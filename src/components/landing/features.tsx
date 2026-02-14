@@ -41,9 +41,9 @@ const features = [
   },
   {
     icon: UserCog,
-    title: "App-Specific Profiles",
+    title: "Context-Aware Profiles",
     description:
-      "Per-app overrides for language, task, engine, and whisper mode. Profiles activate automatically based on the active app.",
+      "Per-app and even per-URL overrides for language, engine, translation, and more. Profiles activate automatically based on the active app or website.",
   },
 ];
 

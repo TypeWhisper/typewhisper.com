@@ -1,4 +1,4 @@
-import { Download } from "lucide-react";
+import { Download, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function DownloadCTA() {
@@ -13,7 +13,7 @@ export function DownloadCTA() {
             Download TypeWhisper for free. Open source, no account required.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="xl" asChild>
               <a
                 href="https://github.com/TypeWhisper/typewhisper-mac/releases"
@@ -22,6 +22,16 @@ export function DownloadCTA() {
               >
                 <Download className="size-5" />
                 Download for macOS
+              </a>
+            </Button>
+            <Button size="xl" variant="outline" asChild>
+              <a
+                href="https://github.com/TypeWhisper/typewhisper-mac/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageSquare className="size-5" />
+                Request a Feature
               </a>
             </Button>
           </div>
