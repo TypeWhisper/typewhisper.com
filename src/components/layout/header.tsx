@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router";
 import { Menu, Moon, Sun, Github } from "lucide-react";
+import { KofiIcon } from "@/components/ui/kofi-icon";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
@@ -59,6 +60,17 @@ export function Header() {
 
           <Button variant="ghost" size="icon-sm" asChild>
             <a
+              href="https://ko-fi.com/seofood"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Sponsor"
+            >
+              <KofiIcon className="size-4" />
+            </a>
+          </Button>
+
+          <Button variant="ghost" size="icon-sm" asChild>
+            <a
               href="https://github.com/TypeWhisper/typewhisper-mac"
               target="_blank"
               rel="noopener noreferrer"
@@ -97,6 +109,15 @@ export function Header() {
                     {link.label}
                   </Link>
                 ))}
+                <a
+                  href="https://ko-fi.com/seofood"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <KofiIcon className="size-4" />
+                  Sponsor
+                </a>
                 <a
                   href="https://github.com/TypeWhisper/typewhisper-mac"
                   target="_blank"

@@ -69,6 +69,26 @@ export function Footer() {
                   Releases
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://github.com/sponsors/seofood"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  GitHub Sponsors
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://ko-fi.com/seofood"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Ko-fi
+                </a>
+              </li>
             </ul>
           </div>
 
