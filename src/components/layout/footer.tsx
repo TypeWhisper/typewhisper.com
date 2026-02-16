@@ -10,8 +10,8 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
-              Local speech-to-text for macOS. Your voice data never leaves your
-              Mac.
+              Local speech-to-text for macOS and Windows. Your voice data never
+              leaves your device.
             </p>
           </div>
 
@@ -33,6 +33,16 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <a
+                  href="https://github.com/TypeWhisper/typewhisper-win/releases"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Windows Download
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -41,7 +51,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a
-                  href="https://github.com/TypeWhisper/typewhisper-mac"
+                  href="https://github.com/TypeWhisper"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors"
@@ -56,7 +66,17 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors"
                 >
-                  Issues
+                  macOS Issues
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/TypeWhisper/typewhisper-win/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Windows Issues
                 </a>
               </li>
               <li>
@@ -66,7 +86,17 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors"
                 >
-                  Releases
+                  macOS Releases
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/TypeWhisper/typewhisper-win/releases"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Windows Releases
                 </a>
               </li>
               <li>
@@ -123,7 +153,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac"
+              href="https://github.com/TypeWhisper"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"

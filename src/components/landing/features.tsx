@@ -13,19 +13,19 @@ const features = [
     icon: Shield,
     title: "100% On-Device",
     description:
-      "All processing happens locally on your Mac. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
+      "All processing happens locally on your device. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
   },
   {
     icon: Cpu,
     title: "Three AI Engines",
     description:
-      "WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (blazing-fast), and Apple Speech (zero-setup, system-managed models on macOS 26+).",
+      "WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (blazing-fast), and Apple Speech (zero setup, macOS 26+).",
   },
   {
     icon: Keyboard,
     title: "System-Wide Dictation",
     description:
-      "Push-to-talk or toggle via global hotkey. Transcription is auto-pasted into any app — works everywhere on macOS.",
+      "Push-to-talk or toggle via global hotkey. Transcription is auto-pasted into any app - works on macOS and Windows.",
   },
   {
     icon: FileAudio,

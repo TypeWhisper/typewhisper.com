@@ -12,9 +12,9 @@ export default function PrivacyPolicy() {
         <section>
           <h2 className="text-lg font-semibold text-foreground">Overview</h2>
           <p className="mt-2">
-            TypeWhisper is a local-only macOS application. We are committed to
-            your privacy and designed TypeWhisper to process all data entirely on
-            your device.
+            TypeWhisper is a local-first desktop app for macOS and Windows. We
+            are committed to your privacy and designed TypeWhisper to process all
+            data entirely on your device.
           </p>
         </section>
 
@@ -24,7 +24,8 @@ export default function PrivacyPolicy() {
           </h2>
           <p className="mt-2">
             <strong>TypeWhisper does not collect any data.</strong> All audio
-            processing, transcription, and storage happens locally on your Mac.
+            processing, transcription, and storage happens locally on your
+            device.
             No audio, transcription text, or usage data is ever sent to any
             server.
           </p>
@@ -35,8 +36,9 @@ export default function PrivacyPolicy() {
             Local Storage
           </h2>
           <p className="mt-2">
-            TypeWhisper stores the following data locally in your Application
-            Support directory:
+            TypeWhisper stores the following data locally in your OS-specific app
+            data directory (for example Application Support on macOS or AppData
+            on Windows):
           </p>
           <ul className="mt-2 space-y-1 list-disc pl-5">
             <li>Transcription history (text, timestamps, app context)</li>
@@ -78,7 +80,7 @@ export default function PrivacyPolicy() {
             TypeWhisper is open source under the GPLv3 license. You can audit
             the entire source code on{" "}
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac"
+              href="https://github.com/TypeWhisper"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
@@ -95,12 +97,12 @@ export default function PrivacyPolicy() {
             If you have questions about this privacy policy, please open an
             issue on our{" "}
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac/issues"
+              href="https://github.com/TypeWhisper"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              GitHub repository
+              GitHub organization
             </a>
             .
           </p>

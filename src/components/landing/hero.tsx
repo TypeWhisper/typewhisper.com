@@ -1,8 +1,25 @@
 import { Download, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { usePlatform } from "@/hooks/use-platform";
+import {
+  macReleaseUrl,
+  windowsReleaseUrl,
+} from "@/lib/platform-download";
+import { PlatformDownloadMenu } from "@/components/landing/platform-download-menu";
 
 export function Hero() {
+  const platform = usePlatform();
+
+  const primaryDownloadUrl =
+    platform === "windows" ? windowsReleaseUrl : macReleaseUrl;
+  const primaryDownloadLabel =
+    platform === "windows"
+      ? "Get TypeWhisper for Windows"
+      : platform === "mac"
+        ? "Get TypeWhisper for macOS"
+        : "Get TypeWhisper Free";
+
   return (
     <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
       {/* Background gradient */}
@@ -17,30 +34,35 @@ export function Hero() {
           </Badge>
 
           <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Local Speech-to-Text
+            Stop Typing.
             <br />
-            <span className="text-primary">for macOS</span>
+            <span className="text-primary">Start Speaking.</span>
+            <br />
+            100% Private.
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Transcribe audio using on-device AI models — no cloud, no API keys,
-            no subscriptions. Your voice data never leaves your Mac.
+            Transcribe speech with on-device AI - no cloud, no API keys, no
+            subscriptions. Your voice data never leaves your device.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button size="xl" asChild>
               <a
-                href="https://github.com/TypeWhisper/typewhisper-mac/releases"
+                href={primaryDownloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Download className="size-5" />
-                Download for macOS
+                {primaryDownloadLabel}
               </a>
             </Button>
+
+            <PlatformDownloadMenu />
+
             <Button variant="outline" size="xl" asChild>
               <a
-                href="https://github.com/TypeWhisper/typewhisper-mac"
+                href="https://github.com/TypeWhisper"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -51,8 +73,8 @@ export function Hero() {
           </div>
 
           <p className="mt-4 text-xs text-muted-foreground">
-            Requires macOS 15.0+ &middot; Apple Silicon recommended &middot;
-            Free & open source
+            macOS and Windows available now &middot; Choose your build above
+            &middot; You can download both from any device
           </p>
         </div>
       </div>
