@@ -6,32 +6,29 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Download, Sparkles, Globe, UserCog } from "lucide-react";
+import { Apple, Monitor, Smartphone } from "lucide-react";
 
-const sections = [
+const platforms = [
   {
-    href: "/docs/installation",
-    icon: Download,
-    title: "Installation",
-    description: "System requirements, download, and first setup.",
+    href: "/docs/mac",
+    icon: Apple,
+    title: "macOS",
+    description: "Complete documentation for TypeWhisper on macOS.",
+    disabled: false,
   },
   {
-    href: "/docs/features",
-    icon: Sparkles,
-    title: "Features",
-    description: "Dictation modes, file transcription, subtitle export, and more.",
+    href: "/docs/windows",
+    icon: Monitor,
+    title: "Windows",
+    description: "Complete documentation for TypeWhisper on Windows.",
+    disabled: false,
   },
   {
-    href: "/docs/api",
-    icon: Globe,
-    title: "HTTP API",
-    description: "REST API endpoints for external tool integration.",
-  },
-  {
-    href: "/docs/profiles",
-    icon: UserCog,
-    title: "Profiles",
-    description: "App-specific settings for language, engine, and task.",
+    href: "#",
+    icon: Smartphone,
+    title: "iOS",
+    description: "Coming soon.",
+    disabled: true,
   },
 ];
 
@@ -43,23 +40,41 @@ export default function DocsIndex() {
           Documentation
         </h1>
         <p className="mt-3 text-lg text-muted-foreground">
-          Learn how to install, configure, and use TypeWhisper.
+          Choose your platform to get started.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          {sections.map((section) => (
-            <Link key={section.href} to={section.href}>
-              <Card className="h-full hover:border-primary/20 transition-colors">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {platforms.map((platform) => {
+            const card = (
+              <Card
+                className={`h-full transition-colors ${
+                  platform.disabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:border-primary/20"
+                }`}
+              >
                 <CardHeader>
                   <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10">
-                    <section.icon className="size-4 text-primary" />
+                    <platform.icon className="size-4 text-primary" />
                   </div>
-                  <CardTitle className="text-base">{section.title}</CardTitle>
-                  <CardDescription>{section.description}</CardDescription>
+                  <CardTitle className="text-base">
+                    {platform.title}
+                  </CardTitle>
+                  <CardDescription>{platform.description}</CardDescription>
                 </CardHeader>
               </Card>
-            </Link>
-          ))}
+            );
+
+            if (platform.disabled) {
+              return <div key={platform.title}>{card}</div>;
+            }
+
+            return (
+              <Link key={platform.title} to={platform.href}>
+                {card}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </DocsLayout>
