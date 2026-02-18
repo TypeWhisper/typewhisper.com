@@ -5,6 +5,7 @@ import { usePlatform } from "@/hooks/use-platform";
 import {
   macReleaseUrl,
   windowsReleaseUrl,
+  iosTestFlightUrl,
 } from "@/lib/platform-download";
 import { PlatformDownloadMenu } from "@/components/landing/platform-download-menu";
 
@@ -12,13 +13,19 @@ export function Hero() {
   const platform = usePlatform();
 
   const primaryDownloadUrl =
-    platform === "windows" ? windowsReleaseUrl : macReleaseUrl;
+    platform === "ios"
+      ? iosTestFlightUrl
+      : platform === "windows"
+        ? windowsReleaseUrl
+        : macReleaseUrl;
   const primaryDownloadLabel =
-    platform === "windows"
-      ? "Get TypeWhisper for Windows"
-      : platform === "mac"
-        ? "Get TypeWhisper for macOS"
-        : "Get TypeWhisper Free";
+    platform === "ios"
+      ? "Get TypeWhisper for iOS"
+      : platform === "windows"
+        ? "Get TypeWhisper for Windows"
+        : platform === "mac"
+          ? "Get TypeWhisper for macOS"
+          : "Get TypeWhisper Free";
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
@@ -73,8 +80,8 @@ export function Hero() {
           </div>
 
           <p className="mt-4 text-xs text-muted-foreground">
-            macOS and Windows available now &middot; Choose your build above
-            &middot; You can download both from any device
+            macOS, Windows, and iOS (Beta) available now &middot; Choose your
+            platform above
           </p>
         </div>
       </div>

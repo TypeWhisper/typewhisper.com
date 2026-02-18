@@ -4,6 +4,7 @@ import { usePlatform } from "@/hooks/use-platform";
 import {
   macReleaseUrl,
   windowsReleaseUrl,
+  iosTestFlightUrl,
 } from "@/lib/platform-download";
 import { PlatformDownloadMenu } from "@/components/landing/platform-download-menu";
 
@@ -11,13 +12,19 @@ export function DownloadCTA() {
   const platform = usePlatform();
 
   const primaryDownloadUrl =
-    platform === "windows" ? windowsReleaseUrl : macReleaseUrl;
+    platform === "ios"
+      ? iosTestFlightUrl
+      : platform === "windows"
+        ? windowsReleaseUrl
+        : macReleaseUrl;
   const primaryDownloadLabel =
-    platform === "windows"
-      ? "Get TypeWhisper for Windows"
-      : platform === "mac"
-        ? "Get TypeWhisper for macOS"
-        : "Get TypeWhisper Free";
+    platform === "ios"
+      ? "Get TypeWhisper for iOS"
+      : platform === "windows"
+        ? "Get TypeWhisper for Windows"
+        : platform === "mac"
+          ? "Get TypeWhisper for macOS"
+          : "Get TypeWhisper Free";
 
   return (
     <section className="py-20 sm:py-28 bg-card/50">
@@ -27,8 +34,8 @@ export function DownloadCTA() {
             Ready to stop typing?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Get TypeWhisper free for macOS and Windows. Open source, no account
-            required.
+            Get TypeWhisper free for macOS, Windows, and iOS. Open source, no
+            account required.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -45,7 +52,7 @@ export function DownloadCTA() {
             <PlatformDownloadMenu label="All downloads" />
           </div>
 
-          <div className="mt-8 grid grid-cols-3 gap-6 text-center max-w-md mx-auto">
+          <div className="mt-8 grid grid-cols-2 gap-6 text-center max-w-lg mx-auto sm:grid-cols-4">
             <div>
               <p className="text-sm font-semibold">Macs from 2020+</p>
               <p className="text-xs text-muted-foreground">Intel and Apple Silicon</p>
@@ -53,6 +60,10 @@ export function DownloadCTA() {
             <div>
               <p className="text-sm font-semibold">Windows 10/11</p>
               <p className="text-xs text-muted-foreground">Available now</p>
+            </div>
+            <div>
+              <p className="text-sm font-semibold">iOS (Beta)</p>
+              <p className="text-xs text-muted-foreground">Via TestFlight</p>
             </div>
             <div>
               <p className="text-sm font-semibold">Free forever</p>

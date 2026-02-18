@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { iosTestFlightUrl } from "@/lib/platform-download";
 
 function PlatformCard({
   icon: Icon,
@@ -16,16 +17,25 @@ function PlatformCard({
   nativeLabel,
   status,
   downloadHref,
+  downloadLabel,
   className,
 }: {
   icon: typeof Smartphone;
   title: string;
   description: string;
   nativeLabel: string;
-  status: "Available Now" | "Coming Soon";
+  status: "Available Now" | "Beta" | "Coming Soon";
   downloadHref?: string;
+  downloadLabel?: string;
   className?: string;
 }) {
+  const badgeVariant =
+    status === "Available Now"
+      ? "default"
+      : status === "Beta"
+        ? "outline"
+        : "secondary";
+
   return (
     <div className={`rounded-2xl border bg-card p-8 text-center ${className ?? ""}`}>
       <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-2xl bg-primary/10">
@@ -36,7 +46,7 @@ function PlatformCard({
         <h3 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
           {title}
         </h3>
-        <Badge variant={downloadHref ? "default" : "secondary"}>{status}</Badge>
+        <Badge variant={badgeVariant}>{status}</Badge>
       </div>
       <p className="mt-2 text-sm text-muted-foreground">{description}</p>
 
@@ -58,17 +68,13 @@ function PlatformCard({
         </div>
       </div>
 
-      {downloadHref ? (
+      {downloadHref && (
         <Button size="lg" className="mt-8" asChild>
           <a href={downloadHref} target="_blank" rel="noopener noreferrer">
-            Download for Windows
+            {downloadLabel ?? `Download for ${title}`}
             <ArrowUpRight className="size-4" />
           </a>
         </Button>
-      ) : (
-        <p className="mt-8 text-xs text-muted-foreground">
-          iOS version is in active development.
-        </p>
       )}
     </div>
   );
@@ -80,23 +86,25 @@ export function PlatformsComingSoon() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center reveal-hidden">
           <Badge variant="secondary" className="mb-4">
-            Windows Available Now
+            Available on All Platforms
           </Badge>
 
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             More platforms, same local privacy
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            TypeWhisper runs on macOS and Windows today. iOS is next.
+            TypeWhisper runs on macOS, Windows, and iOS.
           </p>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
             <PlatformCard
               icon={Smartphone}
               title="iOS"
-              description="Coming soon to iPhone and iPad."
+              description="Available now as Beta for iPhone and iPad."
               nativeLabel="Built for iOS"
-              status="Coming Soon"
+              status="Beta"
+              downloadHref={iosTestFlightUrl}
+              downloadLabel="Join TestFlight Beta"
               className="reveal-hidden stagger-delay-100"
             />
             <PlatformCard
@@ -106,6 +114,7 @@ export function PlatformsComingSoon() {
               nativeLabel="Built for Windows"
               status="Available Now"
               downloadHref="https://github.com/TypeWhisper/typewhisper-win/releases"
+              downloadLabel="Download for Windows"
               className="reveal-hidden stagger-delay-200"
             />
           </div>

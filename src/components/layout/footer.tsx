@@ -10,8 +10,8 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
-              Local speech-to-text for macOS and Windows. Your voice data never
-              leaves your device.
+              Local speech-to-text for macOS, Windows, and iOS. Your voice data
+              never leaves your device.
             </p>
           </div>
 
@@ -41,6 +41,16 @@ export function Footer() {
                   className="hover:text-foreground transition-colors"
                 >
                   Windows Download
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://testflight.apple.com/join/kcCS3hcZ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  iOS TestFlight
                 </a>
               </li>
             </ul>

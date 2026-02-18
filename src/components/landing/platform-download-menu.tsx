@@ -1,5 +1,5 @@
-import { ChevronDown, Download, Monitor } from "lucide-react";
-import { macReleaseUrl, windowsReleaseUrl } from "@/lib/platform-download";
+import { ChevronDown, Download, Monitor, Smartphone } from "lucide-react";
+import { macReleaseUrl, windowsReleaseUrl, iosTestFlightUrl } from "@/lib/platform-download";
 
 export function PlatformDownloadMenu({
   label = "Choose platform",
@@ -31,6 +31,15 @@ export function PlatformDownloadMenu({
         >
           <Monitor className="size-4" />
           Download for Windows
+        </a>
+        <a
+          href={iosTestFlightUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
+        >
+          <Smartphone className="size-4" />
+          iOS Beta (TestFlight)
         </a>
       </div>
     </details>
