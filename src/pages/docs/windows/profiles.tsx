@@ -35,12 +35,54 @@ export default function DocsWindowsProfiles() {
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                 outlook.exe
               </code>
-              ) and optionally a URL pattern for browser tabs. URL patterns
-              support wildcards - for example,{" "}
+              ) and optionally a URL pattern for browser tabs.
+            </p>
+            <p className="mt-3 text-sm font-medium">URL Pattern Syntax</p>
+            <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+              <li>
+                &bull;{" "}
+                <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                  *
+                </code>{" "}
+                matches any sequence of characters within a single segment
+              </li>
+              <li>
+                &bull;{" "}
+                <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                  *.github.com
+                </code>{" "}
+                matches all GitHub subdomains (e.g., gist.github.com)
+              </li>
+              <li>
+                &bull;{" "}
+                <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                  docs.google.com/document/*
+                </code>{" "}
+                matches all Google Docs documents
+              </li>
+              <li>
+                &bull;{" "}
+                <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                  *slack.com*
+                </code>{" "}
+                matches any URL containing slack.com
+              </li>
+            </ul>
+            <p className="mt-3 text-sm font-medium">
+              Finding an App&apos;s Process Name
+            </p>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Open Task Manager (Ctrl+Shift+Esc), go to the Details tab, and
+              find the application. The &quot;Name&quot; column shows the process
+              name you need (e.g.,{" "}
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                *.github.com
-              </code>{" "}
-              matches all GitHub subdomains.
+                Teams.exe
+              </code>
+              ,{" "}
+              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                WINWORD.EXE
+              </code>
+              ).
             </p>
           </div>
 
@@ -51,6 +93,7 @@ export default function DocsWindowsProfiles() {
             </p>
             <ol className="mt-3 space-y-1.5 text-sm text-muted-foreground list-decimal list-inside">
               <li>Process Name + URL Pattern (most specific)</li>
+              <li>URL Pattern only (cross-browser profiles)</li>
               <li>Process Name only</li>
               <li>Default settings (fallback)</li>
             </ol>

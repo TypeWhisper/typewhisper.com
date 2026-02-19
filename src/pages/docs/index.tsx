@@ -24,11 +24,12 @@ const platforms = [
     disabled: false,
   },
   {
-    href: "#",
+    href: "/docs/ios",
     icon: Smartphone,
     title: "iOS",
-    description: "Coming soon.",
-    disabled: true,
+    description:
+      "Beta via TestFlight. On-device transcription for iPhone and iPad.",
+    disabled: false,
   },
 ];
 
