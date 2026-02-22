@@ -16,6 +16,9 @@ import DocsWindowsAPI from "@/pages/docs/windows/api";
 import DocsWindowsProfiles from "@/pages/docs/windows/profiles";
 import DocsIOS from "@/pages/docs/ios";
 import BlogIndex from "@/pages/blog/index";
+import AddonsIndex from "@/pages/addons/index";
+import AddonsDetail from "@/pages/addons/detail";
+import AddonsDevelop from "@/pages/addons/develop";
 import PrivacyPolicy from "@/pages/privacy";
 import TermsOfService from "@/pages/terms";
 import LegalNotice from "@/pages/legal-notice";
@@ -42,6 +45,9 @@ export default function App() {
           <Route path="/docs/windows/profiles" element={<DocsWindowsProfiles />} />
           <Route path="/docs/ios" element={<DocsIOS />} />
           <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/addons" element={<AddonsIndex />} />
+          <Route path="/addons/develop" element={<AddonsDevelop />} />
+          <Route path="/addons/:slug" element={<AddonsDetail />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/legal-notice" element={<LegalNotice />} />

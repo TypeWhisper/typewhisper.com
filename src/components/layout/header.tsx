@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const navLinks = [
   { href: "/#features", label: "Features" },
+  { href: "/addons", label: "Add-ons" },
   { href: "/docs", label: "Docs" },
   { href: "/blog", label: "Blog" },
 ];
@@ -34,7 +35,9 @@ export function Header() {
               to={link.href}
               className={cn(
                 "px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-foreground",
-                location.pathname === link.href
+                location.pathname === link.href ||
+                  (link.href !== "/#features" &&
+                    location.pathname.startsWith(link.href))
                   ? "text-foreground"
                   : "text-muted-foreground"
               )}
@@ -101,7 +104,9 @@ export function Header() {
                     onClick={() => setMobileOpen(false)}
                     className={cn(
                       "px-3 py-2.5 text-sm font-medium rounded-md transition-colors hover:bg-accent",
-                      location.pathname === link.href
+                      location.pathname === link.href ||
+                        (link.href !== "/#features" &&
+                          location.pathname.startsWith(link.href))
                         ? "text-foreground bg-accent"
                         : "text-muted-foreground"
                     )}

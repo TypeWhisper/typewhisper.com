@@ -24,6 +24,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/addons" className="hover:text-foreground transition-colors">
+                  Add-ons
+                </Link>
+              </li>
+              <li>
                 <Link to="/docs" className="hover:text-foreground transition-colors">
                   Documentation
                 </Link>

@@ -1,0 +1,52 @@
+---
+slug: openai
+name: OpenAI
+author: TypeWhisper
+version: 1.0.0
+icon: Brain
+description: Cloud transcription and LLM processing using OpenAI's Whisper and GPT models.
+categories:
+  - transcription
+  - llm
+source: bundled
+apiDocsUrl: https://platform.openai.com/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenAIPlugin
+---
+
+## About
+
+OpenAI provides high-quality speech-to-text via Whisper models and powerful LLM capabilities through GPT-4.1 and GPT-4o. The plugin supports both classic Whisper and the newer GPT-4o Transcribe model for improved accuracy. Use OpenAI as a drop-in cloud transcription engine or as an LLM provider for custom prompts.
+
+## Features
+
+- High-accuracy Whisper transcription
+- GPT-4o Transcribe for enhanced accuracy
+- GPT-4.1 and GPT-4o for LLM tasks
+- o4-mini for fast, cost-effective processing
+- Translation support via Whisper
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Whisper 1 | `whisper-1` |
+| GPT-4o Transcribe | `gpt-4o-transcribe` |
+
+## LLM Models
+
+| Model | ID |
+| --- | --- |
+| GPT-4.1 | `gpt-4.1` |
+| GPT-4o | `gpt-4o` |
+| o4-mini | `o4-mini` |
+
+## Configuration
+
+- **API Key** - Create an API key at platform.openai.com. Requires a paid account.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the OpenAI plugin and click Configure
+3. Enter your OpenAI API key
+4. Select OpenAI as your transcription engine or LLM provider

@@ -9,24 +9,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdx-js/rollup": "^3.1.1",
+    "@radix-ui/react-dialog": "^1",
+    "@radix-ui/react-separator": "^1",
+    "@radix-ui/react-slot": "^1",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/mdx": "^2.0.13",
+    "class-variance-authority": "^0.7",
+    "clsx": "^2",
+    "lucide-react": "latest",
     "react": "^19",
     "react-dom": "^19",
     "react-router": "^7",
-    "lucide-react": "latest",
-    "class-variance-authority": "^0.7",
-    "clsx": "^2",
-    "tailwind-merge": "^3",
-    "@radix-ui/react-slot": "^1",
-    "@radix-ui/react-dialog": "^1",
-    "@radix-ui/react-separator": "^1"
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0",
+    "tailwind-merge": "^3"
   },
   "devDependencies": {
-    "typescript": "~5.7",
-    "vite": "^6",
-    "@vitejs/plugin-react": "^4",
     "@tailwindcss/vite": "^4",
-    "tailwindcss": "^4",
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4",
+    "tailwindcss": "^4",
+    "typescript": "~5.7",
+    "vite": "^6"
   }
 }
