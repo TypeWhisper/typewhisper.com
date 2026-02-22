@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { plugins, type PluginCategory } from "@/data/addons";
+import { plugins, type PluginCategory, type PluginPlatform } from "@/data/addons";
 import { CategoryFilter } from "@/components/addons/category-filter";
+import { PlatformFilter } from "@/components/addons/platform-filter";
 import { AddonCard } from "@/components/addons/addon-card";
 import { Button } from "@/components/ui/button";
 
 export default function AddonsIndex() {
   const [category, setCategory] = useState<PluginCategory | "all">("all");
+  const [platform, setPlatform] = useState<PluginPlatform | "all">("all");
 
-  const filtered =
-    category === "all"
-      ? plugins
-      : plugins.filter((p) => p.categories.includes(category));
+  const filtered = plugins.filter((p) => {
+    const matchesCategory =
+      category === "all" || p.categories.includes(category);
+    const matchesPlatform =
+      platform === "all" || p.platforms.includes(platform);
+    return matchesCategory && matchesPlatform;
+  });
 
   return (
     <div className="py-16 sm:py-20">
@@ -32,8 +37,9 @@ export default function AddonsIndex() {
           </Button>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 flex flex-col gap-3">
           <CategoryFilter selected={category} onChange={setCategory} />
+          <PlatformFilter selected={platform} onChange={setPlatform} />
         </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -44,7 +50,7 @@ export default function AddonsIndex() {
 
         {filtered.length === 0 && (
           <p className="mt-12 text-center text-muted-foreground">
-            No add-ons found for this category.
+            No add-ons found for this filter combination.
           </p>
         )}
       </div>

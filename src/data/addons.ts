@@ -6,6 +6,8 @@ export type PluginCategory =
   | "action"
   | "post-processing";
 
+export type PluginPlatform = "mac" | "windows" | "ios";
+
 export type PluginSource = "bundled" | "community";
 
 export interface Plugin {
@@ -16,6 +18,7 @@ export interface Plugin {
   icon: string;
   description: string;
   categories: PluginCategory[];
+  platforms: PluginPlatform[];
   source: PluginSource;
   apiDocsUrl?: string;
   sourceUrl?: string;
@@ -31,6 +34,12 @@ export const categoryLabels: Record<PluginCategory, string> = {
   llm: "LLM",
   action: "Action",
   "post-processing": "Post-Processing",
+};
+
+export const platformLabels: Record<PluginPlatform, string> = {
+  mac: "macOS",
+  windows: "Windows",
+  ios: "iOS",
 };
 
 const mdxModules = import.meta.glob<PluginModule>(

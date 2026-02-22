@@ -13,7 +13,9 @@ import { Button } from "@/components/ui/button";
 import {
   getPluginModule,
   categoryLabels,
+  platformLabels,
   type PluginCategory,
+  type PluginPlatform,
 } from "@/data/addons";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -82,6 +84,11 @@ export default function AddonsDetail() {
               {plugin.categories.map((cat: PluginCategory) => (
                 <Badge key={cat} variant="outline" className="text-[10px]">
                   {categoryLabels[cat]}
+                </Badge>
+              ))}
+              {plugin.platforms.map((p: PluginPlatform) => (
+                <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary/70">
+                  {platformLabels[p]}
                 </Badge>
               ))}
             </div>

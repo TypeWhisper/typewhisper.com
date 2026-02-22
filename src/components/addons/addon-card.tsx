@@ -10,7 +10,7 @@ import {
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { type Plugin, type PluginCategory, categoryLabels } from "@/data/addons";
+import { type Plugin, type PluginCategory, type PluginPlatform, categoryLabels, platformLabels } from "@/data/addons";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Zap,
@@ -49,6 +49,11 @@ export function AddonCard({ plugin }: AddonCardProps) {
           {plugin.categories.map((cat: PluginCategory) => (
             <Badge key={cat} variant="outline" className="text-[10px]">
               {categoryLabels[cat]}
+            </Badge>
+          ))}
+          {plugin.platforms.map((p: PluginPlatform) => (
+            <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary/70">
+              {platformLabels[p]}
             </Badge>
           ))}
         </div>
