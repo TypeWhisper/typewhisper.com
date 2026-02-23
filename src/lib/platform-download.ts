@@ -10,6 +10,7 @@ export const macGitHubUrl =
 export const windowsGitHubUrl =
   "https://github.com/TypeWhisper/typewhisper-win";
 export const orgGitHubUrl = "https://github.com/TypeWhisper";
+export const discordUrl = "https://discord.gg/pUFR4a65SD";
 
 export type Platform = "mac" | "windows" | "ios" | "other";
 

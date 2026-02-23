@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Logo } from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
+import { discordUrl } from "@/lib/platform-download";
 
 export function Footer() {
   return (
@@ -64,6 +65,16 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold mb-3">Community</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <a
+                  href={discordUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Discord
+                </a>
+              </li>
               <li>
                 <a
                   href="https://github.com/TypeWhisper"
