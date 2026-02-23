@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
+import { Link } from "react-router";
+import type { Platform } from "@/lib/platform-download";
 
 interface Engine {
   name: string;
@@ -12,7 +14,7 @@ interface ComparisonRow {
   values: (boolean | string)[];
 }
 
-const engines: Engine[] = [
+const macEngines: Engine[] = [
   {
     name: "WhisperKit",
     badge: "Versatile",
@@ -29,11 +31,11 @@ const engines: Engine[] = [
     name: "Apple Speech",
     badge: "Zero Setup",
     description:
-      "Apple's native speech recognition. No manual model downloads — models are managed by macOS. Requires macOS 26+.",
+      "Apple's native speech recognition. No manual model downloads - models are managed by macOS. Requires macOS 26+.",
   },
 ];
 
-const rows: ComparisonRow[] = [
+const macRows: ComparisonRow[] = [
   { label: "Languages", values: ["99+", "25 European", "~40"] },
   { label: "Streaming", values: [true, false, true] },
   { label: "Translation", values: ["20 languages", "20 languages", "20 languages"] },
@@ -57,6 +59,69 @@ const rows: ComparisonRow[] = [
   { label: "Accuracy", values: ["Excellent", "Excellent", "Good"] },
 ];
 
+const windowsEngines: Engine[] = [
+  {
+    name: "Parakeet TDT 0.6B",
+    badge: "Fast",
+    description:
+      "NVIDIA's TDT architecture optimized for ONNX Runtime. Fast transcription for European languages, CPU-only.",
+  },
+  {
+    name: "Canary 180M Flash",
+    badge: "Compact",
+    description:
+      "Compact multilingual model with built-in translation. Supports EN, DE, FR, and ES.",
+  },
+];
+
+const windowsRows: ComparisonRow[] = [
+  { label: "Languages", values: ["25+", "4 (EN/DE/FR/ES)"] },
+  { label: "Streaming", values: [false, false] },
+  { label: "Translation", values: ["Via Marian/Cloud", "Built-in"] },
+  { label: "Speed", values: ["Very fast", "Fast"] },
+  { label: "Model Sizes", values: ["0.6B params", "180M params"] },
+  { label: "Model Download", values: ["Automatic", "Automatic"] },
+  { label: "Best For", values: ["European languages", "Quick multilingual"] },
+  { label: "Accuracy", values: ["Excellent", "Good"] },
+];
+
+const iosEngines: Engine[] = [
+  {
+    name: "WhisperKit",
+    badge: "Versatile",
+    description:
+      "Apple-optimized Whisper models. Best for multilingual use and streaming preview.",
+  },
+  {
+    name: "Apple Speech",
+    badge: "Zero Setup",
+    description:
+      "Apple's native speech recognition. No model downloads needed - fast and reliable.",
+  },
+];
+
+const iosRows: ComparisonRow[] = [
+  { label: "Languages", values: ["99+", "~40"] },
+  { label: "Streaming", values: [true, true] },
+  { label: "Translation", values: ["20 languages", "20 languages"] },
+  { label: "Speed", values: ["Fast", "Fast"] },
+  { label: "Model Sizes", values: ["Tiny to Large v3", "System-managed"] },
+  { label: "Model Download", values: ["Manual in-app", "Automatic"] },
+  { label: "Best For", values: ["Multilingual & translation", "Quick setup"] },
+  { label: "Accuracy", values: ["Excellent", "Good"] },
+];
+
+function getEngineData(platform: Platform): { engines: Engine[]; rows: ComparisonRow[] } {
+  switch (platform) {
+    case "windows":
+      return { engines: windowsEngines, rows: windowsRows };
+    case "ios":
+      return { engines: iosEngines, rows: iosRows };
+    default:
+      return { engines: macEngines, rows: macRows };
+  }
+}
+
 function CellValue({ value }: { value: boolean | string }) {
   if (typeof value === "boolean") {
     return value ? (
@@ -68,7 +133,15 @@ function CellValue({ value }: { value: boolean | string }) {
   return <span>{value}</span>;
 }
 
-export function EngineComparisonTable() {
+const gridColsClass: Record<number, string> = {
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+};
+
+export function EngineComparisonTable({ platform }: { platform: Platform }) {
+  const { engines, rows } = getEngineData(platform);
+  const showCloudHint = platform === "mac" || platform === "windows" || platform === "other";
+
   return (
     <>
       {/* Desktop table */}
@@ -115,7 +188,7 @@ export function EngineComparisonTable() {
         </table>
 
         {/* Engine descriptions below table */}
-        <div className="mt-8 grid grid-cols-3 gap-6">
+        <div className={`mt-8 grid ${gridColsClass[engines.length] ?? "grid-cols-3"} gap-6`}>
           {engines.map((engine) => (
             <p
               key={engine.name}
@@ -161,6 +234,16 @@ export function EngineComparisonTable() {
           </div>
         ))}
       </div>
+
+      {showCloudHint && (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          Cloud engines (Groq, OpenAI) are also available as{" "}
+          <Link to="/addons" className="underline underline-offset-4 hover:text-foreground">
+            add-ons
+          </Link>
+          .
+        </p>
+      )}
     </>
   );
 }

@@ -7,7 +7,7 @@ const steps = [
   {
     title: "Speak Naturally",
     description:
-      "Talk at your normal pace. See real-time streaming preview as you speak (WhisperKit).",
+      "Talk at your normal pace. See real-time streaming preview as you speak.",
   },
   {
     title: "Text Appears",

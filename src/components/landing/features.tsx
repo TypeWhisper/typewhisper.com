@@ -6,48 +6,92 @@ import {
   Globe,
   UserCog,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { usePlatform } from "@/hooks/use-platform";
+import type { Platform } from "@/lib/platform-download";
 
-const features = [
-  {
-    icon: Shield,
-    title: "100% On-Device",
-    description:
-      "All processing happens locally on your device. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
-  },
-  {
-    icon: Cpu,
-    title: "Three AI Engines",
-    description:
-      "WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (blazing-fast), and Apple Speech (zero setup, macOS 26+).",
-  },
-  {
-    icon: Keyboard,
-    title: "System-Wide Dictation",
-    description:
-      "Push-to-talk or toggle via global hotkey. Transcription is auto-pasted into any app - works on macOS and Windows.",
-  },
-  {
-    icon: FileAudio,
-    title: "File Transcription",
-    description:
-      "Batch-process audio and video files with drag & drop. Export as SRT or WebVTT subtitles with timestamps.",
-  },
-  {
-    icon: Globe,
-    title: "Local HTTP API",
-    description:
-      "REST API for integration with external tools, scripts, and automations. Run on localhost with zero configuration.",
-  },
-  {
-    icon: UserCog,
-    title: "Context-Aware Profiles",
-    description:
-      "Per-app and even per-URL overrides for language, engine, translation, and more. Profiles activate automatically based on the active app or website.",
-  },
-];
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+function getEngineFeature(platform: Platform): { title: string; description: string } {
+  switch (platform) {
+    case "mac":
+      return {
+        title: "Three AI Engines",
+        description:
+          "WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (blazing-fast), and Apple Speech (zero setup, macOS 26+).",
+      };
+    case "windows":
+      return {
+        title: "Two AI Engines",
+        description:
+          "Parakeet TDT (25+ languages, blazing-fast) and Canary (compact, built-in translation). Both run on-device via ONNX Runtime.",
+      };
+    case "ios":
+      return {
+        title: "Two AI Engines",
+        description:
+          "WhisperKit (99+ languages, streaming) and Apple Speech (zero setup). Both run entirely on-device.",
+      };
+    default:
+      return {
+        title: "Multiple AI Engines",
+        description:
+          "Multiple AI engines depending on your platform. All run entirely on-device.",
+      };
+  }
+}
+
+function getFeatures(platform: Platform): Feature[] {
+  const engine = getEngineFeature(platform);
+
+  return [
+    {
+      icon: Shield,
+      title: "100% On-Device",
+      description:
+        "All processing happens locally on your device. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
+    },
+    {
+      icon: Cpu,
+      title: engine.title,
+      description: engine.description,
+    },
+    {
+      icon: Keyboard,
+      title: "System-Wide Dictation",
+      description:
+        "Push-to-talk or toggle via global hotkey. Transcription is auto-pasted into any app - works on macOS and Windows.",
+    },
+    {
+      icon: FileAudio,
+      title: "File Transcription",
+      description:
+        "Batch-process audio and video files with drag & drop. Export as SRT or WebVTT subtitles with timestamps.",
+    },
+    {
+      icon: Globe,
+      title: "Local HTTP API",
+      description:
+        "REST API for integration with external tools, scripts, and automations. Run on localhost with zero configuration.",
+    },
+    {
+      icon: UserCog,
+      title: "Context-Aware Profiles",
+      description:
+        "Per-app and even per-URL overrides for language, engine, translation, and more. Profiles activate automatically based on the active app or website.",
+    },
+  ];
+}
 
 export function Features() {
+  const platform = usePlatform();
+  const features = getFeatures(platform);
+
   return (
     <section id="features" className="py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -63,7 +107,7 @@ export function Features() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, i) => (
             <Card
-              key={feature.title}
+              key={i}
               className={`reveal-hidden stagger-delay-${(i + 1) * 100} hover:border-primary/20 transition-colors`}
             >
               <CardHeader>
