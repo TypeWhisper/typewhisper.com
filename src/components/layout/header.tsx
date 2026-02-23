@@ -74,7 +74,7 @@ export function Header() {
 
           <Button variant="ghost" size="icon-sm" asChild>
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac"
+              href="https://github.com/TypeWhisper"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -124,7 +124,7 @@ export function Header() {
                   Sponsor
                 </a>
                 <a
-                  href="https://github.com/TypeWhisper/typewhisper-mac"
+                  href="https://github.com/TypeWhisper"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"

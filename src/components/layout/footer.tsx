@@ -76,46 +76,6 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/TypeWhisper/typewhisper-mac/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
-                >
-                  macOS Issues
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/TypeWhisper/typewhisper-win/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
-                >
-                  Windows Issues
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/TypeWhisper/typewhisper-mac/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
-                >
-                  macOS Releases
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/TypeWhisper/typewhisper-win/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
-                >
-                  Windows Releases
-                </a>
-              </li>
-              <li>
-                <a
                   href="https://github.com/sponsors/seofood"
                   target="_blank"
                   rel="noopener noreferrer"

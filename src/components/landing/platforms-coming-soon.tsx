@@ -1,6 +1,7 @@
 import {
   ArrowUpRight,
   Cpu,
+  Laptop,
   Monitor,
   Shield,
   Smartphone,
@@ -8,7 +9,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { iosTestFlightUrl } from "@/lib/platform-download";
+import { iosTestFlightUrl, macReleaseUrl, windowsReleaseUrl } from "@/lib/platform-download";
 
 function PlatformCard({
   icon: Icon,
@@ -80,7 +81,7 @@ function PlatformCard({
   );
 }
 
-export function PlatformsComingSoon() {
+export function AvailablePlatforms() {
   return (
     <section className="py-20 sm:py-28 bg-card/50">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -95,29 +96,39 @@ export function PlatformsComingSoon() {
           <p className="mt-4 text-lg text-muted-foreground">
             TypeWhisper runs on macOS, Windows, and iOS.
           </p>
+        </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            <PlatformCard
-              icon={Smartphone}
-              title="iOS"
-              description="Available now as Beta for iPhone and iPad."
-              nativeLabel="Built for iOS"
-              status="Beta"
-              downloadHref={iosTestFlightUrl}
-              downloadLabel="Join TestFlight Beta"
-              className="reveal-hidden stagger-delay-100"
-            />
-            <PlatformCard
-              icon={Monitor}
-              title="Windows"
-              description="Available now for Windows desktop."
-              nativeLabel="Built for Windows"
-              status="Available Now"
-              downloadHref="https://github.com/TypeWhisper/typewhisper-win/releases"
-              downloadLabel="Download for Windows"
-              className="reveal-hidden stagger-delay-200"
-            />
-          </div>
+        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+          <PlatformCard
+            icon={Laptop}
+            title="macOS"
+            description="Available now for Mac desktop."
+            nativeLabel="Built for macOS"
+            status="Available Now"
+            downloadHref={macReleaseUrl}
+            downloadLabel="Download for macOS"
+            className="reveal-hidden stagger-delay-100"
+          />
+          <PlatformCard
+            icon={Monitor}
+            title="Windows"
+            description="Available now for Windows desktop."
+            nativeLabel="Built for Windows"
+            status="Available Now"
+            downloadHref={windowsReleaseUrl}
+            downloadLabel="Download for Windows"
+            className="reveal-hidden stagger-delay-200"
+          />
+          <PlatformCard
+            icon={Smartphone}
+            title="iOS"
+            description="Available now as Beta for iPhone and iPad."
+            nativeLabel="Built for iOS"
+            status="Beta"
+            downloadHref={iosTestFlightUrl}
+            downloadLabel="Join TestFlight Beta"
+            className="reveal-hidden stagger-delay-300"
+          />
         </div>
       </div>
     </section>

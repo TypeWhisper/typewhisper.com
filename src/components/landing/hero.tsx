@@ -6,6 +6,9 @@ import {
   macReleaseUrl,
   windowsReleaseUrl,
   iosTestFlightUrl,
+  macGitHubUrl,
+  windowsGitHubUrl,
+  orgGitHubUrl,
 } from "@/lib/platform-download";
 import { PlatformDownloadMenu } from "@/components/landing/platform-download-menu";
 
@@ -26,6 +29,13 @@ export function Hero() {
         : platform === "mac"
           ? "Get TypeWhisper for macOS"
           : "Get TypeWhisper Free";
+
+  const gitHubUrl =
+    platform === "mac"
+      ? macGitHubUrl
+      : platform === "windows"
+        ? windowsGitHubUrl
+        : orgGitHubUrl;
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
@@ -69,7 +79,7 @@ export function Hero() {
 
             <Button variant="outline" size="xl" asChild>
               <a
-                href="https://github.com/TypeWhisper"
+                href={gitHubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

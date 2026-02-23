@@ -5,6 +5,12 @@ export const windowsReleaseUrl =
 export const iosTestFlightUrl =
   "https://testflight.apple.com/join/kcCS3hcZ";
 
+export const macGitHubUrl =
+  "https://github.com/TypeWhisper/typewhisper-mac";
+export const windowsGitHubUrl =
+  "https://github.com/TypeWhisper/typewhisper-win";
+export const orgGitHubUrl = "https://github.com/TypeWhisper";
+
 export type Platform = "mac" | "windows" | "ios" | "other";
 
 export function detectPlatform(): Platform {
