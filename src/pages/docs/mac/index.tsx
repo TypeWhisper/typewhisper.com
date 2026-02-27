@@ -20,7 +20,7 @@ const sections = [
     icon: Sparkles,
     title: "Features",
     description:
-      "Dictation modes, streaming preview, file transcription, and more.",
+      "Dictation, streaming, AI prompts, dictionary, snippets, plugins, and more.",
   },
   {
     href: "/docs/mac/api",

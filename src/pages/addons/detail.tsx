@@ -5,6 +5,7 @@ import {
   Sparkles,
   Send,
   SquareKanban,
+  Cpu,
   ArrowLeft,
   ExternalLink,
 } from "lucide-react";
@@ -24,6 +25,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Sparkles,
   Send,
   SquareKanban,
+  Cpu,
 };
 
 export default function AddonsDetail() {

@@ -14,9 +14,10 @@ export default function DocsMacInstallation() {
         <div className="mt-8 rounded-lg border border-border bg-card p-6">
           <h2 className="text-lg font-semibold">System Requirements</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-            <li>&bull; Macs from 2020 or newer</li>
+            <li>&bull; macOS 15.0 (Sequoia) or later</li>
             <li>&bull; Intel and Apple Silicon supported</li>
             <li>&bull; 8 GB RAM minimum, 16 GB+ recommended</li>
+            <li>&bull; Apple SpeechAnalyzer engine requires macOS 26+</li>
           </ul>
         </div>
 

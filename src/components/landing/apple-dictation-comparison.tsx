@@ -13,7 +13,7 @@ function getEngineTitle(platform: string): string {
   switch (platform) {
     case "mac":
     case "other":
-      return "Three speech engines";
+      return "Six speech engines";
     default:
       return "Two speech engines";
   }
@@ -31,7 +31,7 @@ function getReasons(platform: string): Reason[] {
       icon: Languages,
       title: getEngineTitle(platform),
       description:
-        "Pick from multiple engines depending on your speed and accuracy needs.",
+        "Six engines to choose from - three built-in plus three more via add-ons. Pick based on speed, accuracy, and privacy needs.",
     },
     {
       icon: FileAudio,

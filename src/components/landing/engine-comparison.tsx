@@ -5,7 +5,7 @@ function getSubtitle(platform: string): string {
   switch (platform) {
     case "mac":
     case "other":
-      return "Three speech recognition engines. All run entirely on-device.";
+      return "Six speech engines - three built-in, more via add-ons.";
     default:
       return "Two speech recognition engines. All run entirely on-device.";
   }

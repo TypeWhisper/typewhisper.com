@@ -28,7 +28,7 @@ const macEngines: Engine[] = [
       "NVIDIA's latest TDT architecture. Extremely fast transcription for European languages with excellent accuracy.",
   },
   {
-    name: "Apple Speech",
+    name: "Apple SpeechAnalyzer",
     badge: "Zero Setup",
     description:
       "Apple's native speech recognition. No manual model downloads - models are managed by macOS. Requires macOS 26+.",
@@ -237,7 +237,7 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
 
       {showCloudHint && (
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Cloud engines (Groq, OpenAI) are also available as{" "}
+          Additional engines (Qwen3 ASR, Groq Whisper, OpenAI Whisper) are available as{" "}
           <Link to="/addons" className="underline underline-offset-4 hover:text-foreground">
             add-ons
           </Link>

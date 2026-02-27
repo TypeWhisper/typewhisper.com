@@ -3,7 +3,7 @@ import {
   Cpu,
   Keyboard,
   FileAudio,
-  Globe,
+  Wand2,
   UserCog,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -21,9 +21,9 @@ function getEngineFeature(platform: Platform): { title: string; description: str
   switch (platform) {
     case "mac":
       return {
-        title: "Three AI Engines",
+        title: "Six AI Engines",
         description:
-          "WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (blazing-fast), and Apple Speech (zero setup, macOS 26+).",
+          "WhisperKit, Parakeet TDT v3, and Apple SpeechAnalyzer built in. Extend with Qwen3 ASR, Groq, and OpenAI from the add-ons marketplace.",
       };
     case "windows":
       return {
@@ -74,10 +74,10 @@ function getFeatures(platform: Platform): Feature[] {
         "Batch-process audio and video files with drag & drop. Export as SRT or WebVTT subtitles with timestamps.",
     },
     {
-      icon: Globe,
-      title: "Local HTTP API",
+      icon: Wand2,
+      title: "AI Text Processing",
       description:
-        "REST API for integration with external tools, scripts, and automations. Run on localhost with zero configuration.",
+        "8 built-in prompts for translation, formatting, and summarization. Connect Apple Intelligence, Groq, OpenAI, or Gemini.",
     },
     {
       icon: UserCog,

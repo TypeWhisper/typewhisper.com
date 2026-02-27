@@ -54,7 +54,7 @@ export function DownloadCTA() {
 
           <div className="mt-8 grid grid-cols-2 gap-6 text-center max-w-lg mx-auto sm:grid-cols-4">
             <div>
-              <p className="text-sm font-semibold">Macs from 2020+</p>
+              <p className="text-sm font-semibold">macOS 15+</p>
               <p className="text-xs text-muted-foreground">Intel and Apple Silicon</p>
             </div>
             <div>

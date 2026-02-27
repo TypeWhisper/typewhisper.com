@@ -76,13 +76,62 @@ export default function DocsMacProfiles() {
                 (WhisperKit only)
               </li>
               <li>
-                &bull; <strong>Engine</strong> - WhisperKit, Parakeet TDT, or
-                Apple Speech (macOS 26+)
+                &bull; <strong>Engine</strong> - WhisperKit, Parakeet TDT, Apple
+                SpeechAnalyzer (macOS 26+), or any add-on engine
               </li>
               <li>
                 &bull; <strong>Whisper Mode</strong> - Boosted microphone gain
               </li>
+              <li>
+                &bull; <strong>Hotkey</strong> - Dedicated hotkey for this
+                profile
+              </li>
+              <li>
+                &bull; <strong>Prompt</strong> - AI text processing prompt
+                override
+              </li>
+              <li>
+                &bull; <strong>Prompt Provider</strong> - LLM provider override
+                for this profile
+              </li>
             </ul>
+            <img
+              src="/screenshots/mac/profiles.png"
+              alt="Profile configuration with overrides"
+              className="mt-4 rounded-lg border border-border"
+            />
+          </div>
+
+          <div className="rounded-lg border border-border bg-card p-6">
+            <h2 className="text-lg font-semibold">Per-Profile Hotkeys</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Each profile can have its own dedicated hotkey. Press the
+              profile-specific hotkey to start recording with that profile&apos;s
+              settings, regardless of which app is currently active. This lets
+              you bypass automatic matching and force a specific configuration
+              on demand.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-border bg-card p-6">
+            <h2 className="text-lg font-semibold">Prompt Override</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Assign a custom AI prompt to any profile. When the profile
+              activates, transcribed text is automatically processed through the
+              assigned prompt before pasting. You can also override the LLM
+              provider per profile - for example, use Apple Intelligence for
+              quick notes but Groq for detailed summaries.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-border bg-card p-6">
+            <h2 className="text-lg font-semibold">Multiple Engines</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              TypeWhisper can keep multiple engines loaded in memory at the same
+              time. When you switch between profiles that use different engines,
+              there is no loading delay. Configure which engines stay loaded in
+              Settings &gt; Advanced.
+            </p>
           </div>
 
           <div className="rounded-lg border border-border bg-card p-6">

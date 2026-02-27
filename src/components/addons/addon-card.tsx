@@ -5,6 +5,7 @@ import {
   Sparkles,
   Send,
   SquareKanban,
+  Cpu,
   ArrowRight,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -18,6 +19,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Sparkles,
   Send,
   SquareKanban,
+  Cpu,
 };
 
 interface AddonCardProps {
