@@ -30,12 +30,12 @@ export function AddonCard({ plugin }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
 
   return (
-    <Card className="hover:border-primary/20 transition-colors">
+    <Card className="transition-all hover:shadow-md">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
-              {Icon && <Icon className="size-5 text-primary" />}
+            <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
+              {Icon && <Icon className="size-5 text-muted-foreground" />}
             </div>
             <div>
               <CardTitle className="text-base">{plugin.name}</CardTitle>

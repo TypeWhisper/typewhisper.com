@@ -20,8 +20,9 @@ export function CategoryFilter({ selected, onChange }: CategoryFilterProps) {
       {categories.map((cat) => (
         <Button
           key={cat}
-          variant={selected === cat ? "secondary" : "ghost"}
+          variant={selected === cat ? "default" : "outline"}
           size="sm"
+          className="rounded-full"
           onClick={() => onChange(cat)}
         >
           {cat === "all" ? "All" : categoryLabels[cat]}

@@ -19,8 +19,9 @@ export function PlatformFilter({ selected, onChange }: PlatformFilterProps) {
       {platforms.map((p) => (
         <Button
           key={p}
-          variant={selected === p ? "secondary" : "ghost"}
+          variant={selected === p ? "default" : "outline"}
           size="sm"
+          className="rounded-full"
           onClick={() => onChange(p)}
         >
           {p === "all" ? "All Platforms" : platformLabels[p]}

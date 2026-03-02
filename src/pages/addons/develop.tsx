@@ -23,7 +23,7 @@ export default function AddonsDevelop() {
 
         <div className="mt-10 space-y-6">
           {/* Overview */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Overview</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               TypeWhisper plugins are standard macOS bundles (.bundle) written in
@@ -38,14 +38,14 @@ export default function AddonsDevelop() {
           </section>
 
           {/* Plugin Types */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Plugin Types</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               There are four plugin protocols you can adopt. A single plugin can
               conform to multiple protocols (e.g., both transcription and LLM).
             </p>
             <div className="mt-4 space-y-3">
-              <div className="rounded-md bg-muted/50 px-4 py-3">
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">
                   TranscriptionEnginePlugin
                 </h3>
@@ -56,7 +56,7 @@ export default function AddonsDevelop() {
                   translation.
                 </p>
               </div>
-              <div className="rounded-md bg-muted/50 px-4 py-3">
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">LLMProviderPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Provides an LLM for processing transcribed text via custom
@@ -65,7 +65,7 @@ export default function AddonsDevelop() {
                   summarization, formatting, and more.
                 </p>
               </div>
-              <div className="rounded-md bg-muted/50 px-4 py-3">
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">PostProcessorPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Processes text after transcription in a priority-based
@@ -74,7 +74,7 @@ export default function AddonsDevelop() {
                   snippets and dictionary.
                 </p>
               </div>
-              <div className="rounded-md bg-muted/50 px-4 py-3">
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">ActionPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Performs an action with LLM-processed text instead of inserting
@@ -88,7 +88,7 @@ export default function AddonsDevelop() {
           </section>
 
           {/* Getting Started */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Getting Started</h2>
             <div className="mt-4 space-y-4">
               <div>
@@ -116,7 +116,7 @@ export default function AddonsDevelop() {
                 <p className="mt-1 text-sm text-muted-foreground">
                   Add TypeWhisperPluginSDK as a local Swift Package dependency:
                 </p>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`// Package.swift dependency
 .package(path: "../TypeWhisperPluginSDK")
 
@@ -131,7 +131,7 @@ export default function AddonsDevelop() {
                 <p className="mt-1 text-sm text-muted-foreground">
                   Add a manifest.json to your bundle&apos;s Resources directory:
                 </p>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`{
   "id": "com.example.my-plugin",
   "name": "My Plugin",
@@ -176,7 +176,7 @@ export default function AddonsDevelop() {
           </section>
 
           {/* SDK API Reference */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">SDK API Reference</h2>
 
             <div className="mt-4 space-y-4">
@@ -185,7 +185,7 @@ export default function AddonsDevelop() {
                 <p className="mt-1 text-xs text-muted-foreground">
                   Base protocol all plugins must conform to.
                 </p>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol TypeWhisperPlugin: AnyObject, Sendable {
     static var pluginId: String { get }
     static var pluginName: String { get }
@@ -204,7 +204,7 @@ export default function AddonsDevelop() {
                   keychain, preferences, file storage, app context, and the
                   event bus.
                 </p>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol HostServices: Sendable {
     // Keychain (plugin-scoped)
     func storeSecret(key: String, value: String) throws
@@ -232,7 +232,7 @@ export default function AddonsDevelop() {
 
               <div>
                 <h3 className="text-sm font-semibold">LLMProviderPlugin</h3>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol LLMProviderPlugin: TypeWhisperPlugin {
     var providerName: String { get }
     var isAvailable: Bool { get }
@@ -250,7 +250,7 @@ export default function AddonsDevelop() {
                 <h3 className="text-sm font-semibold">
                   TranscriptionEnginePlugin
                 </h3>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol TranscriptionEnginePlugin: TypeWhisperPlugin {
     var providerId: String { get }
     var providerDisplayName: String { get }
@@ -271,7 +271,7 @@ export default function AddonsDevelop() {
 
               <div>
                 <h3 className="text-sm font-semibold">PostProcessorPlugin</h3>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol PostProcessorPlugin: TypeWhisperPlugin {
     var processorName: String { get }
     var priority: Int { get }
@@ -285,7 +285,7 @@ export default function AddonsDevelop() {
 
               <div>
                 <h3 className="text-sm font-semibold">ActionPlugin</h3>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public protocol ActionPlugin: TypeWhisperPlugin {
     var actionName: String { get }
     var actionId: String { get }
@@ -304,7 +304,7 @@ export default function AddonsDevelop() {
                   Subscribe to app-wide events like recording start/stop,
                   transcription completion, and text insertion.
                 </p>
-                <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+                <pre className="mt-2 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                   <code>{`public enum TypeWhisperEvent: Sendable {
     case recordingStarted(RecordingStartedPayload)
     case recordingStopped(RecordingStoppedPayload)
@@ -349,7 +349,7 @@ export default function AddonsDevelop() {
           </section>
 
           {/* Example */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
               Example: Minimal LLM Plugin
             </h2>
@@ -357,7 +357,7 @@ export default function AddonsDevelop() {
               A complete LLM provider plugin that wraps an OpenAI-compatible
               API:
             </p>
-            <pre className="mt-4 overflow-x-auto rounded-md bg-muted p-3 text-xs">
+            <pre className="mt-4 overflow-x-auto rounded-xl bg-muted p-3 text-xs">
               <code>{`import Foundation
 import TypeWhisperPluginSDK
 
@@ -407,14 +407,14 @@ final class MyLLMPlugin: LLMProviderPlugin {
           </section>
 
           {/* Distribution */}
-          <section className="rounded-lg border border-border bg-card p-6">
+          <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Distribution</h2>
             <div className="mt-2 space-y-3 text-sm text-muted-foreground">
               <p>
                 Build your plugin in Release configuration and distribute the
                 resulting .bundle file. Users install it by copying to:
               </p>
-              <pre className="overflow-x-auto rounded-md bg-muted p-3 text-xs">
+              <pre className="overflow-x-auto rounded-xl bg-muted p-3 text-xs">
                 <code>
                   ~/Library/Application Support/TypeWhisper/Plugins/MyPlugin.bundle
                 </code>

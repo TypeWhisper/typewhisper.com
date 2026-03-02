@@ -69,8 +69,8 @@ export default function AddonsDetail() {
 
         {/* Header */}
         <div className="flex items-start gap-4">
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-            {Icon && <Icon className="size-7 text-primary" />}
+          <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
+            {Icon && <Icon className="size-7 text-muted-foreground" />}
           </div>
           <div>
             <div className="flex items-center gap-3">
