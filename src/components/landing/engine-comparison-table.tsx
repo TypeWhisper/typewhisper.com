@@ -148,37 +148,33 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
       <div className="hidden md:block overflow-x-auto reveal-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b">
+            <tr className="border-b border-white/10">
               <th className="py-4 pr-4 text-left font-medium text-muted-foreground w-[180px]">
                 Feature
               </th>
               {engines.map((engine) => (
                 <th key={engine.name} className="py-4 px-4 text-left">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-base">
+                    <span className="font-bold text-lg">
                       {engine.name}
                     </span>
-                    <Badge variant="secondary">{engine.badge}</Badge>
+                    <Badge variant="outline" className="text-xs text-[#86868b] border-[#86868b]/30">{engine.badge}</Badge>
                   </div>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, i) => (
+            {rows.map((row) => (
               <tr
                 key={row.label}
-                className={
-                  i % 2 === 0
-                    ? "bg-muted/30"
-                    : ""
-                }
+                className="border-b border-white/5"
               >
-                <td className="py-3 pr-4 font-medium text-muted-foreground">
+                <td className="py-4 pr-4 font-medium text-[#86868b]">
                   {row.label}
                 </td>
                 {row.values.map((value, j) => (
-                  <td key={engines[j].name} className="py-3 px-4">
+                  <td key={engines[j].name} className="py-4 px-4">
                     <CellValue value={value} />
                   </td>
                 ))}
@@ -205,11 +201,11 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
         {engines.map((engine) => (
           <div
             key={engine.name}
-            className="rounded-xl border bg-card p-5 reveal-hidden"
+            className="rounded-2xl bg-[#1d1d1f] p-5 reveal-hidden"
           >
             <div className="flex items-center gap-2 mb-2">
               <h3 className="text-lg font-semibold">{engine.name}</h3>
-              <Badge variant="secondary">{engine.badge}</Badge>
+              <Badge variant="outline" className="text-xs text-[#86868b] border-[#86868b]/30">{engine.badge}</Badge>
             </div>
             <p className="text-sm text-muted-foreground mb-4">
               {engine.description}
@@ -218,8 +214,8 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
               {rows.map((row, i) => (
                 <div
                   key={row.label}
-                  className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-                    i % 2 === 0 ? "bg-muted/30" : ""
+                  className={`flex items-center justify-between py-3 px-3 ${
+                    i < rows.length - 1 ? "border-b border-white/5" : ""
                   }`}
                 >
                   <span className="text-sm text-muted-foreground">

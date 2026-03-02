@@ -1,98 +1,57 @@
-import { Download, Github } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { usePlatform } from "@/hooks/use-platform";
-import {
-  macReleaseUrl,
-  windowsReleaseUrl,
-  iosTestFlightUrl,
-  macGitHubUrl,
-  windowsGitHubUrl,
-  orgGitHubUrl,
-} from "@/lib/platform-download";
-import { PlatformDownloadMenu } from "@/components/landing/platform-download-menu";
+import { Link } from "react-router";
+import { macReleaseUrl } from "@/lib/platform-download";
 
 export function Hero() {
-  const platform = usePlatform();
-
-  const primaryDownloadUrl =
-    platform === "ios"
-      ? iosTestFlightUrl
-      : platform === "windows"
-        ? windowsReleaseUrl
-        : macReleaseUrl;
-  const primaryDownloadLabel =
-    platform === "ios"
-      ? "Get TypeWhisper for iOS"
-      : platform === "windows"
-        ? "Get TypeWhisper for Windows"
-        : platform === "mac"
-          ? "Get TypeWhisper for macOS"
-          : "Get TypeWhisper Free";
-
-  const gitHubUrl =
-    platform === "mac"
-      ? macGitHubUrl
-      : platform === "windows"
-        ? windowsGitHubUrl
-        : orgGitHubUrl;
-
   return (
-    <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
-      {/* Background gradient */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+    <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #f5f0ff 30%, #fbfbfd 70%)" }}>
+      {/* Soft colored orbs */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-[#818cf8]/15 blur-[100px]" />
+        <div className="absolute -right-32 top-24 h-[400px] w-[400px] rounded-full bg-[#0ea5e9]/10 blur-[100px]" />
+        <div className="absolute bottom-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-[#c084fc]/10 blur-[100px]" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <Badge variant="secondary" className="mb-6">
-            Open Source &middot; GPLv3
-          </Badge>
-
-          <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Stop Typing.
+          <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl lg:text-7xl text-[#1d1d1f]">
+            Your voice,
             <br />
-            <span className="text-primary">Start Speaking.</span>
-            <br />
-            100% Private.
+            your device.
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Transcribe speech with on-device AI - no cloud, no API keys, no
-            subscriptions. Your voice data never leaves your device.
+          <p className="mx-auto mt-6 max-w-xl text-lg text-[#6e6e73]">
+            On-device speech-to-text for macOS, Windows, and iOS.
+            No cloud, no subscriptions, no data collection.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button size="xl" asChild>
+          <div className="mt-8 flex items-center justify-center gap-5">
+            <Button size="pill" asChild>
               <a
-                href={primaryDownloadUrl}
+                href={macReleaseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Download className="size-5" />
-                {primaryDownloadLabel}
+                Download for free
               </a>
             </Button>
 
-            <PlatformDownloadMenu />
-
-            <Button variant="outline" size="xl" asChild>
-              <a
-                href={gitHubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="size-5" />
-                View on GitHub
-              </a>
+            <Button variant="link-arrow" asChild>
+              <Link to="/docs" className="inline-flex items-center gap-1 text-[#0071e3]">
+                Learn more
+                <ArrowRight className="size-4" />
+              </Link>
             </Button>
           </div>
+        </div>
 
-          <p className="mt-4 text-xs text-muted-foreground">
-            macOS, Windows, and iOS (Beta) available now &middot; Choose your
-            platform above
-          </p>
+        <div className="mt-16 reveal-scale-hidden">
+          <img
+            src="/screenshots/mac/home.png"
+            alt="TypeWhisper for macOS"
+            className="mx-auto max-w-3xl w-full"
+          />
         </div>
       </div>
     </section>

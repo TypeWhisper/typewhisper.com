@@ -1,123 +1,74 @@
-import {
-  Shield,
-  Cpu,
-  Keyboard,
-  FileAudio,
-  Wand2,
-  UserCog,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { usePlatform } from "@/hooks/use-platform";
-import type { Platform } from "@/lib/platform-download";
-
 interface Feature {
-  icon: LucideIcon;
   title: string;
   description: string;
+  screenshot?: string;
+  span?: "col-span-1" | "col-span-2";
 }
 
-function getEngineFeature(platform: Platform): { title: string; description: string } {
-  switch (platform) {
-    case "mac":
-      return {
-        title: "Six AI Engines",
-        description:
-          "WhisperKit, Parakeet TDT v3, and Apple SpeechAnalyzer built in. Extend with Qwen3 ASR, Groq, and OpenAI from the add-ons marketplace.",
-      };
-    case "windows":
-      return {
-        title: "Two AI Engines",
-        description:
-          "Parakeet TDT (25+ languages, blazing-fast) and Canary (compact, built-in translation). Both run on-device via ONNX Runtime.",
-      };
-    case "ios":
-      return {
-        title: "Two AI Engines",
-        description:
-          "WhisperKit (99+ languages, streaming) and Apple Speech (zero setup). Both run entirely on-device.",
-      };
-    default:
-      return {
-        title: "Multiple AI Engines",
-        description:
-          "Multiple AI engines depending on your platform. All run entirely on-device.",
-      };
-  }
-}
-
-function getFeatures(platform: Platform): Feature[] {
-  const engine = getEngineFeature(platform);
-
-  return [
+const features: Feature[] = [
     {
-      icon: Shield,
-      title: "100% On-Device",
-      description:
-        "All processing happens locally on your device. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
+      title: "100% on-device.",
+      description: "All processing happens locally. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
+      span: "col-span-2",
+      screenshot: "/screenshots/mac/recording.png",
     },
     {
-      icon: Cpu,
-      title: engine.title,
-      description: engine.description,
+      title: "Extend with add-ons.",
+      description: "Install extra speech engines, AI providers, and tools from the built-in marketplace.",
+      screenshot: "/screenshots/mac/plugins.png",
     },
     {
-      icon: Keyboard,
-      title: "System-Wide Dictation",
-      description:
-        "Push-to-talk or toggle via global hotkey. Transcription is auto-pasted into any app - works on macOS and Windows.",
+      title: "Rewrite, translate, summarize.",
+      description: "8 built-in AI prompts for text processing. Connect Apple Intelligence, Groq, OpenAI, or Gemini.",
+      screenshot: "/screenshots/mac/prompts.png",
     },
     {
-      icon: FileAudio,
-      title: "File Transcription",
-      description:
-        "Batch-process audio and video files with drag & drop. Export as SRT or WebVTT subtitles with timestamps.",
+      title: "Context-aware profiles.",
+      description: "Per-app and per-URL overrides for language, engine, and behavior. Profiles activate automatically.",
+      screenshot: "/screenshots/mac/profiles.png",
     },
     {
-      icon: Wand2,
-      title: "AI Text Processing",
-      description:
-        "8 built-in prompts for translation, formatting, and summarization. Connect Apple Intelligence, Groq, OpenAI, or Gemini.",
+      title: "Transcribe files.",
+      description: "Drag and drop audio or video files. Export as SRT or WebVTT subtitles with timestamps.",
+      screenshot: "/screenshots/mac/file-transcription.png",
     },
-    {
-      icon: UserCog,
-      title: "Context-Aware Profiles",
-      description:
-        "Per-app and even per-URL overrides for language, engine, translation, and more. Profiles activate automatically based on the active app or website.",
-    },
-  ];
-}
+];
 
 export function Features() {
-  const platform = usePlatform();
-  const features = getFeatures(platform);
 
   return (
-    <section id="features" className="py-20 sm:py-28">
+    <section id="features" className="section-dark py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Everything you need for local transcription
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Built for privacy, speed, and flexibility. No account required.
-          </p>
-        </div>
+        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
+          Everything you need.
+        </h2>
+        <p className="reveal-fade-hidden mt-4 text-center text-lg text-[#86868b]">
+          Built for privacy, speed, and flexibility.
+        </p>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
           {features.map((feature, i) => (
-            <Card
+            <div
               key={i}
-              className={`reveal-hidden stagger-delay-${(i + 1) * 100} hover:border-primary/20 transition-colors`}
+              className={`reveal-hidden group rounded-2xl bg-[#1d1d1f] p-6 sm:p-8 ${feature.span === "col-span-2" ? "sm:col-span-2" : ""}`}
             >
-              <CardHeader>
-                <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                  <feature.icon className="size-5 text-primary" />
+              <h3 className="text-xl font-semibold text-[#f5f5f7] sm:text-2xl">
+                {feature.title}
+              </h3>
+              <p className="mt-2 max-w-lg text-[#86868b]">
+                {feature.description}
+              </p>
+              {feature.screenshot && (
+                <div className="mt-6 overflow-hidden rounded-xl">
+                  <img
+                    src={feature.screenshot}
+                    alt={feature.title}
+                    className="w-full rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+                    loading="lazy"
+                  />
                 </div>
-                <CardTitle className="text-base">{feature.title}</CardTitle>
-                <CardDescription>{feature.description}</CardDescription>
-              </CardHeader>
-            </Card>
+              )}
+            </div>
           ))}
         </div>
       </div>
