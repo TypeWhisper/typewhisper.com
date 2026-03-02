@@ -11,7 +11,7 @@ export default function DocsMacInstallation() {
           Get TypeWhisper running on macOS.
         </p>
 
-        <div className="mt-8 rounded-lg border border-border bg-card p-6">
+        <div className="mt-8 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">System Requirements</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             <li>&bull; macOS 15.0 (Sequoia) or later</li>
@@ -21,7 +21,7 @@ export default function DocsMacInstallation() {
           </ul>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Download</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Download the latest build from{" "}
@@ -37,7 +37,7 @@ export default function DocsMacInstallation() {
           </p>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Build from Source</h2>
           <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm">
             <p className="text-muted-foreground"># Clone and open in Xcode</p>
@@ -48,7 +48,7 @@ export default function DocsMacInstallation() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">First Launch</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             TypeWhisper appears as an icon in the menu bar. Open Settings to

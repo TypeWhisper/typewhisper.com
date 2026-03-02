@@ -48,15 +48,15 @@ export default function DocsIndex() {
           {platforms.map((platform) => {
             const card = (
               <Card
-                className={`h-full transition-colors ${
+                className={`h-full transition-all ${
                   platform.disabled
                     ? "opacity-50 cursor-not-allowed"
-                    : "hover:border-primary/20"
+                    : "hover:shadow-md"
                 }`}
               >
                 <CardHeader>
-                  <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10">
-                    <platform.icon className="size-4 text-primary" />
+                  <div className="mb-1 text-muted-foreground">
+                    <platform.icon className="size-5" />
                   </div>
                   <CardTitle className="text-base">
                     {platform.title}

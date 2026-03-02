@@ -13,7 +13,7 @@ export default function DocsMacProfiles() {
         </p>
 
         <div className="mt-8 space-y-6">
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">How Profiles Work</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               When you start dictating, TypeWhisper matches the active
@@ -25,7 +25,7 @@ export default function DocsMacProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Matching</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Profiles match using the app&apos;s bundle ID (e.g.,{" "}
@@ -48,7 +48,7 @@ export default function DocsMacProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Priority</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               When multiple profiles could match, the most specific one wins:
@@ -60,7 +60,7 @@ export default function DocsMacProfiles() {
             </ol>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Creating a Profile</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Go to Settings &gt; Profiles and click &quot;Add Profile&quot;.
@@ -98,11 +98,11 @@ export default function DocsMacProfiles() {
             <img
               src="/screenshots/mac/profiles.png"
               alt="Profile configuration with overrides"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Per-Profile Hotkeys</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Each profile can have its own dedicated hotkey. Press the
@@ -113,7 +113,7 @@ export default function DocsMacProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Prompt Override</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Assign a custom AI prompt to any profile. When the profile
@@ -124,7 +124,7 @@ export default function DocsMacProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Multiple Engines</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               TypeWhisper can keep multiple engines loaded in memory at the same
@@ -134,7 +134,7 @@ export default function DocsMacProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Example Setups</h2>
             <div className="mt-4 space-y-3">
               <div className="rounded-md bg-background p-4">

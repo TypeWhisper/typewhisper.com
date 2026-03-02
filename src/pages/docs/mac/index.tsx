@@ -56,10 +56,10 @@ export default function DocsMacIndex() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {sections.map((section) => (
             <Link key={section.href} to={section.href}>
-              <Card className="h-full hover:border-primary/20 transition-colors">
+              <Card className="h-full transition-all hover:shadow-md">
                 <CardHeader>
-                  <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10">
-                    <section.icon className="size-4 text-primary" />
+                  <div className="mb-1 text-muted-foreground">
+                    <section.icon className="size-5" />
                   </div>
                   <CardTitle className="text-base">{section.title}</CardTitle>
                   <CardDescription>{section.description}</CardDescription>

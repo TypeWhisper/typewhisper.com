@@ -13,7 +13,7 @@ export default function DocsMacFeatures() {
 
         <div className="mt-8 space-y-6">
           {/* 1. System-Wide Dictation */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">System-Wide Dictation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Use a global hotkey to start and stop recording from any app.
@@ -24,7 +24,7 @@ export default function DocsMacFeatures() {
           </div>
 
           {/* 2. Streaming Preview */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Streaming Preview</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               With WhisperKit or Apple SpeechAnalyzer, see partial transcription
@@ -34,7 +34,7 @@ export default function DocsMacFeatures() {
           </div>
 
           {/* 3. AI Text Processing */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">AI Text Processing</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Process transcribed text with AI prompts before it gets pasted.
@@ -51,12 +51,12 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/prompts.png"
               alt="AI Text Processing with Prompt Palette"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
           {/* 4. Dictionary */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Dictionary</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Teach TypeWhisper domain-specific vocabulary. Add custom terms,
@@ -68,12 +68,12 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/dictionary.png"
               alt="Dictionary with custom terms and corrections"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
           {/* 5. Snippets */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Snippets</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Define trigger phrases that expand into longer text blocks.
@@ -94,12 +94,12 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/snippets.png"
               alt="Snippets with trigger phrases and placeholders"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
           {/* 6. File Transcription */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">File Transcription</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Drag and drop audio or video files to transcribe them in batch.
@@ -109,7 +109,7 @@ export default function DocsMacFeatures() {
           </div>
 
           {/* 7. Whisper Mode */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Whisper Mode</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Boost microphone gain for quiet speech or noisy environments.
@@ -118,7 +118,7 @@ export default function DocsMacFeatures() {
           </div>
 
           {/* 8. Translation */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Translation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Apple Translate provides on-device translation between many
@@ -129,7 +129,7 @@ export default function DocsMacFeatures() {
           </div>
 
           {/* 9. Transcription History */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Transcription History</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               All transcriptions are saved locally with timestamps, the app they
@@ -146,12 +146,12 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/history.png"
               alt="Transcription History with timeline and filters"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
           {/* 10. Home Dashboard */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Home Dashboard</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               The Home tab shows your usage statistics, an activity chart
@@ -162,12 +162,12 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/home.png"
               alt="Home Dashboard with usage stats and activity chart"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
 
           {/* 11. Plugin System */}
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Plugin System</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Extend TypeWhisper with plugins. Four plugin types are supported:
@@ -188,7 +188,7 @@ export default function DocsMacFeatures() {
             <img
               src="/screenshots/mac/plugins.png"
               alt="Plugin System with marketplace"
-              className="mt-4 rounded-lg border border-border"
+              className="mt-4 rounded-xl"
             />
           </div>
         </div>

@@ -21,7 +21,7 @@ export default function DocsWindowsAPI() {
         </div>
 
         <div className="mt-8 space-y-6">
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Check Status</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground">
@@ -40,7 +40,7 @@ export default function DocsWindowsAPI() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Transcribe Audio</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground">
@@ -109,7 +109,7 @@ export default function DocsWindowsAPI() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">List Models</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground">
@@ -153,7 +153,7 @@ export default function DocsWindowsAPI() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Error Responses</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               The API returns standard HTTP status codes with a JSON error body:

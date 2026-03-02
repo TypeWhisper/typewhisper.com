@@ -13,7 +13,7 @@ export default function DocsMacCLI() {
         </p>
 
         <div className="mt-8 space-y-6">
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Installation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Install the CLI from the TypeWhisper app: Settings &gt; Advanced
@@ -35,7 +35,7 @@ export default function DocsMacCLI() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Commands</h2>
             <div className="mt-3 space-y-4">
               <div>
@@ -70,7 +70,7 @@ export default function DocsMacCLI() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Options</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full text-sm">
@@ -136,7 +136,7 @@ export default function DocsMacCLI() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Examples</h2>
             <div className="mt-3 space-y-4">
               <div>

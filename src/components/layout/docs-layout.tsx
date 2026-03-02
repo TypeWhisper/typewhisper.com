@@ -56,10 +56,10 @@ export function DocsLayout({ children }: { children: React.ReactNode }) {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-foreground",
+                    "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
                     location.pathname === link.href
-                      ? "bg-accent text-foreground"
-                      : "text-muted-foreground"
+                      ? "border-primary text-foreground"
+                      : "border-transparent text-muted-foreground"
                   )}
                 >
                   {link.label}

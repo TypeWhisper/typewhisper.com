@@ -13,7 +13,7 @@ export default function DocsWindowsFeatures() {
         </p>
 
         <div className="mt-8 space-y-6">
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">On-Device Transcription</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               All local processing runs on your CPU using ONNX Runtime with int8
@@ -32,7 +32,7 @@ export default function DocsWindowsFeatures() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
               Cloud Transcription (Optional)
             </h2>
@@ -96,7 +96,7 @@ export default function DocsWindowsFeatures() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">System-Wide Dictation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Use a global hotkey to start and stop recording from any app.
@@ -122,7 +122,7 @@ export default function DocsWindowsFeatures() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Live Partial Results</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Silero VAD detects speech segments during recording and transcribes
@@ -132,7 +132,7 @@ export default function DocsWindowsFeatures() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">File Transcription</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Transcribe audio and video files directly within the app. Drag and
@@ -155,7 +155,7 @@ export default function DocsWindowsFeatures() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Translation</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               TypeWhisper supports three translation methods:
@@ -183,7 +183,7 @@ export default function DocsWindowsFeatures() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Dictionary</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Custom term corrections applied automatically after transcription.
@@ -197,7 +197,7 @@ export default function DocsWindowsFeatures() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Snippets</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Text shortcuts that expand automatically. Define a trigger word and
@@ -244,7 +244,7 @@ export default function DocsWindowsFeatures() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Whisper Mode</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Boost microphone gain for quiet speech or noisy environments. When
@@ -255,7 +255,7 @@ export default function DocsWindowsFeatures() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Audio &amp; Recording</h2>
             <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
               <li>
@@ -291,7 +291,7 @@ export default function DocsWindowsFeatures() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
               Dashboard &amp; History
             </h2>

@@ -13,7 +13,7 @@ export default function DocsWindowsProfiles() {
         </p>
 
         <div className="mt-8 space-y-6">
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">How Profiles Work</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               When you start dictating, TypeWhisper matches the active
@@ -24,7 +24,7 @@ export default function DocsWindowsProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Matching</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Profiles match using the process name (e.g.,{" "}
@@ -86,7 +86,7 @@ export default function DocsWindowsProfiles() {
             </p>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Priority</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               When multiple profiles could match, the most specific one wins:
@@ -99,7 +99,7 @@ export default function DocsWindowsProfiles() {
             </ol>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Creating a Profile</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Go to Settings &gt; Profiles and click &quot;Add Profile&quot;.
@@ -123,7 +123,7 @@ export default function DocsWindowsProfiles() {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Example Setups</h2>
             <div className="mt-4 space-y-3">
               <div className="rounded-md bg-background p-4">
@@ -150,7 +150,7 @@ export default function DocsWindowsProfiles() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border bg-card p-6">
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">Settings Location</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Profile configuration is stored in{" "}

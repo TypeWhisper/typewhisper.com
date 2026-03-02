@@ -11,7 +11,7 @@ export default function DocsWindowsInstallation() {
           Get TypeWhisper running on Windows.
         </p>
 
-        <div className="mt-8 rounded-lg border border-border bg-card p-6">
+        <div className="mt-8 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">System Requirements</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             <li>&bull; Windows 10 or Windows 11 (64-bit)</li>
@@ -29,7 +29,7 @@ export default function DocsWindowsInstallation() {
           </ul>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Download</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Download the latest{" "}
@@ -68,7 +68,7 @@ export default function DocsWindowsInstallation() {
           </ol>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Build from Source</h2>
           <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm">
             <p className="text-muted-foreground"># Clone and build</p>
@@ -82,7 +82,7 @@ export default function DocsWindowsInstallation() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">First Launch</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             On first launch, a Welcome Wizard guides you through setup in 5
@@ -119,7 +119,7 @@ export default function DocsWindowsInstallation() {
           </p>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Windows Autostart</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             TypeWhisper can optionally start with Windows. Enable this in
@@ -128,7 +128,7 @@ export default function DocsWindowsInstallation() {
           </p>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Update</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             TypeWhisper includes built-in auto-updates via Velopack. When a new
@@ -137,7 +137,7 @@ export default function DocsWindowsInstallation() {
           </p>
         </div>
 
-        <div className="mt-6 rounded-lg border border-border bg-card p-6">
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Uninstall</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Open Windows Settings &gt; Apps &gt; Installed Apps, find
