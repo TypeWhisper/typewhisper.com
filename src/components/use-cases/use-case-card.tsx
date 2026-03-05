@@ -41,10 +41,9 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
               style={{ backgroundColor: `${useCase.color}15` }}
             >
               {Icon && (
-                <Icon
-                  className="size-5"
-                  style={{ color: useCase.color }}
-                />
+                <span style={{ color: useCase.color }}>
+                  <Icon className="size-5" />
+                </span>
               )}
             </div>
             <div>

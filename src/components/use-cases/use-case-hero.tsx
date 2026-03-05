@@ -40,10 +40,9 @@ export function UseCaseHero({ useCase }: UseCaseHeroProps) {
             style={{ backgroundColor: `${useCase.color}15` }}
           >
             {Icon && (
-              <Icon
-                className="size-8"
-                style={{ color: useCase.color }}
-              />
+              <span style={{ color: useCase.color }}>
+                <Icon className="size-8" />
+              </span>
             )}
           </div>
 
