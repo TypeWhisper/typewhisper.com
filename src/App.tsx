@@ -19,6 +19,8 @@ import BlogIndex from "@/pages/blog/index";
 import AddonsIndex from "@/pages/addons/index";
 import AddonsDetail from "@/pages/addons/detail";
 import AddonsDevelop from "@/pages/addons/develop";
+import UseCasesIndex from "@/pages/use-cases/index";
+import UseCaseDetail from "@/pages/use-cases/detail";
 import PrivacyPolicy from "@/pages/privacy";
 import TermsOfService from "@/pages/terms";
 import LegalNotice from "@/pages/legal-notice";
@@ -45,6 +47,8 @@ export default function App() {
           <Route path="/docs/windows/profiles" element={<DocsWindowsProfiles />} />
           <Route path="/docs/ios" element={<DocsIOS />} />
           <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/use-cases" element={<UseCasesIndex />} />
+          <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
           <Route path="/addons" element={<AddonsIndex />} />
           <Route path="/addons/develop" element={<AddonsDevelop />} />
           <Route path="/addons/:slug" element={<AddonsDetail />} />

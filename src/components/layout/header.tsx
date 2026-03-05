@@ -12,6 +12,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 const navLinks = [
   { href: "/#features", label: "Features" },
+  { href: "/use-cases", label: "Use Cases" },
   { href: "/addons", label: "Add-ons" },
   { href: "/docs", label: "Docs" },
   { href: "/blog", label: "Blog" },
