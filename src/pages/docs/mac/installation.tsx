@@ -1,6 +1,18 @@
 import { DocsLayout } from "@/components/layout/docs-layout";
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
 
 export default function DocsMacInstallation() {
+  const [copied, setCopied] = useState(false);
+
+  function copyCommand() {
+    navigator.clipboard.writeText(
+      "brew install --cask typewhisper/tap/typewhisper",
+    );
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
   return (
     <DocsLayout>
       <div>
@@ -35,6 +47,20 @@ export default function DocsMacInstallation() {
             </a>
             .
           </p>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">Homebrew</h2>
+          <div className="mt-3 flex items-center justify-between rounded-md bg-background p-4 font-mono text-sm">
+            <p>brew install --cask typewhisper/tap/typewhisper</p>
+            <button
+              onClick={copyCommand}
+              className="ml-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Copy command"
+            >
+              {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+            </button>
+          </div>
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
