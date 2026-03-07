@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/use-cases", label: "Use Cases" },
   { href: "/addons", label: "Add-ons" },
   { href: "/docs", label: "Docs" },
-  { href: "/blog", label: "Blog" },
+  { href: "/changelog", label: "ChangeLog" },
 ];
 
 function useHeaderState(isLanding: boolean) {

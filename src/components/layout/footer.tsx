@@ -21,7 +21,7 @@ export function Footer() {
               <Link to="/#features" className="hover:text-[#f5f5f7] transition-colors">Features</Link>
               <Link to="/addons" className="hover:text-[#f5f5f7] transition-colors">Add-ons</Link>
               <Link to="/docs" className="hover:text-[#f5f5f7] transition-colors">Docs</Link>
-              <Link to="/blog" className="hover:text-[#f5f5f7] transition-colors">Blog</Link>
+              <Link to="/changelog" className="hover:text-[#f5f5f7] transition-colors">ChangeLog</Link>
               <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" className="hover:text-[#f5f5f7] transition-colors">Windows</a>
               <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" className="hover:text-[#f5f5f7] transition-colors">iOS Beta</a>
             </div>

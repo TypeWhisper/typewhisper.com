@@ -15,7 +15,7 @@ import DocsWindowsFeatures from "@/pages/docs/windows/features";
 import DocsWindowsAPI from "@/pages/docs/windows/api";
 import DocsWindowsProfiles from "@/pages/docs/windows/profiles";
 import DocsIOS from "@/pages/docs/ios";
-import BlogIndex from "@/pages/blog/index";
+import ChangeLogIndex from "@/pages/changelog/index";
 import AddonsIndex from "@/pages/addons/index";
 import AddonsDetail from "@/pages/addons/detail";
 import AddonsDevelop from "@/pages/addons/develop";
@@ -46,7 +46,7 @@ export default function App() {
           <Route path="/docs/windows/api" element={<DocsWindowsAPI />} />
           <Route path="/docs/windows/profiles" element={<DocsWindowsProfiles />} />
           <Route path="/docs/ios" element={<DocsIOS />} />
-          <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/changelog" element={<ChangeLogIndex />} />
           <Route path="/use-cases" element={<UseCasesIndex />} />
           <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
           <Route path="/addons" element={<AddonsIndex />} />
