@@ -9,6 +9,7 @@ const macSidebarLinks = [
   { href: "/docs/mac/api", label: "HTTP API" },
   { href: "/docs/mac/cli", label: "CLI Tool" },
   { href: "/docs/mac/profiles", label: "Profiles" },
+  { href: "/docs/mac/troubleshooting", label: "Troubleshooting" },
 ];
 
 const windowsSidebarLinks = [

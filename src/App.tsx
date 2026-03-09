@@ -9,6 +9,7 @@ import DocsMacFeatures from "@/pages/docs/mac/features";
 import DocsMacAPI from "@/pages/docs/mac/api";
 import DocsMacCLI from "@/pages/docs/mac/cli";
 import DocsMacProfiles from "@/pages/docs/mac/profiles";
+import DocsMacTroubleshooting from "@/pages/docs/mac/troubleshooting";
 import DocsWindowsIndex from "@/pages/docs/windows/index";
 import DocsWindowsInstallation from "@/pages/docs/windows/installation";
 import DocsWindowsFeatures from "@/pages/docs/windows/features";
@@ -40,6 +41,7 @@ export default function App() {
           <Route path="/docs/mac/api" element={<DocsMacAPI />} />
           <Route path="/docs/mac/cli" element={<DocsMacCLI />} />
           <Route path="/docs/mac/profiles" element={<DocsMacProfiles />} />
+          <Route path="/docs/mac/troubleshooting" element={<DocsMacTroubleshooting />} />
           <Route path="/docs/windows" element={<DocsWindowsIndex />} />
           <Route path="/docs/windows/installation" element={<DocsWindowsInstallation />} />
           <Route path="/docs/windows/features" element={<DocsWindowsFeatures />} />
