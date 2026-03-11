@@ -1,0 +1,113 @@
+{
+  "rankings": [
+    {
+      "providerId": "sherpa-onnx",
+      "model": "parakeet-tdt-0.6b",
+      "providerType": "local",
+      "avgWerNormalized": 0,
+      "avgCer": 0,
+      "avgRealtimeFactor": 0.039794041150412275,
+      "avgDurationMs": 120.4,
+      "costPerHourAudio": 0,
+      "totalTests": 10,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "openai",
+      "model": "gpt-4o-mini-transcribe",
+      "providerType": "cloud",
+      "avgWerNormalized": 0.02222222222222222,
+      "avgCer": 0.008121827411167511,
+      "avgRealtimeFactor": 0.13591140414431122,
+      "avgDurationMs": 798,
+      "costPerHourAudio": 0.6,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "openai",
+      "model": "gpt-4o-transcribe",
+      "providerType": "cloud",
+      "avgWerNormalized": 0.03333333333333333,
+      "avgCer": 0.06802030456852792,
+      "avgRealtimeFactor": 0.17494239215969212,
+      "avgDurationMs": 1131.2,
+      "costPerHourAudio": 0.6,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "groq",
+      "model": "whisper-large-v3-turbo",
+      "providerType": "cloud",
+      "avgWerNormalized": 0.050793650793650794,
+      "avgCer": 0.015416513401505677,
+      "avgRealtimeFactor": 0.04462024460526967,
+      "avgDurationMs": 265.8,
+      "costPerHourAudio": 0.168,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "groq",
+      "model": "whisper-large-v3",
+      "providerType": "cloud",
+      "avgWerNormalized": 0.050793650793650794,
+      "avgCer": 0.011712809697801972,
+      "avgRealtimeFactor": 0.04071640199573723,
+      "avgDurationMs": 238.6,
+      "costPerHourAudio": 0.168,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "openai",
+      "model": "whisper-1",
+      "providerType": "cloud",
+      "avgWerNormalized": 0.050793650793650794,
+      "avgCer": 0.011712809697801972,
+      "avgRealtimeFactor": 0.3661933099984426,
+      "avgDurationMs": 2238.8,
+      "costPerHourAudio": 0.36,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "sherpa-onnx",
+      "model": "canary-180m-flash",
+      "providerType": "local",
+      "avgWerNormalized": 0.061111111111111116,
+      "avgCer": 0.018282828282828283,
+      "avgRealtimeFactor": 0.05899745484957577,
+      "avgDurationMs": 174.1,
+      "costPerHourAudio": 0,
+      "totalTests": 10,
+      "errorCount": 0,
+      "errorRate": 0
+    },
+    {
+      "providerId": "apple-speech",
+      "model": "default",
+      "providerType": "system",
+      "avgWerNormalized": 0.15555555555555556,
+      "avgCer": 0.10918422063643869,
+      "avgRealtimeFactor": 0.22240160323653074,
+      "avgDurationMs": 1350.8,
+      "costPerHourAudio": 0,
+      "totalTests": 5,
+      "errorCount": 0,
+      "errorRate": 0
+    }
+  ],
+  "metadata": {
+    "timestamp": "2026-03-11T22:47:39.012Z",
+    "totalModels": 8,
+    "totalTests": 50
+  }
+}

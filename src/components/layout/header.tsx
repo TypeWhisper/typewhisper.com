@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/use-cases", label: "Use Cases" },
   { href: "/addons", label: "Add-ons" },
   { href: "/docs", label: "Docs" },
+  { href: "/benchmark", label: "Benchmark" },
   { href: "/changelog", label: "ChangeLog" },
 ];
 
