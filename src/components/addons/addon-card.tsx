@@ -11,6 +11,7 @@ import {
   Waves,
   Mic,
   Plug,
+  AudioWaveform,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +29,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Waves,
   Mic,
   Plug,
+  AudioWaveform,
 };
 
 interface AddonCardProps {

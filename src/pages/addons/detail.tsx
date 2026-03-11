@@ -11,6 +11,7 @@ import {
   Waves,
   Mic,
   Plug,
+  AudioWaveform,
   ArrowLeft,
   ExternalLink,
 } from "lucide-react";
@@ -36,6 +37,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Waves,
   Mic,
   Plug,
+  AudioWaveform,
 };
 
 export default function AddonsDetail() {
