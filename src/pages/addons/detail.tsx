@@ -6,6 +6,11 @@ import {
   Send,
   SquareKanban,
   Cpu,
+  Radio,
+  AudioLines,
+  Waves,
+  Mic,
+  Plug,
   ArrowLeft,
   ExternalLink,
 } from "lucide-react";
@@ -26,6 +31,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Send,
   SquareKanban,
   Cpu,
+  Radio,
+  AudioLines,
+  Waves,
+  Mic,
+  Plug,
 };
 
 export default function AddonsDetail() {

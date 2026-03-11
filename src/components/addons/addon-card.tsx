@@ -6,6 +6,11 @@ import {
   Send,
   SquareKanban,
   Cpu,
+  Radio,
+  AudioLines,
+  Waves,
+  Mic,
+  Plug,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +23,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Send,
   SquareKanban,
   Cpu,
+  Radio,
+  AudioLines,
+  Waves,
+  Mic,
+  Plug,
 };
 
 interface AddonCardProps {

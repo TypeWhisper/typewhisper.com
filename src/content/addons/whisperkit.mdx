@@ -1,0 +1,50 @@
+---
+slug: whisperkit
+name: WhisperKit
+author: TypeWhisper
+version: 1.0.0
+icon: Cpu
+description: Local on-device transcription using WhisperKit with CoreML, optimized for Apple Silicon.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/WhisperKitPlugin
+---
+
+## About
+
+WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML framework. All processing happens entirely on-device with no cloud connection required. WhisperKit supports 99+ languages, English translation, and automatically selects the best model based on your available RAM.
+
+## Features
+
+- Fully on-device transcription via CoreML on Apple Silicon
+- 99+ languages supported
+- Translation to English
+- Voice Activity Detection (VAD)
+- Automatic model selection based on available RAM
+- No API key or cloud account needed
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Whisper Tiny | `openai_whisper-tiny` |
+| Whisper Base | `openai_whisper-base` |
+| Whisper Small | `openai_whisper-small` |
+| Whisper Medium | `openai_whisper-medium` |
+| Whisper Large V3 | `openai_whisper-large-v3` |
+| Whisper Large V3 Turbo | `openai_whisper-large-v3_turbo` |
+| Distil Large V3 | `distil-whisper_distil-large-v3` |
+
+## Configuration
+
+No API key required. WhisperKit runs entirely on-device.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the WhisperKit plugin and enable it
+3. Models are downloaded automatically on first use
+4. Select WhisperKit as your transcription engine in Settings or in a profile
