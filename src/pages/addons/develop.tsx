@@ -494,7 +494,7 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
     static let pluginId = "com.example.my-llm"
     static let pluginName = "My LLM"
 
-    private var host: HostServices?
+    private nonisolated(unsafe) var host: HostServices?
     private let chatHelper = PluginOpenAIChatHelper(
         baseURL: "https://api.example.com"
     )
