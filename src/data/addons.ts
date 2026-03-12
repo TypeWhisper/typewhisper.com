@@ -38,6 +38,7 @@ export interface Plugin {
   iconUrl?: string;
   apiDocsUrl?: string;
   sourceUrl?: string;
+  principalClass?: string;
 }
 
 export interface PluginModule {
@@ -67,7 +68,7 @@ export const pluginModules: PluginModule[] = Object.values(mdxModules);
 
 const bundledPlugins: Plugin[] = pluginModules.map((mod) => mod.frontmatter);
 
-const communityPlugins: Plugin[] = (communityData as { plugins: Plugin[] }).plugins.map(
+const communityPlugins: Plugin[] = (communityData as unknown as { plugins: Plugin[] }).plugins.map(
   (p) => ({ ...p, source: "community" as const }),
 );
 
