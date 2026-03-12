@@ -28,6 +28,7 @@ export function CodeBlock({ code, lang = "swift" }: CodeBlockProps) {
       const result = highlighter.codeToHtml(code, {
         lang,
         themes: { dark: "github-dark", light: "github-light" },
+        defaultColor: "dark",
       });
       setHtml(result);
     });

@@ -167,6 +167,13 @@
   color: #f5f5f7;
 }
 
+/* Shiki syntax highlighting: dark is default, swap to light vars in light mode */
+:root.light .shiki,
+:root.light .shiki span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
