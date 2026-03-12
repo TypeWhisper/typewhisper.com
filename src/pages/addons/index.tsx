@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { plugins, type PluginCategory, type PluginPlatform } from "@/data/addons";
+import { plugins, type PluginCategory, type PluginPlatform, type PluginSource } from "@/data/addons";
 import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
+import { SourceFilter } from "@/components/addons/source-filter";
 import { AddonCard } from "@/components/addons/addon-card";
 import { Button } from "@/components/ui/button";
 
 export default function AddonsIndex() {
   const [category, setCategory] = useState<PluginCategory | "all">("all");
   const [platform, setPlatform] = useState<PluginPlatform | "all">("all");
+  const [source, setSource] = useState<PluginSource | "all">("all");
 
   const filtered = plugins.filter((p) => {
     const matchesCategory =
       category === "all" || p.categories.includes(category);
     const matchesPlatform =
       platform === "all" || p.platforms.includes(platform);
-    return matchesCategory && matchesPlatform;
+    const matchesSource = source === "all" || p.source === source;
+    return matchesCategory && matchesPlatform && matchesSource;
   });
 
   return (
@@ -40,6 +43,7 @@ export default function AddonsIndex() {
         <div className="mt-10 flex flex-col gap-3">
           <CategoryFilter selected={category} onChange={setCategory} />
           <PlatformFilter selected={platform} onChange={setPlatform} />
+          <SourceFilter selected={source} onChange={setSource} />
         </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

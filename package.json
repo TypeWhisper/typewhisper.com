@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/fetch-releases.mjs && tsc -b && vite build",
+    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-mdx-frontmatter": "^5.2.0",
+    "shiki": "^4.0.2",
     "tailwind-merge": "^3"
   },
   "devDependencies": {
