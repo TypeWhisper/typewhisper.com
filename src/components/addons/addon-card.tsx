@@ -49,7 +49,15 @@ export function AddonCard({ plugin }: AddonCardProps) {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
-            {Icon && <Icon className="size-5 text-muted-foreground" />}
+            {plugin.iconUrl ? (
+              <img
+                src={plugin.iconUrl}
+                alt={plugin.name}
+                className="size-6 rounded"
+              />
+            ) : (
+              Icon && <Icon className="size-5 text-muted-foreground" />
+            )}
           </div>
           <div>
             <h3 className="text-base font-semibold">{plugin.name}</h3>

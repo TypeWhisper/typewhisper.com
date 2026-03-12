@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import communityData from "./community-plugins.json";
 
 export type PluginCategory =
   | "transcription"
@@ -10,6 +11,12 @@ export type PluginPlatform = "mac" | "windows" | "ios";
 
 export type PluginSource = "bundled" | "community";
 
+export interface PluginDownload {
+  url: string;
+  sha256: string;
+  size: number;
+}
+
 export interface Plugin {
   slug: string;
   name: string;
@@ -20,6 +27,15 @@ export interface Plugin {
   categories: PluginCategory[];
   platforms: PluginPlatform[];
   source: PluginSource;
+  id?: string;
+  authorUrl?: string;
+  license?: string;
+  homepage?: string;
+  minAppVersion?: string;
+  readmeUrl?: string;
+  downloads?: Record<string, PluginDownload>;
+  publishedAt?: string;
+  iconUrl?: string;
   apiDocsUrl?: string;
   sourceUrl?: string;
 }
@@ -49,8 +65,22 @@ const mdxModules = import.meta.glob<PluginModule>(
 
 export const pluginModules: PluginModule[] = Object.values(mdxModules);
 
-export const plugins: Plugin[] = pluginModules.map((mod) => mod.frontmatter);
+const bundledPlugins: Plugin[] = pluginModules.map((mod) => mod.frontmatter);
+
+const communityPlugins: Plugin[] = (communityData as { plugins: Plugin[] }).plugins.map(
+  (p) => ({ ...p, source: "community" as const }),
+);
+
+export const plugins: Plugin[] = [...bundledPlugins, ...communityPlugins];
 
 export function getPluginModule(slug: string): PluginModule | undefined {
   return pluginModules.find((mod) => mod.frontmatter.slug === slug);
+}
+
+export function getPlugin(slug: string): Plugin | undefined {
+  return plugins.find((p) => p.slug === slug);
+}
+
+export function isCommunityPlugin(plugin: Plugin): boolean {
+  return plugin.source === "community";
 }
