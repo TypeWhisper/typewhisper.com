@@ -16,6 +16,7 @@ import {
   Plug,
   AudioWaveform,
   Gem,
+  Terminal,
   ArrowLeft,
   ExternalLink,
   Download,
@@ -49,6 +50,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Plug,
   AudioWaveform,
   Gem,
+  Terminal,
 };
 
 function formatSize(bytes: number): string {
@@ -132,6 +134,9 @@ function CommunityContent({ plugin }: { plugin: Plugin }) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
+              pre({ children }) {
+                return <>{children}</>;
+              },
               code({ className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
                 const code = String(children).replace(/\n$/, "");
@@ -288,7 +293,20 @@ export default function AddonsDetail() {
         {/* Content */}
         {mod ? (
           <div className="prose prose-neutral dark:prose-invert mt-10 max-w-none">
-            <mod.default />
+            {(() => {
+              const MdxContent = mod.default as React.ComponentType<{ components?: Record<string, React.ComponentType<any>> }>;
+              return <MdxContent components={{
+                pre: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+                code: ({ className, children }: { className?: string; children: React.ReactNode }) => {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const codeStr = String(children).replace(/\n$/, "");
+                  if (match) {
+                    return <CodeBlock code={codeStr} lang={match[1]} />;
+                  }
+                  return <code className={className}>{children}</code>;
+                },
+              }} />;
+            })()}
           </div>
         ) : isCommunityPlugin(plugin) ? (
           <CommunityContent plugin={plugin} />

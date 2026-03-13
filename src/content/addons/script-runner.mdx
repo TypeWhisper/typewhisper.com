@@ -1,0 +1,88 @@
+---
+slug: script-runner
+name: Script Runner
+author: TypeWhisper
+version: 1.0.0
+icon: Terminal
+description: Run shell scripts on transcribed text for custom text transformations and processing pipelines.
+categories:
+  - post-processing
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ScriptPlugin
+---
+
+## About
+
+The Script Runner plugin pipes transcribed text through any shell command or script. Your text is passed via stdin, and whatever the command writes to stdout becomes the final output. This gives you full flexibility to transform, filter, or enrich transcriptions using standard Unix tools, custom scripts, or any command-line program.
+
+## Features
+
+- Run any shell command on transcribed text
+- Text flows through stdin/stdout - works with standard Unix pipes
+- Environment variables with context (app name, URL, language, profile)
+- Configurable timeout to prevent runaway scripts
+- Profile filter to limit execution to specific profiles
+- Execution log for debugging
+
+## Environment Variables
+
+The following environment variables are available to your scripts:
+
+- **TYPEWHISPER_APP_NAME** - Name of the frontmost application (e.g. "Safari")
+- **TYPEWHISPER_BUNDLE_ID** - Bundle identifier of the frontmost app (e.g. "com.apple.Safari")
+- **TYPEWHISPER_URL** - Current URL from the browser, if available
+- **TYPEWHISPER_LANGUAGE** - Language code of the transcription (e.g. "en")
+- **TYPEWHISPER_PROFILE** - Name of the active TypeWhisper profile
+
+## Examples
+
+**UPPERCASE** - Convert all text to uppercase:
+```bash
+tr '[:lower:]' '[:upper:]'
+```
+
+**Sentence Case** - Capitalize the first letter of each sentence:
+```bash
+sed 's/\.\s*\([a-z]\)/. \U\1/g; s/^\([a-z]\)/\U\1/'
+```
+
+**Search & Replace** - Replace specific words or phrases:
+```bash
+sed 's/old/new/g'
+```
+
+**Append Timestamp** - Add the current date and time at the end:
+```bash
+cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
+```
+
+**Remove Filler Words** - Strip out common filler words:
+```bash
+sed 's/ \(uhm\|uh\|um\|like\|you know\) / /g; s/  */ /g'
+```
+
+**Pipe to Clipboard + Return** - Copy text to clipboard and still return it:
+```bash
+tee >(pbcopy)
+```
+
+**Custom Script File** - Run an external script:
+```bash
+~/scripts/process.sh
+```
+
+## Configuration
+
+- **Script Command** - The shell command to execute. Text is passed via stdin, output is read from stdout.
+- **Timeout** - Maximum execution time in seconds before the script is killed (default: 10s).
+- **Profile Filter** - Optionally limit execution to specific profiles.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Script Runner plugin and click Configure
+3. Enter your shell command or path to a script
+4. Optionally set a timeout and profile filter
+5. Transcriptions will be processed through your script automatically
