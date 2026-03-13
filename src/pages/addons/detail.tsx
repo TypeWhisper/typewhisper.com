@@ -53,6 +53,21 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Terminal,
 };
 
+function PluginScreenshot({ slug, name }: { slug: string; name: string }) {
+  const [show, setShow] = useState(true);
+  if (!show) return null;
+  return (
+    <div className="mt-8">
+      <img
+        src={`/screenshots/plugins/${slug}.png`}
+        alt={`${name} settings`}
+        className="rounded-2xl border shadow-lg"
+        onError={() => setShow(false)}
+      />
+    </div>
+  );
+}
+
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -289,6 +304,9 @@ export default function AddonsDetail() {
             )}
           </div>
         )}
+
+        {/* Screenshot */}
+        <PluginScreenshot slug={plugin.slug} name={plugin.name} />
 
         {/* Content */}
         {mod ? (
