@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import {
   Zap,
   Brain,
@@ -44,8 +43,8 @@ export function AddonCard({ plugin }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
 
   return (
-    <Link
-      to={`/addons/${plugin.slug}`}
+    <a
+      href={`/addons/${plugin.slug}`}
       className="group block rounded-2xl border bg-card p-6 transition-all hover:shadow-md"
     >
       <div className="flex items-start justify-between">
@@ -86,6 +85,6 @@ export function AddonCard({ plugin }: AddonCardProps) {
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
         View Details <ArrowRight className="size-4" />
       </div>
-    </Link>
+    </a>
   );
 }

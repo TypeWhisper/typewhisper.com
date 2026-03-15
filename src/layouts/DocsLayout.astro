@@ -1,0 +1,78 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  platform?: "mac" | "windows" | null;
+}
+
+const { title, description, canonicalPath, platform = null } = Astro.props;
+
+const macSidebarLinks = [
+  { href: "/docs/mac", label: "Overview" },
+  { href: "/docs/mac/installation", label: "Installation" },
+  { href: "/docs/mac/features", label: "Features" },
+  { href: "/docs/mac/api", label: "HTTP API" },
+  { href: "/docs/mac/cli", label: "CLI Tool" },
+  { href: "/docs/mac/profiles", label: "Profiles" },
+  { href: "/docs/mac/troubleshooting", label: "Troubleshooting" },
+];
+
+const windowsSidebarLinks = [
+  { href: "/docs/windows", label: "Overview" },
+  { href: "/docs/windows/installation", label: "Installation" },
+  { href: "/docs/windows/features", label: "Features" },
+  { href: "/docs/windows/api", label: "HTTP API" },
+  { href: "/docs/windows/profiles", label: "Profiles" },
+];
+
+const sidebarLinks = platform === "mac" ? macSidebarLinks
+  : platform === "windows" ? windowsSidebarLinks
+  : null;
+
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath}>
+  {sidebarLinks ? (
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+      <div class="flex flex-col gap-8 lg:flex-row lg:gap-12">
+        <aside class="lg:w-56 shrink-0">
+          <nav class="flex flex-col gap-1 lg:sticky lg:top-24">
+            <a
+              href="/docs"
+              class="mb-2 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              All Platforms
+            </a>
+            <div class="flex flex-row gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-x-visible lg:pb-0">
+              {sidebarLinks.map((link) => (
+                <a
+                  href={link.href}
+                  class:list={[
+                    "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                    currentPath === link.href
+                      ? "border-primary text-foreground"
+                      : "border-transparent text-muted-foreground",
+                  ]}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </nav>
+        </aside>
+        <main class="min-w-0 flex-1">
+          <slot />
+        </main>
+      </div>
+    </div>
+  ) : (
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+      <slot />
+    </div>
+  )}
+</BaseLayout>

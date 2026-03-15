@@ -1,6 +1,5 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
 import { macReleaseUrl } from "@/lib/platform-download";
 
 export function Hero() {
@@ -38,10 +37,10 @@ export function Hero() {
             </Button>
 
             <Button variant="link-arrow" asChild>
-              <Link to="/docs" className="inline-flex items-center gap-1 text-[#0071e3]">
+              <a href="/docs" className="inline-flex items-center gap-1 text-[#0071e3]">
                 Learn more
                 <ArrowRight className="size-4" />
-              </Link>
+              </a>
             </Button>
           </div>
         </div>

@@ -1,0 +1,47 @@
+---
+import { Logo } from "@/components/ui/logo";
+import { discordUrl } from "@/lib/platform-download";
+---
+
+<footer class="section-dark-card">
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Logo />
+        <p class="text-sm text-[#86868b]">
+          Local speech-to-text. Your voice data never leaves your device.
+        </p>
+      </div>
+
+      <div class="h-px bg-white/5"></div>
+
+      <div class="flex flex-col gap-4 text-xs text-[#86868b] sm:flex-row sm:items-start sm:justify-between">
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <a href="/#features" class="hover:text-[#f5f5f7] transition-colors">Features</a>
+          <a href="/addons" class="hover:text-[#f5f5f7] transition-colors">Add-ons</a>
+          <a href="/docs" class="hover:text-[#f5f5f7] transition-colors">Docs</a>
+          <a href="/changelog" class="hover:text-[#f5f5f7] transition-colors">ChangeLog</a>
+          <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">Windows</a>
+          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">iOS Beta</a>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">Discord</a>
+          <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">GitHub</a>
+          <a href="https://github.com/sponsors/seofood" target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">Sponsor</a>
+          <a href="https://ko-fi.com/seofood" target="_blank" rel="noopener noreferrer" class="hover:text-[#f5f5f7] transition-colors">Ko-fi</a>
+        </div>
+      </div>
+
+      <div class="h-px bg-white/5"></div>
+
+      <div class="flex flex-col items-start gap-3 text-xs text-[#86868b] sm:flex-row sm:items-center sm:justify-between">
+        <p>&copy; {new Date().getFullYear()} TypeWhisper. Open source under GPLv3.</p>
+        <div class="flex gap-x-6 gap-y-2 flex-wrap">
+          <a href="/privacy" class="hover:text-[#f5f5f7] transition-colors">Privacy</a>
+          <a href="/terms" class="hover:text-[#f5f5f7] transition-colors">Terms</a>
+          <a href="/legal-notice" class="hover:text-[#f5f5f7] transition-colors">Legal Notice</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

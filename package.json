@@ -4,28 +4,28 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && tsc -b && vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && astro check && astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
-    "@mdx-js/rollup": "^3.1.1",
+    "@astrojs/mdx": "^5.0.0",
+    "@astrojs/react": "^5.0.0",
+    "@astrojs/sitemap": "^3.7.1",
     "@radix-ui/react-dialog": "^1",
     "@radix-ui/react-separator": "^1",
     "@radix-ui/react-slot": "^1",
     "@tailwindcss/typography": "^0.5.19",
     "@types/mdx": "^2.0.13",
+    "astro": "^6.0.4",
     "class-variance-authority": "^0.7",
     "clsx": "^2",
     "lucide-react": "latest",
     "react": "^19",
     "react-dom": "^19",
     "react-markdown": "^10.1.0",
-    "react-router": "^7",
     "recharts": "^3.8.0",
-    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "remark-mdx-frontmatter": "^5.2.0",
     "shiki": "^4.0.2",
     "tailwind-merge": "^3"
   },
@@ -33,7 +33,6 @@
     "@tailwindcss/vite": "^4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitejs/plugin-react": "^4",
     "tailwindcss": "^4",
     "typescript": "~5.7",
     "vite": "^6"

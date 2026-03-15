@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ChangelogPage from "./_index.tsx";
+---
+<BaseLayout
+  title="ChangeLog - TypeWhisper"
+  description="Release notes and updates for TypeWhisper."
+  canonicalPath="/changelog"
+>
+  <ChangelogPage client:load />
+</BaseLayout>
