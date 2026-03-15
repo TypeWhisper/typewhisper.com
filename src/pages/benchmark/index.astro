@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BenchmarkPage from "./_index.tsx";
+---
+<BaseLayout
+  title="Benchmark - TypeWhisper"
+  description="Transcription accuracy, speed, and cost comparison across speech-to-text models."
+  canonicalPath="/benchmark"
+>
+  <BenchmarkPage client:only="react" />
+</BaseLayout>

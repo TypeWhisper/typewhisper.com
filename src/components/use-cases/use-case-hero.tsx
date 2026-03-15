@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import {
   Mail,
   MessageCircle,
@@ -28,10 +27,10 @@ export function UseCaseHero({ useCase }: UseCaseHeroProps) {
     <section className="section-light py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Button variant="ghost" size="sm" asChild className="mb-8">
-          <Link to="/use-cases">
+          <a href="/use-cases">
             <ArrowLeft className="size-4" />
             All Use Cases
-          </Link>
+          </a>
         </Button>
 
         <div className="mx-auto max-w-3xl text-center">

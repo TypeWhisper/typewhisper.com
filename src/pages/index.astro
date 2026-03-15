@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Hero } from "@/components/landing/hero";
+import { Features } from "@/components/landing/features";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { EngineComparison } from "@/components/landing/engine-comparison";
+import { AppleDictationComparison } from "@/components/landing/apple-dictation-comparison";
+import { AvailablePlatforms } from "@/components/landing/platforms-coming-soon";
+import { DownloadCTA } from "@/components/landing/download-cta";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "TypeWhisper",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "macOS, Windows, iOS",
+  description: "Free local speech-to-text for macOS, Windows, and iOS. On-device AI, no cloud, no API keys, no subscriptions.",
+  url: "https://www.typewhisper.com",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+};
+---
+<BaseLayout
+  title="TypeWhisper - Stop Typing. Start Speaking. 100% Private."
+  description="Free local speech-to-text for macOS, Windows, and iOS. On-device AI, no cloud, no API keys, no subscriptions."
+  canonicalPath="/"
+  structuredData={structuredData}
+>
+  <Hero />
+  <HowItWorks />
+  <Features />
+  <AppleDictationComparison />
+  <EngineComparison />
+  <AvailablePlatforms />
+  <DownloadCTA />
+</BaseLayout>

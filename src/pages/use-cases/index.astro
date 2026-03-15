@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UseCasesIndex from "./_index.tsx";
+---
+<BaseLayout
+  title="Use Cases - TypeWhisper"
+  description="Discover how TypeWhisper fits into your daily workflow."
+  canonicalPath="/use-cases"
+>
+  <UseCasesIndex client:load />
+</BaseLayout>

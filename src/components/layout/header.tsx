@@ -1,4 +1,3 @@
-import { Link, useLocation } from "react-router";
 import { Menu, Moon, Sun, Github } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
@@ -60,11 +59,10 @@ function useHeaderState(isLanding: boolean) {
   return { scrolled, overDark, headerRef };
 }
 
-export function Header() {
+export function Header({ currentPath = "/" }: { currentPath?: string }) {
   const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isLanding = location.pathname === "/";
+  const isLanding = currentPath === "/";
   const { scrolled, overDark, headerRef } = useHeaderState(isLanding);
 
   // On landing page: adapt to current section. On other pages: use theme.
@@ -85,7 +83,7 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <Logo
             textClassName={
               isLanding
@@ -95,20 +93,20 @@ export function Header() {
                 : undefined
             }
           />
-        </Link>
+        </a>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => {
             const isActive =
-              location.pathname === link.href ||
+              currentPath === link.href ||
               (link.href !== "/#features" &&
-                location.pathname.startsWith(link.href));
+                currentPath.startsWith(link.href));
 
             return (
-              <Link
+              <a
                 key={link.href}
-                to={link.href}
+                href={link.href}
                 className={cn(
                   "px-3 py-2 text-xs font-medium rounded-md transition-colors",
                   isLanding
@@ -125,7 +123,7 @@ export function Header() {
                 )}
               >
                 {link.label}
-              </Link>
+              </a>
             );
           })}
         </nav>
@@ -217,21 +215,21 @@ export function Header() {
             <SheetContent side="right" className="pt-12">
               <nav className="flex flex-col gap-1 px-4">
                 {navLinks.map((link) => (
-                  <Link
+                  <a
                     key={link.href}
-                    to={link.href}
+                    href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
                       "px-3 py-2.5 text-sm font-medium rounded-md transition-colors hover:bg-accent",
-                      location.pathname === link.href ||
+                      currentPath === link.href ||
                         (link.href !== "/#features" &&
-                          location.pathname.startsWith(link.href))
+                          currentPath.startsWith(link.href))
                         ? "text-foreground bg-accent"
                         : "text-muted-foreground"
                     )}
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 ))}
                 <a
                   href="https://ko-fi.com/seofood"

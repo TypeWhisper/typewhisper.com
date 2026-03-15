@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
-import { Link } from "react-router";
 import type { Platform } from "@/lib/platform-download";
 
 interface Engine {
@@ -234,9 +233,9 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
       {showCloudHint && (
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Additional engines (Qwen3 ASR, Groq Whisper, OpenAI Whisper) are available as{" "}
-          <Link to="/addons" className="underline underline-offset-4 hover:text-foreground">
+          <a href="/addons" className="underline underline-offset-4 hover:text-foreground">
             add-ons
-          </Link>
+          </a>
           .
         </p>
       )}

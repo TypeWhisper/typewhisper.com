@@ -1,0 +1,99 @@
+---
+import "@/index.css";
+import { Header } from "@/components/layout/header";
+import Footer from "@/components/layout/footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogImage?: string;
+  structuredData?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = "https://www.typewhisper.com/og-image.png",
+  structuredData,
+} = Astro.props;
+
+const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#fbfbfd" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="TypeWhisper" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Type_Whisper" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+    <!-- Theme init (prevent flash) -->
+    <script is:inline>
+      (function(){
+        var stored = localStorage.getItem('theme');
+        var theme = stored === 'light' || stored === 'dark' ? stored
+          : window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="flex min-h-screen flex-col">
+      <Header client:load currentPath={Astro.url.pathname} />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <!-- Scroll reveal (vanilla JS, replaces React useScrollReveal hook) -->
+    <script is:inline>
+      (function(){
+        var revealClasses = [
+          { hidden: 'reveal-hidden', visible: 'reveal-visible' },
+          { hidden: 'reveal-fade-hidden', visible: 'reveal-fade-visible' },
+          { hidden: 'reveal-scale-hidden', visible: 'reveal-scale-visible' },
+        ];
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              for (var i = 0; i < revealClasses.length; i++) {
+                if (entry.target.classList.contains(revealClasses[i].hidden)) {
+                  entry.target.classList.add(revealClasses[i].visible);
+                  entry.target.classList.remove(revealClasses[i].hidden);
+                  break;
+                }
+              }
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        var selector = revealClasses.map(function(c) { return '.' + c.hidden; }).join(', ');
+        document.querySelectorAll(selector).forEach(function(el) { observer.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

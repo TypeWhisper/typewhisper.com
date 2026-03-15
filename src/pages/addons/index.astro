@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AddonsIndex from "./_index.tsx";
+---
+<BaseLayout
+  title="Add-ons - TypeWhisper"
+  description="Extend TypeWhisper with cloud transcription, LLM providers, automations, and more."
+  canonicalPath="/addons"
+>
+  <AddonsIndex client:load />
+</BaseLayout>

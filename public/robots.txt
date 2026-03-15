@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.typewhisper.com/sitemap.xml
+Sitemap: https://www.typewhisper.com/sitemap-index.xml

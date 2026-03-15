@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import {
   Mail,
   MessageCircle,
@@ -24,8 +23,8 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
   const Icon = iconMap[useCase.icon];
 
   return (
-    <Link
-      to={`/use-cases/${useCase.slug}`}
+    <a
+      href={`/use-cases/${useCase.slug}`}
       className="group block rounded-2xl border bg-card p-6 transition-all hover:shadow-md"
     >
       <div className="flex items-start justify-between">
@@ -52,6 +51,6 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
         Learn More <ArrowRight className="size-4" />
       </div>
-    </Link>
+    </a>
   );
 }
