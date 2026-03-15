@@ -17,6 +17,7 @@ import {
   AudioWaveform,
   Gem,
   Terminal,
+  Captions,
   ArrowLeft,
   ExternalLink,
   Download,
@@ -51,6 +52,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   AudioWaveform,
   Gem,
   Terminal,
+  Captions,
 };
 
 function PluginScreenshot({ slug, name }: { slug: string; name: string }) {
