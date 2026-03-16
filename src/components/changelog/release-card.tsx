@@ -11,26 +11,30 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
-function cleanBody(body: string | null): string | null {
-  if (!body) return null;
-  // Deduplicate Full Changelog lines (some entries have them twice)
-  const seen = new Set<string>();
-  const stripped = body
-    .split("\n")
-    .filter((line) => {
-      if (/^\*\*Full Changelog\*\*:/.test(line)) {
-        if (seen.has(line)) return false;
-        seen.add(line);
-      }
-      return true;
-    })
-    .join("\n")
-    .trim();
-  return stripped || null;
+const fullChangelogRe = /^\*\*Full Changelog\*\*:\s*(https?:\/\/\S+)/;
+
+function parseBody(body: string | null): {
+  content: string | null;
+  fullChangelogUrl: string | null;
+} {
+  if (!body) return { content: null, fullChangelogUrl: null };
+
+  let fullChangelogUrl: string | null = null;
+  const lines = body.split("\n").filter((line) => {
+    const match = fullChangelogRe.exec(line);
+    if (match) {
+      if (!fullChangelogUrl) fullChangelogUrl = match[1];
+      return false;
+    }
+    return true;
+  });
+
+  const content = lines.join("\n").trim() || null;
+  return { content, fullChangelogUrl };
 }
 
 export function ReleaseCard({ release }: { release: Release }) {
-  const body = cleanBody(release.body);
+  const { content, fullChangelogUrl } = parseBody(release.body);
 
   const repoName =
     release.platform === "mac"
@@ -68,7 +72,7 @@ export function ReleaseCard({ release }: { release: Release }) {
         {dateFormatter.format(new Date(release.published_at))}
       </p>
 
-      {body ? (
+      {content ? (
         <div className="prose prose-neutral dark:prose-invert prose-sm mt-3 max-w-none">
           <Markdown
             remarkPlugins={[
@@ -76,12 +80,25 @@ export function ReleaseCard({ release }: { release: Release }) {
               [remarkGithub, { repository: repoName }],
             ]}
           >
-            {body}
+            {content}
           </Markdown>
         </div>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground italic">
           No detailed release notes.
+        </p>
+      )}
+
+      {fullChangelogUrl && (
+        <p className="mt-3 text-xs text-muted-foreground">
+          <a
+            href={fullChangelogUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            Full Changelog &rarr;
+          </a>
         </p>
       )}
     </div>
