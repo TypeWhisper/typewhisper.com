@@ -36,7 +36,7 @@ export default function ChangelogPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
       <h1 className="font-display text-3xl font-bold tracking-tight">
-        ChangeLog
+        Changelog
       </h1>
       <p className="mt-3 text-lg text-muted-foreground">
         Release notes and updates for TypeWhisper.

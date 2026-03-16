@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Release } from "@/data/releases";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkGithub from "remark-github";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -12,14 +13,29 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 function cleanBody(body: string | null): string | null {
   if (!body) return null;
+  // Deduplicate Full Changelog lines (some entries have them twice)
+  const seen = new Set<string>();
   const stripped = body
-    .replace(/\*\*Full Changelog\*\*:.*/g, "")
+    .split("\n")
+    .filter((line) => {
+      if (/^\*\*Full Changelog\*\*:/.test(line)) {
+        if (seen.has(line)) return false;
+        seen.add(line);
+      }
+      return true;
+    })
+    .join("\n")
     .trim();
   return stripped || null;
 }
 
 export function ReleaseCard({ release }: { release: Release }) {
   const body = cleanBody(release.body);
+
+  const repoName =
+    release.platform === "mac"
+      ? "TypeWhisper/typewhisper-mac"
+      : "TypeWhisper/typewhisper-win";
 
   return (
     <div className="rounded-lg border border-border bg-card p-5">
@@ -54,7 +70,14 @@ export function ReleaseCard({ release }: { release: Release }) {
 
       {body ? (
         <div className="prose prose-neutral dark:prose-invert prose-sm mt-3 max-w-none">
-          <Markdown remarkPlugins={[remarkGfm]}>{body}</Markdown>
+          <Markdown
+            remarkPlugins={[
+              remarkGfm,
+              [remarkGithub, { repository: repoName }],
+            ]}
+          >
+            {body}
+          </Markdown>
         </div>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground italic">

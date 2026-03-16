@@ -1,3 +1,18 @@
+function deduplicateFullChangelog(body) {
+  if (!body) return body;
+  const seen = new Set();
+  return body
+    .split("\n")
+    .filter((line) => {
+      if (/^\*\*Full Changelog\*\*:/.test(line)) {
+        if (seen.has(line)) return false;
+        seen.add(line);
+      }
+      return true;
+    })
+    .join("\n");
+}
+
 const repos = [
   { url: "https://api.github.com/repos/TypeWhisper/typewhisper-mac/releases?per_page=100", platform: "mac" },
   { url: "https://api.github.com/repos/TypeWhisper/typewhisper-win/releases?per_page=100", platform: "windows" },
@@ -19,7 +34,7 @@ const results = await Promise.allSettled(
         id: r.id,
         tag_name: r.tag_name,
         name: r.name,
-        body: r.body,
+        body: deduplicateFullChangelog(r.body),
         published_at: r.published_at,
         html_url: r.html_url,
         platform,
