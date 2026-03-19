@@ -5,7 +5,8 @@ export type PluginCategory =
   | "transcription"
   | "llm"
   | "action"
-  | "post-processing";
+  | "post-processing"
+  | "memory";
 
 export type PluginPlatform = "mac" | "windows" | "ios";
 
@@ -51,6 +52,7 @@ export const categoryLabels: Record<PluginCategory, string> = {
   llm: "LLM",
   action: "Action",
   "post-processing": "Post-Processing",
+  memory: "Memory",
 };
 
 export const platformLabels: Record<PluginPlatform, string> = {

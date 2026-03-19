@@ -13,6 +13,11 @@ import {
   AudioWaveform,
   Gem,
   Terminal,
+  Captions,
+  Cloud,
+  HardDrive,
+  Mountain,
+  Search,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +38,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   AudioWaveform,
   Gem,
   Terminal,
+  Captions,
+  Cloud,
+  HardDrive,
+  Mountain,
+  Search,
 };
 
 interface AddonCardProps {

@@ -7,6 +7,7 @@ const categories: (PluginCategory | "all")[] = [
   "llm",
   "action",
   "post-processing",
+  "memory",
 ];
 
 interface CategoryFilterProps {

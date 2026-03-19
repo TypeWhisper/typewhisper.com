@@ -1,0 +1,41 @@
+---
+slug: cloudflare-asr
+name: Cloudflare ASR
+author: TypeWhisper
+version: 1.0.0
+icon: Cloud
+description: OpenAI-compatible transcription via Cloudflare Tunnel with service token authentication.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/CloudflareASRPlugin
+---
+
+## About
+
+Cloudflare ASR lets you route transcription requests through a Cloudflare Tunnel to any OpenAI-compatible speech-to-text backend. This is useful when you want to self-host a transcription service behind Cloudflare's network and authenticate via service tokens instead of API keys.
+
+## Features
+
+- OpenAI-compatible API endpoint for transcription
+- Cloudflare Tunnel support for secure access to self-hosted backends
+- Service token authentication (CF-Access-Client-Id / CF-Access-Client-Secret)
+- Configurable model selection
+
+## Configuration
+
+- **Endpoint URL** - The URL of your OpenAI-compatible transcription endpoint behind the Cloudflare Tunnel.
+- **CF-Access-Client-Id** - Your Cloudflare Access service token client ID.
+- **CF-Access-Client-Secret** - Your Cloudflare Access service token client secret.
+- **Model** - The transcription model to use on the backend.
+
+## Setup
+
+1. Deploy an OpenAI-compatible transcription server (e.g. faster-whisper-server) behind a Cloudflare Tunnel
+2. Create a Cloudflare Access service token for authentication
+3. Open TypeWhisper Settings > Plugins
+4. Find the Cloudflare ASR plugin and click Configure
+5. Enter your endpoint URL and service token credentials
+6. Select Cloudflare ASR as your transcription engine in Settings or in a profile
