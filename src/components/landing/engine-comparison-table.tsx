@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 import type { Platform } from "@/lib/platform-download";
+import { t, localePath, type Locale } from "@/i18n/index";
 
 interface Engine {
   name: string;
@@ -13,111 +14,116 @@ interface ComparisonRow {
   values: (boolean | string)[];
 }
 
-const macEngines: Engine[] = [
-  {
-    name: "WhisperKit",
-    badge: "Versatile",
-    description:
-      "Apple-optimized Whisper models. Best for multilingual use and streaming preview.",
-  },
-  {
-    name: "Parakeet TDT v3",
-    badge: "Fast",
-    description:
-      "NVIDIA's latest TDT architecture. Extremely fast transcription for European languages with excellent accuracy.",
-  },
-  {
-    name: "Apple SpeechAnalyzer",
-    badge: "Zero Setup",
-    description:
-      "Apple's native speech recognition. No manual model downloads - models are managed by macOS. Requires macOS 26+.",
-  },
-];
+function getMacEngines(locale: Locale): Engine[] {
+  return [
+    {
+      name: t(locale, "engineComparison.mac.engine1.name"),
+      badge: t(locale, "engineComparison.mac.engine1.badge"),
+      description: t(locale, "engineComparison.mac.engine1.description"),
+    },
+    {
+      name: t(locale, "engineComparison.mac.engine2.name"),
+      badge: t(locale, "engineComparison.mac.engine2.badge"),
+      description: t(locale, "engineComparison.mac.engine2.description"),
+    },
+    {
+      name: t(locale, "engineComparison.mac.engine3.name"),
+      badge: t(locale, "engineComparison.mac.engine3.badge"),
+      description: t(locale, "engineComparison.mac.engine3.description"),
+    },
+  ];
+}
 
-const macRows: ComparisonRow[] = [
-  { label: "Languages", values: ["99+", "25 European", "~40"] },
-  { label: "Streaming", values: [true, false, true] },
-  { label: "Translation", values: ["20 languages", "20 languages", "20 languages"] },
-  { label: "Speed", values: ["Fast", "Up to 5x faster", "Fast"] },
-  {
-    label: "Model Sizes",
-    values: ["Tiny to Large v3", "1.1B params", "System-managed"],
-  },
-  {
-    label: "Model Download",
-    values: ["Manual in-app", "Manual in-app", "Automatic by macOS"],
-  },
-  {
-    label: "Best For",
-    values: [
-      "Multilingual & translation",
-      "European languages",
-      "Quick setup",
-    ],
-  },
-  { label: "Accuracy", values: ["Excellent", "Excellent", "Good"] },
-];
+function getMacRows(locale: Locale): ComparisonRow[] {
+  return [
+    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "25 European", "~40"] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [true, false, true] },
+    { label: t(locale, "engineComparison.row.translation"), values: ["20 languages", "20 languages", "20 languages"] },
+    { label: t(locale, "engineComparison.row.speed"), values: ["Fast", "Up to 5x faster", "Fast"] },
+    {
+      label: t(locale, "engineComparison.row.modelSizes"),
+      values: ["Tiny to Large v3", "1.1B params", "System-managed"],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelDownload"),
+      values: ["Manual in-app", "Manual in-app", "Automatic by macOS"],
+    },
+    {
+      label: t(locale, "engineComparison.row.bestFor"),
+      values: [
+        "Multilingual & translation",
+        "European languages",
+        "Quick setup",
+      ],
+    },
+    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Excellent", "Good"] },
+  ];
+}
 
-const windowsEngines: Engine[] = [
-  {
-    name: "Parakeet TDT 0.6B",
-    badge: "Fast",
-    description:
-      "NVIDIA's TDT architecture optimized for ONNX Runtime. Fast transcription for European languages, CPU-only.",
-  },
-  {
-    name: "Canary 180M Flash",
-    badge: "Compact",
-    description:
-      "Compact multilingual model with built-in translation. Supports EN, DE, FR, and ES.",
-  },
-];
+function getWindowsEngines(locale: Locale): Engine[] {
+  return [
+    {
+      name: t(locale, "engineComparison.win.engine1.name"),
+      badge: t(locale, "engineComparison.win.engine1.badge"),
+      description: t(locale, "engineComparison.win.engine1.description"),
+    },
+    {
+      name: t(locale, "engineComparison.win.engine2.name"),
+      badge: t(locale, "engineComparison.win.engine2.badge"),
+      description: t(locale, "engineComparison.win.engine2.description"),
+    },
+  ];
+}
 
-const windowsRows: ComparisonRow[] = [
-  { label: "Languages", values: ["25+", "4 (EN/DE/FR/ES)"] },
-  { label: "Streaming", values: [false, false] },
-  { label: "Translation", values: ["Via Marian/Cloud", "Built-in"] },
-  { label: "Speed", values: ["Very fast", "Fast"] },
-  { label: "Model Sizes", values: ["0.6B params", "180M params"] },
-  { label: "Model Download", values: ["Automatic", "Automatic"] },
-  { label: "Best For", values: ["European languages", "Quick multilingual"] },
-  { label: "Accuracy", values: ["Excellent", "Good"] },
-];
+function getWindowsRows(locale: Locale): ComparisonRow[] {
+  return [
+    { label: t(locale, "engineComparison.row.languages"), values: ["25+", "4 (EN/DE/FR/ES)"] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [false, false] },
+    { label: t(locale, "engineComparison.row.translation"), values: ["Via Marian/Cloud", "Built-in"] },
+    { label: t(locale, "engineComparison.row.speed"), values: ["Very fast", "Fast"] },
+    { label: t(locale, "engineComparison.row.modelSizes"), values: ["0.6B params", "180M params"] },
+    { label: t(locale, "engineComparison.row.modelDownload"), values: ["Automatic", "Automatic"] },
+    { label: t(locale, "engineComparison.row.bestFor"), values: ["European languages", "Quick multilingual"] },
+    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Good"] },
+  ];
+}
 
-const iosEngines: Engine[] = [
-  {
-    name: "WhisperKit",
-    badge: "Versatile",
-    description:
-      "Apple-optimized Whisper models. Best for multilingual use and streaming preview.",
-  },
-  {
-    name: "Apple Speech",
-    badge: "Zero Setup",
-    description:
-      "Apple's native speech recognition. No model downloads needed - fast and reliable.",
-  },
-];
+function getIosEngines(locale: Locale): Engine[] {
+  return [
+    {
+      name: t(locale, "engineComparison.ios.engine1.name"),
+      badge: t(locale, "engineComparison.ios.engine1.badge"),
+      description: t(locale, "engineComparison.ios.engine1.description"),
+    },
+    {
+      name: t(locale, "engineComparison.ios.engine2.name"),
+      badge: t(locale, "engineComparison.ios.engine2.badge"),
+      description: t(locale, "engineComparison.ios.engine2.description"),
+    },
+  ];
+}
 
-const iosRows: ComparisonRow[] = [
-  { label: "Languages", values: ["99+", "~40"] },
-  { label: "Streaming", values: [true, true] },
-  { label: "Translation", values: ["20 languages", "20 languages"] },
-  { label: "Speed", values: ["Fast", "Fast"] },
-  { label: "Model Sizes", values: ["Tiny to Large v3", "System-managed"] },
-  { label: "Model Download", values: ["Manual in-app", "Automatic"] },
-  { label: "Best For", values: ["Multilingual & translation", "Quick setup"] },
-  { label: "Accuracy", values: ["Excellent", "Good"] },
-];
+function getIosRows(locale: Locale): ComparisonRow[] {
+  return [
+    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "~40"] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [true, true] },
+    { label: t(locale, "engineComparison.row.translation"), values: ["20 languages", "20 languages"] },
+    { label: t(locale, "engineComparison.row.speed"), values: ["Fast", "Fast"] },
+    { label: t(locale, "engineComparison.row.modelSizes"), values: ["Tiny to Large v3", "System-managed"] },
+    { label: t(locale, "engineComparison.row.modelDownload"), values: ["Manual in-app", "Automatic"] },
+    { label: t(locale, "engineComparison.row.bestFor"), values: ["Multilingual & translation", "Quick setup"] },
+    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Good"] },
+  ];
+}
 
-function getEngineData(platform: Platform): { engines: Engine[]; rows: ComparisonRow[] } {
+function getEngineData(platform: Platform, locale: Locale): { engines: Engine[]; rows: ComparisonRow[] } {
   switch (platform) {
     case "windows":
-      return { engines: windowsEngines, rows: windowsRows };
+      return { engines: getWindowsEngines(locale), rows: getWindowsRows(locale) };
     case "ios":
-      return { engines: iosEngines, rows: iosRows };
+      return { engines: getIosEngines(locale), rows: getIosRows(locale) };
     default:
-      return { engines: macEngines, rows: macRows };
+      return { engines: getMacEngines(locale), rows: getMacRows(locale) };
   }
 }
 
@@ -137,8 +143,8 @@ const gridColsClass: Record<number, string> = {
   3: "grid-cols-3",
 };
 
-export function EngineComparisonTable({ platform }: { platform: Platform }) {
-  const { engines, rows } = getEngineData(platform);
+export function EngineComparisonTable({ platform, locale = "en" }: { platform: Platform; locale?: Locale }) {
+  const { engines, rows } = getEngineData(platform, locale);
   const showCloudHint = platform === "mac" || platform === "windows" || platform === "other";
 
   return (
@@ -149,7 +155,7 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
           <thead>
             <tr className="border-b border-white/10">
               <th className="py-4 pr-4 text-left font-medium text-muted-foreground w-[180px]">
-                Feature
+                {t(locale, "engineComparison.featureHeader")}
               </th>
               {engines.map((engine) => (
                 <th key={engine.name} className="py-4 px-4 text-left">
@@ -232,9 +238,9 @@ export function EngineComparisonTable({ platform }: { platform: Platform }) {
 
       {showCloudHint && (
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Additional engines (Qwen3 ASR, Groq Whisper, OpenAI Whisper) are available as{" "}
-          <a href="/addons" className="underline underline-offset-4 hover:text-foreground">
-            add-ons
+          {t(locale, "engineComparison.cloudHint")}{" "}
+          <a href={localePath(locale, "/addons")} className="underline underline-offset-4 hover:text-foreground">
+            {t(locale, "engineComparison.cloudHintLink")}
           </a>
           .
         </p>

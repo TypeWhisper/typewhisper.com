@@ -1,15 +1,20 @@
 import { ChevronDown, Download, Monitor, Smartphone } from "lucide-react";
 import { macReleaseUrl, windowsReleaseUrl, iosTestFlightUrl } from "@/lib/platform-download";
+import { t, type Locale } from "@/i18n/index";
 
 export function PlatformDownloadMenu({
-  label = "Choose platform",
+  locale = "en",
+  label,
 }: {
+  locale?: Locale;
   label?: string;
 }) {
+  const resolvedLabel = label ?? t(locale, "platformMenu.label");
+
   return (
     <details className="group relative w-full sm:w-auto">
       <summary className="flex h-12 w-full cursor-pointer list-none items-center justify-center gap-2 rounded-lg border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:bg-accent sm:w-auto [&::-webkit-details-marker]:hidden">
-        {label}
+        {resolvedLabel}
         <ChevronDown className="size-4 transition-transform group-open:rotate-180" />
       </summary>
 
@@ -21,7 +26,7 @@ export function PlatformDownloadMenu({
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Download className="size-4" />
-          Download for macOS
+          {t(locale, "platformMenu.mac")}
         </a>
         <a
           href={windowsReleaseUrl}
@@ -30,7 +35,7 @@ export function PlatformDownloadMenu({
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Monitor className="size-4" />
-          Download for Windows
+          {t(locale, "platformMenu.win")}
         </a>
         <a
           href={iosTestFlightUrl}
@@ -39,7 +44,7 @@ export function PlatformDownloadMenu({
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Smartphone className="size-4" />
-          iOS Beta (TestFlight)
+          {t(locale, "platformMenu.ios")}
         </a>
       </div>
     </details>

@@ -1,0 +1,53 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "de";
+---
+
+<BaseLayout
+  title="Datenschutzerklaerung - TypeWhisper"
+  description="TypeWhisper Datenschutzerklaerung. Alle Daten bleiben auf deinem Geraet - keine Erfassung, kein Tracking."
+  canonicalPath="/de/privacy"
+  locale={locale}
+>
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
+    <h1 class="font-display text-3xl font-bold tracking-tight">Datenschutzerklaerung</h1>
+    <p class="mt-2 text-sm text-muted-foreground">Zuletzt aktualisiert: Februar 2026</p>
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Ueberblick</h2>
+        <p class="mt-2">TypeWhisper ist eine lokal arbeitende Desktop-App fuer macOS und Windows. Wir legen grossen Wert auf deine Privatsphaere und haben TypeWhisper so konzipiert, dass alle Daten vollstaendig auf deinem Geraet verarbeitet werden.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Datenerfassung</h2>
+        <p class="mt-2"><strong>TypeWhisper erfasst keine Daten.</strong> Alle Audioverarbeitung, Transkription und Speicherung erfolgt lokal auf deinem Geraet. Weder Audio- noch Transkriptionstext oder Nutzungsdaten werden jemals an einen Server gesendet.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Lokale Speicherung</h2>
+        <p class="mt-2">TypeWhisper speichert die folgenden Daten lokal im betriebssystemspezifischen App-Datenverzeichnis (z.B. Application Support unter macOS oder AppData unter Windows):</p>
+        <ul class="mt-2 space-y-1 list-disc pl-5">
+          <li>Transkriptionsverlauf (Text, Zeitstempel, App-Kontext)</li>
+          <li>Benutzerprofile und Einstellungen</li>
+          <li>Heruntergeladene KI-Modelle</li>
+        </ul>
+        <p class="mt-2">Diese Daten werden ausschliesslich auf deinem Geraet gespeichert und sind weder fuer uns noch fuer Dritte zugaenglich.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Netzwerkzugriff</h2>
+        <p class="mt-2">TypeWhisper verbindet sich nur mit dem Internet, um KI-Modelle von Hugging Face herunterzuladen. Nachdem die Modelle heruntergeladen wurden, kann die App vollstaendig offline genutzt werden.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Drittanbieter-Dienste</h2>
+        <p class="mt-2">TypeWhisper integriert keine Analyse-, Werbe- oder Tracking-Dienste.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Open Source</h2>
+        <p class="mt-2">TypeWhisper ist Open Source unter der GPLv3-Lizenz. Du kannst den gesamten Quellcode auf <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub</a> einsehen.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Kontakt</h2>
+        <p class="mt-2">Bei Fragen zu dieser Datenschutzerklaerung erstelle bitte ein Issue in unserer <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub-Organisation</a>.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

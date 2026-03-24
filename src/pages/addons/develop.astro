@@ -1,11 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import AddonsDevelop from "./_develop.tsx";
+// Redirect to locale-prefixed version
 ---
-<BaseLayout
-  title="Build a Plugin - TypeWhisper"
-  description="Learn how to build TypeWhisper plugins with Swift. Documentation for the Plugin SDK."
-  canonicalPath="/addons/develop"
->
-  <AddonsDevelop client:load />
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/addons/develop");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/addons/develop" />
+  </head>
+  <body></body>
+</html>

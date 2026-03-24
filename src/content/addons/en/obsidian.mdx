@@ -1,0 +1,45 @@
+---
+slug: obsidian
+name: Obsidian
+author: TypeWhisper
+version: 1.0.0
+icon: Gem
+description: Save transcriptions directly to your Obsidian vault with auto-detection, daily notes, and frontmatter support.
+categories:
+  - action
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://obsidian.md
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ObsidianPlugin
+---
+
+## About
+
+The Obsidian plugin lets you save transcriptions directly into your Obsidian vault. It works as an Action Plugin that automatically detects your vault location and creates notes from voice input. Supports daily notes integration, YAML frontmatter, and configurable file naming templates.
+
+## Features
+
+- Automatic vault detection
+- Configurable subfolder for transcriptions
+- Filename templates with placeholders: `{{DATE}}`, `{{TIME}}`, `{{APP}}`, `{{LANG}}`
+- Daily Note mode - append transcriptions to today's daily note
+- YAML frontmatter with metadata (date, language, source app)
+- Auto-export - automatically save every transcription without manual trigger
+
+## Configuration
+
+- **Vault Path** - Auto-detected from Obsidian or set manually.
+- **Subfolder** - Optional subfolder within the vault for transcriptions.
+- **Filename Template** - Customize filenames using `{{DATE}}`, `{{TIME}}`, `{{APP}}`, `{{LANG}}` placeholders.
+- **Daily Note** - Append transcriptions to today's daily note instead of creating separate files.
+- **Frontmatter** - Add YAML frontmatter with metadata to each note.
+- **Auto-Export** - Automatically save every transcription to Obsidian.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Obsidian plugin and select your vault (auto-detected or browse manually)
+3. Configure subfolder and filename template to your preference
+4. Optionally enable Daily Note mode and YAML frontmatter
+5. Use Obsidian as a target action in your custom prompts

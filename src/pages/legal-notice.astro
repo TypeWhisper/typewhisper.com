@@ -1,27 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+// Redirect to locale-prefixed version
 ---
-<BaseLayout
-  title="Legal Notice - TypeWhisper"
-  description="Legal notice (Impressum) for TypeWhisper."
-  canonicalPath="/legal-notice"
->
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">Legal Notice</h1>
-    <p class="mt-2 text-sm text-muted-foreground">Impressum</p>
-    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-      <section>
-        <h2 class="text-lg font-semibold text-foreground">Information pursuant to &sect; 5 TMG</h2>
-        <p class="mt-2">TypeWhisper is an open source project. For contact information and responsible parties, please refer to the project's <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub repository</a>.</p>
-      </section>
-      <section>
-        <h2 class="text-lg font-semibold text-foreground">Dispute Resolution</h2>
-        <p class="mt-2">The European Commission provides a platform for online dispute resolution (OS). We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
-      </section>
-      <section>
-        <h2 class="text-lg font-semibold text-foreground">Liability for Content</h2>
-        <p class="mt-2">As a service provider, we are responsible for our own content on these pages in accordance with general legislation pursuant to &sect; 7 (1) TMG. However, according to &sect;&sect; 8 to 10 TMG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.</p>
-      </section>
-    </div>
-  </div>
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/legal-notice");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/legal-notice" />
+  </head>
+  <body></body>
+</html>

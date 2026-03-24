@@ -1,11 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import AddonsIndex from "./_index.tsx";
+// Redirect to locale-prefixed version
 ---
-<BaseLayout
-  title="Add-ons - TypeWhisper"
-  description="Extend TypeWhisper with cloud transcription, LLM providers, automations, and more."
-  canonicalPath="/addons"
->
-  <AddonsIndex client:load />
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/addons");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/addons" />
+  </head>
+  <body></body>
+</html>

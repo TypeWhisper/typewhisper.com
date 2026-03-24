@@ -1,15 +1,18 @@
 ---
-import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsAPI from "./_api.tsx";
+// Redirect to locale-prefixed version
 ---
-<DocsLayout
-  title="HTTP API - Windows Beta - TypeWhisper"
-  description="Current TypeWhisper Windows beta HTTP API endpoints for local tool integration."
-  canonicalPath="/docs/windows/api"
-  platform="windows"
-  releaseStage="beta"
-  releaseTitle="Windows is currently a public beta."
-  releaseDescription="The Windows API is already useful for local tooling, but the surrounding product is still in beta."
->
-  <DocsWindowsAPI />
-</DocsLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/docs/windows/api");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/docs/windows/api" />
+  </head>
+  <body></body>
+</html>

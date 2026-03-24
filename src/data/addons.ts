@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import type { Locale } from "@/i18n/index";
 import communityData from "./community-plugins.json";
 
 export type PluginCategory =
@@ -61,29 +62,49 @@ export const platformLabels: Record<PluginPlatform, string> = {
   ios: "iOS",
 };
 
-const mdxModules = import.meta.glob<PluginModule>(
-  "../content/addons/*.mdx",
+const mdxModulesEn = import.meta.glob<PluginModule>(
+  "../content/addons/en/*.mdx",
+  { eager: true },
+);
+const mdxModulesDe = import.meta.glob<PluginModule>(
+  "../content/addons/de/*.mdx",
   { eager: true },
 );
 
-export const pluginModules: PluginModule[] = Object.values(mdxModules);
+function getModules(locale: Locale) {
+  return locale === "de" ? mdxModulesDe : mdxModulesEn;
+}
 
-const bundledPlugins: Plugin[] = pluginModules.map((mod) => mod.frontmatter);
+export function getPluginModules(locale: Locale = "en"): PluginModule[] {
+  return Object.values(getModules(locale));
+}
+
+export function getBundledPlugins(locale: Locale = "en"): Plugin[] {
+  return getPluginModules(locale).map((mod) => mod.frontmatter);
+}
 
 const communityPlugins: Plugin[] = (communityData as unknown as { plugins: Plugin[] }).plugins.map(
   (p) => ({ ...p, source: "community" as const }),
 );
 
-export const plugins: Plugin[] = [...bundledPlugins, ...communityPlugins];
-
-export function getPluginModule(slug: string): PluginModule | undefined {
-  return pluginModules.find((mod) => mod.frontmatter.slug === slug);
+export function getPlugins(locale: Locale = "en"): Plugin[] {
+  return [...getBundledPlugins(locale), ...communityPlugins];
 }
 
-export function getPlugin(slug: string): Plugin | undefined {
-  return plugins.find((p) => p.slug === slug);
+export function getPluginModule(slug: string, locale: Locale = "en"): PluginModule | undefined {
+  return getPluginModules(locale).find((mod) => mod.frontmatter.slug === slug);
+}
+
+export function getPlugin(slug: string, locale: Locale = "en"): Plugin | undefined {
+  return getPlugins(locale).find((p) => p.slug === slug);
 }
 
 export function isCommunityPlugin(plugin: Plugin): boolean {
   return plugin.source === "community";
 }
+
+/** @deprecated Use getPluginModules(locale) instead */
+export const pluginModules: PluginModule[] = Object.values(mdxModulesEn);
+
+/** @deprecated Use getPlugins(locale) instead */
+export const plugins: Plugin[] = [...pluginModules.map((mod) => mod.frontmatter), ...communityPlugins];

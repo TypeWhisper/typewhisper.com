@@ -18,16 +18,17 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface UseCaseHeroProps {
   useCase: UseCase;
+  backHref?: string;
 }
 
-export function UseCaseHero({ useCase }: UseCaseHeroProps) {
+export function UseCaseHero({ useCase, backHref = "/use-cases" }: UseCaseHeroProps) {
   const Icon = iconMap[useCase.icon];
 
   return (
     <section className="section-light py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Button variant="ghost" size="sm" asChild className="mb-8">
-          <a href="/use-cases">
+          <a href={backHref}>
             <ArrowLeft className="size-4" />
             All Use Cases
           </a>

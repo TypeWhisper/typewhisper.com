@@ -1,3 +1,5 @@
+import { t, screenshotPath, type Locale } from "@/i18n/index";
+
 interface Feature {
   title: string;
   description: string;
@@ -5,45 +7,48 @@ interface Feature {
   span?: "col-span-1" | "col-span-2";
 }
 
-const features: Feature[] = [
-  {
-    title: "Private by default.",
-    description: "Run speech-to-text locally on your Mac with no telemetry, no subscriptions, and no mandatory cloud dependency.",
-    span: "col-span-2",
-    screenshot: "/screenshots/mac/recording.png",
-  },
-  {
-    title: "System-wide dictation.",
-    description: "Use a global hotkey to dictate into any app, with fast insertion and configurable behavior.",
-    screenshot: "/screenshots/mac/general.png",
-  },
-  {
-    title: "Prompts and automation.",
-    description: "Process text with built-in prompt actions, then go deeper with the local API, CLI, and plugins as advanced surfaces.",
-    screenshot: "/screenshots/mac/prompts.png",
-  },
-  {
-    title: "Profiles, history, dictionary.",
-    description: "Keep app-aware settings, searchable history, correction rules, and snippets in one place.",
-    screenshot: "/screenshots/mac/profiles.png",
-  },
-  {
-    title: "File transcription.",
-    description: "Drop in audio or video files, batch transcribe them, and export subtitles with timestamps.",
-    screenshot: "/screenshots/mac/file-transcription.png",
-  },
-];
+function getFeatures(locale: Locale): Feature[] {
+  return [
+    {
+      title: t(locale, "features.private.title"),
+      description: t(locale, "features.private.description"),
+      span: "col-span-2",
+      screenshot: screenshotPath(locale, "/screenshots/mac/recording.png"),
+    },
+    {
+      title: t(locale, "features.dictation.title"),
+      description: t(locale, "features.dictation.description"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/general.png"),
+    },
+    {
+      title: t(locale, "features.prompts.title"),
+      description: t(locale, "features.prompts.description"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/prompts.png"),
+    },
+    {
+      title: t(locale, "features.profiles.title"),
+      description: t(locale, "features.profiles.description"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/profiles.png"),
+    },
+    {
+      title: t(locale, "features.transcription.title"),
+      description: t(locale, "features.transcription.description"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/file-transcription.png"),
+    },
+  ];
+}
 
-export function Features() {
+export function Features({ locale = "en" }: { locale?: Locale }) {
+  const features = getFeatures(locale);
 
   return (
     <section id="features" className="section-dark py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          The macOS 1.0 core.
+          {t(locale, "features.title")}
         </h2>
         <p className="reveal-fade-hidden mt-4 text-center text-lg text-[#86868b]">
-          The stable release focuses on dictation, transcription, prompts, profiles, history, dictionary, and snippets.
+          {t(locale, "features.subtitle")}
         </p>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2">

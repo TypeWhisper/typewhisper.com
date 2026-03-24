@@ -1,0 +1,48 @@
+---
+slug: openai-compatible
+name: OpenAI Compatible
+author: TypeWhisper
+version: 1.0.0
+icon: Plug
+description: Universal adapter for any OpenAI-compatible API - connect Ollama, LM Studio, vLLM, and more.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenAICompatiblePlugin
+---
+
+## About
+
+OpenAI Compatible is a universal adapter that connects TypeWhisper to any service with an OpenAI-compatible API. Use it with Ollama, LM Studio, vLLM, or any other compatible server for both transcription and LLM tasks. Models are loaded dynamically from the server's `/v1/models` endpoint or can be entered manually.
+
+## Features
+
+- Works with any OpenAI-compatible API (Ollama, LM Studio, vLLM, etc.)
+- Transcription and LLM support
+- Translation support
+- 99+ languages (depending on the model)
+- Dynamic model discovery via `/v1/models` endpoint
+- Manual model entry supported
+- Test connection function
+- No vendor lock-in
+
+## Transcription & LLM Models
+
+Models are loaded dynamically from the connected server. You can also enter model names manually.
+
+## Configuration
+
+- **Server URL** - The base URL of your OpenAI-compatible server (e.g. `http://localhost:11434/v1` for Ollama)
+- **API Key** - Optional, depends on the server
+
+## Setup
+
+1. Start your OpenAI-compatible server (e.g. Ollama, LM Studio)
+2. Open TypeWhisper Settings > Plugins
+3. Find the OpenAI Compatible plugin and click Configure
+4. Enter your server URL
+5. Use "Test Connection" to verify the connection
+6. Select OpenAI Compatible as your transcription engine or LLM provider

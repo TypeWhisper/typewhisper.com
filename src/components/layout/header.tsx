@@ -9,15 +9,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { cn } from "@/lib/utils";
 import { discordUrl } from "@/lib/platform-download";
 import { useState, useEffect, useRef, useCallback } from "react";
-
-const navLinks = [
-  { href: "/#features", label: "Features" },
-  { href: "/use-cases", label: "Use Cases" },
-  { href: "/addons", label: "Add-ons" },
-  { href: "/docs", label: "Docs" },
-  { href: "/benchmark", label: "Benchmark" },
-  { href: "/changelog", label: "Changelog" },
-];
+import { t, localePath, getAlternatePath, type Locale } from "@/i18n/index";
 
 function useHeaderState(isLanding: boolean) {
   const [scrolled, setScrolled] = useState(false);
@@ -60,11 +52,25 @@ function useHeaderState(isLanding: boolean) {
   return { scrolled, overDark, headerRef };
 }
 
-export function Header({ currentPath = "/" }: { currentPath?: string }) {
+function getNavLinks(locale: Locale) {
+  return [
+    { href: localePath(locale, "/#features"), label: t(locale, "nav.features") },
+    { href: localePath(locale, "/use-cases"), label: t(locale, "nav.useCases") },
+    { href: localePath(locale, "/addons"), label: t(locale, "nav.addons") },
+    { href: localePath(locale, "/docs"), label: t(locale, "nav.docs") },
+    { href: localePath(locale, "/benchmark"), label: t(locale, "nav.benchmark") },
+    { href: localePath(locale, "/changelog"), label: t(locale, "nav.changelog") },
+  ];
+}
+
+export function Header({ currentPath = "/", locale = "en" as Locale }: { currentPath?: string; locale?: Locale }) {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isLanding = currentPath === "/";
+  const isLanding = currentPath === localePath(locale, "/") || currentPath === `${localePath(locale, "/")}/`;
   const { scrolled, overDark, headerRef } = useHeaderState(isLanding);
+  const navLinks = getNavLinks(locale);
+  const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
+  const alternateLabel = locale === "de" ? "EN" : "DE";
 
   // On landing page: adapt to current section. On other pages: use theme.
   const isDark = isLanding ? overDark : theme === "dark";
@@ -84,7 +90,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
       )}
     >
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="/" className="flex items-center gap-3">
+        <a href={localePath(locale, "/")} className="flex items-center gap-3">
           <Logo
             textClassName={
               isLanding
@@ -101,7 +107,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
           {navLinks.map((link) => {
             const isActive =
               currentPath === link.href ||
-              (link.href !== "/#features" &&
+              (link.href !== localePath(locale, "/#features") &&
                 currentPath.startsWith(link.href));
 
             return (
@@ -130,12 +136,27 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
         </nav>
 
         <div className="flex items-center gap-1">
+          {/* Language Switcher */}
+          <a
+            href={alternatePath}
+            className={cn(
+              "px-2 py-1 text-xs font-semibold rounded-md transition-colors",
+              isLanding
+                ? isDark
+                  ? "text-white/50 hover:text-white"
+                  : "text-black/50 hover:text-black"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {alternateLabel}
+          </a>
+
           {!isLanding && (
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={toggleTheme}
-              aria-label="Toggle theme"
+              aria-label={t(locale, "nav.toggleTheme")}
             >
               {theme === "dark" ? (
                 <Sun className="size-4" />
@@ -150,7 +171,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
               href="https://ko-fi.com/seofood"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Sponsor"
+              aria-label={t(locale, "nav.sponsor")}
               className={cn(
                 isLanding &&
                   (isDark
@@ -203,7 +224,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
                 variant="ghost"
                 size="icon-sm"
                 className="md:hidden"
-                aria-label="Menu"
+                aria-label={t(locale, "nav.menu")}
               >
                 <Menu
                   className={cn(
@@ -223,7 +244,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
                     className={cn(
                       "px-3 py-2.5 text-sm font-medium rounded-md transition-colors hover:bg-accent",
                       currentPath === link.href ||
-                        (link.href !== "/#features" &&
+                        (link.href !== localePath(locale, "/#features") &&
                           currentPath.startsWith(link.href))
                         ? "text-foreground bg-accent"
                         : "text-muted-foreground"
@@ -233,13 +254,19 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
                   </a>
                 ))}
                 <a
+                  href={alternatePath}
+                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  {alternateLabel === "DE" ? "Deutsch" : "English"}
+                </a>
+                <a
                   href="https://ko-fi.com/seofood"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
                   <KofiIcon className="size-4" />
-                  Sponsor
+                  {t(locale, "nav.sponsor")}
                 </a>
                 <a
                   href={discordUrl}

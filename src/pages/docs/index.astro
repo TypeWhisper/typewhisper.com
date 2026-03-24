@@ -1,61 +1,18 @@
 ---
-import DocsLayout from "@/layouts/DocsLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+// Redirect to locale-prefixed version
 ---
-<DocsLayout
-  title="Documentation - TypeWhisper"
-  description="TypeWhisper documentation for the macOS 1.0 release, Windows beta, and iOS alpha."
-  canonicalPath="/docs"
->
-  <div>
-    <h1 class="font-display text-3xl font-bold tracking-tight">Documentation</h1>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      macOS is the stable 1.0 release. Windows is currently in public beta, and iOS is available as an early alpha preview.
-    </p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-3">
-      <a href="/docs/mac">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg>
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              macOS
-              <Badge variant="secondary" className="text-[10px]">1.0</Badge>
-            </CardTitle>
-            <CardDescription>Official documentation for the stable macOS release.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-      <a href="/docs/windows">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              Windows
-              <Badge variant="outline" className="text-[10px]">Beta</Badge>
-            </CardTitle>
-            <CardDescription>Public beta docs for early testers and feedback.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-      <a href="/docs/ios">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              iOS
-              <Badge variant="outline" className="text-[10px]">Alpha</Badge>
-            </CardTitle>
-            <CardDescription>Early alpha preview via TestFlight for iPhone and iPad.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-    </div>
-  </div>
-</DocsLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/docs");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/docs" />
+  </head>
+  <body></body>
+</html>

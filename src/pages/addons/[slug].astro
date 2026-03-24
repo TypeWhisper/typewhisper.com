@@ -1,122 +1,24 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import CommunityContent from "@/components/addons/community-content";
-import {
-  plugins,
-  getPluginModule,
-  isCommunityPlugin,
-  categoryLabels,
-  platformLabels,
-} from "@/data/addons";
-import {
-  Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
-  AudioLines, Waves, Mic, Plug, AudioWaveform, Gem, Terminal,
-  Captions, Cloud, HardDrive, Mountain, Search,
-  ArrowLeft, ExternalLink,
-} from "lucide-react";
-
-const iconMap: Record<string, any> = {
-  Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
-  AudioLines, Waves, Mic, Plug, AudioWaveform, Gem, Terminal,
-  Captions, Cloud, HardDrive, Mountain, Search,
-};
+// Redirect to locale-prefixed version
+// Keep getStaticPaths to generate all slug pages as redirects
+import { getPlugins } from "@/data/addons";
 
 export function getStaticPaths() {
-  return plugins.map((plugin) => ({
-    params: { slug: plugin.slug },
-    props: { plugin },
-  }));
+  return getPlugins().map((p) => ({ params: { slug: p.slug } }));
 }
 
-const { plugin } = Astro.props;
-const mod = getPluginModule(plugin.slug);
-const Icon = iconMap[plugin.icon];
-const isCommunity = isCommunityPlugin(plugin);
+const { slug } = Astro.params;
 ---
-<BaseLayout
-  title={`${plugin.name} - TypeWhisper Add-ons`}
-  description={plugin.description}
-  canonicalPath={`/addons/${plugin.slug}`}
->
-  <div class="py-16 sm:py-20">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6">
-      <a href="/addons" class="mb-6 inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
-        <ArrowLeft className="size-4" />
-        Back to Add-ons
-      </a>
-
-      <!-- Header -->
-      <div class="flex items-start gap-4">
-        <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
-          {plugin.iconUrl ? (
-            <img src={plugin.iconUrl} alt={plugin.name} class="size-8 rounded-lg" />
-          ) : Icon ? (
-            <Icon className="size-7 text-muted-foreground" />
-          ) : null}
-        </div>
-        <div>
-          <div class="flex items-center gap-3">
-            <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
-            <Badge variant="secondary" className="text-[10px]">
-              {plugin.source === "bundled" ? "Bundled" : "Community"}
-            </Badge>
-          </div>
-          <p class="mt-0.5 text-sm text-muted-foreground">
-            by {plugin.authorUrl ? (
-              <a href={plugin.authorUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{plugin.author}</a>
-            ) : plugin.author}
-          </p>
-          <div class="mt-2 flex flex-wrap gap-1.5">
-            {plugin.categories.map((cat) => (
-              <Badge variant="outline" className="text-[10px]">{categoryLabels[cat]}</Badge>
-            ))}
-            {plugin.platforms.map((p) => (
-              <Badge variant="outline" className="text-[10px] border-primary/30 text-primary/70">{platformLabels[p]}</Badge>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <!-- Links -->
-      {(plugin.apiDocsUrl || plugin.sourceUrl || plugin.homepage) && (
-        <div class="mt-6 flex flex-wrap gap-4">
-          {plugin.homepage && (
-            <a href={plugin.homepage} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> Homepage
-            </a>
-          )}
-          {plugin.apiDocsUrl && (
-            <a href={plugin.apiDocsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> API Docs
-            </a>
-          )}
-          {plugin.sourceUrl && (
-            <a href={plugin.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> Source Code
-            </a>
-          )}
-        </div>
-      )}
-
-      <!-- Screenshot -->
-      <div class="mt-8">
-        <img
-          src={`/screenshots/plugins/${plugin.slug}.png`}
-          alt={`${plugin.name} settings`}
-          class="rounded-2xl border shadow-lg"
-          onerror="this.parentElement.style.display='none'"
-        />
-      </div>
-
-      <!-- Content -->
-      {mod ? (
-        <div class="prose prose-neutral dark:prose-invert mt-10 max-w-none">
-          <mod.default />
-        </div>
-      ) : isCommunity ? (
-        <CommunityContent client:load plugin={plugin} />
-      ) : null}
-    </div>
-  </div>
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline define:vars={{ slug }}>
+      var lang = (navigator.language || "en").toLowerCase();
+      var locale = lang.startsWith("de") ? "de" : "en";
+      window.location.replace("/" + locale + "/addons/" + slug);
+    </script>
+    <meta http-equiv="refresh" content={`0;url=/en/addons/${slug}`} />
+  </head>
+  <body></body>
+</html>

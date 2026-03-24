@@ -1,0 +1,18 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsWindowsProfiles from "@/pages/docs/windows/_profiles.tsx";
+
+const locale = "de";
+---
+<DocsLayout
+  title="Profiles - Windows Beta - TypeWhisper"
+  description="Configure app-specific settings for language, engine, and task in the TypeWhisper Windows beta."
+  canonicalPath="/de/docs/windows/profiles"
+  locale={locale}
+  platform="windows"
+  releaseStage="beta"
+  releaseTitle="Windows is currently a public beta."
+  releaseDescription="Profile matching already works well for testing, but polish and edge-case handling are still evolving."
+>
+  <DocsWindowsProfiles />
+</DocsLayout>

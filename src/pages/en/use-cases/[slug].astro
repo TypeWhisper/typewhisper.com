@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getUseCaseModules } from "@/data/use-cases";
+import { UseCaseHero } from "@/components/use-cases/use-case-hero";
+import { UseCaseFeatures } from "@/components/use-cases/use-case-features";
+import { UseCaseHowItWorks } from "@/components/use-cases/use-case-how-it-works";
+import { UseCaseBenefits } from "@/components/use-cases/use-case-benefits";
+import { UseCaseCTA } from "@/components/use-cases/use-case-cta";
+
+export function getStaticPaths() {
+  return getUseCaseModules("en").map((mod) => ({
+    params: { slug: mod.frontmatter.slug },
+    props: { mod },
+  }));
+}
+
+const { mod } = Astro.props;
+const useCase = mod.frontmatter;
+const Content = mod.default;
+---
+<BaseLayout
+  title={`${useCase.name} - TypeWhisper`}
+  description={useCase.description}
+  canonicalPath={`/en/use-cases/${useCase.slug}`}
+  locale="en"
+>
+  <UseCaseHero useCase={useCase} backHref="/en/use-cases" />
+  <UseCaseFeatures features={useCase.features} />
+  <UseCaseHowItWorks steps={useCase.howItWorks} />
+  <UseCaseBenefits benefits={useCase.benefits} />
+  {Content && (
+    <section class="section-light py-16 sm:py-20">
+      <div class="prose prose-neutral dark:prose-invert mx-auto max-w-4xl px-4 sm:px-6">
+        <Content />
+      </div>
+    </section>
+  )}
+  <UseCaseCTA />
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+slug: assemblyai
+name: AssemblyAI
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud transcription using AssemblyAI's Universal models with real-time WebSocket streaming and REST fallback.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://www.assemblyai.com/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/AssemblyAIPlugin
+---
+
+## About
+
+AssemblyAI provides high-accuracy cloud-based speech recognition with real-time WebSocket streaming (v3 protocol) and an automatic REST fallback. The plugin supports two model tiers: Universal-3 Pro for top accuracy in 6 major languages, and Universal-2 for broader coverage across 37 languages.
+
+## Features
+
+- Real-time WebSocket streaming with interim and final results
+- Automatic REST fallback if streaming is unavailable
+- Language detection
+- Smart formatting
+- API key validation in settings
+
+## Transcription Models
+
+| Model | ID | Languages |
+| --- | --- | --- |
+| Universal-3 Pro | `universal-3-pro` | 6 (de, en, es, fr, it, pt) |
+| Universal-2 | `universal-2` | 37 |
+
+## Configuration
+
+- **API Key** - Create an API key at assemblyai.com. Requires an account.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the AssemblyAI plugin and click Configure
+3. Enter your AssemblyAI API key (validated automatically)
+4. Select your preferred model
+5. Select AssemblyAI as your transcription engine in Settings or in a profile

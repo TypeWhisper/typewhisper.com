@@ -1,0 +1,79 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t, localePath } from "@/i18n/index";
+import { discordUrl } from "@/lib/platform-download";
+
+const locale = "en";
+---
+
+<BaseLayout
+  title={`${t(locale, "support.title")} - TypeWhisper`}
+  description="Where to get help, report issues, and understand support expectations for TypeWhisper."
+  canonicalPath="/en/support"
+  locale={locale}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:py-16">
+    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "support.title")}</h1>
+    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
+      {t(locale, "support.subtitle")}
+    </p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">{t(locale, "support.mac.title")}</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          {t(locale, "support.mac.description")}
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/TypeWhisper/typewhisper-mac/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.mac.reportIssue")}</a>
+          <a href={localePath(locale, "/docs/mac/troubleshooting")} class="text-primary hover:underline">{t(locale, "support.mac.troubleshooting")}</a>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">{t(locale, "support.win.title")}</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          {t(locale, "support.win.description")}
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/TypeWhisper/typewhisper-win/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.win.reportIssue")}</a>
+          <a href={localePath(locale, "/docs/windows")} class="text-primary hover:underline">{t(locale, "support.win.docs")}</a>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">{t(locale, "support.ios.title")}</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          {t(locale, "support.ios.description")}
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/TypeWhisper/typewhisper-ios/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.reportIssue")}</a>
+          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.testflight")}</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">{t(locale, "support.beforeReport.title")}</h2>
+        <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+          <li>{t(locale, "support.beforeReport.item1")}</li>
+          <li>{t(locale, "support.beforeReport.item2")}</li>
+          <li>{t(locale, "support.beforeReport.item3")}</li>
+          <li>{t(locale, "support.beforeReport.item4")}</li>
+        </ul>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">{t(locale, "support.community.title")}</h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+          {t(locale, "support.community.description")}
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.community.discord")}</a>
+          <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.community.github")}</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

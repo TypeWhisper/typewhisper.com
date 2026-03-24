@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import type { Locale } from "@/i18n/index";
 
 export type UseCaseCategory = "app" | "workflow";
 
@@ -35,17 +36,35 @@ export const categoryLabels: Record<UseCaseCategory, string> = {
   workflow: "Workflow",
 };
 
-const mdxModules = import.meta.glob<UseCaseModule>(
-  "../content/use-cases/*.mdx",
+const mdxModulesEn = import.meta.glob<UseCaseModule>(
+  "../content/use-cases/en/*.mdx",
+  { eager: true },
+);
+const mdxModulesDe = import.meta.glob<UseCaseModule>(
+  "../content/use-cases/de/*.mdx",
   { eager: true },
 );
 
-export const useCaseModules: UseCaseModule[] = Object.values(mdxModules);
+function getModules(locale: Locale) {
+  return locale === "de" ? mdxModulesDe : mdxModulesEn;
+}
 
+export function getUseCaseModules(locale: Locale = "en"): UseCaseModule[] {
+  return Object.values(getModules(locale));
+}
+
+export function getUseCases(locale: Locale = "en"): UseCase[] {
+  return getUseCaseModules(locale).map((mod) => mod.frontmatter);
+}
+
+export function getUseCaseModule(slug: string, locale: Locale = "en"): UseCaseModule | undefined {
+  return getUseCaseModules(locale).find((mod) => mod.frontmatter.slug === slug);
+}
+
+/** @deprecated Use getUseCaseModules(locale) instead */
+export const useCaseModules: UseCaseModule[] = Object.values(mdxModulesEn);
+
+/** @deprecated Use getUseCases(locale) instead */
 export const useCases: UseCase[] = useCaseModules.map(
   (mod) => mod.frontmatter,
 );
-
-export function getUseCaseModule(slug: string): UseCaseModule | undefined {
-  return useCaseModules.find((mod) => mod.frontmatter.slug === slug);
-}

@@ -1,12 +1,21 @@
 import { useState } from "react";
-import { useCases, type UseCaseCategory } from "@/data/use-cases";
+import { useCases, getUseCases, type UseCase, type UseCaseCategory } from "@/data/use-cases";
+import type { Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/use-cases/category-filter";
 import { UseCaseCard } from "@/components/use-cases/use-case-card";
 
-export default function UseCasesIndex() {
+interface UseCasesIndexProps {
+  locale?: Locale;
+  allUseCases?: UseCase[];
+  basePath?: string;
+}
+
+export default function UseCasesIndex({ locale = "en", allUseCases, basePath = "/use-cases" }: UseCasesIndexProps) {
   const [category, setCategory] = useState<UseCaseCategory | "all">("all");
 
-  const filtered = useCases.filter(
+  const items = allUseCases ?? useCases;
+
+  const filtered = items.filter(
     (uc) => category === "all" || uc.category === category,
   );
 
@@ -28,7 +37,7 @@ export default function UseCasesIndex() {
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
           {filtered.map((uc) => (
-            <UseCaseCard key={uc.slug} useCase={uc} />
+            <UseCaseCard key={uc.slug} useCase={uc} basePath={basePath} />
           ))}
         </div>
 

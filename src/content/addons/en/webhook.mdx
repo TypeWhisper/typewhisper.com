@@ -1,0 +1,38 @@
+---
+slug: webhook
+name: Webhook
+author: TypeWhisper
+version: 1.0.0
+icon: Send
+description: Send transcriptions to any HTTP endpoint for custom integrations and automations.
+categories:
+  - post-processing
+platforms:
+  - mac
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/WebhookPlugin
+---
+
+## About
+
+The Webhook plugin sends every transcription as a POST request to a configurable URL. Use it to integrate TypeWhisper with your own services, Zapier, Make, n8n, or any HTTP-compatible automation platform. The payload includes the transcribed text along with context like the source app and URL.
+
+## Features
+
+- POST transcriptions to any URL
+- Includes app context (name, bundle ID, URL)
+- Works with Zapier, Make, n8n, and custom APIs
+- Configurable per-profile
+- JSON payload format
+
+## Configuration
+
+- **Webhook URL** - The HTTP(S) endpoint that will receive POST requests with transcription data.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Webhook plugin and click Configure
+3. Enter your webhook URL
+4. Transcriptions will be sent automatically after each dictation

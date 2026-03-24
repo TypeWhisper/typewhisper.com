@@ -1,12 +1,18 @@
 ---
-import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsMacFeatures from "./_features.tsx";
+// Redirect to locale-prefixed version
 ---
-<DocsLayout
-  title="Features - macOS - TypeWhisper"
-  description="TypeWhisper macOS features: dictation, streaming, AI prompts, dictionary, snippets, plugins, and more."
-  canonicalPath="/docs/mac/features"
-  platform="mac"
->
-  <DocsMacFeatures />
-</DocsLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/docs/mac/features");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/docs/mac/features" />
+  </head>
+  <body></body>
+</html>

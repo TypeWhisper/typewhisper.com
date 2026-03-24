@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UseCasesIndex from "@/pages/use-cases/_index.tsx";
+import { getUseCases } from "@/data/use-cases";
+
+const allUseCases = getUseCases("en");
+---
+<BaseLayout
+  title="Use Cases - TypeWhisper"
+  description="Discover how TypeWhisper fits into your daily workflow."
+  canonicalPath="/en/use-cases"
+  locale="en"
+>
+  <UseCasesIndex client:load locale="en" allUseCases={allUseCases} basePath="/en/use-cases" />
+</BaseLayout>

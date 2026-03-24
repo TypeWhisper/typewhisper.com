@@ -1,0 +1,16 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t } from "@/i18n/index";
+import ChangelogPage from "../../changelog/_index.tsx";
+
+const locale = "de";
+---
+
+<BaseLayout
+  title={t(locale, "changelog.title")}
+  description={t(locale, "changelog.description")}
+  canonicalPath="/de/changelog"
+  locale={locale}
+>
+  <ChangelogPage client:load />
+</BaseLayout>

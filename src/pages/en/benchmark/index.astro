@@ -1,0 +1,16 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t } from "@/i18n/index";
+import BenchmarkPage from "../../benchmark/_index.tsx";
+
+const locale = "en";
+---
+
+<BaseLayout
+  title={t(locale, "benchmark.title")}
+  description={t(locale, "benchmark.description")}
+  canonicalPath="/en/benchmark"
+  locale={locale}
+>
+  <BenchmarkPage client:only="react" />
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+slug: apple-speech
+name: Apple Speech
+author: TypeWhisper
+version: 1.0.0
+icon: Mic
+description: Native on-device transcription using Apple's Speech framework with real-time streaming results.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/SpeechAnalyzerPlugin
+---
+
+## About
+
+Apple Speech uses Apple's native Speech framework for fully on-device speech recognition. It provides real-time streaming with interim results and automatically manages language model downloads. Requires macOS 26.0 or later.
+
+## Features
+
+- Apple's native Speech framework
+- Fully on-device processing
+- Real-time streaming with interim results
+- Automatic language model download
+- No API key or cloud account needed
+
+## Transcription Models
+
+Models are managed automatically by the system - one model per language, downloaded on demand.
+
+## Configuration
+
+No API key required. Apple Speech runs entirely on-device.
+
+## Setup
+
+1. Make sure you are running macOS 26.0 or later
+2. Open TypeWhisper Settings > Plugins
+3. Find the Apple Speech plugin and enable it
+4. Language models are downloaded automatically when needed
+5. Select Apple Speech as your transcription engine in Settings or in a profile

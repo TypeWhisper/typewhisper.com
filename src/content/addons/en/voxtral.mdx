@@ -1,0 +1,43 @@
+---
+slug: voxtral
+name: Voxtral
+author: TypeWhisper
+version: 1.0.0
+icon: Waves
+description: Local speech recognition using Mistral's Voxtral model via MLX with streaming support.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/VoxtralPlugin
+---
+
+## About
+
+Voxtral brings Mistral's speech recognition model to your Mac via Apple's MLX framework. All processing runs locally with no cloud connection required. Voxtral supports 15 languages and offers real-time streaming transcription.
+
+## Features
+
+- Mistral's Voxtral model running locally via MLX
+- 15 languages supported
+- Real-time streaming transcription
+- No API key or cloud account needed
+
+## Transcription Models
+
+| Model | ID | Size |
+| --- | --- | --- |
+| Voxtral Mini 4B 4-bit | `voxtral-mini-4b-4bit` | ~2.5 GB |
+| Voxtral Mini 4B FP16 | `voxtral-mini-4b-fp16` | ~8 GB |
+
+## Configuration
+
+No API key required. Voxtral runs entirely on-device.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Voxtral plugin and enable it
+3. The model will be downloaded on first use
+4. Select Voxtral as your transcription engine in Settings or in a profile
