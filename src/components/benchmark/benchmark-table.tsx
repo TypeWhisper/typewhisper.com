@@ -9,7 +9,7 @@ import {
   providerDisplayName,
   providerTypeLabels,
 } from "@/data/benchmark";
-import type { SortKey } from "@/pages/benchmark/index";
+import type { SortKey } from "@/pages/benchmark/_index";
 
 const providerTypeBadgeClass: Record<string, string> = {
   cloud: "border-blue-500/30 text-blue-500",

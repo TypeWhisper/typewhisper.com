@@ -6,7 +6,7 @@ export default function DocsWindowsInstallation() {
           Installation
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Get TypeWhisper running on Windows.
+          Get the current Windows beta up and running.
         </p>
 
         <div className="mt-8 rounded-2xl bg-card p-6">
@@ -30,7 +30,7 @@ export default function DocsWindowsInstallation() {
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">Download</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Download the latest{" "}
+            Download the latest beta{" "}
             <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
               .exe
             </code>{" "}

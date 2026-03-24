@@ -50,7 +50,7 @@ const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     {structuredData && (
-      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     )}
     <!-- Theme init (prevent flash) -->
     <script is:inline>

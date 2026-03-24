@@ -1,6 +1,7 @@
-import { Menu, Moon, Sun, Github } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
+import { GitHubIcon } from "@/components/ui/github-icon";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
@@ -191,7 +192,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
                     : "text-black/50 hover:text-black")
               )}
             >
-              <Github className="size-4" />
+              <GitHubIcon className="size-4" />
             </a>
           </Button>
 
@@ -255,7 +256,7 @@ export function Header({ currentPath = "/" }: { currentPath?: string }) {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <Github className="size-4" />
+                  <GitHubIcon className="size-4" />
                   GitHub
                 </a>
               </nav>

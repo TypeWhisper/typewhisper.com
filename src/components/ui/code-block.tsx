@@ -1,18 +1,5 @@
-import { useEffect, useState } from "react";
-import { createHighlighter, type Highlighter } from "shiki";
+import { useState } from "react";
 import { Copy, Check } from "lucide-react";
-
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-function getHighlighter() {
-  if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      themes: ["github-dark", "github-light"],
-      langs: ["swift", "json", "bash", "shell"],
-    });
-  }
-  return highlighterPromise;
-}
 
 interface CodeBlockProps {
   code: string;
@@ -20,24 +7,7 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({ code, lang = "swift" }: CodeBlockProps) {
-  const [html, setHtml] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    getHighlighter().then((highlighter) => {
-      if (cancelled) return;
-      const result = highlighter.codeToHtml(code, {
-        lang,
-        themes: { dark: "github-dark", light: "github-light" },
-        defaultColor: "dark",
-      });
-      setHtml(result);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [code, lang]);
 
   function copyCode() {
     navigator.clipboard.writeText(code);
@@ -54,16 +24,12 @@ export function CodeBlock({ code, lang = "swift" }: CodeBlockProps) {
       >
         {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
       </button>
-      {html ? (
-        <div
-          className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:text-xs [&_.shiki]:!bg-transparent"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      ) : (
-        <pre className="overflow-x-auto p-4 text-xs">
-          <code>{code}</code>
-        </pre>
-      )}
+      <div className="border-b border-border/50 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+        {lang}
+      </div>
+      <pre className="overflow-x-auto p-4 text-xs leading-relaxed text-foreground">
+        <code>{code}</code>
+      </pre>
     </div>
   );
 }
