@@ -2,11 +2,14 @@
 import "@/index.css";
 import { Header } from "@/components/layout/header";
 import Footer from "@/components/layout/footer.astro";
+import type { Locale } from "@/i18n/index";
+import { ogLocale, localePath, getAlternatePath } from "@/i18n/index";
 
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
+  locale?: Locale;
   ogImage?: string;
   structuredData?: Record<string, unknown>;
 }
@@ -15,15 +18,19 @@ const {
   title,
   description,
   canonicalPath,
+  locale = "en",
   ogImage = "https://www.typewhisper.com/og-image.png",
   structuredData,
 } = Astro.props;
 
 const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
+const basePath = canonicalPath.replace(/^\/(en|de)/, "") || "/";
+const deUrl = `https://www.typewhisper.com${localePath("de", basePath)}`;
+const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -33,6 +40,10 @@ const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
@@ -40,7 +51,8 @@ const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content="TypeWhisper" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={ogLocale(locale)} />
+    <meta property="og:locale:alternate" content={ogLocale(locale === "de" ? "en" : "de")} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <!-- Twitter Card -->
@@ -64,11 +76,11 @@ const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
   </head>
   <body>
     <div class="flex min-h-screen flex-col">
-      <Header client:load currentPath={Astro.url.pathname} />
+      <Header client:load currentPath={Astro.url.pathname} locale={locale} />
       <main class="flex-1">
         <slot />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
     <!-- Scroll reveal (vanilla JS, replaces React useScrollReveal hook) -->
     <script is:inline>

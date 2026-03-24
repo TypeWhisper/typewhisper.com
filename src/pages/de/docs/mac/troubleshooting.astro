@@ -1,0 +1,15 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMacTroubleshooting from "@/pages/docs/mac/_troubleshooting.tsx";
+
+const locale = "de";
+---
+<DocsLayout
+  title="Troubleshooting - macOS - TypeWhisper"
+  description="Solutions for common TypeWhisper issues on macOS."
+  canonicalPath="/de/docs/mac/troubleshooting"
+  locale={locale}
+  platform="mac"
+>
+  <DocsMacTroubleshooting client:load />
+</DocsLayout>

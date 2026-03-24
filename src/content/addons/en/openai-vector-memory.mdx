@@ -1,0 +1,39 @@
+---
+slug: openai-vector-memory
+name: OpenAI Vector Memory
+author: TypeWhisper
+version: 1.0.0
+icon: Search
+description: Cloud-based semantic memory storage using the OpenAI Vector Store API.
+categories:
+  - memory
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenAIVectorMemoryPlugin
+---
+
+## About
+
+OpenAI Vector Memory provides semantic memory storage and retrieval for TypeWhisper using the OpenAI Vector Store API. Unlike the file-based memory plugin, this plugin uses vector embeddings for semantic search - meaning it can find relevant memories based on meaning, not just keyword matching.
+
+## Features
+
+- Semantic search using vector embeddings
+- Cloud-based storage via OpenAI Vector Store API
+- Finds contextually relevant memories even without exact keyword matches
+- Automatic embedding generation for stored content
+
+## Configuration
+
+- **API Key** - Your OpenAI API key with access to the Vector Store API.
+- **Vector Store ID** - The ID of the vector store to use. You can create one in the OpenAI dashboard.
+
+## Setup
+
+1. Create an OpenAI API key at platform.openai.com
+2. Create a vector store in the OpenAI dashboard or via the API
+3. Open TypeWhisper Settings > Plugins
+4. Find the OpenAI Vector Memory plugin and click Configure
+5. Enter your API key and vector store ID
+6. The plugin will automatically store and retrieve memories as you use TypeWhisper

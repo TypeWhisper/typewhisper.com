@@ -1,70 +1,18 @@
 ---
-import DocsLayout from "@/layouts/DocsLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+// Redirect to locale-prefixed version
 ---
-<DocsLayout
-  title="Windows Beta Documentation - TypeWhisper"
-  description="Public beta documentation for TypeWhisper on Windows."
-  canonicalPath="/docs/windows"
-  platform="windows"
-  releaseStage="beta"
-  releaseTitle="Windows is currently a public beta."
-  releaseDescription="Use these docs as guidance for testing and feedback. Expect polish gaps and behavior changes while the release stabilizes."
->
-  <div>
-    <div class="flex flex-wrap items-center gap-3">
-      <h1 class="font-display text-3xl font-bold tracking-tight">Windows Documentation</h1>
-      <Badge variant="outline">Beta</Badge>
-    </div>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      The Windows app is available for public testing. Core workflows are already useful, but this is not yet a 1.0-stable release.
-    </p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2">
-      <a href="/docs/windows/installation">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-            </div>
-            <CardTitle className="text-base">Installation</CardTitle>
-            <CardDescription>Beta install guide, system requirements, and first setup.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-      <a href="/docs/windows/features">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-            </div>
-            <CardTitle className="text-base">Features</CardTitle>
-            <CardDescription>Current beta feature set, platform constraints, and workflow notes.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-      <a href="/docs/windows/api">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <CardTitle className="text-base">HTTP API</CardTitle>
-            <CardDescription>Current beta API surface for local tooling and automation.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-      <a href="/docs/windows/profiles">
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M13.765 2.152C13.398 2 12.932 2 12 2s-1.398 0-1.765.152a2 2 0 0 0-1.083 1.083c-.092.223-.129.484-.143.863a1.617 1.617 0 0 1-.79 1.353 1.617 1.617 0 0 1-1.567.008c-.336-.178-.579-.276-.82-.308a2 2 0 0 0-1.478.497C4.013 5.935 3.757 6.4 3.244 7.33s-.769 1.395-.657 1.774a2 2 0 0 0 .395 1.58c.178.205.417.35.71.487.434.2.777.598.777 1.093v.008c0 .493-.345.893-.777 1.093-.293.138-.532.282-.71.487a2 2 0 0 0-.395 1.58c.112.38.625.844 1.113 1.774s.769 1.395 1.112 1.682a2 2 0 0 0 1.478.497c.241-.032.484-.13.82-.308a1.617 1.617 0 0 1 1.567.008c.483.28.77.795.79 1.353.014.379.051.64.143.863a2 2 0 0 0 1.083 1.083C10.602 22 11.068 22 12 22s1.398 0 1.765-.152a2 2 0 0 0 1.083-1.083c.092-.223.129-.484.143-.863.02-.558.307-1.074.79-1.353a1.617 1.617 0 0 1 1.567-.008c.336.178.579.276.82.308a2 2 0 0 0 1.478-.497c.34-.287.625-.752 1.112-1.682s.769-1.395.657-1.774a2 2 0 0 0-.395-1.58c-.178-.205-.417-.35-.71-.487C19.655 12.901 19.311 12.5 19.311 12.008v-.008c0-.495.344-.893.777-1.093.293-.138.532-.282.71-.487a2 2 0 0 0 .395-1.58c-.112-.38-.625-.844-1.113-1.774s-.769-1.395-1.112-1.682a2 2 0 0 0-1.478-.497c-.241.032-.484.13-.82.308a1.617 1.617 0 0 1-1.567-.008 1.617 1.617 0 0 1-.79-1.353c-.014-.379-.051-.64-.143-.863a2 2 0 0 0-1.083-1.083Z"/></svg>
-            </div>
-            <CardTitle className="text-base">Profiles</CardTitle>
-            <CardDescription>Per-app and per-site settings with current beta behavior.</CardDescription>
-          </CardHeader>
-        </Card>
-      </a>
-    </div>
-  </div>
-</DocsLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/docs/windows");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/docs/windows" />
+  </head>
+  <body></body>
+</html>

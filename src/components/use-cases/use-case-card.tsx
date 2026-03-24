@@ -17,14 +17,15 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface UseCaseCardProps {
   useCase: UseCase;
+  basePath?: string;
 }
 
-export function UseCaseCard({ useCase }: UseCaseCardProps) {
+export function UseCaseCard({ useCase, basePath = "/use-cases" }: UseCaseCardProps) {
   const Icon = iconMap[useCase.icon];
 
   return (
     <a
-      href={`/use-cases/${useCase.slug}`}
+      href={`${basePath}/${useCase.slug}`}
       className="group block rounded-2xl border bg-card p-6 transition-all hover:shadow-md"
     >
       <div className="flex items-start justify-between">

@@ -1,0 +1,40 @@
+---
+slug: linear
+name: Linear
+author: TypeWhisper
+version: 1.0.0
+icon: SquareKanban
+description: Create Linear issues from voice input using custom prompts and the Action Plugin system.
+categories:
+  - action
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://developers.linear.app/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/LinearPlugin
+---
+
+## About
+
+The Linear plugin lets you create issues in Linear directly from voice. Pair it with a custom prompt that extracts a title and description from your speech, then route the LLM output to Linear as an Action Plugin. The plugin uses Linear's GraphQL API to create issues in your specified team with proper formatting.
+
+## Features
+
+- Create Linear issues from voice
+- Automatic title/description extraction via LLM
+- Configurable team and project
+- Works with any LLM provider
+- GraphQL API integration
+
+## Configuration
+
+- **API Key** - Generate a personal API key in Linear Settings > API.
+- **Team ID** - The Linear team ID where issues will be created.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Linear plugin and click Configure
+3. Enter your Linear API key and team ID
+4. Create a custom prompt with Linear as the target action
+5. Dictate and your speech becomes a Linear issue

@@ -1,11 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import BenchmarkPage from "./_index.tsx";
+// Redirect to locale-prefixed version
 ---
-<BaseLayout
-  title="Benchmark - TypeWhisper"
-  description="Transcription accuracy, speed, and cost comparison across speech-to-text models."
-  canonicalPath="/benchmark"
->
-  <BenchmarkPage client:only="react" />
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/benchmark");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/benchmark" />
+  </head>
+  <body></body>
+</html>

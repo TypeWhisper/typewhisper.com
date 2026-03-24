@@ -1,39 +1,20 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Hero } from "@/components/landing/hero";
-import { Features } from "@/components/landing/features";
-import { HowItWorks } from "@/components/landing/how-it-works";
-import { EngineComparison } from "@/components/landing/engine-comparison";
-import { AppleDictationComparison } from "@/components/landing/apple-dictation-comparison";
-import { AvailablePlatforms } from "@/components/landing/platforms-coming-soon";
-import { DownloadCTA } from "@/components/landing/download-cta";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "TypeWhisper",
-  applicationCategory: "UtilitiesApplication",
-  operatingSystem: "macOS, Windows, iOS",
-  description: "TypeWhisper 1.0 is available for macOS. Windows beta and iOS alpha are available for early testing.",
-  url: "https://www.typewhisper.com",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-};
+// Root page: redirects to /de/ or /en/ based on browser language.
+// This page is only served when a user visits the bare domain.
 ---
-<BaseLayout
-  title="TypeWhisper 1.0 for macOS - Private Speech-to-Text"
-  description="TypeWhisper 1.0 is available for macOS. Windows beta and iOS alpha are available for early testing."
-  canonicalPath="/"
-  structuredData={structuredData}
->
-  <Hero />
-  <HowItWorks />
-  <Features />
-  <AppleDictationComparison />
-  <EngineComparison />
-  <AvailablePlatforms />
-  <DownloadCTA />
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>TypeWhisper - Redirecting...</title>
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var target = lang.startsWith("de") ? "/de/" : "/en/";
+        window.location.replace(target);
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/" />
+  </head>
+  <body></body>
+</html>

@@ -1,18 +1,27 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { plugins, type PluginCategory, type PluginPlatform, type PluginSource } from "@/data/addons";
+import { plugins, getPlugins, type Plugin, type PluginCategory, type PluginPlatform, type PluginSource } from "@/data/addons";
+import type { Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
 import { SourceFilter } from "@/components/addons/source-filter";
 import { AddonCard } from "@/components/addons/addon-card";
 import { Button } from "@/components/ui/button";
 
-export default function AddonsIndex() {
+interface AddonsIndexProps {
+  locale?: Locale;
+  allPlugins?: Plugin[];
+  basePath?: string;
+}
+
+export default function AddonsIndex({ locale = "en", allPlugins, basePath = "/addons" }: AddonsIndexProps) {
   const [category, setCategory] = useState<PluginCategory | "all">("all");
   const [platform, setPlatform] = useState<PluginPlatform | "all">("all");
   const [source, setSource] = useState<PluginSource | "all">("all");
 
-  const filtered = plugins.filter((p) => {
+  const items = allPlugins ?? plugins;
+
+  const filtered = items.filter((p) => {
     const matchesCategory =
       category === "all" || p.categories.includes(category);
     const matchesPlatform =
@@ -33,7 +42,7 @@ export default function AddonsIndex() {
             automations, and more.
           </p>
           <Button variant="link" asChild className="mt-2">
-            <a href="/addons/develop">
+            <a href={`${basePath}/develop`}>
               Build your own plugin <ArrowRight className="size-4" />
             </a>
           </Button>
@@ -47,7 +56,7 @@ export default function AddonsIndex() {
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((plugin) => (
-            <AddonCard key={plugin.slug} plugin={plugin} />
+            <AddonCard key={plugin.slug} plugin={plugin} basePath={basePath} />
           ))}
         </div>
 

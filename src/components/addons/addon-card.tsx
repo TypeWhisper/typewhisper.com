@@ -47,14 +47,15 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface AddonCardProps {
   plugin: Plugin;
+  basePath?: string;
 }
 
-export function AddonCard({ plugin }: AddonCardProps) {
+export function AddonCard({ plugin, basePath = "/addons" }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
 
   return (
     <a
-      href={`/addons/${plugin.slug}`}
+      href={`${basePath}/${plugin.slug}`}
       className="group block rounded-2xl border bg-card p-6 transition-all hover:shadow-md"
     >
       <div className="flex items-start justify-between">

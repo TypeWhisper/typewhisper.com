@@ -2,12 +2,16 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
 
-export default function AddonsDevelop() {
+interface AddonsDevelopProps {
+  backHref?: string;
+}
+
+export default function AddonsDevelop({ backHref = "/addons" }: AddonsDevelopProps) {
   return (
     <div className="py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <Button variant="ghost" size="sm" asChild className="mb-6">
-          <a href="/addons">
+          <a href={backHref}>
             <ArrowLeft className="size-4" />
             Back to Add-ons
           </a>

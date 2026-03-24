@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "de";
+---
+
+<BaseLayout
+  title="Impressum - TypeWhisper"
+  description="Impressum fuer TypeWhisper."
+  canonicalPath="/de/legal-notice"
+  locale={locale}
+>
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
+    <h1 class="font-display text-3xl font-bold tracking-tight">Impressum</h1>
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Angaben gemaess &sect; 5 TMG</h2>
+        <p class="mt-2">TypeWhisper ist ein Open-Source-Projekt. Kontaktinformationen und verantwortliche Personen findest du im <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub-Repository</a> des Projekts.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Streitschlichtung</h2>
+        <p class="mt-2">Die Europaeische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+      </section>
+      <section>
+        <h2 class="text-lg font-semibold text-foreground">Haftung fuer Inhalte</h2>
+        <p class="mt-2">Als Diensteanbieter sind wir gemaess &sect; 7 Abs. 1 TMG fuer eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach &sect;&sect; 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, uebermittelte oder gespeicherte fremde Informationen zu ueberwachen oder nach Umstaenden zu forschen, die auf eine rechtswidrige Taetigkeit hinweisen.</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

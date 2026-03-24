@@ -1,8 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { macReleaseUrl } from "@/lib/platform-download";
+import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
 
-export function Hero() {
+export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #f5f0ff 30%, #fbfbfd 70%)" }}>
       {/* Soft colored orbs */}
@@ -15,14 +16,13 @@ export function Hero() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl lg:text-7xl text-[#1d1d1f]">
-            TypeWhisper 1.0,
+            {t(locale, "hero.title.line1")}
             <br />
-            now on macOS.
+            {t(locale, "hero.title.line2")}
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-lg text-[#6e6e73]">
-            Private speech-to-text for your Mac with system-wide dictation,
-            file transcription, prompts, profiles, history, dictionary, and snippets.
+            {t(locale, "hero.subtitle")}
           </p>
 
           <div className="mt-8 flex items-center justify-center gap-5">
@@ -32,27 +32,27 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download for macOS
+                {t(locale, "hero.download")}
               </a>
             </Button>
 
             <Button variant="link-arrow" asChild>
-              <a href="/docs/mac" className="inline-flex items-center gap-1 text-[#0071e3]">
-                Read the macOS docs
+              <a href={localePath(locale, "/docs/mac")} className="inline-flex items-center gap-1 text-[#0071e3]">
+                {t(locale, "hero.readDocs")}
                 <ArrowRight className="size-4" />
               </a>
             </Button>
           </div>
 
           <p className="mt-4 text-sm text-[#6e6e73]">
-            Windows Beta and iOS Alpha are available for early testing.
+            {t(locale, "hero.platformNotice")}
           </p>
         </div>
 
         <div className="mt-16 reveal-scale-hidden">
           <img
-            src="/screenshots/mac/home.png"
-            alt="TypeWhisper for macOS"
+            src={screenshotPath(locale, "/screenshots/mac/home.png")}
+            alt={t(locale, "hero.imgAlt")}
             className="mx-auto max-w-3xl w-full"
           />
         </div>

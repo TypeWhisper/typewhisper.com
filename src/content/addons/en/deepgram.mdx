@@ -1,0 +1,45 @@
+---
+slug: deepgram
+name: Deepgram
+author: TypeWhisper
+version: 1.0.0
+icon: Radio
+description: Real-time cloud transcription via Deepgram's Nova models with WebSocket streaming and smart formatting.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://developers.deepgram.com/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/DeepgramPlugin
+---
+
+## About
+
+Deepgram provides fast, accurate cloud-based speech recognition using their Nova model family. The plugin uses WebSocket streaming for real-time transcription with smart formatting, automatic language detection, and support for 49+ languages.
+
+## Features
+
+- WebSocket streaming for real-time results
+- Smart formatting (punctuation, capitalization, numerals)
+- 49+ languages supported
+- Automatic language detection
+- Custom base URL support
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Nova 3 | `nova-3` |
+| Nova 2 | `nova-2` |
+
+## Configuration
+
+- **API Key** - Create an API key at console.deepgram.com.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Deepgram plugin and click Configure
+3. Enter your Deepgram API key
+4. Select Deepgram as your transcription engine in Settings or in a profile

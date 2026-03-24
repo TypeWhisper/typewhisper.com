@@ -1,17 +1,18 @@
 import { EngineComparisonTable } from "@/components/landing/engine-comparison-table";
 import { usePlatform } from "@/hooks/use-platform";
+import { t, type Locale } from "@/i18n/index";
 
-function getSubtitle(platform: string): string {
+function getSubtitle(locale: Locale, platform: string): string {
   switch (platform) {
     case "mac":
     case "other":
-      return "Six speech engines - three built-in, more via add-ons.";
+      return t(locale, "engineComparison.subtitle.mac");
     default:
-      return "Two speech recognition engines. All run entirely on-device.";
+      return t(locale, "engineComparison.subtitle.other");
   }
 }
 
-export function EngineComparison() {
+export function EngineComparison({ locale = "en" }: { locale?: Locale }) {
   const platform = usePlatform();
 
   return (
@@ -19,15 +20,15 @@ export function EngineComparison() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight sm:text-4xl">
-            Choose your engine
+            {t(locale, "engineComparison.title")}
           </h2>
           <p className="mt-4 text-lg text-[#86868b]">
-            {getSubtitle(platform)}
+            {getSubtitle(locale, platform)}
           </p>
         </div>
 
         <div className="mt-12">
-          <EngineComparisonTable platform={platform} />
+          <EngineComparisonTable platform={platform} locale={locale} />
         </div>
       </div>
     </section>

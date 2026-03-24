@@ -1,0 +1,15 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMacInstallation from "@/pages/docs/mac/_installation.tsx";
+
+const locale = "de";
+---
+<DocsLayout
+  title="Installation - macOS - TypeWhisper"
+  description="Install TypeWhisper 1.0 on macOS via direct download, Homebrew, or build from source."
+  canonicalPath="/de/docs/mac/installation"
+  locale={locale}
+  platform="mac"
+>
+  <DocsMacInstallation client:load />
+</DocsLayout>

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { iosTestFlightUrl, macReleaseUrl, windowsReleaseUrl } from "@/lib/platform-download";
+import { t, type Locale } from "@/i18n/index";
 
 interface PlatformInfo {
   name: string;
@@ -11,42 +12,46 @@ interface PlatformInfo {
   downloadLabel: string;
 }
 
-const platforms: PlatformInfo[] = [
-  {
-    name: "macOS",
-    description: "Stable 1.0 release for daily use on your Mac.",
-    status: "1.0 Stable",
-    statusClassName: "bg-emerald-500/10 text-emerald-700",
-    downloadHref: macReleaseUrl,
-    downloadLabel: "Download for macOS",
-  },
-  {
-    name: "Windows",
-    description: "Public beta for Windows 10 and 11. Expect ongoing polish and rapid iteration.",
-    status: "Beta",
-    statusClassName: "bg-amber-500/10 text-amber-700",
-    downloadHref: windowsReleaseUrl,
-    downloadLabel: "Download Windows Beta",
-  },
-  {
-    name: "iOS",
-    description: "Early alpha preview via TestFlight for iPhone and iPad.",
-    status: "Alpha",
-    statusClassName: "bg-rose-500/10 text-rose-700",
-    downloadHref: iosTestFlightUrl,
-    downloadLabel: "Join iOS Alpha",
-  },
-];
+function getPlatforms(locale: Locale): PlatformInfo[] {
+  return [
+    {
+      name: t(locale, "platforms.mac.name"),
+      description: t(locale, "platforms.mac.description"),
+      status: t(locale, "platforms.mac.status"),
+      statusClassName: "bg-emerald-500/10 text-emerald-700",
+      downloadHref: macReleaseUrl,
+      downloadLabel: t(locale, "platforms.mac.download"),
+    },
+    {
+      name: t(locale, "platforms.win.name"),
+      description: t(locale, "platforms.win.description"),
+      status: t(locale, "platforms.win.status"),
+      statusClassName: "bg-amber-500/10 text-amber-700",
+      downloadHref: windowsReleaseUrl,
+      downloadLabel: t(locale, "platforms.win.download"),
+    },
+    {
+      name: t(locale, "platforms.ios.name"),
+      description: t(locale, "platforms.ios.description"),
+      status: t(locale, "platforms.ios.status"),
+      statusClassName: "bg-rose-500/10 text-rose-700",
+      downloadHref: iosTestFlightUrl,
+      downloadLabel: t(locale, "platforms.ios.download"),
+    },
+  ];
+}
 
-export function AvailablePlatforms() {
+export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
+  const platforms = getPlatforms(locale);
+
   return (
     <section className="section-light py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl">
-          Available now, with clear release stages.
+          {t(locale, "platforms.title")}
         </h2>
         <p className="mt-4 text-center text-lg text-[#6e6e73]">
-          macOS is the supported 1.0 path. Windows and iOS remain preview releases.
+          {t(locale, "platforms.subtitle")}
         </p>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-3">

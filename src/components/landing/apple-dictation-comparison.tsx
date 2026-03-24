@@ -1,50 +1,51 @@
 import { usePlatform } from "@/hooks/use-platform";
+import { t, type Locale } from "@/i18n/index";
 
 interface Reason {
   title: string;
   description: string;
 }
 
-function getEngineTitle(platform: string): string {
+function getEngineTitle(locale: Locale, platform: string): string {
   switch (platform) {
     case "mac":
     case "other":
-      return "Six speech engines";
+      return t(locale, "appleDictation.engines.title.mac");
     default:
-      return "Two speech engines";
+      return t(locale, "appleDictation.engines.title.other");
   }
 }
 
-function getReasons(platform: string): Reason[] {
+function getReasons(locale: Locale, platform: string): Reason[] {
   return [
     {
-      title: "Per-app profiles",
-      description: "Automatically switch language, engine, and behavior per app or website.",
+      title: t(locale, "appleDictation.profiles.title"),
+      description: t(locale, "appleDictation.profiles.description"),
     },
     {
-      title: getEngineTitle(platform),
-      description: "Pick the right engine for speed, accuracy, or language support.",
+      title: getEngineTitle(locale, platform),
+      description: t(locale, "appleDictation.engines.description"),
     },
     {
-      title: "Audio and video files",
-      description: "Transcribe full files with drag and drop. Export subtitles as SRT or WebVTT.",
+      title: t(locale, "appleDictation.files.title"),
+      description: t(locale, "appleDictation.files.description"),
     },
     {
-      title: "History and automation",
-      description: "Searchable transcription history and a local HTTP API for workflows.",
+      title: t(locale, "appleDictation.history.title"),
+      description: t(locale, "appleDictation.history.description"),
     },
   ];
 }
 
-export function AppleDictationComparison() {
+export function AppleDictationComparison({ locale = "en" }: { locale?: Locale }) {
   const platform = usePlatform();
-  const reasons = getReasons(platform);
+  const reasons = getReasons(locale, platform);
 
   return (
     <section className="section-light py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl">
-          Why not just use built-in dictation?
+          {t(locale, "appleDictation.title")}
         </h2>
 
         <div className="mt-12">

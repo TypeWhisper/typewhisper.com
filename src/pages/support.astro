@@ -1,75 +1,18 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { discordUrl } from "@/lib/platform-download";
+// Redirect to locale-prefixed version
 ---
-
-<BaseLayout
-  title="Support - TypeWhisper"
-  description="Where to get help, report issues, and understand support expectations for TypeWhisper."
-  canonicalPath="/support"
->
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">Support</h1>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      Use the right support path for the platform and release stage you are on. macOS 1.0 is the stable release; Windows Beta and iOS Alpha are feedback-heavy preview builds.
-    </p>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-3">
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">macOS 1.0</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          Stable release support for installation issues, permissions, dictation, file transcription, prompts, profiles, history, dictionary, snippets, and bundled integrations.
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-mac/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Report a macOS issue</a>
-          <a href="/docs/mac/troubleshooting" class="text-primary hover:underline">Troubleshooting docs</a>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">Windows Beta</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          Expect to report bugs, edge cases, and rough UI behavior. Beta feedback is valuable, but some instability is normal at this stage.
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-win/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Report a Windows beta issue</a>
-          <a href="/docs/windows" class="text-primary hover:underline">Windows beta docs</a>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">iOS Alpha</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          The iOS build is still experimental. Missing features and frequent changes are expected while the mobile product is taking shape.
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-ios/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Report an iOS issue</a>
-          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Send TestFlight feedback</a>
-        </div>
-      </section>
-    </div>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-2">
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">Before you report a bug</h2>
-        <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
-          <li>Include the app version and your OS version.</li>
-          <li>Describe exactly what you expected and what happened instead.</li>
-          <li>List the active engine, model, prompt, or profile if relevant.</li>
-          <li>For macOS, attach the JSON diagnostics export from the Error Log when possible.</li>
-        </ul>
-      </section>
-
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">Community channels</h2>
-        <p class="mt-3 text-sm text-muted-foreground">
-          For setup questions, workflow ideas, and quick checks, the community Discord is usually the fastest path.
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Join Discord</a>
-          <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Browse project repositories</a>
-        </div>
-      </section>
-    </div>
-  </div>
-</BaseLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + "/support");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0;url=/en/support" />
+  </head>
+  <body></body>
+</html>
