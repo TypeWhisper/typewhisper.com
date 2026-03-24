@@ -1,0 +1,72 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
+---
+
+<BaseLayout
+  title="Release Status - TypeWhisper"
+  description="Current release stages for TypeWhisper on macOS, Windows, and iOS."
+  canonicalPath="/release-status"
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:py-16">
+    <h1 class="font-display text-3xl font-bold tracking-tight">Release Status</h1>
+    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
+      TypeWhisper ships on multiple platforms, but they are not all at the same maturity level. This page is the reference for what is stable today.
+    </p>
+
+    <div class="mt-10 space-y-6">
+      <ReleaseStageNotice
+        stage="stable"
+        title="macOS is the supported 1.0 release."
+        description="This is the official stable path for daily use, documentation, support, and launch messaging."
+      />
+
+      <ReleaseStageNotice
+        stage="beta"
+        title="Windows is currently a public beta."
+        description="Core workflows are available, but quality, polish, and compatibility are still being tightened before a stable release."
+      />
+
+      <ReleaseStageNotice
+        stage="alpha"
+        title="iOS is currently an alpha preview."
+        description="The mobile experience is still experimental and should be treated as early access rather than a broad release."
+      />
+    </div>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">macOS 1.0</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Stable direct-download release with the officially supported core workflow.
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/TypeWhisper/typewhisper-mac/releases/latest" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Download latest release</a>
+          <a href="/docs/mac" class="text-primary hover:underline">Read macOS docs</a>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">Windows Beta</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Public testing build for early adopters who want to try the Windows app and report issues.
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Download beta builds</a>
+          <a href="/docs/windows" class="text-primary hover:underline">Read Windows beta docs</a>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-6">
+        <h2 class="text-lg font-semibold">iOS Alpha</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Experimental TestFlight build for very early mobile testing and feedback.
+        </p>
+        <div class="mt-4 flex flex-col gap-2 text-sm">
+          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Join TestFlight</a>
+          <a href="/docs/ios" class="text-primary hover:underline">Read iOS alpha notes</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

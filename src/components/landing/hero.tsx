@@ -15,14 +15,14 @@ export function Hero() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl lg:text-7xl text-[#1d1d1f]">
-            Your voice,
+            TypeWhisper 1.0,
             <br />
-            your device.
+            now on macOS.
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-lg text-[#6e6e73]">
-            On-device speech-to-text for macOS, Windows, and iOS.
-            No cloud, no subscriptions, no data collection.
+            Private speech-to-text for your Mac with system-wide dictation,
+            file transcription, prompts, profiles, history, dictionary, and snippets.
           </p>
 
           <div className="mt-8 flex items-center justify-center gap-5">
@@ -32,17 +32,21 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download for free
+                Download for macOS
               </a>
             </Button>
 
             <Button variant="link-arrow" asChild>
-              <a href="/docs" className="inline-flex items-center gap-1 text-[#0071e3]">
-                Learn more
+              <a href="/docs/mac" className="inline-flex items-center gap-1 text-[#0071e3]">
+                Read the macOS docs
                 <ArrowRight className="size-4" />
               </a>
             </Button>
           </div>
+
+          <p className="mt-4 text-sm text-[#6e6e73]">
+            Windows Beta and iOS Alpha are available for early testing.
+          </p>
         </div>
 
         <div className="mt-16 reveal-scale-hidden">

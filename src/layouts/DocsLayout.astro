@@ -1,14 +1,26 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
 
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
   platform?: "mac" | "windows" | null;
+  releaseStage?: "stable" | "beta" | "alpha" | null;
+  releaseTitle?: string;
+  releaseDescription?: string;
 }
 
-const { title, description, canonicalPath, platform = null } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath,
+  platform = null,
+  releaseStage = null,
+  releaseTitle,
+  releaseDescription,
+} = Astro.props;
 
 const macSidebarLinks = [
   { href: "/docs/mac", label: "Overview" },
@@ -66,12 +78,26 @@ const currentPath = Astro.url.pathname;
           </nav>
         </aside>
         <main class="min-w-0 flex-1">
+          {releaseStage && releaseTitle && releaseDescription && (
+            <ReleaseStageNotice
+              stage={releaseStage}
+              title={releaseTitle}
+              description={releaseDescription}
+            />
+          )}
           <slot />
         </main>
       </div>
     </div>
   ) : (
     <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+      {releaseStage && releaseTitle && releaseDescription && (
+        <ReleaseStageNotice
+          stage={releaseStage}
+          title={releaseTitle}
+          description={releaseDescription}
+        />
+      )}
       <slot />
     </div>
   )}

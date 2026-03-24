@@ -7,7 +7,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-  Cell,
 } from "recharts";
 import { Button } from "@/components/ui/button";
 import type { ModelRanking } from "@/data/benchmark";
@@ -45,6 +44,7 @@ function AccuracyChart({ rankings }: { rankings: ModelRanking[] }) {
     name: chartLabel(r),
     value: r.avgWerNormalized * 100,
     providerType: r.providerType,
+    fill: providerTypeColors[r.providerType]?.fill ?? "#888",
   }));
 
   return (
@@ -75,14 +75,7 @@ function AccuracyChart({ rankings }: { rankings: ModelRanking[] }) {
             color: "var(--color-foreground)",
           }}
         />
-        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28}>
-          {data.map((entry, index) => (
-            <Cell
-              key={index}
-              fill={providerTypeColors[entry.providerType]?.fill ?? "#888"}
-            />
-          ))}
-        </Bar>
+        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -96,6 +89,7 @@ function SpeedChart({ rankings }: { rankings: ModelRanking[] }) {
     name: chartLabel(r),
     value: r.avgRealtimeFactor,
     providerType: r.providerType,
+    fill: providerTypeColors[r.providerType]?.fill ?? "#888",
   }));
 
   return (
@@ -137,14 +131,7 @@ function SpeedChart({ rankings }: { rankings: ModelRanking[] }) {
             position: "top",
           }}
         />
-        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28}>
-          {data.map((entry, index) => (
-            <Cell
-              key={index}
-              fill={providerTypeColors[entry.providerType]?.fill ?? "#888"}
-            />
-          ))}
-        </Bar>
+        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -160,6 +147,7 @@ function CostChart({ rankings }: { rankings: ModelRanking[] }) {
     name: chartLabel(r),
     value: r.costPerHourAudio,
     providerType: r.providerType,
+    fill: providerTypeColors[r.providerType]?.fill ?? "#888",
   }));
 
   return (
@@ -191,14 +179,7 @@ function CostChart({ rankings }: { rankings: ModelRanking[] }) {
               color: "var(--color-foreground)",
             }}
           />
-          <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28}>
-            {data.map((entry, index) => (
-              <Cell
-                key={index}
-                fill={providerTypeColors[entry.providerType]?.fill ?? "#888"}
-              />
-            ))}
-          </Bar>
+          <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28} />
         </BarChart>
       </ResponsiveContainer>
       {free.length > 0 && (

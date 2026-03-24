@@ -6,32 +6,32 @@ interface Feature {
 }
 
 const features: Feature[] = [
-    {
-      title: "100% on-device.",
-      description: "All processing happens locally. No cloud, no telemetry, no data collection. Your voice data never leaves your machine.",
-      span: "col-span-2",
-      screenshot: "/screenshots/mac/recording.png",
-    },
-    {
-      title: "Extend with add-ons.",
-      description: "Install extra speech engines, AI providers, and tools from the built-in marketplace.",
-      screenshot: "/screenshots/mac/plugins.png",
-    },
-    {
-      title: "Rewrite, translate, summarize.",
-      description: "8 built-in AI prompts for text processing. Connect Apple Intelligence, Groq, OpenAI, or Gemini.",
-      screenshot: "/screenshots/mac/prompts.png",
-    },
-    {
-      title: "Context-aware profiles.",
-      description: "Per-app and per-URL overrides for language, engine, and behavior. Profiles activate automatically.",
-      screenshot: "/screenshots/mac/profiles.png",
-    },
-    {
-      title: "Transcribe files.",
-      description: "Drag and drop audio or video files. Export as SRT or WebVTT subtitles with timestamps.",
-      screenshot: "/screenshots/mac/file-transcription.png",
-    },
+  {
+    title: "Private by default.",
+    description: "Run speech-to-text locally on your Mac with no telemetry, no subscriptions, and no mandatory cloud dependency.",
+    span: "col-span-2",
+    screenshot: "/screenshots/mac/recording.png",
+  },
+  {
+    title: "System-wide dictation.",
+    description: "Use a global hotkey to dictate into any app, with fast insertion and configurable behavior.",
+    screenshot: "/screenshots/mac/general.png",
+  },
+  {
+    title: "Prompts and automation.",
+    description: "Process text with built-in prompt actions, then go deeper with the local API, CLI, and plugins as advanced surfaces.",
+    screenshot: "/screenshots/mac/prompts.png",
+  },
+  {
+    title: "Profiles, history, dictionary.",
+    description: "Keep app-aware settings, searchable history, correction rules, and snippets in one place.",
+    screenshot: "/screenshots/mac/profiles.png",
+  },
+  {
+    title: "File transcription.",
+    description: "Drop in audio or video files, batch transcribe them, and export subtitles with timestamps.",
+    screenshot: "/screenshots/mac/file-transcription.png",
+  },
 ];
 
 export function Features() {
@@ -40,10 +40,10 @@ export function Features() {
     <section id="features" className="section-dark py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          Everything you need.
+          The macOS 1.0 core.
         </h2>
         <p className="reveal-fade-hidden mt-4 text-center text-lg text-[#86868b]">
-          Built for privacy, speed, and flexibility.
+          The stable release focuses on dictation, transcription, prompts, profiles, history, dictionary, and snippets.
         </p>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2">

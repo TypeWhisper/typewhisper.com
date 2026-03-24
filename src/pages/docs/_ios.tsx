@@ -14,11 +14,11 @@ export default function DocsIOS() {
             <h1 className="font-display text-3xl font-bold tracking-tight">
               iOS
             </h1>
-            <Badge variant="outline">Beta</Badge>
+            <Badge variant="outline">Alpha</Badge>
           </div>
           <p className="mt-2 max-w-md text-lg text-muted-foreground">
-            TypeWhisper for iOS is available as a beta through Apple TestFlight.
-            Get on-device speech-to-text on your iPhone and iPad.
+            TypeWhisper for iOS is currently an early alpha through Apple TestFlight.
+            It is an experimental preview of on-device speech-to-text for iPhone and iPad.
           </p>
 
           <Button size="lg" className="mt-8" asChild>
@@ -27,7 +27,7 @@ export default function DocsIOS() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Join TestFlight Beta
+              Join TestFlight Alpha
               <ArrowUpRight className="size-4" />
             </a>
           </Button>
@@ -68,12 +68,13 @@ export default function DocsIOS() {
 
             <div>
               <h2 className="font-display text-lg font-semibold">
-                Beta notice
+                Alpha notice
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                This is a beta release. You may encounter bugs or incomplete
-                features. Your feedback helps us improve - you can report issues
-                directly through TestFlight.
+                This build is still experimental. Expect missing features,
+                rough edges, and frequent changes while the mobile experience
+                takes shape. Feedback through TestFlight is especially helpful
+                at this stage.
               </p>
             </div>
           </div>
