@@ -6,15 +6,18 @@ import {
   getPlugins,
   getPluginModule,
   isCommunityPlugin,
-  categoryLabels,
-  platformLabels,
+  categoryKeys,
+  platformKeys,
 } from "@/data/addons";
+import { t } from "@/i18n/index";
 import {
   Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
   AudioLines, Waves, Mic, Plug, AudioWaveform, Gem, Terminal,
   Captions, Cloud, HardDrive, Mountain, Search,
   ArrowLeft, ExternalLink,
 } from "lucide-react";
+
+const locale = "de";
 
 const iconMap: Record<string, any> = {
   Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
@@ -44,7 +47,7 @@ const isCommunity = isCommunityPlugin(plugin);
     <div class="mx-auto max-w-4xl px-4 sm:px-6">
       <a href="/de/addons" class="mb-6 inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
         <ArrowLeft className="size-4" />
-        Back to Add-ons
+        {t(locale, "addons.backToAddons")}
       </a>
 
       <!-- Header -->
@@ -60,20 +63,20 @@ const isCommunity = isCommunityPlugin(plugin);
           <div class="flex items-center gap-3">
             <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
             <Badge variant="secondary" className="text-[10px]">
-              {plugin.source === "bundled" ? "Bundled" : "Community"}
+              {plugin.source === "bundled" ? t(locale, "addons.bundled") : t(locale, "addons.community")}
             </Badge>
           </div>
           <p class="mt-0.5 text-sm text-muted-foreground">
-            by {plugin.authorUrl ? (
+            {t(locale, "addons.by")} {plugin.authorUrl ? (
               <a href={plugin.authorUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{plugin.author}</a>
             ) : plugin.author}
           </p>
           <div class="mt-2 flex flex-wrap gap-1.5">
             {plugin.categories.map((cat) => (
-              <Badge variant="outline" className="text-[10px]">{categoryLabels[cat]}</Badge>
+              <Badge variant="outline" className="text-[10px]">{t(locale, categoryKeys[cat])}</Badge>
             ))}
             {plugin.platforms.map((p) => (
-              <Badge variant="outline" className="text-[10px] border-primary/30 text-primary/70">{platformLabels[p]}</Badge>
+              <Badge variant="outline" className="text-[10px] border-primary/30 text-primary/70">{t(locale, platformKeys[p])}</Badge>
             ))}
           </div>
         </div>
@@ -84,17 +87,17 @@ const isCommunity = isCommunityPlugin(plugin);
         <div class="mt-6 flex flex-wrap gap-4">
           {plugin.homepage && (
             <a href={plugin.homepage} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> Homepage
+              <ExternalLink className="size-3.5" /> {t(locale, "addons.homepage")}
             </a>
           )}
           {plugin.apiDocsUrl && (
             <a href={plugin.apiDocsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> API Docs
+              <ExternalLink className="size-3.5" /> {t(locale, "addons.apiDocs")}
             </a>
           )}
           {plugin.sourceUrl && (
             <a href={plugin.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> Source Code
+              <ExternalLink className="size-3.5" /> {t(locale, "addons.sourceCode")}
             </a>
           )}
         </div>

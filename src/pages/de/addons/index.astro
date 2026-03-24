@@ -2,14 +2,16 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AddonsIndex from "@/pages/addons/_index.tsx";
 import { getPlugins } from "@/data/addons";
+import { t } from "@/i18n/index";
 
-const allPlugins = getPlugins("de");
+const locale = "de";
+const allPlugins = getPlugins(locale);
 ---
 <BaseLayout
-  title="Add-ons - TypeWhisper"
-  description="Extend TypeWhisper with cloud transcription, LLM providers, automations, and more."
+  title={t(locale, "addons.title")}
+  description={t(locale, "addons.description")}
   canonicalPath="/de/addons"
-  locale="de"
+  locale={locale}
 >
-  <AddonsIndex client:load locale="de" allPlugins={allPlugins} basePath="/de/addons" />
+  <AddonsIndex client:load locale={locale} allPlugins={allPlugins} basePath="/de/addons" />
 </BaseLayout>

@@ -1,28 +1,26 @@
-export default function DocsMacAPI() {
+import { t, type Locale } from "@/i18n/index";
+
+export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
   return (
       <div>
         <h1 className="font-display text-3xl font-bold tracking-tight">
-          HTTP API
+          {t(locale, "docs.mac.api.title")}
         </h1>
         <p className="mt-3 text-muted-foreground">
-          TypeWhisper includes a local REST API for automation and integration
-          with external tools. In macOS 1.0, this is an advanced surface:
-          documented <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">/v1/*</code>{" "}
-          endpoints are intended to remain stable across 1.x. Enable it in
-          Settings &gt; Advanced (default port: 8978).
+          {t(locale, "docs.mac.api.intro1")}{" "}
+          <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">/v1/*</code>{" "}
+          {t(locale, "docs.mac.api.intro2")}
         </p>
 
         <div className="mt-4 rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
           <p className="text-sm text-muted-foreground">
-            <strong>Note:</strong> The API is disabled by default, binds to
-            localhost only, and is designed for local automation rather than
-            public network access.
+            <strong>{t(locale, "docs.mac.api.noteLabel")}</strong> {t(locale, "docs.mac.api.noteText")}
           </p>
         </div>
 
         <div className="mt-8 space-y-6">
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Check Status</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.checkStatus.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground"># Check if the API is ready</p>
               <p>curl http://localhost:8978/v1/status</p>
@@ -39,7 +37,7 @@ export default function DocsMacAPI() {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Transcribe Audio</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.transcribe.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground">
                 # Send an audio file for transcription
@@ -62,56 +60,32 @@ export default function DocsMacAPI() {
 }`}</pre>
             </div>
             <div className="mt-4">
-              <h3 className="text-sm font-semibold">Optional Parameters</h3>
+              <h3 className="text-sm font-semibold">{t(locale, "docs.mac.api.transcribe.optionalParams")}</h3>
               <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
                 <li>
                   <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                     language
                   </code>{" "}
-                  - ISO 639-1 code (e.g.,{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    en
-                  </code>
-                  ,{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    de
-                  </code>
-                  ). Omit for auto-detection.
+                  - {t(locale, "docs.mac.api.transcribe.params.language")}
                 </li>
                 <li>
                   <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                     task
                   </code>{" "}
-                  -{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    transcribe
-                  </code>{" "}
-                  (default) or{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    translate
-                  </code>{" "}
-                  (to English, WhisperKit only).
+                  - {t(locale, "docs.mac.api.transcribe.params.task")}
                 </li>
                 <li>
                   <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                     target_language
                   </code>{" "}
-                  - ISO 639-1 code for translation target language (e.g.,{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    de
-                  </code>
-                  ,{" "}
-                  <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                    fr
-                  </code>
-                  ). Used with Apple Translate.
+                  - {t(locale, "docs.mac.api.transcribe.params.targetLanguage")}
                 </li>
               </ul>
             </div>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">List Models</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.listModels.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground"># Get available models</p>
               <p>curl http://localhost:8978/v1/models</p>
@@ -130,7 +104,7 @@ export default function DocsMacAPI() {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">History</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.history.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground"># Search history</p>
               <p>curl "http://localhost:8978/v1/history?q=meeting&amp;limit=10&amp;offset=0"</p>
@@ -140,7 +114,7 @@ export default function DocsMacAPI() {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Profiles</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.profiles.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground"># List all profiles</p>
               <p>curl http://localhost:8978/v1/profiles</p>
@@ -150,7 +124,7 @@ export default function DocsMacAPI() {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Dictation Control</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.dictation.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <p className="text-muted-foreground"># Start dictation</p>
               <p>curl -X POST http://localhost:8978/v1/dictation/start</p>
@@ -162,9 +136,9 @@ export default function DocsMacAPI() {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Error Responses</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.errors.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              The API returns standard HTTP status codes with a JSON error body:
+              {t(locale, "docs.mac.api.errors.description")}
             </p>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
               <pre className="text-muted-foreground">{`{
@@ -173,27 +147,25 @@ export default function DocsMacAPI() {
 }`}</pre>
             </div>
             <div className="mt-4">
-              <h3 className="text-sm font-semibold">Common Error Codes</h3>
+              <h3 className="text-sm font-semibold">{t(locale, "docs.mac.api.errors.commonCodes")}</h3>
               <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
                 <li>
                   <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">
                     400
                   </code>{" "}
-                  - Missing or invalid file input, unsupported audio format, or
-                  invalid parameter value.
+                  - {t(locale, "docs.mac.api.errors.400")}
                 </li>
                 <li>
                   <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">
                     503
                   </code>{" "}
-                  - No model is currently loaded.
+                  - {t(locale, "docs.mac.api.errors.503")}
                 </li>
                 <li>
                   <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">
                     500
                   </code>{" "}
-                  - Internal transcription error. Check the app&apos;s logs or
-                  diagnostics export for more detail.
+                  - {t(locale, "docs.mac.api.errors.500")}
                 </li>
               </ul>
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { plugins, getPlugins, type Plugin, type PluginCategory, type PluginPlatform, type PluginSource } from "@/data/addons";
-import type { Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
 import { SourceFilter } from "@/components/addons/source-filter";
@@ -35,34 +35,33 @@ export default function AddonsIndex({ locale = "en", allPlugins, basePath = "/ad
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Add-ons
+            {t(locale, "addons.heading")}
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            Extend TypeWhisper with cloud transcription, LLM providers,
-            automations, and more.
+            {t(locale, "addons.subtitle")}
           </p>
           <Button variant="link" asChild className="mt-2">
             <a href={`${basePath}/develop`}>
-              Build your own plugin <ArrowRight className="size-4" />
+              {t(locale, "addons.buildPlugin")} <ArrowRight className="size-4" />
             </a>
           </Button>
         </div>
 
         <div className="mt-10 flex flex-col gap-3">
-          <CategoryFilter selected={category} onChange={setCategory} />
-          <PlatformFilter selected={platform} onChange={setPlatform} />
-          <SourceFilter selected={source} onChange={setSource} />
+          <CategoryFilter selected={category} onChange={setCategory} locale={locale} />
+          <PlatformFilter selected={platform} onChange={setPlatform} locale={locale} />
+          <SourceFilter selected={source} onChange={setSource} locale={locale} />
         </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((plugin) => (
-            <AddonCard key={plugin.slug} plugin={plugin} basePath={basePath} />
+            <AddonCard key={plugin.slug} plugin={plugin} basePath={basePath} locale={locale} />
           ))}
         </div>
 
         {filtered.length === 0 && (
           <p className="mt-12 text-center text-muted-foreground">
-            No add-ons found for this filter combination.
+            {t(locale, "addons.noResults")}
           </p>
         )}
       </div>

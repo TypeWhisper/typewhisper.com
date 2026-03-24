@@ -1,20 +1,22 @@
 import { Button } from "@/components/ui/button";
 import type { PluginSource } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
 
 const sources: (PluginSource | "all")[] = ["all", "bundled", "community"];
 
-const sourceLabels: Record<PluginSource | "all", string> = {
-  all: "All Sources",
-  bundled: "Bundled",
-  community: "Community",
+const sourceKeys: Record<PluginSource | "all", string> = {
+  all: "addons.allSources",
+  bundled: "addons.bundled",
+  community: "addons.community",
 };
 
 interface SourceFilterProps {
   selected: PluginSource | "all";
   onChange: (source: PluginSource | "all") => void;
+  locale?: Locale;
 }
 
-export function SourceFilter({ selected, onChange }: SourceFilterProps) {
+export function SourceFilter({ selected, onChange, locale = "en" }: SourceFilterProps) {
   return (
     <div className="flex flex-wrap gap-2">
       {sources.map((s) => (
@@ -25,7 +27,7 @@ export function SourceFilter({ selected, onChange }: SourceFilterProps) {
           className="rounded-full"
           onClick={() => onChange(s)}
         >
-          {sourceLabels[s]}
+          {t(locale, sourceKeys[s])}
         </Button>
       ))}
     </div>

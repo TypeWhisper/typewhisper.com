@@ -1,155 +1,133 @@
-export default function DocsMacProfiles() {
+import { t, screenshotPath, type Locale } from "@/i18n/index";
+
+export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) {
   return (
       <div>
         <h1 className="font-display text-3xl font-bold tracking-tight">
-          Profiles
+          {t(locale, "docs.mac.profiles.title")}
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Configure per-application transcription settings that activate
-          automatically.
+          {t(locale, "docs.mac.profiles.subtitle")}
         </p>
 
         <div className="mt-8 space-y-6">
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">How Profiles Work</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.howWork.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              When you start dictating, TypeWhisper matches the active
-              application&apos;s bundle ID against your profiles. For
-              browser-based apps, it also matches the current domain. If a match
-              is found, the profile&apos;s overrides are applied automatically.
-              The active profile name is shown as a badge in the recording
-              overlay.
+              {t(locale, "docs.mac.profiles.howWork.desc")}
             </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Matching</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.matching.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Profiles match using the app&apos;s bundle ID (e.g.,{" "}
+              {t(locale, "docs.mac.profiles.matching.desc1")}{" "}
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                 com.apple.mail
               </code>
-              ) and optionally a domain for browser tabs (e.g.,{" "}
+              {t(locale, "docs.mac.profiles.matching.desc2")}{" "}
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                 github.com
               </code>
-              ). Subdomain matching is supported - a rule for{" "}
+              {t(locale, "docs.mac.profiles.matching.desc3")}{" "}
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                 github.com
               </code>{" "}
-              also matches{" "}
+              {t(locale, "docs.mac.profiles.matching.desc4")}{" "}
               <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                 gist.github.com
               </code>
-              .
+              {t(locale, "docs.mac.profiles.matching.desc5")}
             </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Priority</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.priority.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              When multiple profiles could match, the most specific one wins:
+              {t(locale, "docs.mac.profiles.priority.desc")}
             </p>
             <ol className="mt-3 space-y-1.5 text-sm text-muted-foreground list-decimal list-inside">
-              <li>Bundle ID + Domain (most specific)</li>
-              <li>Bundle ID only</li>
-              <li>Default settings (fallback)</li>
+              <li>{t(locale, "docs.mac.profiles.priority.item1")}</li>
+              <li>{t(locale, "docs.mac.profiles.priority.item2")}</li>
+              <li>{t(locale, "docs.mac.profiles.priority.item3")}</li>
             </ol>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Creating a Profile</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.creating.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Go to Settings &gt; Profiles and click &quot;Add Profile&quot;.
-              Assign one or more applications, then configure your overrides:
+              {t(locale, "docs.mac.profiles.creating.desc")}
             </p>
             <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
               <li>
-                &bull; <strong>Language</strong> - Override the transcription
-                language
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.language.label")}</strong> - {t(locale, "docs.mac.profiles.creating.language.desc")}
               </li>
               <li>
-                &bull; <strong>Task</strong> - Transcribe or Translate
-                (WhisperKit only)
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.task.label")}</strong> - {t(locale, "docs.mac.profiles.creating.task.desc")}
               </li>
               <li>
-                &bull; <strong>Engine</strong> - WhisperKit, Parakeet TDT, Apple
-                SpeechAnalyzer (macOS 26+), or any add-on engine
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.engine.label")}</strong> - {t(locale, "docs.mac.profiles.creating.engine.desc")}
               </li>
               <li>
-                &bull; <strong>Whisper Mode</strong> - Boosted microphone gain
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.whisperMode.label")}</strong> - {t(locale, "docs.mac.profiles.creating.whisperMode.desc")}
               </li>
               <li>
-                &bull; <strong>Hotkey</strong> - Dedicated hotkey for this
-                profile
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.hotkey.label")}</strong> - {t(locale, "docs.mac.profiles.creating.hotkey.desc")}
               </li>
               <li>
-                &bull; <strong>Prompt</strong> - AI text processing prompt
-                override
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.prompt.label")}</strong> - {t(locale, "docs.mac.profiles.creating.prompt.desc")}
               </li>
               <li>
-                &bull; <strong>Prompt Provider</strong> - LLM provider override
-                for this profile
+                &bull; <strong>{t(locale, "docs.mac.profiles.creating.promptProvider.label")}</strong> - {t(locale, "docs.mac.profiles.creating.promptProvider.desc")}
               </li>
             </ul>
             <img
-              src="/screenshots/mac/profiles.png"
-              alt="Profile configuration with overrides"
+              src={screenshotPath(locale, "/screenshots/mac/profiles.png")}
+              alt={t(locale, "docs.mac.profiles.creating.imgAlt")}
               className="mt-4 rounded-xl"
             />
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Per-Profile Hotkeys</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.hotkeys.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Each profile can have its own dedicated hotkey. Press the
-              profile-specific hotkey to start recording with that profile&apos;s
-              settings, regardless of which app is currently active. This lets
-              you bypass automatic matching and force a specific configuration
-              on demand.
+              {t(locale, "docs.mac.profiles.hotkeys.desc")}
             </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Prompt Override</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.promptOverride.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Assign a custom AI prompt to any profile. When the profile
-              activates, transcribed text is automatically processed through the
-              assigned prompt before pasting. You can also override the LLM
-              provider per profile - for example, use Apple Intelligence for
-              quick notes but Groq for detailed summaries.
+              {t(locale, "docs.mac.profiles.promptOverride.desc")}
             </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Multiple Engines</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.multipleEngines.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              TypeWhisper can keep multiple engines loaded in memory at the same
-              time. When you switch between profiles that use different engines,
-              there is no loading delay. Configure which engines stay loaded in
-              Settings &gt; Advanced.
+              {t(locale, "docs.mac.profiles.multipleEngines.desc")}
             </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Example Setups</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.examples.title")}</h2>
             <div className="mt-4 space-y-3">
               <div className="rounded-md bg-background p-4">
-                <p className="text-sm font-semibold">Mail - German</p>
+                <p className="text-sm font-semibold">{t(locale, "docs.mac.profiles.examples.mail.title")}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Language: German, Engine: WhisperKit, Model: Large v3
+                  {t(locale, "docs.mac.profiles.examples.mail.desc")}
                 </p>
               </div>
               <div className="rounded-md bg-background p-4">
-                <p className="text-sm font-semibold">Slack - English</p>
+                <p className="text-sm font-semibold">{t(locale, "docs.mac.profiles.examples.slack.title")}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Language: English, Engine: Parakeet TDT v3
+                  {t(locale, "docs.mac.profiles.examples.slack.desc")}
                 </p>
               </div>
               <div className="rounded-md bg-background p-4">
-                <p className="text-sm font-semibold">Terminal - Whisper Mode</p>
+                <p className="text-sm font-semibold">{t(locale, "docs.mac.profiles.examples.terminal.title")}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Whisper Mode: Always on
+                  {t(locale, "docs.mac.profiles.examples.terminal.desc")}
                 </p>
               </div>
             </div>
