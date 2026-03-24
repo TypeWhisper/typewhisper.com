@@ -56,10 +56,24 @@ export const categoryLabels: Record<PluginCategory, string> = {
   memory: "Memory",
 };
 
+export const categoryKeys: Record<PluginCategory, string> = {
+  transcription: "addons.category.transcription",
+  llm: "addons.category.llm",
+  action: "addons.category.action",
+  "post-processing": "addons.category.postProcessing",
+  memory: "addons.category.memory",
+};
+
 export const platformLabels: Record<PluginPlatform, string> = {
   mac: "macOS",
   windows: "Windows",
   ios: "iOS",
+};
+
+export const platformKeys: Record<PluginPlatform, string> = {
+  mac: "addons.platform.macOS",
+  windows: "addons.platform.windows",
+  ios: "addons.platform.ios",
 };
 
 const mdxModulesEn = import.meta.glob<PluginModule>(

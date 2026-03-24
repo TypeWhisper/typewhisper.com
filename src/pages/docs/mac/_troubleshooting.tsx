@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
+import { t, type Locale } from "@/i18n/index";
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -21,79 +22,72 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export default function DocsMacTroubleshooting() {
+export default function DocsMacTroubleshooting({ locale = "en" }: { locale?: Locale }) {
   return (
       <div>
         <h1 className="font-display text-3xl font-bold tracking-tight">
-          Troubleshooting
+          {t(locale, "docs.mac.troubleshooting.title")}
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Common issues and how to fix them.
+          {t(locale, "docs.mac.troubleshooting.subtitle")}
         </p>
 
         {/* Text not inserted */}
         <div className="mt-8 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            Transcription works but text is not inserted
+            {t(locale, "docs.mac.troubleshooting.textInsert.title")}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            If you see streaming text in the notch indicator but nothing appears
-            in your target app, the issue is almost always a missing or stale{" "}
-            <strong className="text-foreground">Accessibility</strong>{" "}
-            permission. TypeWhisper needs two separate permissions: Microphone
-            (for recording) and Accessibility (for inserting text). Many users
-            only grant Microphone and miss the second one.
+            {t(locale, "docs.mac.troubleshooting.textInsert.desc1a")}{" "}
+            <strong className="text-foreground">{t(locale, "docs.mac.troubleshooting.textInsert.accessibility")}</strong>{" "}
+            {t(locale, "docs.mac.troubleshooting.textInsert.desc1b")}
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            Another sign of this issue is that your{" "}
-            <strong className="text-foreground">history stays empty</strong> -
-            history entries are only saved after text insertion succeeds.
+            {t(locale, "docs.mac.troubleshooting.textInsert.desc2a")}{" "}
+            <strong className="text-foreground">{t(locale, "docs.mac.troubleshooting.textInsert.historyEmpty")}</strong>{" "}
+            {t(locale, "docs.mac.troubleshooting.textInsert.desc2b")}
           </p>
 
-          <h3 className="mt-5 text-sm font-semibold">How to fix</h3>
+          <h3 className="mt-5 text-sm font-semibold">{t(locale, "docs.mac.troubleshooting.howToFix")}</h3>
           <ol className="mt-2 space-y-2 text-sm text-muted-foreground list-decimal list-inside">
             <li>
-              Open{" "}
+              {t(locale, "docs.mac.troubleshooting.textInsert.fix1a")}{" "}
               <strong className="text-foreground">
-                System Settings &gt; Privacy &amp; Security &gt; Accessibility
+                {t(locale, "docs.mac.troubleshooting.textInsert.fix1Path")}
               </strong>
             </li>
             <li>
-              If TypeWhisper is listed, remove it (click the minus button)
+              {t(locale, "docs.mac.troubleshooting.textInsert.fix2")}
             </li>
-            <li>Restart TypeWhisper - it will re-prompt for permission</li>
+            <li>{t(locale, "docs.mac.troubleshooting.textInsert.fix3")}</li>
           </ol>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            If that doesn't work, the TCC database entry may be stale. Reset it
-            via Terminal:
+            {t(locale, "docs.mac.troubleshooting.textInsert.tccDesc")}
           </p>
           <div className="mt-2 flex items-center justify-between rounded-md bg-background p-4 font-mono text-sm">
             <p>tccutil reset Accessibility com.typewhisper.mac</p>
             <CopyButton text="tccutil reset Accessibility com.typewhisper.mac" />
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            Then restart TypeWhisper and grant Accessibility permission when
-            prompted.
+            {t(locale, "docs.mac.troubleshooting.textInsert.tccAfter")}
           </p>
         </div>
 
         {/* Microphone permission */}
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            Microphone permission not working
+            {t(locale, "docs.mac.troubleshooting.microphone.title")}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            If TypeWhisper can't start recording, check{" "}
+            {t(locale, "docs.mac.troubleshooting.microphone.desc1a")}{" "}
             <strong className="text-foreground">
-              System Settings &gt; Privacy &amp; Security &gt; Microphone
+              {t(locale, "docs.mac.troubleshooting.microphone.desc1Path")}
             </strong>{" "}
-            and make sure TypeWhisper is listed and enabled.
+            {t(locale, "docs.mac.troubleshooting.microphone.desc1b")}
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            On macOS 26 (Tahoe) and later, the Microphone permission dialog only
-            appears once. If you denied it the first time, you need to enable it
-            manually in System Settings. If toggling doesn't help, reset it:
+            {t(locale, "docs.mac.troubleshooting.microphone.desc2")}
           </p>
           <div className="mt-2 flex items-center justify-between rounded-md bg-background p-4 font-mono text-sm">
             <p>tccutil reset Microphone com.typewhisper.mac</p>
@@ -104,44 +98,35 @@ export default function DocsMacTroubleshooting() {
         {/* Permissions after reinstall */}
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            Permissions broken after reinstall
+            {t(locale, "docs.mac.troubleshooting.reinstall.title")}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            macOS ties permissions to the app's code signature. After
-            reinstalling or updating TypeWhisper, old permission entries can
-            become stale - the toggle appears enabled but the permission doesn't
-            actually work.
+            {t(locale, "docs.mac.troubleshooting.reinstall.desc1")}
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            Fix: Remove TypeWhisper from both the Accessibility and Microphone
-            lists in System Settings, restart the app, and re-grant both
-            permissions.
+            {t(locale, "docs.mac.troubleshooting.reinstall.desc2")}
           </p>
         </div>
 
         {/* Setup wizard */}
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            Setup wizard keeps appearing
+            {t(locale, "docs.mac.troubleshooting.setupWizard.title")}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            The setup wizard appears automatically when Microphone permission is
-            not granted. Once you grant both Microphone and Accessibility
-            permissions and complete the wizard, it won't appear again.
+            {t(locale, "docs.mac.troubleshooting.setupWizard.desc")}
           </p>
         </div>
 
         {/* No audio input */}
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">No audio input detected</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.troubleshooting.noAudio.title")}</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            If TypeWhisper shows "No audio input available", make sure your
-            microphone is connected and selected. Go to{" "}
+            {t(locale, "docs.mac.troubleshooting.noAudio.desc1a")}{" "}
             <strong className="text-foreground">
-              Settings &gt; Recording
+              {t(locale, "docs.mac.troubleshooting.noAudio.settingsPath")}
             </strong>{" "}
-            and pick the correct input device. If using an external microphone,
-            check that it's recognized in System Settings &gt; Sound &gt; Input.
+            {t(locale, "docs.mac.troubleshooting.noAudio.desc1b")}
           </p>
         </div>
       </div>

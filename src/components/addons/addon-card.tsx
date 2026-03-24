@@ -21,7 +21,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { type Plugin, type PluginCategory, type PluginPlatform, categoryLabels, platformLabels } from "@/data/addons";
+import { type Plugin, type PluginCategory, type PluginPlatform, categoryKeys, platformKeys } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Zap,
@@ -48,9 +49,10 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 interface AddonCardProps {
   plugin: Plugin;
   basePath?: string;
+  locale?: Locale;
 }
 
-export function AddonCard({ plugin, basePath = "/addons" }: AddonCardProps) {
+export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
 
   return (
@@ -77,24 +79,24 @@ export function AddonCard({ plugin, basePath = "/addons" }: AddonCardProps) {
           </div>
         </div>
         <Badge variant="secondary" className="text-[10px]">
-          {plugin.source === "bundled" ? "Bundled" : "Community"}
+          {plugin.source === "bundled" ? t(locale, "addons.bundled") : t(locale, "addons.community")}
         </Badge>
       </div>
       <p className="mt-3 text-sm text-muted-foreground">{plugin.description}</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {plugin.categories.map((cat: PluginCategory) => (
           <Badge key={cat} variant="outline" className="text-[10px]">
-            {categoryLabels[cat]}
+            {t(locale, categoryKeys[cat])}
           </Badge>
         ))}
         {plugin.platforms.map((p: PluginPlatform) => (
           <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary/70">
-            {platformLabels[p]}
+            {t(locale, platformKeys[p])}
           </Badge>
         ))}
       </div>
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-        View Details <ArrowRight className="size-4" />
+        {t(locale, "addons.viewDetails")} <ArrowRight className="size-4" />
       </div>
     </a>
   );

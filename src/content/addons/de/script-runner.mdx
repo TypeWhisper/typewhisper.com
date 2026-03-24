@@ -4,7 +4,7 @@ name: Script Runner
 author: TypeWhisper
 version: 1.0.0
 icon: Terminal
-description: Run shell scripts on transcribed text for custom text transformations and processing pipelines.
+description: Führe Shell-Skripte auf transkribiertem Text aus für benutzerdefinierte Texttransformationen und Verarbeitungspipelines.
 categories:
   - post-processing
 platforms:
@@ -13,76 +13,76 @@ source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ScriptPlugin
 ---
 
-## About
+## Über
 
-The Script Runner plugin pipes transcribed text through any shell command or script. Your text is passed via stdin, and whatever the command writes to stdout becomes the final output. This gives you full flexibility to transform, filter, or enrich transcriptions using standard Unix tools, custom scripts, or any command-line program.
+Das Script Runner Plugin leitet transkribierten Text durch einen beliebigen Shell-Befehl oder ein Skript. Dein Text wird über stdin übergeben, und was der Befehl auf stdout schreibt, wird zur finalen Ausgabe. Das gibt dir volle Flexibilität, Transkriptionen mit Standard-Unix-Tools, eigenen Skripten oder beliebigen Kommandozeilenprogrammen zu transformieren, filtern oder anzureichern.
 
 ## Features
 
-- Run any shell command on transcribed text
-- Text flows through stdin/stdout - works with standard Unix pipes
-- Environment variables with context (app name, URL, language, profile)
-- Configurable timeout to prevent runaway scripts
-- Profile filter to limit execution to specific profiles
-- Execution log for debugging
+- Beliebige Shell-Befehle auf transkribiertem Text ausführen
+- Text fließt über stdin/stdout - funktioniert mit Standard-Unix-Pipes
+- Umgebungsvariablen mit Kontext (App-Name, URL, Sprache, Profil)
+- Konfigurierbares Timeout gegen unkontrollierte Skripte
+- Profilfilter zur Einschränkung auf bestimmte Profile
+- Ausführungsprotokoll zur Fehlersuche
 
-## Environment Variables
+## Umgebungsvariablen
 
-The following environment variables are available to your scripts:
+Die folgenden Umgebungsvariablen stehen deinen Skripten zur Verfügung:
 
-- **TYPEWHISPER_APP_NAME** - Name of the frontmost application (e.g. "Safari")
-- **TYPEWHISPER_BUNDLE_ID** - Bundle identifier of the frontmost app (e.g. "com.apple.Safari")
-- **TYPEWHISPER_URL** - Current URL from the browser, if available
-- **TYPEWHISPER_LANGUAGE** - Language code of the transcription (e.g. "en")
-- **TYPEWHISPER_PROFILE** - Name of the active TypeWhisper profile
+- **TYPEWHISPER_APP_NAME** - Name der aktiven Anwendung (z.B. "Safari")
+- **TYPEWHISPER_BUNDLE_ID** - Bundle-Identifier der aktiven App (z.B. "com.apple.Safari")
+- **TYPEWHISPER_URL** - Aktuelle URL aus dem Browser, falls verfügbar
+- **TYPEWHISPER_LANGUAGE** - Sprachcode der Transkription (z.B. "en")
+- **TYPEWHISPER_PROFILE** - Name des aktiven TypeWhisper-Profils
 
-## Examples
+## Beispiele
 
-**UPPERCASE** - Convert all text to uppercase:
+**GROSSBUCHSTABEN** - Allen Text in Großbuchstaben umwandeln:
 ```bash
 tr '[:lower:]' '[:upper:]'
 ```
 
-**Sentence Case** - Capitalize the first letter of each sentence:
+**Satzanfang groß** - Den ersten Buchstaben jedes Satzes groß schreiben:
 ```bash
 sed 's/\.\s*\([a-z]\)/. \U\1/g; s/^\([a-z]\)/\U\1/'
 ```
 
-**Search & Replace** - Replace specific words or phrases:
+**Suchen & Ersetzen** - Bestimmte Wörter oder Phrasen ersetzen:
 ```bash
 sed 's/old/new/g'
 ```
 
-**Append Timestamp** - Add the current date and time at the end:
+**Zeitstempel anhängen** - Aktuelles Datum und Uhrzeit am Ende anfügen:
 ```bash
 cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 ```
 
-**Remove Filler Words** - Strip out common filler words:
+**Füllwörter entfernen** - Gängige Füllwörter herausfiltern:
 ```bash
 sed 's/ \(uhm\|uh\|um\|like\|you know\) / /g; s/  */ /g'
 ```
 
-**Pipe to Clipboard + Return** - Copy text to clipboard and still return it:
+**In Zwischenablage kopieren + zurückgeben** - Text in die Zwischenablage kopieren und trotzdem zurückgeben:
 ```bash
 tee >(pbcopy)
 ```
 
-**Custom Script File** - Run an external script:
+**Externes Skript** - Ein externes Skript ausführen:
 ```bash
 ~/scripts/process.sh
 ```
 
-## Configuration
+## Konfiguration
 
-- **Script Command** - The shell command to execute. Text is passed via stdin, output is read from stdout.
-- **Timeout** - Maximum execution time in seconds before the script is killed (default: 10s).
-- **Profile Filter** - Optionally limit execution to specific profiles.
+- **Skript-Befehl** - Der auszuführende Shell-Befehl. Text wird über stdin übergeben, die Ausgabe wird von stdout gelesen.
+- **Timeout** - Maximale Ausführungszeit in Sekunden, bevor das Skript abgebrochen wird (Standard: 10s).
+- **Profilfilter** - Optional die Ausführung auf bestimmte Profile einschränken.
 
-## Setup
+## Einrichtung
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the Script Runner plugin and click Configure
-3. Enter your shell command or path to a script
-4. Optionally set a timeout and profile filter
-5. Transcriptions will be processed through your script automatically
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Script Runner Plugin und klicke auf Konfigurieren
+3. Gib deinen Shell-Befehl oder den Pfad zu einem Skript ein
+4. Setze optional ein Timeout und einen Profilfilter
+5. Transkriptionen werden automatisch durch dein Skript verarbeitet

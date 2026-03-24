@@ -4,7 +4,7 @@ name: Linear
 author: TypeWhisper
 version: 1.0.0
 icon: SquareKanban
-description: Create Linear issues from voice input using custom prompts and the Action Plugin system.
+description: Erstelle Linear Issues per Spracheingabe mit benutzerdefinierten Prompts und dem Action-Plugin-System.
 categories:
   - action
 platforms:
@@ -14,27 +14,27 @@ apiDocsUrl: https://developers.linear.app/docs
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/LinearPlugin
 ---
 
-## About
+## Über
 
-The Linear plugin lets you create issues in Linear directly from voice. Pair it with a custom prompt that extracts a title and description from your speech, then route the LLM output to Linear as an Action Plugin. The plugin uses Linear's GraphQL API to create issues in your specified team with proper formatting.
+Das Linear Plugin ermöglicht es dir, Issues in Linear direkt per Sprache zu erstellen. Kombiniere es mit einem benutzerdefinierten Prompt, der Titel und Beschreibung aus deiner Sprache extrahiert, und leite die LLM-Ausgabe als Action Plugin an Linear weiter. Das Plugin nutzt Linears GraphQL API, um Issues in deinem angegebenen Team mit korrekter Formatierung zu erstellen.
 
 ## Features
 
-- Create Linear issues from voice
-- Automatic title/description extraction via LLM
-- Configurable team and project
-- Works with any LLM provider
-- GraphQL API integration
+- Linear Issues per Sprache erstellen
+- Automatische Titel-/Beschreibungsextraktion per LLM
+- Konfigurierbares Team und Projekt
+- Funktioniert mit jedem LLM-Anbieter
+- GraphQL API Integration
 
-## Configuration
+## Konfiguration
 
-- **API Key** - Generate a personal API key in Linear Settings > API.
-- **Team ID** - The Linear team ID where issues will be created.
+- **API Key** - Erstelle einen persönlichen API-Schlüssel unter Linear Settings > API.
+- **Team ID** - Die Linear Team-ID, unter der Issues erstellt werden.
 
-## Setup
+## Einrichtung
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the Linear plugin and click Configure
-3. Enter your Linear API key and team ID
-4. Create a custom prompt with Linear as the target action
-5. Dictate and your speech becomes a Linear issue
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Linear Plugin und klicke auf Konfigurieren
+3. Gib deinen Linear API-Schlüssel und die Team-ID ein
+4. Erstelle einen benutzerdefinierten Prompt mit Linear als Ziel-Aktion
+5. Diktiere und deine Sprache wird zu einem Linear Issue

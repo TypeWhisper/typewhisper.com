@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
+import { t, type Locale } from "@/i18n/index";
 
-export default function DocsMacInstallation() {
+export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale }) {
   const [copied, setCopied] = useState(false);
 
   function copyCommand() {
@@ -15,56 +16,51 @@ export default function DocsMacInstallation() {
   return (
       <div>
         <h1 className="font-display text-3xl font-bold tracking-tight">
-          Installation
+          {t(locale, "docs.mac.installation.title")}
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Install the stable macOS 1.0 release.
+          {t(locale, "docs.mac.installation.subtitle")}
         </p>
 
         <div className="mt-8 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
-          <h2 className="text-lg font-semibold">macOS 1.0</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.release.title")}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            macOS is the officially supported TypeWhisper 1.0 release path.
-            The core workflow covers system-wide dictation, file transcription,
-            prompts, profiles, history, dictionary, snippets, and bundled
-            integrations.
+            {t(locale, "docs.mac.installation.release.desc")}
           </p>
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">System Requirements</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.requirements.title")}</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-            <li>&bull; macOS 14.0 (Sonoma) or later</li>
-            <li>&bull; Apple Silicon recommended, Intel supported</li>
-            <li>&bull; 8 GB RAM minimum, 16 GB+ recommended</li>
-            <li>&bull; Apple Translate features require macOS 15+</li>
-            <li>&bull; Apple Intelligence and SpeechAnalyzer require macOS 26+</li>
+            <li>&bull; {t(locale, "docs.mac.installation.requirements.macos")}</li>
+            <li>&bull; {t(locale, "docs.mac.installation.requirements.chip")}</li>
+            <li>&bull; {t(locale, "docs.mac.installation.requirements.ram")}</li>
+            <li>&bull; {t(locale, "docs.mac.installation.requirements.translate")}</li>
+            <li>&bull; {t(locale, "docs.mac.installation.requirements.intelligence")}</li>
           </ul>
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">Download</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.download.title")}</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Download the latest stable DMG from{" "}
+            {t(locale, "docs.mac.installation.download.descBefore")}{" "}
             <a
               href="https://github.com/TypeWhisper/typewhisper-mac/releases"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              typewhisper-mac releases
+              {t(locale, "docs.mac.installation.download.linkText")}
             </a>
-            {" "}or install via Homebrew below.
+            {" "}{t(locale, "docs.mac.installation.download.descAfter")}
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            Release candidates and daily builds stay on preview channels and do
-            not flow through Homebrew. For most users, the latest stable release
-            is the right choice.
+            {t(locale, "docs.mac.installation.download.channels")}
           </p>
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">Homebrew</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.homebrew.title")}</h2>
           <div className="mt-3 flex items-center justify-between rounded-md bg-background p-4 font-mono text-sm">
             <p>brew install --cask typewhisper/tap/typewhisper</p>
             <button
@@ -78,7 +74,7 @@ export default function DocsMacInstallation() {
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">Build from Source</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.buildFromSource.title")}</h2>
           <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm">
             <p className="text-muted-foreground"># Clone and open in Xcode</p>
             <p>git clone https://github.com/TypeWhisper/typewhisper-mac.git</p>
@@ -89,12 +85,9 @@ export default function DocsMacInstallation() {
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">First Launch</h2>
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.firstLaunch.title")}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            TypeWhisper appears as an icon in the menu bar. Open Settings to
-            download your first model, configure your hotkey, and grant
-            Microphone plus Accessibility access. Once that is done, you can
-            complete your first dictation immediately.
+            {t(locale, "docs.mac.installation.firstLaunch.desc")}
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ name: Webhook
 author: TypeWhisper
 version: 1.0.0
 icon: Send
-description: Send transcriptions to any HTTP endpoint for custom integrations and automations.
+description: Sende Transkriptionen an beliebige HTTP-Endpunkte für individuelle Integrationen und Automatisierungen.
 categories:
   - post-processing
 platforms:
@@ -14,25 +14,25 @@ source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/WebhookPlugin
 ---
 
-## About
+## Über
 
-The Webhook plugin sends every transcription as a POST request to a configurable URL. Use it to integrate TypeWhisper with your own services, Zapier, Make, n8n, or any HTTP-compatible automation platform. The payload includes the transcribed text along with context like the source app and URL.
+Das Webhook Plugin sendet jede Transkription als POST-Request an eine konfigurierbare URL. Nutze es, um TypeWhisper mit deinen eigenen Diensten, Zapier, Make, n8n oder jeder HTTP-kompatiblen Automatisierungsplattform zu verbinden. Die Payload enthält den transkribierten Text zusammen mit Kontext wie der Quell-App und URL.
 
 ## Features
 
-- POST transcriptions to any URL
-- Includes app context (name, bundle ID, URL)
-- Works with Zapier, Make, n8n, and custom APIs
-- Configurable per-profile
-- JSON payload format
+- Transkriptionen per POST an beliebige URLs senden
+- Enthält App-Kontext (Name, Bundle-ID, URL)
+- Funktioniert mit Zapier, Make, n8n und eigenen APIs
+- Pro Profil konfigurierbar
+- JSON-Payload-Format
 
-## Configuration
+## Konfiguration
 
-- **Webhook URL** - The HTTP(S) endpoint that will receive POST requests with transcription data.
+- **Webhook URL** - Der HTTP(S)-Endpunkt, der POST-Requests mit Transkriptionsdaten empfängt.
 
-## Setup
+## Einrichtung
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the Webhook plugin and click Configure
-3. Enter your webhook URL
-4. Transcriptions will be sent automatically after each dictation
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Webhook Plugin und klicke auf Konfigurieren
+3. Gib deine Webhook-URL ein
+4. Transkriptionen werden nach jedem Diktat automatisch gesendet
