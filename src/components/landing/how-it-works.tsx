@@ -14,9 +14,6 @@ export function HowItWorks({ locale = "en" }: { locale?: Locale }) {
           <div className="overflow-hidden rounded-2xl shadow-2xl">
             <video
               className="w-full"
-              autoPlay
-              loop
-              muted
               playsInline
               controls
               preload="metadata"
