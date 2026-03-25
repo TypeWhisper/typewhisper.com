@@ -1,0 +1,45 @@
+---
+slug: gladia
+name: Gladia
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud-Transkription in Echtzeit mit Gladia Solaria plus automatischem Fallback auf Pre-Recorded-Verarbeitung.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.gladia.io
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/pull/126
+---
+
+## Über
+
+Gladia ergänzt TypeWhisper um eine dedizierte Cloud-Transkriptions-Engine. Das in PR #126 eingeführte macOS-Plugin nutzt Gladias Solaria-API für Live-WebSocket-Streaming und fällt automatisch auf Upload plus Polling zurück, wenn Live-Transkription nicht verfügbar ist.
+
+## Features
+
+- Echtzeit-Transkription per WebSocket-Streaming
+- Automatischer Fallback auf Pre-Recorded-Upload und Polling
+- Sichere Speicherung des API-Schlüssels im macOS-Keychain
+- Eingebaute API-Key-Validierung in den Einstellungen
+- Sprachbewusste Transkription mit breiter Mehrsprachigkeits-Unterstützung
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| Solaria-1 | `solaria-1` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel in deinem Gladia-Konto und füge ihn in die Plugin-Einstellungen ein.
+- **Modell** - Wähle im Plugin-Dialog `Solaria-1` aus.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Integrationen
+2. Finde Gladia unter Transkriptions-Engines und klicke auf Konfigurieren
+3. Gib deinen Gladia API-Schlüssel ein und speichere ihn
+4. Wähle Gladia als Transkriptions-Engine aus
