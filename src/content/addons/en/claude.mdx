@@ -1,0 +1,49 @@
+---
+slug: claude
+name: Claude
+author: TypeWhisper
+version: 1.0.0
+icon: Brain
+description: LLM processing via Anthropic's Claude API for custom prompts and text workflows.
+categories:
+  - llm
+platforms:
+  - mac
+source: bundled
+id: com.typewhisper.claude
+minAppVersion: 0.9.0
+apiDocsUrl: https://platform.claude.com/docs/en/docs/models-overview
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ClaudePlugin
+principalClass: ClaudePlugin
+---
+
+## About
+
+Claude adds Anthropic's LLM capabilities to TypeWhisper for custom prompts and text workflows. Unlike OpenAI-compatible providers, this plugin talks directly to Anthropic's native API and uses the Messages API to process your prompt output.
+
+## Features
+
+- API key authentication via Anthropic
+- API keys stored securely in the macOS Keychain
+- Model picker in plugin settings
+- Usable as the LLM provider for prompt-based workflows
+
+## LLM Models
+
+| Model | ID |
+| --- | --- |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6` |
+| Claude Opus 4.6 | `claude-opus-4-6` |
+| Claude Haiku 4.5 | `claude-haiku-4-5-20251001` |
+
+## Configuration
+
+- **API Key** - Create an API key in the Anthropic Console on the Claude platform.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Claude plugin and click Configure
+3. Enter your Claude API key
+4. Select a Claude model
+5. Choose Claude as your LLM provider in a custom prompt

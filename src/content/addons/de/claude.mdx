@@ -1,0 +1,49 @@
+---
+slug: claude
+name: Claude
+author: TypeWhisper
+version: 1.0.0
+icon: Brain
+description: LLM-Verarbeitung über Anthropics Claude-API für benutzerdefinierte Prompts und Text-Workflows.
+categories:
+  - llm
+platforms:
+  - mac
+source: bundled
+id: com.typewhisper.claude
+minAppVersion: 0.9.0
+apiDocsUrl: https://platform.claude.com/docs/en/docs/models-overview
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ClaudePlugin
+principalClass: ClaudePlugin
+---
+
+## Über
+
+Claude bringt Anthropics LLM-Fähigkeiten in TypeWhisper für benutzerdefinierte Prompts und textbasierte Workflows. Anders als OpenAI-kompatible Anbieter spricht dieses Plugin direkt mit der nativen Anthropic-API und nutzt die Messages API zur Verarbeitung deiner Prompt-Ausgabe.
+
+## Features
+
+- API-Schlüssel-Authentifizierung über Anthropic
+- API-Schlüssel werden sicher im macOS Schlüsselbund gespeichert
+- LLM-Modellauswahl in den Plugin-Einstellungen
+- Nutzbar als LLM-Anbieter für promptbasierte Workflows
+
+## LLM-Modelle
+
+| Modell | ID |
+| --- | --- |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6` |
+| Claude Opus 4.6 | `claude-opus-4-6` |
+| Claude Haiku 4.5 | `claude-haiku-4-5-20251001` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel in der Anthropic Console auf der Claude-Plattform.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Claude-Plugin und klicke auf Konfigurieren
+3. Gib deinen Claude API-Schlüssel ein
+4. Wähle ein Claude-Modell
+5. Wähle Claude als LLM-Anbieter in einem benutzerdefinierten Prompt
