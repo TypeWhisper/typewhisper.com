@@ -1,0 +1,61 @@
+---
+slug: fireworks
+name: Fireworks AI
+author: TypeWhisper
+version: 1.0.0
+icon: Flame
+description: Schnelle Cloud-Transkription und LLM-Inferenz mit Fireworks AIs optimiertem Model-Serving.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.fireworks.ai
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/FireworksPlugin
+---
+
+## Über
+
+Fireworks AI ist eine Cloud-Inferenzplattform, die schnelles, produktionsreifes Model-Serving bietet. Die Plattform hostet Whisper-Modelle für Sprache-zu-Text und einen umfangreichen Katalog offener LLM-Modelle für Textverarbeitung. Nutze Fireworks AI für schnelle Cloud-Transkription mit Übersetzungsunterstützung oder als LLM-Anbieter mit Zugriff auf Hunderte von Modellen.
+
+## Features
+
+- Whisper V3 und V3 Turbo Transkriptionsmodelle
+- Großer Katalog von LLM-Modellen mit dynamischer Aktualisierung
+- Beliebige Modell-ID von fireworks.ai/models eingeben
+- Streaming-Transkription
+- Übersetzungsunterstützung für über 100 Sprachen
+- API-Schlüssel sicher im macOS-Schlüsselbund gespeichert
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| Whisper V3 | `whisper-v3` |
+| Whisper V3 Turbo | `whisper-v3-turbo` |
+
+## LLM-Modelle
+
+| Modell | ID |
+| --- | --- |
+| DeepSeek V3p1 | `accounts/fireworks/models/deepseek-v3p1` |
+| Llama 3.3 70B | `accounts/fireworks/models/llama-v3p3-70b-instruct` |
+| Llama 3.1 8B | `accounts/fireworks/models/llama-v3p1-8b-instruct` |
+| Qwen 2.5 72B | `accounts/fireworks/models/qwen2p5-72b-instruct` |
+| GPT-OSS 120B | `accounts/fireworks/models/gpt-oss-120b` |
+| Kimi K2.5 | `accounts/fireworks/models/kimi-k2p5` |
+
+Nutze den Aktualisieren-Button, um die neuesten Modelle von Fireworks AI zu laden. Du kannst auch jede Modell-ID von [fireworks.ai/models](https://fireworks.ai/models) direkt eingeben.
+
+## Konfiguration
+
+- **API-Schlüssel** - Registriere dich auf fireworks.ai und erstelle einen API-Schlüssel in der Konsole. Dein Schlüssel wird sicher im macOS-Schlüsselbund gespeichert.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Fireworks AI-Plugin und klicke auf Konfigurieren
+3. Gib deinen Fireworks AI API-Schlüssel ein
+4. Wähle ein Transkriptionsmodell oder ein LLM-Modell
+5. Wähle Fireworks AI als Transkriptions-Engine oder LLM-Anbieter
