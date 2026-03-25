@@ -1,0 +1,46 @@
+---
+slug: elevenlabs
+name: ElevenLabs
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud transcription via ElevenLabs Scribe v2 with low-latency realtime streaming and REST fallback.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://elevenlabs.io/docs/capabilities/speech-to-text
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/71404b58d738f4da9b7c4d30b16dc4c11daa6eb5/Plugins/ElevenLabsPlugin
+---
+
+## About
+
+ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. The plugin is focused on fast live transcription: it uses realtime WebSocket streaming when available and automatically falls back to the REST endpoint if the streaming connection fails.
+
+## Features
+
+- Scribe v2 transcription engine
+- Low-latency realtime streaming for live dictation previews
+- Automatic REST fallback for reliability
+- Broad multilingual coverage with automatic language detection
+- API key validation in the configuration UI
+- API keys stored securely in the macOS Keychain
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Scribe v2 | `scribe_v2` |
+
+## Configuration
+
+- **API Key** - Create an ElevenLabs API key in your account dashboard.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the ElevenLabs plugin and click Configure
+3. Enter your ElevenLabs API key
+4. Keep `Scribe v2` selected as the transcription model
+5. Select ElevenLabs as your transcription engine in Settings or in a profile
