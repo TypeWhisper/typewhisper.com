@@ -1,0 +1,48 @@
+---
+slug: cerebras
+name: Cerebras
+author: TypeWhisper
+version: 1.0.0
+icon: Brain
+description: Ultraschnelle Cloud-LLM-Inferenz mit Cerebras Wafer-Scale Engine Hardware.
+categories:
+  - llm
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://cloud.cerebras.ai/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/CerebrasPlugin
+---
+
+## Über
+
+Cerebras bietet ultraschnelle LLM-Inferenz mit spezieller Wafer-Scale Engine (WSE) Hardware. Die Plattform erreicht Geschwindigkeiten von rund 3.000 Tokens pro Sekunde für große Modelle wie GPT-OSS 120B und ist damit einer der schnellsten Cloud-Inferenzanbieter. Das Plugin nutzt eine OpenAI-kompatible API und ruft verfügbare Modelle dynamisch ab.
+
+## Features
+
+- Ultraschnelle Inferenz (~3.000 Tokens/Sek. für GPT-OSS 120B)
+- Dynamische Modellliste mit Aktualisierung über die Cerebras-API
+- OpenAI-kompatible API
+- API-Schlüssel sicher im macOS-Schlüsselbund gespeichert
+
+## LLM-Modelle
+
+| Modell | ID |
+| --- | --- |
+| Llama 3.1 8B | `llama3.1-8b` |
+| GPT-OSS 120B | `gpt-oss-120b` |
+| Qwen 3 235B | `qwen-3-235b-a22b-instruct-2507` |
+| ZAI GLM 4.7 | `zai-glm-4.7` |
+
+Nutze den Aktualisieren-Button, um die neuesten Modelle von der Cerebras-API zu laden.
+
+## Konfiguration
+
+- **API-Schlüssel** - Registriere dich auf cloud.cerebras.ai und erstelle einen API-Schlüssel. Dein Schlüssel wird sicher im macOS-Schlüsselbund gespeichert.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Cerebras-Plugin und klicke auf Konfigurieren
+3. Gib deinen Cerebras API-Schlüssel ein
+4. Wähle ein LLM-Modell und setze Cerebras als LLM-Anbieter
