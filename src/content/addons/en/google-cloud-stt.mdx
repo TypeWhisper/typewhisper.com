@@ -1,0 +1,57 @@
+---
+slug: google-cloud-stt
+name: Google Cloud Speech-to-Text
+author: TypeWhisper
+version: 1.0.0
+icon: Globe
+description: Cloud transcription via Google Cloud Speech-to-Text using a service-account JSON key with automatic chunking for long recordings.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://cloud.google.com/speech-to-text/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/GoogleCloudSTTPlugin
+principalClass: GoogleCloudSTTPlugin
+---
+
+## About
+
+Google Cloud Speech-to-Text adds a cloud transcription engine backed by Google's speech recognition models. The plugin authenticates with a Google Cloud service-account JSON key instead of a simple API key and stores credentials securely in the macOS Keychain. Long recordings are automatically split into overlapping chunks so they stay within Google's per-request size limit.
+
+## Features
+
+- 30+ languages including Arabic, Bengali, German, English, Spanish, French, Hindi, Japanese, Korean, Portuguese, Russian, Chinese, and more
+- Automatic punctuation and capitalization
+- Word-level time offsets for precise alignment
+- Speech context boosting for domain-specific vocabulary
+- Automatic audio chunking with overlap for long recordings
+- Built-in credential validation against the live API
+- Secure service-account storage in the macOS Keychain
+- Configurable default language code
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Default | `default` |
+| Command and Search | `command_and_search` |
+| Latest Short | `latest_short` |
+| Latest Long | `latest_long` |
+| Phone Call | `phone_call` |
+| Video | `video` |
+
+## Configuration
+
+- **Service Account JSON** - Create a service account in Google Cloud Console, generate a JSON key, and paste the full contents into the plugin settings. Simple API keys are not supported.
+- **Model** - Select a recognition model. Use `default` or `command_and_search` for the broadest language coverage.
+- **Default Language** - A BCP-47 language code (e.g. `en-US`, `de-DE`) used when TypeWhisper does not pass a spoken language.
+
+## Setup
+
+1. Enable the Cloud Speech-to-Text API in your Google Cloud project
+2. Create a service account and download the JSON key file
+3. Open TypeWhisper Settings > Plugins
+4. Find the Google Cloud Speech-to-Text plugin and click Configure
+5. Paste the full JSON key contents and save
+6. Select Google Cloud Speech-to-Text as your transcription engine in Settings or in a profile
