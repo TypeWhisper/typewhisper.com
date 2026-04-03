@@ -1,0 +1,50 @@
+---
+slug: soniox
+name: Soniox
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud-Transkription in Echtzeit mit Soniox per WebSocket-Streaming, REST-Fallback und Einweg-Übersetzung ins Englische.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://soniox.com/docs
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/pull/174
+principalClass: SonioxPlugin
+---
+
+## Über
+
+Soniox ergänzt TypeWhisper um eine Cloud-Transkriptions-Engine auf Basis der Soniox-API. Das in PR #174 eingeführte Plugin nutzt Echtzeit-WebSocket-Streaming als primären Pfad und fällt automatisch auf REST-Batch-Transkription zurück, wenn Streaming nicht verfügbar ist. Soniox ist das erste TypeWhisper-Transkriptions-Plugin mit eingebauter Einweg-Übersetzung ins Englische.
+
+## Features
+
+- Echtzeit-Transkription per WebSocket-Streaming
+- Automatischer REST-Batch-Fallback für mehr Zuverlässigkeit
+- Einweg-Übersetzung ins Englische während der Live-Transkription
+- 70+ unterstützte Sprachen, darunter Arabisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Russisch, Spanisch und viele mehr
+- Automatische Endpunkt-Erkennung für natürliche Sprachsegmentierung
+- Eingebaute API-Key-Validierung in den Einstellungen
+- Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| STT RT v4 | `stt-rt-v4` |
+| STT RT Preview | `stt-rt-preview` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel in deinem Soniox-Konto und füge ihn in die Plugin-Einstellungen ein.
+- **Modell** - Wähle ein Transkriptionsmodell. `STT RT v4` ist die empfohlene Standardeinstellung.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Soniox-Plugin und klicke auf Konfigurieren
+3. Gib deinen Soniox-API-Schlüssel ein und speichere ihn
+4. Wähle dein bevorzugtes Modell (STT RT v4 empfohlen)
+5. Wähle Soniox als Transkriptions-Engine in den Einstellungen oder in einem Profil
