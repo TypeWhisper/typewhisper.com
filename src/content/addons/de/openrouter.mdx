@@ -1,0 +1,57 @@
+---
+slug: openrouter
+name: OpenRouter
+author: TypeWhisper
+version: 1.0.0
+icon: Globe
+description: Zugriff auf über 300 LLMs von OpenAI, Anthropic, Google, Meta und mehr über eine einzelne API mit Modellsuche und Preisanzeige.
+categories:
+  - llm
+platforms:
+  - mac
+source: bundled
+id: com.typewhisper.openrouter
+minAppVersion: 0.9.0
+apiDocsUrl: https://openrouter.ai/docs/quickstart
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenRouterPlugin
+principalClass: OpenRouterPlugin
+---
+
+## Über
+
+OpenRouter gibt TypeWhisper Zugriff auf über 300 große Sprachmodelle von dutzenden Anbietern über einen einzigen API-Schlüssel. Anstatt separate Konten bei jedem Anbieter zu verwalten, wählst du ein beliebiges Modell aus dem OpenRouter-Katalog und das Plugin leitet die Anfragen entsprechend weiter. Die Einstellungen zeigen dein verbleibendes Kontoguthaben und die Preise pro Modell, damit du das richtige Modell für dein Budget wählen kannst.
+
+## Features
+
+- Zugriff auf über 300 LLMs von OpenAI, Anthropic, Google, Meta, Mistral und mehr
+- Durchsuchbare Modellauswahl mit Live-Filterung
+- Preisanzeige pro Modell (Eingabe- und Ausgabekosten pro 1M Tokens)
+- Kontoguthaben und verbleibende Credits in den Einstellungen sichtbar
+- API-Schlüssel werden sicher im macOS Schlüsselbund gespeichert
+- Nutzbar als LLM-Anbieter für promptbasierte Workflows
+
+## Unterstützte Anbieter
+
+OpenRouter bündelt Modelle von vielen Anbietern. Einige Beispiele:
+
+- **OpenAI** - GPT-4o, GPT-4.1, o3 und mehr
+- **Anthropic** - Claude Opus, Sonnet, Haiku
+- **Google** - Gemini Pro, Gemma
+- **Meta** - Llama 4
+- **Mistral** - Mistral Large, Codestral
+- **Und viele mehr** - der vollständige Katalog ist im Plugin durchsuchbar
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle ein kostenloses Konto auf openrouter.ai und generiere einen API-Schlüssel im Dashboard. Lade Guthaben auf dein Konto, um kostenpflichtige Modelle zu nutzen.
+- **LLM-Modell** - Nutze das Suchfeld, um ein Modell nach Name oder Anbieter zu finden. Die Auswahl zeigt die Preise pro 1M Tokens für jedes Modell.
+
+## Einrichtung
+
+1. Erstelle ein Konto auf openrouter.ai und lade Guthaben auf
+2. Generiere einen API-Schlüssel im OpenRouter-Dashboard
+3. Öffne TypeWhisper Einstellungen > Plugins
+4. Finde das OpenRouter-Plugin und klicke auf Konfigurieren
+5. Gib deinen OpenRouter API-Schlüssel ein
+6. Suche und wähle ein Modell aus
+7. Wähle OpenRouter als LLM-Anbieter in einem benutzerdefinierten Prompt
