@@ -1,0 +1,47 @@
+---
+slug: cohere
+name: Cohere
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud transcription via Cohere Transcribe API with state-of-the-art accuracy across 14 languages.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.cohere.com/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/pull/185
+principalClass: CoherePlugin
+---
+
+## About
+
+Cohere adds a cloud transcription engine to TypeWhisper powered by the Cohere Transcribe API. Introduced in PR #185, the plugin provides state-of-the-art speech recognition across 14 languages using a REST-based architecture. Audio is sent to Cohere's API endpoint and the transcribed text is returned directly.
+
+## Features
+
+- Cloud transcription via Cohere Transcribe API
+- 14 supported languages: Arabic, Bengali, Chinese, English, French, German, Hindi, Japanese, Korean, Portuguese, Russian, Spanish, Swahili, and Turkish
+- Automatic language detection
+- Built-in API key validation in settings
+- Secure API key storage in the macOS Keychain
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Cohere Transcribe | `cohere-transcribe-03-2026` |
+
+## Configuration
+
+- **API Key** - Create an API key at cohere.com and paste it into the plugin settings.
+
+## Setup
+
+1. Create a free account at cohere.com
+2. Generate an API key in your dashboard
+3. Open TypeWhisper Settings > Plugins
+4. Find the Cohere plugin and click Configure
+5. Enter your Cohere API key and save it
+6. Select Cohere as your transcription engine in Settings or in a profile
