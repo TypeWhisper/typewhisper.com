@@ -1,0 +1,47 @@
+---
+slug: cohere
+name: Cohere
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud-Transkription über die Cohere Transcribe API mit erstklassiger Genauigkeit in 14 Sprachen.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.cohere.com/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/pull/185
+principalClass: CoherePlugin
+---
+
+## Über
+
+Cohere ergänzt TypeWhisper um eine Cloud-Transkriptions-Engine auf Basis der Cohere Transcribe API. Das in PR #185 eingeführte Plugin bietet erstklassige Spracherkennung in 14 Sprachen über eine REST-basierte Architektur. Audio wird an Coheres API-Endpunkt gesendet und der transkribierte Text direkt zurückgegeben.
+
+## Features
+
+- Cloud-Transkription über die Cohere Transcribe API
+- 14 unterstützte Sprachen: Arabisch, Bengalisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Russisch, Spanisch, Suaheli und Türkisch
+- Automatische Spracherkennung
+- Eingebaute API-Key-Validierung in den Einstellungen
+- Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| Cohere Transcribe | `cohere-transcribe-03-2026` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel auf cohere.com und füge ihn in die Plugin-Einstellungen ein.
+
+## Einrichtung
+
+1. Erstelle ein kostenloses Konto auf cohere.com
+2. Generiere einen API-Schlüssel in deinem Dashboard
+3. Öffne TypeWhisper Einstellungen > Plugins
+4. Finde das Cohere-Plugin und klicke auf Konfigurieren
+5. Gib deinen Cohere-API-Schlüssel ein und speichere ihn
+6. Wähle Cohere als Transkriptions-Engine in den Einstellungen oder in einem Profil
