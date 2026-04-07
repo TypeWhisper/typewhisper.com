@@ -1,0 +1,52 @@
+---
+slug: speechmatics
+name: Speechmatics
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Real-time cloud transcription via Speechmatics with Enhanced and Standard models and configurable server region.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.speechmatics.com/
+principalClass: SpeechmaticsPlugin
+---
+
+## About
+
+Speechmatics adds a cloud transcription engine to TypeWhisper powered by the Speechmatics API. The plugin offers real-time speech recognition with a choice between Enhanced and Standard models. Enhanced provides the best accuracy while Standard is faster and more cost-effective. A configurable server region setting lets you route requests to the closest endpoint for lower latency.
+
+## Features
+
+- Real-time cloud transcription via Speechmatics API
+- 50+ supported languages including Arabic, Chinese, Dutch, English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, Russian, Spanish, and many more
+- Enhanced model for best-in-class accuracy
+- Standard model for faster, cost-effective transcription
+- Configurable server region (EU or US) for lower latency
+- Built-in API key validation in settings
+- Secure API key storage in the macOS Keychain
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Enhanced | `enhanced` |
+| Standard | `standard` |
+
+## Configuration
+
+- **API Key** - Create an API key at speechmatics.com and paste it into the plugin settings.
+- **Model** - Select a transcription model. Enhanced provides the best accuracy. Standard is faster and more cost-effective.
+- **Region** - Select the server region closest to you for lower latency. Available regions are EU and US.
+
+## Setup
+
+1. Create an account at speechmatics.com
+2. Generate an API key in your dashboard
+3. Open TypeWhisper Settings > Plugins
+4. Find the Speechmatics plugin and click Configure
+5. Enter your Speechmatics API key and save it
+6. Select your preferred model and region
+7. Select Speechmatics as your transcription engine in Settings or in a profile

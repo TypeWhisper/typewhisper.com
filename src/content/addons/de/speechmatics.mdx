@@ -1,0 +1,52 @@
+---
+slug: speechmatics
+name: Speechmatics
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud-Transkription in Echtzeit mit Speechmatics, Enhanced- und Standard-Modellen und konfigurierbarer Serverregion.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.speechmatics.com/
+principalClass: SpeechmaticsPlugin
+---
+
+## Über
+
+Speechmatics ergänzt TypeWhisper um eine Cloud-Transkriptions-Engine auf Basis der Speechmatics-API. Das Plugin bietet Echtzeit-Spracherkennung mit einer Auswahl zwischen Enhanced- und Standard-Modellen. Enhanced liefert die beste Genauigkeit, während Standard schneller und kostengünstiger ist. Über eine konfigurierbare Serverregion lassen sich Anfragen an den nächstgelegenen Endpunkt für geringere Latenz leiten.
+
+## Features
+
+- Cloud-Transkription in Echtzeit über die Speechmatics-API
+- Über 50 unterstützte Sprachen, darunter Arabisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Italienisch, Japanisch, Koreanisch, Niederländisch, Portugiesisch, Russisch, Spanisch und viele mehr
+- Enhanced-Modell für erstklassige Genauigkeit
+- Standard-Modell für schnellere, kostengünstige Transkription
+- Konfigurierbare Serverregion (EU oder US) für geringere Latenz
+- Eingebaute API-Key-Validierung in den Einstellungen
+- Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| Enhanced | `enhanced` |
+| Standard | `standard` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel auf speechmatics.com und füge ihn in die Plugin-Einstellungen ein.
+- **Modell** - Wähle ein Transkriptionsmodell. Enhanced bietet die beste Genauigkeit. Standard ist schneller und kostengünstiger.
+- **Region** - Wähle die Serverregion, die dir am nächsten liegt, für geringere Latenz. Verfügbare Regionen sind EU und US.
+
+## Einrichtung
+
+1. Erstelle ein Konto auf speechmatics.com
+2. Generiere einen API-Schlüssel in deinem Dashboard
+3. Öffne TypeWhisper Einstellungen > Plugins
+4. Finde das Speechmatics-Plugin und klicke auf Konfigurieren
+5. Gib deinen Speechmatics-API-Schlüssel ein und speichere ihn
+6. Wähle dein bevorzugtes Modell und deine Region
+7. Wähle Speechmatics als Transkriptions-Engine in den Einstellungen oder in einem Profil
