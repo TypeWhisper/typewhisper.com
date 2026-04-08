@@ -5,7 +5,7 @@ import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #f5f0ff 30%, #fbfbfd 70%)" }}>
+    <section className="relative overflow-hidden py-16 sm:py-32 lg:py-40" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #f5f0ff 30%, #fbfbfd 70%)" }}>
       {/* Soft colored orbs */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-[#818cf8]/15 blur-[100px]" />
@@ -25,7 +25,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             {t(locale, "hero.subtitle")}
           </p>
 
-          <div className="mt-8 flex items-center justify-center gap-5">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
             <Button size="pill" asChild>
               <a
                 href={macReleaseUrl}
@@ -49,11 +49,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </p>
         </div>
 
-        <div className="mt-16 reveal-scale-hidden">
+        <div className="mt-10 sm:mt-16 reveal-scale-hidden">
           <img
             src={screenshotPath(locale, "/screenshots/mac/home.png")}
             alt={t(locale, "hero.imgAlt")}
-            className="mx-auto max-w-3xl w-full"
+            className="mx-auto max-w-3xl w-full max-h-[30vh] sm:max-h-none object-contain object-top"
           />
         </div>
       </div>
