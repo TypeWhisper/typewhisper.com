@@ -7,7 +7,8 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { type UseCase, categoryLabels } from "@/data/use-cases";
+import { type UseCase, categoryKeys } from "@/data/use-cases";
+import { t, type Locale } from "@/i18n/index";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Mail,
@@ -19,9 +20,10 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 interface UseCaseHeroProps {
   useCase: UseCase;
   backHref?: string;
+  locale?: Locale;
 }
 
-export function UseCaseHero({ useCase, backHref = "/use-cases" }: UseCaseHeroProps) {
+export function UseCaseHero({ useCase, backHref = "/use-cases", locale = "en" }: UseCaseHeroProps) {
   const Icon = iconMap[useCase.icon];
 
   return (
@@ -30,7 +32,7 @@ export function UseCaseHero({ useCase, backHref = "/use-cases" }: UseCaseHeroPro
         <Button variant="ghost" size="sm" asChild className="mb-8">
           <a href={backHref}>
             <ArrowLeft className="size-4" />
-            All Use Cases
+            {t(locale, "useCases.allUseCases")}
           </a>
         </Button>
 
@@ -47,7 +49,7 @@ export function UseCaseHero({ useCase, backHref = "/use-cases" }: UseCaseHeroPro
           </div>
 
           <Badge variant="secondary" className="reveal-fade-hidden mb-4">
-            {categoryLabels[useCase.category]}
+            {t(locale, categoryKeys[useCase.category])}
           </Badge>
 
           <h1 className="reveal-fade-hidden font-display text-3xl font-bold tracking-tight sm:text-5xl">

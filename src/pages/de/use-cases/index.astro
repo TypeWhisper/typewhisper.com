@@ -2,12 +2,13 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import UseCasesIndex from "@/pages/use-cases/_index.tsx";
 import { getUseCases } from "@/data/use-cases";
+import { t } from "@/i18n/index";
 
 const allUseCases = getUseCases("de");
 ---
 <BaseLayout
-  title="Use Cases - TypeWhisper"
-  description="Discover how TypeWhisper fits into your daily workflow."
+  title={t("de", "useCases.title")}
+  description={t("de", "useCases.description")}
   canonicalPath="/de/use-cases"
   locale="de"
 >

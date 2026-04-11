@@ -1,48 +1,55 @@
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
+import { t, type Locale } from "@/i18n/index";
 
 interface AddonsDevelopProps {
   backHref?: string;
+  locale?: Locale;
 }
 
-export default function AddonsDevelop({ backHref = "/addons" }: AddonsDevelopProps) {
+export default function AddonsDevelop({ backHref = "/addons", locale = "en" }: AddonsDevelopProps) {
+  const isDe = locale === "de";
+
   return (
     <div className="py-16 sm:py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <Button variant="ghost" size="sm" asChild className="mb-6">
           <a href={backHref}>
             <ArrowLeft className="size-4" />
-            Back to Add-ons
+            {t(locale, "addons.backToAddons")}
           </a>
         </Button>
 
         <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          Build a Plugin
+          {isDe ? "Plugin erstellen" : "Build a Plugin"}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Create custom plugins for TypeWhisper using Swift and the
-          TypeWhisperPluginSDK.
+          {isDe
+            ? "Erstelle eigene Plugins für TypeWhisper mit Swift und dem TypeWhisperPluginSDK."
+            : "Create custom plugins for TypeWhisper using Swift and the TypeWhisperPluginSDK."}
         </p>
 
         <div className="mt-10 space-y-6">
           {/* Overview */}
           <section className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Overview</h2>
+            <h2 className="text-lg font-semibold">
+              {isDe ? "Überblick" : "Overview"}
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              TypeWhisper plugins are standard macOS bundles (.bundle) written in
-              Swift. Each plugin links against the TypeWhisperPluginSDK package
-              and exports a principal class conforming to one or more plugin
-              protocols. The principal class must inherit from{" "}
+              {isDe
+                ? "TypeWhisper-Plugins sind normale macOS-Bundles (.bundle), die in Swift geschrieben werden. Jedes Plugin bindet das TypeWhisperPluginSDK-Paket ein und exportiert eine Principal Class, die einem oder mehreren Plugin-Protokollen entspricht. Die Principal Class muss von "
+                : "TypeWhisper plugins are standard macOS bundles (.bundle) written in Swift. Each plugin links against the TypeWhisperPluginSDK package and exports a principal class conforming to one or more plugin protocols. The principal class must inherit from "}
               <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                 NSObject
-              </code>{" "}
-              and use the{" "}
+              </code>
+              {isDe ? " erben und das Attribut " : " and use the "}
               <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                 @objc(ClassName)
-              </code>{" "}
-              attribute so the bundle loader can instantiate it. Plugins are
-              loaded at launch from{" "}
+              </code>
+              {isDe
+                ? " verwenden, damit der Bundle-Loader sie instanziieren kann. Plugins werden beim Start aus "
+                : " attribute so the bundle loader can instantiate it. Plugins are loaded at launch from "}
               <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                 ~/Library/Application Support/TypeWhisper/Plugins/
               </code>
@@ -52,10 +59,13 @@ export default function AddonsDevelop({ backHref = "/addons" }: AddonsDevelopPro
 
           {/* Plugin Types */}
           <section className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Plugin Types</h2>
+            <h2 className="text-lg font-semibold">
+              {isDe ? "Plugin-Typen" : "Plugin Types"}
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              There are four plugin protocols you can adopt. A single plugin can
-              conform to multiple protocols (e.g., both transcription and LLM).
+              {isDe
+                ? "Es gibt vier Plugin-Protokolle, die du implementieren kannst. Ein einzelnes Plugin kann mehreren Protokollen gleichzeitig entsprechen, z.B. Transkription und LLM."
+                : "There are four plugin protocols you can adopt. A single plugin can conform to multiple protocols (e.g., both transcription and LLM)."}
             </p>
             <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-muted/50 px-4 py-3">
@@ -63,37 +73,33 @@ export default function AddonsDevelop({ backHref = "/addons" }: AddonsDevelopPro
                   TranscriptionEnginePlugin
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Provides a speech-to-text engine. Receives audio data (16kHz
-                  mono Float samples + pre-encoded WAV) and returns transcribed
-                  text. Supports model selection, language detection, translation,
-                  and optional streaming via a progress callback.
+                  {isDe
+                    ? "Stellt eine Speech-to-Text-Engine bereit. Erhält Audiodaten (16kHz Mono-Float-Samples plus vorcodiertes WAV) und gibt transkribierten Text zurück. Unterstützt Modellauswahl, Spracherkennung, Übersetzung und optionales Streaming über einen Progress-Callback."
+                    : "Provides a speech-to-text engine. Receives audio data (16kHz mono Float samples + pre-encoded WAV) and returns transcribed text. Supports model selection, language detection, translation, and optional streaming via a progress callback."}
                 </p>
               </div>
               <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">LLMProviderPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Provides an LLM for processing transcribed text via custom
-                  prompts. Receives a system prompt and user text, returns the
-                  model's response. Used for text correction,
-                  summarization, formatting, and more.
+                  {isDe
+                    ? "Stellt ein LLM zur Verarbeitung transkribierten Texts über eigene Prompts bereit. Erhält einen System-Prompt und Benutzertest und gibt die Modellantwort zurück. Geeignet für Textkorrektur, Zusammenfassung, Formatierung und mehr."
+                    : "Provides an LLM for processing transcribed text via custom prompts. Receives a system prompt and user text, returns the model's response. Used for text correction, summarization, formatting, and more."}
                 </p>
               </div>
               <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">PostProcessorPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Processes text after transcription in a priority-based
-                  pipeline. Receives the transcribed text and context (active
-                  app, URL, language). Runs alongside built-in processors like
-                  snippets and dictionary.
+                  {isDe
+                    ? "Verarbeitet Text nach der Transkription in einer prioritätsbasierten Pipeline. Erhält den transkribierten Text und Kontext wie aktive App, URL und Sprache. Läuft neben eingebauten Prozessoren wie Snippets und Wörterbuch."
+                    : "Processes text after transcription in a priority-based pipeline. Receives the transcribed text and context (active app, URL, language). Runs alongside built-in processors like snippets and dictionary."}
                 </p>
               </div>
               <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">ActionPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Performs an action with LLM-processed text instead of inserting
-                  it. Receives the processed text and context, returns a result
-                  message shown in the notch indicator. Can include a URL to open
-                  and a custom display duration.
+                  {isDe
+                    ? "Führt eine Aktion mit LLM-verarbeitetem Text aus, statt ihn einzufügen. Erhält den verarbeiteten Text und Kontext und gibt eine Ergebnisnachricht zurück, die im Notch-Indikator angezeigt wird. Kann eine zu öffnende URL und eine eigene Anzeigedauer enthalten."
+                    : "Performs an action with LLM-processed text instead of inserting it. Receives the processed text and context, returns a result message shown in the notch indicator. Can include a URL to open and a custom display duration."}
                 </p>
               </div>
             </div>
@@ -101,40 +107,48 @@ export default function AddonsDevelop({ backHref = "/addons" }: AddonsDevelopPro
 
           {/* Getting Started */}
           <section className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Getting Started</h2>
+            <h2 className="text-lg font-semibold">
+              {isDe ? "Erste Schritte" : "Getting Started"}
+            </h2>
             <div className="mt-4 space-y-4">
               <div>
-                <h3 className="text-sm font-semibold">Prerequisites</h3>
+                <h3 className="text-sm font-semibold">
+                  {isDe ? "Voraussetzungen" : "Prerequisites"}
+                </h3>
                 <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
                   <li>- macOS 14.0+ (Sonoma) and Xcode 16+</li>
                   <li>- Swift 6.0</li>
-                  <li>- Basic familiarity with macOS bundle targets</li>
+                  <li>{isDe ? "- Grundlegende Vertrautheit mit macOS-Bundle-Targets" : "- Basic familiarity with macOS bundle targets"}</li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-sm font-semibold">
-                  1. Create a Bundle Target
+                  {isDe ? "1. Ein Bundle-Target erstellen" : "1. Create a Bundle Target"}
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  In Xcode, create a new macOS Bundle target. Set the principal
-                  class in your Info.plist to your plugin's main class name.
-                  The class must inherit from{" "}
+                  {isDe
+                    ? "Erstelle in Xcode ein neues macOS-Bundle-Target. Setze in deiner Info.plist die Principal Class auf den Namen der Hauptklasse deines Plugins. Die Klasse muss von "
+                    : "In Xcode, create a new macOS Bundle target. Set the principal class in your Info.plist to your plugin's main class name. The class must inherit from "}
                   <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                     NSObject
-                  </code>{" "}
-                  and be annotated with{" "}
+                  </code>
+                  {isDe ? " erben und mit " : " and be annotated with "}
                   <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                     @objc(ClassName)
-                  </code>{" "}
-                  so the runtime can find and instantiate it.
+                  </code>
+                  {isDe
+                    ? " annotiert sein, damit die Runtime sie finden und instanziieren kann."
+                    : " so the runtime can find and instantiate it."}
                 </p>
               </div>
               <div>
                 <h3 className="text-sm font-semibold">
-                  2. Add the SDK Dependency
+                  {isDe ? "2. Die SDK-Abhängigkeit hinzufügen" : "2. Add the SDK Dependency"}
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Add TypeWhisperPluginSDK as a Swift Package dependency:
+                  {isDe
+                    ? "Füge TypeWhisperPluginSDK als Swift-Package-Abhängigkeit hinzu:"
+                    : "Add TypeWhisperPluginSDK as a Swift Package dependency:"}
                 </p>
                 <div className="mt-2">
                   <CodeBlock
@@ -154,10 +168,12 @@ dependencies: [
               </div>
               <div>
                 <h3 className="text-sm font-semibold">
-                  3. Create manifest.json
+                  {isDe ? "3. manifest.json erstellen" : "3. Create manifest.json"}
                 </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Add a manifest.json to your bundle's Resources directory:
+                  {isDe
+                    ? "Lege eine manifest.json im Resources-Verzeichnis deines Bundles an:"
+                    : "Add a manifest.json to your bundle's Resources directory:"}
                 </p>
                 <div className="mt-2">
                   <CodeBlock
@@ -176,26 +192,28 @@ dependencies: [
                 <p className="mt-2 text-xs text-muted-foreground">
                   <code className="rounded bg-muted px-1 py-0.5">
                     principalClass
-                  </code>{" "}
-                  must match the name in your{" "}
+                  </code>
+                  {isDe ? " muss zum Namen in deiner " : " must match the name in your "}
                   <code className="rounded bg-muted px-1 py-0.5">
                     @objc(...)
-                  </code>{" "}
-                  annotation.{" "}
+                  </code>
+                  {isDe ? "-Annotation passen. " : " annotation. "}
                   <code className="rounded bg-muted px-1 py-0.5">
                     minOSVersion
-                  </code>{" "}
-                  is optional and defaults to 14.0.
+                  </code>
+                  {isDe ? " ist optional und standardmäßig 14.0." : " is optional and defaults to 14.0."}
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold">4. Build & Install</h3>
+                <h3 className="text-sm font-semibold">
+                  {isDe ? "4. Bauen und installieren" : "4. Build & Install"}
+                </h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Build your bundle and copy the .bundle file to{" "}
+                  {isDe ? "Baue dein Bundle und kopiere die .bundle-Datei nach " : "Build your bundle and copy the .bundle file to "}
                   <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                     ~/Library/Application Support/TypeWhisper/Plugins/
                   </code>
-                  . Restart TypeWhisper to load the plugin.
+                  {isDe ? ". Starte TypeWhisper neu, um das Plugin zu laden." : ". Restart TypeWhisper to load the plugin."}
                 </p>
               </div>
             </div>
@@ -203,13 +221,15 @@ dependencies: [
 
           {/* SDK API Reference */}
           <section className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">SDK API Reference</h2>
+            <h2 className="text-lg font-semibold">
+              {isDe ? "SDK-API-Referenz" : "SDK API Reference"}
+            </h2>
 
             <div className="mt-4 space-y-4">
               <div>
                 <h3 className="text-sm font-semibold">TypeWhisperPlugin</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Base protocol all plugins must conform to.
+                  {isDe ? "Basisprotokoll, dem alle Plugins entsprechen müssen." : "Base protocol all plugins must conform to."}
                 </p>
                 <div className="mt-2">
                   <CodeBlock
@@ -228,9 +248,9 @@ dependencies: [
               <div>
                 <h3 className="text-sm font-semibold">HostServices</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Provided to your plugin on activation. Gives access to
-                  keychain, preferences, file storage, app context, and the
-                  event bus.
+                  {isDe
+                    ? "Wird deinem Plugin bei der Aktivierung übergeben. Bietet Zugriff auf Keychain, Preferences, Dateispeicher, App-Kontext und den Event Bus."
+                    : "Provided to your plugin on activation. Gives access to keychain, preferences, file storage, app context, and the event bus."}
                 </p>
                 <div className="mt-2">
                   <CodeBlock
@@ -262,12 +282,13 @@ dependencies: [
                   />
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Call{" "}
+                  {isDe ? "Rufe " : "Call "}
                   <code className="rounded bg-muted px-1 py-0.5">
                     notifyCapabilitiesChanged()
-                  </code>{" "}
-                  when your plugin's available models or configuration state
-                  changes (e.g., after loading a model or receiving an API key).
+                  </code>
+                  {isDe
+                    ? " auf, wenn sich verfügbare Modelle oder der Konfigurationszustand deines Plugins ändern, z.B. nach dem Laden eines Modells oder dem Empfang eines API-Keys."
+                    : " when your plugin's available models or configuration state changes (e.g., after loading a model or receiving an API key)."}
                 </p>
               </div>
 
@@ -347,18 +368,19 @@ dependencies: [
                   />
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  The streaming variant has a default implementation that falls
-                  back to the standard{" "}
+                  {isDe
+                    ? "Die Streaming-Variante besitzt eine Standardimplementierung, die auf die normale "
+                    : "The streaming variant has a default implementation that falls back to the standard "}
                   <code className="rounded bg-muted px-1 py-0.5">
                     transcribe
-                  </code>{" "}
-                  method. Override it and set{" "}
+                  </code>
+                  {isDe ? "-Methode zurückfällt. Überschreibe sie und setze " : " method. Override it and set "}
                   <code className="rounded bg-muted px-1 py-0.5">
                     supportsStreaming
-                  </code>{" "}
-                  to{" "}
+                  </code>
+                  {isDe ? " auf " : " to "}
                   <code className="rounded bg-muted px-1 py-0.5">true</code>{" "}
-                  if your engine supports partial results.
+                  {isDe ? ", wenn deine Engine Teilergebnisse unterstützt." : "if your engine supports partial results."}
                 </p>
               </div>
 
@@ -421,8 +443,9 @@ public struct ActionResult: Sendable {
               <div>
                 <h3 className="text-sm font-semibold">EventBus</h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Subscribe to app-wide events like recording start/stop,
-                  transcription completion, and text insertion.
+                  {isDe
+                    ? "Abonniere appweite Events wie Aufnahme-Start/Stopp, abgeschlossene Transkription und Texteinfügung."
+                    : "Subscribe to app-wide events like recording start/stop, transcription completion, and text insertion."}
                 </p>
                 <div className="mt-2">
                   <CodeBlock
@@ -447,9 +470,11 @@ public enum TypeWhisperEvent: Sendable {
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold">Helper Classes</h3>
+                <h3 className="text-sm font-semibold">
+                  {isDe ? "Hilfsklassen" : "Helper Classes"}
+                </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  The SDK includes helpers for common patterns:
+                  {isDe ? "Das SDK enthält Helfer für häufige Muster:" : "The SDK includes helpers for common patterns:"}
                 </p>
                 <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
                   <li>
@@ -457,21 +482,21 @@ public enum TypeWhisperEvent: Sendable {
                     <code className="rounded bg-muted px-1 py-0.5">
                       PluginOpenAITranscriptionHelper
                     </code>{" "}
-                    - OpenAI-compatible transcription API client
+                    - {isDe ? "OpenAI-kompatibler Transkriptions-API-Client" : "OpenAI-compatible transcription API client"}
                   </li>
                   <li>
                     -{" "}
                     <code className="rounded bg-muted px-1 py-0.5">
                       PluginOpenAIChatHelper
                     </code>{" "}
-                    - OpenAI-compatible chat completion client
+                    - {isDe ? "OpenAI-kompatibler Chat-Completion-Client" : "OpenAI-compatible chat completion client"}
                   </li>
                   <li>
                     -{" "}
                     <code className="rounded bg-muted px-1 py-0.5">
                       PluginWavEncoder
                     </code>{" "}
-                    - Encode Float samples to WAV data
+                    - {isDe ? "Kodiert Float-Samples zu WAV-Daten" : "Encode Float samples to WAV data"}
                   </li>
                 </ul>
               </div>
@@ -481,11 +506,12 @@ public enum TypeWhisperEvent: Sendable {
           {/* Example */}
           <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
-              Example: Minimal LLM Plugin
+              {isDe ? "Beispiel: Minimales LLM-Plugin" : "Example: Minimal LLM Plugin"}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              A complete LLM provider plugin that wraps an OpenAI-compatible
-              API:
+              {isDe
+                ? "Ein vollständiges LLM-Provider-Plugin, das eine OpenAI-kompatible API kapselt:"
+                : "A complete LLM provider plugin that wraps an OpenAI-compatible API:"}
             </p>
             <div className="mt-4">
               <CodeBlock
@@ -550,11 +576,14 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
 
           {/* Distribution */}
           <section className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">Distribution</h2>
+            <h2 className="text-lg font-semibold">
+              {isDe ? "Distribution" : "Distribution"}
+            </h2>
             <div className="mt-2 space-y-3 text-sm text-muted-foreground">
               <p>
-                Build your plugin in Release configuration and distribute the
-                resulting .bundle file. Users install it by copying to:
+                {isDe
+                  ? "Baue dein Plugin in der Release-Konfiguration und verteile die resultierende .bundle-Datei. Nutzer installieren es, indem sie es nach folgendem Pfad kopieren:"
+                  : "Build your plugin in Release configuration and distribute the resulting .bundle file. Users install it by copying to:"}
               </p>
               <div className="mt-2">
                 <CodeBlock
@@ -568,20 +597,22 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
           {/* Submit to Plugin Catalog */}
           <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
-              Submit to the Plugin Catalog
+              {isDe ? "Beim Plugin-Katalog einreichen" : "Submit to the Plugin Catalog"}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Share your plugin with the TypeWhisper community by submitting it
-              to the official plugin catalog. Submitted plugins are built
-              automatically and listed on this website for easy discovery.
+              {isDe
+                ? "Teile dein Plugin mit der TypeWhisper-Community, indem du es in den offiziellen Plugin-Katalog einreichst. Eingereichte Plugins werden automatisch gebaut und auf dieser Website gelistet, damit sie leicht gefunden werden können."
+                : "Share your plugin with the TypeWhisper community by submitting it to the official plugin catalog. Submitted plugins are built automatically and listed on this website for easy discovery."}
             </p>
             <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-muted/50 px-4 py-3">
-                <h3 className="text-sm font-semibold">How to Submit</h3>
+                <h3 className="text-sm font-semibold">
+                  {isDe ? "So reichst du es ein" : "How to Submit"}
+                </h3>
                 <ol className="mt-2 space-y-2 text-sm text-muted-foreground">
                   <li>
                     <span className="font-medium text-foreground">1.</span>{" "}
-                    Fork the{" "}
+                    {isDe ? "Forke das Repository " : "Fork the "}
                     <a
                       href="https://github.com/TypeWhisper/typewhisper-plugins"
                       target="_blank"
@@ -590,15 +621,15 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
                     >
                       TypeWhisper/typewhisper-plugins
                     </a>{" "}
-                    repository.
+                    {isDe ? "." : "repository."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">2.</span>{" "}
-                    Create a directory under{" "}
+                    {isDe ? "Erstelle ein Verzeichnis unter " : "Create a directory under "}
                     <code className="rounded bg-muted px-1 py-0.5 text-xs">
                       plugins/your-plugin-slug/
                     </code>{" "}
-                    with your{" "}
+                    {isDe ? "mit deiner " : "with your "}
                     <code className="rounded bg-muted px-1 py-0.5 text-xs">
                       manifest.json
                     </code>
@@ -610,30 +641,32 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
                     <code className="rounded bg-muted px-1 py-0.5 text-xs">
                       LICENSE
                     </code>
-                    , and{" "}
+                    {isDe ? ", und " : ", and "}
                     <code className="rounded bg-muted px-1 py-0.5 text-xs">
                       src/
                     </code>{" "}
-                    directory with your Swift source.
+                    {isDe ? "als Verzeichnis mit deinem Swift-Quellcode." : "directory with your Swift source."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">3.</span>{" "}
-                    Open a pull request - CI will automatically validate your
-                    manifest, check required files, and compile your plugin.
+                    {isDe
+                      ? "Öffne einen Pull Request - die CI validiert automatisch dein Manifest, prüft erforderliche Dateien und kompiliert dein Plugin."
+                      : "Open a pull request - CI will automatically validate your manifest, check required files, and compile your plugin."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">4.</span>{" "}
-                    The TypeWhisper team reviews your submission.
+                    {isDe ? "Das TypeWhisper-Team prüft deine Einreichung." : "The TypeWhisper team reviews your submission."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">5.</span>{" "}
-                    After merge, your plugin is automatically built, released,
-                    and listed in the catalog.
+                    {isDe
+                      ? "Nach dem Merge wird dein Plugin automatisch gebaut, veröffentlicht und im Katalog gelistet."
+                      : "After merge, your plugin is automatically built, released, and listed in the catalog."}
                   </li>
                 </ol>
               </div>
               <p className="text-xs text-muted-foreground">
-                See the{" "}
+                {isDe ? "Siehe " : "See the "}
                 <a
                   href="https://github.com/TypeWhisper/typewhisper-plugins/blob/main/CONTRIBUTING.md"
                   target="_blank"
@@ -643,8 +676,9 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
                   CONTRIBUTING.md
                   <ExternalLink className="ml-0.5 inline size-3" />
                 </a>{" "}
-                for detailed guidelines on manifest format, directory structure,
-                and review criteria.
+                {isDe
+                  ? "für detaillierte Richtlinien zu Manifest-Format, Verzeichnisstruktur und Review-Kriterien."
+                  : "for detailed guidelines on manifest format, directory structure, and review criteria."}
               </p>
             </div>
           </section>
