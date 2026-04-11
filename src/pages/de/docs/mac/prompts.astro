@@ -1,0 +1,16 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMacPrompts from "@/pages/docs/mac/_prompts.tsx";
+import { t } from "@/i18n/index";
+
+const locale = "de";
+---
+<DocsLayout
+  title={t(locale, "docs.mac.prompts.meta.title")}
+  description={t(locale, "docs.mac.prompts.meta.description")}
+  canonicalPath="/de/docs/mac/prompts"
+  locale={locale}
+  platform="mac"
+>
+  <DocsMacPrompts locale={locale} />
+</DocsLayout>
