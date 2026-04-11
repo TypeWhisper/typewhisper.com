@@ -22,6 +22,10 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
       question: t(locale, "docs.mac.prompts.faq.q5.question"),
       answer: t(locale, "docs.mac.prompts.faq.q5.answer"),
     },
+    {
+      question: t(locale, "docs.mac.prompts.faq.q6.question"),
+      answer: t(locale, "docs.mac.prompts.faq.q6.answer"),
+    },
   ];
 
   return (
@@ -94,6 +98,7 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
             <li>&bull; {t(locale, "docs.mac.prompts.custom.item2")}</li>
             <li>&bull; {t(locale, "docs.mac.prompts.custom.item3")}</li>
             <li>&bull; {t(locale, "docs.mac.prompts.custom.item4")}</li>
+            <li>&bull; {t(locale, "docs.mac.prompts.custom.item5")}</li>
           </ul>
 
           <div className="mt-4 rounded-xl bg-background p-4">
