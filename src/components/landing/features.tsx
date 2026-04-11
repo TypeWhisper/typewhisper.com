@@ -42,12 +42,12 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
   const features = getFeatures(locale);
 
   return (
-    <section id="features" className="section-dark py-20 sm:py-28">
+    <section id="features" className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t(locale, "features.title")}
         </h2>
-        <p className="reveal-fade-hidden mt-4 text-center text-lg text-[#86868b]">
+        <p className="reveal-fade-hidden mt-4 text-center text-lg text-muted-foreground">
           {t(locale, "features.subtitle")}
         </p>
 
@@ -55,12 +55,12 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
           {features.map((feature, i) => (
             <div
               key={i}
-              className={`reveal-hidden group rounded-2xl bg-[#1d1d1f] p-6 sm:p-8 ${feature.span === "col-span-2" ? "sm:col-span-2" : ""}`}
+              className={`reveal-hidden group rounded-2xl border border-border bg-card p-6 sm:p-8 ${feature.span === "col-span-2" ? "sm:col-span-2" : ""}`}
             >
-              <h3 className="text-xl font-semibold text-[#f5f5f7] sm:text-2xl">
+              <h3 className="text-xl font-semibold text-card-foreground sm:text-2xl">
                 {feature.title}
               </h3>
-              <p className="mt-2 max-w-lg text-[#86868b]">
+              <p className="mt-2 max-w-lg text-muted-foreground">
                 {feature.description}
               </p>
               {feature.screenshot && (

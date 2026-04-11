@@ -42,9 +42,9 @@ export function AppleDictationComparison({ locale = "en" }: { locale?: Locale })
   const reasons = getReasons(locale, platform);
 
   return (
-    <section className="section-light py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl">
+        <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t(locale, "appleDictation.title")}
         </h2>
 
@@ -52,12 +52,12 @@ export function AppleDictationComparison({ locale = "en" }: { locale?: Locale })
           {reasons.map((reason, i) => (
             <div
               key={i}
-              className={`reveal-hidden py-6 ${i < reasons.length - 1 ? "border-b border-[#d2d2d7]" : ""}`}
+              className={`reveal-hidden py-6 ${i < reasons.length - 1 ? "border-b border-border" : ""}`}
             >
-              <h3 className="text-lg font-semibold text-[#1d1d1f]">
+              <h3 className="text-lg font-semibold text-foreground">
                 {reason.title}
               </h3>
-              <p className="mt-1 text-[#6e6e73]">
+              <p className="mt-1 text-muted-foreground">
                 {reason.description}
               </p>
             </div>

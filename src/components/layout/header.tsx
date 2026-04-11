@@ -8,48 +8,20 @@ import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
 import { cn } from "@/lib/utils";
 import { discordUrl } from "@/lib/platform-download";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { t, localePath, getAlternatePath, type Locale } from "@/i18n/index";
 
-function useHeaderState(isLanding: boolean) {
+function useHeaderState() {
   const [scrolled, setScrolled] = useState(false);
-  const [overDark, setOverDark] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-
-  const update = useCallback(() => {
-    setScrolled(window.scrollY > 10);
-
-    if (!isLanding) return;
-
-    const header = headerRef.current;
-    if (!header) return;
-
-    // Check the element just below the header to determine section theme
-    const headerBottom = header.getBoundingClientRect().bottom;
-    // Temporarily hide header so elementFromPoint can see through it
-    header.style.pointerEvents = "none";
-    header.style.visibility = "hidden";
-    const el = document.elementFromPoint(window.innerWidth / 2, headerBottom + 2);
-    header.style.pointerEvents = "";
-    header.style.visibility = "";
-
-    if (el) {
-      // Walk up the DOM to find the nearest section with a theme class
-      const section = el.closest(".section-dark, .section-dark-card, .section-light, .section-light-gray, footer");
-      const dark =
-        section?.classList.contains("section-dark") === true ||
-        section?.classList.contains("section-dark-card") === true;
-      setOverDark(dark);
-    }
-  }, [isLanding]);
 
   useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 10);
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
-  }, [update]);
+  }, []);
 
-  return { scrolled, overDark, headerRef };
+  return { scrolled };
 }
 
 function getNavLinks(locale: Locale) {
@@ -67,39 +39,32 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isLanding = currentPath === localePath(locale, "/") || currentPath === `${localePath(locale, "/")}/`;
-  const { scrolled, overDark, headerRef } = useHeaderState(isLanding);
+  const { scrolled } = useHeaderState();
   const navLinks = getNavLinks(locale);
   const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
   const alternateLabel = locale === "de" ? "EN" : "DE";
-
-  // On landing page: adapt to current section. On other pages: use theme.
-  const isDark = isLanding ? overDark : theme === "dark";
+  const isDark = theme === "dark";
+  const headerChrome = isDark
+    ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.06]"
+    : "bg-[#fbfbfd]/80 backdrop-blur-xl border-b border-black/[0.06]";
+  const foregroundClass = isDark ? "text-white" : "text-black";
+  const mutedForegroundClass = isDark ? "text-white/60 hover:text-white" : "text-black/60 hover:text-black";
+  const iconButtonClass = isDark
+    ? "text-white/70 hover:text-white hover:bg-white/10"
+    : "text-black/70 hover:text-black hover:bg-black/5";
+  const shouldShowChrome = isLanding || scrolled;
 
   return (
     <header
-      ref={headerRef}
+      data-testid="site-header"
       className={cn(
         "sticky top-0 z-40 w-full transition-[background-color,border-color,box-shadow] duration-300",
-        isLanding
-          ? isDark
-            ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.06]"
-            : "bg-[#fbfbfd] border-b border-black/[0.04]"
-          : scrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
-            : "bg-transparent border-b border-transparent"
+        shouldShowChrome ? headerChrome : "bg-transparent border-b border-transparent"
       )}
     >
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href={localePath(locale, "/")} className="flex items-center gap-3">
-          <Logo
-            textClassName={
-              isLanding
-                ? isDark
-                  ? "text-white"
-                  : "text-black"
-                : undefined
-            }
-          />
+          <Logo textClassName={foregroundClass} />
         </a>
 
         {/* Desktop Nav */}
@@ -116,17 +81,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 href={link.href}
                 className={cn(
                   "px-3 py-2 text-xs font-medium rounded-md transition-colors",
-                  isLanding
-                    ? isDark
-                      ? isActive
-                        ? "text-white"
-                        : "text-white/50 hover:text-white/70"
-                      : isActive
-                        ? "text-black"
-                        : "text-black/50 hover:text-black/70"
-                    : isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                  isActive ? foregroundClass : mutedForegroundClass
                 )}
               >
                 {link.label}
@@ -141,30 +96,26 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             href={alternatePath}
             className={cn(
               "px-2 py-1 text-xs font-semibold rounded-md transition-colors",
-              isLanding
-                ? isDark
-                  ? "text-white/50 hover:text-white"
-                  : "text-black/50 hover:text-black"
-                : "text-muted-foreground hover:text-foreground"
+              mutedForegroundClass
             )}
           >
             {alternateLabel}
           </a>
 
-          {!isLanding && (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={toggleTheme}
-              aria-label={t(locale, "nav.toggleTheme")}
-            >
-              {theme === "dark" ? (
-                <Sun className="size-4" />
-              ) : (
-                <Moon className="size-4" />
-              )}
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className={cn(iconButtonClass, "hidden md:inline-flex")}
+            onClick={toggleTheme}
+            aria-label={t(locale, "nav.toggleTheme")}
+            data-testid="theme-toggle"
+          >
+            {theme === "dark" ? (
+              <Sun className="size-4" />
+            ) : (
+              <Moon className="size-4" />
+            )}
+          </Button>
 
           <Button variant="ghost" size="icon-sm" asChild>
             <a
@@ -172,12 +123,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t(locale, "nav.sponsor")}
-              className={cn(
-                isLanding &&
-                  (isDark
-                    ? "text-white/50 hover:text-white"
-                    : "text-black/50 hover:text-black")
-              )}
+              className={mutedForegroundClass}
             >
               <KofiIcon className="size-4" />
             </a>
@@ -189,12 +135,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Discord"
-              className={cn(
-                isLanding &&
-                  (isDark
-                    ? "text-white/50 hover:text-white"
-                    : "text-black/50 hover:text-black")
-              )}
+              className={mutedForegroundClass}
             >
               <DiscordIcon className="size-4" />
             </a>
@@ -206,12 +147,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className={cn(
-                isLanding &&
-                  (isDark
-                    ? "text-white/50 hover:text-white"
-                    : "text-black/50 hover:text-black")
-              )}
+              className={mutedForegroundClass}
             >
               <GitHubIcon className="size-4" />
             </a>
@@ -223,15 +159,10 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="md:hidden"
+                className={cn("md:hidden", iconButtonClass)}
                 aria-label={t(locale, "nav.menu")}
               >
-                <Menu
-                  className={cn(
-                    "size-4",
-                    isLanding && (isDark ? "text-white/70" : "text-black/70")
-                  )}
-                />
+                <Menu className="size-4" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="pt-12">
@@ -259,6 +190,22 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 >
                   {alternateLabel === "DE" ? "Deutsch" : "English"}
                 </a>
+                <Button
+                  variant="ghost"
+                  className="justify-start px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+                  onClick={() => {
+                    toggleTheme();
+                    setMobileOpen(false);
+                  }}
+                  data-testid="theme-toggle-mobile"
+                >
+                  {theme === "dark" ? (
+                    <Sun className="size-4" />
+                  ) : (
+                    <Moon className="size-4" />
+                  )}
+                  {t(locale, "nav.toggleTheme")}
+                </Button>
                 <a
                   href="https://ko-fi.com/seofood"
                   target="_blank"
