@@ -31,6 +31,30 @@ const providerTypeColors: Record<string, { fill: string; label: string }> = {
   system: { fill: "#a855f7", label: "System" },
 };
 
+const chartAxisTick = {
+  fill: "var(--color-muted-foreground)",
+  fontSize: 12,
+};
+
+const chartTooltipContentStyle = {
+  backgroundColor: "var(--color-card)",
+  border: "1px solid var(--color-border)",
+  borderRadius: "8px",
+  color: "var(--color-foreground)",
+};
+
+const chartTooltipLabelStyle = {
+  color: "var(--color-foreground)",
+};
+
+const chartTooltipItemStyle = {
+  color: "var(--color-foreground)",
+};
+
+const chartTooltipCursor = {
+  fill: "var(--chart-hover-overlay)",
+};
+
 interface BenchmarkChartsProps {
   rankings: ModelRanking[];
 }
@@ -54,7 +78,7 @@ function AccuracyChart({ rankings }: { rankings: ModelRanking[] }) {
           type="number"
           domain={[0, "auto"]}
           tickFormatter={(v: number) => `${v.toFixed(0)}%`}
-          tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+          tick={chartAxisTick}
           axisLine={false}
           tickLine={false}
         />
@@ -62,18 +86,16 @@ function AccuracyChart({ rankings }: { rankings: ModelRanking[] }) {
           type="category"
           dataKey="name"
           width={200}
-          tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+          tick={chartAxisTick}
           axisLine={false}
           tickLine={false}
         />
         <Tooltip
           formatter={(value) => [formatWer(Number(value) / 100), "WER"]}
-          contentStyle={{
-            backgroundColor: "var(--color-card)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "8px",
-            color: "var(--color-foreground)",
-          }}
+          contentStyle={chartTooltipContentStyle}
+          labelStyle={chartTooltipLabelStyle}
+          itemStyle={chartTooltipItemStyle}
+          cursor={chartTooltipCursor}
         />
         <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28} />
       </BarChart>
@@ -99,7 +121,7 @@ function SpeedChart({ rankings }: { rankings: ModelRanking[] }) {
           type="number"
           domain={[0, "auto"]}
           tickFormatter={(v: number) => `${v.toFixed(1)}x`}
-          tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+          tick={chartAxisTick}
           axisLine={false}
           tickLine={false}
         />
@@ -107,18 +129,16 @@ function SpeedChart({ rankings }: { rankings: ModelRanking[] }) {
           type="category"
           dataKey="name"
           width={200}
-          tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+          tick={chartAxisTick}
           axisLine={false}
           tickLine={false}
         />
         <Tooltip
           formatter={(value) => [formatRtf(Number(value)), "RTF"]}
-          contentStyle={{
-            backgroundColor: "var(--color-card)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "8px",
-            color: "var(--color-foreground)",
-          }}
+          contentStyle={chartTooltipContentStyle}
+          labelStyle={chartTooltipLabelStyle}
+          itemStyle={chartTooltipItemStyle}
+          cursor={chartTooltipCursor}
         />
         <ReferenceLine
           x={1}
@@ -158,7 +178,7 @@ function CostChart({ rankings }: { rankings: ModelRanking[] }) {
             type="number"
             domain={[0, "auto"]}
             tickFormatter={(v: number) => `$${v.toFixed(2)}`}
-            tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+            tick={chartAxisTick}
             axisLine={false}
             tickLine={false}
           />
@@ -166,18 +186,16 @@ function CostChart({ rankings }: { rankings: ModelRanking[] }) {
             type="category"
             dataKey="name"
             width={200}
-            tick={{ fill: "var(--color-muted-foreground)", fontSize: 12 }}
+            tick={chartAxisTick}
             axisLine={false}
             tickLine={false}
           />
           <Tooltip
             formatter={(value) => [formatCost(Number(value)), "Cost/h"]}
-            contentStyle={{
-              backgroundColor: "var(--color-card)",
-              border: "1px solid var(--color-border)",
-              borderRadius: "8px",
-              color: "var(--color-foreground)",
-            }}
+            contentStyle={chartTooltipContentStyle}
+            labelStyle={chartTooltipLabelStyle}
+            itemStyle={chartTooltipItemStyle}
+            cursor={chartTooltipCursor}
           />
           <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={28} />
         </BarChart>
