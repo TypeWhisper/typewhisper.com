@@ -183,6 +183,11 @@
 
   "useCases.title": "Anwendungen - TypeWhisper",
   "useCases.description": "Entdecke, wie TypeWhisper in deinen täglichen Workflow passt.",
+  "useCases.heading": "Anwendungen",
+  "useCases.all": "Alle",
+  "useCases.allUseCases": "Alle Anwendungen",
+  "useCases.learnMore": "Mehr erfahren",
+  "useCases.emptyState": "Keine Anwendungen für diesen Filter gefunden.",
   "useCases.category.app": "App",
   "useCases.category.workflow": "Workflow",
 

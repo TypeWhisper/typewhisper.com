@@ -6,7 +6,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { type UseCase, categoryLabels } from "@/data/use-cases";
+import { type UseCase, categoryKeys } from "@/data/use-cases";
+import { t, type Locale } from "@/i18n/index";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Mail,
@@ -18,9 +19,10 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 interface UseCaseCardProps {
   useCase: UseCase;
   basePath?: string;
+  locale?: Locale;
 }
 
-export function UseCaseCard({ useCase, basePath = "/use-cases" }: UseCaseCardProps) {
+export function UseCaseCard({ useCase, basePath = "/use-cases", locale = "en" }: UseCaseCardProps) {
   const Icon = iconMap[useCase.icon];
 
   return (
@@ -43,14 +45,14 @@ export function UseCaseCard({ useCase, basePath = "/use-cases" }: UseCaseCardPro
           <h3 className="text-base font-semibold">{useCase.name}</h3>
         </div>
         <Badge variant="secondary" className="text-[10px]">
-          {categoryLabels[useCase.category]}
+          {t(locale, categoryKeys[useCase.category])}
         </Badge>
       </div>
       <p className="mt-3 text-sm text-muted-foreground">
         {useCase.description}
       </p>
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-        Learn More <ArrowRight className="size-4" />
+        {t(locale, "useCases.learnMore")} <ArrowRight className="size-4" />
       </div>
     </a>
   );

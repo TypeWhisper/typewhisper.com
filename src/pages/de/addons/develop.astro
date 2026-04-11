@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AddonsDevelop from "@/pages/addons/_develop.tsx";
+import { t } from "@/i18n/index";
 ---
 <BaseLayout
-  title="Build a Plugin - TypeWhisper"
-  description="Learn how to build TypeWhisper plugins with Swift. Documentation for the Plugin SDK."
+  title={t("de", "addons.develop.title")}
+  description={t("de", "addons.develop.description")}
   canonicalPath="/de/addons/develop"
   locale="de"
 >
-  <AddonsDevelop client:load backHref="/de/addons" />
+  <AddonsDevelop client:load locale="de" backHref="/de/addons" />
 </BaseLayout>

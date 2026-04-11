@@ -31,9 +31,9 @@ export interface UseCaseModule {
   frontmatter: UseCase;
 }
 
-export const categoryLabels: Record<UseCaseCategory, string> = {
-  app: "App",
-  workflow: "Workflow",
+export const categoryKeys: Record<UseCaseCategory, string> = {
+  app: "useCases.category.app",
+  workflow: "useCases.category.workflow",
 };
 
 const mdxModulesEn = import.meta.glob<UseCaseModule>(
