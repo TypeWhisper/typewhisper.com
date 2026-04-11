@@ -1,4 +1,4 @@
-import { t, screenshotPath, type Locale } from "@/i18n/index";
+import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) {
   return (
@@ -99,6 +99,11 @@ export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) 
             <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.promptOverride.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.profiles.promptOverride.desc")}
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              <a href={localePath(locale, "/docs/mac/prompts")} className="text-primary hover:underline">
+                {t(locale, "docs.mac.profiles.promptOverride.learn")}
+              </a>
             </p>
           </div>
 

@@ -36,6 +36,11 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.ai.desc2")}
             </p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              <a href={localePath(locale, "/docs/mac/prompts")} className="text-primary hover:underline">
+                {t(locale, "docs.mac.features.ai.learn")}
+              </a>
+            </p>
             <img
               src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
               alt={t(locale, "docs.mac.features.ai.imgAlt")}
