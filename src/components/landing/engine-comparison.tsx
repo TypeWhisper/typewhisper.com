@@ -16,13 +16,13 @@ export function EngineComparison({ locale = "en" }: { locale?: Locale }) {
   const platform = usePlatform();
 
   return (
-    <section className="section-dark py-20 sm:py-28">
+    <section className="bg-secondary py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             {t(locale, "engineComparison.title")}
           </h2>
-          <p className="mt-4 text-lg text-[#86868b]">
+          <p className="mt-4 text-lg text-muted-foreground">
             {getSubtitle(locale, platform)}
           </p>
         </div>

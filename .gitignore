@@ -4,3 +4,5 @@ dist
 *.local
 src/data/releases.json
 src/data/community-plugins.json
+playwright-report
+test-results

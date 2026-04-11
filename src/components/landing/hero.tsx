@@ -5,23 +5,26 @@ import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
-    <section className="relative overflow-hidden py-16 sm:py-32 lg:py-40" style={{ background: "linear-gradient(180deg, #eef2ff 0%, #f5f0ff 30%, #fbfbfd 70%)" }}>
+    <section
+      data-testid="landing-hero"
+      className="relative overflow-hidden bg-[linear-gradient(180deg,#eef2ff_0%,#f5f0ff_30%,#fbfbfd_70%)] py-16 dark:bg-[linear-gradient(180deg,#0b1220_0%,#111827_35%,#000000_75%)] sm:py-32 lg:py-40"
+    >
       {/* Soft colored orbs */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-[#818cf8]/15 blur-[100px]" />
-        <div className="absolute -right-32 top-24 h-[400px] w-[400px] rounded-full bg-[#0ea5e9]/10 blur-[100px]" />
-        <div className="absolute bottom-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-[#c084fc]/10 blur-[100px]" />
+        <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-[#818cf8]/15 blur-[100px] dark:bg-[#2563eb]/20" />
+        <div className="absolute -right-32 top-24 h-[400px] w-[400px] rounded-full bg-[#0ea5e9]/10 blur-[100px] dark:bg-[#06b6d4]/15" />
+        <div className="absolute bottom-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-[#c084fc]/10 blur-[100px] dark:bg-[#7c3aed]/15" />
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl lg:text-7xl text-[#1d1d1f]">
+          <h1 className="text-5xl font-bold tracking-tighter text-foreground sm:text-6xl lg:text-7xl">
             {t(locale, "hero.title.line1")}
             <br />
             {t(locale, "hero.title.line2")}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg text-[#6e6e73]">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
             {t(locale, "hero.subtitle")}
           </p>
 
@@ -37,14 +40,14 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             </Button>
 
             <Button variant="link-arrow" asChild>
-              <a href={localePath(locale, "/docs/mac")} className="inline-flex items-center gap-1 text-[#0071e3]">
+              <a href={localePath(locale, "/docs/mac")} className="inline-flex items-center gap-1 text-primary">
                 {t(locale, "hero.readDocs")}
                 <ArrowRight className="size-4" />
               </a>
             </Button>
           </div>
 
-          <p className="mt-4 text-sm text-[#6e6e73]">
+          <p className="mt-4 text-sm text-muted-foreground">
             {t(locale, "hero.platformNotice")}
           </p>
         </div>

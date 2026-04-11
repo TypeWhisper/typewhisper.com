@@ -45,12 +45,12 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
   const platforms = getPlatforms(locale);
 
   return (
-    <section className="section-light py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-[#1d1d1f] sm:text-4xl">
+        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t(locale, "platforms.title")}
         </h2>
-        <p className="mt-4 text-center text-lg text-[#6e6e73]">
+        <p className="mt-4 text-center text-lg text-muted-foreground">
           {t(locale, "platforms.subtitle")}
         </p>
 
@@ -58,13 +58,13 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
           {platforms.map((p) => (
             <div
               key={p.name}
-              className="reveal-hidden flex flex-col items-center rounded-2xl bg-white p-8 text-center shadow-sm"
+              className="reveal-hidden flex flex-col items-center rounded-2xl border border-border bg-card p-8 text-center shadow-sm"
             >
               <span className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${p.statusClassName}`}>
                 {p.status}
               </span>
-              <h3 className="mt-5 text-2xl font-bold text-[#1d1d1f]">{p.name}</h3>
-              <p className="mt-2 text-sm text-[#6e6e73]">{p.description}</p>
+              <h3 className="mt-5 text-2xl font-bold text-card-foreground">{p.name}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
               <Button size="pill" className="mt-6" asChild>
                 <a
                   href={p.downloadHref}
