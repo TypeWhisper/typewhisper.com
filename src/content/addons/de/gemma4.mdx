@@ -1,0 +1,47 @@
+---
+slug: gemma4
+name: Gemma 4
+author: TypeWhisper
+version: 1.0.0
+icon: Gem
+description: Lokales LLM auf Basis von Google Gemma 4 auf Apple Silicon mit MLX.
+categories:
+  - llm
+platforms:
+  - mac
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/Gemma4Plugin
+---
+
+## Über
+
+Gemma 4 bringt Googles Open-Weight-Modellfamilie Gemma als vollständig lokalen LLM-Anbieter zu TypeWhisper. Alles läuft direkt auf deinem Mac mit Apples MLX-Framework, sodass du benutzerdefinierte Prompts, Texttransformationen, Zusammenfassungen und andere KI-Workflows nutzen kannst, ohne Daten in die Cloud zu senden.
+
+## Features
+
+- Vollständig lokale LLM-Verarbeitung auf dem Gerät
+- Basiert auf Google Gemma 4 Modellen
+- Läuft auf Apple Silicon via MLX
+- Keine API-Schlüssel oder Cloud-Konten erforderlich
+- Mehrere Modellgrößen für unterschiedliche RAM-Budgets
+
+## Verfügbare Modelle
+
+| Modell | Download-Größe | Empfohlener RAM |
+| --- | --- | --- |
+| Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ |
+| Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ |
+| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ |
+| Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ |
+
+## Konfiguration
+
+- **Modell** - Wähle, welche Gemma 4 Modellvariante heruntergeladen und geladen werden soll.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Gemma 4 Plugin und klicke auf Konfigurieren
+3. Lade dein bevorzugtes Gemma 4 Modell herunter und aktiviere es
+4. Wähle Gemma 4 als LLM-Anbieter in einem benutzerdefinierten Prompt
+5. Nutze lokale KI-Workflows ohne API-Schlüssel
