@@ -1,3 +1,4 @@
+import { Screenshot } from "@/components/ui/screenshot";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) {
@@ -41,7 +42,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
                 {t(locale, "docs.mac.features.ai.learn")}
               </a>
             </p>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
               alt={t(locale, "docs.mac.features.ai.imgAlt")}
               className="mt-4 rounded-xl"
@@ -54,7 +55,13 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.dictionary.desc")}
             </p>
-            <img
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.features.dictionary.desc2")}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.features.dictionary.desc3")}
+            </p>
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/dictionary.png")}
               alt={t(locale, "docs.mac.features.dictionary.imgAlt")}
               className="mt-4 rounded-xl"
@@ -79,7 +86,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
               </code>{" "}
               {t(locale, "docs.mac.features.snippets.descAfter")}
             </p>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/snippets.png")}
               alt={t(locale, "docs.mac.features.snippets.imgAlt")}
               className="mt-4 rounded-xl"
@@ -119,7 +126,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.history.desc2")}
             </p>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/history.png")}
               alt={t(locale, "docs.mac.features.history.imgAlt")}
               className="mt-4 rounded-xl"
@@ -132,7 +139,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.home.desc")}
             </p>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/home.png")}
               alt={t(locale, "docs.mac.features.home.imgAlt")}
               className="mt-4 rounded-xl"
@@ -155,7 +162,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
               </a>{" "}
               {t(locale, "docs.mac.features.plugins.seeAfter")}
             </p>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/plugins.png")}
               alt={t(locale, "docs.mac.features.plugins.imgAlt")}
               className="mt-4 rounded-xl"

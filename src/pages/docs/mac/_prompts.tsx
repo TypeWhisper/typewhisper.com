@@ -1,3 +1,4 @@
+import { Screenshot } from "@/components/ui/screenshot";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
@@ -52,7 +53,7 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
               {t(locale, "docs.mac.prompts.intro.calloutDesc")}
             </p>
           </div>
-          <img
+          <Screenshot
             src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
             alt={t(locale, "docs.mac.prompts.intro.imgAlt")}
             className="mt-4 rounded-xl"

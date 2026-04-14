@@ -1,3 +1,4 @@
+import { Screenshot } from "@/components/ui/screenshot";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) {
@@ -81,7 +82,7 @@ export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) 
                 &bull; <strong>{t(locale, "docs.mac.profiles.creating.promptProvider.label")}</strong> - {t(locale, "docs.mac.profiles.creating.promptProvider.desc")}
               </li>
             </ul>
-            <img
+            <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/profiles.png")}
               alt={t(locale, "docs.mac.profiles.creating.imgAlt")}
               className="mt-4 rounded-xl"

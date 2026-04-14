@@ -1,4 +1,5 @@
 import { t, screenshotPath, type Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
 
 interface Feature {
   title: string;
@@ -65,7 +66,7 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
               </p>
               {feature.screenshot && (
                 <div className="mt-6 overflow-hidden rounded-xl">
-                  <img
+                  <Screenshot
                     src={feature.screenshot}
                     alt={feature.title}
                     className="w-full rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"

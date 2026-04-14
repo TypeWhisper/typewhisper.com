@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Screenshot } from "@/components/ui/screenshot";
 import { macReleaseUrl } from "@/lib/platform-download";
 import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
 
@@ -53,7 +54,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
         </div>
 
         <div className="mt-10 sm:mt-16 reveal-scale-hidden">
-          <img
+          <Screenshot
             src={screenshotPath(locale, "/screenshots/mac/home.png")}
             alt={t(locale, "hero.imgAlt")}
             className="mx-auto max-w-3xl w-full max-h-[30vh] sm:max-h-none object-contain object-top"

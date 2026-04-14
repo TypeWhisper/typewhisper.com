@@ -24,6 +24,7 @@ Parakeet uses NVIDIA's Parakeet TDT model for extremely fast on-device speech re
 - Word-level timestamps
 - No API key or cloud account needed
 - Compact model size (~600 MB)
+- Optional local vocabulary boosting from your TypeWhisper dictionary
 
 ## Transcription Models
 
@@ -34,6 +35,8 @@ Parakeet uses NVIDIA's Parakeet TDT model for extremely fast on-device speech re
 ## Configuration
 
 No API key required. Parakeet runs entirely on-device.
+
+If vocabulary boosting is enabled, Parakeet uses your custom TypeWhisper dictionary terms locally during transcription. Dictionary corrections are still applied automatically after transcription, so the dictionary helps both during and after the transcription step.
 
 ## Setup
 
