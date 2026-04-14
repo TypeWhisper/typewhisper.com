@@ -49,3 +49,8 @@ export function ogLocale(locale: Locale): string {
 export function screenshotPath(locale: Locale, path: string): string {
   return path.replace("/screenshots/", `/screenshots/${locale}/`);
 }
+
+/** Swap a raster image path to a WebP sibling, e.g. "/screenshots/en/mac/home.png" -> "/screenshots/en/mac/home.webp". */
+export function webpPath(path: string): string {
+  return path.replace(/\.(png|jpe?g)$/i, ".webp");
+}

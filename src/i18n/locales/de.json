@@ -268,6 +268,8 @@
   "docs.mac.features.ai.imgAlt": "KI-Textverarbeitung mit Prompt-Palette",
   "docs.mac.features.dictionary.title": "Wörterbuch",
   "docs.mac.features.dictionary.desc": "Bringe TypeWhisper fachspezifisches Vokabular bei. Füge eigene Begriffe hinzu, definiere Korrekturen für häufig falsch erkannte Wörter und aktiviere Auto-Lernen, um dein persönliches Wörterbuch aufzubauen. Importiere Community-Begriffspakete für Fachgebiete wie Medizin, Recht oder Softwareentwicklung.",
+  "docs.mac.features.dictionary.desc2": "Das Wörterbuch hat zwei Teile: Eigene Begriffe können an die Transkription übergeben werden, wenn die Engine das unterstützt, und Wörterbuch-Korrekturen werden nach der Transkription automatisch angewendet. Du musst das Wörterbuch nicht manuell erzwingen.",
+  "docs.mac.features.dictionary.desc3": "Mit Parakeet können eigene Begriffe komplett lokal bleiben. Aktiviere Vocabulary Boosting, dann verwendet Parakeet diese Begriffe direkt auf dem Gerät während der Transkription, während nachgelagerte Korrekturen weiterhin automatisch laufen.",
   "docs.mac.features.dictionary.imgAlt": "Wörterbuch mit eigenen Begriffen und Korrekturen",
   "docs.mac.features.snippets.title": "Snippets",
   "docs.mac.features.snippets.descBefore": "Definiere Trigger-Phrasen, die zu längeren Textblöcken expandieren. Snippets unterstützen dynamische Platzhalter wie",

@@ -323,8 +323,13 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {isDe
-              ? "Benutzerdefinierte Begriffskorrekturen werden nach der Transkription automatisch angewendet. Korrigiere Namen, Fachbegriffe oder wiederkehrende Fehlinterpretationen. Regex-Muster werden für fortgeschrittene Ersetzungen unterstützt."
-              : "Custom term corrections applied automatically after transcription. Fix names, jargon, or recurring misrecognitions. Supports regex patterns for advanced replacements."}
+              ? "Das Wörterbuch hat zwei Teile: Eigene Begriffe können an die Transkription übergeben werden, wenn die Engine das unterstützt, und Begriffskorrekturen werden nach der Transkription automatisch angewendet. Korrigiere Namen, Fachbegriffe oder wiederkehrende Fehlinterpretationen. Regex-Muster werden für fortgeschrittene Ersetzungen unterstützt."
+              : "The dictionary has two parts: custom terms can be passed into transcription when the engine supports them, and term corrections are applied automatically after transcription. Fix names, jargon, or recurring misrecognitions. Supports regex patterns for advanced replacements."}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {isDe
+              ? "Wenn du Parakeet verwendest, kannst du Vocabulary Boosting aktivieren, damit diese Begriffe lokal auf dem Gerät bereits während der Transkription berücksichtigt werden. Du musst das Wörterbuch nicht manuell erzwingen."
+              : "If you use Parakeet, enable vocabulary boosting to have those terms applied locally on-device during transcription. You do not need to manually force the dictionary to run."}
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
             {isDe

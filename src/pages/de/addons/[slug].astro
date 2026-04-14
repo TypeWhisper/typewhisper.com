@@ -105,12 +105,15 @@ const isCommunity = isCommunityPlugin(plugin);
 
       <!-- Screenshot -->
       <div class="mt-8">
-        <img
-          src={`/screenshots/de/plugins/${plugin.slug}.png`}
-          alt={`${plugin.name} settings`}
-          class="rounded-2xl border shadow-lg"
-          onerror="this.parentElement.style.display='none'"
-        />
+        <picture>
+          <source srcset={`/screenshots/de/plugins/${plugin.slug}.webp`} type="image/webp" />
+          <img
+            src={`/screenshots/de/plugins/${plugin.slug}.png`}
+            alt={`${plugin.name} Einstellungen`}
+            class="rounded-2xl border shadow-lg"
+            onerror="this.parentElement.style.display='none'"
+          />
+        </picture>
       </div>
 
       <!-- Content -->
