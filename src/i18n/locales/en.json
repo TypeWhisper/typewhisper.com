@@ -404,7 +404,7 @@
   "docs.mac.api.meta.description": "REST API endpoints for automation and integration with TypeWhisper on macOS.",
   "docs.mac.api.title": "HTTP API",
   "docs.mac.api.intro1": "TypeWhisper includes a local REST API for automation and integration with external tools. In macOS 1.2, this is an advanced surface: documented",
-  "docs.mac.api.intro2": "endpoints are intended to remain stable across 1.x. Enable it in Settings > Advanced (default port: 8978).",
+  "docs.mac.api.intro2": "endpoints are intended to remain stable throughout the 1.2 release line. Enable it in Settings > Advanced (default port: 8978).",
   "docs.mac.api.noteLabel": "Note:",
   "docs.mac.api.noteText": "The API is disabled by default, binds to localhost only, and is designed for local automation rather than public network access.",
   "docs.mac.api.checkStatus.title": "Check Status",
