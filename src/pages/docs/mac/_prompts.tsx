@@ -53,6 +53,15 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
               {t(locale, "docs.mac.prompts.intro.calloutDesc")}
             </p>
           </div>
+          <div className="mt-4 rounded-xl border border-border bg-background p-4">
+            <p className="text-sm font-semibold">{t(locale, "docs.mac.prompts.intro.cleanupTitle")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.prompts.intro.cleanupDesc")}{" "}
+              <a href={localePath(locale, "/docs/mac/profiles")} className="text-primary hover:underline">
+                {t(locale, "docs.mac.prompts.intro.cleanupLink")}
+              </a>
+            </p>
+          </div>
           <Screenshot
             src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
             alt={t(locale, "docs.mac.prompts.intro.imgAlt")}
