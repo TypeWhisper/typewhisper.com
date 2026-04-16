@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { iosTestFlightUrl, macReleaseUrl, windowsReleaseUrl } from "@/lib/platform-download";
+import { iosTestFlightUrl, macDmgUrl, windowsSetupUrl } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 interface PlatformInfo {
@@ -19,7 +19,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.mac.description"),
       status: t(locale, "platforms.mac.status"),
       statusClassName: "bg-emerald-500/10 text-emerald-700",
-      downloadHref: macReleaseUrl,
+      downloadHref: macDmgUrl,
       downloadLabel: t(locale, "platforms.mac.download"),
     },
     {
@@ -27,7 +27,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.win.description"),
       status: t(locale, "platforms.win.status"),
       statusClassName: "bg-amber-500/10 text-amber-700",
-      downloadHref: windowsReleaseUrl,
+      downloadHref: windowsSetupUrl,
       downloadLabel: t(locale, "platforms.win.download"),
     },
     {

@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { t, localePath } from "@/i18n/index";
 import { Button } from "@/components/ui/button";
 import { commercialTiers, currencySymbol, salesEmail } from "@/lib/pricing";
-import { macReleaseUrl } from "@/lib/platform-download";
+import { macDmgUrl } from "@/lib/platform-download";
 
 const locale = "en";
 
@@ -180,7 +180,7 @@ const trust = ["local", "gpl", "noTelemetry"];
       </p>
       <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Button size="pill" asChild>
-          <a href={macReleaseUrl} target="_blank" rel="noopener noreferrer">
+          <a href={macDmgUrl} target="_blank" rel="noopener noreferrer">
             {t(locale, "business.finalCta.download")}
           </a>
         </Button>

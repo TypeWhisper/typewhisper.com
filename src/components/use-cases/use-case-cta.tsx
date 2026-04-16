@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { macReleaseUrl } from "@/lib/platform-download";
+import { macDmgUrl } from "@/lib/platform-download";
 
 export function UseCaseCTA() {
   return (
@@ -15,7 +15,7 @@ export function UseCaseCTA() {
           <div className="mt-10">
             <Button size="pill" asChild>
               <a
-                href={macReleaseUrl}
+                href={macDmgUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

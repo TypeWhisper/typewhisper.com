@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
-import { macReleaseUrl } from "@/lib/platform-download";
+import { macDmgUrl } from "@/lib/platform-download";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
@@ -32,7 +32,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
             <Button size="pill" asChild>
               <a
-                href={macReleaseUrl}
+                href={macDmgUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

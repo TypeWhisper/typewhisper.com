@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { macReleaseUrl } from "@/lib/platform-download";
+import { macDmgUrl } from "@/lib/platform-download";
 import { t, localePath, type Locale } from "@/i18n/index";
 
 export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
@@ -17,7 +17,7 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="pill" asChild>
               <a
-                href={macReleaseUrl}
+                href={macDmgUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >

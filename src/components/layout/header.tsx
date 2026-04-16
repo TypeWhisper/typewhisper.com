@@ -10,8 +10,8 @@ import { usePlatform } from "@/hooks/use-platform";
 import { cn } from "@/lib/utils";
 import {
   discordUrl,
-  macReleaseUrl,
-  windowsReleaseUrl,
+  macDmgUrl,
+  windowsSetupUrl,
   iosTestFlightUrl,
 } from "@/lib/platform-download";
 import { useState } from "react";
@@ -30,13 +30,13 @@ function getNavLinks(locale: Locale) {
 function getDownloadTarget(platform: ReturnType<typeof usePlatform>, locale: Locale) {
   switch (platform) {
     case "windows":
-      return { href: windowsReleaseUrl, label: t(locale, "nav.downloadWindows") };
+      return { href: windowsSetupUrl, label: t(locale, "nav.downloadWindows") };
     case "ios":
       return { href: iosTestFlightUrl, label: t(locale, "nav.downloadIos") };
     case "mac":
-      return { href: macReleaseUrl, label: t(locale, "nav.downloadMac") };
+      return { href: macDmgUrl, label: t(locale, "nav.downloadMac") };
     default:
-      return { href: macReleaseUrl, label: t(locale, "nav.download") };
+      return { href: macDmgUrl, label: t(locale, "nav.download") };
   }
 }
 
