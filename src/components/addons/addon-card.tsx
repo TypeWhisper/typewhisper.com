@@ -63,6 +63,8 @@ export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: Addon
     <a
       href={`${basePath}/${plugin.slug}`}
       className="group block rounded-2xl border bg-card p-6 transition-all hover:shadow-md"
+      data-testid="addon-card"
+      data-slug={plugin.slug}
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">

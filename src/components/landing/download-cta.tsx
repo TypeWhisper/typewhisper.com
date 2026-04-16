@@ -31,6 +31,16 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
               </a>
             </Button>
           </div>
+
+          <p className="mt-6 text-sm text-muted-foreground">
+            {t(locale, "downloadCta.licenseNote.before")}{" "}
+            <a
+              href={localePath(locale, "/pricing")}
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              {t(locale, "downloadCta.licenseNote.link")}
+            </a>
+          </p>
         </div>
       </div>
     </section>

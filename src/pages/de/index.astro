@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Hero } from "@/components/landing/hero";
+import { SocialProof } from "@/components/landing/social-proof";
 import { Features } from "@/components/landing/features";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { EngineComparison } from "@/components/landing/engine-comparison";
@@ -30,6 +31,7 @@ const structuredData = {
   structuredData={structuredData}
 >
   <Hero locale="de" />
+  <SocialProof locale="de" />
   <HowItWorks locale="de" />
   <Features locale="de" />
   <AppleDictationComparison locale="de" client:load />

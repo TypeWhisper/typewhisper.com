@@ -4,8 +4,8 @@
   "version": "1.2.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && astro dev",
-    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && astro check && astro build",
+    "dev": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro dev",
+    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro check && astro build",
     "preview": "astro preview",
     "test:e2e": "playwright test"
   },

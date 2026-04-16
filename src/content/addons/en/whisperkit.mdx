@@ -11,6 +11,7 @@ platforms:
   - mac
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/WhisperKitPlugin
+featured: true
 ---
 
 ## About
@@ -48,3 +49,17 @@ No API key required. WhisperKit runs entirely on-device.
 2. Find the WhisperKit plugin and enable it
 3. Models are downloaded automatically on first use
 4. Select WhisperKit as your transcription engine in Settings or in a profile
+
+## Manual copy workaround
+
+If WhisperKit is already working on one Mac, you can also copy the local model files over as a workaround. This is separate from plugin installation.
+
+1. Quit TypeWhisper on both Macs.
+2. On the Mac where WhisperKit already works, copy only the model folders you actually use from `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.whisperkit/models/`.
+3. On the target Mac, install the same or a newer TypeWhisper version, launch it once, then quit it again.
+4. Copy those model folders into the exact same path on the target Mac: `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.whisperkit/models/`.
+5. Reopen TypeWhisper and check whether the model is detected and can be loaded.
+
+`Install from file` is for plugin bundles. It does not import WhisperKit model folders for you.
+
+This is a workaround, not the polished primary flow. If the target Mac blocks access to `~/Library/Application Support` or CoreML cache usage, the copied model can still fail to load.

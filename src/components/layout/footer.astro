@@ -26,6 +26,8 @@ const { locale = "en" } = Astro.props;
       <div class="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
         <div class="flex flex-wrap gap-x-6 gap-y-2">
           <a href={localePath(locale, "/#features")} class="transition-colors hover:text-foreground">{t(locale, "footer.features")}</a>
+          <a href={localePath(locale, "/pricing")} class="transition-colors hover:text-foreground">{t(locale, "footer.pricing")}</a>
+          <a href={localePath(locale, "/business")} class="transition-colors hover:text-foreground">{t(locale, "footer.business")}</a>
           <a href={localePath(locale, "/addons")} class="transition-colors hover:text-foreground">{t(locale, "footer.addons")}</a>
           <a href={localePath(locale, "/docs")} class="transition-colors hover:text-foreground">{t(locale, "footer.docs")}</a>
           <a href={localePath(locale, "/release-status")} class="transition-colors hover:text-foreground">{t(locale, "footer.releaseStatus")}</a>

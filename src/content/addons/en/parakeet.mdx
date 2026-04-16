@@ -11,6 +11,7 @@ platforms:
   - mac
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ParakeetPlugin
+featured: true
 ---
 
 ## About
@@ -44,3 +45,20 @@ If vocabulary boosting is enabled, Parakeet uses your custom TypeWhisper diction
 2. Find the Parakeet plugin and enable it
 3. The model will be downloaded on first use
 4. Select Parakeet as your transcription engine in Settings or in a profile
+
+## Manual copy workaround
+
+If Parakeet is already working on one Mac, you can also copy the local model files over as a workaround. This is separate from plugin installation.
+
+1. Quit TypeWhisper on both Macs.
+2. On the Mac where Parakeet already works, copy only the model folders you actually use:
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v3-coreml/`
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v2-coreml/` if you still use the older v2 model
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-ctc-110m-coreml/` if you use vocabulary boosting
+3. On the target Mac, install the same or a newer TypeWhisper version, launch it once, then quit it again.
+4. Copy those folders into the exact same paths on the target Mac under `~/Library/Application Support/FluidAudio/Models/`.
+5. Reopen TypeWhisper and check whether the model is detected and can be loaded.
+
+`Install from file` is for plugin bundles. It does not import Parakeet model folders for you.
+
+This is a workaround, not the polished primary flow. If the target Mac blocks access to `~/Library/Application Support` or CoreML cache usage, the copied model can still fail to load.
