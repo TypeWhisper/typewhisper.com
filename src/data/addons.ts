@@ -41,6 +41,7 @@ export interface Plugin {
   apiDocsUrl?: string;
   sourceUrl?: string;
   principalClass?: string;
+  featured?: boolean;
 }
 
 export interface PluginModule {

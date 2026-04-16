@@ -29,6 +29,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_GUILD_ID: ${{ vars.DISCORD_GUILD_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

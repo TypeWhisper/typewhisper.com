@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun } from "lucide-react";
+import { Download, Menu, Moon, Sun } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
 import { GitHubIcon } from "@/components/ui/github-icon";
@@ -6,43 +6,49 @@ import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
+import { usePlatform } from "@/hooks/use-platform";
 import { cn } from "@/lib/utils";
-import { discordUrl } from "@/lib/platform-download";
-import { useState, useEffect } from "react";
+import {
+  discordUrl,
+  macReleaseUrl,
+  windowsReleaseUrl,
+  iosTestFlightUrl,
+} from "@/lib/platform-download";
+import { useState } from "react";
 import { t, localePath, getAlternatePath, type Locale } from "@/i18n/index";
-
-function useHeaderState() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 10);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  return { scrolled };
-}
 
 function getNavLinks(locale: Locale) {
   return [
-    { href: localePath(locale, "/#features"), label: t(locale, "nav.features") },
     { href: localePath(locale, "/use-cases"), label: t(locale, "nav.useCases") },
     { href: localePath(locale, "/addons"), label: t(locale, "nav.addons") },
+    { href: localePath(locale, "/pricing"), label: t(locale, "nav.pricing") },
     { href: localePath(locale, "/docs"), label: t(locale, "nav.docs") },
-    { href: localePath(locale, "/benchmark"), label: t(locale, "nav.benchmark") },
     { href: localePath(locale, "/changelog"), label: t(locale, "nav.changelog") },
   ];
+}
+
+function getDownloadTarget(platform: ReturnType<typeof usePlatform>, locale: Locale) {
+  switch (platform) {
+    case "windows":
+      return { href: windowsReleaseUrl, label: t(locale, "nav.downloadWindows") };
+    case "ios":
+      return { href: iosTestFlightUrl, label: t(locale, "nav.downloadIos") };
+    case "mac":
+      return { href: macReleaseUrl, label: t(locale, "nav.downloadMac") };
+    default:
+      return { href: macReleaseUrl, label: t(locale, "nav.download") };
+  }
 }
 
 export function Header({ currentPath = "/", locale = "en" as Locale }: { currentPath?: string; locale?: Locale }) {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isLanding = currentPath === localePath(locale, "/") || currentPath === `${localePath(locale, "/")}/`;
-  const { scrolled } = useHeaderState();
   const navLinks = getNavLinks(locale);
   const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
   const alternateLabel = locale === "de" ? "EN" : "DE";
+  const platform = usePlatform();
+  const download = getDownloadTarget(platform, locale);
+  const showDownloadCta = true;
   const isDark = theme === "dark";
   const headerChrome = isDark
     ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.06]"
@@ -52,15 +58,11 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const iconButtonClass = isDark
     ? "text-white/70 hover:text-white hover:bg-white/10"
     : "text-black/70 hover:text-black hover:bg-black/5";
-  const shouldShowChrome = isLanding || scrolled;
 
   return (
     <header
       data-testid="site-header"
-      className={cn(
-        "sticky top-0 z-40 w-full transition-[background-color,border-color,box-shadow] duration-300",
-        shouldShowChrome ? headerChrome : "bg-transparent border-b border-transparent"
-      )}
+      className={cn("sticky top-0 z-40 w-full", headerChrome)}
     >
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href={localePath(locale, "/")} className="flex items-center gap-3">
@@ -71,9 +73,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => {
             const isActive =
-              currentPath === link.href ||
-              (link.href !== localePath(locale, "/#features") &&
-                currentPath.startsWith(link.href));
+              currentPath === link.href || currentPath.startsWith(link.href);
 
             return (
               <a
@@ -91,6 +91,21 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
         </nav>
 
         <div className="flex items-center gap-1">
+          {/* Desktop Download CTA */}
+          {showDownloadCta && (
+            <Button
+              size="sm"
+              className="hidden md:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
+              asChild
+              data-testid="header-download"
+            >
+              <a href={download.href} target="_blank" rel="noopener noreferrer">
+                <Download className="size-4" />
+                {download.label}
+              </a>
+            </Button>
+          )}
+
           {/* Language Switcher */}
           <a
             href={alternatePath}
@@ -167,6 +182,23 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             </SheetTrigger>
             <SheetContent side="right" className="pt-12">
               <nav className="flex flex-col gap-1 px-4">
+                {showDownloadCta && (
+                  <Button
+                    asChild
+                    className="mb-3 w-full rounded-full"
+                    data-testid="header-download-mobile"
+                  >
+                    <a
+                      href={download.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <Download className="size-4" />
+                      {download.label}
+                    </a>
+                  </Button>
+                )}
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
@@ -175,8 +207,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                     className={cn(
                       "px-3 py-2.5 text-sm font-medium rounded-md transition-colors hover:bg-accent",
                       currentPath === link.href ||
-                        (link.href !== localePath(locale, "/#features") &&
-                          currentPath.startsWith(link.href))
+                        currentPath.startsWith(link.href)
                         ? "text-foreground bg-accent"
                         : "text-muted-foreground"
                     )}

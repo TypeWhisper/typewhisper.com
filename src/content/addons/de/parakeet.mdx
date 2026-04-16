@@ -11,6 +11,7 @@ platforms:
   - mac
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/ParakeetPlugin
+featured: true
 ---
 
 ## Über
@@ -44,3 +45,20 @@ Wenn Vocabulary Boosting aktiviert ist, verwendet Parakeet deine eigenen TypeWhi
 2. Finde das Parakeet-Plugin und aktiviere es
 3. Das Modell wird beim ersten Gebrauch heruntergeladen
 4. Wähle Parakeet als Transkriptions-Engine in den Einstellungen oder in einem Profil
+
+## Workaround: Modelle manuell kopieren
+
+Wenn Parakeet auf einem Mac bereits funktioniert, kannst du die lokalen Modelldateien auch als Workaround übernehmen. Das ist getrennt von der Plugin-Installation.
+
+1. Beende TypeWhisper auf beiden Macs.
+2. Kopiere auf dem Mac, auf dem Parakeet bereits funktioniert, nur die Modellordner, die du tatsächlich nutzt:
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v3-coreml/`
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v2-coreml/`, falls du das ältere v2-Modell noch nutzt
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-ctc-110m-coreml/`, falls du Vocabulary Boosting verwendest
+3. Installiere auf dem Ziel-Mac dieselbe oder eine neuere TypeWhisper-Version, starte die App einmal und beende sie dann wieder.
+4. Kopiere diese Ordner auf dem Ziel-Mac in exakt dieselben Pfade unter `~/Library/Application Support/FluidAudio/Models/`.
+5. Öffne TypeWhisper erneut und prüfe, ob das Modell erkannt wird und sich laden lässt.
+
+`Install from file` ist für Plugin-Bundles gedacht. Parakeet-Modellordner werden darüber nicht importiert.
+
+Das ist ein Workaround und nicht der offizielle Standard-Flow. Wenn der Ziel-Mac den Zugriff auf `~/Library/Application Support` oder die Nutzung des CoreML-Cache blockiert, kann das Modell trotz kopierter Dateien trotzdem nicht laden.

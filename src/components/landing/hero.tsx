@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
 import { macReleaseUrl } from "@/lib/platform-download";
-import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
+import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
