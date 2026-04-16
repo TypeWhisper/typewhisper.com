@@ -1,9 +1,17 @@
+import downloads from "@/data/downloads.json";
+
 export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
 export const iosTestFlightUrl =
   "https://testflight.apple.com/join/kcCS3hcZ";
+
+// Direct asset URLs for the latest stable release. Resolved at build time
+// by scripts/fetch-releases.mjs and written to src/data/downloads.json.
+// Falls back to the releases page if no stable asset could be resolved.
+export const macDmgUrl: string = downloads.mac.url;
+export const windowsSetupUrl: string = downloads.windows.url;
 
 export const macGitHubUrl =
   "https://github.com/TypeWhisper/typewhisper-mac";

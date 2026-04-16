@@ -1,5 +1,5 @@
 import { ChevronDown, Download, Monitor, Smartphone } from "lucide-react";
-import { macReleaseUrl, windowsReleaseUrl, iosTestFlightUrl } from "@/lib/platform-download";
+import { macDmgUrl, windowsSetupUrl, iosTestFlightUrl } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 export function PlatformDownloadMenu({
@@ -20,7 +20,7 @@ export function PlatformDownloadMenu({
 
       <div className="absolute left-0 top-[calc(100%+0.5rem)] z-20 w-full min-w-[260px] overflow-hidden rounded-xl border bg-popover p-2 text-left shadow-xl sm:w-[280px]">
         <a
-          href={macReleaseUrl}
+          href={macDmgUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
@@ -29,7 +29,7 @@ export function PlatformDownloadMenu({
           {t(locale, "platformMenu.mac")}
         </a>
         <a
-          href={windowsReleaseUrl}
+          href={windowsSetupUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"

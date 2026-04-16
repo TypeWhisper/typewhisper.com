@@ -3,6 +3,7 @@ dist
 .DS_Store
 *.local
 src/data/releases.json
+src/data/downloads.json
 src/data/community-plugins.json
 playwright-report
 test-results
