@@ -51,7 +51,15 @@ export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) 
               <li>{t(locale, "docs.mac.profiles.priority.item1")}</li>
               <li>{t(locale, "docs.mac.profiles.priority.item2")}</li>
               <li>{t(locale, "docs.mac.profiles.priority.item3")}</li>
+              <li>{t(locale, "docs.mac.profiles.priority.item4")}</li>
             </ol>
+          </div>
+
+          <div className="rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.profiles.fallback.title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.profiles.fallback.desc")}
+            </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
@@ -134,6 +142,12 @@ export default function DocsMacProfiles({ locale = "en" }: { locale?: Locale }) 
                 <p className="text-sm font-semibold">{t(locale, "docs.mac.profiles.examples.terminal.title")}</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {t(locale, "docs.mac.profiles.examples.terminal.desc")}
+                </p>
+              </div>
+              <div className="rounded-md bg-background p-4">
+                <p className="text-sm font-semibold">{t(locale, "docs.mac.profiles.examples.languages.title")}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {t(locale, "docs.mac.profiles.examples.languages.desc")}
                 </p>
               </div>
             </div>
