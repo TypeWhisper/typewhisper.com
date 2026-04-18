@@ -531,7 +531,7 @@
   "docs.mac.index.cli.title": "CLI Tool",
   "docs.mac.index.cli.description": "Shell-friendly transcription via the typewhisper command.",
   "docs.mac.index.profiles.title": "Profiles",
-  "docs.mac.index.profiles.description": "App-specific settings for language, engine, and task.",
+  "docs.mac.index.profiles.description": "Profiles for app, website, and fallback settings for language, engine, and task.",
 
   "pricing.meta.title": "Pricing & Licensing - TypeWhisper",
   "pricing.meta.description": "Free for personal and open-source use. Commercial licenses start at 5 EUR/mo. Pay what you want, no DRM, honor-based.",
