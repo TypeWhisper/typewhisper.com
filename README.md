@@ -5,7 +5,7 @@ Landing page and documentation site for [TypeWhisper](https://www.typewhisper.co
 ## Stack
 
 - Astro 6 + React 19 + TypeScript
-- Vite 6
+- Vite 7
 - TailwindCSS 4
 - Radix UI + shadcn/ui components
 
