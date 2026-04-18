@@ -1,16 +1,14 @@
 ---
-import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsMacProfiles from "@/pages/docs/mac/_profiles.tsx";
-import { t } from "@/i18n/index";
-
-const locale = "de";
+// Legacy redirect to Regeln
 ---
-<DocsLayout
-  title={t(locale, "docs.mac.profiles.meta.title")}
-  description={t(locale, "docs.mac.profiles.meta.description")}
-  canonicalPath="/de/docs/mac/profiles"
-  locale={locale}
-  platform="mac"
->
-  <DocsMacProfiles locale={locale} />
-</DocsLayout>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      window.location.replace("/de/docs/mac/rules");
+    </script>
+    <meta http-equiv="refresh" content="0;url=/de/docs/mac/rules" />
+  </head>
+  <body></body>
+</html>

@@ -57,7 +57,7 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
             <p className="text-sm font-semibold">{t(locale, "docs.mac.prompts.intro.cleanupTitle")}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.prompts.intro.cleanupDesc")}{" "}
-              <a href={localePath(locale, "/docs/mac/profiles")} className="text-primary hover:underline">
+              <a href={localePath(locale, "/docs/mac/rules")} className="text-primary hover:underline">
                 {t(locale, "docs.mac.prompts.intro.cleanupLink")}
               </a>
             </p>
@@ -137,12 +137,12 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.prompts.advanced.title")}</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-xl bg-background p-4">
-              <h3 className="text-sm font-semibold">{t(locale, "docs.mac.prompts.advanced.profiles.title")}</h3>
+              <h3 className="text-sm font-semibold">{t(locale, "docs.mac.prompts.advanced.rules.title")}</h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.prompts.advanced.profiles.desc")}
+                {t(locale, "docs.mac.prompts.advanced.rules.desc")}
               </p>
-              <a href={localePath(locale, "/docs/mac/profiles")} className="mt-3 inline-block text-sm text-primary hover:underline">
-                {t(locale, "docs.mac.prompts.advanced.profiles.link")}
+              <a href={localePath(locale, "/docs/mac/rules")} className="mt-3 inline-block text-sm text-primary hover:underline">
+                {t(locale, "docs.mac.prompts.advanced.rules.link")}
               </a>
             </div>
             <div className="rounded-xl bg-background p-4">
