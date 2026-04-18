@@ -114,13 +114,16 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.profiles.title")}</h2>
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.api.rules.title")}</h2>
             <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-              <p className="text-muted-foreground"># List all profiles</p>
-              <p>curl http://localhost:8978/v1/profiles</p>
-              <p className="mt-3 text-muted-foreground"># Toggle a profile on or off</p>
-              <p>curl -X PUT "http://localhost:8978/v1/profiles/toggle?id=&lt;uuid&gt;"</p>
+              <p className="text-muted-foreground"># {t(locale, "docs.mac.api.rules.primaryList")}</p>
+              <p>curl http://localhost:8978/v1/rules</p>
+              <p className="mt-3 text-muted-foreground"># {t(locale, "docs.mac.api.rules.primaryToggle")}</p>
+              <p>curl -X PUT "http://localhost:8978/v1/rules/toggle?id=&lt;uuid&gt;"</p>
             </div>
+            <p className="mt-3 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.api.rules.legacyAlias")}
+            </p>
           </div>
 
           <div className="rounded-2xl bg-card p-6">
