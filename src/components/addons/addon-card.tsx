@@ -23,6 +23,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import { type Plugin, type PluginCategory, type PluginPlatform, categoryKeys, platformKeys } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
 
@@ -58,6 +59,9 @@ interface AddonCardProps {
 
 export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
+  const showBrandLogo = plugin.brandLogo
+    ? canRenderBrandLogo(plugin.brandLogo, "addon")
+    : false;
 
   return (
     <a
@@ -69,7 +73,14 @@ export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: Addon
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-muted">
-            {plugin.iconUrl ? (
+            {showBrandLogo && plugin.brandLogo ? (
+              <BrandLogo
+                brand={plugin.brandLogo}
+                context="addon"
+                className="size-6 rounded"
+                alt={plugin.name}
+              />
+            ) : plugin.iconUrl ? (
               <img
                 src={plugin.iconUrl}
                 alt={plugin.name}

@@ -12,6 +12,13 @@ async function waitForHeaderHydration(page: Page) {
   });
 }
 
+async function prepareThemeSession(page: Page, theme: "dark" | "light") {
+  await page.emulateMedia({ colorScheme: theme });
+  await page.addInitScript((storedTheme) => {
+    window.localStorage.setItem("theme", storedTheme);
+  }, theme);
+}
+
 test.describe("header download CTA", () => {
   test("download CTA is visible on the landing page", async ({ page }) => {
     await page.goto("/en/");
@@ -33,6 +40,92 @@ test.describe("social proof on landing", () => {
   });
 });
 
+test.describe("docs platform logos", () => {
+  test("docs landing uses dedicated platform logos for macOS and iOS", async ({
+    page,
+  }) => {
+    await page.goto("/en/docs");
+    await expect(page.locator('[data-platform-logo="macos"]').first()).toBeVisible();
+    await expect(page.locator('[data-platform-logo="ios"]').first()).toBeVisible();
+  });
+});
+
+test.describe("brand logos", () => {
+  test("addons overview uses a local brand logo asset for Linear", async ({
+    page,
+  }) => {
+    await page.goto("/en/addons");
+    await expect(page.getByTestId("featured-addons")).toBeVisible();
+
+    const linearCard = page.locator('[data-testid="addon-card"][data-slug="linear"]').first();
+    await expect(linearCard).toBeVisible();
+    await expect(
+      linearCard.locator('img[src^="/brand-logos/linear/logo"]'),
+    ).toBeVisible();
+  });
+
+  test("addon detail uses a local brand logo asset for Linear", async ({
+    page,
+  }) => {
+    await page.goto("/en/addons/linear");
+    await expect(
+      page.locator('img[src^="/brand-logos/linear/logo"]'),
+    ).toBeVisible();
+  });
+
+  test("header uses theme-aware local brand assets for GitHub without external svgl requests", async ({
+    page,
+  }) => {
+    const svglRequests: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().includes("svgl.app")) {
+        svglRequests.push(request.url());
+      }
+    });
+
+    await prepareThemeSession(page, "dark");
+    await page.goto("/en/");
+    await waitForHeaderHydration(page);
+
+    const githubLink = page.getByLabel("GitHub").first();
+    await expect(
+      githubLink.locator('img[src="/brand-logos/github/logo-dark.svg"]'),
+    ).toBeVisible();
+    await expect(
+      githubLink.locator('img[src="/brand-logos/github/logo-light.svg"]'),
+    ).not.toBeVisible();
+
+    await page.getByTestId("theme-toggle").click();
+    await expect(
+      githubLink.locator('img[src="/brand-logos/github/logo-light.svg"]'),
+    ).toBeVisible();
+    await expect(
+      githubLink.locator('img[src="/brand-logos/github/logo-dark.svg"]'),
+    ).not.toBeVisible();
+
+    expect(svglRequests).toEqual([]);
+  });
+
+  test("header keeps Discord and Ko-fi on custom monochrome icons", async ({
+    page,
+  }) => {
+    await page.goto("/en/");
+    await waitForHeaderHydration(page);
+
+    const discordLink = page.getByLabel("Discord").first();
+    await expect(
+      discordLink.locator('img[src^="/brand-logos/discord/"]'),
+    ).toHaveCount(0);
+    await expect(discordLink.locator("svg")).toBeVisible();
+
+    const sponsorLink = page.getByLabel(/sponsor/i).first();
+    await expect(
+      sponsorLink.locator('img[src^="/brand-logos/kofi/"]'),
+    ).toHaveCount(0);
+    await expect(sponsorLink.locator("svg")).toBeVisible();
+  });
+});
+
 test.describe("addons search", () => {
   test("search input filters the addon cards", async ({ page }) => {
     await page.goto("/en/addons");
@@ -50,6 +143,7 @@ test.describe("addons search", () => {
     });
 
     const cards = page.getByTestId("addon-card");
+    await expect(cards.first()).toBeVisible();
     const totalCount = await cards.count();
     expect(totalCount).toBeGreaterThan(0);
 

@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-04-19T12:27:23.966Z",
+  "brands": {
+    "github": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/github/logo-light.svg",
+        "dark": "/brand-logos/github/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/github/wordmark-light.svg",
+        "dark": "/brand-logos/github/wordmark-dark.svg"
+      },
+      "brandUrl": "https://brand.github.com/",
+      "sourceUrl": "https://github.com/"
+    },
+    "discord": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/discord/logo.svg",
+      "brandUrl": "https://discord.com/branding",
+      "sourceUrl": "https://discord.com/"
+    },
+    "openai": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/openai/logo-light.svg",
+        "dark": "/brand-logos/openai/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/openai/wordmark-light.svg",
+        "dark": "/brand-logos/openai/wordmark-dark.svg"
+      },
+      "brandUrl": "https://openai.com/brand/",
+      "sourceUrl": "https://openai.com/"
+    },
+    "linear": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/linear/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://linear.app/"
+    },
+    "claude-ai": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": "/brand-logos/claude-ai/logo.svg",
+      "wordmark": {
+        "light": "/brand-logos/claude-ai/wordmark-light.svg",
+        "dark": "/brand-logos/claude-ai/wordmark-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://claude.ai/"
+    },
+    "gemini": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/gemini/logo.svg",
+      "wordmark": "/brand-logos/gemini/wordmark.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://gemini.google.com/"
+    },
+    "obsidian": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/obsidian/logo.svg",
+      "brandUrl": "https://obsidian.md/brand",
+      "sourceUrl": "https://obsidian.md/"
+    },
+    "cohere": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/cohere/logo.svg",
+      "wordmark": "/brand-logos/cohere/wordmark.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://cohere.com/"
+    },
+    "groq": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": "/brand-logos/groq/logo.svg",
+      "wordmark": {
+        "light": "/brand-logos/groq/wordmark-light.svg",
+        "dark": "/brand-logos/groq/wordmark-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://groq.com/"
+    },
+    "openrouter": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/openrouter/logo-light.svg",
+        "dark": "/brand-logos/openrouter/logo-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://openrouter.ai/"
+    },
+    "google-cloud": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/google-cloud/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://cloud.google.com/"
+    },
+    "cloudflare": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/cloudflare/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://www.cloudflare.com/"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/index";
+import type { BrandLogoId } from "@/data/brand-logos";
 import communityData from "./community-plugins.json";
 
 export type PluginCategory =
@@ -38,6 +39,7 @@ export interface Plugin {
   downloads?: Record<string, PluginDownload>;
   publishedAt?: string;
   iconUrl?: string;
+  brandLogo?: BrandLogoId;
   apiDocsUrl?: string;
   sourceUrl?: string;
   principalClass?: string;
