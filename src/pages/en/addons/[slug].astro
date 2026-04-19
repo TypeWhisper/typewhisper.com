@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Badge } from "@/components/ui/badge";
+import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import CommunityContent from "@/components/addons/community-content";
 import {
   getPlugins,
@@ -33,6 +34,9 @@ const { plugin } = Astro.props;
 const mod = getPluginModule(plugin.slug, "en");
 const Icon = iconMap[plugin.icon];
 const isCommunity = isCommunityPlugin(plugin);
+const showBrandLogo = plugin.brandLogo
+  ? canRenderBrandLogo(plugin.brandLogo, "addon")
+  : false;
 ---
 <BaseLayout
   title={`${plugin.name} - TypeWhisper Add-ons`}
@@ -50,7 +54,9 @@ const isCommunity = isCommunityPlugin(plugin);
       <!-- Header -->
       <div class="flex items-start gap-4">
         <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
-          {plugin.iconUrl ? (
+          {showBrandLogo && plugin.brandLogo ? (
+            <BrandLogo brand={plugin.brandLogo} context="addon" className="size-8 rounded-lg" alt={plugin.name} />
+          ) : plugin.iconUrl ? (
             <img src={plugin.iconUrl} alt={plugin.name} class="size-8 rounded-lg" />
           ) : Icon ? (
             <Icon className="size-7 text-muted-foreground" />

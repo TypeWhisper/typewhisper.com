@@ -2,6 +2,7 @@ import { Download, Menu, Moon, Sun } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
 import { GitHubIcon } from "@/components/ui/github-icon";
+import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
@@ -47,6 +48,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
   const alternateLabel = locale === "de" ? "EN" : "DE";
   const platform = usePlatform();
+  const showGitHubBrandLogo = canRenderBrandLogo("github", "nav");
   const download = getDownloadTarget(platform, locale);
   const showDownloadCta = true;
   const isDark = theme === "dark";
@@ -164,7 +166,11 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               aria-label="GitHub"
               className={mutedForegroundClass}
             >
-              <GitHubIcon className="size-4" />
+              {showGitHubBrandLogo ? (
+                <BrandLogo brand="github" context="nav" className="size-4" alt="GitHub" />
+              ) : (
+                <GitHubIcon className="size-4" />
+              )}
             </a>
           </Button>
 
@@ -261,7 +267,11 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <GitHubIcon className="size-4" />
+                  {showGitHubBrandLogo ? (
+                    <BrandLogo brand="github" context="nav" className="size-4" alt="GitHub" />
+                  ) : (
+                    <GitHubIcon className="size-4" />
+                  )}
                   GitHub
                 </a>
               </nav>

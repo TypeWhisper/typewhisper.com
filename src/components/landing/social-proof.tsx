@@ -1,6 +1,7 @@
 import { Star, Users } from "lucide-react";
 import { DiscordIcon } from "@/components/ui/discord-icon";
 import { GitHubIcon } from "@/components/ui/github-icon";
+import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import { discordUrl, orgGitHubUrl } from "@/lib/platform-download";
 import { t, localePath, type Locale } from "@/i18n/index";
 import socialStats from "@/data/social-stats.json";
@@ -21,6 +22,7 @@ export function SocialProof({ locale = "en" }: SocialProofProps) {
     githubStars: number;
     discordMembers: number | null;
   };
+  const showGitHubBrandLogo = canRenderBrandLogo("github", "social");
 
   return (
     <section
@@ -36,7 +38,11 @@ export function SocialProof({ locale = "en" }: SocialProofProps) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
             >
-              <GitHubIcon className="size-4" />
+              {showGitHubBrandLogo ? (
+                <BrandLogo brand="github" context="social" className="size-4" alt="GitHub" />
+              ) : (
+                <GitHubIcon className="size-4" />
+              )}
               <Star className="size-3.5 text-amber-500" aria-hidden="true" />
               <span className="font-medium text-foreground">
                 {formatCount(githubStars)}

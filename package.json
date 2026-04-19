@@ -7,6 +7,7 @@
     "dev": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro dev",
     "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro check && astro build",
     "preview": "astro preview",
+    "sync:svgl": "node scripts/sync-svgl-logos.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
