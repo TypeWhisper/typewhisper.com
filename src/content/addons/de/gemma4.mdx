@@ -2,9 +2,9 @@
 slug: gemma4
 name: Gemma 4
 author: TypeWhisper
-version: 1.0.0
+version: 1.0.1
 icon: Gem
-description: Lokales LLM auf Basis von Google Gemma 4 auf Apple Silicon mit MLX.
+description: Lokales LLM mit Google Gemma 4 auf Apple Silicon via MLX. Kein API-Key erforderlich.
 categories:
   - llm
 platforms:
@@ -15,33 +15,43 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/Gemm
 
 ## Über
 
-Gemma 4 bringt Googles Open-Weight-Modellfamilie Gemma als vollständig lokalen LLM-Anbieter zu TypeWhisper. Alles läuft direkt auf deinem Mac mit Apples MLX-Framework, sodass du benutzerdefinierte Prompts, Texttransformationen, Zusammenfassungen und andere KI-Workflows nutzen kannst, ohne Daten in die Cloud zu senden.
+Gemma 4 bringt Googles Open-Weight-Modellfamilie Gemma als vollständig lokalen Anbieter für Prompt-Verarbeitung nach TypeWhisper auf Apple Silicon. Alles läuft direkt auf deinem Mac via MLX, sodass du Umschreibungen, Zusammenfassungen und eigene Prompt-Workflows ohne Cloud-Upload nutzen kannst. Im aktuell verifizierten Release-Pfad empfiehlt TypeWhisper ausdrücklich die dichten Varianten `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`. Größere Varianten bleiben in der UI sichtbar, sind derzeit aber experimentell und können je nach Hardware oder Runtime-Unterstützung fehlschlagen.
 
 ## Features
 
-- Vollständig lokale LLM-Verarbeitung auf dem Gerät
-- Basiert auf Google Gemma 4 Modellen
-- Läuft auf Apple Silicon via MLX
-- Keine API-Schlüssel oder Cloud-Konten erforderlich
-- Mehrere Modellgrößen für unterschiedliche RAM-Budgets
+- Vollständig lokale Prompt-Verarbeitung auf dem Gerät via MLX
+- Regler für die Generation Temperature zwischen präziser und kreativer Ausgabe
+- Optionaler HuggingFace-Token für höhere Download-Rate-Limits
+- Validierung des HuggingFace-Tokens vor dem Speichern
+- Download-, Lade-, Abbrechen- und Entladen-Zustände für lokale Modelle
+- Sichtbare experimentelle Modellvarianten mit klaren Warnhinweisen
+- Kein API-Key für den lokalen Basis-Workflow erforderlich
 
 ## Verfügbare Modelle
 
-| Modell | Download-Größe | Empfohlener RAM |
-| --- | --- | --- |
-| Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ |
-| Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ |
-| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ |
-| Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ |
+| Modell | Download-Größe | Empfohlener RAM | Status |
+| --- | --- | --- | --- |
+| Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ | Empfohlen |
+| Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ | Empfohlen |
+| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Experimentell |
+| Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ | Experimentell |
 
 ## Konfiguration
 
-- **Modell** - Wähle, welche Gemma 4 Modellvariante heruntergeladen und geladen werden soll.
+- **Generation Temperature** - Steuert, ob die Ausgabe eher präzise oder kreativer ausfällt.
+- **HuggingFace Token** - Optional. Erhöht Download-Rate-Limits und wird vor dem Speichern validiert. Du kannst ihn unter `huggingface.co/settings/tokens` erstellen.
+- **Modell** - Wähle, welche Gemma-4-Variante heruntergeladen und geladen werden soll. Die 4-bit-Modelle `E2B` und `E4B` sind aktuell der empfohlene Pfad.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
-2. Finde das Gemma 4 Plugin und klicke auf Konfigurieren
-3. Lade dein bevorzugtes Gemma 4 Modell herunter und aktiviere es
-4. Wähle Gemma 4 als LLM-Anbieter in einem benutzerdefinierten Prompt
-5. Nutze lokale KI-Workflows ohne API-Schlüssel
+1. Öffne `TypeWhisper > Einstellungen > Integrationen`.
+2. Finde das Plugin `Gemma 4` und öffne seine Konfiguration.
+3. Füge optional einen HuggingFace-Token ein und speichere ihn nach erfolgreicher Validierung.
+4. Wähle eines der empfohlenen 4-bit-Modelle und klicke auf `Laden & Aktivieren`.
+5. Sobald das Modell geladen ist, wähle `Gemma 4 (MLX)` als LLM-Anbieter in deinem Prompt-Workflow.
+
+## Hinweise
+
+- Aktuell empfohlen sind `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`.
+- Größere Varianten sind weiterhin experimentell und können je nach Hardware oder aktuellem App-Build fehlschlagen.
+- Ein HuggingFace-Token ist optional, kann Downloads aber durch höhere Rate-Limits stabiler machen.

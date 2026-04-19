@@ -2,9 +2,9 @@
 slug: gemma4
 name: Gemma 4
 author: TypeWhisper
-version: 1.0.0
+version: 1.0.1
 icon: Gem
-description: Local LLM powered by Google Gemma 4 on Apple Silicon with MLX.
+description: Local LLM powered by Google Gemma 4 on Apple Silicon via MLX. No API key required.
 categories:
   - llm
 platforms:
@@ -15,33 +15,43 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/Gemm
 
 ## About
 
-Gemma 4 brings Google's open-weight Gemma model family to TypeWhisper as a fully local LLM provider. Everything runs on your Mac with Apple's MLX framework, so you can use custom prompts, text transformations, summaries, and other AI workflows without sending data to the cloud.
+Gemma 4 brings Google's open-weight Gemma family to TypeWhisper for fully local prompt processing on Apple Silicon. Everything runs on your Mac via MLX, so you can use rewrites, summaries, and custom prompt workflows without sending text to the cloud. In the current verified release path, TypeWhisper officially recommends the dense `Gemma 4 E2B (4-bit)` and `Gemma 4 E4B (4-bit)` variants. Larger variants remain visible in the UI, but they are still experimental and may fail depending on hardware or runtime support.
 
 ## Features
 
-- Fully local on-device LLM processing
-- Powered by Google Gemma 4 models
-- Runs on Apple Silicon via MLX
-- No API keys or cloud accounts required
-- Multiple model sizes for different RAM budgets
+- Fully local on-device prompt processing via MLX
+- Generation temperature slider for more precise or more creative outputs
+- Optional HuggingFace token for higher download rate limits
+- HuggingFace token validation before it is saved
+- Download, load, cancel, and unload controls for local models
+- Experimental model variants stay visible with explicit warnings
+- No API key required for the core local workflow
 
 ## Available Models
 
-| Model | Download Size | Recommended RAM |
-| --- | --- | --- |
-| Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ |
-| Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ |
-| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ |
-| Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ |
+| Model | Download Size | Recommended RAM | Status |
+| --- | --- | --- | --- |
+| Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ | Supported |
+| Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ | Supported |
+| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Experimental |
+| Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ | Experimental |
 
 ## Configuration
 
-- **Model** - Choose which Gemma 4 model variant to download and load.
+- **Generation Temperature** - Adjust the output style between more precise and more creative responses.
+- **HuggingFace Token** - Optional. Increases download rate limits and is validated before saving. You can create one at `huggingface.co/settings/tokens`.
+- **Model** - Choose which Gemma 4 variant to download and load. The 4-bit `E2B` and `E4B` models are the current recommended path.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the Gemma 4 plugin and click Configure
-3. Download and load your preferred Gemma 4 model
-4. Select Gemma 4 as the LLM provider in a custom prompt
-5. Start using local AI workflows without an API key
+1. Open `TypeWhisper > Settings > Integrations`.
+2. Find the `Gemma 4` plugin and open its configuration.
+3. Optionally paste a HuggingFace token and save it after validation.
+4. Pick one of the recommended 4-bit models, then click `Download & Load`.
+5. After the model is loaded, select `Gemma 4 (MLX)` as the LLM provider in your prompt workflow.
+
+## Notes
+
+- The currently recommended models are `Gemma 4 E2B (4-bit)` and `Gemma 4 E4B (4-bit)`.
+- Larger variants are still experimental and may fail depending on hardware or the current app build.
+- A HuggingFace token is optional, but it can make downloads more reliable by increasing rate limits.
