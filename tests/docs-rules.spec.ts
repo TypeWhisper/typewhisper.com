@@ -8,6 +8,12 @@ test.describe("macOS rules documentation", () => {
       page.getByRole("heading", { level: 1, name: "Rules" }),
     ).toBeVisible();
     await expect(
+      page.getByRole("heading", { level: 2, name: "App-aware Formatting" }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Obsidian with Auto-Detect"),
+    ).toBeVisible();
+    await expect(
       page.locator('img[src="/screenshots/en/mac/rules.png"]'),
     ).toBeVisible();
   });
@@ -17,6 +23,12 @@ test.describe("macOS rules documentation", () => {
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Regeln" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "App-basierte Formatierung" }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Obsidian mit Auto-Erkennung"),
     ).toBeVisible();
     await expect(
       page.locator('img[src="/screenshots/de/mac/rules.png"]'),

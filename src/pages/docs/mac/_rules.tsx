@@ -137,6 +137,86 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
         </div>
 
         <div className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.formatting.title")}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.formatting.desc1")}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.formatting.desc2")}
+          </p>
+
+          <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.none.label")}</strong> - {t(locale, "docs.mac.rules.formatting.none.desc")}
+            </li>
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.auto.label")}</strong> - {t(locale, "docs.mac.rules.formatting.auto.desc")}
+            </li>
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.markdown.label")}</strong> - {t(locale, "docs.mac.rules.formatting.markdown.desc")}
+            </li>
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.html.label")}</strong> - {t(locale, "docs.mac.rules.formatting.html.desc")}
+            </li>
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.plainText.label")}</strong> - {t(locale, "docs.mac.rules.formatting.plainText.desc")}
+            </li>
+            <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.formatting.code.label")}</strong> - {t(locale, "docs.mac.rules.formatting.code.desc")}
+            </li>
+          </ul>
+
+          <h3 className="mt-6 text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.title")}</h3>
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.obsidian.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.formatting.examples.obsidian.desc")}
+              </p>
+              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
+                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.obsidian.code")}</pre>
+              </div>
+            </div>
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.mail.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.formatting.examples.mail.desc")}
+              </p>
+              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
+                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.mail.code")}</pre>
+              </div>
+            </div>
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.codeApp.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.formatting.examples.codeApp.desc")}
+              </p>
+              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
+                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.codeApp.code")}</pre>
+              </div>
+            </div>
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.unknown.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.formatting.examples.unknown.desc")}
+              </p>
+              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
+                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.unknown.code")}</pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 className="mt-6 text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.limitations.title")}</h3>
+          <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item1")}</li>
+            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item2")}</li>
+            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item3")}</li>
+            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item4")}</li>
+            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item5")}</li>
+          </ul>
+        </div>
+
+        <div className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.examples.title")}</h2>
           <div className="mt-4 space-y-3">
             <div className="rounded-md bg-background p-4">
