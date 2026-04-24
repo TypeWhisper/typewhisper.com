@@ -1,4 +1,5 @@
 import downloads from "@/data/downloads.json";
+import { t, type Locale } from "@/i18n/index";
 
 export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
@@ -21,30 +22,103 @@ export const orgGitHubUrl = "https://github.com/TypeWhisper";
 export const discordUrl = "https://discord.gg/pUFR4a65SD";
 
 export type Platform = "mac" | "windows" | "ios" | "other";
+export type DownloadTargetContext = "nav" | "landing";
+
+export interface PlatformDownloadTarget {
+  href: string;
+  label: string;
+  platform: Platform;
+}
+
+export function detectPlatformFromUserAgent(userAgent: string): Platform {
+  const normalized = userAgent.toLowerCase();
+
+  if (normalized.includes("windows")) {
+    return "windows";
+  }
+
+  // Check iOS before Mac, since iPad UA can contain "Macintosh".
+  if (
+    normalized.includes("iphone") ||
+    normalized.includes("ipad") ||
+    normalized.includes("ipod")
+  ) {
+    return "ios";
+  }
+
+  if (
+    normalized.includes("macintosh") ||
+    normalized.includes("mac os x")
+  ) {
+    return "mac";
+  }
+
+  return "other";
+}
 
 export function detectPlatform(): Platform {
   if (typeof navigator === "undefined") {
     return "other";
   }
 
-  const userAgent = navigator.userAgent.toLowerCase();
+  return detectPlatformFromUserAgent(navigator.userAgent);
+}
 
-  if (userAgent.includes("windows")) {
-    return "windows";
+export function getPlatformDownloadTarget(
+  platform: Platform,
+  locale: Locale,
+  context: DownloadTargetContext = "nav",
+): PlatformDownloadTarget {
+  if (context === "landing") {
+    switch (platform) {
+      case "windows":
+        return {
+          href: windowsSetupUrl,
+          label: t(locale, "platforms.win.download"),
+          platform,
+        };
+      case "ios":
+        return {
+          href: iosTestFlightUrl,
+          label: t(locale, "platforms.ios.download"),
+          platform,
+        };
+      case "mac":
+      case "other":
+      default:
+        return {
+          href: macDmgUrl,
+          label: t(locale, "platforms.mac.download"),
+          platform: platform === "other" ? "mac" : platform,
+        };
+    }
   }
 
-  // Check iOS before Mac, since iPad UA can contain "Macintosh"
-  if (
-    userAgent.includes("iphone") ||
-    userAgent.includes("ipad") ||
-    userAgent.includes("ipod")
-  ) {
-    return "ios";
+  switch (platform) {
+    case "windows":
+      return {
+        href: windowsSetupUrl,
+        label: t(locale, "nav.downloadWindows"),
+        platform,
+      };
+    case "ios":
+      return {
+        href: iosTestFlightUrl,
+        label: t(locale, "nav.downloadIos"),
+        platform,
+      };
+    case "mac":
+      return {
+        href: macDmgUrl,
+        label: t(locale, "nav.downloadMac"),
+        platform,
+      };
+    case "other":
+    default:
+      return {
+        href: macDmgUrl,
+        label: t(locale, "nav.download"),
+        platform: "other",
+      };
   }
-
-  if (userAgent.includes("macintosh") || userAgent.includes("mac os x")) {
-    return "mac";
-  }
-
-  return "other";
 }

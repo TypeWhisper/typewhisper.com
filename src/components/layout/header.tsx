@@ -11,9 +11,7 @@ import { usePlatform } from "@/hooks/use-platform";
 import { cn } from "@/lib/utils";
 import {
   discordUrl,
-  macDmgUrl,
-  windowsSetupUrl,
-  iosTestFlightUrl,
+  getPlatformDownloadTarget,
 } from "@/lib/platform-download";
 import { useState } from "react";
 import { t, localePath, getAlternatePath, type Locale } from "@/i18n/index";
@@ -28,19 +26,6 @@ function getNavLinks(locale: Locale) {
   ];
 }
 
-function getDownloadTarget(platform: ReturnType<typeof usePlatform>, locale: Locale) {
-  switch (platform) {
-    case "windows":
-      return { href: windowsSetupUrl, label: t(locale, "nav.downloadWindows") };
-    case "ios":
-      return { href: iosTestFlightUrl, label: t(locale, "nav.downloadIos") };
-    case "mac":
-      return { href: macDmgUrl, label: t(locale, "nav.downloadMac") };
-    default:
-      return { href: macDmgUrl, label: t(locale, "nav.download") };
-  }
-}
-
 export function Header({ currentPath = "/", locale = "en" as Locale }: { currentPath?: string; locale?: Locale }) {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -49,7 +34,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const alternateLabel = locale === "de" ? "EN" : "DE";
   const platform = usePlatform();
   const showGitHubBrandLogo = canRenderBrandLogo("github", "nav");
-  const download = getDownloadTarget(platform, locale);
+  const download = getPlatformDownloadTarget(platform, locale, "nav");
   const showDownloadCta = true;
   const isDark = theme === "dark";
   const headerChrome = isDark
