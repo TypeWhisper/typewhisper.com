@@ -1,10 +1,14 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
-import { macDmgUrl } from "@/lib/platform-download";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
+import { usePlatform } from "@/hooks/use-platform";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
+  const platform = usePlatform();
+  const download = getPlatformDownloadTarget(platform, locale, "landing");
+
   return (
     <section
       data-testid="landing-hero"
@@ -32,11 +36,12 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
             <Button size="pill" asChild>
               <a
-                href={macDmgUrl}
+                href={download.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid="landing-hero-download"
               >
-                {t(locale, "hero.download")}
+                {download.label}
               </a>
             </Button>
 

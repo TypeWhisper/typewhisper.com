@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
 import { t, localePath } from "@/i18n/index";
+import { macDmgUrl, windowsSetupUrl, iosTestFlightUrl } from "@/lib/platform-download";
 
 const locale = "en";
 ---
@@ -45,7 +46,7 @@ const locale = "en";
           {t(locale, "releaseStatus.mac.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-mac/releases/latest" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.mac.download")}</a>
+          <a href={macDmgUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.mac.download")}</a>
           <a href={localePath(locale, "/docs/mac")} class="text-primary hover:underline">{t(locale, "releaseStatus.mac.docs")}</a>
         </div>
       </section>
@@ -56,7 +57,7 @@ const locale = "en";
           {t(locale, "releaseStatus.win.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
+          <a href={windowsSetupUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
           <a href={localePath(locale, "/docs/windows")} class="text-primary hover:underline">{t(locale, "releaseStatus.win.docs")}</a>
         </div>
       </section>
@@ -67,7 +68,7 @@ const locale = "en";
           {t(locale, "releaseStatus.ios.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
+          <a href={iosTestFlightUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
           <a href={localePath(locale, "/docs/ios")} class="text-primary hover:underline">{t(locale, "releaseStatus.ios.docs")}</a>
         </div>
       </section>

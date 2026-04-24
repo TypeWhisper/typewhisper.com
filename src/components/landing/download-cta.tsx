@@ -1,9 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { macDmgUrl } from "@/lib/platform-download";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
+import { usePlatform } from "@/hooks/use-platform";
 import { t, localePath, type Locale } from "@/i18n/index";
 
 export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
+  const platform = usePlatform();
+  const download = getPlatformDownloadTarget(platform, locale, "landing");
+
   return (
     <section className="bg-secondary py-32 sm:py-40">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -17,11 +21,12 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="pill" asChild>
               <a
-                href={macDmgUrl}
+                href={download.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid="landing-footer-download"
               >
-                {t(locale, "downloadCta.download")}
+                {download.label}
               </a>
             </Button>
             <Button variant="link-arrow" asChild>
