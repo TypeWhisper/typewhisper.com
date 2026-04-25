@@ -166,3 +166,53 @@ export async function fetchReleaseData({
 
   return { releases, downloads };
 }
+
+export function preservePreviousReleaseData(
+  current,
+  previous = {},
+  { repos = DEFAULT_REPOS, logger = console } = {},
+) {
+  const releases = Array.isArray(current.releases) ? [...current.releases] : [];
+  const downloads =
+    current.downloads && typeof current.downloads === "object"
+      ? { ...current.downloads }
+      : {};
+  const previousReleases = Array.isArray(previous.releases)
+    ? previous.releases
+    : [];
+  const previousDownloads =
+    previous.downloads && typeof previous.downloads === "object"
+      ? previous.downloads
+      : {};
+
+  for (const repo of repos) {
+    const { platform } = repo;
+    const hasFetchedPlatformReleases = releases.some(
+      (release) => release.platform === platform,
+    );
+    const download = downloads[platform];
+    const previousDownload = previousDownloads[platform];
+
+    if (
+      hasFetchedPlatformReleases ||
+      download?.version ||
+      !previousDownload?.url
+    ) {
+      continue;
+    }
+
+    downloads[platform] = previousDownload;
+    const restoredReleases = previousReleases.filter(
+      (release) => release.platform === platform,
+    );
+    releases.push(...restoredReleases);
+
+    logger.warn(
+      `Keeping previous ${platform} release data because the latest fetch did not return releases for that platform.`,
+    );
+  }
+
+  releases.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+
+  return { releases, downloads };
+}

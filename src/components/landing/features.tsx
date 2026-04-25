@@ -24,12 +24,12 @@ function getFeatures(locale: Locale): Feature[] {
     {
       title: t(locale, "features.prompts.title"),
       description: t(locale, "features.prompts.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/prompts.png"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/workflows.png"),
     },
     {
       title: t(locale, "features.profiles.title"),
       description: t(locale, "features.profiles.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/profiles.png"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/dictionary.png"),
     },
     {
       title: t(locale, "features.transcription.title"),

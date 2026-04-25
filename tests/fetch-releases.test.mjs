@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { fetchReleaseData } from "../scripts/fetch-releases-lib.mjs";
+import {
+  fetchReleaseData,
+  preservePreviousReleaseData,
+} from "../scripts/fetch-releases-lib.mjs";
 
 function createRelease({
   id,
@@ -154,4 +157,106 @@ test("fetchReleaseData falls back when no stable release contains the expected a
     version: null,
     filename: null,
   });
+});
+
+test("preservePreviousReleaseData keeps cached platform data after a failed fetch", () => {
+  const current = {
+    releases: [],
+    downloads: {
+      mac: {
+        url: "https://example.com/typewhisper-mac/releases",
+        version: null,
+        filename: null,
+      },
+    },
+  };
+  const previous = {
+    releases: [
+      {
+        id: 500,
+        tag_name: "v1.2.2",
+        name: "v1.2.2",
+        body: null,
+        published_at: "2026-04-14T23:51:26Z",
+        html_url: "https://example.com/releases/tag/v1.2.2",
+        platform: "mac",
+      },
+    ],
+    downloads: {
+      mac: {
+        url: "https://example.com/TypeWhisper-v1.2.2.dmg",
+        version: "v1.2.2",
+        filename: "TypeWhisper-v1.2.2.dmg",
+      },
+    },
+  };
+
+  const { releases, downloads } = preservePreviousReleaseData(
+    current,
+    previous,
+    {
+      repos: [
+        {
+          platform: "mac",
+        },
+      ],
+      logger: silentLogger,
+    },
+  );
+
+  assert.equal(downloads.mac.url, "https://example.com/TypeWhisper-v1.2.2.dmg");
+  assert.equal(downloads.mac.version, "v1.2.2");
+  assert.equal(releases.length, 1);
+  assert.equal(releases[0].tag_name, "v1.2.2");
+});
+
+test("preservePreviousReleaseData does not hide a successful fetch with no matching stable asset", () => {
+  const current = {
+    releases: [
+      {
+        id: 600,
+        tag_name: "v1.3.0-rc5",
+        name: "v1.3.0-rc5",
+        body: null,
+        published_at: "2026-04-24T12:34:27Z",
+        html_url: "https://example.com/releases/tag/v1.3.0-rc5",
+        platform: "mac",
+      },
+    ],
+    downloads: {
+      mac: {
+        url: "https://example.com/typewhisper-mac/releases",
+        version: null,
+        filename: null,
+      },
+    },
+  };
+  const previous = {
+    releases: [],
+    downloads: {
+      mac: {
+        url: "https://example.com/TypeWhisper-v1.2.2.dmg",
+        version: "v1.2.2",
+        filename: "TypeWhisper-v1.2.2.dmg",
+      },
+    },
+  };
+
+  const { releases, downloads } = preservePreviousReleaseData(
+    current,
+    previous,
+    {
+      repos: [
+        {
+          platform: "mac",
+        },
+      ],
+      logger: silentLogger,
+    },
+  );
+
+  assert.equal(downloads.mac.url, "https://example.com/typewhisper-mac/releases");
+  assert.equal(downloads.mac.version, null);
+  assert.equal(releases.length, 1);
+  assert.equal(releases[0].tag_name, "v1.3.0-rc5");
 });

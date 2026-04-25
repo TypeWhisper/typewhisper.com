@@ -57,13 +57,13 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
             <p className="text-sm font-semibold">{t(locale, "docs.mac.prompts.intro.cleanupTitle")}</p>
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.prompts.intro.cleanupDesc")}{" "}
-              <a href={localePath(locale, "/docs/mac/rules")} className="text-primary hover:underline">
+              <a href={localePath(locale, "/docs/mac/workflows")} className="text-primary hover:underline">
                 {t(locale, "docs.mac.prompts.intro.cleanupLink")}
               </a>
             </p>
           </div>
           <Screenshot
-            src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
+            src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
             alt={t(locale, "docs.mac.prompts.intro.imgAlt")}
             className="mt-4 rounded-xl"
           />
@@ -141,7 +141,7 @@ export default function DocsMacPrompts({ locale = "en" }: { locale?: Locale }) {
               <p className="mt-2 text-sm text-muted-foreground">
                 {t(locale, "docs.mac.prompts.advanced.rules.desc")}
               </p>
-              <a href={localePath(locale, "/docs/mac/rules")} className="mt-3 inline-block text-sm text-primary hover:underline">
+              <a href={localePath(locale, "/docs/mac/workflows")} className="mt-3 inline-block text-sm text-primary hover:underline">
                 {t(locale, "docs.mac.prompts.advanced.rules.link")}
               </a>
             </div>

@@ -38,12 +38,12 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
               {t(locale, "docs.mac.features.ai.desc2")}
             </p>
             <p className="mt-3 text-sm text-muted-foreground">
-              <a href={localePath(locale, "/docs/mac/prompts")} className="text-primary hover:underline">
+              <a href={localePath(locale, "/docs/mac/workflows")} className="text-primary hover:underline">
                 {t(locale, "docs.mac.features.ai.learn")}
               </a>
             </p>
             <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/prompts.png")}
+              src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
               alt={t(locale, "docs.mac.features.ai.imgAlt")}
               className="mt-4 rounded-xl"
             />
@@ -140,7 +140,7 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
               {t(locale, "docs.mac.features.home.desc")}
             </p>
             <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/home.png")}
+              src={screenshotPath(locale, "/screenshots/mac/home-dashboard.png")}
               alt={t(locale, "docs.mac.features.home.imgAlt")}
               className="mt-4 rounded-xl"
             />
