@@ -40,7 +40,8 @@ All routes exist under both `/en/` and `/de/`.
 | `/{locale}/docs/mac/installation` | System requirements and installation guide |
 | `/{locale}/docs/mac/features` | Feature documentation |
 | `/{locale}/docs/mac/api` | HTTP API reference |
-| `/{locale}/docs/mac/profiles` | Profiles guide for app, website, and fallback setups |
+| `/{locale}/docs/mac/workflows` | Workflows guide for app, website, hotkey, and fallback automations |
+| `/{locale}/docs/mac/troubleshooting` | Troubleshooting guide for permissions, text insertion, microphone access, and setup |
 | `/{locale}/addons` | Add-ons marketplace |
 | `/{locale}/addons/{slug}` | Individual add-on documentation |
 | `/{locale}/use-cases` | Use cases overview |
