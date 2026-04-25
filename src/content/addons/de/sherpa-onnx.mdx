@@ -1,0 +1,56 @@
+---
+slug: sherpa-onnx
+name: Lokale Modelle (sherpa-onnx)
+author: TypeWhisper
+version: 1.0.1
+icon: AudioLines
+description: Offline-Transkription unter Windows mit sherpa-onnx-Modellen, inklusive Parakeet und Canary.
+categories:
+  - transcription
+platforms:
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
+---
+
+## Über
+
+Lokale Modelle (sherpa-onnx) ergänzt TypeWhisper unter Windows um Offline-Transkription mit sherpa-onnx. Das Plugin bietet aktuell NVIDIA Parakeet für breite lokale Transkription und Canary 180M Flash als kleineres Modell mit Übersetzungsunterstützung.
+
+## Features
+
+- Offline-Transkription unter Windows über sherpa-onnx
+- Herunterladbare Modelldateien von Hugging Face
+- CPU-Provider-Konfiguration
+- Parakeet-Modell mit breiter Sprachabdeckung
+- Canary-Modell mit Unterstützung für Englisch, Deutsch, Französisch und Spanisch
+- Übersetzungsunterstützung, wenn das Canary-Modell ausgewählt ist
+- Kein API-Schlüssel oder Cloud-Konto erforderlich, nachdem das Modell heruntergeladen wurde
+
+## Transkriptionsmodelle
+
+| Modell | ID | Größe | Sprachen | Übersetzung |
+| --- | --- | --- | --- | --- |
+| Parakeet TDT 0.6B | `parakeet-tdt-0.6b` | ~670 MB | 25 | Nein |
+| Canary 180M Flash | `canary-180m-flash` | ~198 MB | 4 | Ja |
+
+## Konfiguration
+
+- **Modell** - Wähle Parakeet TDT 0.6B oder Canary 180M Flash.
+- **Download** - Lädt alle erforderlichen ONNX-Modelldateien und Token-Dateien herunter.
+- **Sprache** - Canary unterstützt `en`, `de`, `fr` und `es`.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Wähle Lokale Modelle (sherpa-onnx)
+3. Lade das gewünschte Modell herunter und lade es in den Speicher
+4. Wähle den sherpa-onnx-Anbieter als Transkriptions-Engine
+
+## Hinweise
+
+- Parakeet ist das empfohlene Modell für allgemeine Offline-Transkription.
+- Canary ist die Option, wenn du Übersetzungsunterstützung brauchst.
+- Das Plugin speichert Modelldateien im Plugin-Datenverzeichnis unter `Models/<model-id>/`.

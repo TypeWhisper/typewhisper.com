@@ -1,0 +1,56 @@
+---
+slug: sherpa-onnx
+name: Local Models (sherpa-onnx)
+author: TypeWhisper
+version: 1.0.1
+icon: AudioLines
+description: Offline Windows transcription with sherpa-onnx models, including Parakeet and Canary.
+categories:
+  - transcription
+platforms:
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
+---
+
+## About
+
+Local Models (sherpa-onnx) adds offline transcription to TypeWhisper for Windows using sherpa-onnx. The plugin currently exposes NVIDIA Parakeet for broad local transcription and Canary 180M Flash for a smaller model with translation support.
+
+## Features
+
+- Offline transcription on Windows through sherpa-onnx
+- Downloadable model files from Hugging Face
+- CPU provider configuration
+- Parakeet model with broad language coverage
+- Canary model with English, German, French, and Spanish support
+- Translation support when the Canary model is selected
+- No API key or cloud account required after the model is downloaded
+
+## Transcription Models
+
+| Model | ID | Size | Languages | Translation |
+| --- | --- | --- | --- | --- |
+| Parakeet TDT 0.6B | `parakeet-tdt-0.6b` | ~670 MB | 25 | No |
+| Canary 180M Flash | `canary-180m-flash` | ~198 MB | 4 | Yes |
+
+## Configuration
+
+- **Model** - Select either Parakeet TDT 0.6B or Canary 180M Flash.
+- **Download** - Downloads all required ONNX model files and token files.
+- **Language** - Canary supports `en`, `de`, `fr`, and `es`.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Select Local Models (sherpa-onnx)
+3. Download and load the model you want to use
+4. Select the sherpa-onnx provider as your transcription engine
+
+## Notes
+
+- Parakeet is the recommended model for general offline transcription.
+- Canary is the option to use when you need translation support.
+- The plugin stores model files under the plugin data directory in `Models/<model-id>/`.

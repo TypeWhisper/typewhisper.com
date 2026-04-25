@@ -1,0 +1,66 @@
+---
+slug: whisper-cpp
+name: whisper.cpp (Local)
+author: TypeWhisper
+version: 1.0.0
+icon: Cpu
+description: Offline-Transkription unter Windows über Whisper.net und whisper.cpp-Modelldateien.
+categories:
+  - transcription
+platforms:
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
+---
+
+## Über
+
+whisper.cpp (Local) ergänzt TypeWhisper unter Windows um Offline-Whisper-Transkription über Whisper.net. Das Plugin lädt GGML-Modelldateien herunter, lädt das gewählte lokale Modell und kann Audio ohne Cloud-Dienst transkribieren.
+
+## Features
+
+- Offline-Whisper-Transkription unter Windows
+- Nutzt Whisper.net mit whisper.cpp-Runtime-Dateien
+- Integrierte GGML-Modell-Downloads
+- Automatische Spracherkennung
+- Prompt-Unterstützung für Transkriptionskontext
+- Übersetzungsunterstützung
+- Kein API-Schlüssel oder Cloud-Konto erforderlich
+
+## Transkriptionsmodelle
+
+| Modellfamilie | Varianten |
+| --- | --- |
+| Tiny | mehrsprachig, nur Englisch, Q5_0 |
+| Base | mehrsprachig, nur Englisch, Q5_0 |
+| Small | mehrsprachig, nur Englisch, Q5_0 |
+| Medium | mehrsprachig, nur Englisch, Q5_0 |
+| Large V3 Turbo | vollständig und Q5_0 |
+
+## Empfohlene Modelle
+
+| Modell | ID | Größe |
+| --- | --- | --- |
+| Base | `base` | ~142 MB |
+| Base (Q5_0) | `base-q5_0` | ~57 MB |
+
+## Konfiguration
+
+- **Modell** - Wähle das Whisper-Modell, das heruntergeladen und geladen werden soll.
+- **Prompt** - Optionaler Kontext kann an den Transkriptionsprozessor übergeben werden.
+- **Übersetzen** - Aktiviert Whisper-Übersetzung, wenn TypeWhisper sie anfordert.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Wähle whisper.cpp (Local)
+3. Lade dein bevorzugtes Modell herunter und lade es in den Speicher
+4. Wähle whisper.cpp als Transkriptions-Engine in den Einstellungen oder in einem Profil
+
+## Hinweise
+
+- Modelle werden im Plugin-Datenverzeichnis gespeichert.
+- Quantisierte Q5_0-Varianten reduzieren die Downloadgröße gegenüber vollständigen Modellen.
+- Größere Whisper-Modelle können die Genauigkeit verbessern, benötigen aber mehr Speicherplatz und Arbeitsspeicher.
