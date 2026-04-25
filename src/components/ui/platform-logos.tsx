@@ -15,6 +15,21 @@ export function MacOSLogo(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function WindowsLogo(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      data-platform-logo="windows"
+      {...props}
+    >
+      <path d="M3 5.4 11.2 4.3v7.6H3V5.4Zm0 13.2v-6.4h8.2v7.5L3 18.6Zm9.4-7.5V4.1L21 3v8.9h-8.6Zm0 1.1H21V21l-8.6-1.2v-7.6Z" />
+    </svg>
+  );
+}
+
 export function IOSLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
