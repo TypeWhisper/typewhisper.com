@@ -37,6 +37,16 @@ const isCommunity = isCommunityPlugin(plugin);
 const showBrandLogo = plugin.brandLogo
   ? canRenderBrandLogo(plugin.brandLogo, "addon")
   : false;
+const sourceLinks = plugin.sourceUrls
+  ? Object.entries(plugin.sourceUrls)
+      .filter(([, url]) => Boolean(url))
+      .map(([platform, url]) => ({
+        label: `${platformLabels[platform as keyof typeof platformLabels]} Source Code`,
+        url: url as string,
+      }))
+  : plugin.sourceUrl
+    ? [{ label: "Source Code", url: plugin.sourceUrl }]
+    : [];
 ---
 <BaseLayout
   title={`${plugin.name} - TypeWhisper Add-ons`}
@@ -86,7 +96,7 @@ const showBrandLogo = plugin.brandLogo
       </div>
 
       <!-- Links -->
-      {(plugin.apiDocsUrl || plugin.sourceUrl || plugin.homepage) && (
+      {(plugin.apiDocsUrl || sourceLinks.length > 0 || plugin.homepage) && (
         <div class="mt-6 flex flex-wrap gap-4">
           {plugin.homepage && (
             <a href={plugin.homepage} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
@@ -98,11 +108,11 @@ const showBrandLogo = plugin.brandLogo
               <ExternalLink className="size-3.5" /> API Docs
             </a>
           )}
-          {plugin.sourceUrl && (
-            <a href={plugin.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> Source Code
+          {sourceLinks.map((sourceLink) => (
+            <a href={sourceLink.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+              <ExternalLink className="size-3.5" /> {sourceLink.label}
             </a>
-          )}
+          ))}
         </div>
       )}
 

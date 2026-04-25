@@ -42,6 +42,7 @@ export interface Plugin {
   brandLogo?: BrandLogoId;
   apiDocsUrl?: string;
   sourceUrl?: string;
+  sourceUrls?: Partial<Record<PluginPlatform, string>>;
   principalClass?: string;
   featured?: boolean;
 }

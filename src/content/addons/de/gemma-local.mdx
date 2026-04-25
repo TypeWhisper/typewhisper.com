@@ -1,0 +1,56 @@
+---
+slug: gemma-local
+name: Gemma 4 (Local)
+author: TypeWhisper
+version: 1.0.0
+icon: Gem
+description: Lokaler LLM-Anbieter fuer Windows mit LLamaSharp und GGUF-Modelldateien.
+categories:
+  - llm
+platforms:
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
+---
+
+## Über
+
+Gemma 4 (Local) ergänzt TypeWhisper unter Windows um einen lokalen LLM-Anbieter. Das Plugin führt GGUF-Modelldateien über LLamaSharp aus und verarbeitet Prompts lokal auf dem Rechner, sobald das gewählte Modell heruntergeladen und geladen wurde.
+
+## Features
+
+- Lokale LLM-Prompt-Verarbeitung unter Windows
+- Basiert auf LLamaSharp mit CPU-Backend-Unterstützung
+- GGUF-Modell-Downloads von Hugging Face
+- Download-, Laden-, Entladen- und Abbrechen-Steuerung in den Plugin-Einstellungen
+- Zuvor gewählte heruntergeladene Modelle können im Hintergrund automatisch geladen werden
+- Kein API-Schlüssel für den lokalen Kern-Workflow erforderlich
+
+## Verfügbare Modelle
+
+| Modell | ID | Größe | Status |
+| --- | --- | --- | --- |
+| Gemma 4 4B (Q4_K_M) | `gemma4-4b-q4` | ~3 GB | Empfohlen |
+| Gemma 4 12B (Q4_K_M) | `gemma4-12b-q4` | ~8 GB | Verfügbar |
+| Gemma 4 27B (Q4_K_M) | `gemma4-27b-q4` | ~17 GB | Verfügbar |
+
+## Konfiguration
+
+- **Modell** - Wähle aus, welches lokale Gemma-Modell heruntergeladen und geladen werden soll.
+- **Download** - Lädt die ausgewählte GGUF-Modelldatei in das Plugin-Datenverzeichnis.
+- **Laden / Entladen** - Lädt das heruntergeladene Modell für Prompt-Verarbeitung oder gibt es aus dem Speicher frei.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Plugin Gemma 4 (Local) und öffne die Einstellungen
+3. Wähle ein Modell aus, lade es herunter und lade es in den Speicher
+4. Wähle Gemma 4 (Local) als LLM-Anbieter in deinem Prompt-Workflow
+
+## Hinweise
+
+- Modelle werden im Plugin-Datenverzeichnis unter `Models/<model-id>/` gespeichert.
+- Die aktuelle Windows-Implementierung nutzt LLamaSharp mit CPU-Backend.
+- Größere Modelle benötigen deutlich mehr Speicherplatz und Arbeitsspeicher als das empfohlene 4B-Modell.

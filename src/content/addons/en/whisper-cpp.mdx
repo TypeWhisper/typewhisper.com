@@ -1,0 +1,66 @@
+---
+slug: whisper-cpp
+name: whisper.cpp (Local)
+author: TypeWhisper
+version: 1.0.0
+icon: Cpu
+description: Offline Windows transcription via Whisper.net and whisper.cpp model files.
+categories:
+  - transcription
+platforms:
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
+---
+
+## About
+
+whisper.cpp (Local) adds offline Whisper transcription to TypeWhisper for Windows through Whisper.net. It downloads GGML model files, loads the selected local model, and can transcribe without sending audio to a cloud service.
+
+## Features
+
+- Offline Whisper transcription on Windows
+- Uses Whisper.net with whisper.cpp runtime files
+- Built-in GGML model downloads
+- Automatic language detection
+- Prompt support for transcription context
+- Translation support
+- No API key or cloud account required
+
+## Transcription Models
+
+| Model family | Variants |
+| --- | --- |
+| Tiny | multilingual, English-only, Q5_0 |
+| Base | multilingual, English-only, Q5_0 |
+| Small | multilingual, English-only, Q5_0 |
+| Medium | multilingual, English-only, Q5_0 |
+| Large V3 Turbo | full and Q5_0 |
+
+## Recommended Models
+
+| Model | ID | Size |
+| --- | --- | --- |
+| Base | `base` | ~142 MB |
+| Base (Q5_0) | `base-q5_0` | ~57 MB |
+
+## Configuration
+
+- **Model** - Choose the Whisper model to download and load.
+- **Prompt** - Optional context can be passed into the transcription processor.
+- **Translate** - Enables Whisper translation when requested by TypeWhisper.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Select whisper.cpp (Local)
+3. Download and load your preferred model
+4. Select whisper.cpp as your transcription engine in Settings or in a profile
+
+## Notes
+
+- Models are stored under the plugin data directory.
+- Quantized Q5_0 variants reduce download size compared with full models.
+- Larger Whisper models can improve accuracy but require more disk space and memory.
