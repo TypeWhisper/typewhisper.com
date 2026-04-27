@@ -59,6 +59,12 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
   "model": "openai_whisper-large-v3_turbo"
 }`}</pre>
             </div>
+            <div className="mt-4 rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
+              <p className="text-sm text-muted-foreground">
+                <strong>{t(locale, "docs.mac.api.transcribe.uploadLimit.title")}</strong>{" "}
+                {t(locale, "docs.mac.api.transcribe.uploadLimit.description")}
+              </p>
+            </div>
             <div className="mt-4">
               <h3 className="text-sm font-semibold">{t(locale, "docs.mac.api.transcribe.optionalParams")}</h3>
               <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
@@ -157,6 +163,12 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
                     400
                   </code>{" "}
                   - {t(locale, "docs.mac.api.errors.400")}
+                </li>
+                <li>
+                  <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">
+                    413
+                  </code>{" "}
+                  - {t(locale, "docs.mac.api.errors.413")}
                 </li>
                 <li>
                   <code className="rounded bg-background px-1.5 py-0.5 text-xs font-mono">

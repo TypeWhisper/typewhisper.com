@@ -67,6 +67,14 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
           </div>
 
           <div className="rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.fileSize.title")}</h2>
+            <div className="mt-3 space-y-3 text-sm text-muted-foreground">
+              <p>{t(locale, "docs.mac.cli.fileSize.localFiles")}</p>
+              <p>{t(locale, "docs.mac.cli.fileSize.stdin")}</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.options.title")}</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full text-sm">
