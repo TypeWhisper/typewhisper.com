@@ -1,0 +1,63 @@
+---
+slug: filler-words
+name: Filler Words
+author: TypeWhisper
+version: 1.0.0
+icon: Captions
+description: Entferne konfigurierbare Füllwörter aus Transkriptionen, bevor sie eingefügt werden.
+categories:
+  - post-processing
+platforms:
+  - mac
+source: bundled
+id: com.typewhisper.filler-words
+minAppVersion: 1.0.0
+principalClass: FillerWordsPlugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/FillerWordsPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/FillerWordsPlugin
+---
+
+## Über
+
+Filler Words entfernt konfigurierbare Füllwörter aus diktiertem Text nach der Transkription und vor dem Einfügen des finalen Textes. Das ist hilfreich, um spontane Sprache zu bereinigen, ohne Text an einen externen Dienst zu senden oder ein eigenes Skript zu schreiben.
+
+Das Plugin erkennt Wörter unabhängig von Groß- und Kleinschreibung, respektiert Wortgrenzen und kann angrenzende Satzzeichen um Füllwörter wie "ähm," oder "uh." entfernen. Die Standardliste deckt häufige englische und deutsche Füllwörter ab.
+
+## Features
+
+- Entfernt Füllwörter nach der Transkription
+- Konfigurierbare Wortliste
+- Erkennung unabhängig von Groß- und Kleinschreibung
+- Schützt normale Wörter wie "umbrella" oder "summer"
+- Entfernt angrenzende Satzzeichen um erkannte Füllwörter
+- Läuft vollständig lokal ohne API-Schlüssel
+
+## Standard-Füllwörter
+
+```text
+ah
+ahh
+eh
+ehm
+hm
+hmm
+uh
+uhh
+um
+umm
+äh
+ähm
+```
+
+## Konfiguration
+
+- **Füllwörter** - Ein Wort pro Zeile. Kommas und Semikolons werden ebenfalls akzeptiert.
+- **Standardwerte zurücksetzen** - Stellt die integrierte englische und deutsche Füllwortliste wieder her.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Filler Words Plugin und klicke auf Konfigurieren
+3. Passe die Füllwortliste bei Bedarf an
+4. Transkriptionen werden automatisch während der Nachbearbeitung bereinigt

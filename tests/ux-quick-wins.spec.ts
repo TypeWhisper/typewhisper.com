@@ -19,6 +19,18 @@ async function prepareThemeSession(page: Page, theme: "dark" | "light") {
   }, theme);
 }
 
+async function waitForAddonsHydration(page: Page) {
+  await page.waitForFunction(() => {
+    const islands = Array.from(
+      document.querySelectorAll("astro-island"),
+    ) as HTMLElement[];
+    const target = islands.find((el) =>
+      (el.getAttribute("component-url") ?? "").includes("addons/_index"),
+    );
+    return target !== undefined && !target.hasAttribute("ssr");
+  });
+}
+
 test.describe("header download CTA", () => {
   test("download CTA is visible on the landing page", async ({ page }) => {
     await page.goto("/en/");
@@ -127,20 +139,56 @@ test.describe("brand logos", () => {
 });
 
 test.describe("addons search", () => {
+  test("Filler Words addon appears in both locales and has detail screenshots", async ({
+    page,
+  }) => {
+    const locales = [
+      {
+        code: "en",
+        search: "filler",
+        category: "Post-Processing",
+        detailText: "Filler Words removes configurable filler words",
+        screenshotAlt: "Filler Words settings",
+      },
+      {
+        code: "de",
+        search: "füll",
+        category: "Nachbearbeitung",
+        detailText: "Filler Words entfernt konfigurierbare Füllwörter",
+        screenshotAlt: "Filler Words Einstellungen",
+      },
+    ] as const;
+
+    for (const locale of locales) {
+      await page.goto(`/${locale.code}/addons`);
+      await waitForAddonsHydration(page);
+
+      const search = page.getByTestId("addons-search");
+      await search.fill(locale.search);
+
+      const fillerWordsCard = page.locator(
+        '[data-testid="addon-card"][data-slug="filler-words"]',
+      );
+      await expect(fillerWordsCard).toBeVisible();
+      await expect(fillerWordsCard).toContainText("Filler Words");
+
+      await page.goto(`/${locale.code}/addons/filler-words`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Filler Words" }),
+      ).toBeVisible();
+      await expect(page.getByText(locale.category).first()).toBeVisible();
+      await expect(page.getByText("macOS").first()).toBeVisible();
+      await expect(page.getByText(locale.detailText).first()).toBeVisible();
+      await expect(page.getByAltText(locale.screenshotAlt)).toBeVisible();
+    }
+  });
+
   test("search input filters the addon cards", async ({ page }) => {
     await page.goto("/en/addons");
     await expect(page.getByTestId("featured-addons")).toBeVisible();
 
     // Wait for the addons React island to finish hydrating before typing.
-    await page.waitForFunction(() => {
-      const islands = Array.from(
-        document.querySelectorAll("astro-island"),
-      ) as HTMLElement[];
-      const target = islands.find((el) =>
-        (el.getAttribute("component-url") ?? "").includes("addons/_index"),
-      );
-      return target !== undefined && !target.hasAttribute("ssr");
-    });
+    await waitForAddonsHydration(page);
 
     const cards = page.getByTestId("addon-card");
     await expect(cards.first()).toBeVisible();

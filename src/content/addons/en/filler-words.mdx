@@ -1,0 +1,63 @@
+---
+slug: filler-words
+name: Filler Words
+author: TypeWhisper
+version: 1.0.0
+icon: Captions
+description: Remove configurable filler words from transcriptions before they are inserted.
+categories:
+  - post-processing
+platforms:
+  - mac
+source: bundled
+id: com.typewhisper.filler-words
+minAppVersion: 1.0.0
+principalClass: FillerWordsPlugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/FillerWordsPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/FillerWordsPlugin
+---
+
+## About
+
+Filler Words removes configurable filler words from dictated text after transcription and before the final text is inserted. It is useful for cleaning up spontaneous speech without sending text to an external service or writing a custom script.
+
+The plugin matches words case-insensitively, respects word boundaries, and can remove adjacent punctuation around filler words such as "um," or "uh." The built-in defaults cover common English and German fillers.
+
+## Features
+
+- Removes filler words after transcription
+- Configurable word list
+- Case-insensitive matching
+- Preserves normal words such as "umbrella" or "summer"
+- Removes adjacent punctuation around matched filler words
+- Works fully locally without API keys
+
+## Default Filler Words
+
+```text
+ah
+ahh
+eh
+ehm
+hm
+hmm
+uh
+uhh
+um
+umm
+äh
+ähm
+```
+
+## Configuration
+
+- **Filler words** - One word per line. Commas and semicolons are also accepted.
+- **Reset Defaults** - Restores the built-in English and German filler word list.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Filler Words plugin and click Configure
+3. Adjust the filler word list if needed
+4. Transcriptions will be cleaned automatically during post-processing
