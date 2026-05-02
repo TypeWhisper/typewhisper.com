@@ -118,6 +118,28 @@ export default function DocsMacTroubleshooting({ locale = "en" }: { locale?: Loc
           </p>
         </div>
 
+        {/* Live Transcript plugin panel */}
+        <div className="mt-6 rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {t(locale, "docs.mac.troubleshooting.liveTranscript.title")}
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.troubleshooting.liveTranscript.desc")}
+          </p>
+
+          <h3 className="mt-5 text-sm font-semibold">{t(locale, "docs.mac.troubleshooting.howToFix")}</h3>
+          <ol className="mt-2 space-y-2 text-sm text-muted-foreground list-decimal list-inside">
+            <li>
+              {t(locale, "docs.mac.troubleshooting.liveTranscript.fix1a")}{" "}
+              <strong className="text-foreground">
+                {t(locale, "docs.mac.troubleshooting.liveTranscript.fix1Path")}
+              </strong>
+            </li>
+            <li>{t(locale, "docs.mac.troubleshooting.liveTranscript.fix2")}</li>
+            <li>{t(locale, "docs.mac.troubleshooting.liveTranscript.fix3")}</li>
+          </ol>
+        </div>
+
         {/* No audio input */}
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.troubleshooting.noAudio.title")}</h2>
