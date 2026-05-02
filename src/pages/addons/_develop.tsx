@@ -184,6 +184,8 @@ dependencies: [
   "version": "1.0.0",
   "minHostVersion": "0.9.0",
   "minOSVersion": "14.0",
+  "hosting": "local",
+  "requiresAPIKey": false,
   "author": "Your Name",
   "principalClass": "MyPlugin"
 }`}
@@ -201,7 +203,19 @@ dependencies: [
                   <code className="rounded bg-muted px-1 py-0.5">
                     minOSVersion
                   </code>
-                  {isDe ? " ist optional und standardmäßig 14.0." : " is optional and defaults to 14.0."}
+                  {isDe ? " ist optional und standardmäßig 14.0. " : " is optional and defaults to 14.0. "}
+                  <code className="rounded bg-muted px-1 py-0.5">
+                    hosting
+                  </code>
+                  {isDe
+                    ? " steuert die Local/Cloud-Kategorie im Plugin-Katalog; "
+                    : " controls the Local/Cloud category in the plugin catalog; "}
+                  <code className="rounded bg-muted px-1 py-0.5">
+                    requiresAPIKey
+                  </code>
+                  {isDe
+                    ? " beschreibt nur, ob ein API-Key-Credential erforderlich ist."
+                    : " only describes whether an API key credential is required."}
                 </p>
               </div>
               <div>
