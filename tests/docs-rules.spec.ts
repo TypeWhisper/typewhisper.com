@@ -73,6 +73,30 @@ test.describe("macOS workflows documentation", () => {
     ).toBeVisible();
   });
 
+  test("macOS troubleshooting explains the Live Transcript plugin panel", async ({ page }) => {
+    await page.goto("/en/docs/mac/troubleshooting");
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: "Live Transcript window stays on screen",
+      }),
+    ).toBeVisible();
+    await expect(page.getByText("Integrations > Live Transcript")).toBeVisible();
+    await expect(page.getByText("disable Auto-open on recording")).toBeVisible();
+    await expect(page.getByText("assign a Toggle Shortcut")).toBeVisible();
+
+    await page.goto("/de/docs/mac/troubleshooting");
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: "Live-Transcript-Fenster bleibt auf dem Bildschirm",
+      }),
+    ).toBeVisible();
+    await expect(page.getByText("Integrationen > Live Transcript")).toBeVisible();
+    await expect(page.getByText("Auto-open on recording deaktivieren")).toBeVisible();
+    await expect(page.getByText("Toggle Shortcut festlegen")).toBeVisible();
+  });
+
   test("windows docs still use profiles", async ({ page }) => {
     await page.goto("/en/docs/windows");
     await expect(
