@@ -85,6 +85,9 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
               &bull; <strong>{t(locale, "docs.mac.rules.creating.task.label")}</strong> - {t(locale, "docs.mac.rules.creating.task.desc")}
             </li>
             <li>
+              &bull; <strong>{t(locale, "docs.mac.rules.creating.translationMode.label")}</strong> - {t(locale, "docs.mac.rules.creating.translationMode.desc")}
+            </li>
+            <li>
               &bull; <strong>{t(locale, "docs.mac.rules.creating.engine.label")}</strong> - {t(locale, "docs.mac.rules.creating.engine.desc")}
             </li>
             <li>
@@ -229,6 +232,12 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
               <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.github.title")}</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {t(locale, "docs.mac.rules.examples.github.desc")}
+              </p>
+            </div>
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.translation.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.examples.translation.desc")}
               </p>
             </div>
             <div className="rounded-md bg-background p-4">
