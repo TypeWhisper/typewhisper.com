@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AddonsIndex from "@/pages/addons/_index.tsx";
+import { getPlugins } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const allPlugins = getPlugins(locale);
+const basePath = canonicalPath(locale, "/addons");
+---
+<BaseLayout
+  title={t(locale, "addons.title")}
+  description={t(locale, "addons.description")}
+  canonicalPath={basePath}
+  locale={locale}
+>
+  <AddonsIndex client:load locale={locale} allPlugins={allPlugins} basePath={basePath} />
+</BaseLayout>

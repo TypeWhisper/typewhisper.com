@@ -1,24 +1,11 @@
 ---
-// Redirect to locale-prefixed version
-// Keep getStaticPaths to generate all slug pages as redirects
-import { useCaseModules } from "@/data/use-cases";
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
+import { getUseCaseModules } from "@/data/use-cases";
 
 export function getStaticPaths() {
-  return useCaseModules.map((mod) => ({ params: { slug: mod.frontmatter.slug } }));
+  return getUseCaseModules("en").map((mod) => ({ params: { slug: mod.frontmatter.slug } }));
 }
 
 const { slug } = Astro.params;
 ---
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <script is:inline define:vars={{ slug }}>
-      var lang = (navigator.language || "en").toLowerCase();
-      var locale = lang.startsWith("de") ? "de" : "en";
-      window.location.replace("/" + locale + "/use-cases/" + slug);
-    </script>
-    <meta http-equiv="refresh" content={`0;url=/en/use-cases/${slug}`} />
-  </head>
-  <body></body>
-</html>
+<LocalizedRedirect path={`/use-cases/${slug}`} />

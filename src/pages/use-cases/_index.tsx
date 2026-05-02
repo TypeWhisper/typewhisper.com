@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCases, getUseCases, type UseCase, type UseCaseCategory } from "@/data/use-cases";
+import { useCases, type UseCase, type UseCaseCategory } from "@/data/use-cases";
 import { t, type Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/use-cases/category-filter";
 import { UseCaseCard } from "@/components/use-cases/use-case-card";

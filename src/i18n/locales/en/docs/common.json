@@ -1,0 +1,21 @@
+{
+  "docs.title": "Documentation",
+  "docs.subtitle": "macOS is the stable 1.3 release, focused on unified workflows, local dictation, and better reliability. Windows is currently in public beta, and iOS is available as an early alpha preview.",
+  "docs.allPlatforms": "All Platforms",
+  "docs.sidebar.overview": "Overview",
+  "docs.sidebar.installation": "Installation",
+  "docs.sidebar.features": "Features",
+  "docs.sidebar.prompts": "Prompts",
+  "docs.sidebar.workflows": "Workflows",
+  "docs.sidebar.httpApi": "HTTP API",
+  "docs.sidebar.cliTool": "CLI Tool",
+  "docs.sidebar.profiles": "Profiles",
+  "docs.sidebar.rules": "Rules",
+  "docs.sidebar.troubleshooting": "Troubleshooting",
+  "docs.win.title": "Windows",
+  "docs.win.badge": "Beta",
+  "docs.win.description": "Public beta docs for early testers and feedback.",
+  "docs.ios.title": "iOS",
+  "docs.ios.badge": "Alpha",
+  "docs.ios.description": "Early alpha preview via TestFlight for iPhone and iPad."
+}

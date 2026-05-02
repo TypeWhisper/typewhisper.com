@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PricingIndex from "@/pages/pricing/_index";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  title={t(locale, "pricing.meta.title")}
+  description={t(locale, "pricing.meta.description")}
+  canonicalPath={canonicalPath(locale, "/pricing")}
+  locale={locale}
+>
+  <PricingIndex client:load locale={locale} />
+</BaseLayout>
