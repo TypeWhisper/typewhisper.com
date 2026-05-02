@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Hero } from "@/components/landing/hero";
+import { SocialProof } from "@/components/landing/social-proof";
+import { Features } from "@/components/landing/features";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { EngineComparison } from "@/components/landing/engine-comparison";
+import { AppleDictationComparison } from "@/components/landing/apple-dictation-comparison";
+import { AvailablePlatforms } from "@/components/landing/platforms-coming-soon";
+import { DownloadCTA } from "@/components/landing/download-cta";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const path = canonicalPath(locale, "/");
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "TypeWhisper",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "macOS, Windows, iOS",
+  description: t(locale, "structuredData.description"),
+  inLanguage: locale,
+  url: `https://www.typewhisper.com${path}`,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+<BaseLayout
+  title={t(locale, "landing.title")}
+  description={t(locale, "landing.description")}
+  canonicalPath={path}
+  locale={locale}
+  structuredData={structuredData}
+>
+  <Hero locale={locale} client:load />
+  <SocialProof locale={locale} />
+  <HowItWorks locale={locale} />
+  <Features locale={locale} />
+  <AppleDictationComparison locale={locale} client:load />
+  <EngineComparison locale={locale} client:load />
+  <AvailablePlatforms locale={locale} />
+  <DownloadCTA locale={locale} client:load />
+</BaseLayout>

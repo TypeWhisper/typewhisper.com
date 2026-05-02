@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import ChangelogPage from "@/pages/changelog/_index.tsx";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  title={t(locale, "changelog.title")}
+  description={t(locale, "changelog.description")}
+  canonicalPath={canonicalPath(locale, "/changelog")}
+  locale={locale}
+>
+  <ChangelogPage client:load />
+</BaseLayout>

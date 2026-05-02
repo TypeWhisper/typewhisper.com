@@ -1,5 +1,5 @@
-import en from "./locales/en.json";
-import de from "./locales/de.json";
+import en from "./locales/en/index";
+import de from "./locales/de/index";
 
 export type Locale = "en" | "de";
 export const defaultLocale: Locale = "en";

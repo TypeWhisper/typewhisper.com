@@ -1,24 +1,11 @@
 ---
-// Redirect to locale-prefixed version
-// Keep getStaticPaths to generate all slug pages as redirects
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
 import { getPlugins } from "@/data/addons";
 
 export function getStaticPaths() {
-  return getPlugins().map((p) => ({ params: { slug: p.slug } }));
+  return getPlugins("en").map((plugin) => ({ params: { slug: plugin.slug } }));
 }
 
 const { slug } = Astro.params;
 ---
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <script is:inline define:vars={{ slug }}>
-      var lang = (navigator.language || "en").toLowerCase();
-      var locale = lang.startsWith("de") ? "de" : "en";
-      window.location.replace("/" + locale + "/addons/" + slug);
-    </script>
-    <meta http-equiv="refresh" content={`0;url=/en/addons/${slug}`} />
-  </head>
-  <body></body>
-</html>
+<LocalizedRedirect path={`/addons/${slug}`} />
