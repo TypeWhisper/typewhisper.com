@@ -1,4 +1,4 @@
-import { useState, type ReactElement, type SVGProps } from "react";
+import { useEffect, useState, type ReactElement, type SVGProps } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
@@ -52,6 +52,23 @@ const logoByPlatform: Record<
 export function Hero({ locale = "en" }: { locale?: Locale }) {
   const detectedPlatform = usePlatform();
   const [selectedPlatform, setSelectedPlatform] = useState<HeroPlatform>("mac");
+  const [hasUserSelectedPlatform, setHasUserSelectedPlatform] = useState(false);
+
+  useEffect(() => {
+    if (
+      !hasUserSelectedPlatform &&
+      (detectedPlatform === "mac" ||
+        detectedPlatform === "windows" ||
+        detectedPlatform === "ios")
+    ) {
+      setSelectedPlatform(detectedPlatform);
+    }
+  }, [detectedPlatform, hasUserSelectedPlatform]);
+
+  function handleSelectPlatform(platform: HeroPlatform) {
+    setHasUserSelectedPlatform(true);
+    setSelectedPlatform(platform);
+  }
 
   const download = getPlatformDownloadTarget(
     selectedPlatform,
@@ -84,7 +101,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           <HeroPlatformSwitcher
             locale={locale}
             selected={selectedPlatform}
-            onSelect={setSelectedPlatform}
+            onSelect={handleSelectPlatform}
             detectedHint={detectedHintPlatform}
           />
 

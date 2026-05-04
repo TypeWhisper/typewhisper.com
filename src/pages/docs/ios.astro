@@ -1,18 +1,4 @@
 ---
-// Redirect to locale-prefixed version
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
 ---
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <script is:inline>
-      (function() {
-        var lang = (navigator.language || "en").toLowerCase();
-        var locale = lang.startsWith("de") ? "de" : "en";
-        window.location.replace("/" + locale + "/docs/ios");
-      })();
-    </script>
-    <meta http-equiv="refresh" content="0;url=/en/docs/ios" />
-  </head>
-  <body></body>
-</html>
+<LocalizedRedirect path="/docs/ios" />

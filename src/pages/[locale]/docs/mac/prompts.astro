@@ -1,0 +1,25 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMacPrompts from "@/pages/docs/mac/_prompts.tsx";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+---
+<DocsLayout
+  title={t(locale, "docs.mac.prompts.meta.title")}
+  description={t(locale, "docs.mac.prompts.meta.description")}
+  canonicalPath={canonicalPath(locale, "/docs/mac/prompts")}
+  locale={locale}
+  platform="mac"
+>
+  <DocsMacPrompts locale={locale} />
+</DocsLayout>

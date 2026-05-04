@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import UseCasesIndex from "@/pages/use-cases/_index.tsx";
+import { getUseCases } from "@/data/use-cases";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const allUseCases = getUseCases(locale);
+const basePath = canonicalPath(locale, "/use-cases");
+---
+<BaseLayout
+  title={t(locale, "useCases.title")}
+  description={t(locale, "useCases.description")}
+  canonicalPath={basePath}
+  locale={locale}
+>
+  <UseCasesIndex client:load locale={locale} allUseCases={allUseCases} basePath={basePath} />
+</BaseLayout>

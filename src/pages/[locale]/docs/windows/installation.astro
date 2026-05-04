@@ -1,0 +1,41 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsWindowsInstallation from "@/pages/docs/windows/_installation.tsx";
+import { type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const copy = locale === "de"
+  ? {
+      title: "Installation - Windows Beta - TypeWhisper",
+      description: "Installiere die TypeWhisper Windows-Beta. Systemanforderungen, Download und erste Einrichtung.",
+      releaseTitle: "Windows ist derzeit eine öffentliche Beta.",
+      releaseDescription: "Installer-Details, Onboarding-Ablauf und einige Features können sich vor dem stabilen Release noch ändern.",
+    }
+  : {
+      title: "Installation - Windows Beta - TypeWhisper",
+      description: "Install the TypeWhisper Windows beta. System requirements, download, and first setup.",
+      releaseTitle: "Windows is currently a public beta.",
+      releaseDescription: "Installer details, onboarding flow, and some features may still change before the stable release.",
+    };
+---
+<DocsLayout
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/docs/windows/installation")}
+  locale={locale}
+  platform="windows"
+  releaseStage="beta"
+  releaseTitle={copy.releaseTitle}
+  releaseDescription={copy.releaseDescription}
+>
+  <DocsWindowsInstallation locale={locale} />
+</DocsLayout>

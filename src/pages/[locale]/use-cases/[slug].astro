@@ -1,0 +1,43 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getUseCaseModules } from "@/data/use-cases";
+import { UseCaseHero } from "@/components/use-cases/use-case-hero";
+import { UseCaseFeatures } from "@/components/use-cases/use-case-features";
+import { UseCaseHowItWorks } from "@/components/use-cases/use-case-how-it-works";
+import { UseCaseBenefits } from "@/components/use-cases/use-case-benefits";
+import { UseCaseCTA } from "@/components/use-cases/use-case-cta";
+import { locales } from "@/i18n/index";
+import { canonicalPath } from "@/lib/locale-routes";
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    getUseCaseModules(locale).map((mod) => ({
+      params: { locale, slug: mod.frontmatter.slug },
+      props: { locale, mod },
+    })),
+  );
+}
+
+const { locale, mod } = Astro.props;
+const useCase = mod.frontmatter;
+const Content = mod.default;
+---
+<BaseLayout
+  title={`${useCase.name} - TypeWhisper`}
+  description={useCase.description}
+  canonicalPath={canonicalPath(locale, `/use-cases/${useCase.slug}`)}
+  locale={locale}
+>
+  <UseCaseHero useCase={useCase} backHref={canonicalPath(locale, "/use-cases")} locale={locale} />
+  <UseCaseFeatures features={useCase.features} locale={locale} />
+  <UseCaseHowItWorks steps={useCase.howItWorks} locale={locale} />
+  <UseCaseBenefits benefits={useCase.benefits} locale={locale} />
+  {Content && (
+    <section class="section-light py-16 sm:py-20">
+      <div class="prose prose-neutral dark:prose-invert mx-auto max-w-4xl px-4 sm:px-6">
+        <Content />
+      </div>
+    </section>
+  )}
+  <UseCaseCTA locale={locale} />
+</BaseLayout>

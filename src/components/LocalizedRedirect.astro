@@ -1,0 +1,24 @@
+---
+interface Props {
+  path: string;
+}
+
+const { path } = Astro.props;
+const targetPath = path.startsWith("/") ? path : `/${path}`;
+const fallbackPath = targetPath === "/" ? "/en/" : `/en${targetPath}`;
+---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline define:vars={{ targetPath }}>
+      (function() {
+        var lang = (navigator.language || "en").toLowerCase();
+        var locale = lang.startsWith("de") ? "de" : "en";
+        window.location.replace("/" + locale + targetPath);
+      })();
+    </script>
+    <meta http-equiv="refresh" content={`0;url=${fallbackPath}`} />
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,84 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { Download, Globe, Settings, Sparkles } from "lucide-react";
+
+interface Props {
+  locale: Locale;
+}
+
+type WindowsCard = [slug: string, title: string, description: string, Icon: typeof Download];
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const copy = locale === "de"
+  ? {
+      title: "Windows-Beta-Dokumentation - TypeWhisper",
+      description: "Öffentliche Beta-Dokumentation für TypeWhisper auf Windows.",
+      releaseTitle: "Windows ist derzeit eine öffentliche Beta.",
+      releaseDescription: "Nutze diese Doku als Orientierung für Tests und Feedback. Erwarte noch Feinschliff-Lücken und Verhaltensänderungen, während sich das Release stabilisiert.",
+      heading: "Windows-Dokumentation",
+      intro: "Die Windows-App ist öffentlich testbar. Die Kern-Workflows sind bereits nützlich, aber dies ist noch kein stabiles 1.0-Release.",
+      cards: [
+        ["installation", "Installation", "Beta-Installationsanleitung, Systemanforderungen und erster Start.", Download],
+        ["features", "Funktionen", "Aktueller Funktionsumfang der Beta, Plattformgrenzen und Workflow-Hinweise.", Sparkles],
+        ["api", "HTTP API", "Aktuelle Beta-API für lokale Tools und Automatisierung.", Globe],
+        ["profiles", "Profile", "App- und seitenbezogene Einstellungen mit dem aktuellen Verhalten der Beta.", Settings],
+      ],
+    }
+  : {
+      title: "Windows Beta Documentation - TypeWhisper",
+      description: "Public beta documentation for TypeWhisper on Windows.",
+      releaseTitle: "Windows is currently a public beta.",
+      releaseDescription: "Use these docs as guidance for testing and feedback. Expect polish gaps and behavior changes while the release stabilizes.",
+      heading: "Windows Documentation",
+      intro: "The Windows app is available for public testing. Core workflows are already useful, but this is not yet a 1.0-stable release.",
+      cards: [
+        ["installation", "Installation", "Beta install guide, system requirements, and first setup.", Download],
+        ["features", "Features", "Current beta feature set, platform constraints, and workflow notes.", Sparkles],
+        ["api", "HTTP API", "Current beta API surface for local tooling and automation.", Globe],
+        ["profiles", "Profiles", "Per-app and per-site settings with current beta behavior.", Settings],
+      ],
+    };
+---
+<DocsLayout
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/docs/windows")}
+  locale={locale}
+  platform="windows"
+  releaseStage="beta"
+  releaseTitle={copy.releaseTitle}
+  releaseDescription={copy.releaseDescription}
+>
+  <div>
+    <div class="flex flex-wrap items-center gap-3">
+      <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
+      <Badge variant="outline">Beta</Badge>
+    </div>
+    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
+      {copy.intro}
+    </p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      {(copy.cards as WindowsCard[]).map(([slug, title, description, Icon]) => (
+        <a href={canonicalPath(locale, `/docs/windows/${slug}`)}>
+          <Card className="h-full transition-all hover:shadow-md">
+            <CardHeader>
+              <div class="mb-1 text-muted-foreground">
+                <Icon className="size-5" />
+              </div>
+              <CardTitle className="text-base">{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
+            </CardHeader>
+          </Card>
+        </a>
+      ))}
+    </div>
+  </div>
+</DocsLayout>

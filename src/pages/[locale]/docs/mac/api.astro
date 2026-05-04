@@ -1,0 +1,25 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMacAPI from "@/pages/docs/mac/_api.tsx";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+---
+<DocsLayout
+  title={t(locale, "docs.mac.api.meta.title")}
+  description={t(locale, "docs.mac.api.meta.description")}
+  canonicalPath={canonicalPath(locale, "/docs/mac/api")}
+  locale={locale}
+  platform="mac"
+>
+  <DocsMacAPI locale={locale} />
+</DocsLayout>

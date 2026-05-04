@@ -12,6 +12,7 @@ import {
   FileAudio,
 } from "lucide-react";
 import type { UseCaseFeature } from "@/data/use-cases";
+import { t, type Locale } from "@/i18n/index";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   PenLine,
@@ -29,14 +30,15 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface UseCaseFeaturesProps {
   features: UseCaseFeature[];
+  locale?: Locale;
 }
 
-export function UseCaseFeatures({ features }: UseCaseFeaturesProps) {
+export function UseCaseFeatures({ features, locale = "en" }: UseCaseFeaturesProps) {
   return (
     <section className="section-dark py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          Key Features
+          {t(locale, "useCases.featuresTitle")}
         </h2>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-3">

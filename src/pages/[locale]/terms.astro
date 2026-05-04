@@ -1,0 +1,62 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const copy = locale === "de"
+  ? {
+      title: "Nutzungsbedingungen - TypeWhisper",
+      description: "TypeWhisper Nutzungsbedingungen. Kostenlos und Open Source unter GPLv3.",
+      heading: "Nutzungsbedingungen",
+      updated: "Zuletzt aktualisiert: Februar 2026",
+      sections: [
+        ["Lizenz", "TypeWhisper ist freie und quelloffene Software, verteilt unter der GNU General Public License v3.0 (GPLv3). Durch die Nutzung von TypeWhisper stimmst du den Bedingungen dieser Lizenz zu."],
+        ["Haftungsausschluss", "TypeWhisper wird ohne jegliche Gewährleistung bereitgestellt, weder ausdrücklich noch stillschweigend, einschließlich, aber nicht beschränkt auf die Gewährleistung der Marktgängigkeit, der Eignung für einen bestimmten Zweck und der Nichtverletzung von Rechten."],
+        ["Haftungsbeschränkung", "In keinem Fall haften die Autoren oder Urheberrechtsinhaber für Ansprüche, Schäden oder sonstige Haftung, sei es aus Vertrag, unerlaubter Handlung oder anderweitig, die sich aus der Software oder der Nutzung der Software oder dem sonstigen Umgang mit der Software ergeben."],
+        ["Drittanbieter-Modelle", "TypeWhisper lädt KI-Modelle von Drittanbieterquellen herunter (Hugging Face). Diese Modelle unterliegen ihren eigenen Lizenzen (z.B. MIT, Apache 2.0). Bitte prüfe die jeweiligen Modelllizenzen vor der Nutzung."],
+        ["Kommerzielle Lizenzierung", 'Wenn die GPLv3-Lizenz deinen Anforderungen nicht genügt, ist eine kommerzielle Lizenzierung verfügbar. Siehe die <a href="https://github.com/TypeWhisper/typewhisper-mac/blob/main/LICENSE-COMMERCIAL.md" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">kommerzielle Lizenz</a> für Details.'],
+      ],
+    }
+  : {
+      title: "Terms of Service - TypeWhisper",
+      description: "TypeWhisper terms of service. Free and open source under GPLv3.",
+      heading: "Terms of Service",
+      updated: "Last updated: February 2026",
+      sections: [
+        ["License", "TypeWhisper is free and open source software, distributed under the GNU General Public License v3.0 (GPLv3). By using TypeWhisper, you agree to the terms of this license."],
+        ["Disclaimer of Warranties", 'TypeWhisper is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement.'],
+        ["Limitation of Liability", "In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software."],
+        ["Third-Party Models", "TypeWhisper downloads AI models from third-party sources (Hugging Face). These models are subject to their own licenses (e.g., MIT, Apache 2.0). Please review the respective model licenses before use."],
+        ["Commercial Licensing", 'If the GPLv3 license does not meet your needs, commercial licensing is available. See the <a href="https://github.com/TypeWhisper/typewhisper-mac/blob/main/LICENSE-COMMERCIAL.md" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">commercial license</a> for details.'],
+      ],
+    };
+---
+
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/terms")}
+  locale={locale}
+>
+  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
+    <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
+    <p class="mt-2 text-sm text-muted-foreground">{copy.updated}</p>
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
+      {copy.sections.map(([title, body]) => (
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">{title}</h2>
+          <p class="mt-2" set:html={body} />
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

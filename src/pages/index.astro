@@ -1,20 +1,4 @@
 ---
-// Root page: redirects to /de/ or /en/ based on browser language.
-// This page is only served when a user visits the bare domain.
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
 ---
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>TypeWhisper - Redirecting...</title>
-    <script is:inline>
-      (function() {
-        var lang = (navigator.language || "en").toLowerCase();
-        var target = lang.startsWith("de") ? "/de/" : "/en/";
-        window.location.replace(target);
-      })();
-    </script>
-    <meta http-equiv="refresh" content="0;url=/en/" />
-  </head>
-  <body></body>
-</html>
+<LocalizedRedirect path="/" />

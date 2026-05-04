@@ -1,0 +1,38 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsIOS from "@/pages/docs/_ios.tsx";
+import { type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const copy = locale === "de"
+  ? {
+      description: "TypeWhisper für iOS Alpha via TestFlight. Frühe Vorschau auf lokale Transkription für iPhone und iPad.",
+      releaseTitle: "iOS ist derzeit eine Alpha-Vorschau.",
+      releaseDescription: "Behandle den iPhone- und iPad-Build als experimentelles TestFlight-Release, nicht als breiten produktiven Rollout.",
+    }
+  : {
+      description: "TypeWhisper for iOS alpha via TestFlight. Early on-device transcription preview for iPhone and iPad.",
+      releaseTitle: "iOS is currently an alpha preview.",
+      releaseDescription: "Treat the iPhone and iPad build as an experimental TestFlight release, not as a broad production rollout.",
+    };
+---
+<DocsLayout
+  title="iOS - TypeWhisper"
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/docs/ios")}
+  locale={locale}
+  releaseStage="alpha"
+  releaseTitle={copy.releaseTitle}
+  releaseDescription={copy.releaseDescription}
+>
+  <DocsIOS locale={locale} />
+</DocsLayout>

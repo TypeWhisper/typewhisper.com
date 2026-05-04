@@ -1,0 +1,17 @@
+{
+  "useCases.title": "Anwendungen - TypeWhisper",
+  "useCases.description": "Entdecke, wie TypeWhisper in deinen täglichen Workflow passt.",
+  "useCases.heading": "Anwendungen",
+  "useCases.all": "Alle",
+  "useCases.allUseCases": "Alle Anwendungen",
+  "useCases.learnMore": "Mehr erfahren",
+  "useCases.emptyState": "Keine Anwendungen für diesen Filter gefunden.",
+  "useCases.featuresTitle": "Wichtige Funktionen",
+  "useCases.howItWorksTitle": "So funktioniert es",
+  "useCases.benefitsTitle": "Vorteile",
+  "useCases.cta.title": "Bereit zum Ausprobieren?",
+  "useCases.cta.subtitle": "Kostenlos und Open Source für macOS, Windows und iOS.",
+  "useCases.cta.download": "Kostenlos herunterladen",
+  "useCases.category.app": "App",
+  "useCases.category.workflow": "Workflow"
+}

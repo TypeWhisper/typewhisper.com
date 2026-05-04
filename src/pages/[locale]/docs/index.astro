@@ -1,0 +1,79 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { t, type Locale } from "@/i18n/index";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { IOSLogo, MacOSLogo } from "@/components/ui/platform-logos";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { Monitor } from "lucide-react";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const metaDescription = locale === "de"
+  ? "TypeWhisper-Dokumentation für das macOS 1.3-Release, die Windows-Beta und die iOS-Alpha."
+  : "TypeWhisper documentation for the macOS 1.3 release, Windows beta, and iOS alpha.";
+---
+<DocsLayout
+  title={`${t(locale, "docs.title")} - TypeWhisper`}
+  description={metaDescription}
+  canonicalPath={canonicalPath(locale, "/docs")}
+  locale={locale}
+>
+  <div>
+    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "docs.title")}</h1>
+    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
+      {t(locale, "docs.subtitle")}
+    </p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      <a href={canonicalPath(locale, "/docs/mac")}>
+        <Card className="h-full transition-all hover:shadow-md">
+          <CardHeader>
+            <div class="mb-1 text-muted-foreground">
+              <MacOSLogo className="h-5 w-5" />
+            </div>
+            <CardTitle className="flex items-center gap-2 text-base">
+              {t(locale, "docs.mac.title")}
+              <Badge variant="secondary" className="text-[10px]">{t(locale, "docs.mac.badge")}</Badge>
+            </CardTitle>
+            <CardDescription>{t(locale, "docs.mac.description")}</CardDescription>
+          </CardHeader>
+        </Card>
+      </a>
+      <a href={canonicalPath(locale, "/docs/windows")}>
+        <Card className="h-full transition-all hover:shadow-md">
+          <CardHeader>
+            <div class="mb-1 text-muted-foreground">
+              <Monitor className="size-5" />
+            </div>
+            <CardTitle className="flex items-center gap-2 text-base">
+              {t(locale, "docs.win.title")}
+              <Badge variant="outline" className="text-[10px]">{t(locale, "docs.win.badge")}</Badge>
+            </CardTitle>
+            <CardDescription>{t(locale, "docs.win.description")}</CardDescription>
+          </CardHeader>
+        </Card>
+      </a>
+      <a href={canonicalPath(locale, "/docs/ios")}>
+        <Card className="h-full transition-all hover:shadow-md">
+          <CardHeader>
+            <div class="mb-1 text-muted-foreground">
+              <IOSLogo className="h-5 w-5" />
+            </div>
+            <CardTitle className="flex items-center gap-2 text-base">
+              {t(locale, "docs.ios.title")}
+              <Badge variant="outline" className="text-[10px]">{t(locale, "docs.ios.badge")}</Badge>
+            </CardTitle>
+            <CardDescription>{t(locale, "docs.ios.description")}</CardDescription>
+          </CardHeader>
+        </Card>
+      </a>
+    </div>
+  </div>
+</DocsLayout>
