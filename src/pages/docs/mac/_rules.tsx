@@ -23,12 +23,6 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.matching.title")}</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.appAndSite.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.appAndSite.desc")}
-              </p>
-            </div>
-            <div className="rounded-xl bg-background p-4">
               <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.siteOnly.title")}</p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {t(locale, "docs.mac.rules.matching.siteOnly.desc1")}{" "}
@@ -42,6 +36,18 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
               <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.appOnly.title")}</p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {t(locale, "docs.mac.rules.matching.appOnly.desc")}
+              </p>
+            </div>
+            <div className="rounded-xl bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.hotkey.title")}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t(locale, "docs.mac.rules.matching.hotkey.desc")}
+              </p>
+            </div>
+            <div className="rounded-xl bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.manual.title")}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t(locale, "docs.mac.rules.matching.manual.desc")}
               </p>
             </div>
             <div className="rounded-xl bg-background p-4">
@@ -62,8 +68,10 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
             <li>{t(locale, "docs.mac.rules.priority.item1")}</li>
             <li>{t(locale, "docs.mac.rules.priority.item2")}</li>
             <li>{t(locale, "docs.mac.rules.priority.item3")}</li>
-            <li>{t(locale, "docs.mac.rules.priority.item4")}</li>
           </ol>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.priority.manualHotkeyNote")}
+          </p>
         </div>
 
         <div className="rounded-2xl bg-card p-6">
