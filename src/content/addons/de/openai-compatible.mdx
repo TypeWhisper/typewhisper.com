@@ -20,7 +20,7 @@ sourceUrls:
 
 ## Über
 
-OpenAI Compatible ist ein universaler Adapter, der TypeWhisper mit jedem Dienst verbindet, der eine OpenAI-kompatible API bietet. Nutze es mit Ollama, LM Studio, vLLM oder jedem anderen kompatiblen Server für Transkription und LLM-Aufgaben. Modelle werden dynamisch vom `/v1/models`-Endpunkt des Servers geladen oder können manuell eingegeben werden.
+OpenAI Compatible ist ein universaler Adapter, der TypeWhisper mit jedem Dienst verbindet, der eine OpenAI-kompatible API bietet. Nutze es mit Ollama, LM Studio, vLLM oder jedem anderen kompatiblen Server fuer lokale LLM-Prompt-Verarbeitung. Server, die auch OpenAI-kompatible Audio-Endpunkte implementieren, koennen fuer Transkription genutzt werden. Modelle werden dynamisch vom `/v1/models`-Endpunkt des Servers geladen oder koennen manuell eingegeben werden.
 
 ## Features
 
@@ -42,7 +42,7 @@ Modelle werden dynamisch vom verbundenen Server geladen. Du kannst Modellnamen a
 - **Server-URL** - Die Basis-URL deines OpenAI-kompatiblen Servers (z.B. `http://localhost:11434/v1` für Ollama)
 - **API-Schlüssel** - Optional, abhängig vom Server
 
-## Einrichtung
+## Schnelle Einrichtung
 
 1. Starte deinen OpenAI-kompatiblen Server (z.B. Ollama, LM Studio)
 2. Öffne TypeWhisper Einstellungen > Plugins
@@ -50,3 +50,43 @@ Modelle werden dynamisch vom verbundenen Server geladen. Du kannst Modellnamen a
 4. Gib deine Server-URL ein
 5. Nutze "Verbindung testen", um die Verbindung zu prüfen
 6. Wähle OpenAI Compatible als Transkriptions-Engine oder LLM-Anbieter
+
+## Ollama fuer lokale LLM-Prompts nutzen
+
+Ollama stellt eine OpenAI-kompatible API unter `http://localhost:11434/v1` bereit. TypeWhisper kann diesen Endpunkt fuer Workflows und Prompt-Verarbeitung nutzen, ohne dass dasselbe lokale LLM ein zweites Mal geladen werden muss.
+
+1. Installiere und starte Ollama.
+2. Lade ein Modell, zum Beispiel `ollama pull llama3.2`.
+3. Oeffne in TypeWhisper Einstellungen > Plugins > OpenAI Compatible.
+4. Setze **Server-URL** auf `http://localhost:11434/v1`.
+5. Lasse **API-Schluessel** leer.
+6. Klicke auf **Verbindung testen**.
+7. Aktualisiere die Modelle und waehle das Ollama-Modell fuer LLM-Aufgaben aus.
+
+Siehe die offiziellen [Ollama OpenAI-Kompatibilitaetsdocs](https://docs.ollama.com/api/openai-compatibility) fuer die unterstuetzten `/v1/*`-Endpunkte.
+
+## LM Studio fuer lokale LLM-Prompts nutzen
+
+LM Studio bietet einen OpenAI-kompatiblen lokalen Server, haeufig unter `http://localhost:1234/v1`.
+
+1. Oeffne LM Studio und lade ein Chat-Modell.
+2. Starte den lokalen Server in LM Studio.
+3. Oeffne in TypeWhisper Einstellungen > Plugins > OpenAI Compatible.
+4. Setze **Server-URL** auf `http://localhost:1234/v1`.
+5. Lasse **API-Schluessel** leer, sofern dein LM-Studio-Server keinen verlangt.
+6. Klicke auf **Verbindung testen**.
+7. Aktualisiere die Modelle und waehle das geladene LM-Studio-Modell fuer LLM-Aufgaben aus.
+
+Siehe die offiziellen [LM Studio OpenAI-Kompatibilitaetsdocs](https://lmstudio.ai/docs/developer/openai-compat) fuer die unterstuetzten Endpunkte.
+
+## Hinweise zur Transkription
+
+Ollama und LM Studio sind LLM-Server. Sie unterstuetzen OpenAI-kompatible Text-Endpunkte wie `/v1/models` und `/v1/chat/completions`, die TypeWhisper fuer Prompt-Verarbeitung nutzt.
+
+Um OpenAI Compatible als Transkriptions-Engine zu verwenden, muss der Server auch OpenAI-kompatible Audio-Endpunkte wie `/v1/audio/transcriptions` implementieren. Wenn dein Server nur Chat Completions unterstuetzt, nutze OpenAI Compatible fuer LLM-Workflows und waehle fuer Speech-to-Text eine dedizierte TypeWhisper-Transkriptions-Engine.
+
+## Fehlerbehebung
+
+- Wenn **Verbindung testen** fehlschlaegt, pruefe, ob der Server laeuft und ob die URL mit `/v1` endet.
+- Wenn keine Modelle erscheinen, gib den Modellnamen manuell exakt so ein, wie der Server ihn meldet.
+- Wenn LLM-Workflows funktionieren, aber Transkription fehlschlaegt, implementiert der Server wahrscheinlich keine OpenAI-kompatiblen Audio-Transkriptionsendpunkte.
