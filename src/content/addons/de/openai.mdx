@@ -2,71 +2,127 @@
 slug: openai
 name: OpenAI / ChatGPT
 author: TypeWhisper
-version: 1.0.1
+version: 1.2.0
 icon: Brain
 brandLogo: openai
-description: Cloud-Transkription plus OpenAI-/ChatGPT-Prompts. Unter macOS per API-Key oder ChatGPT-Login nutzbar.
+description: Cloud-Transkription, OpenAI-/ChatGPT-Prompts und Text-to-Speech. STT/TTS brauchen einen API-Key, Prompts funktionieren auch per ChatGPT-Login.
 categories:
   - transcription
   - llm
+  - tts
 platforms:
   - mac
   - windows
 source: bundled
 apiDocsUrl: https://platform.openai.com/docs
-sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenAIPlugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin
 sourceUrls:
-  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/OpenAIPlugin
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAi
 featured: false
 ---
 
 ## Über
 
-OpenAI / ChatGPT bringt hochwertige Sprache-zu-Text-Umwandlung über Whisper-Modelle und flexible Prompt-Verarbeitung über OpenAI- sowie ChatGPT-/Codex-Modelle in TypeWhisper. Das Plugin unterstützt sowohl klassisches Whisper als auch das neuere GPT-4o-Transcribe-Modell für bessere Genauigkeit. Unter macOS kannst du entweder einen normalen OpenAI-API-Key verbinden oder deinen bestehenden ChatGPT-Plus-/Pro- oder Codex-Login für die Prompt-Verarbeitung nutzen.
+OpenAI / ChatGPT ist der mitgelieferte Cloud-Anbieter von TypeWhisper für Sprache-zu-Text, Prompt-Verarbeitung und Text-to-Speech. Version `1.2.0` bringt die aktuelle macOS-Konfiguration aus dem Screenshot: API-Schlüssel-Modus für den vollen OpenAI-API-Funktionsumfang und ChatGPT-Login für Prompt-Verarbeitung mit einem ChatGPT-Plus-/Pro- oder Codex-Konto.
 
-## Features
+Die veröffentlichte Release ist die Quelle der Wahrheit für die öffentliche Version. Der Plugin-Release-Workflow kann das Bundle-Manifest während der Veröffentlichung patchen; ein lokaler Checkout kann daher noch eine ältere Manifest-Version zeigen.
 
-- Hochpräzise Whisper-Transkription
-- GPT-4o Transcribe für verbesserte Genauigkeit
-- GPT- und ChatGPT-/Codex-Modelle für LLM-Aufgaben
-- o4-mini für schnelle, kosteneffiziente Verarbeitung
-- Übersetzungsunterstützung über Whisper
-- Browser-Login unter macOS
-- Import eines bestehenden Codex-Logins unter macOS
+Quellen: [OpenAIPlugin v1.2.0 Release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-openai-v1.2.0), [TypeWhisper Plugin-Registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-v1.json), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
-## Transkriptionsmodelle
+## Verbindungsmethode
 
-| Modell | ID |
-| --- | --- |
-| Whisper 1 | `whisper-1` |
-| GPT-4o Transcribe | `gpt-4o-transcribe` |
+| Feld | Was es steuert | Beispiel |
+| --- | --- | --- |
+| **Connection Method / Verbindungsmethode** | Legt fest, wie sich der LLM-Anbieter authentifiziert. **API-Schlüssel** nutzt die OpenAI API direkt. **ChatGPT-Login** nutzt einen ChatGPT-/Codex-Login für Prompt-Verarbeitung. | Nutze API-Schlüssel, wenn du Transkription, TTS und den vollen API-Modellkatalog willst. Nutze ChatGPT-Login, wenn Prompts über dein bestehendes ChatGPT-/Codex-Konto laufen sollen. |
+| **API-Schlüssel** | Speichert einen OpenAI-API-Schlüssel im macOS-Schlüsselbund und validiert ihn, bevor Cloud-Transkription, TTS und API-basierte Prompt-Verarbeitung aktiv werden. | Füge einen `sk-...`-Schlüssel ein, speichere ihn und warte auf **Gültiger API-Schlüssel**. |
+| **API-Schlüssel anzeigen/verbergen** | Maskiert oder zeigt den gespeicherten Schlüssel beim Bearbeiten. | Nutze das Augen-Symbol, um einen eingefügten Schlüssel vor dem Speichern zu prüfen. |
+| **Entfernen** | Löscht den gespeicherten API-Schlüssel oder die ChatGPT-Login-Tokens. | Entferne den Schlüssel, bevor du das OpenAI-Projekt wechselst oder den Mac weitergibst. |
+| **Im Browser anmelden** | Startet unter macOS den ChatGPT-Browser-Login. TypeWhisper beendet den lokalen Callback automatisch. | Klicke darauf, schließe den OpenAI-Login im Browser ab und kehre zu TypeWhisper zurück. |
+| **Codex-Login importieren** | Importiert einen vorhandenen Codex-Login aus `~/.codex/auth.json` auf demselben Mac. | Nutze diese Option, wenn Codex bereits angemeldet ist und du den Browser-Login nicht wiederholen willst. |
+| **Verbundener Plan** | Zeigt den ChatGPT-Plantyp an, wenn OpenAI ihn im Login-Token mitliefert. | `Verbundener Plan: pro` oder `Verbundener Plan: prolite`. |
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/de/plugins/openai-chatgpt-login.webp" type="image/webp" />
+    <img src="/screenshots/de/plugins/openai-chatgpt-login.png" alt="OpenAI / ChatGPT Einstellungen im ChatGPT-Login-Modus" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>Der ChatGPT-Login-Modus nutzt Browser- oder Codex-Authentifizierung für Prompt-Verarbeitung. Transkription und Text-to-Speech benötigen weiterhin einen API-Schlüssel.</figcaption>
+</figure>
+
+Quellen: [OpenAI API-Dokumentation](https://platform.openai.com/docs), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
+
+## Transkription
+
+Der API-Schlüssel-Modus aktiviert OpenAI-Sprache-zu-Text. ChatGPT-Login ersetzt den API-Schlüssel für Transkription nicht.
+
+| Modell | ID | Hinweise |
+| --- | --- | --- |
+| Whisper 1 | `whisper-1` | Klassische Whisper-Transkription. Unterstützt Whisper Translate ins Englische. |
+| GPT-4o Transcribe | `gpt-4o-transcribe` | Genauere GPT-4o-Transkription. Whisper Translate ist bei GPT-4o-Transkriptionsmodellen nicht verfügbar. |
+| GPT-4o Mini Transcribe | `gpt-4o-mini-transcribe` | Kleineres GPT-4o-Transkriptionsmodell für schnellere oder günstigere Transkription. Whisper Translate ist nicht verfügbar. |
+| GPT Realtime Whisper | `gpt-realtime-whisper` | Streamt 24-kHz-Mono-PCM über OpenAIs Realtime API für Live-Transkription. Whisper Translate ist nicht verfügbar. |
+
+| Feld | Was es steuert | Beispiel |
+| --- | --- | --- |
+| **Transkriptionsmodell** | Wählt aus, an welches OpenAI-Modell TypeWhisper aufgezeichnetes oder laufendes Audio sendet. | Wähle **GPT Realtime Whisper** für Live-Updates oder **Whisper 1**, wenn du Übersetzung ins Englische brauchst. |
+| **Sprache** | Kommt aus dem TypeWhisper-Profil oder dem jeweiligen Request-Kontext. | Setze die Profilsprache auf Deutsch, damit OpenAI `de` als Sprachhinweis erhält. |
+| **Prompt / Wörterbuchbegriffe** | TypeWhisper kann Prompt-Kontext und Wörterbuchbegriffe mitgeben, um Namen und Fachbegriffe zu verbessern, soweit der gewählte OpenAI-Endpunkt das unterstützt. | Ergänze Begriffe wie `TypeWhisper` oder `WhisperKit` in den Wörterbuchbegriffen. |
+
+Quellen: [OpenAI Speech to text](https://platform.openai.com/docs/guides/speech-to-text), [OpenAI Realtime transcription](https://platform.openai.com/docs/guides/realtime-transcription), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
+
+## Text-to-Speech
+
+OpenAI / ChatGPT stellt auch den Text-to-Speech-Anbieter für TypeWhisper bereit. Dafür wird ein OpenAI-API-Schlüssel genutzt, auch wenn ChatGPT-Login für Prompts ausgewählt ist.
+
+| Feld | Was es steuert | Beispiel |
+| --- | --- | --- |
+| **Text-to-Speech Voice** | Wählt eine der integrierten OpenAI-Stimmen aus. TypeWhisper nutzt standardmäßig **Marin**. | Wähle `Marin` als Standardstimme oder `Cedar` als weitere hochwertige Option. |
+| **Voice instructions** | Sendet zusätzliche Sprechanweisungen an die `gpt-4o-mini-tts`-Anfrage, wenn das Feld nicht leer ist. | `Sprich ruhig, mit kurzen Pausen zwischen den Sätzen.` |
+
+Das Plugin unterstützt `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`, `sage`, `shimmer`, `verse`, `marin` und `cedar`. TypeWhisper fordert PCM-Audio an, damit die Wiedergabe ohne zusätzliche Dateikonvertierung starten kann.
+
+Quellen: [OpenAI Text to speech](https://platform.openai.com/docs/guides/text-to-speech), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
 ## LLM-Modelle
 
-| Modell | ID |
-| --- | --- |
-| GPT-4.1 | `gpt-4.1` |
-| GPT-4o | `gpt-4o` |
-| o4-mini | `o4-mini` |
+Der LLM-Bereich ist verfügbar, sobald die ausgewählte Verbindungsmethode gültige Zugangsdaten hat. Im API-Schlüssel-Modus kann TypeWhisper den OpenAI-API-Modellkatalog abrufen. Im ChatGPT-Login-Modus nutzt das Plugin die unterstützte ChatGPT-/Codex-Modellliste.
 
-## Konfiguration
+| Feld | Was es steuert | Beispiel |
+| --- | --- | --- |
+| **LLM-Modell** | Wählt das Modell für Prompt-Verarbeitung und Workflows. | Nutze `gpt-5.5` für hochwertige Prompt-Verarbeitung oder ein kleineres Modell, wenn Latenz wichtiger ist. |
+| **Aktualisieren** | Im API-Schlüssel-Modus ruft TypeWhisper OpenAIs `/v1/models`-Endpunkt ab und behält chat-fähige Modelle. Im ChatGPT-Login-Modus wird die ChatGPT-/Codex-Liste aktualisiert, ohne den OpenAI-API-Modellendpunkt aufzurufen. | Klicke **Aktualisieren**, nachdem dein OpenAI-Projekt Zugriff auf ein neues API-Modell erhalten hat. |
+| **Denkaufwand** | Erscheint bei GPT-5-, o-Series- und Codex-artigen Modellen. Steuert, wie viel Denkzeit sich das Modell vor der Antwort nimmt. | Nutze **Niedrig** für schnelle Korrektur-Prompts, **Hoch** oder **X High** für schwierigere Rewrite- oder Coding-Workflows. |
+| **Temperature Mode** | Nur im API-Schlüssel-Modus. **Provider Default** nutzt TypeWhispers Standard-Temperaturverhalten. **Custom** aktiviert einen 0,0-2,0-Slider, wenn das gewählte Modell benutzerdefinierte Temperatur unterstützt. | Nutze `0.2` für deterministische Bereinigung oder einen höheren Wert für variablere Formulierungen. |
+| **Hinweis bei ignorierter Temperatur** | Wird gezeigt, wenn eine GPT-5-Reasoning-Konfiguration keine benutzerdefinierte Temperatur akzeptiert. | Wenn du GPT-5 mit Denkaufwand nutzt, bleibe bei Provider Default oder ignoriere den Custom-Slider. |
 
-- **API-Schlüssel** - Erstelle einen API-Schlüssel auf platform.openai.com. Er ist für Transkription erforderlich und kann auch für Prompt-Verarbeitung genutzt werden.
-- **ChatGPT-Login** - Unter macOS kannst du dein bestehendes ChatGPT-Plus-/Pro-Abo oder deinen Codex-Login für Prompt-Verarbeitung nutzen, ohne dafür einen OpenAI-API-Schlüssel für Prompts zu hinterlegen.
+Die Standardmodelle im API-Schlüssel-Modus enthalten `gpt-5.5`, `gpt-4.1-nano`, `gpt-4.1-mini`, `gpt-4.1`, `gpt-4o`, `gpt-4o-mini` und `o4-mini`. Der ChatGPT-Login-Modus enthält aktuelle ChatGPT-/Codex-Optionen wie `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.3-codex` und `gpt-5.3-codex-spark`.
 
-## Einrichtung
+Quellen: [OpenAI Models API](https://platform.openai.com/docs/api-reference/models/list), [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
-1. Öffne TypeWhisper Einstellungen > Plugins
-2. Finde das Plugin OpenAI / ChatGPT und klicke auf Konfigurieren
-3. Wähle deine Verbindungsmethode:
-4. Für API Key gibst du deinen OpenAI-API-Schlüssel ein
-5. Für ChatGPT-Login unter macOS klickst du entweder auf Sign In In Browser oder auf Import Codex Login
-6. Wenn du Transkription nutzen willst, hinterlege zusätzlich einen OpenAI-API-Schlüssel, auch wenn du ChatGPT-Login für Prompts verwendest
-7. Wähle OpenAI / ChatGPT als Transkriptions-Engine oder LLM-Anbieter
+## Einrichtungsbeispiele
+
+### API-Schlüssel für Transkription, TTS und Prompts
+
+1. Öffne TypeWhisper Einstellungen > Plugins.
+2. Konfiguriere **OpenAI / ChatGPT**.
+3. Wähle **API-Schlüssel**.
+4. Füge deinen OpenAI-API-Schlüssel ein und warte auf **Gültiger API-Schlüssel**.
+5. Wähle **Transkriptionsmodell**, **Text-to-Speech Voice** und **LLM-Modell**.
+6. Klicke **Aktualisieren**, wenn TypeWhisper die für dein OpenAI-Projekt verfügbaren Modelle abrufen soll.
+
+### ChatGPT- oder Codex-Login für Prompts
+
+1. Öffne TypeWhisper Einstellungen > Plugins.
+2. Konfiguriere **OpenAI / ChatGPT**.
+3. Wähle **ChatGPT-Login**.
+4. Klicke **Im Browser anmelden** oder **Codex-Login importieren**.
+5. Wähle ein ChatGPT-/Codex-**LLM-Modell** und den **Denkaufwand**.
+6. Hinterlege zusätzlich einen OpenAI-API-Schlüssel, wenn du auch Transkription oder Text-to-Speech nutzen willst.
 
 ## Hinweise
 
-- Der ChatGPT-Login ist hier aktuell nur für macOS dokumentiert.
-- Der ChatGPT-Login zeigt nur die unterstützten ChatGPT-/Codex-Modelle an.
-- Browser-Login und Codex-Import sind für Prompt-Verarbeitung gedacht und ersetzen nicht den API-Schlüssel für Transkription.
+- ChatGPT-Login ist hier für macOS dokumentiert.
+- Transkription und Text-to-Speech benötigen einen OpenAI-API-Schlüssel.
+- Browser-Login und Codex-Import sind für Prompt-Verarbeitung gedacht und ersetzen keine API-Authentifizierung für STT/TTS.
+- Die öffentliche `1.2.0`-Release benötigt TypeWhisper-Hostversion `1.4.0` oder neuer.

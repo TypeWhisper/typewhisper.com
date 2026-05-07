@@ -131,7 +131,7 @@ const sourceLinks = plugin.sourceUrls
       </div>
 
       {mod ? (
-        <div class="prose prose-neutral dark:prose-invert mt-10 max-w-none">
+        <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none">
           <mod.default />
         </div>
       ) : isCommunity ? (
@@ -140,3 +140,11 @@ const sourceLinks = plugin.sourceUrls
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  :global(.addon-prose table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+</style>
