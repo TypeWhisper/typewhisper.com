@@ -1,5 +1,7 @@
 # TypeWhisper Website
 
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/2lx87.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
 Landing page and documentation site for [TypeWhisper](https://www.typewhisper.com).
 
 ## Stack
