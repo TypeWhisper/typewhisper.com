@@ -6,6 +6,7 @@ const categories: (PluginCategory | "all")[] = [
   "all",
   "transcription",
   "llm",
+  "tts",
   "action",
   "post-processing",
   "memory",

@@ -11,6 +11,7 @@
   "addons.settingsAlt": "settings",
   "addons.category.transcription": "Transcription",
   "addons.category.llm": "LLM",
+  "addons.category.tts": "Text-to-Speech",
   "addons.category.action": "Action",
   "addons.category.postProcessing": "Post-Processing",
   "addons.category.memory": "Memory",

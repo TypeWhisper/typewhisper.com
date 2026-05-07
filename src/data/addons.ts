@@ -6,6 +6,7 @@ import communityData from "./community-plugins.json";
 export type PluginCategory =
   | "transcription"
   | "llm"
+  | "tts"
   | "action"
   | "post-processing"
   | "memory";
@@ -55,6 +56,7 @@ export interface PluginModule {
 export const categoryLabels: Record<PluginCategory, string> = {
   transcription: "Transcription",
   llm: "LLM",
+  tts: "Text-to-Speech",
   action: "Action",
   "post-processing": "Post-Processing",
   memory: "Memory",
@@ -63,6 +65,7 @@ export const categoryLabels: Record<PluginCategory, string> = {
 export const categoryKeys: Record<PluginCategory, string> = {
   transcription: "addons.category.transcription",
   llm: "addons.category.llm",
+  tts: "addons.category.tts",
   action: "addons.category.action",
   "post-processing": "addons.category.postProcessing",
   memory: "addons.category.memory",
