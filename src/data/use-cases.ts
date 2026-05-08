@@ -21,6 +21,8 @@ export interface UseCase {
   icon: string;
   category: UseCaseCategory;
   color: string;
+  /** Locale-neutral screenshot path passed through screenshotPath() at render time. */
+  heroScreenshot?: string;
   features: UseCaseFeature[];
   benefits: string[];
   howItWorks: UseCaseStep[];

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-19T12:27:23.966Z",
+  "generatedAt": "2026-05-08T19:32:48.046Z",
   "brands": {
     "github": {
       "hasLogo": true,
@@ -123,6 +123,39 @@
       "logo": "/brand-logos/cloudflare/logo.svg",
       "brandUrl": null,
       "sourceUrl": "https://www.cloudflare.com/"
+    },
+    "slack": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/slack/logo.svg",
+      "wordmark": "/brand-logos/slack/wordmark.svg",
+      "brandUrl": "https://slack.com/media-kit",
+      "sourceUrl": "https://www.slack.com"
+    },
+    "vscode": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/vscode/logo.svg",
+      "brandUrl": "https://code.visualstudio.com/brand",
+      "sourceUrl": "https://code.visualstudio.com/"
+    },
+    "notion": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/notion/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://notion.so/"
+    },
+    "gmail": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/gmail/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://www.gmail.com"
     }
   }
 }

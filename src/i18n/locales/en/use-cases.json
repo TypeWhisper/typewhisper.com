@@ -13,5 +13,10 @@
   "useCases.cta.subtitle": "Free and open source for macOS, Windows, and iOS.",
   "useCases.cta.download": "Download for free",
   "useCases.category.app": "App",
-  "useCases.category.workflow": "Workflow"
+  "useCases.category.workflow": "Workflow",
+  "useCases.relatedTitle": "More use cases",
+  "useCases.availableOn": "Available on",
+  "useCases.seeHowItWorks": "See how it works",
+  "useCases.findCta.title": "Get TypeWhisper",
+  "useCases.findCta.subtitle": "Dictate anywhere on macOS, Windows, and iOS \u2014 free and open source."
 }
