@@ -234,7 +234,7 @@ test.describe("pricing & business pages", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /free for personal use/i,
+        name: /open source under GPLv3/i,
       }),
     ).toBeVisible();
 
