@@ -16,7 +16,7 @@
   "downloadCta.subtitle": "Download the stable macOS 1.3 release. Windows Beta and iOS Alpha remain available for preview testing.",
   "downloadCta.download": "Download for macOS",
   "downloadCta.releaseStatus": "View release status",
-  "downloadCta.licenseNote.before": "Free for personal and GPL-compliant open-source use. Pay-what-you-want commercial licenses from 5 EUR/mo.",
+  "downloadCta.licenseNote.before": "Free under GPLv3, including internal use of the GPL app. Commercial licenses for non-GPL terms and support start at 5 EUR/mo.",
   "downloadCta.licenseNote.link": "See pricing",
   "platforms.title": "Available now, with clear release stages.",
   "platforms.subtitle": "macOS 1.3 is the supported stable path. Windows and iOS remain preview releases.",
