@@ -13,7 +13,11 @@ export type BrandLogoId =
   | "groq"
   | "openrouter"
   | "google-cloud"
-  | "cloudflare";
+  | "cloudflare"
+  | "slack"
+  | "vscode"
+  | "notion"
+  | "gmail";
 
 export interface BrandLogoDefinition {
   id: BrandLogoId;
@@ -129,6 +133,40 @@ export const brandLogos = [
     contexts: ["addon"],
     fallback: "lucide",
     homepage: "https://www.cloudflare.com/",
+  },
+  {
+    id: "slack",
+    svglSearch: "slack",
+    expectedTitle: "Slack",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://slack.com/",
+    brandGuidelinesUrl: "https://slack.com/media-kit",
+  },
+  {
+    id: "vscode",
+    svglSearch: "visual studio code",
+    expectedTitle: "Visual Studio Code",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://code.visualstudio.com/",
+    brandGuidelinesUrl: "https://code.visualstudio.com/brand",
+  },
+  {
+    id: "notion",
+    svglSearch: "notion",
+    expectedTitle: "Notion",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://notion.so/",
+  },
+  {
+    id: "gmail",
+    svglSearch: "gmail",
+    expectedTitle: "Gmail",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://www.gmail.com/",
   },
 ] as const satisfies readonly BrandLogoDefinition[];
 
