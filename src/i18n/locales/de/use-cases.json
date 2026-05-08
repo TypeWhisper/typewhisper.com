@@ -13,5 +13,10 @@
   "useCases.cta.subtitle": "Kostenlos und Open Source für macOS, Windows und iOS.",
   "useCases.cta.download": "Kostenlos herunterladen",
   "useCases.category.app": "App",
-  "useCases.category.workflow": "Workflow"
+  "useCases.category.workflow": "Workflow",
+  "useCases.relatedTitle": "Weitere Anwendungen",
+  "useCases.availableOn": "Verfügbar für",
+  "useCases.seeHowItWorks": "So funktioniert's",
+  "useCases.findCta.title": "TypeWhisper holen",
+  "useCases.findCta.subtitle": "Diktiere überall auf macOS, Windows und iOS \u2014 kostenlos und Open Source."
 }
