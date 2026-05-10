@@ -333,8 +333,8 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
             {isDe
-              ? "13 eingebaute Begriffspakete sind enthalten: Web Dev, .NET/C#, DevOps, Data & AI, Design, Game Dev, Mobile, Security, Databases, Medical, Legal, Finance und Music Production."
-              : "13 built-in term packs are included: Web Dev, .NET/C#, DevOps, Data & AI, Design, Game Dev, Mobile, Security, Databases, Medical, Legal, Finance, and Music Production."}
+              ? "Windows enthält allgemeine Begriffspakete für technische, medizinische, finanzielle und kreative Themen. Zusätzlich gibt es lizenzierte Branchen-Packs für Immobilien, Architektur und Recht."
+              : "Windows includes general term packs for technical, medical, finance, and creative topics. Licensed industry packs are also available for real estate, architecture, and legal work."}
           </p>
         </div>
 

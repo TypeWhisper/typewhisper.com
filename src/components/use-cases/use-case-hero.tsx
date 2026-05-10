@@ -4,6 +4,9 @@ import {
   MessageCircle,
   Code,
   ClipboardList,
+  Home,
+  Building2,
+  Scale,
   ArrowLeft,
   ArrowRight,
 } from "lucide-react";
@@ -28,6 +31,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   MessageCircle,
   Code,
   ClipboardList,
+  Home,
+  Building2,
+  Scale,
 };
 
 interface UseCaseHeroProps {
