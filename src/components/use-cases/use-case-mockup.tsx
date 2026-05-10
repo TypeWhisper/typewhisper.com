@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/index";
 import { ChatMockup } from "./mockups/chat-mockup";
 import { CodeMockup } from "./mockups/code-mockup";
 import { EmailMockup } from "./mockups/email-mockup";
+import { IndustryMockup } from "./mockups/industry-mockup";
 import { MeetingMockup } from "./mockups/meeting-mockup";
 
 interface UseCaseMockupProps {
@@ -33,11 +34,30 @@ export function UseCaseMockup({
       return <CodeMockup color={color} compact={compact} locale={locale} />;
     case "meeting-notes":
       return <MeetingMockup color={color} compact={compact} locale={locale} />;
+    case "real-estate":
+    case "architecture":
+    case "legal":
+      return (
+        <IndustryMockup
+          slug={slug}
+          color={color}
+          compact={compact}
+          locale={locale}
+        />
+      );
     default:
       return null;
   }
 }
 
 export function hasUseCaseMockup(slug: string): boolean {
-  return ["emails", "chat", "code", "meeting-notes"].includes(slug);
+  return [
+    "emails",
+    "chat",
+    "code",
+    "meeting-notes",
+    "real-estate",
+    "architecture",
+    "legal",
+  ].includes(slug);
 }

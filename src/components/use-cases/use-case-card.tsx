@@ -4,6 +4,9 @@ import {
   MessageCircle,
   Code,
   ClipboardList,
+  Home,
+  Building2,
+  Scale,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +24,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   MessageCircle,
   Code,
   ClipboardList,
+  Home,
+  Building2,
+  Scale,
 };
 
 interface UseCaseCardProps {
