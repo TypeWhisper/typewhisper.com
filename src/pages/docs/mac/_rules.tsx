@@ -129,6 +129,22 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
         </div>
 
         <div className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.languageEngineHotkeys.title")}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.languageEngineHotkeys.desc")}
+          </p>
+          <ol className="mt-3 list-decimal list-inside space-y-1.5 text-sm text-muted-foreground">
+            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step1")}</li>
+            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step2")}</li>
+            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step3")}</li>
+            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step4")}</li>
+          </ol>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.languageEngineHotkeys.note")}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.promptOverride.title")}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {t(locale, "docs.mac.rules.promptOverride.desc")}
@@ -246,6 +262,12 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
               <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.translation.title")}</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {t(locale, "docs.mac.rules.examples.translation.desc")}
+              </p>
+            </div>
+            <div className="rounded-md bg-background p-4">
+              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.languageHotkeys.title")}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {t(locale, "docs.mac.rules.examples.languageHotkeys.desc")}
               </p>
             </div>
             <div className="rounded-md bg-background p-4">
