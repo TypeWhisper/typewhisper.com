@@ -1,0 +1,77 @@
+---
+slug: supertonic
+name: Supertonic (Experimental)
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Experimentelles lokales Text-to-Speech mit Supertonic-3-ONNX-Modellen. Vor dem Download der Modellassets muss die OpenRAIL-M-Modelllizenz akzeptiert werden.
+categories:
+  - tts
+platforms:
+  - mac
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SupertonicPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SupertonicPlugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Supertonic
+featured: false
+---
+
+## Über
+
+Supertonic ist TypeWhispers experimenteller lokaler Text-to-Speech-Anbieter für Supertonic-3-ONNX-Modelle. Das Plugin lädt die Modellassets in TypeWhispers Plugin-Datenverzeichnis und erzeugt Sprache danach lokal für gesprochenes Feedback und Vorlesen.
+
+Die Modellassets sind separat von TypeWhisper unter OpenRAIL-M lizenziert. TypeWhisper verlangt deshalb, dass du die Supertonic-3-Modelllizenz prüfst und akzeptierst, bevor Modell-Dateien heruntergeladen werden.
+
+Der Screenshot oben dokumentiert die aktuelle macOS-Konfiguration. Der Katalogeintrag enthält zusätzlich Windows, damit das Add-on im Windows-Plattformfilter erscheint, sobald das passende Windows-Bundle verfügbar ist.
+
+## Voraussetzungen & Datenschutz
+
+| Voraussetzung | Details |
+| --- | --- |
+| TypeWhisper | Erfordert TypeWhisper `1.4.0` oder neuer. |
+| macOS | Erfordert macOS `14.0` oder neuer auf Apple Silicon (`arm64`). |
+| Modell-Download | Lädt Supertonic-3-ONNX-Dateien und Voice-Style-JSON-Dateien von Hugging Face. |
+| Lizenz-Gate | Der Modell-Download bleibt deaktiviert, bis die OpenRAIL-M-Bedingungen in den Einstellungen akzeptiert wurden. |
+| Netzwerkzugriff | Netzwerk wird für Modell-Downloads und optionale Hugging-Face-Token-Prüfung genutzt. Die Spracherzeugung läuft lokal, sobald das Modell im Cache liegt. |
+| Zugangsdaten | Für Synthese ist kein API-Key nötig. Ein Hugging-Face-Token ist optional und hilft nur bei Download-Rate-Limits. |
+
+## Modelllizenz & Download
+
+| Feld | Was es steuert | Hinweise |
+| --- | --- | --- |
+| **Open Supertonic 3 OpenRAIL-M license** | Öffnet die Modelllizenz vor dem Download. | Prüfe die Nutzungsbeschränkungen vor der Annahme. |
+| **I have read and accept...** | Speichert die Annahme für die aktuelle Supertonic-3-Lizenz-ID und -Revision. | Der Download bleibt deaktiviert, bis diese Option aktiviert ist. |
+| **Download & Load** | Lädt die erforderlichen ONNX-Modell-Dateien und Voice-Style-JSON-Dateien. | Während des Downloads wird der Fortschritt angezeigt. |
+| **Bereit** | Bestätigt, dass die erforderlichen Modellassets lokal vorhanden sind. | TypeWhisper kann Sprache erzeugen, sobald dieser Status erscheint. |
+| **Delete cached model** | Entfernt den zwischengespeicherten Modellordner. | Nutze das, um Speicherplatz freizugeben oder einen frischen Download zu erzwingen. |
+| **Hugging Face Token** | Optionaler Token für Hugging-Face-Anfragen. | Nützlich, wenn Downloads ohne Anmeldung in Rate-Limits laufen. |
+
+## Stimme & Qualität
+
+| Einstellung | Werte | Hinweise |
+| --- | --- | --- |
+| **Voice** | Standard ist `M1`; gebündelte Style-Namen enthalten `M1` und `F1`, weitere gefundene Voice-Style-Dateien werden ebenfalls gelistet. | Das Plugin zeigt verfügbare Voice-Style-JSON-Dateien als TypeWhisper-Stimmen an. |
+| **Speed** | `0,70` bis `2,00`, Schritt `0,05`; Standard `1,05`. | Niedrigere Werte verlangsamen die erzeugte Sprache, höhere Werte beschleunigen sie. |
+| **Quality** | `Fast`, `Balanced`, `High`; Standard `Balanced`. | Höhere Qualität nutzt mehr Synthese-Schritte. |
+
+Unterstützte Sprachhinweise sind unter anderem `en`, `de`, `fr`, `es`, `it`, `ja`, `ko`, `pt`, `nl`, `pl`, `sv`, `tr`, `uk`, `vi` und weitere. Nicht unterstützte oder leere Sprachhinweise fallen auf Englisch zurück.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins.
+2. Konfiguriere **Supertonic (Experimental)**.
+3. Prüfe die Supertonic-3-OpenRAIL-M-Lizenz.
+4. Akzeptiere die Modelllizenz-Bedingungen.
+5. Ergänze nur dann einen Hugging-Face-Token, wenn Downloads in Rate-Limits laufen.
+6. Klicke auf **Download & Load** und warte auf **Bereit**.
+7. Wähle Stimme, Geschwindigkeit und Qualitätsmodus.
+8. Wähle Supertonic als Text-to-Speech-Anbieter für gesprochenes Feedback oder Vorlesen.
+
+## Hinweise
+
+- Supertonic ist experimentell und wird hier anhand der macOS-Einstellungsoberfläche dokumentiert.
+- Die Spracherzeugung läuft lokal, nachdem der Modell-Download abgeschlossen ist.
+- Modellassets werden separat heruntergeladen, weil sie der Supertonic-3-OpenRAIL-M-Lizenz unterliegen.
+- Das Löschen des gecachten Modells entfernt weder deine Lizenzannahme noch einen optional gespeicherten Hugging-Face-Token.
