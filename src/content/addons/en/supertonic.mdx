@@ -1,0 +1,77 @@
+---
+slug: supertonic
+name: Supertonic (Experimental)
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Experimental local text-to-speech with Supertonic 3 ONNX models. Requires accepting the OpenRAIL-M model license before downloading model assets.
+categories:
+  - tts
+platforms:
+  - mac
+  - windows
+source: bundled
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SupertonicPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SupertonicPlugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Supertonic
+featured: false
+---
+
+## About
+
+Supertonic is TypeWhisper's experimental local text-to-speech provider for Supertonic 3 ONNX models. It downloads the model assets into TypeWhisper's plugin data directory, then generates speech locally for spoken feedback and readback.
+
+The model assets are licensed separately from TypeWhisper under OpenRAIL-M. TypeWhisper requires you to review and accept the Supertonic 3 model license before it downloads the model files.
+
+The settings shown above document the current macOS plugin surface. The catalog entry also lists Windows so the add-on appears in Windows platform filtering once the matching Windows bundle is available.
+
+## Requirements & Privacy
+
+| Requirement | Details |
+| --- | --- |
+| TypeWhisper | Requires TypeWhisper `1.4.0` or newer. |
+| macOS | Requires macOS `14.0` or newer on Apple Silicon (`arm64`). |
+| Model download | Downloads Supertonic 3 ONNX files and voice style JSON files from Hugging Face. |
+| License gate | Model download is disabled until the OpenRAIL-M terms have been accepted in the settings view. |
+| Network use | Network access is used for model downloads and optional Hugging Face token validation. Speech generation runs locally after the model is cached. |
+| Credentials | No API key is required for synthesis. A Hugging Face token is optional and only helps with download rate limits. |
+
+## Model License & Download
+
+| Field | What it controls | Notes |
+| --- | --- | --- |
+| **Open Supertonic 3 OpenRAIL-M license** | Opens the model license before download. | Review the restrictions before accepting. |
+| **I have read and accept...** | Stores acceptance for the current Supertonic 3 license id and revision. | Download remains disabled until this is checked. |
+| **Download & Load** | Downloads required ONNX model files and voice style JSON files. | Progress is shown while the files are fetched. |
+| **Ready** | Confirms the required model assets are present locally. | TypeWhisper can synthesize speech once this state appears. |
+| **Delete cached model** | Removes the cached model directory. | Use it to free disk space or force a fresh download. |
+| **Hugging Face Token** | Optional token used for Hugging Face requests. | Useful when unauthenticated downloads hit rate limits. |
+
+## Voice & Quality
+
+| Setting | Values | Notes |
+| --- | --- | --- |
+| **Voice** | Defaults to `M1`; bundled style names include `M1` and `F1`, with additional discovered voice style files listed when present. | The plugin exposes available voice style JSON files as TypeWhisper voices. |
+| **Speed** | `0.70` to `2.00`, step `0.05`; default `1.05`. | Lower values slow the generated speech, higher values speed it up. |
+| **Quality** | `Fast`, `Balanced`, `High`; default `Balanced`. | Higher quality uses more synthesis steps. |
+
+Supported language hints include `en`, `de`, `fr`, `es`, `it`, `ja`, `ko`, `pt`, `nl`, `pl`, `sv`, `tr`, `uk`, `vi`, and more. Unsupported or empty language hints fall back to English.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins.
+2. Configure **Supertonic (Experimental)**.
+3. Review the Supertonic 3 OpenRAIL-M license.
+4. Accept the model license terms.
+5. Add a Hugging Face token only if downloads are rate-limited.
+6. Click **Download & Load** and wait for **Ready**.
+7. Choose a voice, speed, and quality mode.
+8. Select Supertonic as the text-to-speech provider for spoken feedback or readback.
+
+## Notes
+
+- Supertonic is experimental and currently documented from the macOS settings surface.
+- Speech generation is local after the model download completes.
+- Model assets are downloaded separately because they are governed by the Supertonic 3 OpenRAIL-M license.
+- Removing the cached model does not remove your license acceptance or optional Hugging Face token.
