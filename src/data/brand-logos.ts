@@ -10,6 +10,7 @@ export type BrandLogoId =
   | "gemini"
   | "obsidian"
   | "cohere"
+  | "xai"
   | "groq"
   | "openrouter"
   | "google-cloud"
@@ -101,6 +102,14 @@ export const brandLogos = [
     contexts: ["addon"],
     fallback: "lucide",
     homepage: "https://cohere.com/",
+  },
+  {
+    id: "xai",
+    svglSearch: "xai",
+    expectedTitle: "xAI",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://x.ai/",
   },
   {
     id: "groq",
