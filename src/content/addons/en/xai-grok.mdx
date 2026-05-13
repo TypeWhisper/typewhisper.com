@@ -1,0 +1,68 @@
+---
+slug: xai-grok
+name: xAI / Grok
+author: TypeWhisper
+version: 1.0.0
+icon: Sparkles
+brandLogo: xai
+description: Cloud LLM, speech-to-text, and text-to-speech via xAI Grok APIs.
+categories:
+  - transcription
+  - llm
+  - tts
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.x.ai/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/XAIPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/XAIPlugin
+---
+
+## About
+
+xAI / Grok adds Grok-powered cloud speech-to-text, prompt processing, and text-to-speech to TypeWhisper for macOS. The plugin uses an xAI API key for every capability and stores the key securely in the macOS Keychain.
+
+## Features
+
+- Grok Speech to Text for recorded and live transcription
+- Streaming transcription with REST fallback
+- Grok LLM provider for TypeWhisper prompts and workflows
+- Text-to-speech with built-in and custom xAI voice IDs
+- Refresh buttons for available LLM models and TTS voices
+- API key validation in the settings UI
+
+## Speech-to-Text
+
+| Field | What it controls | Example |
+| --- | --- | --- |
+| **API Key** | Stores and validates the xAI API key used by STT, LLM, and TTS features. | Paste an xAI API key, then wait for **Valid API Key** before using the provider. |
+| **Transcription model** | Uses xAI's Grok Speech to Text model. | TypeWhisper sends audio to `grok-stt`. |
+| **Language** | Comes from the TypeWhisper profile or request context. | Set a profile language such as `en` or `de` to pass a language hint. |
+
+The plugin supports streaming transcription and falls back to the REST endpoint if streaming fails. Translation is not supported by the xAI STT provider.
+
+## LLM Models
+
+| Field | What it controls | Example |
+| --- | --- | --- |
+| **LLM Model** | Selects the Grok model used for prompt processing and workflows. | The default model is `grok-4.3`. |
+| **Refresh** | Calls xAI's model endpoint and keeps LLM-capable models. | Click **Refresh** after your xAI account gains access to new Grok models. |
+
+## Text-to-Speech
+
+| Field | What it controls | Example |
+| --- | --- | --- |
+| **TTS Voice** | Selects the xAI voice used for spoken feedback and readback. | The fallback voice list includes `eve`, `ara`, `leo`, `rex`, and `sal`. |
+| **Custom Voice ID** | Overrides the selected voice with a manually entered xAI voice ID. | Paste a voice ID that is available to your xAI account. |
+| **Low Latency** | Requests lower-latency TTS playback. | Enable it when response speed matters more than maximum quality. |
+| **Text Normalization** | Lets xAI normalize text before speech generation. | Enable it for text with numbers, units, or abbreviations. |
+| **Refresh** | Fetches the voices available to your xAI account. | Click **Refresh** after adding or changing voices in xAI. |
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins.
+2. Find **xAI / Grok** and click Configure.
+3. Paste your xAI API key and wait for validation.
+4. Choose an **LLM Model** and **TTS Voice**, or enter a **Custom Voice ID**.
+5. Select xAI / Grok as a transcription engine, LLM provider, or TTS provider where you want to use it.

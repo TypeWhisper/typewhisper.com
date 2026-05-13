@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-08T19:32:48.046Z",
+  "generatedAt": "2026-05-13T16:09:03.636Z",
   "brands": {
     "github": {
       "hasLogo": true,
@@ -84,6 +84,17 @@
       "wordmark": "/brand-logos/cohere/wordmark.svg",
       "brandUrl": null,
       "sourceUrl": "https://cohere.com/"
+    },
+    "xai": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/xai/logo-light.svg",
+        "dark": "/brand-logos/xai/logo-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://grok.com/"
     },
     "groq": {
       "hasLogo": true,
