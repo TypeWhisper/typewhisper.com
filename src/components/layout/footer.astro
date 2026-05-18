@@ -28,6 +28,7 @@ const { locale = "en" } = Astro.props;
           <a href={localePath(locale, "/#features")} class="transition-colors hover:text-foreground">{t(locale, "footer.features")}</a>
           <a href={localePath(locale, "/pricing")} class="transition-colors hover:text-foreground">{t(locale, "footer.pricing")}</a>
           <a href={localePath(locale, "/business")} class="transition-colors hover:text-foreground">{t(locale, "footer.business")}</a>
+          <a href={localePath(locale, "/sponsors")} class="transition-colors hover:text-foreground">{t(locale, "footer.sponsors")}</a>
           <a href={localePath(locale, "/addons")} class="transition-colors hover:text-foreground">{t(locale, "footer.addons")}</a>
           <a href={localePath(locale, "/docs")} class="transition-colors hover:text-foreground">{t(locale, "footer.docs")}</a>
           <a href={localePath(locale, "/release-status")} class="transition-colors hover:text-foreground">{t(locale, "footer.releaseStatus")}</a>
@@ -39,7 +40,6 @@ const { locale = "en" } = Astro.props;
         <div class="flex flex-wrap gap-x-6 gap-y-2">
           <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.discord")}</a>
           <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.github")}</a>
-          <a href="https://github.com/sponsors/seofood" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.sponsor")}</a>
           <a href="https://ko-fi.com/seofood" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.kofi")}</a>
         </div>
       </div>

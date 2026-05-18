@@ -5,6 +5,7 @@ import useCases from "./use-cases.json";
 import pricing from "./pricing.json";
 import business from "./business.json";
 import support from "./support.json";
+import sponsors from "./sponsors.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
 
@@ -16,6 +17,7 @@ const translations = {
   ...pricing,
   ...business,
   ...support,
+  ...sponsors,
   ...docsCommon,
   ...docsMac,
 } satisfies Record<string, string>;

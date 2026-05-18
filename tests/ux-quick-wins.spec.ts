@@ -259,7 +259,36 @@ test.describe("pricing & business pages", () => {
     await expect(page.locator('a[href="/en/pricing"]').first()).toBeVisible();
   });
 
-  test("footer exposes pricing and business links on non-landing pages", async ({
+  test("/en/sponsors loads and shows the sponsorship hero", async ({ page }) => {
+    await page.goto("/en/sponsors");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: /keep typewhisper independent/i,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /^discuss sponsorship$/i }),
+    ).toHaveAttribute("href", /^mailto:/i);
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: /where a sponsor would appear/i,
+      }),
+    ).toBeVisible();
+  });
+
+  test("/de/sponsors loads the German sponsorship page", async ({ page }) => {
+    await page.goto("/de/sponsors");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: /typewhisper unabhängig/i,
+      }),
+    ).toBeVisible();
+  });
+
+  test("footer exposes pricing, business, and sponsors links on non-landing pages", async ({
     page,
   }) => {
     await page.goto("/en/docs");
@@ -269,5 +298,23 @@ test.describe("pricing & business pages", () => {
     await expect(
       page.locator('footer a[href="/en/business"]').first(),
     ).toBeVisible();
+    await expect(
+      page.locator('footer a[href="/en/sponsors"]').first(),
+    ).toBeVisible();
+    await expect(
+      page.locator('footer a[href*="github.com/sponsors/"]'),
+    ).toHaveCount(0);
+  });
+
+  test("header sponsor icon links to the local sponsors page", async ({
+    page,
+  }) => {
+    await page.goto("/en/");
+    await waitForHeaderHydration(page);
+
+    await expect(page.getByLabel(/sponsor/i).first()).toHaveAttribute(
+      "href",
+      "/en/sponsors",
+    );
   });
 });
