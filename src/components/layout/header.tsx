@@ -121,9 +121,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
 
           <Button variant="ghost" size="icon-sm" asChild>
             <a
-              href="https://ko-fi.com/seofood"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={localePath(locale, "/sponsors")}
               aria-label={t(locale, "nav.sponsor")}
               className={mutedForegroundClass}
             >
@@ -229,9 +227,8 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   {t(locale, "nav.toggleTheme")}
                 </Button>
                 <a
-                  href="https://ko-fi.com/seofood"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={localePath(locale, "/sponsors")}
+                  onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
                   <KofiIcon className="size-4" />

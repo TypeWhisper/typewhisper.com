@@ -1,0 +1,279 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Button } from "@/components/ui/button";
+import { t, localePath, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { salesEmail } from "@/lib/pricing";
+import { sponsorsByKind, type Sponsor } from "@/data/sponsors";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const sponsorMailto = `mailto:${salesEmail}?subject=${encodeURIComponent("TypeWhisper sponsorship")}`;
+
+const sponsorModels = [
+  {
+    title: t(locale, "sponsors.model.oss.title"),
+    description: t(locale, "sponsors.model.oss.description"),
+  },
+  {
+    title: t(locale, "sponsors.model.ecosystem.title"),
+    description: t(locale, "sponsors.model.ecosystem.description"),
+  },
+];
+
+const criteria = [
+  "privacy",
+  "opensource",
+  "ai",
+  "accessibility",
+].map((key) => t(locale, `sponsors.criteria.${key}`));
+
+const visibility = [
+  "website",
+  "context",
+  "noAds",
+  "noLicense",
+].map((key) => t(locale, `sponsors.visibility.${key}`));
+
+const placementDetails = [
+  "page",
+  "logo",
+  "label",
+].map((key) => t(locale, `sponsors.placement.detail.${key}`));
+
+const groupedSponsors: { title: string; sponsors: Sponsor[] }[] = [
+  {
+    title: t(locale, "sponsors.current.ossTitle"),
+    sponsors: sponsorsByKind("oss-funder"),
+  },
+  {
+    title: t(locale, "sponsors.current.ecosystemTitle"),
+    sponsors: sponsorsByKind("ecosystem-partner"),
+  },
+];
+
+const hasSponsors = groupedSponsors.some((group) => group.sponsors.length > 0);
+---
+
+<BaseLayout
+  title={t(locale, "sponsors.meta.title")}
+  description={t(locale, "sponsors.meta.description")}
+  canonicalPath={canonicalPath(locale, "/sponsors")}
+  locale={locale}
+>
+  <section class="relative overflow-hidden py-16 sm:py-24">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -left-32 top-0 h-[400px] w-[400px] rounded-full bg-emerald-400/10 blur-[120px] dark:bg-emerald-500/15"></div>
+      <div class="absolute -right-32 top-32 h-[400px] w-[400px] rounded-full bg-sky-400/10 blur-[120px] dark:bg-sky-500/15"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
+      <span class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm">
+        {t(locale, "sponsors.hero.eyebrow")}
+      </span>
+      <h1 class="mt-6 font-display text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl">
+        {t(locale, "sponsors.hero.title")}
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
+        {t(locale, "sponsors.hero.subtitle")}
+      </p>
+
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <Button size="pill" asChild>
+          <a href={sponsorMailto}>{t(locale, "sponsors.hero.cta")}</a>
+        </Button>
+        <Button variant="outline" size="pill" asChild>
+          <a href={localePath(locale, "/pricing")}>{t(locale, "sponsors.hero.secondary")}</a>
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "sponsors.models.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "sponsors.models.subtitle")}
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {sponsorModels.map((model) => (
+          <section class="rounded-2xl border bg-card p-6">
+            <h3 class="text-lg font-semibold">{model.title}</h3>
+            <p class="mt-2 text-sm text-muted-foreground">{model.description}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div>
+        <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {t(locale, "sponsors.placement.eyebrow")}
+        </span>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "sponsors.placement.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "sponsors.placement.subtitle")}
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {placementDetails.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-1 size-2 shrink-0 rounded-full bg-primary"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-dashed bg-card p-6 shadow-sm">
+        <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+          <div class="flex size-16 shrink-0 items-center justify-center rounded-xl border bg-muted text-sm font-bold text-muted-foreground">
+            TW
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full border border-primary/30 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                {t(locale, "sponsors.placement.exampleBadge")}
+              </span>
+              <span class="text-xs text-muted-foreground">
+                {t(locale, "sponsors.placement.exampleNote")}
+              </span>
+            </div>
+            <h3 class="mt-3 text-xl font-semibold">
+              {t(locale, "sponsors.placement.exampleName")}
+            </h3>
+            <p class="mt-2 text-sm text-muted-foreground">
+              {t(locale, "sponsors.placement.exampleDescription")}
+            </p>
+            <p class="mt-4 text-sm font-medium text-primary">
+              {t(locale, "sponsors.placement.exampleLink")}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6 lg:grid-cols-2">
+      <section class="rounded-3xl border bg-card p-8">
+        <h2 class="font-display text-3xl font-bold tracking-tight">
+          {t(locale, "sponsors.criteria.title")}
+        </h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+          {t(locale, "sponsors.criteria.subtitle")}
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {criteria.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-1 size-2 shrink-0 rounded-full bg-emerald-500"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="rounded-3xl border bg-card p-8">
+        <h2 class="font-display text-3xl font-bold tracking-tight">
+          {t(locale, "sponsors.visibility.title")}
+        </h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+          {t(locale, "sponsors.visibility.subtitle")}
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {visibility.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-1 size-2 shrink-0 rounded-full bg-sky-500"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  {hasSponsors && (
+    <section class="py-12 sm:py-16">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+            {t(locale, "sponsors.current.title")}
+          </h2>
+        </div>
+
+        <div class="mt-10 grid gap-8 md:grid-cols-2">
+          {groupedSponsors.map((group) => (
+            group.sponsors.length > 0 && (
+              <section>
+                <h3 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  {group.title}
+                </h3>
+                <div class="mt-4 grid gap-4">
+                  {group.sponsors.map((sponsor) => (
+                    <a
+                      href={sponsor.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block rounded-2xl border bg-card p-5 transition-colors hover:border-primary/40"
+                    >
+                      <div class="flex items-start gap-4">
+                        {sponsor.logo && (
+                          <img
+                            src={sponsor.logo}
+                            alt=""
+                            class="size-10 shrink-0 rounded-md border bg-background object-contain p-1"
+                            loading="lazy"
+                          />
+                        )}
+                        <div>
+                          <h4 class="font-semibold text-foreground">{sponsor.name}</h4>
+                          <p class="mt-1 text-sm text-muted-foreground">{sponsor.description}</p>
+                          {sponsor.since && (
+                            <p class="mt-3 text-xs text-muted-foreground">
+                              {t(locale, "sponsors.current.since").replace("{since}", sponsor.since)}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="py-16 sm:py-24">
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+        {t(locale, "sponsors.cta.title")}
+      </h2>
+      <p class="mt-3 text-muted-foreground">
+        {t(locale, "sponsors.cta.subtitle")}
+      </p>
+      <div class="mt-6">
+        <Button size="pill" asChild>
+          <a href={sponsorMailto}>{t(locale, "sponsors.cta.email")}</a>
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
