@@ -183,6 +183,57 @@ test.describe("addons search", () => {
     }
   });
 
+  test("Smallest Pulse addon appears in both locales", async ({ page }) => {
+    const locales = [
+      {
+        code: "en",
+        search: "smallest",
+        category: "Transcription",
+        detailText: "Smallest Pulse adds cloud speech-to-text",
+        languageModeText: "Language Modes",
+        screenshotAlt: "Smallest Pulse settings",
+      },
+      {
+        code: "de",
+        search: "smallest",
+        category: "Transkription",
+        detailText: "Smallest Pulse erweitert TypeWhisper",
+        languageModeText: "Sprachmodi",
+        screenshotAlt: "Smallest Pulse Einstellungen",
+      },
+    ] as const;
+
+    for (const locale of locales) {
+      await page.goto(`/${locale.code}/addons`);
+      await waitForAddonsHydration(page);
+
+      const search = page.getByTestId("addons-search");
+      await search.fill(locale.search);
+
+      const smallestPulseCard = page.locator(
+        '[data-testid="addon-card"][data-slug="smallest-pulse"]',
+      );
+      await expect(smallestPulseCard).toBeVisible();
+      await expect(smallestPulseCard).toContainText("Smallest Pulse");
+      await expect(
+        smallestPulseCard.locator('img[src^="/brand-logos/smallest/logo"]'),
+      ).toBeVisible();
+
+      await page.goto(`/${locale.code}/addons/smallest-pulse`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Smallest Pulse" }),
+      ).toBeVisible();
+      await expect(page.getByText(locale.category).first()).toBeVisible();
+      await expect(page.getByText("macOS").first()).toBeVisible();
+      await expect(page.getByText("Windows").first()).toBeVisible();
+      await expect(page.getByText(locale.detailText).first()).toBeVisible();
+      await expect(page.getByText(locale.languageModeText).first()).toBeVisible();
+      await expect(page.getByText("com.typewhisper.smallest-pulse").first()).toBeVisible();
+      await expect(page.getByText("com.typewhisper.smallest-ai").first()).toBeVisible();
+      await expect(page.getByAltText(locale.screenshotAlt)).toBeVisible();
+    }
+  });
+
   test("search input filters the addon cards", async ({ page }) => {
     await page.goto("/en/addons");
     await expect(page.getByTestId("featured-addons")).toBeVisible();

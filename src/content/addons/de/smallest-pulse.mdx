@@ -1,0 +1,69 @@
+---
+slug: smallest-pulse
+name: Smallest Pulse
+author: TypeWhisper
+version: 1.0.0
+icon: Waves
+iconUrl: /brand-logos/smallest/logo.svg
+description: Cloud-Transkription über die Smallest AI Pulse STT API. Erfordert einen Smallest API-Key.
+categories:
+  - transcription
+platforms:
+  - mac
+  - windows
+source: bundled
+apiDocsUrl: https://docs.smallest.ai/waves/model-cards/speech-to-text/pulse
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SmallestAIPlugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SmallestAi
+---
+
+## Über
+
+Smallest Pulse erweitert TypeWhisper um Cloud-Spracherkennung über die Smallest AI Pulse STT API. Pulse ist für latenzarme Transkription gebaut und unterstützt sowohl feste Sprachcodes als auch automatische Sprachmodi.
+
+Das Plugin benötigt einen Smallest API-Key. TypeWhisper speichert den Key über die Plugin-Secret-Speicherung, während Audio zur Transkription an Smallest AI gesendet wird.
+
+Quellen: [Smallest Pulse Dokumentation](https://docs.smallest.ai/waves/model-cards/speech-to-text/pulse), [macOS Plugin PR](https://github.com/TypeWhisper/typewhisper-mac/pull/568), [Windows Plugin PR](https://github.com/TypeWhisper/typewhisper-win/pull/150)
+
+## Features
+
+- Cloud-Transkription mit Smallest AI Pulse
+- API-Key-Validierung in den Plugin-Einstellungen
+- Sprachmodi für automatische Spracherkennung
+- Wort-Zeitstempel und Segment-Auswertung, soweit die Plattformimplementierung sie bereitstellt
+- Sichere API-Key-Speicherung über TypeWhisper Plugin-Secrets
+- Keine Übersetzungsunterstützung
+
+## Plattformverhalten
+
+| Plattform | Plugin-ID | Verhalten |
+| --- | --- | --- |
+| macOS | `com.typewhisper.smallest-pulse` | Nutzt in der ersten Umsetzung den pre-recorded Pulse HTTP-Endpunkt. |
+| Windows | `com.typewhisper.smallest-ai` | Unterstützt pre-recorded HTTPS-Transkription und WebSocket-Live-Streaming. |
+
+## Sprachmodi
+
+Setze eine explizite Profilsprache, wenn die gesprochene Sprache bekannt ist. Smallest empfiehlt den Sprachparameter nach Möglichkeit explizit zu setzen, damit das Modell direkt für diese Sprache optimieren kann.
+
+| Modus | ID | Wann verwenden |
+| --- | --- | --- |
+| Auto (European) | `multi-eu` | Unbekannte europäische Sprache. |
+| Auto (Multilingual) | `multi` | Wirklich unbekannte oder gemischte mehrsprachige Audiodaten. |
+| Auto (Indic) | `multi-indic` | Unbekannte indische Sprache. |
+| Auto (Asian) | `multi-asian` | Unbekannte asiatische Sprache. |
+
+## Konfiguration
+
+- **API-Key** - Erstelle einen Smallest API-Key und füge ihn in die Plugin-Einstellungen ein.
+- **Sprachmodus** - Wähle den automatischen Sprachmodus, der verwendet wird, wenn das Profil keine spezifischere Sprache vorgibt.
+- **Entfernen** - Löscht den gespeicherten API-Key aus TypeWhisper.
+
+## Einrichtung
+
+1. Erstelle ein Smallest AI Konto und generiere einen API-Key.
+2. Öffne TypeWhisper Einstellungen > Plugins.
+3. Finde Smallest Pulse und klicke auf Konfigurieren.
+4. Gib den API-Key ein und warte auf die Validierung.
+5. Wähle einen Sprachmodus.
+6. Wähle Smallest Pulse als Transkriptions-Engine in den Einstellungen oder in einem Profil.
