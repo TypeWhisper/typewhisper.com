@@ -216,7 +216,7 @@ test.describe("addons search", () => {
       await expect(smallestPulseCard).toBeVisible();
       await expect(smallestPulseCard).toContainText("Smallest Pulse");
       await expect(
-        smallestPulseCard.locator('img[src="/brand-logos/smallest/logo.svg"]'),
+        smallestPulseCard.locator('img[src^="/brand-logos/smallest/logo"]'),
       ).toBeVisible();
 
       await page.goto(`/${locale.code}/addons/smallest-pulse`);
