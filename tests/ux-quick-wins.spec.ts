@@ -267,9 +267,9 @@ test.describe("pricing & business pages", () => {
         name: /keep typewhisper independent/i,
       }),
     ).toBeVisible();
-    await expect(page.locator(`a[href^="mailto:"]`).first()).toContainText(
-      /sponsorship/i,
-    );
+    await expect(
+      page.getByRole("link", { name: /^discuss sponsorship$/i }),
+    ).toHaveAttribute("href", /^mailto:/i);
     await expect(
       page.getByRole("heading", {
         level: 2,
@@ -302,7 +302,7 @@ test.describe("pricing & business pages", () => {
       page.locator('footer a[href="/en/sponsors"]').first(),
     ).toBeVisible();
     await expect(
-      page.locator('footer a[href="https://github.com/sponsors/seofood"]'),
+      page.locator('footer a[href*="github.com/sponsors/"]'),
     ).toHaveCount(0);
   });
 
