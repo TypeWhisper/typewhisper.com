@@ -85,6 +85,8 @@
   "appleDictation.history.description": "Durchsuchbarer Transkriptionsverlauf und eine lokale HTTP-API für Workflows.",
   "landing.title": "TypeWhisper 1.3 für macOS - Lokale Sprache-zu-Text",
   "landing.description": "TypeWhisper 1.3 ist für macOS verfügbar - mit einheitlichen Workflows, lokalem Diktieren, Datei-Transkription und robusterer Automatisierung. Windows Beta und iOS Alpha sind zum frühen Testen verfügbar.",
+  "pressMentions.title": "Bekannt aus",
+  "pressMentions.faz.aria": "F.A.Z.-Artikel über die besten KI-Apps für das Diktieren öffnen",
   "socialProof.stars": "GitHub-Stars",
   "socialProof.members": "Discord-Mitglieder",
   "socialProof.commercial.before": "Für die Arbeit?",

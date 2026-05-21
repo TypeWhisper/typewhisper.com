@@ -85,6 +85,8 @@
   "appleDictation.history.description": "Searchable transcription history and a local HTTP API for workflows.",
   "landing.title": "TypeWhisper 1.3 for macOS - Private Speech-to-Text",
   "landing.description": "TypeWhisper 1.3 is available for macOS with unified workflows, local dictation, file transcription, and more reliable automation. Windows beta and iOS alpha are available for early testing.",
+  "pressMentions.title": "Known from",
+  "pressMentions.faz.aria": "Open the F.A.Z. article about the best AI dictation apps",
   "socialProof.stars": "GitHub stars",
   "socialProof.members": "Discord members",
   "socialProof.commercial.before": "Need it for work?",
