@@ -1,9 +1,9 @@
 {
   "support.title": "Support",
   "support.meta.description": "Wo du Hilfe bekommst, Probleme meldest und was du vom Support erwarten kannst.",
-  "support.subtitle": "Nutze den richtigen Support-Weg für die Plattform und Release-Stufe, die du verwendest. macOS 1.3 ist das stabile Release; Windows Beta und iOS Alpha sind Feedback-intensive Preview-Builds.",
-  "support.mac.title": "macOS 1.3",
-  "support.mac.description": "Stabiler Release-Support für Installationsprobleme, Berechtigungen, Diktieren, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets und mitgelieferte Integrationen.",
+  "support.subtitle": "Nutze den richtigen Support-Weg für die Plattform und Release-Stufe, die du verwendest. macOS 1.4 ist das stabile Release; Windows Beta und iOS Alpha sind Feedback-intensive Preview-Builds.",
+  "support.mac.title": "macOS 1.4",
+  "support.mac.description": "Stabiler Release-Support für Installation, Berechtigungen, Diktieren, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets, Integrationen, lokale APIs und Modellverwaltung.",
   "support.mac.reportIssue": "macOS-Problem melden",
   "support.mac.troubleshooting": "Fehlerbehebung-Doku",
   "support.mac.prompts": "Workflow-Leitfaden",
