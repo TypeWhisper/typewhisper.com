@@ -1,9 +1,9 @@
 {
   "support.title": "Support",
   "support.meta.description": "Where to get help, report issues, and understand support expectations for TypeWhisper.",
-  "support.subtitle": "Use the right support path for the platform and release stage you are on. macOS 1.3 is the stable release; Windows Beta and iOS Alpha are feedback-heavy preview builds.",
-  "support.mac.title": "macOS 1.3",
-  "support.mac.description": "Stable release support for installation issues, permissions, dictation, file transcription, workflows, history, dictionary, snippets, and bundled integrations.",
+  "support.subtitle": "Use the right support path for the platform and release stage you are on. macOS 1.4 is the stable release; Windows Beta and iOS Alpha are feedback-heavy preview builds.",
+  "support.mac.title": "macOS 1.4",
+  "support.mac.description": "Stable release support for installation, permissions, dictation, file transcription, workflows, history, dictionary, snippets, integrations, local APIs, and model management.",
   "support.mac.reportIssue": "Report a macOS issue",
   "support.mac.troubleshooting": "Troubleshooting docs",
   "support.mac.prompts": "Workflow guide",

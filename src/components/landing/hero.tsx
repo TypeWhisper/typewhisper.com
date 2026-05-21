@@ -24,7 +24,7 @@ const docsPathByPlatform: Record<HeroPlatform, string> = {
   ios: "/docs/ios",
 };
 
-// Reduce a release version like "v1.3.0" or "1.3" to a "Major.Minor" label
+// Reduce a release version like "v1.4.0" or "1.4" to a "Major.Minor" label
 // for the hero headline. Returns null when the input cannot be parsed.
 function shortVersion(version: string | undefined): string | null {
   if (!version) return null;

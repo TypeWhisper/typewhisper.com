@@ -45,12 +45,12 @@ function getFeatures(locale: Locale): Feature[] {
       title: t(locale, "features.private.title"),
       description: t(locale, "features.private.description"),
       span: "col-span-2",
-      screenshot: screenshotPath(locale, "/screenshots/mac/recording.png"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/home.png"),
     },
     {
       title: t(locale, "features.dictation.title"),
       description: t(locale, "features.dictation.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/general.png"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/recording.png"),
     },
     {
       title: t(locale, "features.prompts.title"),
@@ -60,7 +60,7 @@ function getFeatures(locale: Locale): Feature[] {
     {
       title: t(locale, "features.profiles.title"),
       description: t(locale, "features.profiles.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/dictionary.png"),
+      screenshot: screenshotPath(locale, "/screenshots/mac/plugins.png"),
     },
     {
       title: t(locale, "features.transcription.title"),
