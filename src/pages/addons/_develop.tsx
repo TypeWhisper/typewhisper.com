@@ -621,6 +621,21 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
             <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">
+                  {isDe ? "Katalogrichtlinie" : "Catalog review policy"}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {isDe
+                    ? "Einreichungen für den Katalog, die externe Anbieter anbinden, müssen Zugangswege verwenden, die der Anbieter für Drittanbieter-Integrationen autorisiert. Zulässig sind nutzerbereitgestellte API-Schlüssel, offizielle Abrechnung über Entwicklerplattformen, offiziell dokumentierte SDK- oder OAuth-Flows für Drittanbieter-Apps sowie rein lokale Integrationen, die kein Anbieterkonto imitieren."
+                    : "Catalog submissions that connect to external providers must use access paths the provider authorizes for third-party integrations. Acceptable paths include user-provided API keys, official developer platform billing, officially documented SDK or OAuth flows intended for third-party apps, and local-only integrations that do not impersonate a provider account."}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {isDe
+                    ? "Katalog-Plugins dürfen keinen First-Party-Client eines Anbieters imitieren, keine Verbraucher-Abo-Zugangsdaten als API-Zugriff verwenden, sofern der Anbieter diesen Drittanbieter-Weg nicht ausdrücklich unterstützt, und nicht auf inoffizielle OAuth-Clients, kopierte Client-IDs, versteckte Endpunkte oder Token-Refresh-Flows setzen, die für ein anderes First-Party-Produkt bestimmt sind."
+                    : "Catalog plugins must not impersonate a provider's first-party client, use consumer subscription credentials as API access unless the provider explicitly supports that third-party path, or rely on unofficial OAuth clients, copied client IDs, hidden endpoints, or token refresh flows intended for another first-party product."}
+                </p>
+              </div>
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
+                <h3 className="text-sm font-semibold">
                   {isDe ? "So reichst du es ein" : "How to Submit"}
                 </h3>
                 <ol className="mt-2 space-y-2 text-sm text-muted-foreground">
@@ -691,8 +706,8 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
                   <ExternalLink className="ml-0.5 inline size-3" />
                 </a>{" "}
                 {isDe
-                  ? "für detaillierte Richtlinien zu Manifest-Format, Verzeichnisstruktur und Review-Kriterien."
-                  : "for detailed guidelines on manifest format, directory structure, and review criteria."}
+                  ? "für detaillierte Richtlinien zu Provider-Zugriff, Manifest-Format, Verzeichnisstruktur und Review-Kriterien."
+                  : "for detailed guidelines on provider access, manifest format, directory structure, and review criteria."}
               </p>
             </div>
           </section>
