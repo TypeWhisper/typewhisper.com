@@ -1,4 +1,4 @@
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
 import { t, type Locale } from "@/i18n/index";
@@ -608,91 +608,81 @@ final class MyLLMPlugin: NSObject, LLMProviderPlugin {
             </div>
           </section>
 
-          {/* Submit to Plugin Catalog */}
+          {/* Contribute Plugins */}
           <section className="rounded-2xl bg-card p-6">
             <h2 className="text-lg font-semibold">
-              {isDe ? "Beim Plugin-Katalog einreichen" : "Submit to the Plugin Catalog"}
+              {isDe ? "Plugins beitragen" : "Contribute Plugins"}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {isDe
-                ? "Teile dein Plugin mit der TypeWhisper-Community, indem du es in den offiziellen Plugin-Katalog einreichst. Eingereichte Plugins werden automatisch gebaut und auf dieser Website gelistet, damit sie leicht gefunden werden können."
-                : "Share your plugin with the TypeWhisper community by submitting it to the official plugin catalog. Submitted plugins are built automatically and listed on this website for easy discovery."}
+                ? "Wenn du ein Plugin teilen oder upstream beisteuern möchtest, reiche es im passenden Plattform-Repository ein. Der separate Community-Plugin-Katalog wird eingestellt; macOS- und Windows-Plugins werden in den jeweiligen App-Repos geprüft."
+                : "If you want to share or upstream a plugin, submit it to the matching platform repository. The separate community plugin catalog is being retired; macOS and Windows plugins are reviewed in the app repositories that own them."}
             </p>
             <div className="mt-4 space-y-3">
               <div className="rounded-xl bg-muted/50 px-4 py-3">
                 <h3 className="text-sm font-semibold">
-                  {isDe ? "So reichst du es ein" : "How to Submit"}
+                  {isDe ? "Provider-Zugriffsrichtlinie" : "Provider access policy"}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {isDe
+                    ? "Plugin-Beiträge, die externe Anbieter anbinden, müssen Zugangswege verwenden, die der Anbieter für Drittanbieter-Integrationen autorisiert. Zulässig sind nutzerbereitgestellte API-Schlüssel, offizielle Abrechnung über Entwicklerplattformen, offiziell dokumentierte SDK- oder OAuth-Flows für Drittanbieter-Apps sowie rein lokale Integrationen, die kein Anbieterkonto imitieren."
+                    : "Plugin contributions that connect to external providers must use access paths the provider authorizes for third-party integrations. Acceptable paths include user-provided API keys, official developer platform billing, officially documented SDK or OAuth flows intended for third-party apps, and local-only integrations that do not impersonate a provider account."}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {isDe
+                    ? "Plugins dürfen keinen First-Party-Client eines Anbieters imitieren, keine Verbraucher-Abo-Zugangsdaten als API-Zugriff verwenden, sofern der Anbieter diesen Drittanbieter-Weg nicht ausdrücklich unterstützt, und nicht auf inoffizielle OAuth-Clients, kopierte Client-IDs, versteckte Endpunkte oder Token-Refresh-Flows setzen, die für ein anderes First-Party-Produkt bestimmt sind."
+                    : "Plugins must not impersonate a provider's first-party client, use consumer subscription credentials as API access unless the provider explicitly supports that third-party path, or rely on unofficial OAuth clients, copied client IDs, hidden endpoints, or token refresh flows intended for another first-party product."}
+                </p>
+              </div>
+              <div className="rounded-xl bg-muted/50 px-4 py-3">
+                <h3 className="text-sm font-semibold">
+                  {isDe ? "Wo du Beiträge einreichst" : "Where to submit"}
                 </h3>
                 <ol className="mt-2 space-y-2 text-sm text-muted-foreground">
                   <li>
                     <span className="font-medium text-foreground">1.</span>{" "}
-                    {isDe ? "Forke das Repository " : "Fork the "}
+                    {isDe ? "macOS-Plugins gehören in " : "Submit macOS plugins to "}
                     <a
-                      href="https://github.com/TypeWhisper/typewhisper-plugins"
+                      href="https://github.com/TypeWhisper/typewhisper-mac"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
                     >
-                      TypeWhisper/typewhisper-plugins
+                      TypeWhisper/typewhisper-mac
                     </a>{" "}
-                    {isDe ? "." : "repository."}
+                    {isDe ? "." : "."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">2.</span>{" "}
-                    {isDe ? "Erstelle ein Verzeichnis unter " : "Create a directory under "}
-                    <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      plugins/your-plugin-slug/
-                    </code>{" "}
-                    {isDe ? "mit deiner " : "with your "}
-                    <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      manifest.json
-                    </code>
-                    ,{" "}
-                    <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      README.md
-                    </code>
-                    ,{" "}
-                    <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      LICENSE
-                    </code>
-                    {isDe ? ", und " : ", and "}
-                    <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                      src/
-                    </code>{" "}
-                    {isDe ? "als Verzeichnis mit deinem Swift-Quellcode." : "directory with your Swift source."}
+                    {isDe ? "Windows-Plugins gehören in " : "Submit Windows plugins to "}
+                    <a
+                      href="https://github.com/TypeWhisper/typewhisper-win"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      TypeWhisper/typewhisper-win
+                    </a>{" "}
+                    {isDe ? "." : "."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">3.</span>{" "}
                     {isDe
-                      ? "Öffne einen Pull Request - die CI validiert automatisch dein Manifest, prüft erforderliche Dateien und kompiliert dein Plugin."
-                      : "Open a pull request - CI will automatically validate your manifest, check required files, and compile your plugin."}
+                      ? "Dokumentiere Einrichtung, benötigte Zugangsdaten, unterstützte Plattformen und den autorisierten Provider-Zugriffsweg im Pull Request oder Issue."
+                      : "Document setup, required credentials, supported platforms, and the authorized provider access path in the pull request or issue."}
                   </li>
                   <li>
                     <span className="font-medium text-foreground">4.</span>{" "}
-                    {isDe ? "Das TypeWhisper-Team prüft deine Einreichung." : "The TypeWhisper team reviews your submission."}
-                  </li>
-                  <li>
-                    <span className="font-medium text-foreground">5.</span>{" "}
                     {isDe
-                      ? "Nach dem Merge wird dein Plugin automatisch gebaut, veröffentlicht und im Katalog gelistet."
-                      : "After merge, your plugin is automatically built, released, and listed in the catalog."}
+                      ? "Das Plattform-Repo ist die Quelle der Wahrheit für Build, Review, Release und mögliche Katalog-Listung."
+                      : "The platform repository is the source of truth for build, review, release, and any catalog listing."}
                   </li>
                 </ol>
               </div>
               <p className="text-xs text-muted-foreground">
-                {isDe ? "Siehe " : "See the "}
-                <a
-                  href="https://github.com/TypeWhisper/typewhisper-plugins/blob/main/CONTRIBUTING.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  CONTRIBUTING.md
-                  <ExternalLink className="ml-0.5 inline size-3" />
-                </a>{" "}
                 {isDe
-                  ? "für detaillierte Richtlinien zu Manifest-Format, Verzeichnisstruktur und Review-Kriterien."
-                  : "for detailed guidelines on manifest format, directory structure, and review criteria."}
+                  ? "Der frühere separate Community-Plugin-Repository-Ansatz wird nicht mehr als Einreichungsweg verwendet."
+                  : "The earlier separate community plugin repository flow is no longer used for submissions."}
               </p>
             </div>
           </section>
