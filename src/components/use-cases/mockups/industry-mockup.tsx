@@ -4,7 +4,7 @@ import { MacWindow } from "./mac-window";
 import { RecordingNotch } from "./recording-notch";
 
 interface IndustryMockupProps {
-  slug: "real-estate" | "architecture" | "legal";
+  slug: "real-estate" | "architecture" | "legal" | "law-firm-dictation";
   color: string;
   compact?: boolean;
   locale?: "en" | "de";
@@ -103,6 +103,7 @@ const icons = {
   "real-estate": Home,
   architecture: Building2,
   legal: Scale,
+  "law-firm-dictation": Scale,
 };
 
 const content = {
@@ -146,6 +147,19 @@ const content = {
       partialText:
         "statement of claim draft, while the limitation deadline and GDPR references remain separately checked",
     },
+    "law-firm-dictation": {
+      windowTitle: "TypeWhisper Dictation",
+      sidebarTitle: "Firm workflows",
+      presets: ["Case note", "Email draft", "Pleading draft", "Term correction"],
+      activePreset: "Case note",
+      badge: "law-firm dictation",
+      documentTitle: "Case note draft",
+      body:
+        "The client call is captured as a raw note. The pleading draft, deadline, and GDPR reference remain reviewed by the firm before use",
+      terms: ["Case note", "Email draft", "Pleading", "Deadline", "Power of attorney", "GDPR", "Review"],
+      partialText:
+        "raw note. The pleading draft, deadline, and GDPR reference remain reviewed by the firm",
+    },
   },
   de: {
     "real-estate": {
@@ -186,6 +200,19 @@ const content = {
       terms: ["Mandat", "Schriftsatz", "Klageschrift", "Frist", "Vollmacht", "Anspruch", "DSGVO"],
       partialText:
         "Entwurf der Klageschrift, während Frist und DSGVO-Bezug gesondert geprüft bleiben",
+    },
+    "law-firm-dictation": {
+      windowTitle: "TypeWhisper Diktat",
+      sidebarTitle: "Kanzlei-Workflows",
+      presets: ["Mandatsnotiz", "E-Mail-Entwurf", "Schriftsatz", "Fachwort-Korrektur"],
+      activePreset: "Mandatsnotiz",
+      badge: "Kanzlei-Diktat",
+      documentTitle: "Mandatsnotiz",
+      body:
+        "Das Mandantengespräch wird als Rohnotiz erfasst. Schriftsatzentwurf, Frist und DSGVO-Bezug bleiben vor Verwendung durch die Kanzlei geprüft",
+      terms: ["Mandatsnotiz", "E-Mail", "Schriftsatz", "Frist", "Vollmacht", "DSGVO", "Prüfung"],
+      partialText:
+        "Rohnotiz erfasst. Schriftsatzentwurf, Frist und DSGVO-Bezug bleiben geprüft",
     },
   },
 } as const;

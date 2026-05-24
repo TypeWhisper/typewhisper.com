@@ -37,6 +37,7 @@ export function UseCaseMockup({
     case "real-estate":
     case "architecture":
     case "legal":
+    case "law-firm-dictation":
       return (
         <IndustryMockup
           slug={slug}
@@ -59,5 +60,6 @@ export function hasUseCaseMockup(slug: string): boolean {
     "real-estate",
     "architecture",
     "legal",
+    "law-firm-dictation",
   ].includes(slug);
 }
