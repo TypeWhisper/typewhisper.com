@@ -35,6 +35,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const platform = usePlatform();
   const showGitHubBrandLogo = canRenderBrandLogo("github", "nav");
   const download = getPlatformDownloadTarget(platform, locale, "nav");
+  const downloadOpensNewTab = download.platform === "ios";
   const showDownloadCta = true;
   const isDark = theme === "dark";
   const headerChrome = isDark
@@ -86,7 +87,12 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               asChild
               data-testid="header-download"
             >
-              <a href={download.href} target="_blank" rel="noopener noreferrer">
+              <a
+                href={download.href}
+                target={downloadOpensNewTab ? "_blank" : undefined}
+                rel={downloadOpensNewTab ? "noopener noreferrer" : undefined}
+                data-download-social-trigger
+              >
                 <Download className="size-4" />
                 {download.label}
               </a>
@@ -179,8 +185,9 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   >
                     <a
                       href={download.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={downloadOpensNewTab ? "_blank" : undefined}
+                      rel={downloadOpensNewTab ? "noopener noreferrer" : undefined}
+                      data-download-social-trigger
                       onClick={() => setMobileOpen(false)}
                     >
                       <Download className="size-4" />

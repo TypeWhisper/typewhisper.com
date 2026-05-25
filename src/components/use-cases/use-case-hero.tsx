@@ -122,8 +122,7 @@ export function UseCaseHero({
             <Button size="pill" asChild>
               <a
                 href={macDmgUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                data-download-social-trigger
               >
                 {t(locale, "useCases.cta.download")}
               </a>

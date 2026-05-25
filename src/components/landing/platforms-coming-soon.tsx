@@ -1,9 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { iosTestFlightUrl, macDmgUrl, windowsSetupUrl } from "@/lib/platform-download";
+import type { Platform } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 interface PlatformInfo {
+  platform: Platform;
   name: string;
   description: string;
   status: string;
@@ -15,6 +17,7 @@ interface PlatformInfo {
 function getPlatforms(locale: Locale): PlatformInfo[] {
   return [
     {
+      platform: "mac",
       name: t(locale, "platforms.mac.name"),
       description: t(locale, "platforms.mac.description"),
       status: t(locale, "platforms.mac.status"),
@@ -23,6 +26,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       downloadLabel: t(locale, "platforms.mac.download"),
     },
     {
+      platform: "windows",
       name: t(locale, "platforms.win.name"),
       description: t(locale, "platforms.win.description"),
       status: t(locale, "platforms.win.status"),
@@ -31,6 +35,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       downloadLabel: t(locale, "platforms.win.download"),
     },
     {
+      platform: "ios",
       name: t(locale, "platforms.ios.name"),
       description: t(locale, "platforms.ios.description"),
       status: t(locale, "platforms.ios.status"),
@@ -68,8 +73,9 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
               <Button size="pill" className="mt-6" asChild>
                 <a
                   href={p.downloadHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={p.platform === "ios" ? "_blank" : undefined}
+                  rel={p.platform === "ios" ? "noopener noreferrer" : undefined}
+                  data-download-social-trigger
                 >
                   {p.downloadLabel}
                   <ArrowUpRight className="size-4" />
