@@ -117,8 +117,7 @@ export default function UseCasesIndex({
                 <Button size="pill" asChild>
                   <a
                     href={macDmgUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    data-download-social-trigger
                     className="inline-flex items-center gap-1.5"
                   >
                     {t(locale, "useCases.cta.download")}

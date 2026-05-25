@@ -75,6 +75,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
     locale,
     "landing",
   );
+  const downloadOpensNewTab = download.platform === "ios";
 
   // If the visitor is actually on Windows or iOS but the active tab is still
   // the mac default, surface a small switch hint so they can flip in one click.
@@ -121,9 +122,10 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             <Button size="pill" asChild>
               <a
                 href={download.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={downloadOpensNewTab ? "_blank" : undefined}
+                rel={downloadOpensNewTab ? "noopener noreferrer" : undefined}
                 data-testid="landing-hero-download"
+                data-download-social-trigger
               >
                 {download.label}
               </a>

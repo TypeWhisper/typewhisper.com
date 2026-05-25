@@ -7,6 +7,7 @@ import { t, localePath, type Locale } from "@/i18n/index";
 export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
   const platform = usePlatform();
   const download = getPlatformDownloadTarget(platform, locale, "landing");
+  const downloadOpensNewTab = download.platform === "ios";
 
   return (
     <section className="bg-secondary py-32 sm:py-40">
@@ -22,9 +23,10 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
             <Button size="pill" asChild>
               <a
                 href={download.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={downloadOpensNewTab ? "_blank" : undefined}
+                rel={downloadOpensNewTab ? "noopener noreferrer" : undefined}
                 data-testid="landing-footer-download"
+                data-download-social-trigger
               >
                 {download.label}
               </a>
