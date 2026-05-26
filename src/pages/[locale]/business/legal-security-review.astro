@@ -1,0 +1,262 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Button } from "@/components/ui/button";
+import { localePath, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { salesEmail } from "@/lib/pricing";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+
+const copy = locale === "de"
+  ? {
+      title: "Security-Review für Kanzlei-Diktat - TypeWhisper",
+      description:
+        "Prüffragen für Kanzlei-IT, Datenschutz und Partner, die TypeWhisper als lokale Spracheingabe für juristische Rohtexte bewerten.",
+      badge: "Für Kanzlei-IT & Datenschutz",
+      heading: "Security-Review für Kanzlei-Diktat.",
+      subtitle:
+        "Eine öffentliche Prüfliste für Kanzleien, die vor dem Einsatz von Sprache-zu-Text klären wollen, wo Audio, Rohtexte, Wörterbuch, Snippets und optionale Cloud-Dienste ins Spiel kommen.",
+      primaryCta: "Review-Fragen senden",
+      secondaryCta: "Business-Seite öffnen",
+      checklistTitle: "Prüffragen für Kanzleien",
+      checklistIntro:
+        "TypeWhisper ist ein Werkzeug für Spracheingabe und bearbeitbare Rohtexte. Die Prüfung sollte Datenfluss, lokale Speicherung, optionale Integrationen und manuelle Freigabegrenzen abdecken.",
+      dataFlowTitle: "Datenfluss nach Baustein",
+      boundariesTitle: "Bewusst abgegrenzt",
+      relatedTitle: "Weiter prüfen",
+      checklist: [
+        "Welche Audio- und Textdaten bleiben bei lokalen Engines auf dem Gerät?",
+        "Wann würde eine optionale Cloud-Engine oder ein LLM-Provider kontaktiert?",
+        "Wo liegen Verlauf, Wörterbuch, Snippets, Profile und API-Keys?",
+        "Ist die lokale API aktiviert, wie ist sie gebunden und wie wird Zugriff begrenzt?",
+        "Wie kann die Kanzlei Cloud-Funktionen für sensible Tests bewusst vermeiden?",
+        "Welche fachliche Prüfung bleibt vor Versand, Frist oder Mandantenkommunikation erforderlich?",
+      ],
+      dataFlow: [
+        {
+          area: "Lokale Verarbeitung",
+          detail:
+            "On-device-Engines können Sprache lokal verarbeiten. Die konkrete Engine-Auswahl sollte vor dem Einsatz bewusst geprüft werden.",
+        },
+        {
+          area: "Optionale Cloud",
+          detail:
+            "Cloud-Provider und LLM-Add-ons sind keine Voraussetzung für Diktat. Wenn sie genutzt werden, sollten sie bewusst konfiguriert und intern freigegeben werden.",
+        },
+        {
+          area: "Lokale Speicherung",
+          detail:
+            "Verlauf, Wörterbuch, Snippets und Profile gehören getrennt in die Prüfung, weil sie unterschiedliche Inhalte und Risiken betreffen können.",
+        },
+        {
+          area: "API & Automation",
+          detail:
+            "Die lokale API ist ein optionaler Power-User-Baustein. Kanzlei-IT sollte prüfen, ob sie benötigt wird und wie Zugriff beschränkt wird.",
+        },
+        {
+          area: "Fachliche Freigabe",
+          detail:
+            "TypeWhisper erzeugt Rohtexte. Rechtslage, Fristen, Zitate, Tonalität und Versandfreigabe bleiben bei der Kanzlei.",
+        },
+      ],
+      boundaries: [
+        "Keine pauschale Zusage, dass Berufsrecht, Mandatsgeheimnis oder Datenschutz automatisch gelöst sind.",
+        "Keine Rechtsberatung, keine Fristenprüfung und keine automatische fachliche Dokumentation.",
+        "Keine echten Mandats- oder Kundendaten in Demos verwenden, bevor interne Freigabe und Datenfluss geklärt sind.",
+      ],
+      related: [
+        {
+          href: localePath("de", "/business"),
+          label: "Business-Seite",
+          text: "Team-Lizenzen, Open-Source-Hinweise und allgemeine Trust-Positionierung.",
+        },
+        {
+          href: localePath("de", "/privacy"),
+          label: "Datenschutzerklärung",
+          text: "Grundlegende Datenschutz- und Speicherhinweise für TypeWhisper.",
+        },
+        {
+          href: localePath("de", "/use-cases/legal"),
+          label: "Juristisches Diktat",
+          text: "Produktkontext für juristische Rohtexte, Fachbegriffe und Freigabegrenzen.",
+        },
+      ],
+    }
+  : {
+      title: "Security Review for Law-Firm Dictation - TypeWhisper",
+      description:
+        "Review questions for firm IT, privacy reviewers, and partners evaluating TypeWhisper as local speech input for legal raw drafts.",
+      badge: "For firm IT & privacy review",
+      heading: "Security review for law-firm dictation.",
+      subtitle:
+        "A public checklist for firms that want to understand where audio, raw drafts, dictionary entries, snippets, and optional cloud services come into play before adopting speech-to-text.",
+      primaryCta: "Send review questions",
+      secondaryCta: "Open business page",
+      checklistTitle: "Review Questions for Firms",
+      checklistIntro:
+        "TypeWhisper is a speech-input tool for editable drafts. Review should focus on data flow, storage, optional integrations, and manual approval boundaries.",
+      dataFlowTitle: "Data Flow by Building Block",
+      boundariesTitle: "Deliberate Boundaries",
+      relatedTitle: "Continue Reviewing",
+      checklist: [
+        "Which audio and text data stays on the device when local engines are used?",
+        "When would an optional cloud engine or LLM provider be contacted?",
+        "Where are history, dictionary entries, snippets, profiles, and API keys stored?",
+        "Is the local API enabled, where is it bound, and how is access limited?",
+        "How can the firm deliberately avoid cloud features for sensitive tests?",
+        "Which professional review remains required before sending, deadlines, or client communication?",
+      ],
+      dataFlow: [
+        {
+          area: "Local processing",
+          detail:
+            "On-device engines can process speech locally. The selected engine should be reviewed deliberately before use.",
+        },
+        {
+          area: "Optional cloud",
+          detail:
+            "Cloud providers and LLM add-ons are not required for dictation. If used, they should be configured deliberately and approved internally.",
+        },
+        {
+          area: "Local storage",
+          detail:
+            "History, dictionary entries, snippets, and profiles should be reviewed separately because they can contain different content and risks.",
+        },
+        {
+          area: "API & automation",
+          detail:
+            "The local API is an optional power-user building block. Firm IT should decide whether it is needed and how access is constrained.",
+        },
+        {
+          area: "Professional approval",
+          detail:
+            "TypeWhisper creates raw drafts. Legal merits, deadlines, citations, tone, and sending approval remain with the firm.",
+        },
+      ],
+      boundaries: [
+        "No blanket promise that professional duties, client confidentiality, or privacy obligations are automatically solved.",
+        "No legal advice, deadline control, or automatic professional documentation.",
+        "Do not use real client or customer data in demos before internal approval and data flow are clear.",
+      ],
+      related: [
+        {
+          href: localePath("en", "/business"),
+          label: "Business page",
+          text: "Team licensing, open-source notes, and general trust positioning.",
+        },
+        {
+          href: localePath("en", "/privacy"),
+          label: "Privacy policy",
+          text: "Baseline privacy and storage notes for TypeWhisper.",
+        },
+        {
+          href: localePath("en", "/use-cases/legal"),
+          label: "Legal dictation",
+          text: "Product context for legal raw drafts, terminology, and approval boundaries.",
+        },
+      ],
+    };
+---
+
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/business/legal-security-review")}
+  locale={locale}
+>
+  <section class="section-light py-16 sm:py-24">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground">
+          {copy.badge}
+        </span>
+        <h1 class="mt-6 font-display text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl">
+          {copy.heading}
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg text-muted-foreground">
+          {copy.subtitle}
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button size="pill" asChild>
+            <a href={`mailto:${salesEmail}`}>{copy.primaryCta}</a>
+          </Button>
+          <Button variant="outline" size="pill" asChild>
+            <a href={localePath(locale, "/business")}>{copy.secondaryCta}</a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr]">
+      <div>
+        <h2 class="font-display text-3xl font-bold tracking-tight">{copy.checklistTitle}</h2>
+        <p class="mt-3 text-muted-foreground">
+          {copy.checklistIntro}
+        </p>
+      </div>
+      <ol class="space-y-3">
+        {copy.checklist.map((item, index) => (
+          <li class="flex gap-3 rounded-2xl border bg-card p-4">
+            <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+              {index + 1}
+            </span>
+            <span class="text-sm text-muted-foreground">{item}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-light-gray py-12 sm:py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="font-display text-3xl font-bold tracking-tight">{copy.dataFlowTitle}</h2>
+      <div class="mt-8 overflow-hidden rounded-2xl border bg-background">
+        <div class="divide-y">
+          {copy.dataFlow.map((row) => (
+            <div class="grid gap-3 p-5 sm:grid-cols-[220px_1fr] sm:p-6">
+              <h3 class="font-semibold text-foreground">{row.area}</h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">{row.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-2">
+      <div>
+        <h2 class="font-display text-3xl font-bold tracking-tight">{copy.boundariesTitle}</h2>
+        <ul class="mt-6 space-y-3">
+          {copy.boundaries.map((item) => (
+            <li class="flex gap-3 text-sm text-muted-foreground">
+              <span class="mt-2 size-2 shrink-0 rounded-full bg-primary"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-display text-3xl font-bold tracking-tight">{copy.relatedTitle}</h2>
+        <div class="mt-6 space-y-4">
+          {copy.related.map((link) => (
+            <a href={link.href} class="block rounded-2xl border bg-card p-5 transition-colors hover:border-primary/40">
+              <span class="font-semibold text-foreground">{link.label}</span>
+              <span class="mt-1 block text-sm text-muted-foreground">{link.text}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
