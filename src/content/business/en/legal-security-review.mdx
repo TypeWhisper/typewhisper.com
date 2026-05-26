@@ -1,0 +1,59 @@
+---
+meta:
+  title: "Security Review for Law-Firm Dictation - TypeWhisper"
+  description: "Review questions for firm IT, privacy reviewers, and partners evaluating TypeWhisper as local speech input for legal raw drafts."
+color: "#991b1b"
+hero:
+  badge: "For firm IT & privacy review"
+  title: "Security review for law-firm dictation."
+  subtitle: "A public checklist for firms that want to understand where audio, raw drafts, dictionary entries, snippets, and optional cloud services come into play before adopting speech-to-text."
+checklist:
+  title: "Review Questions for Firms"
+  intro: "TypeWhisper is a speech-input tool for editable drafts. Review should focus on data flow, storage, optional integrations, and manual approval boundaries."
+  items:
+    - "Which audio and text data stays on the device when local engines are used?"
+    - "When would an optional cloud engine or LLM provider be contacted?"
+    - "Where are history, dictionary entries, snippets, profiles, and API keys stored?"
+    - "Is the local API enabled, where is it bound, and how is access limited?"
+    - "How can the firm deliberately avoid cloud features for sensitive tests?"
+    - "Which professional review remains required before sending, deadlines, or client communication?"
+dataFlow:
+  title: "Data Flow by Building Block"
+  items:
+    - area: "Local processing"
+      detail: "On-device engines can process speech locally. The selected engine should be reviewed deliberately before use."
+      icon: Cpu
+    - area: "Optional cloud"
+      detail: "Cloud providers and LLM add-ons are not required for dictation. If used, they should be configured deliberately and approved internally."
+      icon: Cloud
+    - area: "Local storage"
+      detail: "History, dictionary entries, snippets, and profiles should be reviewed separately because they can contain different content and risks."
+      icon: Database
+    - area: "API & automation"
+      detail: "The local API is an optional power-user building block. Firm IT should decide whether it is needed and how access is constrained."
+      icon: Plug
+    - area: "Professional approval"
+      detail: "TypeWhisper creates raw drafts. Legal merits, deadlines, citations, tone, and sending approval remain with the firm."
+      icon: Scale
+boundaries:
+  title: "Deliberate Boundaries"
+  items:
+    - "No blanket promise that professional duties, client confidentiality, or privacy obligations are automatically solved."
+    - "No legal advice, deadline control, or automatic professional documentation."
+    - "Do not use real client or customer data in demos before internal approval and data flow are clear."
+related:
+  title: "Continue Reviewing"
+  links:
+    - key: business
+      label: "Business page"
+      text: "Team licensing, open-source notes, and general trust positioning."
+    - key: privacy
+      label: "Privacy policy"
+      text: "Baseline privacy and storage notes for TypeWhisper."
+    - key: legal
+      label: "Legal dictation"
+      text: "Product context for legal raw drafts, terminology, and approval boundaries."
+cta:
+  title: "Questions about the security review?"
+  subtitle: "Send us your review questions — we answer with what we can document publicly and point you to source code and docs where it helps."
+---

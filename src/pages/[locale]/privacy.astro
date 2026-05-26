@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { type Locale } from "@/i18n/index";
+import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -12,128 +12,66 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const copy = locale === "de"
-  ? {
-      title: "Datenschutzerklärung - TypeWhisper",
-      description: "TypeWhisper Datenschutzerklärung. Alle Daten bleiben auf deinem Gerät - keine Erfassung, kein Tracking.",
-      heading: "Datenschutzerklärung",
-      updated: "Zuletzt aktualisiert: Februar 2026",
-      sections: [
-        {
-          title: "Überblick",
-          paragraphs: ["TypeWhisper ist eine lokal arbeitende Desktop-App für macOS und Windows. Wir legen großen Wert auf deine Privatsphäre und haben TypeWhisper so konzipiert, dass alle Daten vollständig auf deinem Gerät verarbeitet werden."],
-        },
-        {
-          title: "Datenerfassung",
-          paragraphs: ["<strong>TypeWhisper erfasst keine Daten.</strong> Alle Audioverarbeitung, Transkription und Speicherung erfolgt lokal auf deinem Gerät. Weder Audio- noch Transkriptionstext oder Nutzungsdaten werden jemals an einen Server gesendet."],
-        },
-        {
-          title: "Lokale Speicherung",
-          paragraphs: [
-            "TypeWhisper speichert die folgenden Daten lokal im betriebssystemspezifischen App-Datenverzeichnis (z.B. Application Support unter macOS oder AppData unter Windows):",
-            "Diese Daten werden ausschließlich auf deinem Gerät gespeichert und sind weder für uns noch für Dritte zugänglich.",
-          ],
-          items: [
-            "Transkriptionsverlauf (Text, Zeitstempel, App-Kontext)",
-            "Benutzerprofile und Einstellungen",
-            "Heruntergeladene KI-Modelle",
-          ],
-        },
-        {
-          title: "Netzwerkzugriff",
-          paragraphs: ["TypeWhisper verbindet sich nur mit dem Internet, um KI-Modelle von Hugging Face herunterzuladen. Nachdem die Modelle heruntergeladen wurden, kann die App vollständig offline genutzt werden."],
-        },
-        {
-          title: "Drittanbieter-Dienste",
-          paragraphs: ["TypeWhisper integriert keine Analyse-, Werbe- oder Tracking-Dienste."],
-        },
-        {
-          title: "Kanzlei-Security-Review",
-          paragraphs: ['Für Kanzlei-IT und Datenschutzprüfung gibt es zusätzlich eine <a href="/de/business/legal-security-review/" class="text-primary hover:underline">öffentliche Prüfliste zu Datenfluss, Speicherorten und optionalen Cloud-Bausteinen</a>.'],
-        },
-        {
-          title: "Open Source",
-          paragraphs: ['TypeWhisper ist Open Source unter der GPLv3-Lizenz. Du kannst den gesamten Quellcode auf <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub</a> einsehen.'],
-        },
-        {
-          title: "Kontakt",
-          paragraphs: ['Bei Fragen zu dieser Datenschutzerklärung erstelle bitte ein Issue in unserer <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub-Organisation</a>.'],
-        },
-      ],
-    }
-  : {
-      title: "Privacy Policy - TypeWhisper",
-      description: "TypeWhisper privacy policy. All data stays on your device - no collection, no tracking.",
-      heading: "Privacy Policy",
-      updated: "Last updated: February 2026",
-      sections: [
-        {
-          title: "Overview",
-          paragraphs: ["TypeWhisper is a local-first desktop app for macOS and Windows. We are committed to your privacy and designed TypeWhisper to process all data entirely on your device."],
-        },
-        {
-          title: "Data Collection",
-          paragraphs: ["<strong>TypeWhisper does not collect any data.</strong> All audio processing, transcription, and storage happens locally on your device. No audio, transcription text, or usage data is ever sent to any server."],
-        },
-        {
-          title: "Local Storage",
-          paragraphs: [
-            "TypeWhisper stores the following data locally in your OS-specific app data directory (for example Application Support on macOS or AppData on Windows):",
-            "This data is stored only on your device and is not accessible to us or any third party.",
-          ],
-          items: [
-            "Transcription history (text, timestamps, app context)",
-            "User profiles and settings",
-            "Downloaded AI models",
-          ],
-        },
-        {
-          title: "Network Access",
-          paragraphs: ["TypeWhisper connects to the internet only to download AI models from Hugging Face. After models are downloaded, the app can function entirely offline."],
-        },
-        {
-          title: "Third-Party Services",
-          paragraphs: ["TypeWhisper does not integrate with any analytics, advertising, or tracking services."],
-        },
-        {
-          title: "Law-Firm Security Review",
-          paragraphs: ['For firm IT and privacy review, there is also a <a href="/en/business/legal-security-review/" class="text-primary hover:underline">public checklist covering data flow, storage locations, and optional cloud building blocks</a>.'],
-        },
-        {
-          title: "Open Source",
-          paragraphs: ['TypeWhisper is open source under the GPLv3 license. You can audit the entire source code on <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub</a>.'],
-        },
-        {
-          title: "Contact",
-          paragraphs: ['If you have questions about this privacy policy, please open an issue on our <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub organization</a>.'],
-        },
-      ],
-    };
+
+const securityReviewHref = localePath(locale, "/business/legal-security-review");
+
+type PrivacySection =
+  | { id: "overview" | "dataCollection" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
+  | { id: "localStorage"; kind: "list" }
+  | { id: "securityReview"; kind: "link" };
+
+const sections: PrivacySection[] = [
+  { id: "overview", kind: "simple" },
+  { id: "dataCollection", kind: "simple" },
+  { id: "localStorage", kind: "list" },
+  { id: "network", kind: "simple" },
+  { id: "thirdParty", kind: "simple" },
+  { id: "securityReview", kind: "link" },
+  { id: "openSource", kind: "simple" },
+  { id: "contact", kind: "simple" },
+];
 ---
 
 <BaseLayout
-  title={copy.title}
-  description={copy.description}
+  title={t(locale, "privacy.meta.title")}
+  description={t(locale, "privacy.meta.description")}
   canonicalPath={canonicalPath(locale, "/privacy")}
   locale={locale}
 >
   <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-    <p class="mt-2 text-sm text-muted-foreground">{copy.updated}</p>
+    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "privacy.heading")}</h1>
+    <p class="mt-2 text-sm text-muted-foreground">{t(locale, "privacy.updated")}</p>
     <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-      {copy.sections.map((section) => (
+      {sections.map((section) => (
         <section>
-          <h2 class="text-lg font-semibold text-foreground">{section.title}</h2>
-          {section.paragraphs.map((paragraph, index) => (
+          <h2 class="text-lg font-semibold text-foreground">
+            {t(locale, `privacy.section.${section.id}.title`)}
+          </h2>
+
+          {section.kind === "simple" && (
+            <p class="mt-2" set:html={t(locale, `privacy.section.${section.id}.p1`)} />
+          )}
+
+          {section.kind === "list" && (
             <>
-              <p class="mt-2" set:html={paragraph} />
-              {index === 0 && section.items && (
-                <ul class="mt-2 space-y-1 list-disc pl-5">
-                  {section.items.map((item) => <li>{item}</li>)}
-                </ul>
-              )}
+              <p class="mt-2">{t(locale, "privacy.section.localStorage.p1")}</p>
+              <ul class="mt-2 list-disc space-y-1 pl-5">
+                <li>{t(locale, "privacy.section.localStorage.item1")}</li>
+                <li>{t(locale, "privacy.section.localStorage.item2")}</li>
+                <li>{t(locale, "privacy.section.localStorage.item3")}</li>
+              </ul>
+              <p class="mt-2">{t(locale, "privacy.section.localStorage.p2")}</p>
             </>
-          ))}
+          )}
+
+          {section.kind === "link" && (
+            <p class="mt-2">
+              {t(locale, "privacy.section.securityReview.beforeLink")}
+              <a href={securityReviewHref} class="text-primary hover:underline">
+                {t(locale, "privacy.section.securityReview.linkText")}
+              </a>.
+            </p>
+          )}
         </section>
       ))}
     </div>

@@ -6,6 +6,7 @@ import pricing from "./pricing.json";
 import business from "./business.json";
 import support from "./support.json";
 import sponsors from "./sponsors.json";
+import privacy from "./privacy.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
 
@@ -18,6 +19,7 @@ const translations = {
   ...business,
   ...support,
   ...sponsors,
+  ...privacy,
   ...docsCommon,
   ...docsMac,
 } satisfies Record<string, string>;

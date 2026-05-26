@@ -1,0 +1,59 @@
+---
+meta:
+  title: "Security-Review für Kanzlei-Diktat - TypeWhisper"
+  description: "Prüffragen für Kanzlei-IT, Datenschutz und Partner, die TypeWhisper als lokale Spracheingabe für juristische Rohtexte bewerten."
+color: "#991b1b"
+hero:
+  badge: "Für Kanzlei-IT & Datenschutz"
+  title: "Security-Review für Kanzlei-Diktat."
+  subtitle: "Eine öffentliche Prüfliste für Kanzleien, die vor dem Einsatz von Sprache-zu-Text klären wollen, wo Audio, Rohtexte, Wörterbuch, Snippets und optionale Cloud-Dienste ins Spiel kommen."
+checklist:
+  title: "Prüffragen für Kanzleien"
+  intro: "TypeWhisper ist ein Werkzeug für Spracheingabe und bearbeitbare Rohtexte. Die Prüfung sollte Datenfluss, lokale Speicherung, optionale Integrationen und manuelle Freigabegrenzen abdecken."
+  items:
+    - "Welche Audio- und Textdaten bleiben bei lokalen Engines auf dem Gerät?"
+    - "Wann würde eine optionale Cloud-Engine oder ein LLM-Provider kontaktiert?"
+    - "Wo liegen Verlauf, Wörterbuch, Snippets, Profile und API-Keys?"
+    - "Ist die lokale API aktiviert, wie ist sie gebunden und wie wird Zugriff begrenzt?"
+    - "Wie kann die Kanzlei Cloud-Funktionen für sensible Tests bewusst vermeiden?"
+    - "Welche fachliche Prüfung bleibt vor Versand, Frist oder Mandantenkommunikation erforderlich?"
+dataFlow:
+  title: "Datenfluss nach Baustein"
+  items:
+    - area: "Lokale Verarbeitung"
+      detail: "On-device-Engines können Sprache lokal verarbeiten. Die konkrete Engine-Auswahl sollte vor dem Einsatz bewusst geprüft werden."
+      icon: Cpu
+    - area: "Optionale Cloud"
+      detail: "Cloud-Provider und LLM-Add-ons sind keine Voraussetzung für Diktat. Wenn sie genutzt werden, sollten sie bewusst konfiguriert und intern freigegeben werden."
+      icon: Cloud
+    - area: "Lokale Speicherung"
+      detail: "Verlauf, Wörterbuch, Snippets und Profile gehören getrennt in die Prüfung, weil sie unterschiedliche Inhalte und Risiken betreffen können."
+      icon: Database
+    - area: "API & Automation"
+      detail: "Die lokale API ist ein optionaler Power-User-Baustein. Kanzlei-IT sollte prüfen, ob sie benötigt wird und wie Zugriff beschränkt wird."
+      icon: Plug
+    - area: "Fachliche Freigabe"
+      detail: "TypeWhisper erzeugt Rohtexte. Rechtslage, Fristen, Zitate, Tonalität und Versandfreigabe bleiben bei der Kanzlei."
+      icon: Scale
+boundaries:
+  title: "Bewusst abgegrenzt"
+  items:
+    - "Keine pauschale Zusage, dass Berufsrecht, Mandatsgeheimnis oder Datenschutz automatisch gelöst sind."
+    - "Keine Rechtsberatung, keine Fristenprüfung und keine automatische fachliche Dokumentation."
+    - "Keine echten Mandats- oder Kundendaten in Demos verwenden, bevor interne Freigabe und Datenfluss geklärt sind."
+related:
+  title: "Weiter prüfen"
+  links:
+    - key: business
+      label: "Business-Seite"
+      text: "Team-Lizenzen, Open-Source-Hinweise und allgemeine Trust-Positionierung."
+    - key: privacy
+      label: "Datenschutzerklärung"
+      text: "Grundlegende Datenschutz- und Speicherhinweise für TypeWhisper."
+    - key: legal
+      label: "Juristisches Diktat"
+      text: "Produktkontext für juristische Rohtexte, Fachbegriffe und Freigabegrenzen."
+cta:
+  title: "Fragen zum Security-Review?"
+  subtitle: "Schick uns eure Prüffragen — wir antworten mit dem, was wir öffentlich belegen können, und verweisen euch auf Quellcode und Dokumentation, wo es passt."
+---
