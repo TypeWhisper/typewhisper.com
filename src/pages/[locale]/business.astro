@@ -111,6 +111,16 @@ const trust = ["local", "gpl", "noTelemetry"];
             ))}
           </ul>
         </div>
+        <div class="mt-8 border-t border-border pt-6">
+          <p class="text-sm text-muted-foreground">
+            {t(locale, "business.trust.review.description")}
+          </p>
+          <Button variant="outline" size="pill" asChild className="mt-4">
+            <a href={localePath(locale, "/business/legal-security-review")}>
+              {t(locale, "business.trust.review.cta")}
+            </a>
+          </Button>
+        </div>
       </div>
     </div>
   </section>

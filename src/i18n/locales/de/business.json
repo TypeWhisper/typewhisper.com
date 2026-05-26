@@ -28,6 +28,8 @@
   "business.trust.gpl.description": "Jede Zeile Code, die ausgeliefert wird, ist auf GitHub einsehbar.",
   "business.trust.noTelemetry.title": "Keine verpflichtende Telemetrie",
   "business.trust.noTelemetry.description": "Keine Account-Hürde, kein erzwungener Cloud-Check-in, keine Analytics, die wir nicht offenlegen.",
+  "business.trust.review.description": "Für Kanzlei-IT, Datenschutz und Partner gibt es eine eigene Prüfliste zu Datenfluss, Speicherorten, optionalen Cloud-Bausteinen und Freigabegrenzen.",
+  "business.trust.review.cta": "Security-Review für Kanzleien öffnen",
   "business.pricing.title": "Preise für Teams.",
   "business.pricing.subtitle": "Team- und Enterprise-Pläne auf einen Blick - komplette Preise und Lifetime-Optionen auf der Preis-Seite.",
   "business.pricing.teamDevices": "Bis zu 10 Geräte. Kleine Teams.",
