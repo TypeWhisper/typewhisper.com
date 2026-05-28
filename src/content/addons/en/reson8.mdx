@@ -1,0 +1,62 @@
+---
+slug: reson8
+name: Reson8
+author: Y. Vos
+version: 1.0.0
+icon: AudioWaveform
+iconUrl: /brand-logos/reson8/logo.png
+description: Cloud transcription via the Reson8 speech-to-text API with real-time WebSocket streaming. Requires an API key.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+homepage: https://www.reson8.dev/
+apiDocsUrl: https://docs.reson8.dev/
+principalClass: Reson8Plugin
+featured: true
+---
+
+## About
+
+Reson8 adds cloud speech-to-text to TypeWhisper for macOS through the Reson8 API. The plugin can stream audio over WebSocket for live transcription and falls back to the pre-recorded REST endpoint when streaming is not available.
+
+The plugin requires a Reson8 API key. TypeWhisper validates the key in the settings UI and stores it securely in the macOS Keychain.
+
+Sources: [Reson8 documentation](https://docs.reson8.dev/), [macOS plugin commit](https://github.com/TypeWhisper/typewhisper-mac/commit/949c01a9848562c2df3e6a819cc32d87e4279194)
+
+## Features
+
+- Cloud transcription via Reson8 speech-to-text
+- Real-time WebSocket streaming with REST fallback
+- API key validation in the plugin settings
+- Secure API key storage in the macOS Keychain
+- Default Reson8 model plus custom models fetched from the API
+- Language hints from the selected TypeWhisper profile, with Reson8 auto-detect when no single language is provided
+- Advanced fields for custom base URLs and custom auth headers
+- No translation support
+
+## Transcription
+
+| Mode | Behavior |
+| --- | --- |
+| Live transcription | Streams PCM audio to Reson8 over WebSocket and emits interim text while audio is processed. |
+| REST fallback | Sends recorded audio to the pre-recorded Reson8 endpoint when streaming fails or is not used. |
+| Language hints | Forwards a single explicit language from TypeWhisper. Multiple hints or no language let Reson8 auto-detect. |
+
+## Configuration
+
+- **API Key** - Paste a Reson8 API key and wait for the plugin to show **Valid API Key**.
+- **Model** - Use the default Reson8 dictation model or refresh custom models available to the API key.
+- **Custom Base URL** - Override the default `https://api.reson8.dev` endpoint for gateways or proxies.
+- **Custom Auth Header** - Override the default `Authorization` header when a proxy expects a different header name.
+
+## Setup
+
+1. Create or open a Reson8 account.
+2. Generate an API key.
+3. Open TypeWhisper Settings > Plugins.
+4. Find Reson8 and click Configure.
+5. Paste the API key and wait for validation.
+6. Optionally refresh custom models or configure advanced gateway settings.
+7. Select Reson8 as your transcription engine in Settings or in a profile.
