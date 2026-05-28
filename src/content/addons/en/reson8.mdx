@@ -10,27 +10,31 @@ categories:
   - transcription
 platforms:
   - mac
+  - windows
 source: bundled
 homepage: https://www.reson8.dev/
 apiDocsUrl: https://docs.reson8.dev/
 principalClass: Reson8Plugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Reson8Plugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Reson8
 featured: true
 ---
 
 ## About
 
-Reson8 adds cloud speech-to-text to TypeWhisper for macOS through the Reson8 API. The plugin can stream audio over WebSocket for live transcription and falls back to the pre-recorded REST endpoint when streaming is not available.
+Reson8 adds cloud speech-to-text to TypeWhisper for macOS and Windows through the Reson8 API. The plugin can stream audio over WebSocket for live transcription and falls back to the pre-recorded REST endpoint when streaming is not available.
 
-The plugin requires a Reson8 API key. TypeWhisper validates the key in the settings UI and stores it securely in the macOS Keychain.
+The plugin requires a Reson8 API key. TypeWhisper validates the key in the settings UI and stores it through the app's secure plugin secret storage.
 
-Sources: [Reson8 documentation](https://docs.reson8.dev/), [macOS plugin commit](https://github.com/TypeWhisper/typewhisper-mac/commit/949c01a9848562c2df3e6a819cc32d87e4279194)
+Source: [Reson8 documentation](https://docs.reson8.dev/)
 
 ## Features
 
 - Cloud transcription via Reson8 speech-to-text
 - Real-time WebSocket streaming with REST fallback
 - API key validation in the plugin settings
-- Secure API key storage in the macOS Keychain
+- Secure API key storage through TypeWhisper plugin secrets
 - Default Reson8 model plus custom models fetched from the API
 - Language hints from the selected TypeWhisper profile, with Reson8 auto-detect when no single language is provided
 - Advanced fields for custom base URLs and custom auth headers
