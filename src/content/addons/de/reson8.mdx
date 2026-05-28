@@ -10,27 +10,31 @@ categories:
   - transcription
 platforms:
   - mac
+  - windows
 source: bundled
 homepage: https://www.reson8.dev/
 apiDocsUrl: https://docs.reson8.dev/
 principalClass: Reson8Plugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Reson8Plugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Reson8
 featured: true
 ---
 
 ## Über
 
-Reson8 ergänzt TypeWhisper für macOS um Cloud-Sprache-zu-Text über die Reson8-API. Das Plugin kann Audio per WebSocket für Live-Transkription streamen und fällt auf den pre-recorded REST-Endpunkt zurück, wenn Streaming nicht verfügbar ist.
+Reson8 ergänzt TypeWhisper für macOS und Windows um Cloud-Sprache-zu-Text über die Reson8-API. Das Plugin kann Audio per WebSocket für Live-Transkription streamen und fällt auf den pre-recorded REST-Endpunkt zurück, wenn Streaming nicht verfügbar ist.
 
-Das Plugin benötigt einen Reson8-API-Key. TypeWhisper validiert den Key in der Einstellungsoberfläche und speichert ihn sicher im macOS-Schlüsselbund.
+Das Plugin benötigt einen Reson8-API-Key. TypeWhisper validiert den Key in der Einstellungsoberfläche und speichert ihn über die sichere Plugin-Secret-Speicherung der App.
 
-Quellen: [Reson8-Dokumentation](https://docs.reson8.dev/), [macOS-Plugin-Commit](https://github.com/TypeWhisper/typewhisper-mac/commit/949c01a9848562c2df3e6a819cc32d87e4279194)
+Quelle: [Reson8-Dokumentation](https://docs.reson8.dev/)
 
 ## Features
 
 - Cloud-Transkription über Reson8 Speech-to-Text
 - Echtzeit-WebSocket-Streaming mit REST-Fallback
 - API-Key-Validierung in den Plugin-Einstellungen
-- Sichere API-Key-Speicherung im macOS-Schlüsselbund
+- Sichere API-Key-Speicherung über TypeWhisper Plugin-Secrets
 - Standardmodell von Reson8 plus eigene Modelle, die über die API geladen werden
 - Sprachhinweise aus dem ausgewählten TypeWhisper-Profil, mit Reson8-Auto-Erkennung wenn keine einzelne Sprache vorgegeben ist
 - Erweiterte Felder für eigene Basis-URLs und eigene Auth-Header
