@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="20" height="12" role="img" aria-label="Flag of Germany">
+  <defs>
+    <clipPath id="de-rounded">
+      <rect width="5" height="3" rx="0.4" ry="0.4" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#de-rounded)">
+    <rect width="5" height="1" y="0" fill="#000000" />
+    <rect width="5" height="1" y="1" fill="#dd0000" />
+    <rect width="5" height="1" y="2" fill="#ffce00" />
+  </g>
+</svg>

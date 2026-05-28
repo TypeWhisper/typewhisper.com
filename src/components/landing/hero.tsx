@@ -145,6 +145,21 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           <p className="mt-4 text-sm text-muted-foreground">
             {t(locale, `hero.platformNotice.${selectedPlatform}`)}
           </p>
+
+          <div className="mt-5 flex justify-center">
+            <span
+              className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
+              title={t(locale, "madeInGermany.craft")}
+            >
+              <img
+                src="/flags/de.svg"
+                alt=""
+                aria-hidden="true"
+                className="h-3 w-auto rounded-[2px]"
+              />
+              {t(locale, "madeInGermany.label")}
+            </span>
+          </div>
         </div>
 
         <div className="mt-10 sm:mt-16 reveal-scale-hidden">
