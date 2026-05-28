@@ -27,7 +27,7 @@ function getNavLinks(locale: Locale) {
 }
 
 export function Header({ currentPath = "/", locale = "en" as Locale }: { currentPath?: string; locale?: Locale }) {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = getNavLinks(locale);
   const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
@@ -37,15 +37,13 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const download = getPlatformDownloadTarget(platform, locale, "nav");
   const downloadOpensNewTab = download.platform === "ios";
   const showDownloadCta = true;
-  const isDark = theme === "dark";
-  const headerChrome = isDark
-    ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.06]"
-    : "bg-[#fbfbfd]/80 backdrop-blur-xl border-b border-black/[0.06]";
-  const foregroundClass = isDark ? "text-white" : "text-black";
-  const mutedForegroundClass = isDark ? "text-white/60 hover:text-white" : "text-black/60 hover:text-black";
-  const iconButtonClass = isDark
-    ? "text-white/70 hover:text-white hover:bg-white/10"
-    : "text-black/70 hover:text-black hover:bg-black/5";
+  const headerChrome =
+    "bg-[#fbfbfd]/80 backdrop-blur-xl border-b border-black/[0.06] dark:bg-black/80 dark:border-white/[0.06]";
+  const foregroundClass = "text-black dark:text-white";
+  const mutedForegroundClass =
+    "text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white";
+  const iconButtonClass =
+    "text-black/70 hover:text-black hover:bg-black/5 dark:text-white/70 dark:hover:text-white dark:hover:bg-white/10";
 
   return (
     <header
@@ -118,11 +116,8 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             aria-label={t(locale, "nav.toggleTheme")}
             data-testid="theme-toggle"
           >
-            {theme === "dark" ? (
-              <Sun className="size-4" />
-            ) : (
-              <Moon className="size-4" />
-            )}
+            <Sun className="hidden size-4 dark:block" />
+            <Moon className="size-4 dark:hidden" />
           </Button>
 
           <Button variant="ghost" size="icon-sm" asChild>
@@ -226,11 +221,8 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   }}
                   data-testid="theme-toggle-mobile"
                 >
-                  {theme === "dark" ? (
-                    <Sun className="size-4" />
-                  ) : (
-                    <Moon className="size-4" />
-                  )}
+                  <Sun className="hidden size-4 dark:block" />
+                  <Moon className="size-4 dark:hidden" />
                   {t(locale, "nav.toggleTheme")}
                 </Button>
                 <a
