@@ -35,6 +35,25 @@ async function waitForHeaderHydration(page: Page) {
   });
 }
 
+async function expectHeaderBackground(page: Page, theme: "dark" | "light") {
+  const backgroundColor = await page
+    .getByTestId("site-header")
+    .evaluate((element) => getComputedStyle(element).backgroundColor);
+
+  if (theme === "dark") {
+    expect([
+      "rgba(0, 0, 0, 0.8)",
+      "oklab(0 0 0 / 0.8)",
+    ]).toContain(backgroundColor);
+    return;
+  }
+
+  expect(
+    backgroundColor === "rgba(251, 251, 253, 0.8)" ||
+      /^oklab\(0\.98.* \/ 0\.8\)$/.test(backgroundColor),
+  ).toBe(true);
+}
+
 async function expectDarkLanding(
   page: Page,
   locale: "en" | "de",
@@ -49,7 +68,7 @@ async function expectDarkLanding(
 
   const heroHeading = page.locator("h1").first();
   await expect(heroHeading).toHaveCSS("color", "rgb(245, 245, 247)");
-  await expect(page.getByTestId("site-header")).toHaveClass(/bg-black\/80/);
+  await expectHeaderBackground(page, "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(0, 0, 0)");
 
   await expect(page).toHaveURL(new RegExp(`/${locale}/?$`));
@@ -60,7 +79,7 @@ async function switchThemeOnLanding(page: Page) {
   await page.getByTestId("theme-toggle").click();
   await expect(page.locator("html")).toHaveClass(/light/);
   await expect(page.locator("h1").first()).toHaveCSS("color", "rgb(29, 29, 31)");
-  await expect(page.getByTestId("site-header")).not.toHaveClass(/bg-black\/80/);
+  await expectHeaderBackground(page, "light");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(251, 251, 253)");
 }
 
@@ -123,6 +142,31 @@ test.describe("stored dark theme behavior", () => {
     await waitForHeaderHydration(page);
 
     await expectDarkLanding(page, "en");
+  });
+});
+
+test.describe("stored light theme behavior", () => {
+  test.use({ locale: "en-US" });
+
+  test("add-on pages hydrate without React mismatches when light theme is stored", async ({
+    page,
+  }) => {
+    const consoleErrors: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "error") {
+        consoleErrors.push(message.text());
+      }
+    });
+
+    await prepareDarkModeSession(page, "light");
+    await page.goto("/en/addons/reson8/");
+    await waitForHeaderHydration(page);
+
+    expect(
+      consoleErrors.filter((message) => message.includes("React error #418")),
+    ).toEqual([]);
+    await expect(page.locator("html")).toHaveClass(/light/);
+    await expectHeaderBackground(page, "light");
   });
 });
 
