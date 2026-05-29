@@ -36,7 +36,7 @@ Source: [Reson8 documentation](https://docs.reson8.dev/)
 - API key validation in the plugin settings
 - Secure API key storage through TypeWhisper plugin secrets
 - Default Reson8 model plus custom models fetched from the API
-- Language hints from the selected TypeWhisper profile, with Reson8 auto-detect when no single language is provided
+- A single language from the TypeWhisper language selection; when multiple languages are selected, TypeWhisper uses the first supported language, and Reson8 auto-detects when no language is selected
 - Advanced fields for custom base URLs and custom auth headers
 - No translation support
 
@@ -46,7 +46,7 @@ Source: [Reson8 documentation](https://docs.reson8.dev/)
 | --- | --- |
 | Live transcription | Streams PCM audio to Reson8 over WebSocket and emits interim text while audio is processed. |
 | REST fallback | Sends recorded audio to the pre-recorded Reson8 endpoint when streaming fails or is not used. |
-| Language hints | Forwards a single explicit language from TypeWhisper. Multiple hints or no language let Reson8 auto-detect. |
+| Language | Sends one language to Reson8. When multiple TypeWhisper languages are selected, the first supported language is used; with no language selected, Reson8 auto-detects. |
 
 ## Configuration
 
