@@ -99,6 +99,11 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.fileTranscription.desc")}
             </p>
+            <Screenshot
+              src={screenshotPath(locale, "/screenshots/mac/watch-folder.png")}
+              alt={t(locale, "docs.mac.fileTranscription.imgAlt")}
+              className="mt-4 rounded-xl"
+            />
           </div>
 
           {/* 7. Whisper Mode */}

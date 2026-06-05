@@ -5,6 +5,7 @@
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
   "docs.sidebar.features": "Features",
+  "docs.sidebar.fileTranscription": "File Transcription",
   "docs.sidebar.prompts": "Prompts",
   "docs.sidebar.workflows": "Workflows",
   "docs.sidebar.httpApi": "HTTP API",

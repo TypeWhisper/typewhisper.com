@@ -30,6 +30,7 @@ const macSidebarLinks = [
   { href: localePath(locale, "/docs/mac"), label: t(locale, "docs.sidebar.overview") },
   { href: localePath(locale, "/docs/mac/installation"), label: t(locale, "docs.sidebar.installation") },
   { href: localePath(locale, "/docs/mac/features"), label: t(locale, "docs.sidebar.features") },
+  { href: localePath(locale, "/docs/mac/file-transcription"), label: t(locale, "docs.sidebar.fileTranscription") },
   { href: localePath(locale, "/docs/mac/workflows"), label: t(locale, "docs.sidebar.workflows") },
   { href: localePath(locale, "/docs/mac/api"), label: t(locale, "docs.sidebar.httpApi") },
   { href: localePath(locale, "/docs/mac/cli"), label: t(locale, "docs.sidebar.cliTool") },
@@ -48,7 +49,8 @@ const sidebarLinks = platform === "mac" ? macSidebarLinks
   : platform === "windows" ? windowsSidebarLinks
   : null;
 
-const currentPath = Astro.url.pathname;
+const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
+const currentPath = normalizePath(Astro.url.pathname);
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={canonicalPath} locale={locale}>
@@ -70,7 +72,7 @@ const currentPath = Astro.url.pathname;
                   href={link.href}
                   class:list={[
                     "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                    currentPath === link.href
+                    currentPath === normalizePath(link.href)
                       ? "border-primary text-foreground"
                       : "border-transparent text-muted-foreground",
                   ]}
