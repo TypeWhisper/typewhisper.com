@@ -38,12 +38,12 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
   const downloadOpensNewTab = download.platform === "ios";
   const showDownloadCta = true;
   const headerChrome =
-    "bg-[#fbfbfd]/80 backdrop-blur-xl border-b border-black/[0.06] dark:bg-black/80 dark:border-white/[0.06]";
-  const foregroundClass = "text-black dark:text-white";
+    "bg-background/80 backdrop-blur-xl border-b border-border";
+  const foregroundClass = "text-foreground";
   const mutedForegroundClass =
-    "text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white";
+    "text-muted-foreground hover:text-foreground";
   const iconButtonClass =
-    "text-black/70 hover:text-black hover:bg-black/5 dark:text-white/70 dark:hover:text-white dark:hover:bg-white/10";
+    "text-muted-foreground hover:text-foreground hover:bg-accent";
 
   return (
     <header

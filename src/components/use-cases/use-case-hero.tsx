@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
+import { Waveform } from "@/components/ui/waveform";
 import {
   MacOSLogo,
   WindowsLogo,
@@ -60,21 +61,11 @@ export function UseCaseHero({
       className="section-light relative overflow-hidden py-16 sm:py-20"
       style={
         {
-          backgroundImage: `linear-gradient(180deg, ${color}14 0%, ${color}06 35%, transparent 75%)`,
-        } satisfies CSSProperties
+          backgroundImage: `radial-gradient(60% 50% at 50% 0%, ${color}1F 0%, transparent 70%), linear-gradient(180deg, ${color}14 0%, ${color}06 35%, transparent 75%)`,
+          "--waveform-color": `${color}8C`,
+        } as CSSProperties
       }
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute -left-32 -top-16 h-[420px] w-[420px] rounded-full blur-[100px]"
-          style={{ backgroundColor: `${color}26` }}
-        />
-        <div
-          className="absolute -right-24 top-32 h-[340px] w-[340px] rounded-full blur-[100px]"
-          style={{ backgroundColor: `${color}1A` }}
-        />
-      </div>
-
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <Button variant="ghost" size="sm" asChild className="mb-8">
           <a href={backHref}>
@@ -84,6 +75,10 @@ export function UseCaseHero({
         </Button>
 
         <div className="mx-auto max-w-3xl text-center">
+          <Waveform
+            bars={32}
+            className="reveal-fade-hidden mx-auto mb-6 h-4 max-w-[160px]"
+          />
           <div className="reveal-fade-hidden mb-5 inline-flex items-center gap-2">
             {Icon && (
               <span

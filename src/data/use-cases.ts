@@ -38,6 +38,32 @@ export const categoryKeys: Record<UseCaseCategory, string> = {
   workflow: "useCases.category.workflow",
 };
 
+/**
+ * Named accent palette for use cases. MDX frontmatter references these names
+ * (e.g. `color: green`); the hex values live only here. Components receive the
+ * resolved hex because they derive alpha variants from it (e.g. `${color}33`).
+ */
+export const useCaseAccents = {
+  blue: "#0071e3",
+  green: "#10b981",
+  violet: "#7c3aed",
+  amber: "#f59e0b",
+  bronze: "#b45309",
+  teal: "#0f766e",
+  red: "#991b1b",
+  wine: "#7f1d1d",
+} as const;
+
+export type UseCaseAccentName = keyof typeof useCaseAccents;
+
+function resolveAccent(color: string): string {
+  return useCaseAccents[color as UseCaseAccentName] ?? color;
+}
+
+function withResolvedColor(useCase: UseCase): UseCase {
+  return { ...useCase, color: resolveAccent(useCase.color) };
+}
+
 const mdxModulesEn = import.meta.glob<UseCaseModule>(
   "../content/use-cases/en/*.mdx",
   { eager: true },
@@ -52,7 +78,10 @@ function getModules(locale: Locale) {
 }
 
 export function getUseCaseModules(locale: Locale = "en"): UseCaseModule[] {
-  return Object.values(getModules(locale));
+  return Object.values(getModules(locale)).map((mod) => ({
+    default: mod.default,
+    frontmatter: withResolvedColor(mod.frontmatter),
+  }));
 }
 
 export function getUseCases(locale: Locale = "en"): UseCase[] {
@@ -64,7 +93,12 @@ export function getUseCaseModule(slug: string, locale: Locale = "en"): UseCaseMo
 }
 
 /** @deprecated Use getUseCaseModules(locale) instead */
-export const useCaseModules: UseCaseModule[] = Object.values(mdxModulesEn);
+export const useCaseModules: UseCaseModule[] = Object.values(mdxModulesEn).map(
+  (mod) => ({
+    default: mod.default,
+    frontmatter: withResolvedColor(mod.frontmatter),
+  }),
+);
 
 /** @deprecated Use getUseCases(locale) instead */
 export const useCases: UseCase[] = useCaseModules.map(
