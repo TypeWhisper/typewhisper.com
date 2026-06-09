@@ -55,6 +55,12 @@ test.describe("new landing sections", () => {
   });
 
   test("German landing page localizes the new sections", async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "language", { get: () => "de-DE" });
+      Object.defineProperty(navigator, "languages", {
+        get: () => ["de-DE", "de"],
+      });
+    });
     await page.goto("/de/");
 
     await expect(page.getByTestId("addons-showcase")).toContainText(

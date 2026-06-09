@@ -36,9 +36,10 @@ export function Waveform({
 }: WaveformProps) {
   const heights = useMemo(() => {
     const random = mulberry32(seed);
+    const denominator = Math.max(1, bars - 1);
     return Array.from({ length: bars }, (_, i) => {
       // Speech-like envelope: louder mid-phrase, quieter at the edges.
-      const envelope = Math.sin((i / (bars - 1)) * Math.PI);
+      const envelope = Math.sin((i / denominator) * Math.PI);
       return 0.15 + envelope * (0.25 + random() * 0.6);
     });
   }, [bars, seed]);

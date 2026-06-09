@@ -64,11 +64,11 @@ export function WallOfLove({ locale = "en" }: WallOfLoveProps) {
                 rel="noopener noreferrer"
                 className={`${cardClass} ${revealClass} hover:border-primary/40 hover:shadow-md`}
               >
-                <div>{body}</div>
+                {body}
               </a>
             ) : (
               <div key={item.id} className={`${cardClass} ${revealClass}`}>
-                <div>{body}</div>
+                {body}
               </div>
             );
           })}
