@@ -13,6 +13,7 @@ const requiredChunks = [
   "business.json",
   "support.json",
   "sponsors.json",
+  "open-source-accessibility.json",
   "docs/common.json",
   "docs/mac.json",
 ];
