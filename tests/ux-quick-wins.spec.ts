@@ -327,6 +327,11 @@ test.describe("pricing & business pages", () => {
         name: /where a sponsor would appear/i,
       }),
     ).toBeVisible();
+    await expect(
+      page.getByRole("link", {
+        name: /open source & accessibility initiative/i,
+      }),
+    ).toHaveAttribute("href", "/en/open-source-accessibility");
   });
 
   test("/de/sponsors loads the German sponsorship page", async ({ page }) => {
@@ -337,6 +342,74 @@ test.describe("pricing & business pages", () => {
         name: /typewhisper unabhängig/i,
       }),
     ).toBeVisible();
+    await expect(
+      page.getByRole("link", {
+        name: /open source & accessibility initiative/i,
+      }),
+    ).toHaveAttribute("href", "/de/open-source-accessibility");
+  });
+
+  test("/en/open-source-accessibility loads the initiative page", async ({
+    page,
+  }) => {
+    await page.goto("/en/open-source-accessibility");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: /local speech input for more accessible digital work/i,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: /who it should help/i,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /^discuss pilot project$/i }),
+    ).toHaveAttribute("href", /^mailto:/i);
+    await expect(
+      page.getByRole("link", { name: /^download one-pager$/i }).first(),
+    ).toHaveAttribute(
+      "href",
+      "/downloads/typewhisper-open-source-accessibility-one-pager-en.pdf",
+    );
+    await expect(
+      page.locator('main img[src="/screenshots/en/mac/file-transcription.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.locator('main img[src="/screenshots/en/mac/workflows.png"]'),
+    ).toBeVisible();
+  });
+
+  test("/de/open-source-accessibility loads the German initiative page", async ({
+    page,
+  }) => {
+    await page.goto("/de/open-source-accessibility");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: /lokale spracheingabe für barriereärmere digitale arbeit/i,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: /wem es helfen soll/i,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.locator('main img[src="/screenshots/de/mac/watch-folder.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.locator('main img[src="/screenshots/de/mac/rules.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /^one-pager herunterladen$/i }).first(),
+    ).toHaveAttribute(
+      "href",
+      "/downloads/typewhisper-open-source-accessibility-one-pager-de.pdf",
+    );
   });
 
   test("footer exposes pricing, business, and sponsors links on non-landing pages", async ({
@@ -355,6 +428,12 @@ test.describe("pricing & business pages", () => {
     await expect(
       page.locator('footer a[href*="github.com/sponsors/"]'),
     ).toHaveCount(0);
+    await expect(page.locator("footer")).toContainText(
+      "With local engines, voice data stays on your device.",
+    );
+    await expect(page.locator("footer")).not.toContainText(
+      "never leaves your device",
+    );
   });
 
   test("header sponsor icon links to the local sponsors page", async ({

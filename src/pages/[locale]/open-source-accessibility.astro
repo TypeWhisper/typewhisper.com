@@ -1,0 +1,301 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t, localePath, screenshotPath, webpPath, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { salesEmail } from "@/lib/pricing";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const contactHref = `mailto:${salesEmail}?subject=${encodeURIComponent("TypeWhisper Open Source & Accessibility Initiative")}`;
+const onePagerHref =
+  locale === "de"
+    ? "/downloads/typewhisper-open-source-accessibility-one-pager-de.pdf"
+    : "/downloads/typewhisper-open-source-accessibility-one-pager-en.pdf";
+
+const screenshots = [
+  {
+    src:
+      locale === "de"
+        ? screenshotPath(locale, "/screenshots/mac/watch-folder.png")
+        : screenshotPath(locale, "/screenshots/mac/file-transcription.png"),
+    alt: t(locale, "openSourceAccessibility.screenshot.fileTranscription.alt"),
+    label: t(locale, "openSourceAccessibility.screenshot.fileTranscription.label"),
+  },
+  {
+    src:
+      locale === "de"
+        ? screenshotPath(locale, "/screenshots/mac/rules.png")
+        : screenshotPath(locale, "/screenshots/mac/workflows.png"),
+    alt: t(locale, "openSourceAccessibility.screenshot.workflows.alt"),
+    label: t(locale, "openSourceAccessibility.screenshot.workflows.label"),
+  },
+];
+
+const principles = ["local", "assistive", "open", "honest"];
+const buildingBlocks = ["speech", "workflows", "integrations", "guides"];
+const impactMetrics = ["typing", "workflows", "docs", "local", "barriers"];
+const audiences = ["users", "organizations", "builders"];
+const partnerTypes = ["accessibility", "foundations", "research", "opensource", "employers"];
+const statusGroups = ["available", "planned", "wanted"];
+---
+
+<BaseLayout
+  title={t(locale, "openSourceAccessibility.meta.title")}
+  description={t(locale, "openSourceAccessibility.meta.description")}
+  canonicalPath={canonicalPath(locale, "/open-source-accessibility")}
+  locale={locale}
+>
+  <section class="section-light py-16 sm:py-24">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+          {t(locale, "openSourceAccessibility.hero.eyebrow")}
+        </span>
+        <h1 class="mt-6 max-w-3xl font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          {t(locale, "openSourceAccessibility.hero.title")}
+        </h1>
+        <p class="mt-3 text-sm font-semibold text-primary">
+          {t(locale, "openSourceAccessibility.hero.initiative")}
+        </p>
+        <p class="mt-5 max-w-2xl text-lg text-muted-foreground">
+          {t(locale, "openSourceAccessibility.hero.subtitle")}
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={contactHref}
+            class="inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            {t(locale, "openSourceAccessibility.hero.cta")}
+          </a>
+          <a
+            href={onePagerHref}
+            download
+            class="inline-flex h-12 items-center justify-center rounded-full border bg-background px-8 text-base font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            {t(locale, "openSourceAccessibility.hero.secondary")}
+          </a>
+        </div>
+        <p class="mt-4 text-sm text-muted-foreground">
+          <a href={localePath(locale, "/sponsors")} class="font-medium text-primary underline-offset-4 hover:underline">
+            {t(locale, "openSourceAccessibility.hero.sponsorLink")}
+          </a>
+        </p>
+      </div>
+
+      <div class="grid gap-4">
+        {screenshots.map((screenshot, index) => (
+          <figure class={index === 0 ? "overflow-hidden rounded-2xl border bg-card shadow-sm" : "ml-8 overflow-hidden rounded-2xl border bg-card shadow-sm sm:ml-16"}>
+            <picture>
+              <source srcset={webpPath(screenshot.src)} type="image/webp" />
+              <img
+                src={screenshot.src}
+                alt={screenshot.alt}
+                class="aspect-[16/10] w-full object-cover object-top"
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </picture>
+            <figcaption class="border-t px-4 py-3 text-xs font-medium text-muted-foreground">
+              {screenshot.label}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6 lg:grid-cols-2">
+      <section class="rounded-2xl border bg-card p-7">
+        <h2 class="font-display text-3xl font-bold tracking-tight">
+          {t(locale, "openSourceAccessibility.problem.title")}
+        </h2>
+        <p class="mt-3 text-sm leading-6 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.problem.description")}
+        </p>
+      </section>
+
+      <section class="rounded-2xl border bg-card p-7">
+        <h2 class="font-display text-3xl font-bold tracking-tight">
+          {t(locale, "openSourceAccessibility.approach.title")}
+        </h2>
+        <p class="mt-3 text-sm leading-6 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.approach.description")}
+        </p>
+      </section>
+    </div>
+  </section>
+
+  <section class="section-light-gray py-12 sm:py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "openSourceAccessibility.principles.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.principles.subtitle")}
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {principles.map((key) => (
+          <section class="rounded-2xl border bg-card p-5">
+            <h3 class="text-base font-semibold">{t(locale, `openSourceAccessibility.principle.${key}.title`)}</h3>
+            <p class="mt-2 text-sm text-muted-foreground">{t(locale, `openSourceAccessibility.principle.${key}.description`)}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      <div>
+        <span class="text-xs font-semibold uppercase text-muted-foreground">
+          {t(locale, "openSourceAccessibility.blocks.eyebrow")}
+        </span>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "openSourceAccessibility.blocks.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.blocks.subtitle")}
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {buildingBlocks.map((key) => (
+          <section class="rounded-2xl border bg-card p-5">
+            <h3 class="text-base font-semibold">{t(locale, `openSourceAccessibility.block.${key}.title`)}</h3>
+            <p class="mt-2 text-sm text-muted-foreground">{t(locale, `openSourceAccessibility.block.${key}.description`)}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light-gray py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      <div>
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "openSourceAccessibility.impact.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.impact.subtitle")}
+        </p>
+      </div>
+
+      <div class="grid gap-3 text-sm sm:grid-cols-2">
+        {impactMetrics.map((key) => (
+          <div class="flex gap-3 rounded-2xl border bg-card p-4">
+            <span class="mt-1.5 size-2 shrink-0 rounded-full bg-primary"></span>
+            <span>{t(locale, `openSourceAccessibility.impact.${key}`)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark py-12 sm:py-16">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-2">
+      <section>
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "openSourceAccessibility.audience.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.audience.subtitle")}
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {audiences.map((key) => (
+            <li class="flex gap-3">
+              <span class="mt-1.5 size-2 shrink-0 rounded-full bg-primary"></span>
+              <span>{t(locale, `openSourceAccessibility.audience.${key}`)}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+          {t(locale, "openSourceAccessibility.partners.title")}
+        </h2>
+        <p class="mt-3 text-muted-foreground">
+          {t(locale, "openSourceAccessibility.partners.subtitle")}
+        </p>
+        <div class="mt-6 grid gap-3 text-sm sm:grid-cols-2">
+          {partnerTypes.map((key) => (
+            <div class="rounded-2xl border border-border bg-card p-4">
+              {t(locale, `openSourceAccessibility.partner.${key}`)}
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="rounded-2xl border bg-card p-7 sm:p-10">
+        <h2 class="font-display text-3xl font-bold tracking-tight">
+          {t(locale, "openSourceAccessibility.status.title")}
+        </h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          {statusGroups.map((key) => (
+            <section class="rounded-2xl border bg-background p-5">
+              <h3 class="text-base font-semibold">
+                {t(locale, `openSourceAccessibility.status.${key}.title`)}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-muted-foreground">
+                {t(locale, `openSourceAccessibility.status.${key}.description`)}
+              </p>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl px-4 text-center text-xs leading-5 text-muted-foreground sm:px-6">
+      <p>
+        {t(locale, "openSourceAccessibility.legalNote")}
+      </p>
+    </div>
+  </section>
+
+  <section class="section-light-gray py-16 sm:py-24">
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
+        {t(locale, "openSourceAccessibility.cta.title")}
+      </h2>
+      <p class="mt-3 text-muted-foreground">
+        {t(locale, "openSourceAccessibility.cta.subtitle")}
+      </p>
+      <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href={contactHref}
+          class="inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          {t(locale, "openSourceAccessibility.cta.email")}
+        </a>
+        <a
+          href={onePagerHref}
+          download
+          class="inline-flex h-12 items-center justify-center rounded-full border bg-background px-8 text-base font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          {t(locale, "openSourceAccessibility.cta.onePager")}
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-muted-foreground">
+        <a href={localePath(locale, "/sponsors")} class="font-medium text-primary underline-offset-4 hover:underline">
+          {t(locale, "openSourceAccessibility.cta.sponsors")}
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
