@@ -3,6 +3,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Display font: General Sans (variable), self-hosted. Body stays on the system stack. */
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -36,12 +45,25 @@
   --color-sidebar-border: var(--sidebar-border);
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "General Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
 }
 
-/* Dark Theme (default) */
-:root {
+/*
+ * Theme tokens.
+ *
+ * One definition per theme: the global dark default shares its tokens with
+ * `.section-dark`, the global light theme shares its tokens with
+ * `.section-light`. Surface variants (`.section-light-gray`,
+ * `.section-dark-card`) only override the deltas. Section classes paint
+ * their own background via the shared surface rule below, independent of
+ * the global theme.
+ */
+
+/* Dark theme (default) */
+:root,
+.section-dark,
+.section-dark-card {
   --radius: 0.75rem;
   --background: #000000;
   --foreground: #f5f5f7;
@@ -69,10 +91,17 @@
   --sidebar-accent-foreground: #f5f5f7;
   --sidebar-border: rgba(255, 255, 255, 0.08);
   --chart-hover-overlay: rgba(255, 255, 255, 0.07);
+  /* Hero / branded surfaces: blue-centric, subtle */
+  --hero-gradient-from: #001428;
+  --hero-gradient-via: #000a17;
+  --hero-glow: rgba(0, 113, 227, 0.22);
+  --waveform-color: rgba(0, 113, 227, 0.55);
 }
 
-/* Light Theme */
-:root.light {
+/* Light theme */
+:root.light,
+.section-light,
+.section-light-gray {
   --background: #fbfbfd;
   --foreground: #1d1d1f;
   --card: #ffffff;
@@ -99,78 +128,41 @@
   --sidebar-accent-foreground: #1d1d1f;
   --sidebar-border: rgba(0, 0, 0, 0.08);
   --chart-hover-overlay: rgba(0, 0, 0, 0.05);
+  --hero-gradient-from: #e6f0fb;
+  --hero-gradient-via: #f2f7fd;
+  --hero-glow: rgba(0, 113, 227, 0.12);
+  --waveform-color: rgba(0, 113, 227, 0.45);
 }
 
-/* Section-level theme overrides for light/dark alternation */
-.section-light {
-  --background: #fbfbfd;
-  --foreground: #1d1d1f;
-  --card: #ffffff;
-  --card-foreground: #1d1d1f;
-  --primary: #0071e3;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f7;
-  --secondary-foreground: #1d1d1f;
-  --muted: #f5f5f7;
-  --muted-foreground: #6e6e73;
-  --accent: #f5f5f7;
-  --accent-foreground: #1d1d1f;
-  --border: rgba(0, 0, 0, 0.08);
-  --chart-hover-overlay: rgba(0, 0, 0, 0.05);
-  background-color: #fbfbfd;
-  color: #1d1d1f;
-}
-
+/* Surface deltas on top of the shared theme definitions */
 .section-light-gray {
   --background: #f5f5f7;
-  --foreground: #1d1d1f;
   --card: #ffffff;
-  --card-foreground: #1d1d1f;
-  --primary: #0071e3;
-  --primary-foreground: #ffffff;
   --secondary: #e8e8ed;
   --secondary-foreground: #1d1d1f;
   --muted: #e8e8ed;
-  --muted-foreground: #6e6e73;
   --accent: #e8e8ed;
-  --accent-foreground: #1d1d1f;
-  --border: rgba(0, 0, 0, 0.08);
-  --chart-hover-overlay: rgba(0, 0, 0, 0.05);
-  background-color: #f5f5f7;
-  color: #1d1d1f;
-}
-
-.section-dark {
-  --background: #000000;
-  --foreground: #f5f5f7;
-  --card: #1d1d1f;
-  --card-foreground: #f5f5f7;
-  --primary: #2997ff;
-  --primary-foreground: #ffffff;
-  --secondary: #1d1d1f;
-  --secondary-foreground: #f5f5f7;
-  --muted: #1d1d1f;
-  --muted-foreground: #86868b;
-  --accent: #1d1d1f;
-  --accent-foreground: #f5f5f7;
-  --border: rgba(255, 255, 255, 0.08);
-  --chart-hover-overlay: rgba(255, 255, 255, 0.07);
-  background-color: #000000;
-  color: #f5f5f7;
 }
 
 .section-dark-card {
   --background: #1d1d1f;
-  --foreground: #f5f5f7;
   --card: #2d2d2f;
-  --card-foreground: #f5f5f7;
-  --primary: #2997ff;
-  --primary-foreground: #ffffff;
-  --muted-foreground: #86868b;
-  --border: rgba(255, 255, 255, 0.08);
-  --chart-hover-overlay: rgba(255, 255, 255, 0.07);
-  background-color: #1d1d1f;
-  color: #f5f5f7;
+}
+
+/* Section classes paint their own surface, independent of the global theme */
+.section-light,
+.section-light-gray,
+.section-dark,
+.section-dark-card {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Branded hero surface (replaces hardcoded indigo/violet gradients) */
+.hero-surface {
+  background:
+    radial-gradient(60% 50% at 50% 0%, var(--hero-glow) 0%, transparent 70%),
+    linear-gradient(180deg, var(--hero-gradient-from) 0%, var(--hero-gradient-via) 45%, var(--background) 85%);
 }
 
 /* Shiki syntax highlighting: dark is default, swap to light vars in light mode */
@@ -188,10 +180,22 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
   }
+  h1,
+  h2 {
+    font-family: var(--font-display);
+  }
   button,
   [role="button"] {
     cursor: pointer;
   }
+}
+
+/* Motion tokens */
+:root {
+  --motion-micro: 100ms;
+  --motion-short: 200ms;
+  --motion-medium: 350ms;
+  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 /* Scroll Reveal Animations */
@@ -203,7 +207,7 @@
 .reveal-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 0.8s var(--motion-ease), transform 0.8s var(--motion-ease);
 }
 
 .reveal-fade-hidden {
@@ -212,7 +216,7 @@
 
 .reveal-fade-visible {
   opacity: 1;
-  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 0.8s var(--motion-ease);
 }
 
 .reveal-scale-hidden {
@@ -223,7 +227,7 @@
 .reveal-scale-visible {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 0.8s var(--motion-ease), transform 0.8s var(--motion-ease);
 }
 
 .stagger-delay-100 { transition-delay: 100ms; }
@@ -232,6 +236,31 @@
 .stagger-delay-400 { transition-delay: 400ms; }
 .stagger-delay-500 { transition-delay: 500ms; }
 .stagger-delay-600 { transition-delay: 600ms; }
+
+/* Simple fade-in utility (used by the hero dictation demo) */
+@keyframes fade-in-soft {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in-soft {
+  animation: fade-in-soft var(--motion-medium) var(--motion-ease);
+}
+
+/* Waveform brand motif */
+@keyframes waveform-pulse {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+.waveform-bar {
+  transform-origin: center;
+}
+
+.waveform-animated .waveform-bar {
+  animation: waveform-pulse 1.6s ease-in-out infinite;
+  animation-delay: var(--bar-delay, 0ms);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-hidden,
@@ -244,5 +273,11 @@
   .reveal-fade-visible,
   .reveal-scale-visible {
     transition: none;
+  }
+  .waveform-animated .waveform-bar {
+    animation: none;
+  }
+  .fade-in-soft {
+    animation: none;
   }
 }

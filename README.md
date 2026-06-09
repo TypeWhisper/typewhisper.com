@@ -11,6 +11,10 @@ Landing page and documentation site for [TypeWhisper](https://www.typewhisper.co
 - TailwindCSS 4
 - Radix UI + shadcn/ui components
 
+## Design
+
+All visual decisions (tokens, typography, color, motion, brand motif) are documented in [DESIGN.md](DESIGN.md). Read it before making UI changes.
+
 ## Languages
 
 The site is fully localized in English and German. All routes are prefixed with the locale (`/en/`, `/de/`). The root `/` redirects based on the browser's language preference.

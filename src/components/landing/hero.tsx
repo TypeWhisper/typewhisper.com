@@ -8,6 +8,7 @@ import {
   WindowsLogo,
   IOSLogo,
 } from "@/components/ui/platform-logos";
+import { HeroDemo } from "@/components/landing/hero-demo";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { usePlatform } from "@/hooks/use-platform";
 import { cn } from "@/lib/utils";
@@ -88,15 +89,8 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
     <section
       data-testid="landing-hero"
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#eef2ff_0%,#f5f0ff_30%,#fbfbfd_70%)] py-16 dark:bg-[linear-gradient(180deg,#0b1220_0%,#111827_35%,#000000_75%)] sm:py-32 lg:py-40"
+      className="hero-surface relative overflow-hidden py-16 sm:py-32 lg:py-40"
     >
-      {/* Soft colored orbs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-0 h-[500px] w-[500px] rounded-full bg-[#818cf8]/15 blur-[100px] dark:bg-[#2563eb]/20" />
-        <div className="absolute -right-32 top-24 h-[400px] w-[400px] rounded-full bg-[#0ea5e9]/10 blur-[100px] dark:bg-[#06b6d4]/15" />
-        <div className="absolute bottom-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-[#c084fc]/10 blur-[100px] dark:bg-[#7c3aed]/15" />
-      </div>
-
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <HeroPlatformSwitcher
@@ -162,7 +156,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-16 reveal-scale-hidden">
+        <div className="mt-10 sm:mt-14">
+          <HeroDemo locale={locale} />
+        </div>
+
+        <div className="mt-10 sm:mt-14 reveal-scale-hidden">
           <Screenshot
             src={screenshotPath(locale, "/screenshots/mac/home.png")}
             alt={t(locale, "hero.imgAlt")}
