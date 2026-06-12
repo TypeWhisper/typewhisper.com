@@ -1,0 +1,130 @@
+---
+slug: sber-salutespeech
+name: Sber SaluteSpeech
+author: TypeWhisper
+version: 0.1.0
+icon: Cloud
+description: Cloud transcription via the Sber SaluteSpeech REST API. Requires a user-supplied SaluteSpeech Authorization Key.
+categories:
+  - transcription
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://developers.sber.ru/docs/ru/salutespeech/rest/salutespeech-rest-api
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SaluteSpeechPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SaluteSpeechPlugin
+principalClass: SaluteSpeechPlugin
+id: com.typewhisper.sber-salutespeech
+---
+
+## About
+
+Sber SaluteSpeech adds a macOS cloud transcription provider backed by Sber's SaluteSpeech REST API. It is intended for users who already have, or can create, a SaluteSpeech project in Sber Developer Studio and provide their own SaluteSpeech Authorization Key.
+
+TypeWhisper does not include a shared Sber credential. Audio is sent to SaluteSpeech for recognition, and TypeWhisper stores the Authorization Key through its plugin secret storage.
+
+The initial public plugin manifest is `0.1.0`, requires TypeWhisper host version `1.4.0` or newer, and declares SDK compatibility `v1`. Public releases should use the tag format `plugin-sber-salutespeech-v<version>`. With the current manifest, that means `plugin-sber-salutespeech-v0.1.0`. The plugin release workflow maps `sber-salutespeech` to `SaluteSpeechPlugin`, builds and signs the bundle, publishes the release asset, and writes the entry to the `plugins-v1.json` registry path.
+
+Sources: [Sber SaluteSpeech REST API](https://developers.sber.ru/docs/ru/salutespeech/rest/salutespeech-rest-api), [Sber access-token documentation](https://developers.sber.ru/docs/ru/salutespeech/api/authentication), [macOS plugin PR](https://github.com/TypeWhisper/typewhisper-mac/pull/706), [TypeWhisper plugin registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-v1.json)
+
+## Requirements & Privacy
+
+| Requirement | Details | Why it matters |
+| --- | --- | --- |
+| **Platform** | macOS `14.0` or newer. | The initial TypeWhisper integration is a macOS plugin. |
+| **TypeWhisper host** | `1.4.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
+| **SDK compatibility** | `v1`. | The release workflow publishes compatible metadata to `plugins-v1.json`. |
+| **Credential** | A SaluteSpeech Authorization Key from Sber Developer Studio. | The plugin exchanges this key for short-lived OAuth access tokens before each recognition request. |
+| **Network use** | Audio is uploaded to `smartspeech.sber.ru`; OAuth tokens are requested from Sber's OAuth endpoint. | This is a cloud provider, not local transcription. |
+| **Credential ownership** | User supplied only. | TypeWhisper does not proxy requests through a TypeWhisper-owned Sber account. |
+
+Sources: [Sber personal-account setup](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-individuals), [Sber corporate-account setup](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-entities), [Sber API authentication](https://developers.sber.ru/docs/ru/salutespeech/api/authentication)
+
+## Get a SaluteSpeech Authorization Key
+
+For a personal account:
+
+1. Register or sign in to Sber Developer Studio with Sber ID.
+2. Create a SaluteSpeech API project under voice technologies.
+3. Choose a package or use the available Freemium allocation if it is available for your account.
+4. Open the project, go to API settings, and generate the Authorization Key.
+5. Copy the key immediately. Sber shows it once; generate a new key if it is lost or compromised.
+6. In TypeWhisper, open Settings > Plugins > Sber SaluteSpeech and paste the Authorization Key.
+
+For a corporate account, create or use a corporate Studio space, complete the contract or billing setup Sber requires for your organization, then generate the Authorization Key from the SaluteSpeech API project's settings.
+
+Sources: [Sber personal-account setup](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-individuals), [Sber corporate-account setup](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-entities), [Sber Authorization Key instructions](https://developers.sber.ru/docs/ru/salutespeech/api/authentication)
+
+## OAuth Scopes
+
+The plugin supports the scopes exposed in its settings:
+
+| Scope | Use it for |
+| --- | --- |
+| `SALUTE_SPEECH_PERS` | Personal SaluteSpeech projects in a personal Studio space. This is the default. |
+| `SALUTE_SPEECH_CORP` | Corporate SaluteSpeech projects on postpaid corporate terms. |
+
+Sber documents additional scope values for other account types, including prepaid corporate and legacy values. This plugin currently exposes only the two scopes above. If support for a newer SDK, scope, or account model is added before public release, update the plugin manifest and this page in the same release.
+
+Sources: [Sber API authentication](https://developers.sber.ru/docs/ru/salutespeech/api/authentication), [Sber personal-account scope notes](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-individuals), [Sber corporate-account scope notes](https://developers.sber.ru/docs/ru/salutespeech/quick-start/integration-entities)
+
+## Supported Recognition Languages
+
+The plugin exposes Russian and English recognition in TypeWhisper.
+
+| TypeWhisper selection | SaluteSpeech language sent |
+| --- | --- |
+| Auto-detect or no language | `ru-RU` |
+| `ru`, `ru-RU`, or another `ru-*` locale | `ru-RU` |
+| `en`, `en-US`, or another `en-*` locale | `en-US` |
+
+Russian is the default because SaluteSpeech is Russian-first and because the plugin should behave predictably when TypeWhisper has no spoken-language selection. Translation is not supported.
+
+## Short and Long Audio Behavior
+
+The plugin always sends 16 kHz mono `PCM_S16LE` audio.
+
+| Recording | TypeWhisper behavior | SaluteSpeech flow |
+| --- | --- | --- |
+| Up to 2 MB of PCM data and up to 60 seconds | Sends one synchronous recognition request. | `POST /rest/v1/speech:recognize` with `model=general` and the selected `language`. |
+| Larger than 2 MB or longer than 60 seconds | Uses the asynchronous workflow. | Upload audio, create a recognition task, poll task status, then download the JSON result file. |
+
+Sber documents synchronous HTTP recognition for short audio with a 2 MB and one-minute limit. Their async HTTP flow is designed for longer recorded audio and uses upload, task creation, status polling, and result download.
+
+Sources: [Sber synchronous recognition](https://developers.sber.ru/docs/ru/salutespeech/rest/sync-general), [Sber async REST flow](https://developers.sber.ru/docs/ru/salutespeech/rest/async-general), [Sber audio formats and limits](https://developers.sber.ru/docs/ru/salutespeech/guides/recognition/encodings)
+
+## Configuration
+
+- **Authorization Key** - Paste the SaluteSpeech Authorization Key from Sber Developer Studio. TypeWhisper normalizes keys pasted with or without the `Basic` prefix.
+- **Scope** - Choose `SALUTE_SPEECH_PERS` for personal projects or `SALUTE_SPEECH_CORP` for supported corporate projects.
+- **Model** - The initial plugin uses SaluteSpeech `general`.
+- **Usage estimate** - The plugin tracks successful recognition duration locally to help compare against your SaluteSpeech allocation. It is an estimate; check Sber Studio for billing truth.
+- **Balance correction** - Optionally enter the remaining recognition minutes from Sber Studio so TypeWhisper can estimate local remaining time.
+
+## Practical Testing Notes
+
+- Validate the Authorization Key in plugin settings before selecting the engine for production dictation.
+- Test both a short clip under one minute and a longer clip over one minute. They exercise different SaluteSpeech REST paths.
+- Test Russian and English explicitly from a TypeWhisper profile or workflow. Auto/no-language currently defaults to Russian.
+- The plugin is cloud-only and sends audio to SaluteSpeech; use a local engine when audio must stay on device.
+- Certificate or trust-store issues can make validation fail in some environments. Install the certificates required by Sber for your macOS environment if Sber's endpoint is not trusted.
+- Rate limits, account package limits, and parallel request limits are controlled by Sber. Check Sber Studio for current usage and billing status.
+
+## Release Path
+
+The SaluteSpeech plugin should be published from the macOS repository with the existing plugin release workflow.
+
+| Release field | Current value |
+| --- | --- |
+| Plugin ID | `com.typewhisper.sber-salutespeech` |
+| Release slug | `sber-salutespeech` |
+| Principal class | `SaluteSpeechPlugin` |
+| Tag format | `plugin-sber-salutespeech-v<version>` |
+| Current manifest version | `0.1.0` |
+| Current expected tag | `plugin-sber-salutespeech-v0.1.0` |
+| Minimum host version | `1.4.0` |
+| SDK compatibility | `v1` |
+| Registry path | `plugins-v1.json` |
+
+If the plugin needs a newer SDK before shipping, update `sdkCompatibilityVersion`, `minHostVersion`, this docs page, and the release tag plan together.
