@@ -1,0 +1,142 @@
+---
+slug: cartesia
+name: Cartesia
+author: TypeWhisper
+version: 1.0.0
+icon: AudioWaveform
+description: Cloud-Spracherkennung und Text-to-Speech über Cartesia-APIs. Benötigt einen nutzerbereitgestellten Cartesia-API-Key.
+categories:
+  - transcription
+  - tts
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.cartesia.ai/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CartesiaPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CartesiaPlugin
+principalClass: CartesiaPlugin
+id: com.typewhisper.cartesia
+---
+
+## Überblick
+
+Cartesia ergänzt TypeWhisper unter macOS um einen Cloud-Anbieter für Spracherkennung und Text-to-Speech. Das erste TypeWhisper-Plugin nutzt Cartesias Batch-Speech-to-Text-API mit `ink-whisper` und die Text-to-Speech-Bytes-API mit `sonic-3.5`.
+
+TypeWhisper bringt keine gemeinsamen Cartesia-Zugangsdaten mit. Du hinterlegst deinen eigenen Cartesia-API-Key, TypeWhisper speichert ihn über den Plugin-Secret-Speicher, und Audio oder Text wird direkt an Cartesia gesendet, wenn du diesen Anbieter auswählst.
+
+Das erste öffentliche Plugin-Manifest ist `1.0.0`, benötigt TypeWhisper-Hostversion `1.4.0` oder neuer und deklariert SDK-Kompatibilität `v1`. Öffentliche Releases sollten das Tag-Format `plugin-cartesia-v<version>` verwenden. Mit dem aktuellen Manifest bedeutet das `plugin-cartesia-v1.0.0`. Der Plugin-Release-Workflow ordnet `cartesia` `CartesiaPlugin` zu, baut und signiert das Bundle, veröffentlicht das Release-Asset und schreibt den Eintrag in den Registry-Pfad `plugins-v1.json`.
+
+Quellen: [Cartesia API-Konventionen](https://docs.cartesia.ai/use-the-api/api-conventions), [Cartesia Batch Speech-to-Text](https://docs.cartesia.ai/api-reference/stt/transcribe), [Cartesia Text-to-Speech Bytes](https://docs.cartesia.ai/api-reference/tts/bytes), [macOS Plugin-PR](https://github.com/TypeWhisper/typewhisper-mac/pull/713), [TypeWhisper Plugin-Registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-v1.json)
+
+## Anforderungen & Datenschutz
+
+| Anforderung | Details | Warum das wichtig ist |
+| --- | --- | --- |
+| **Plattform** | macOS `14.0` oder neuer. | Die erste TypeWhisper-Integration ist ein macOS-Plugin. |
+| **TypeWhisper-Host** | `1.4.0` oder neuer. | Das ist `minHostVersion` im Plugin-Manifest. |
+| **SDK-Kompatibilität** | `v1`. | Der Release-Workflow veröffentlicht kompatible Metadaten in `plugins-v1.json`. |
+| **Zugangsdaten** | Ein Cartesia-API-Key aus deinem Cartesia-Konto. | Das Plugin sendet ihn als `Authorization: Bearer <api_key>` bei Cartesia-API-Anfragen. |
+| **OAuth-Scopes** | Keine. | Dieses Plugin nutzt keine Cartesia-OAuth-Scopes, sondern einen nutzerbereitgestellten API-Key. |
+| **Netzwerkzugriff** | Audio wird für STT an `api.cartesia.ai` hochgeladen; Text wird für TTS an `api.cartesia.ai` gesendet. | Das ist ein Cloud-Anbieter, keine lokale Transkription oder lokale Sprachsynthese. |
+| **Eigentum der Zugangsdaten** | Ausschließlich nutzerbereitgestellt. | TypeWhisper leitet Anfragen nicht über ein TypeWhisper-eigenes Cartesia-Konto weiter. |
+
+Quellen: [Cartesia API-Konventionen](https://docs.cartesia.ai/use-the-api/api-conventions), [Cartesia API-Keys](https://play.cartesia.ai/keys)
+
+## Cartesia-API-Key erhalten
+
+1. Erstelle ein Cartesia-Konto oder melde dich an.
+2. Öffne die Cartesia-API-Key-Seite unter `play.cartesia.ai/keys`.
+3. Erstelle einen Standard-API-Key für TypeWhisper.
+4. Kopiere den Key und behandle ihn vertraulich. Rotiere ihn in Cartesia, wenn er verloren geht oder offengelegt wurde.
+5. Öffne in TypeWhisper Einstellungen > Plugins > Cartesia und füge den API-Key ein.
+6. Warte, bis das Plugin den Key validiert hat, bevor du Cartesia für Diktat oder Text-to-Speech auswählst.
+
+Cartesia bietet zusätzlich Admin-API-Keys für Verwaltungs-Endpunkte. TypeWhisper benötigt für Transkription oder Text-to-Speech keinen Admin-API-Key.
+
+Quellen: [Cartesia API-Konventionen](https://docs.cartesia.ai/use-the-api/api-conventions), [Cartesia API-Keys](https://play.cartesia.ai/keys), [Cartesia Admin-API-Key-Hinweise](https://docs.cartesia.ai/api-reference/api-keys/get)
+
+## Speech-to-Text
+
+Das Plugin sendet WAV-Audio an Cartesias Batch-Endpunkt `/stt` mit `model=ink-whisper`, fordert Wort-Zeitstempel an und fügt bei normaler Transkription das Feld `language` hinzu.
+
+Cartesia dokumentiert `language` als Sprache des Eingabeaudios im ISO-639-1-Format. TypeWhisper normalisiert Profil- und Workflow-Sprachauswahlen auf Cartesias primären Sprachcode, sodass aus `ru-RU` `ru` und aus `en-US` `en` wird.
+
+| TypeWhisper-Verhalten | Cartesia-Anfrage |
+| --- | --- |
+| Gesprochene Sprache auf Russisch gesetzt | Sendet `language=ru`. |
+| Gesprochene Sprache auf Englisch gesetzt | Sendet `language=en`. |
+| Auto oder keine TypeWhisper-Sprache | Nutzt die Einstellung **Gesprochene Sprache** des Plugins. Die erste Vorgabe ist Russisch, um unbeabsichtigtes englisches Übersetzungsverhalten zu vermeiden. |
+| **Enable Translate to English** aktiviert | Lässt `language` weg, damit Cartesias STT-Dienst englische Ausgabe erzeugen kann. |
+
+Der Übersetzungs-Schalter ist absichtlich opt-in. Wenn du Russisch sprichst und russischen Text erwartest, lasse **Enable Translate to English** aus und wähle Russisch als gesprochene Sprache.
+
+Quellen: [Cartesia Batch Speech-to-Text](https://docs.cartesia.ai/api-reference/stt/transcribe), [macOS Plugin-PR](https://github.com/TypeWhisper/typewhisper-mac/pull/713)
+
+## Unterstützte Erkennungssprachen
+
+Das Plugin zeigt in TypeWhisper Cartesias `ink-whisper`-Sprachliste an, einschließlich Russisch (`ru`) und Englisch (`en`). Cartesia dokumentiert den STT-Sprachparameter als ISO-639-1-Codes und listet viele weitere Sprachen wie Deutsch, Spanisch, Französisch, Japanisch, Portugiesisch, Ukrainisch und Chinesisch.
+
+Nutze eine explizite gesprochene Sprache, wenn du die Audiosprache kennst. Das vermeidet Provider-Defaults und macht mehrsprachige Profile vorhersehbarer.
+
+Quellen: [Cartesia Batch Speech-to-Text](https://docs.cartesia.ai/api-reference/stt/transcribe)
+
+## Verhalten bei kurzer und langer Aufnahme
+
+Cartesias Batch-STT-Endpunkt akzeptiert Audiodateien direkt und dokumentiert, dass lange Dateien nicht manuell aufgeteilt werden müssen; der Dienst teilt lange Audiodateien serverseitig auf. Das aktuelle TypeWhisper-Plugin nutzt deshalb dieselbe Batch-REST-Anfrage für kurze und längere Aufnahmen.
+
+| Aufnahme | TypeWhisper-Verhalten | Cartesia-Ablauf |
+| --- | --- | --- |
+| Kurze Clips | Sendet eine Multipart-Anfrage an `/stt`. | WAV-Audio, `model=ink-whisper`, ausgewählte `language`, Wort-Zeitstempel. |
+| Längere Clips | Sendet dieselbe Multipart-Anfrage an `/stt`. | Cartesia übernimmt das Chunking serverseitig. |
+
+Im Cartesia-Plugin gibt es keinen separaten Async-Upload, kein Task-Polling und keinen Ergebnis-Download.
+
+Quellen: [Cartesia Batch Speech-to-Text](https://docs.cartesia.ai/api-reference/stt/transcribe)
+
+## Text-to-Speech
+
+Das Plugin nutzt Cartesias Endpunkt `/tts/bytes` mit `sonic-3.5` und fordert rohes `pcm_s16le`-Audio mit 44,1 kHz für die Wiedergabe an.
+
+| Einstellung | Bedeutung |
+| --- | --- |
+| **Text-to-Speech Voice** | Wählt eine Stimme aus Cartesias Stimmenliste, nachdem das Plugin verfügbare Stimmen aktualisiert hat. |
+| **Custom Voice ID** | Ermöglicht das manuelle Einfügen einer Voice-ID, falls die Stimme noch nicht in der geladenen Liste steht. |
+| **Language** | TypeWhisper übergibt eine TTS-Sprache, wenn die Anfrage oder die ausgewählte Stimme eine von Cartesia unterstützte Sprache liefert. |
+
+Quellen: [Cartesia Text-to-Speech Bytes](https://docs.cartesia.ai/api-reference/tts/bytes), [Cartesia Sonic 3.5](https://docs.cartesia.ai/build-with-cartesia/tts-models/latest)
+
+## Konfiguration
+
+- **API Key** - Füge einen Standard-Cartesia-API-Key ein. TypeWhisper speichert ihn über den Plugin-Secret-Speicher.
+- **Spoken Language** - Wähle die Quellsprache des Audios für STT. Diese Auswahl ist deaktiviert, wenn Übersetzungsmodus aktiv ist.
+- **Enable Translate to English** - Aktiviert englische Ausgabe für gesprochenes Audio; lasse dies für normale gleichsprachige Transkription aus.
+- **Text-to-Speech Voice** - Wähle eine geladene Cartesia-Stimme oder nutze eine Custom Voice ID.
+- **Refresh** - Lädt die aktuelle Cartesia-Stimmenliste, die für dein Konto verfügbar ist.
+
+## Praktische Testhinweise
+
+- Validiere den API-Key in den Plugin-Einstellungen, bevor du Cartesia für produktives Diktat auswählst.
+- Teste Russisch und Englisch explizit; Englisch als gesprochene Sprache für russisches Audio kann englische Ausgabe erzeugen.
+- Teste den Übersetzungs-Schalter separat von normaler Transkription. Übersetzung ist nicht das Standardverhalten.
+- Teste sowohl einen kurzen Clip als auch eine längere Aufnahme. Beide nutzen denselben Cartesia-Batch-STT-Endpunkt, anders als Anbieter mit getrennten APIs für kurze und lange Audiodaten.
+- Das Plugin ist ausschließlich cloudbasiert und sendet Audio oder Text an Cartesia; nutze eine lokale Engine, wenn Inhalte auf dem Gerät bleiben müssen.
+- Cartesia-Limits, Abrechnung und verfügbare Stimmen werden durch dein Cartesia-Konto bestimmt. Prüfe das Cartesia-Dashboard für den aktuellen Kontostatus.
+
+## Release Path
+
+Das Cartesia-Plugin sollte aus dem macOS-Repository mit dem vorhandenen Plugin-Release-Workflow veröffentlicht werden.
+
+| Release-Feld | Aktueller Wert |
+| --- | --- |
+| Plugin-ID | `com.typewhisper.cartesia` |
+| Release-Slug | `cartesia` |
+| Principal Class | `CartesiaPlugin` |
+| Tag-Format | `plugin-cartesia-v<version>` |
+| Aktuelle Manifest-Version | `1.0.0` |
+| Aktuell erwartetes Tag | `plugin-cartesia-v1.0.0` |
+| Mindest-Host-Version | `1.4.0` |
+| SDK-Kompatibilität | `v1` |
+| Registry-Pfad | `plugins-v1.json` |
+
+Falls das Plugin vor der Veröffentlichung ein neueres SDK benötigt, aktualisiere `sdkCompatibilityVersion`, `minHostVersion`, diese Dokumentationsseite und den Release-Tag-Plan gemeinsam.
