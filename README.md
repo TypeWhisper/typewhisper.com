@@ -19,7 +19,7 @@ All visual decisions (tokens, typography, color, motion, brand motif) are docume
 
 The site is fully localized in English and German. All routes are prefixed with the locale (`/en/`, `/de/`). The root `/` redirects based on the browser's language preference.
 
-Translations live in `src/i18n/locales/en.json` and `src/i18n/locales/de.json`. Locale-specific screenshots are stored in `public/screenshots/de/` and `public/screenshots/en/`.
+Translations live in `src/i18n/locales/en/` and `src/i18n/locales/de/`. Locale-specific screenshots are stored in `public/screenshots/de/` and `public/screenshots/en/`.
 
 ## Development
 
