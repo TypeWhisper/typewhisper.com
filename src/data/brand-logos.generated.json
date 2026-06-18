@@ -68,6 +68,14 @@
       "brandUrl": null,
       "sourceUrl": "https://gemini.google.com/"
     },
+    "mistral": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/mistral/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://mistral.ai/"
+    },
     "obsidian": {
       "hasLogo": true,
       "hasWordmark": false,
