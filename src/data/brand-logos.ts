@@ -8,6 +8,7 @@ export type BrandLogoId =
   | "linear"
   | "claude-ai"
   | "gemini"
+  | "mistral"
   | "obsidian"
   | "cohere"
   | "xai"
@@ -85,6 +86,14 @@ export const brandLogos = [
     contexts: ["addon"],
     fallback: "lucide",
     homepage: "https://gemini.google.com/",
+  },
+  {
+    id: "mistral",
+    svglSearch: "mistral ai",
+    expectedTitle: "Mistral AI",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://mistral.ai/",
   },
   {
     id: "obsidian",

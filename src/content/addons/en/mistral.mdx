@@ -1,0 +1,62 @@
+---
+slug: mistral
+name: Mistral AI
+author: MinerAle
+version: 1.0.1
+icon: Sparkles
+brandLogo: mistral
+description: Cloud API integration for Mistral LLMs and Voxtral speech-to-text.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.mistral.ai/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MistralAIPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MistralAIPlugin
+principalClass: MistralAIPlugin
+featured: true
+---
+
+## About
+
+Mistral AI adds a cloud provider for both custom prompt processing and speech-to-text. Use Mistral models for LLM workflows and Voxtral for cloud transcription from the same API key.
+
+## Features
+
+- Mistral LLM provider for custom prompts and post-processing
+- Voxtral Mini Latest cloud transcription
+- Separate model selection for transcription and LLM tasks
+- Built-in API key validation in settings
+- Secure API key storage in the macOS Keychain
+
+## Transcription Models
+
+| Model | ID |
+| --- | --- |
+| Voxtral Mini Latest | `voxtral-mini-latest` |
+
+## LLM Models
+
+| Model | ID |
+| --- | --- |
+| Mistral Large | `mistral-large-latest` |
+| Mistral Small | `mistral-small-latest` |
+| Pixtral 12B | `pixtral-12b-2409` |
+| Ministral 8B | `ministral-8b-latest` |
+| Ministral 3B | `ministral-3b-latest` |
+
+## Configuration
+
+- **API Key** - Create an API key in your Mistral account and paste it into the plugin settings.
+- **Transcription Model** - Select the Voxtral transcription model.
+- **LLM Model** - Select the Mistral model used by custom prompts.
+
+## Setup
+
+1. Open TypeWhisper Settings > Plugins
+2. Find the Mistral AI plugin and click Configure
+3. Enter your Mistral API key and save it
+4. Select Mistral AI as your transcription engine or LLM provider

@@ -1,0 +1,62 @@
+---
+slug: mistral
+name: Mistral AI
+author: MinerAle
+version: 1.0.1
+icon: Sparkles
+brandLogo: mistral
+description: Cloud-API-Integration für Mistral-LLMs und Voxtral-Spracherkennung.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: bundled
+apiDocsUrl: https://docs.mistral.ai/
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MistralAIPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MistralAIPlugin
+principalClass: MistralAIPlugin
+featured: true
+---
+
+## Über
+
+Mistral AI ergänzt TypeWhisper um einen Cloud-Anbieter für benutzerdefinierte Prompts und Sprache-zu-Text. Nutze Mistral-Modelle für LLM-Workflows und Voxtral für Cloud-Transkription mit demselben API-Schlüssel.
+
+## Features
+
+- Mistral-LLM-Anbieter für benutzerdefinierte Prompts und Nachbearbeitung
+- Cloud-Transkription mit Voxtral Mini Latest
+- Separate Modellauswahl für Transkription und LLM-Aufgaben
+- Eingebaute API-Key-Validierung in den Einstellungen
+- Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
+
+## Transkriptionsmodelle
+
+| Modell | ID |
+| --- | --- |
+| Voxtral Mini Latest | `voxtral-mini-latest` |
+
+## LLM-Modelle
+
+| Modell | ID |
+| --- | --- |
+| Mistral Large | `mistral-large-latest` |
+| Mistral Small | `mistral-small-latest` |
+| Pixtral 12B | `pixtral-12b-2409` |
+| Ministral 8B | `ministral-8b-latest` |
+| Ministral 3B | `ministral-3b-latest` |
+
+## Konfiguration
+
+- **API-Schlüssel** - Erstelle einen API-Schlüssel in deinem Mistral-Konto und füge ihn in die Plugin-Einstellungen ein.
+- **Transkriptionsmodell** - Wähle das Voxtral-Transkriptionsmodell.
+- **LLM-Modell** - Wähle das Mistral-Modell für benutzerdefinierte Prompts.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Plugins
+2. Finde das Mistral-AI-Plugin und klicke auf Konfigurieren
+3. Gib deinen Mistral-API-Schlüssel ein und speichere ihn
+4. Wähle Mistral AI als Transkriptions-Engine oder LLM-Anbieter
