@@ -2,53 +2,68 @@
 slug: soniox
 name: Soniox
 author: TypeWhisper
-version: 1.0.0
+version: 1.2.0
 icon: AudioWaveform
-description: Cloud-Transkription in Echtzeit mit Soniox per WebSocket-Streaming, REST-Fallback und Einweg-Übersetzung ins Englische.
+description: Soniox Cloud-Sprache mit regionalen STT-Endpunkten, Dateitranskription, Echtzeit-WebSocket-Transkription, Text-to-Speech und automatischem Modell-Refresh.
 categories:
   - transcription
+  - tts
 platforms:
   - mac
   - windows
 source: bundled
 apiDocsUrl: https://soniox.com/docs
-sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/pull/174
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SonioxPlugin
 sourceUrls:
-  mac: https://github.com/TypeWhisper/typewhisper-mac/pull/174
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SonioxPlugin
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Soniox
 principalClass: SonioxPlugin
 ---
 
 ## Über
 
-Soniox ergänzt TypeWhisper um eine Cloud-Transkriptions-Engine auf Basis der Soniox-API. Das in PR #174 eingeführte Plugin nutzt Echtzeit-WebSocket-Streaming als primären Pfad und fällt automatisch auf REST-Batch-Transkription zurück, wenn Streaming nicht verfügbar ist. Soniox ist das erste TypeWhisper-Transkriptions-Plugin mit eingebauter Einweg-Übersetzung ins Englische.
+Soniox ergänzt TypeWhisper um Cloud Speech-to-Text und Text-to-Speech auf Basis der Soniox-API. Das macOS-Plugin nutzt Echtzeit-WebSocket-Transkription für Live-Diktat, die Async-REST-Transkription für Dateien und den Realtime-TTS-Endpunkt für Sprachausgabe.
+
+Das Plugin unterstützt Soniox Data-Residency-Regionen. Wähle **Vereinigte Staaten**, **Europäische Union** oder **Japan** in den Plugin-Einstellungen; TypeWhisper validiert den API-Schlüssel, Echtzeit-Transkription, Dateitranskription, Modell-Refresh und TTS gegen den passenden regionalen Soniox-Endpunkt.
 
 ## Features
 
 - Echtzeit-Transkription per WebSocket-Streaming
-- Automatischer REST-Batch-Fallback für mehr Zuverlässigkeit
+- REST-Dateitranskription über Soniox STT Async Modelle
 - Einweg-Übersetzung ins Englische während der Live-Transkription
 - 70+ unterstützte Sprachen, darunter Arabisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Russisch, Spanisch und viele mehr
-- Automatische Endpunkt-Erkennung für natürliche Sprachsegmentierung
-- Eingebaute API-Key-Validierung in den Einstellungen
+- Regionale Endpunkte für Vereinigte Staaten, Europäische Union und Japan
+- Eingebaute API-Key-Validierung in den Einstellungen vor dem Speichern
+- Text-to-Speech-Wiedergabe mit auswählbaren Soniox-Stimmen
+- Automatischer Refresh für STT- und TTS-Modellkataloge
 - Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
 
 ## Transkriptionsmodelle
 
-| Modell | ID |
+| Modus | Standard |
 | --- | --- |
-| STT RT v4 | `stt-rt-v4` |
-| STT RT Preview | `stt-rt-preview` |
+| Echtzeit-Diktat | Automatisch neuestes Realtime-STT-Modell, mit `stt-rt-v5` als Fallback |
+| Dateitranskription | Automatisch neuestes Async-STT-Modell, mit `stt-async-v5` als Fallback |
+
+Nutze **Aktualisieren** in den Plugin-Einstellungen nach einem gültigen API-Schlüssel, um den aktuellen Soniox-Modellkatalog für die gewählte Region zu laden.
+
+## Text-to-Speech
+
+Soniox TTS ist im selben Plugin und mit demselben API-Schlüssel verfügbar. TypeWhisper nutzt standardmäßig automatisch das neueste TTS-Modell und erlaubt die Auswahl einer Soniox-Stimme wie Maya, Grace, Adrian, Kenji oder der Stimmen, die Soniox für die gewählte Region zurückliefert.
 
 ## Konfiguration
 
 - **API-Schlüssel** - Erstelle einen API-Schlüssel in deinem Soniox-Konto und füge ihn in die Plugin-Einstellungen ein.
-- **Modell** - Wähle ein Transkriptionsmodell. `STT RT v4` ist die empfohlene Standardeinstellung.
+- **Region** - Wähle die Soniox-Projektregion. API-Key-Validierung und alle STT/TTS-Anfragen verwenden diese Region sofort.
+- **Echtzeitmodell** - Behalte **Automatisch (neueste)**, um neue Soniox-Realtime-STT-Modelle automatisch zu verwenden, oder pinne ein geladenes Modell.
+- **Text-to-Speech-Modell** - Behalte **Automatisch (neueste)** für Soniox-TTS-Modellupdates, oder pinne ein geladenes TTS-Modell.
+- **Text-to-Speech-Stimme** - Wähle die Stimme, die TypeWhisper für TTS-Funktionen nutzt.
 
 ## Einrichtung
 
 1. Öffne TypeWhisper Einstellungen > Plugins
 2. Finde das Soniox-Plugin und klicke auf Konfigurieren
-3. Gib deinen Soniox-API-Schlüssel ein und speichere ihn
-4. Wähle dein bevorzugtes Modell (STT RT v4 empfohlen)
-5. Wähle Soniox als Transkriptions-Engine in den Einstellungen oder in einem Profil
+3. Wähle die Soniox-Region, die zu deinem Soniox-Projekt passt
+4. Gib deinen Soniox-API-Schlüssel ein und speichere ihn nach erfolgreicher Validierung
+5. Behalte **Automatisch (neueste)** für die Modellauswahl, oder klicke **Aktualisieren**, um ein bestimmtes Modell zu laden und zu pinnen
+6. Wähle Soniox als Transkriptions-Engine oder TTS-Anbieter in den Einstellungen oder in einem Profil
