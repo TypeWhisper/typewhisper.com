@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Hero } from "@/components/landing/hero";
 import { TrustStrip } from "@/components/landing/trust-strip";
 import { Features } from "@/components/landing/features";
+import { PremiumFeatures } from "@/components/landing/premium-features";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { AddonsShowcase } from "@/components/landing/addons-showcase";
 import { EngineComparison } from "@/components/landing/engine-comparison";
@@ -47,6 +48,7 @@ const structuredData = {
   <TrustStrip locale={locale} />
   <HowItWorks locale={locale} />
   <Features locale={locale} />
+  <PremiumFeatures locale={locale} />
   <AddonsShowcase locale={locale} />
   <AppleDictationComparison locale={locale} client:load />
   <EngineComparison locale={locale} client:load />
