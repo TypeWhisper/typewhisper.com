@@ -26,6 +26,7 @@ export function DecisionHelper({ locale }: { locale: Locale }) {
       recommend: t(locale, "pricing.decision.individual.recommend"),
       title: t(locale, "pricing.decision.individual.title"),
       examples: [
+        t(locale, "pricing.decision.individual.included"),
         t(locale, "pricing.decision.individual.example1"),
         t(locale, "pricing.decision.individual.example2"),
         t(locale, "pricing.decision.individual.example3"),
@@ -39,6 +40,7 @@ export function DecisionHelper({ locale }: { locale: Locale }) {
       recommend: t(locale, "pricing.decision.team.recommend"),
       title: t(locale, "pricing.decision.team.title"),
       examples: [
+        t(locale, "pricing.decision.team.included"),
         t(locale, "pricing.decision.team.example1"),
         t(locale, "pricing.decision.team.example2"),
       ],
@@ -51,6 +53,7 @@ export function DecisionHelper({ locale }: { locale: Locale }) {
       recommend: t(locale, "pricing.decision.enterprise.recommend"),
       title: t(locale, "pricing.decision.enterprise.title"),
       examples: [
+        t(locale, "pricing.decision.enterprise.included"),
         t(locale, "pricing.decision.enterprise.example1"),
         t(locale, "pricing.decision.enterprise.example2"),
       ],

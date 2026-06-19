@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { t, type Locale } from "@/i18n/index";
@@ -105,6 +106,7 @@ function TierCard({
       : t(locale, "pricing.tiers.oneTime");
   const tierLabel = t(locale, `pricing.tiers.${tier.id}.name`);
   const tagline = t(locale, `pricing.tiers.${tier.id}.tagline`);
+  const included = t(locale, `pricing.tiers.${tier.id}.included`);
 
   return (
     <Card className="flex flex-col bg-card transition-colors hover:border-primary/40">
@@ -116,6 +118,12 @@ function TierCard({
         </p>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col justify-between gap-4">
+        <ul className="space-y-1.5 text-xs text-muted-foreground">
+          <li className="flex gap-2">
+            <Check className="mt-0.5 size-3.5 shrink-0 text-primary" />
+            <span>{included}</span>
+          </li>
+        </ul>
         <p className="text-2xl font-bold">
           <span className="text-sm font-normal text-muted-foreground">
             {t(locale, "pricing.tiers.from")}{" "}

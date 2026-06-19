@@ -48,6 +48,9 @@ test.describe("new landing sections", () => {
     expect(await addonCards.count()).toBeGreaterThanOrEqual(4);
 
     await expect(page.getByTestId("wall-of-love")).toBeVisible();
+    await expect(page.getByTestId("premium-features")).toContainText(
+      "iCloud sync",
+    );
     await expect(page.getByTestId("pricing-teaser")).toBeVisible();
     await expect(
       page.getByTestId("pricing-teaser").locator('a[href="/en/pricing"]').first(),
@@ -66,8 +69,11 @@ test.describe("new landing sections", () => {
     await expect(page.getByTestId("addons-showcase")).toContainText(
       "Ein offenes Ökosystem",
     );
+    await expect(page.getByTestId("premium-features")).toContainText(
+      "iCloud-Sync",
+    );
     await expect(page.getByTestId("pricing-teaser")).toContainText(
-      "Kostenlos für alle",
+      "Kostenloser Core",
     );
   });
 });
