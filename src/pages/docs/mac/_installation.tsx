@@ -8,7 +8,7 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
 
   function copyCommand() {
     navigator.clipboard.writeText(
-      "brew install --cask typewhisper/tap/typewhisper",
+      "brew install --cask typewhisper",
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -63,7 +63,7 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
         <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.homebrew.title")}</h2>
           <div className="mt-3 flex items-center justify-between rounded-md bg-background p-4 font-mono text-sm">
-            <p>brew install --cask typewhisper/tap/typewhisper</p>
+            <p>brew install --cask typewhisper</p>
             <button
               onClick={copyCommand}
               className="ml-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors"
