@@ -16,7 +16,7 @@
   "docs.mac.features.ai.learn": "Learn how workflows work, how prompt instructions are applied, and what to check if nothing changes.",
   "docs.mac.features.ai.imgAlt": "Workflows with trigger and provider settings",
   "docs.mac.features.dictionary.title": "Dictionary",
-  "docs.mac.features.dictionary.desc": "Teach TypeWhisper domain-specific vocabulary. Add custom terms, define corrections for commonly misrecognized words, and enable auto-learn to build your personal dictionary over time. Import community term packs and use licensed industry packs for fields such as real estate, architecture, and legal drafting.",
+  "docs.mac.features.dictionary.desc": "Teach TypeWhisper domain-specific vocabulary. Add custom terms, define corrections for commonly misrecognized words, and enable auto-learn to build your personal dictionary over time. Newly learned corrections show undoable feedback and can be reviewed with the Auto-learned filter in the Dictionary screen. Import community term packs and use licensed industry packs for fields such as real estate, architecture, and legal drafting.",
   "docs.mac.features.dictionary.desc2": "The dictionary has two parts: custom terms can be passed into transcription when the engine supports them, and dictionary corrections are applied automatically after transcription. You do not need to manually force the dictionary to run.",
   "docs.mac.features.dictionary.desc3": "With Parakeet, custom terms can stay fully local. Enable vocabulary boosting and Parakeet will use those terms on-device during transcription, while post-transcription corrections still run automatically.",
   "docs.mac.features.dictionary.imgAlt": "Dictionary with custom terms and corrections",
