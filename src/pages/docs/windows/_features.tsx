@@ -160,6 +160,22 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
         "Transcription History - All transcriptions are saved locally with timestamps, the app they were dictated into, and which engine/model was used. Search and browse your history. Edit transcriptions inline and see correction detection that highlights differences between the original and edited text.",
       ];
 
+  const autoLearnItems = isDe
+    ? [
+        "Aktivierung - Benötigt eine kommerzielle Lizenz und Learn corrections from edits im Premium-Bereich.",
+        "Ablauf - Die Funktion läuft nach normalem Auto-Paste-Einfügen. Es gibt keinen separaten Schalter pro Workflow.",
+        "Beobachtung - TypeWhisper beobachtet den eingefügten Zieltext kurz über Windows UI Automation und Zieltext-Erkennung.",
+        "Sicherheit - Nur eindeutige manuelle Korrekturen werden als Wörterbuch-Korrektur gespeichert; mehrdeutige Änderungen, Action-Plugin-Ausgaben sowie leere oder zu lange eingefügte Texte werden übersprungen.",
+        "Feedback - Wenn eine Korrektur gelernt wurde, zeigt Windows Feedback mit Undo-Aktion. Gelernte Einträge findest du im Wörterbuch unter Auto-learned beziehungsweise Corrections.",
+      ]
+    : [
+        "Enablement - Requires a commercial license and Learn corrections from edits in the Premium section.",
+        "Flow - Runs after normal auto-paste insertion. There is no separate per-workflow switch.",
+        "Observation - TypeWhisper briefly watches the inserted target text through Windows UI Automation and target text observation.",
+        "Safety - Only high-confidence manual corrections are saved as Dictionary Corrections; ambiguous edits, action-plugin output, and empty or too-long inserted text are skipped.",
+        "Feedback - When a correction is learned, Windows shows learned-correction feedback with an Undo action. Review learned entries in Dictionary under Auto-learned or Corrections.",
+      ];
+
   return (
     <div>
       <h1 className="font-display text-3xl font-bold tracking-tight">
@@ -335,6 +351,24 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
             {isDe
               ? "Windows enthält allgemeine Begriffspakete für technische, medizinische, finanzielle und kreative Themen. Zusätzlich gibt es lizenzierte Branchen-Packs für Immobilien, Architektur und Recht."
               : "Windows includes general term packs for technical, medical, finance, and creative topics. Licensed industry packs are also available for real estate, architecture, and legal work."}
+          </p>
+          <h3 className="mt-4 text-sm font-semibold">
+            {isDe ? "Automatisches Korrektur-Lernen" : "Automatic Correction Learning"}
+          </h3>
+          <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+            {autoLearnItems.map((item) => {
+              const [label, rest] = item.split(" - ");
+              return (
+                <li key={item}>
+                  &bull; <strong>{label}</strong> - {rest}
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {isDe
+              ? "Zum Testen: Aktiviere die Einstellung, diktiere einen kurzen Satz in ein normales Textfeld, korrigiere ein falsch erkanntes Wort manuell und verlasse das Feld oder sende den Text. Wenn die Änderung eindeutig erkannt wurde, erscheint das Feedback und der neue Auto-learned-Eintrag."
+              : "To test it: enable the setting, dictate a short sentence into a normal text field, manually fix one misrecognized word, then leave the field or send the text. If the edit was recognized with enough confidence, the feedback appears and the new Auto-learned entry is saved."}
           </p>
         </div>
 
