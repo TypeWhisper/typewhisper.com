@@ -61,6 +61,21 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.dictionary.desc3")}
             </p>
+            <h3 className="mt-4 text-sm font-semibold">
+              {t(locale, "docs.mac.features.dictionary.autoLearnTitle")}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.features.dictionary.autoLearnDesc")}
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.features.dictionary.autoLearnFeedback")}
+            </p>
+            <h3 className="mt-4 text-sm font-semibold">
+              {t(locale, "docs.mac.features.dictionary.autoLearnTestTitle")}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.features.dictionary.autoLearnTest")}
+            </p>
             <Screenshot
               src={screenshotPath(locale, "/screenshots/mac/dictionary.png")}
               alt={t(locale, "docs.mac.features.dictionary.imgAlt")}
