@@ -1,4 +1,5 @@
-import type { Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
+import { screenshotPath, type Locale } from "@/i18n/index";
 
 export default function DocsWindowsProfiles({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
@@ -111,6 +112,12 @@ export default function DocsWindowsProfiles({ locale = "en" }: { locale?: Locale
           ? "Konfiguriere app-spezifische Transkriptionseinstellungen, die automatisch aktiviert werden."
           : "Configure per-application transcription settings that activate automatically."}
       </p>
+      <Screenshot
+        src={screenshotPath(locale, "/screenshots/windows/workflows.png")}
+        alt={isDe ? "TypeWhisper Windows-Workflows" : "TypeWhisper Windows workflows"}
+        className="mt-8 rounded-xl border border-border"
+        loading="eager"
+      />
 
       <div className="mt-8 space-y-6">
         <div className="rounded-2xl bg-card p-6">

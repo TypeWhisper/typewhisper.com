@@ -129,7 +129,7 @@ const copyEn = {
   members: "12 members",
   composeText: "Looks great — let's review on Friday after the design sync",
   partialText:
-    "looks great, let's review on Friday after the design sync and ship the beta to internal testers",
+    "looks great, let's review on Friday after the design sync and ship the pilot to internal testers",
   messages: [
     {
       initials: "AL",
@@ -150,7 +150,7 @@ const copyEn = {
       hue: "#f59e0b",
       author: "Tom",
       time: "10:51",
-      text: "Should we ship the beta to internal testers this week?",
+      text: "Should we ship the pilot to internal testers this week?",
     },
   ] as ChatMessage[],
 };
@@ -163,7 +163,7 @@ const copyDe = {
   members: "12 Mitglieder",
   composeText: "Sieht gut aus — lass uns Freitag nach dem Sync drüberschauen",
   partialText:
-    "sieht gut aus, lass uns Freitag nach dem Sync drüberschauen und die Beta an Internal Testers schicken",
+    "sieht gut aus, lass uns Freitag nach dem Sync drüberschauen und den Pilotversuch an interne Tester schicken",
   messages: [
     {
       initials: "AL",
@@ -184,7 +184,7 @@ const copyDe = {
       hue: "#f59e0b",
       author: "Tom",
       time: "10:51",
-      text: "Sollen wir die Beta diese Woche an Internal Testers schicken?",
+      text: "Sollen wir den Pilotversuch diese Woche an interne Tester schicken?",
     },
   ] as ChatMessage[],
 };

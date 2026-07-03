@@ -1,4 +1,5 @@
-import type { Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
+import { screenshotPath, type Locale } from "@/i18n/index";
 
 export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
@@ -109,9 +110,15 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
       </h1>
       <p className="mt-3 text-muted-foreground">
         {isDe
-          ? "Bringe die aktuelle Windows-Beta zum Laufen."
-          : "Get the current Windows beta up and running."}
+          ? "Bringe TypeWhisper für Windows zum Laufen."
+          : "Get TypeWhisper for Windows up and running."}
       </p>
+      <Screenshot
+        src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
+        alt={isDe ? "TypeWhisper Windows-Dashboard" : "TypeWhisper Windows dashboard"}
+        className="mt-8 rounded-xl border border-border"
+        loading="eager"
+      />
 
       <div className="mt-8 rounded-2xl bg-card p-6">
         <h2 className="text-lg font-semibold">
@@ -129,7 +136,7 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
           {isDe ? "Download" : "Download"}
         </h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          {isDe ? "Lade den neuesten Beta-" : "Download the latest beta "}
+          {isDe ? "Lade den neuesten " : "Download the latest "}
           <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
             .exe
           </code>{" "}
@@ -155,7 +162,7 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
         <h2 className="text-lg font-semibold">
           {isDe ? "Aus Quellcode bauen" : "Build from Source"}
         </h2>
-        <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm">
+        <div className="mt-3 overflow-x-auto rounded-md bg-background p-4 font-mono text-sm">
           <p className="text-muted-foreground"># Clone and build</p>
           <p>git clone https://github.com/TypeWhisper/typewhisper-win.git</p>
           <p>cd typewhisper-win</p>
@@ -195,6 +202,12 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
             ? "TypeWhisper kann optional zusammen mit Windows starten. Aktiviere dies in den Einstellungen, damit die App immer bereit ist, wenn du sie brauchst. Die Einstellung legt einen Registry-Eintrag an, um TypeWhisper beim Login zu starten."
             : "TypeWhisper can optionally start with Windows. Enable this in Settings so it is always ready when you need it. The setting adds a registry entry to launch TypeWhisper on login."}
         </p>
+        <Screenshot
+          src={screenshotPath(locale, "/screenshots/windows/general.png")}
+          alt={isDe ? "TypeWhisper Windows-Allgemein-Einstellungen" : "TypeWhisper Windows general settings"}
+          className="mt-4 rounded-xl border border-border"
+          loading="lazy"
+        />
       </div>
 
       <div className="mt-6 rounded-2xl bg-card p-6">

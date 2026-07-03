@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement, type SVGProps } from "react";
+import { type ReactElement, type SVGProps } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
@@ -10,12 +10,16 @@ import {
 } from "@/components/ui/platform-logos";
 import { HeroDemo } from "@/components/landing/hero-demo";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
-import { usePlatform } from "@/hooks/use-platform";
+import {
+  useLandingPlatformSelection,
+  type LandingPlatform,
+} from "@/hooks/use-landing-platform";
+import { heroScreenshotByPlatform } from "@/lib/landing-screenshots";
 import { cn } from "@/lib/utils";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 import downloads from "@/data/downloads.json";
 
-type HeroPlatform = "mac" | "windows" | "ios";
+type HeroPlatform = LandingPlatform;
 
 const heroPlatforms: HeroPlatform[] = ["mac", "windows", "ios"];
 
@@ -51,24 +55,11 @@ const logoByPlatform: Record<
 };
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
-  const detectedPlatform = usePlatform();
-  const [selectedPlatform, setSelectedPlatform] = useState<HeroPlatform>("mac");
-  const [hasUserSelectedPlatform, setHasUserSelectedPlatform] = useState(false);
-
-  useEffect(() => {
-    if (
-      !hasUserSelectedPlatform &&
-      (detectedPlatform === "mac" ||
-        detectedPlatform === "windows" ||
-        detectedPlatform === "ios")
-    ) {
-      setSelectedPlatform(detectedPlatform);
-    }
-  }, [detectedPlatform, hasUserSelectedPlatform]);
+  const { detectedHintPlatform, selectedPlatform, selectPlatform } =
+    useLandingPlatformSelection();
 
   function handleSelectPlatform(platform: HeroPlatform) {
-    setHasUserSelectedPlatform(true);
-    setSelectedPlatform(platform);
+    selectPlatform(platform);
   }
 
   const download = getPlatformDownloadTarget(
@@ -78,13 +69,10 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
   );
   const downloadOpensNewTab = download.platform === "ios";
 
-  // If the visitor is actually on Windows or iOS but the active tab is still
-  // the mac default, surface a small switch hint so they can flip in one click.
-  const detectedHintPlatform: HeroPlatform | null =
-    selectedPlatform === "mac" &&
-    (detectedPlatform === "windows" || detectedPlatform === "ios")
-      ? detectedPlatform
-      : null;
+  const heroScreenshot = screenshotPath(
+    locale,
+    heroScreenshotByPlatform[selectedPlatform],
+  );
 
   return (
     <section
@@ -162,11 +150,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
 
         <div className="mt-10 sm:mt-14 reveal-scale-hidden">
           <Screenshot
-            src={screenshotPath(locale, "/screenshots/mac/home.png")}
+            src={heroScreenshot}
             alt={t(locale, "hero.imgAlt")}
             className="mx-auto max-w-3xl w-full max-h-[30vh] sm:max-h-none object-contain object-top"
           />
-          {selectedPlatform !== "mac" && (
+          {selectedPlatform === "ios" && (
             <p className="mx-auto mt-3 max-w-xl text-center text-xs text-muted-foreground">
               {t(locale, "hero.shotNotice.nonMac")}
             </p>

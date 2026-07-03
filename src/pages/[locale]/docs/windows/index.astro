@@ -2,7 +2,8 @@
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { type Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
+import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import { Download, Globe, Settings, Sparkles } from "lucide-react";
 
@@ -19,31 +20,27 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const copy = locale === "de"
   ? {
-      title: "Windows-Beta-Dokumentation - TypeWhisper",
-      description: "Öffentliche Beta-Dokumentation für TypeWhisper auf Windows.",
-      releaseTitle: "Windows ist derzeit eine öffentliche Beta.",
-      releaseDescription: "Nutze diese Doku als Orientierung für Tests und Feedback. Erwarte noch Feinschliff-Lücken und Verhaltensänderungen, während sich das Release stabilisiert.",
+      title: "Windows-Dokumentation - TypeWhisper",
+      description: "Dokumentation für TypeWhisper auf Windows.",
       heading: "Windows-Dokumentation",
-      intro: "Die Windows-App ist öffentlich testbar. Die Kern-Workflows sind bereits nützlich, aber dies ist noch kein stabiles 1.0-Release.",
+      intro: "Die Windows-App ist stabil für den täglichen Einsatz mit systemweitem Diktat, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets und Integrationen.",
       cards: [
-        ["installation", "Installation", "Beta-Installationsanleitung, Systemanforderungen und erster Start.", Download],
-        ["features", "Funktionen", "Aktueller Funktionsumfang der Beta, Plattformgrenzen und Workflow-Hinweise.", Sparkles],
-        ["api", "HTTP API", "Aktuelle Beta-API für lokale Tools und Automatisierung.", Globe],
-        ["profiles", "Profile", "App- und seitenbezogene Einstellungen mit dem aktuellen Verhalten der Beta.", Settings],
+        ["installation", "Installation", "Installationsanleitung, Systemanforderungen und erster Start.", Download],
+        ["features", "Funktionen", "Aktueller Funktionsumfang, Plattformgrenzen und Workflow-Hinweise.", Sparkles],
+        ["api", "HTTP API", "Aktuelle API für lokale Tools und Automatisierung.", Globe],
+        ["profiles", "Profile", "App- und seitenbezogene Einstellungen für den täglichen Einsatz.", Settings],
       ],
     }
   : {
-      title: "Windows Beta Documentation - TypeWhisper",
-      description: "Public beta documentation for TypeWhisper on Windows.",
-      releaseTitle: "Windows is currently a public beta.",
-      releaseDescription: "Use these docs as guidance for testing and feedback. Expect polish gaps and behavior changes while the release stabilizes.",
+      title: "Windows Documentation - TypeWhisper",
+      description: "Documentation for TypeWhisper on Windows.",
       heading: "Windows Documentation",
-      intro: "The Windows app is available for public testing. Core workflows are already useful, but this is not yet a 1.0-stable release.",
+      intro: "The Windows app is stable for daily use with system-wide dictation, file transcription, workflows, history, dictionary, snippets, and integrations.",
       cards: [
-        ["installation", "Installation", "Beta install guide, system requirements, and first setup.", Download],
-        ["features", "Features", "Current beta feature set, platform constraints, and workflow notes.", Sparkles],
-        ["api", "HTTP API", "Current beta API surface for local tooling and automation.", Globe],
-        ["profiles", "Profiles", "Per-app and per-site settings with current beta behavior.", Settings],
+        ["installation", "Installation", "Install guide, system requirements, and first setup.", Download],
+        ["features", "Features", "Current feature set, platform constraints, and workflow notes.", Sparkles],
+        ["api", "HTTP API", "Current API surface for local tooling and automation.", Globe],
+        ["profiles", "Profiles", "Per-app and per-site settings for daily use.", Settings],
       ],
     };
 ---
@@ -53,18 +50,24 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows")}
   locale={locale}
   platform="windows"
-  releaseStage="beta"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseStage="stable"
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.indexDescription")}
 >
   <div>
     <div class="flex flex-wrap items-center gap-3">
       <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-      <Badge variant="outline">Beta</Badge>
+      <Badge variant="secondary">{locale === "de" ? "Stabil" : "Stable"}</Badge>
     </div>
     <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
       {copy.intro}
     </p>
+    <Screenshot
+      src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
+      alt={locale === "de" ? "TypeWhisper Windows-Dashboard" : "TypeWhisper Windows dashboard"}
+      className="mt-8 aspect-[31/20] w-full rounded-xl border border-border object-cover"
+      loading="eager"
+    />
     <div class="mt-8 grid gap-4 sm:grid-cols-2">
       {(copy.cards as WindowsCard[]).map(([slug, title, description, Icon]) => (
         <a href={canonicalPath(locale, `/docs/windows/${slug}`)}>

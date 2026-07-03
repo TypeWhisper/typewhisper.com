@@ -1,7 +1,7 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import DocsWindowsFeatures from "@/pages/docs/windows/_features.tsx";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -15,16 +15,12 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const copy = locale === "de"
   ? {
-      title: "Funktionen - Windows Beta - TypeWhisper",
-      description: "Aktuelle TypeWhisper Windows-Beta-Features: Diktiermodi, Datei-Transkription, Übersetzung und mehr.",
-      releaseTitle: "Windows ist derzeit eine öffentliche Beta.",
-      releaseDescription: "Diese Feature-Liste beschreibt den aktuellen Beta-Build. Rechne vor 1.0 noch mit Iterationen und Feinschliff.",
+      title: "Funktionen - Windows - TypeWhisper",
+      description: "Aktuelle TypeWhisper Windows-Features: Diktiermodi, Datei-Transkription, Übersetzung und mehr.",
     }
   : {
-      title: "Features - Windows Beta - TypeWhisper",
-      description: "Current TypeWhisper Windows beta features: dictation modes, file transcription, translation, and more.",
-      releaseTitle: "Windows is currently a public beta.",
-      releaseDescription: "This feature list reflects the current beta build. Expect iteration and refinement before 1.0.",
+      title: "Features - Windows - TypeWhisper",
+      description: "Current TypeWhisper Windows features: dictation modes, file transcription, translation, and more.",
     };
 ---
 <DocsLayout
@@ -33,9 +29,9 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/features")}
   locale={locale}
   platform="windows"
-  releaseStage="beta"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseStage="stable"
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.featuresDescription")}
 >
   <DocsWindowsFeatures locale={locale} />
 </DocsLayout>
