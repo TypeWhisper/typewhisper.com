@@ -1,7 +1,7 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import DocsWindowsAPI from "@/pages/docs/windows/_api.tsx";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -17,14 +17,10 @@ const copy = locale === "de"
   ? {
       title: "HTTP API - Windows - TypeWhisper",
       description: "Aktuelle HTTP-API-Endpunkte von TypeWhisper für Windows zur Integration lokaler Tools.",
-      releaseTitle: "Windows ist ein stabiles Desktop-Release.",
-      releaseDescription: "Die Windows-API ist für lokale Tools und Automatisierung verfügbar.",
     }
   : {
       title: "HTTP API - Windows - TypeWhisper",
       description: "Current TypeWhisper Windows HTTP API endpoints for local tool integration.",
-      releaseTitle: "Windows is a stable desktop release.",
-      releaseDescription: "The Windows API is available for local tooling and automation.",
     };
 ---
 <DocsLayout
@@ -34,8 +30,8 @@ const copy = locale === "de"
   locale={locale}
   platform="windows"
   releaseStage="stable"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.apiDescription")}
 >
   <DocsWindowsAPI locale={locale} />
 </DocsLayout>

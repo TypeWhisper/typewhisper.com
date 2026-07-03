@@ -16,6 +16,12 @@
   "docs.win.title": "Windows",
   "docs.win.badge": "Stable",
   "docs.win.description": "Stable Windows docs for installation, dictation, file transcription, workflows, and local automation.",
+  "docs.win.release.title": "Windows is a stable desktop release.",
+  "docs.win.release.indexDescription": "Use these docs for installation, daily dictation, file transcription, workflows, integrations, and local automation.",
+  "docs.win.release.installationDescription": "Installation details, onboarding flow, and first setup for Windows 10 and 11.",
+  "docs.win.release.featuresDescription": "This feature list reflects the current stable Windows feature set.",
+  "docs.win.release.apiDescription": "The Windows API is available for local tooling and automation.",
+  "docs.win.release.profilesDescription": "Profile matching is available for daily use with apps and websites.",
   "docs.ios.title": "iOS",
   "docs.ios.badge": "Alpha",
   "docs.ios.description": "Early alpha preview via TestFlight for iPhone and iPad."

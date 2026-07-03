@@ -1,7 +1,7 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import DocsWindowsProfiles from "@/pages/docs/windows/_profiles.tsx";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -17,14 +17,10 @@ const copy = locale === "de"
   ? {
       title: "Profile - Windows - TypeWhisper",
       description: "Konfiguriere app-spezifische Einstellungen für Sprache, Engine und Aufgabe in TypeWhisper für Windows.",
-      releaseTitle: "Windows ist ein stabiles Desktop-Release.",
-      releaseDescription: "Profil-Zuordnung ist für den täglichen Einsatz mit Apps und Websites verfügbar.",
     }
   : {
       title: "Profiles - Windows - TypeWhisper",
       description: "Configure app-specific settings for language, engine, and task in TypeWhisper for Windows.",
-      releaseTitle: "Windows is a stable desktop release.",
-      releaseDescription: "Profile matching is available for daily use with apps and websites.",
     };
 ---
 <DocsLayout
@@ -34,8 +30,8 @@ const copy = locale === "de"
   locale={locale}
   platform="windows"
   releaseStage="stable"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.profilesDescription")}
 >
   <DocsWindowsProfiles locale={locale} />
 </DocsLayout>

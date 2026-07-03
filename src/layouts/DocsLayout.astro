@@ -89,6 +89,7 @@ const currentPath = normalizePath(Astro.url.pathname);
               stage={releaseStage}
               title={releaseTitle}
               description={releaseDescription}
+              locale={locale}
             />
           )}
           <slot />
@@ -102,6 +103,7 @@ const currentPath = normalizePath(Astro.url.pathname);
           stage={releaseStage}
           title={releaseTitle}
           description={releaseDescription}
+          locale={locale}
         />
       )}
       <slot />

@@ -1,7 +1,7 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import DocsWindowsFeatures from "@/pages/docs/windows/_features.tsx";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -17,14 +17,10 @@ const copy = locale === "de"
   ? {
       title: "Funktionen - Windows - TypeWhisper",
       description: "Aktuelle TypeWhisper Windows-Features: Diktiermodi, Datei-Transkription, Übersetzung und mehr.",
-      releaseTitle: "Windows ist ein stabiles Desktop-Release.",
-      releaseDescription: "Diese Feature-Liste beschreibt den aktuellen stabilen Windows-Funktionsumfang.",
     }
   : {
       title: "Features - Windows - TypeWhisper",
       description: "Current TypeWhisper Windows features: dictation modes, file transcription, translation, and more.",
-      releaseTitle: "Windows is a stable desktop release.",
-      releaseDescription: "This feature list reflects the current stable Windows feature set.",
     };
 ---
 <DocsLayout
@@ -34,8 +30,8 @@ const copy = locale === "de"
   locale={locale}
   platform="windows"
   releaseStage="stable"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.featuresDescription")}
 >
   <DocsWindowsFeatures locale={locale} />
 </DocsLayout>

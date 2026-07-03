@@ -16,6 +16,12 @@
   "docs.win.title": "Windows",
   "docs.win.badge": "Stabil",
   "docs.win.description": "Stabile Windows-Doku für Installation, Diktat, Datei-Transkription, Workflows und lokale Automatisierung.",
+  "docs.win.release.title": "Windows ist ein stabiles Desktop-Release.",
+  "docs.win.release.indexDescription": "Nutze diese Doku für Installation, tägliches Diktieren, Datei-Transkription, Workflows, Integrationen und lokale Automatisierung.",
+  "docs.win.release.installationDescription": "Installationsdetails, Onboarding-Ablauf und erste Einrichtung für Windows 10 und 11.",
+  "docs.win.release.featuresDescription": "Diese Feature-Liste beschreibt den aktuellen stabilen Windows-Funktionsumfang.",
+  "docs.win.release.apiDescription": "Die Windows-API ist für lokale Tools und Automatisierung verfügbar.",
+  "docs.win.release.profilesDescription": "Profil-Zuordnung ist für den täglichen Einsatz mit Apps und Websites verfügbar.",
   "docs.ios.title": "iOS",
   "docs.ios.badge": "Alpha",
   "docs.ios.description": "Frühe Alpha-Vorschau über TestFlight für iPhone und iPad."

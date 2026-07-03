@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
 import { localePath, screenshotPath, t, type Locale } from "@/i18n/index";
 import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
+import { premiumScreenshotByPlatform } from "@/lib/landing-screenshots";
 
 interface PremiumFeature {
   title: string;
@@ -52,9 +53,7 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
   ];
   const premiumScreenshot = screenshotPath(
     locale,
-    platform === "windows"
-      ? "/screenshots/windows/premium-active.png"
-      : "/screenshots/mac/premium.png",
+    premiumScreenshotByPlatform[platform],
   );
 
   return (

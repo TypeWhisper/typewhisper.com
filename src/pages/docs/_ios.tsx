@@ -53,7 +53,7 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
                   >
                     TestFlight
                   </a>{" "}
-                  {isDe ? "aus dem App Store, falls du es noch nicht hast." : "from the App Store if you don&apos;t have it yet."}
+                  {isDe ? "aus dem App Store, falls du es noch nicht hast." : "from the App Store if you don't have it yet."}
                 </li>
                 <li>
                   {isDe ? "Öffne den " : "Tap the "}

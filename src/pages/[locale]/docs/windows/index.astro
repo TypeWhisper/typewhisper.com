@@ -3,7 +3,7 @@ import DocsLayout from "@/layouts/DocsLayout.astro";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Screenshot } from "@/components/ui/screenshot";
-import { screenshotPath, type Locale } from "@/i18n/index";
+import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import { Download, Globe, Settings, Sparkles } from "lucide-react";
 
@@ -22,8 +22,6 @@ const copy = locale === "de"
   ? {
       title: "Windows-Dokumentation - TypeWhisper",
       description: "Dokumentation für TypeWhisper auf Windows.",
-      releaseTitle: "Windows ist ein stabiles Desktop-Release.",
-      releaseDescription: "Nutze diese Doku für Installation, tägliches Diktieren, Datei-Transkription, Workflows, Integrationen und lokale Automatisierung.",
       heading: "Windows-Dokumentation",
       intro: "Die Windows-App ist stabil für den täglichen Einsatz mit systemweitem Diktat, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets und Integrationen.",
       cards: [
@@ -36,8 +34,6 @@ const copy = locale === "de"
   : {
       title: "Windows Documentation - TypeWhisper",
       description: "Documentation for TypeWhisper on Windows.",
-      releaseTitle: "Windows is a stable desktop release.",
-      releaseDescription: "Use these docs for installation, daily dictation, file transcription, workflows, integrations, and local automation.",
       heading: "Windows Documentation",
       intro: "The Windows app is stable for daily use with system-wide dictation, file transcription, workflows, history, dictionary, snippets, and integrations.",
       cards: [
@@ -55,8 +51,8 @@ const copy = locale === "de"
   locale={locale}
   platform="windows"
   releaseStage="stable"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseTitle={t(locale, "docs.win.release.title")}
+  releaseDescription={t(locale, "docs.win.release.indexDescription")}
 >
   <div>
     <div class="flex flex-wrap items-center gap-3">
@@ -69,7 +65,7 @@ const copy = locale === "de"
     <Screenshot
       src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
       alt={locale === "de" ? "TypeWhisper Windows-Dashboard" : "TypeWhisper Windows dashboard"}
-      className="mt-8 rounded-xl border border-border"
+      className="mt-8 aspect-[31/20] w-full rounded-xl border border-border object-cover"
       loading="eager"
     />
     <div class="mt-8 grid gap-4 sm:grid-cols-2">

@@ -14,6 +14,7 @@ import {
   useLandingPlatformSelection,
   type LandingPlatform,
 } from "@/hooks/use-landing-platform";
+import { heroScreenshotByPlatform } from "@/lib/landing-screenshots";
 import { cn } from "@/lib/utils";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 import downloads from "@/data/downloads.json";
@@ -68,10 +69,10 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
   );
   const downloadOpensNewTab = download.platform === "ios";
 
-  const heroScreenshot =
-    selectedPlatform === "windows"
-      ? screenshotPath(locale, "/screenshots/windows/dashboard.png")
-      : screenshotPath(locale, "/screenshots/mac/home.png");
+  const heroScreenshot = screenshotPath(
+    locale,
+    heroScreenshotByPlatform[selectedPlatform],
+  );
 
   return (
     <section

@@ -4,6 +4,7 @@ import {
   useSyncedLandingPlatform,
   type LandingPlatform,
 } from "@/hooks/use-landing-platform";
+import { featureScreenshotsByPlatform } from "@/lib/landing-screenshots";
 
 interface Feature {
   title: string;
@@ -43,32 +44,8 @@ function FeatureCard({
   );
 }
 
-const screenshotByPlatform: Record<LandingPlatform, Record<string, string>> = {
-  mac: {
-    private: "/screenshots/mac/home.png",
-    dictation: "/screenshots/mac/recording.png",
-    prompts: "/screenshots/mac/workflows.png",
-    profiles: "/screenshots/mac/plugins.png",
-    transcription: "/screenshots/mac/file-transcription.png",
-  },
-  windows: {
-    private: "/screenshots/windows/dashboard.png",
-    dictation: "/screenshots/windows/dictation.png",
-    prompts: "/screenshots/windows/workflows.png",
-    profiles: "/screenshots/windows/integrations-installed.png",
-    transcription: "/screenshots/windows/file-transcription.png",
-  },
-  ios: {
-    private: "/screenshots/mac/home.png",
-    dictation: "/screenshots/mac/recording.png",
-    prompts: "/screenshots/mac/workflows.png",
-    profiles: "/screenshots/mac/plugins.png",
-    transcription: "/screenshots/mac/file-transcription.png",
-  },
-};
-
 function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
-  const screenshots = screenshotByPlatform[platform];
+  const screenshots = featureScreenshotsByPlatform[platform];
 
   return [
     {
