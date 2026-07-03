@@ -1,5 +1,9 @@
 import { t, screenshotPath, type Locale } from "@/i18n/index";
 import { Screenshot } from "@/components/ui/screenshot";
+import {
+  useSyncedLandingPlatform,
+  type LandingPlatform,
+} from "@/hooks/use-landing-platform";
 
 interface Feature {
   title: string;
@@ -39,39 +43,66 @@ function FeatureCard({
   );
 }
 
-function getFeatures(locale: Locale): Feature[] {
+const screenshotByPlatform: Record<LandingPlatform, Record<string, string>> = {
+  mac: {
+    private: "/screenshots/mac/home.png",
+    dictation: "/screenshots/mac/recording.png",
+    prompts: "/screenshots/mac/workflows.png",
+    profiles: "/screenshots/mac/plugins.png",
+    transcription: "/screenshots/mac/file-transcription.png",
+  },
+  windows: {
+    private: "/screenshots/windows/dashboard.png",
+    dictation: "/screenshots/windows/dictation.png",
+    prompts: "/screenshots/windows/workflows.png",
+    profiles: "/screenshots/windows/integrations-installed.png",
+    transcription: "/screenshots/windows/file-transcription.png",
+  },
+  ios: {
+    private: "/screenshots/mac/home.png",
+    dictation: "/screenshots/mac/recording.png",
+    prompts: "/screenshots/mac/workflows.png",
+    profiles: "/screenshots/mac/plugins.png",
+    transcription: "/screenshots/mac/file-transcription.png",
+  },
+};
+
+function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
+  const screenshots = screenshotByPlatform[platform];
+
   return [
     {
       title: t(locale, "features.private.title"),
       description: t(locale, "features.private.description"),
       span: "col-span-2",
-      screenshot: screenshotPath(locale, "/screenshots/mac/home.png"),
+      screenshot: screenshotPath(locale, screenshots.private),
     },
     {
       title: t(locale, "features.dictation.title"),
       description: t(locale, "features.dictation.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/recording.png"),
+      screenshot: screenshotPath(locale, screenshots.dictation),
     },
     {
       title: t(locale, "features.prompts.title"),
       description: t(locale, "features.prompts.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/workflows.png"),
+      screenshot: screenshotPath(locale, screenshots.prompts),
     },
     {
       title: t(locale, "features.profiles.title"),
       description: t(locale, "features.profiles.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/plugins.png"),
+      screenshot: screenshotPath(locale, screenshots.profiles),
     },
     {
       title: t(locale, "features.transcription.title"),
       description: t(locale, "features.transcription.description"),
-      screenshot: screenshotPath(locale, "/screenshots/mac/file-transcription.png"),
+      screenshot: screenshotPath(locale, screenshots.transcription),
     },
   ];
 }
 
 export function Features({ locale = "en" }: { locale?: Locale }) {
-  const features = getFeatures(locale);
+  const platform = useSyncedLandingPlatform();
+  const features = getFeatures(locale, platform);
   const fullWidthFeatures = features.filter(
     (feature) => feature.span === "col-span-2"
   );

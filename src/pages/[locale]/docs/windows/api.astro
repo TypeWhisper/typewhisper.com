@@ -15,16 +15,16 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const copy = locale === "de"
   ? {
-      title: "HTTP API - Windows Beta - TypeWhisper",
-      description: "Aktuelle HTTP-API-Endpunkte der TypeWhisper Windows-Beta für die Integration lokaler Tools.",
-      releaseTitle: "Windows ist derzeit eine öffentliche Beta.",
-      releaseDescription: "Die Windows-API ist bereits für lokale Tools nutzbar, aber das Gesamtprodukt befindet sich noch in der Beta.",
+      title: "HTTP API - Windows - TypeWhisper",
+      description: "Aktuelle HTTP-API-Endpunkte von TypeWhisper für Windows zur Integration lokaler Tools.",
+      releaseTitle: "Windows ist ein stabiles Desktop-Release.",
+      releaseDescription: "Die Windows-API ist für lokale Tools und Automatisierung verfügbar.",
     }
   : {
-      title: "HTTP API - Windows Beta - TypeWhisper",
-      description: "Current TypeWhisper Windows beta HTTP API endpoints for local tool integration.",
-      releaseTitle: "Windows is currently a public beta.",
-      releaseDescription: "The Windows API is already useful for local tooling, but the surrounding product is still in beta.",
+      title: "HTTP API - Windows - TypeWhisper",
+      description: "Current TypeWhisper Windows HTTP API endpoints for local tool integration.",
+      releaseTitle: "Windows is a stable desktop release.",
+      releaseDescription: "The Windows API is available for local tooling and automation.",
     };
 ---
 <DocsLayout
@@ -33,7 +33,7 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/api")}
   locale={locale}
   platform="windows"
-  releaseStage="beta"
+  releaseStage="stable"
   releaseTitle={copy.releaseTitle}
   releaseDescription={copy.releaseDescription}
 >

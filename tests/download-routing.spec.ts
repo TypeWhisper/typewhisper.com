@@ -21,7 +21,7 @@ const landingScenarios: LandingScenario[] = [
     name: "Windows",
     userAgent:
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-    expectedLabel: "Download Windows Beta",
+    expectedLabel: "Download for Windows",
     expectedHref: /TypeWhisper-win-x64-Setup\.exe$/,
     opensNewTab: false,
   },
@@ -116,10 +116,10 @@ test.describe("release status direct downloads", () => {
       page.getByRole("link", { name: "Download latest release" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
-      page.getByRole("link", { name: "Download beta builds" }),
+      page.getByRole("link", { name: "Download latest Windows release" }),
     ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
     await expect(
-      page.getByRole("link", { name: "Download beta builds" }),
+      page.getByRole("link", { name: "Download latest Windows release" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
       page.getByRole("link", { name: "Join TestFlight" }),
@@ -141,10 +141,10 @@ test.describe("release status direct downloads", () => {
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
-      page.getByRole("link", { name: "Beta-Builds herunterladen" }),
+      page.getByRole("link", { name: "Neuestes Windows-Release herunterladen" }),
     ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
     await expect(
-      page.getByRole("link", { name: "Beta-Builds herunterladen" }),
+      page.getByRole("link", { name: "Neuestes Windows-Release herunterladen" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
       page.getByRole("link", { name: "TestFlight beitreten" }),

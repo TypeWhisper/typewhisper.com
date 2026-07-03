@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
 import { localePath, screenshotPath, t, type Locale } from "@/i18n/index";
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 
 interface PremiumFeature {
   title: string;
@@ -28,6 +29,7 @@ function PremiumFeatureBlock({ feature }: { feature: PremiumFeature }) {
 }
 
 export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
+  const platform = useSyncedLandingPlatform();
   const features: PremiumFeature[] = [
     {
       title: t(locale, "premiumFeatures.sync.title"),
@@ -50,7 +52,9 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
   ];
   const premiumScreenshot = screenshotPath(
     locale,
-    "/screenshots/mac/premium.png",
+    platform === "windows"
+      ? "/screenshots/windows/premium-active.png"
+      : "/screenshots/mac/premium.png",
   );
 
   return (

@@ -40,7 +40,7 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           <div className="mt-12 max-w-md text-left space-y-6">
             <div>
               <h2 className="font-display text-lg font-semibold">
-                {isDe ? "So trittst du der Beta bei" : "How to join the beta"}
+                {isDe ? "So trittst du TestFlight bei" : "How to join TestFlight"}
               </h2>
               <ol className="mt-2 list-decimal list-inside space-y-2 text-sm text-muted-foreground">
                 <li>

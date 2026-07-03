@@ -1,6 +1,6 @@
 {
   "docs.title": "Dokumentation",
-  "docs.subtitle": "macOS ist das stabile 1.5-Release mit app-bewusstem Diktieren, stärkerer Workflow-Ausgabe-Kontrolle, automatischem Korrektur-Lernen, zuverlässigen Cloud-Uploads und verbesserten Fullscreen-Indikatoren. Windows ist derzeit in der öffentlichen Beta und iOS ist als frühe Alpha-Vorschau verfügbar.",
+  "docs.subtitle": "macOS und Windows sind stabile Desktop-Releases mit app-bewusstem Diktieren, stärkerer Workflow-Ausgabe-Kontrolle, automatischem Korrektur-Lernen, zuverlässigen Cloud-Uploads und verbesserten Fullscreen-Indikatoren. iOS ist als frühe Alpha-Vorschau verfügbar.",
   "docs.allPlatforms": "Alle Plattformen",
   "docs.sidebar.overview": "Übersicht",
   "docs.sidebar.installation": "Installation",
@@ -14,8 +14,8 @@
   "docs.sidebar.rules": "Regeln",
   "docs.sidebar.troubleshooting": "Fehlerbehebung",
   "docs.win.title": "Windows",
-  "docs.win.badge": "Beta",
-  "docs.win.description": "Öffentliche Beta-Doku für frühe Tester und Feedback.",
+  "docs.win.badge": "Stabil",
+  "docs.win.description": "Stabile Windows-Doku für Installation, Diktat, Datei-Transkription, Workflows und lokale Automatisierung.",
   "docs.ios.title": "iOS",
   "docs.ios.badge": "Alpha",
   "docs.ios.description": "Frühe Alpha-Vorschau über TestFlight für iPhone und iPad."

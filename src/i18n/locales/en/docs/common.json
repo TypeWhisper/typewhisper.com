@@ -1,6 +1,6 @@
 {
   "docs.title": "Documentation",
-  "docs.subtitle": "macOS is the stable 1.5 release, with app-aware dictation, stronger workflow output controls, automatic correction learning, resilient cloud uploads, and improved fullscreen indicators. Windows is currently in public beta, and iOS is available as an early alpha preview.",
+  "docs.subtitle": "macOS and Windows are stable desktop releases, with app-aware dictation, stronger workflow output controls, automatic correction learning, resilient cloud uploads, and improved fullscreen indicators. iOS is available as an early alpha preview.",
   "docs.allPlatforms": "All Platforms",
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
@@ -14,8 +14,8 @@
   "docs.sidebar.rules": "Rules",
   "docs.sidebar.troubleshooting": "Troubleshooting",
   "docs.win.title": "Windows",
-  "docs.win.badge": "Beta",
-  "docs.win.description": "Public beta docs for early testers and feedback.",
+  "docs.win.badge": "Stable",
+  "docs.win.description": "Stable Windows docs for installation, dictation, file transcription, workflows, and local automation.",
   "docs.ios.title": "iOS",
   "docs.ios.badge": "Alpha",
   "docs.ios.description": "Early alpha preview via TestFlight for iPhone and iPad."

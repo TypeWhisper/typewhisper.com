@@ -140,11 +140,11 @@ const copyEn = {
   attendees: "4 attendees",
   section1: "Discussion",
   bullet1: "Decided to ship the new card layout this week",
-  bullet2: "Beta opens to internal testers Friday",
+  bullet2: "Pilot opens to internal testers Friday",
   section2: "Action items",
   action1: "Marco writes the release notes by Thursday",
   partialText:
-    "Marco writes the release notes by Thursday and we ship the beta to internal testers Friday",
+    "Marco writes the release notes by Thursday and we ship the pilot to internal testers Friday",
 };
 
 const copyDe = {
@@ -160,9 +160,9 @@ const copyDe = {
   attendees: "4 Teilnehmer",
   section1: "Diskussion",
   bullet1: "Neues Card-Layout wird diese Woche ausgerollt",
-  bullet2: "Beta startet Freitag für interne Tester",
+  bullet2: "Pilotversuch startet Freitag für interne Tester",
   section2: "Action Items",
   action1: "Marco schreibt die Release Notes bis Donnerstag",
   partialText:
-    "Marco schreibt die Release Notes bis Donnerstag, dann starten wir Freitag die Beta für interne Tester",
+    "Marco schreibt die Release Notes bis Donnerstag, dann starten wir Freitag den Pilotversuch mit internen Testern",
 };

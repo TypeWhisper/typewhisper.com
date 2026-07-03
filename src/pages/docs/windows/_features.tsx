@@ -1,4 +1,5 @@
-import type { Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
+import { screenshotPath, type Locale } from "@/i18n/index";
 
 export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
@@ -20,6 +21,16 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
     ["OpenAI", "gpt-4o-mini-transcribe", isDe ? "Geringere Kosten, gute Qualität" : "Lower cost, good quality"],
     ["OpenAI", "whisper-1", isDe ? "Klassisch, unterstützt Übersetzung" : "Classic, supports translation"],
   ] as const;
+
+  const integrationItems = isDe
+    ? [
+        "Installierte Erweiterungen - Aktiviere, deaktiviere oder entferne Engines, KI-Anbieter und Nachbearbeitung direkt in TypeWhisper.",
+        "Marketplace - Filtere verfügbare Erweiterungen nach Transkriptions-Engines, KI-Anbietern, Text-to-Speech, Aktionen, Speicher und Hilfsfunktionen.",
+      ]
+    : [
+        "Installed extensions - Enable, disable, or remove engines, AI providers, and post-processing directly in TypeWhisper.",
+        "Marketplace - Filter available extensions by transcription engines, AI providers, text-to-speech, actions, memory, and utilities.",
+      ];
 
   const dictationItems = isDe
     ? [
@@ -207,6 +218,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               );
             })}
           </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/dictation.png")}
+            alt={isDe ? "TypeWhisper Windows-Diktat-Einstellungen" : "TypeWhisper Windows dictation settings"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -252,6 +269,39 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               ? "Konfiguriere Cloud-Provider in den Einstellungen oder während des Welcome Wizard."
               : "Configure cloud providers in Settings or during the Welcome Wizard."}
           </p>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/integrations-installed.png")}
+            alt={isDe ? "Installierte TypeWhisper Windows-Erweiterungen" : "Installed TypeWhisper Windows extensions"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
+        </div>
+
+        <div className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {isDe ? "Integrationen" : "Integrations"}
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {isDe
+              ? "Erweiterungen bringen zusätzliche lokale und Cloud-Engines, KI-Anbieter, Aktionen und Hilfsfunktionen in die Windows-App."
+              : "Extensions add local and cloud engines, AI providers, actions, and utility features to the Windows app."}
+          </p>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {integrationItems.map((item) => {
+              const [label, rest] = item.split(" - ");
+              return (
+                <li key={item}>
+                  &bull; <strong>{label}</strong> - {rest}
+                </li>
+              );
+            })}
+          </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/integrations-marketplace.png")}
+            alt={isDe ? "TypeWhisper Windows-Erweiterungs-Marketplace" : "TypeWhisper Windows extensions marketplace"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -273,6 +323,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               );
             })}
           </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/shortcuts.png")}
+            alt={isDe ? "TypeWhisper Windows-Tastenkürzel" : "TypeWhisper Windows shortcuts"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -284,6 +340,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               ? "Silero VAD erkennt Sprachsegmente während der Aufnahme und transkribiert sie in Echtzeit. Ein schwebendes Overlay zeigt Teilergebnisse schon vor dem Stoppen der Aufnahme, sodass du sofort Feedback bekommst."
               : "Silero VAD detects speech segments during recording and transcribes them in real time. A floating overlay shows partial transcription results before you stop recording, so you get immediate feedback as you speak."}
           </p>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/appearance.png")}
+            alt={isDe ? "TypeWhisper Windows-Overlay-Layout" : "TypeWhisper Windows overlay layout"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -305,6 +367,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               );
             })}
           </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/file-transcription.png")}
+            alt={isDe ? "TypeWhisper Windows-Datei-Transkription" : "TypeWhisper Windows file transcription"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -370,6 +438,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               ? "Zum Testen: Aktiviere die Einstellung, diktiere einen kurzen Satz in ein normales Textfeld, korrigiere ein falsch erkanntes Wort manuell und verlasse das Feld oder sende den Text. Wenn die Änderung eindeutig erkannt wurde, erscheint das Feedback und der neue Auto-learned-Eintrag."
               : "To test it: enable the setting, dictate a short sentence into a normal text field, manually fix one misrecognized word, then leave the field or send the text. If the edit was recognized with enough confidence, the feedback appears and the new Auto-learned entry is saved."}
           </p>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/dictionary.png")}
+            alt={isDe ? "TypeWhisper Windows-Wörterbuch" : "TypeWhisper Windows dictionary"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -386,6 +460,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               <li key={index}>&bull; {item}</li>
             ))}
           </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/snippets.png")}
+            alt={isDe ? "TypeWhisper Windows-Snippets" : "TypeWhisper Windows snippets"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -413,6 +493,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               );
             })}
           </ul>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/recorder.png")}
+            alt={isDe ? "TypeWhisper Windows-Aufnahmen" : "TypeWhisper Windows recorder"}
+            className="mt-4 rounded-xl border border-border"
+            loading="lazy"
+          />
         </div>
 
         <div className="rounded-2xl bg-card p-6">
@@ -429,6 +515,20 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
               );
             })}
           </ul>
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <Screenshot
+              src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
+              alt={isDe ? "TypeWhisper Windows-Dashboard" : "TypeWhisper Windows dashboard"}
+              className="rounded-xl border border-border"
+              loading="lazy"
+            />
+            <Screenshot
+              src={screenshotPath(locale, "/screenshots/windows/history.png")}
+              alt={isDe ? "TypeWhisper Windows-Verlauf" : "TypeWhisper Windows history"}
+              className="rounded-xl border border-border"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </div>
