@@ -63,7 +63,7 @@
   "premiumFeatures.sync.item3": "Nutze den Cloud-Ordner, dem du bereits vertraust",
   "premiumFeatures.dictionary.title": "Wörterbuch-Autokorrektur",
   "premiumFeatures.dictionary.description": "TypeWhisper kann eindeutige Korrekturen nach dem Einfügen lernen und wiederkehrende Wörter, Namen oder Tippfehler beim nächsten Mal automatisch korrigieren.",
-  "premiumFeatures.dictionary.item1": "Lernt nur aus eindeutigen Bearbeitungen",
+  "premiumFeatures.dictionary.item1": "Lernt nur aus eindeutigen Einzelwort-Bearbeitungen",
   "premiumFeatures.dictionary.item2": "Korrigiert wiederkehrende Namen, Fachbegriffe und Schreibfehler",
   "premiumFeatures.dictionary.item3": "Arbeitet mit der bestehenden Wörterbuch-Pipeline zusammen",
   "premiumFeatures.licenseNote": "Premium-Features benötigen eine aktive kommerzielle Lizenz. Die Core-App bleibt Open Source und lokal zuerst.",
