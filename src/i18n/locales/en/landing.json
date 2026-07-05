@@ -63,7 +63,7 @@
   "premiumFeatures.sync.item3": "Use the cloud folder you already trust",
   "premiumFeatures.dictionary.title": "Dictionary autocorrection",
   "premiumFeatures.dictionary.description": "TypeWhisper can learn confident corrections after insertion, then apply them automatically the next time recurring words, names, or typos appear.",
-  "premiumFeatures.dictionary.item1": "Learns only from confident edits",
+  "premiumFeatures.dictionary.item1": "Learns only from confident single-word edits",
   "premiumFeatures.dictionary.item2": "Fixes repeated names, jargon, and misspellings",
   "premiumFeatures.dictionary.item3": "Works alongside the existing dictionary pipeline",
   "premiumFeatures.licenseNote": "Premium features require an active Commercial license. The core app stays open source and local-first.",
