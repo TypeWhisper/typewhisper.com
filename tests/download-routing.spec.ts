@@ -21,9 +21,10 @@ const landingScenarios: LandingScenario[] = [
     name: "Windows",
     userAgent:
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-    expectedLabel: "Download for Windows",
-    expectedHref: /TypeWhisper-win-x64-Setup\.exe$/,
-    opensNewTab: false,
+    expectedLabel: "Install from Microsoft Store",
+    expectedHref:
+      "https://apps.microsoft.com/detail/9pf42zcr0jr0?cid=DevShareMCLPCS&hl=en-US&gl=US",
+    opensNewTab: true,
   },
   {
     name: "iOS",
@@ -57,9 +58,13 @@ for (const scenario of landingScenarios) {
       if (scenario.opensNewTab) {
         await expect(heroCta).toHaveAttribute("target", "_blank");
         await expect(footerCta).toHaveAttribute("target", "_blank");
+        await expect(heroCta).toHaveAttribute("rel", "noopener noreferrer");
+        await expect(footerCta).toHaveAttribute("rel", "noopener noreferrer");
       } else {
         await expect(heroCta).not.toHaveAttribute("target", "_blank");
         await expect(footerCta).not.toHaveAttribute("target", "_blank");
+        await expect(heroCta).not.toHaveAttribute("rel", "noopener noreferrer");
+        await expect(footerCta).not.toHaveAttribute("rel", "noopener noreferrer");
       }
 
       const hrefs = [
@@ -116,11 +121,20 @@ test.describe("release status direct downloads", () => {
       page.getByRole("link", { name: "Download latest release" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
-      page.getByRole("link", { name: "Download latest Windows release" }),
-    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
+      page.getByRole("link", { name: "Install from Microsoft Store" }),
+    ).toHaveAttribute(
+      "href",
+      "https://apps.microsoft.com/detail/9pf42zcr0jr0?cid=DevShareMCLPCS&hl=en-US&gl=US",
+    );
     await expect(
-      page.getByRole("link", { name: "Download latest Windows release" }),
-    ).not.toHaveAttribute("target", "_blank");
+      page.getByRole("link", { name: "Install from Microsoft Store" }),
+    ).toHaveAttribute("target", "_blank");
+    await expect(
+      page.getByRole("link", { name: "Install from Microsoft Store" }),
+    ).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(
+      page.getByRole("link", { name: "Download GitHub installer" }),
+    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
     await expect(
       page.getByRole("link", { name: "Join TestFlight" }),
     ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");
@@ -141,11 +155,20 @@ test.describe("release status direct downloads", () => {
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
     ).not.toHaveAttribute("target", "_blank");
     await expect(
-      page.getByRole("link", { name: "Neuestes Windows-Release herunterladen" }),
-    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
+      page.getByRole("link", { name: "Aus dem Microsoft Store installieren" }),
+    ).toHaveAttribute(
+      "href",
+      "https://apps.microsoft.com/detail/9pf42zcr0jr0?cid=DevShareMCLPCS&hl=de-DE&gl=DE",
+    );
     await expect(
-      page.getByRole("link", { name: "Neuestes Windows-Release herunterladen" }),
-    ).not.toHaveAttribute("target", "_blank");
+      page.getByRole("link", { name: "Aus dem Microsoft Store installieren" }),
+    ).toHaveAttribute("target", "_blank");
+    await expect(
+      page.getByRole("link", { name: "Aus dem Microsoft Store installieren" }),
+    ).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(
+      page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
+    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
     await expect(
       page.getByRole("link", { name: "TestFlight beitreten" }),
     ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");

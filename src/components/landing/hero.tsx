@@ -67,7 +67,6 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
     locale,
     "landing",
   );
-  const downloadOpensNewTab = download.platform === "ios";
 
   const heroScreenshot = screenshotPath(
     locale,
@@ -104,8 +103,8 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             <Button size="pill" asChild>
               <a
                 href={download.href}
-                target={downloadOpensNewTab ? "_blank" : undefined}
-                rel={downloadOpensNewTab ? "noopener noreferrer" : undefined}
+                target={download.opensNewTab ? "_blank" : undefined}
+                rel={download.opensNewTab ? "noopener noreferrer" : undefined}
                 data-testid="landing-hero-download"
                 data-download-social-trigger
               >

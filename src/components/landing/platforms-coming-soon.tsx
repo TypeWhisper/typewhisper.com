@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { iosTestFlightUrl, macDmgUrl, windowsSetupUrl } from "@/lib/platform-download";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import type { Platform } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
@@ -12,9 +12,14 @@ interface PlatformInfo {
   statusClassName: string;
   downloadHref: string;
   downloadLabel: string;
+  downloadOpensNewTab: boolean;
 }
 
 function getPlatforms(locale: Locale): PlatformInfo[] {
+  const macDownload = getPlatformDownloadTarget("mac", locale, "landing");
+  const windowsDownload = getPlatformDownloadTarget("windows", locale, "landing");
+  const iosDownload = getPlatformDownloadTarget("ios", locale, "landing");
+
   return [
     {
       platform: "mac",
@@ -22,8 +27,9 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.mac.description"),
       status: t(locale, "platforms.mac.status"),
       statusClassName: "bg-emerald-500/10 text-emerald-700",
-      downloadHref: macDmgUrl,
-      downloadLabel: t(locale, "platforms.mac.download"),
+      downloadHref: macDownload.href,
+      downloadLabel: macDownload.label,
+      downloadOpensNewTab: macDownload.opensNewTab,
     },
     {
       platform: "windows",
@@ -31,8 +37,9 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.win.description"),
       status: t(locale, "platforms.win.status"),
       statusClassName: "bg-amber-500/10 text-amber-700",
-      downloadHref: windowsSetupUrl,
-      downloadLabel: t(locale, "platforms.win.download"),
+      downloadHref: windowsDownload.href,
+      downloadLabel: windowsDownload.label,
+      downloadOpensNewTab: windowsDownload.opensNewTab,
     },
     {
       platform: "ios",
@@ -40,8 +47,9 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.ios.description"),
       status: t(locale, "platforms.ios.status"),
       statusClassName: "bg-rose-500/10 text-rose-700",
-      downloadHref: iosTestFlightUrl,
-      downloadLabel: t(locale, "platforms.ios.download"),
+      downloadHref: iosDownload.href,
+      downloadLabel: iosDownload.label,
+      downloadOpensNewTab: iosDownload.opensNewTab,
     },
   ];
 }
@@ -73,8 +81,8 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
               <Button size="pill" className="mt-6" asChild>
                 <a
                   href={p.downloadHref}
-                  target={p.platform === "ios" ? "_blank" : undefined}
-                  rel={p.platform === "ios" ? "noopener noreferrer" : undefined}
+                  target={p.downloadOpensNewTab ? "_blank" : undefined}
+                  rel={p.downloadOpensNewTab ? "noopener noreferrer" : undefined}
                   data-download-social-trigger
                 >
                   {p.downloadLabel}

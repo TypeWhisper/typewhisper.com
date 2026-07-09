@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { macDmgUrl, windowsSetupUrl, iosTestFlightUrl } from "@/lib/platform-download";
+import { getWindowsStoreUrl, macDmgUrl, windowsSetupUrl, iosTestFlightUrl } from "@/lib/platform-download";
 
 interface Props {
   locale: Locale;
@@ -14,6 +14,7 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
+const windowsStoreUrl = getWindowsStoreUrl(locale);
 ---
 
 <BaseLayout
@@ -66,7 +67,8 @@ const { locale } = Astro.props;
           {t(locale, "releaseStatus.win.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={windowsSetupUrl} data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
+          <a href={windowsStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
+          <a href={windowsSetupUrl} data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.win.githubInstaller")}</a>
           <a href={localePath(locale, "/docs/windows")} class="text-primary hover:underline">{t(locale, "releaseStatus.win.docs")}</a>
         </div>
       </section>
