@@ -7,6 +7,9 @@ export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
 export const iosTestFlightUrl =
   "https://testflight.apple.com/join/kcCS3hcZ";
+const windowsStoreProductUrl =
+  "https://apps.microsoft.com/detail/9pf42zcr0jr0";
+const windowsStoreCampaignId = "DevShareMCLPCS";
 
 // Direct asset URLs for the latest stable release. Resolved at build time
 // by scripts/fetch-releases.mjs and written to src/data/downloads.json.
@@ -28,6 +31,17 @@ export interface PlatformDownloadTarget {
   href: string;
   label: string;
   platform: Platform;
+  opensNewTab: boolean;
+}
+
+export function getWindowsStoreUrl(locale: Locale): string {
+  const params = new URLSearchParams({
+    cid: windowsStoreCampaignId,
+    hl: locale === "de" ? "de-DE" : "en-US",
+    gl: locale === "de" ? "DE" : "US",
+  });
+
+  return `${windowsStoreProductUrl}?${params.toString()}`;
 }
 
 export function detectPlatformFromUserAgent(userAgent: string): Platform {
@@ -73,15 +87,17 @@ export function getPlatformDownloadTarget(
     switch (platform) {
       case "windows":
         return {
-          href: windowsSetupUrl,
+          href: getWindowsStoreUrl(locale),
           label: t(locale, "platforms.win.download"),
           platform,
+          opensNewTab: true,
         };
       case "ios":
         return {
           href: iosTestFlightUrl,
           label: t(locale, "platforms.ios.download"),
           platform,
+          opensNewTab: true,
         };
       case "mac":
       case "other":
@@ -90,6 +106,7 @@ export function getPlatformDownloadTarget(
           href: macDmgUrl,
           label: t(locale, "platforms.mac.download"),
           platform: platform === "other" ? "mac" : platform,
+          opensNewTab: false,
         };
     }
   }
@@ -97,21 +114,24 @@ export function getPlatformDownloadTarget(
   switch (platform) {
     case "windows":
       return {
-        href: windowsSetupUrl,
+        href: getWindowsStoreUrl(locale),
         label: t(locale, "nav.downloadWindows"),
         platform,
+        opensNewTab: true,
       };
     case "ios":
       return {
         href: iosTestFlightUrl,
         label: t(locale, "nav.downloadIos"),
         platform,
+        opensNewTab: true,
       };
     case "mac":
       return {
         href: macDmgUrl,
         label: t(locale, "nav.downloadMac"),
         platform,
+        opensNewTab: false,
       };
     case "other":
     default:
@@ -119,6 +139,7 @@ export function getPlatformDownloadTarget(
         href: macDmgUrl,
         label: t(locale, "nav.download"),
         platform: "other",
+        opensNewTab: false,
       };
   }
 }

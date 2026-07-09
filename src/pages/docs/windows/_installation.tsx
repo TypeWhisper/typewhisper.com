@@ -1,8 +1,10 @@
 import { Screenshot } from "@/components/ui/screenshot";
 import { screenshotPath, type Locale } from "@/i18n/index";
+import { getWindowsStoreUrl, windowsSetupUrl } from "@/lib/platform-download";
 
 export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
+  const windowsStoreUrl = getWindowsStoreUrl(locale);
 
   const requirements = isDe
     ? [
@@ -20,19 +22,53 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
         "CPU-only inference - no dedicated GPU required. All local processing runs on your CPU using optimized ONNX Runtime with int8 quantization.",
       ];
 
-  const downloadSteps = isDe
+  const storeSteps = isDe
+    ? [
+        <>
+          Öffne die{" "}
+          <a
+            href={windowsStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            Microsoft Store-Seite für TypeWhisper
+          </a>
+          .
+        </>,
+        "Klicke auf Installieren oder öffne die Seite in der Microsoft Store-App.",
+        "Folge dem Store-Dialog. TypeWhisper erscheint danach im Startmenü und im System Tray.",
+      ]
+    : [
+        <>
+          Open the{" "}
+          <a
+            href={windowsStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            Microsoft Store page for TypeWhisper
+          </a>
+          .
+        </>,
+        "Click Install or open the page in the Microsoft Store app.",
+        "Follow the Store dialog. TypeWhisper will then appear in your Start menu and system tray.",
+      ];
+
+  const manualInstallerSteps = isDe
     ? [
         <>
           Lade die Datei{" "}
           <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
             TypeWhisper-Setup.exe
           </code>{" "}
-          aus dem neuesten Release herunter.
+          aus dem neuesten GitHub-Release herunter.
         </>,
         <>
-          Starte den Installer. Windows SmartScreen kann eine Warnung anzeigen,
-          da die App noch nicht code-signiert ist - klicke auf &quot;More
-          info&quot; und dann auf &quot;Run anyway&quot;.
+          Starte den Installer. Windows SmartScreen kann beim manuellen
+          Installer eine Warnung anzeigen - klicke auf &quot;More info&quot;
+          und dann auf &quot;Run anyway&quot;.
         </>,
         "Folge dem Setup-Assistenten, um die Installation abzuschließen.",
         "TypeWhisper startet danach automatisch und erscheint im System Tray.",
@@ -43,12 +79,12 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
           <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
             TypeWhisper-Setup.exe
           </code>{" "}
-          file from the latest release.
+          file from the latest GitHub release.
         </>,
         <>
-          Run the installer. Windows SmartScreen may show a warning since the
-          app is not code-signed yet - click &quot;More info&quot; and then
-          &quot;Run anyway&quot;.
+          Run the installer. Windows SmartScreen may show a warning for the
+          manual installer - click &quot;More info&quot; and then &quot;Run
+          anyway&quot;.
         </>,
         "Follow the setup wizard to complete installation.",
         "TypeWhisper will launch automatically and appear in your system tray.",
@@ -136,23 +172,39 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
           {isDe ? "Download" : "Download"}
         </h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          {isDe ? "Lade den neuesten " : "Download the latest "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            .exe
-          </code>{" "}
-          {isDe ? "Installer von " : "installer from "}
+          {isDe
+            ? "Der offizielle Windows-Download läuft über den Microsoft Store. Verwende den GitHub-Installer nur, wenn der Store für dein Setup nicht verfügbar ist."
+            : "The official Windows download is served through the Microsoft Store. Use the GitHub installer only when the Store is not available for your setup."}
+        </p>
+        <div className="mt-4 flex flex-col gap-2 text-sm">
           <a
-            href="https://github.com/TypeWhisper/typewhisper-win/releases"
+            href={windowsStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline"
           >
-            typewhisper-win releases
+            {isDe ? "Aus dem Microsoft Store installieren" : "Install from Microsoft Store"}
           </a>
-          .
-        </p>
+          <a
+            href={windowsSetupUrl}
+            className="text-primary hover:underline"
+          >
+            {isDe ? "GitHub-Installer herunterladen" : "Download GitHub installer"}
+          </a>
+        </div>
+        <h3 className="mt-5 text-sm font-semibold">
+          {isDe ? "Microsoft Store" : "Microsoft Store"}
+        </h3>
         <ol className="mt-3 space-y-1.5 text-sm text-muted-foreground list-decimal list-inside">
-          {downloadSteps.map((step, index) => (
+          {storeSteps.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ol>
+        <h3 className="mt-5 text-sm font-semibold">
+          {isDe ? "Manueller GitHub-Installer" : "Manual GitHub installer"}
+        </h3>
+        <ol className="mt-3 space-y-1.5 text-sm text-muted-foreground list-decimal list-inside">
+          {manualInstallerSteps.map((step, index) => (
             <li key={index}>{step}</li>
           ))}
         </ol>
@@ -214,8 +266,8 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
         <h2 className="text-lg font-semibold">{isDe ? "Update" : "Update"}</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           {isDe
-            ? "TypeWhisper enthält eingebaute Auto-Updates über Velopack. Wenn eine neue Version verfügbar ist, siehst du einen Hinweis in der App. Updates werden automatisch heruntergeladen und angewendet."
-            : "TypeWhisper includes built-in auto-updates via Velopack. When a new version is available, you will see a notification in the app. Updates are downloaded and applied automatically."}
+            ? "Store-Installationen werden über Microsoft Store-Updates aktualisiert. Wenn du den manuellen GitHub-Installer nutzt, aktualisiert sich TypeWhisper weiterhin über die eingebaute Velopack-Aktualisierung."
+            : "Store installations update through Microsoft Store updates. If you use the manual GitHub installer, TypeWhisper continues to update through the built-in Velopack updater."}
         </p>
       </div>
 

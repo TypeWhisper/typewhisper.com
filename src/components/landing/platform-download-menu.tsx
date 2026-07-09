@@ -1,5 +1,5 @@
 import { ChevronDown, Download, Monitor, Smartphone } from "lucide-react";
-import { macDmgUrl, windowsSetupUrl, iosTestFlightUrl } from "@/lib/platform-download";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 export function PlatformDownloadMenu({
@@ -10,6 +10,9 @@ export function PlatformDownloadMenu({
   label?: string;
 }) {
   const resolvedLabel = label ?? t(locale, "platformMenu.label");
+  const macDownload = getPlatformDownloadTarget("mac", locale, "landing");
+  const windowsDownload = getPlatformDownloadTarget("windows", locale, "landing");
+  const iosDownload = getPlatformDownloadTarget("ios", locale, "landing");
 
   return (
     <details className="group relative w-full sm:w-auto">
@@ -20,7 +23,9 @@ export function PlatformDownloadMenu({
 
       <div className="absolute left-0 top-[calc(100%+0.5rem)] z-20 w-full min-w-[260px] overflow-hidden rounded-xl border bg-popover p-2 text-left shadow-xl sm:w-[280px]">
         <a
-          href={macDmgUrl}
+          href={macDownload.href}
+          target={macDownload.opensNewTab ? "_blank" : undefined}
+          rel={macDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
@@ -28,7 +33,9 @@ export function PlatformDownloadMenu({
           {t(locale, "platformMenu.mac")}
         </a>
         <a
-          href={windowsSetupUrl}
+          href={windowsDownload.href}
+          target={windowsDownload.opensNewTab ? "_blank" : undefined}
+          rel={windowsDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
@@ -36,9 +43,9 @@ export function PlatformDownloadMenu({
           {t(locale, "platformMenu.win")}
         </a>
         <a
-          href={iosTestFlightUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={iosDownload.href}
+          target={iosDownload.opensNewTab ? "_blank" : undefined}
+          rel={iosDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
