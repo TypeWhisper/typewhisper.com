@@ -157,6 +157,19 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
         </div>
 
         <div className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.globalLLMFallbacks.title")}</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc1")}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc2")}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc3")}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.multipleEngines.title")}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {t(locale, "docs.mac.rules.multipleEngines.desc")}
