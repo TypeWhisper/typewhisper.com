@@ -152,7 +152,14 @@ const trust = ["local", "gpl", "noTelemetry"];
               {t(locale, "business.pricing.teamDevices")}
             </p>
             <Button asChild className="mt-4 w-full" variant="outline">
-              <a href={teamTier.checkout.monthly} target="_blank" rel="noopener noreferrer">
+              <a
+                href={teamTier.checkout.monthly}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-checkout-tier="team"
+                data-checkout-billing-period="monthly"
+                data-tracking-placement="business"
+              >
                 {t(locale, "business.pricing.startTeam")}
               </a>
             </Button>
@@ -199,7 +206,7 @@ const trust = ["local", "gpl", "noTelemetry"];
       </p>
       <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Button size="pill" asChild>
-          <a href={macDmgUrl} data-download-social-trigger>
+          <a href={macDmgUrl} data-download-social-trigger data-download-platform="mac" data-download-target="mac_dmg" data-tracking-placement="business">
             {t(locale, "business.finalCta.download")}
           </a>
         </Button>

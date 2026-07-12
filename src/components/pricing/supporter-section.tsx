@@ -55,7 +55,14 @@ export function SupporterSection({ locale }: { locale: Locale }) {
                 <CardContent className="flex flex-1 flex-col justify-between gap-4">
                   <p className="text-sm text-muted-foreground">{description}</p>
                   <Button asChild variant="outline" size="sm">
-                    <a href={tier.checkout} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={tier.checkout}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-checkout-tier={tier.id}
+                      data-checkout-billing-period="one_time"
+                      data-tracking-placement="pricing"
+                    >
                       {t(locale, "supporter.become")}
                     </a>
                   </Button>

@@ -31,6 +31,9 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
               target="_blank"
               rel="noopener noreferrer"
               data-download-social-trigger
+              data-download-platform="ios"
+              data-download-target="ios_testflight"
+              data-tracking-placement="docs"
             >
               {isDe ? "TestFlight Alpha beitreten" : "Join TestFlight Alpha"}
               <ArrowUpRight className="size-4" />
@@ -62,6 +65,9 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-download-social-trigger
+                    data-download-platform="ios"
+                    data-download-target="ios_testflight"
+                    data-tracking-placement="docs"
                     className="underline hover:text-foreground"
                   >
                     {isDe ? "TestFlight-Einladungslink" : "TestFlight invite link"}

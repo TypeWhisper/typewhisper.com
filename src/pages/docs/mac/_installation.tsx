@@ -10,6 +10,14 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
     navigator.clipboard.writeText(
       "brew install --cask typewhisper",
     );
+    window.plausible?.("Download", {
+      props: {
+        platform: "mac",
+        target: "mac_homebrew",
+        placement: "docs",
+        locale,
+      },
+    });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -49,6 +57,9 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
               href="https://github.com/TypeWhisper/typewhisper-mac/releases"
               target="_blank"
               rel="noopener noreferrer"
+              data-download-platform="mac"
+              data-download-target="mac_github_releases"
+              data-tracking-placement="docs"
               className="text-primary hover:underline"
             >
               {t(locale, "docs.mac.installation.download.linkText")}

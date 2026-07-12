@@ -134,7 +134,14 @@ function TierCard({
           </span>
         </p>
         <Button asChild size="sm">
-          <a href={checkout} target="_blank" rel="noopener noreferrer">
+          <a
+            href={checkout}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-checkout-tier={tier.id}
+            data-checkout-billing-period={period}
+            data-tracking-placement="pricing"
+          >
             {t(locale, "pricing.tiers.checkout")}
           </a>
         </Button>

@@ -27,6 +27,10 @@ export function PlatformDownloadMenu({
           target={macDownload.opensNewTab ? "_blank" : undefined}
           rel={macDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
+          data-download-platform={macDownload.platform}
+          data-download-target={macDownload.target}
+          data-download-version={macDownload.version}
+          data-tracking-placement="platform_menu"
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Download className="size-4" />
@@ -37,6 +41,9 @@ export function PlatformDownloadMenu({
           target={windowsDownload.opensNewTab ? "_blank" : undefined}
           rel={windowsDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
+          data-download-platform={windowsDownload.platform}
+          data-download-target={windowsDownload.target}
+          data-tracking-placement="platform_menu"
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Monitor className="size-4" />
@@ -47,6 +54,9 @@ export function PlatformDownloadMenu({
           target={iosDownload.opensNewTab ? "_blank" : undefined}
           rel={iosDownload.opensNewTab ? "noopener noreferrer" : undefined}
           data-download-social-trigger
+          data-download-platform={iosDownload.platform}
+          data-download-target={iosDownload.target}
+          data-tracking-placement="platform_menu"
           className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
         >
           <Smartphone className="size-4" />
