@@ -30,6 +30,9 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
             href={windowsStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-download-platform="windows"
+            data-download-target="windows_store"
+            data-tracking-placement="docs"
             className="text-primary hover:underline"
           >
             Microsoft Store-Seite für TypeWhisper
@@ -46,6 +49,9 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
             href={windowsStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-download-platform="windows"
+            data-download-target="windows_store"
+            data-tracking-placement="docs"
             className="text-primary hover:underline"
           >
             Microsoft Store page for TypeWhisper
@@ -181,12 +187,18 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
             href={windowsStoreUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-download-platform="windows"
+            data-download-target="windows_store"
+            data-tracking-placement="docs"
             className="text-primary hover:underline"
           >
             {isDe ? "Aus dem Microsoft Store installieren" : "Install from Microsoft Store"}
           </a>
           <a
             href={windowsSetupUrl}
+            data-download-platform="windows"
+            data-download-target="windows_github_installer"
+            data-tracking-placement="docs"
             className="text-primary hover:underline"
           >
             {isDe ? "GitHub-Installer herunterladen" : "Download GitHub installer"}

@@ -56,7 +56,7 @@ const windowsStoreUrl = getWindowsStoreUrl(locale);
           {t(locale, "releaseStatus.mac.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={macDmgUrl} data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.mac.download")}</a>
+          <a href={macDmgUrl} data-download-social-trigger data-download-platform="mac" data-download-target="mac_dmg" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.mac.download")}</a>
           <a href={localePath(locale, "/docs/mac")} class="text-primary hover:underline">{t(locale, "releaseStatus.mac.docs")}</a>
         </div>
       </section>
@@ -67,8 +67,8 @@ const windowsStoreUrl = getWindowsStoreUrl(locale);
           {t(locale, "releaseStatus.win.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={windowsStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
-          <a href={windowsSetupUrl} data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.win.githubInstaller")}</a>
+          <a href={windowsStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="windows" data-download-target="windows_store" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
+          <a href={windowsSetupUrl} data-download-social-trigger data-download-platform="windows" data-download-target="windows_github_installer" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.win.githubInstaller")}</a>
           <a href={localePath(locale, "/docs/windows")} class="text-primary hover:underline">{t(locale, "releaseStatus.win.docs")}</a>
         </div>
       </section>
@@ -79,7 +79,7 @@ const windowsStoreUrl = getWindowsStoreUrl(locale);
           {t(locale, "releaseStatus.ios.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={iosTestFlightUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
+          <a href={iosTestFlightUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="ios" data-download-target="ios_testflight" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
           <a href={localePath(locale, "/docs/ios")} class="text-primary hover:underline">{t(locale, "releaseStatus.ios.docs")}</a>
         </div>
       </section>

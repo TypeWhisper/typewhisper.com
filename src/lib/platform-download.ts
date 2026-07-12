@@ -1,5 +1,6 @@
 import downloads from "@/data/downloads.json";
 import { t, type Locale } from "@/i18n/index";
+import type { DownloadTarget } from "@/lib/attribution";
 
 export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
@@ -31,6 +32,8 @@ export interface PlatformDownloadTarget {
   href: string;
   label: string;
   platform: Platform;
+  target: DownloadTarget;
+  version?: string;
   opensNewTab: boolean;
 }
 
@@ -90,6 +93,7 @@ export function getPlatformDownloadTarget(
           href: getWindowsStoreUrl(locale),
           label: t(locale, "platforms.win.download"),
           platform,
+          target: "windows_store",
           opensNewTab: true,
         };
       case "ios":
@@ -97,6 +101,7 @@ export function getPlatformDownloadTarget(
           href: iosTestFlightUrl,
           label: t(locale, "platforms.ios.download"),
           platform,
+          target: "ios_testflight",
           opensNewTab: true,
         };
       case "mac":
@@ -106,6 +111,8 @@ export function getPlatformDownloadTarget(
           href: macDmgUrl,
           label: t(locale, "platforms.mac.download"),
           platform: platform === "other" ? "mac" : platform,
+          target: "mac_dmg",
+          version: downloads.mac.version,
           opensNewTab: false,
         };
     }
@@ -117,6 +124,7 @@ export function getPlatformDownloadTarget(
         href: getWindowsStoreUrl(locale),
         label: t(locale, "nav.downloadWindows"),
         platform,
+        target: "windows_store",
         opensNewTab: true,
       };
     case "ios":
@@ -124,6 +132,7 @@ export function getPlatformDownloadTarget(
         href: iosTestFlightUrl,
         label: t(locale, "nav.downloadIos"),
         platform,
+        target: "ios_testflight",
         opensNewTab: true,
       };
     case "mac":
@@ -131,6 +140,8 @@ export function getPlatformDownloadTarget(
         href: macDmgUrl,
         label: t(locale, "nav.downloadMac"),
         platform,
+        target: "mac_dmg",
+        version: downloads.mac.version,
         opensNewTab: false,
       };
     case "other":
@@ -138,7 +149,9 @@ export function getPlatformDownloadTarget(
       return {
         href: macDmgUrl,
         label: t(locale, "nav.download"),
-        platform: "other",
+        platform: "mac",
+        target: "mac_dmg",
+        version: downloads.mac.version,
         opensNewTab: false,
       };
   }

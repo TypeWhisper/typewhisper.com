@@ -16,13 +16,14 @@ const { locale } = Astro.props;
 const securityReviewHref = localePath(locale, "/business/legal-security-review");
 
 type PrivacySection =
-  | { id: "overview" | "dataCollection" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
+  | { id: "overview" | "dataCollection" | "analytics" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
   | { id: "localStorage"; kind: "list" }
   | { id: "securityReview"; kind: "link" };
 
 const sections: PrivacySection[] = [
   { id: "overview", kind: "simple" },
   { id: "dataCollection", kind: "simple" },
+  { id: "analytics", kind: "simple" },
   { id: "localStorage", kind: "list" },
   { id: "network", kind: "simple" },
   { id: "thirdParty", kind: "simple" },

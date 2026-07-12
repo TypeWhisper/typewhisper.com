@@ -118,6 +118,9 @@ export default function UseCasesIndex({
                   <a
                     href={macDmgUrl}
                     data-download-social-trigger
+                    data-download-platform="mac"
+                    data-download-target="mac_dmg"
+                    data-tracking-placement="use_case"
                     className="inline-flex items-center gap-1.5"
                   >
                     {t(locale, "useCases.cta.download")}

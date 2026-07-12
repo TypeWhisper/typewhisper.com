@@ -118,6 +118,9 @@ export function UseCaseHero({
               <a
                 href={macDmgUrl}
                 data-download-social-trigger
+                data-download-platform="mac"
+                data-download-target="mac_dmg"
+                data-tracking-placement="use_case"
               >
                 {t(locale, "useCases.cta.download")}
               </a>

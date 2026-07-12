@@ -26,6 +26,10 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
                 rel={download.opensNewTab ? "noopener noreferrer" : undefined}
                 data-testid="landing-footer-download"
                 data-download-social-trigger
+                data-download-platform={download.platform}
+                data-download-target={download.target}
+                data-download-version={download.version}
+                data-tracking-placement="landing"
               >
                 {download.label}
               </a>

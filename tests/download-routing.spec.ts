@@ -82,9 +82,12 @@ test("download clicks show the social follow banner", async ({ page }) => {
   await page.goto("/en/");
 
   await page.evaluate(() => {
-    document
-      .querySelector('[data-testid="landing-hero-download"]')
-      ?.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    const element = document.querySelector('[data-testid="landing-hero-download"]');
+    element?.addEventListener("click", (event) => event.preventDefault(), {
+      once: true,
+      capture: true,
+    });
+    element?.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
   });
 
   const banner = page.getByTestId("download-social-banner");
@@ -106,6 +109,94 @@ test("download clicks show the social follow banner", async ({ page }) => {
   await expect(banner.locator("[data-social-icon='reddit'] svg")).toBeVisible();
   await expect(banner.locator("[data-social-icon='discord'] svg")).toBeVisible();
   await expect(banner.locator("[data-social-icon='github'] svg")).toBeVisible();
+});
+
+test("attributes download and checkout events without blocking navigation", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const events: unknown[][] = [];
+    Object.assign(window, {
+      __plausibleEvents: events,
+      plausible: (...args: unknown[]) => events.push(args),
+    });
+  });
+
+  await page.goto(
+    "/en/?utm_source=reddit&utm_medium=social&utm_campaign=launch",
+  );
+  await page.getByTestId("landing-hero-download").evaluate((element) => {
+    element.addEventListener("click", (event) => event.preventDefault(), {
+      once: true,
+      capture: true,
+    });
+    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+
+  const downloadEvents = await page.evaluate(
+    () => (window as typeof window & { __plausibleEvents: unknown[][] }).__plausibleEvents,
+  );
+  expect(downloadEvents).toHaveLength(1);
+  expect(downloadEvents[0]).toEqual([
+    "Download",
+    {
+      props: expect.objectContaining({
+        platform: "mac",
+        target: "mac_dmg",
+        placement: "hero",
+        locale: "en",
+      }),
+    },
+  ]);
+
+  await page.goto("/en/pricing");
+  const checkout = page.locator("[data-checkout-tier='individual'][data-checkout-billing-period='monthly']");
+  await checkout.evaluate((element) => {
+    element.addEventListener("click", (event) => event.preventDefault(), {
+      once: true,
+      capture: true,
+    });
+    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+
+  const checkoutURL = new URL((await checkout.getAttribute("href"))!);
+  expect(checkoutURL.searchParams.get("utm_source")).toBe("reddit");
+  expect(checkoutURL.searchParams.get("utm_medium")).toBe("social");
+  expect(checkoutURL.searchParams.get("utm_campaign")).toBe("launch");
+  expect(checkoutURL.searchParams.get("utm_content")).toBe(
+    "website_pricing_individual_monthly",
+  );
+
+  const allEvents = await page.evaluate(
+    () => (window as typeof window & { __plausibleEvents: unknown[][] }).__plausibleEvents,
+  );
+  expect(allEvents.at(-1)).toEqual([
+    "Checkout Started",
+    {
+      props: {
+        tier: "individual",
+        billing_period: "monthly",
+        placement: "pricing",
+        locale: "en",
+      },
+    },
+  ]);
+});
+
+test("uses website checkout defaults when no campaign is present", async ({ page }) => {
+  await page.goto("/en/pricing");
+  const checkout = page.locator("[data-checkout-tier='bronze']");
+  await checkout.evaluate((element) => {
+    element.addEventListener("click", (event) => event.preventDefault(), {
+      once: true,
+      capture: true,
+    });
+    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+
+  const checkoutURL = new URL((await checkout.getAttribute("href"))!);
+  expect(checkoutURL.searchParams.get("utm_source")).toBe("typewhisper_website");
+  expect(checkoutURL.searchParams.get("utm_medium")).toBe("web");
 });
 
 test.describe("release status direct downloads", () => {

@@ -89,6 +89,10 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 target={download.opensNewTab ? "_blank" : undefined}
                 rel={download.opensNewTab ? "noopener noreferrer" : undefined}
                 data-download-social-trigger
+                data-download-platform={download.platform}
+                data-download-target={download.target}
+                data-download-version={download.version}
+                data-tracking-placement="header"
               >
                 <Download className="size-4" />
                 {download.label}
@@ -182,6 +186,10 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                       target={download.opensNewTab ? "_blank" : undefined}
                       rel={download.opensNewTab ? "noopener noreferrer" : undefined}
                       data-download-social-trigger
+                      data-download-platform={download.platform}
+                      data-download-target={download.target}
+                      data-download-version={download.version}
+                      data-tracking-placement="header"
                       onClick={() => setMobileOpen(false)}
                     >
                       <Download className="size-4" />

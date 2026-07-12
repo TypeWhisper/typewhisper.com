@@ -72,6 +72,16 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
     {structuredData && (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     )}
+    {import.meta.env.PROD && (
+      <script is:inline defer data-domain="typewhisper.com" src="https://plausible.io/js/script.js"></script>
+    )}
+    {import.meta.env.PROD && (
+      <script is:inline>
+        window.plausible = window.plausible || function() {
+          (window.plausible.q = window.plausible.q || []).push(arguments);
+        };
+      </script>
+    )}
     <!-- Theme init (prevent flash) -->
     <script is:inline>
       (function(){
@@ -115,6 +125,11 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
         var selector = revealClasses.map(function(c) { return '.' + c.hidden; }).join(', ');
         document.querySelectorAll(selector).forEach(function(el) { observer.observe(el); });
       })();
+    </script>
+    <script>
+      import { initializeAttributionTracking } from "@/lib/attribution";
+
+      initializeAttributionTracking();
     </script>
   </body>
 </html>

@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import type { Platform } from "@/lib/platform-download";
+import type { DownloadTarget } from "@/lib/attribution";
 import { t, type Locale } from "@/i18n/index";
 
 interface PlatformInfo {
@@ -12,6 +13,8 @@ interface PlatformInfo {
   statusClassName: string;
   downloadHref: string;
   downloadLabel: string;
+  downloadTarget: DownloadTarget;
+  downloadVersion?: string;
   downloadOpensNewTab: boolean;
 }
 
@@ -29,6 +32,8 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       statusClassName: "bg-emerald-500/10 text-emerald-700",
       downloadHref: macDownload.href,
       downloadLabel: macDownload.label,
+      downloadTarget: macDownload.target,
+      downloadVersion: macDownload.version,
       downloadOpensNewTab: macDownload.opensNewTab,
     },
     {
@@ -39,6 +44,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       statusClassName: "bg-amber-500/10 text-amber-700",
       downloadHref: windowsDownload.href,
       downloadLabel: windowsDownload.label,
+      downloadTarget: windowsDownload.target,
       downloadOpensNewTab: windowsDownload.opensNewTab,
     },
     {
@@ -49,6 +55,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       statusClassName: "bg-rose-500/10 text-rose-700",
       downloadHref: iosDownload.href,
       downloadLabel: iosDownload.label,
+      downloadTarget: iosDownload.target,
       downloadOpensNewTab: iosDownload.opensNewTab,
     },
   ];
@@ -84,6 +91,10 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
                   target={p.downloadOpensNewTab ? "_blank" : undefined}
                   rel={p.downloadOpensNewTab ? "noopener noreferrer" : undefined}
                   data-download-social-trigger
+                  data-download-platform={p.platform}
+                  data-download-target={p.downloadTarget}
+                  data-download-version={p.downloadVersion}
+                  data-tracking-placement="landing"
                 >
                   {p.downloadLabel}
                   <ArrowUpRight className="size-4" />
