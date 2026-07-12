@@ -83,7 +83,11 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
         window.plausible.init = window.plausible.init || function(options) {
           window.plausible.o = options || {};
         };
-        window.plausible.init();
+        window.plausible.init({
+          formSubmissions: false,
+          fileDownloads: false,
+          outboundLinks: false,
+        });
       </script>
     )}
     <!-- Theme init (prevent flash) -->
