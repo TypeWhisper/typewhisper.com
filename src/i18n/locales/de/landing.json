@@ -70,6 +70,8 @@
   "premiumFeatures.cta": "Premium-Lizenz ansehen",
   "howItWorks.title": "Sieh es in Aktion.",
   "howItWorks.caption": "Hotkey drücken. Sprechen. Text erscheint.",
+  "howItWorks.windows.title": "TypeWhisper unter Windows einrichten.",
+  "howItWorks.windows.caption": "Vom Microsoft Store bis zum ersten systemweiten Diktat - in knapp zwei Minuten.",
   "howItWorks.videoFallback": "Dein Browser unterstützt das Video-Tag nicht.",
   "engineComparison.title": "Wähle deine Engine",
   "engineComparison.subtitle.mac": "Sechs Sprach-Engines - drei integriert, weitere über Add-ons.",
