@@ -131,9 +131,13 @@ test.describe("localized landing video", () => {
         media.addEventListener("loadedmetadata", () => resolve(media.duration), {
           once: true,
         });
-        media.addEventListener("error", () => reject(media.error), {
-          once: true,
-        });
+        media.addEventListener(
+          "error",
+          () => reject(new Error(media.error?.message || "Media load failed")),
+          {
+            once: true,
+          },
+        );
       });
     });
 
