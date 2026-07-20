@@ -82,6 +82,11 @@ test.describe("localized landing video", () => {
   test("German landing page switches to the setup video with the Windows tab", async ({
     page,
   }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "userAgent", {
+        get: () => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+      });
+    });
     const youtubeRequests: string[] = [];
     page.on("request", (request) => {
       if (/youtube|googlevideo|ytimg/i.test(request.url())) {
@@ -101,6 +106,10 @@ test.describe("localized landing video", () => {
       "/demo-de.mp4",
     );
     await expect(video.locator("track")).toHaveCount(0);
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-landing-platform",
+      "mac",
+    );
 
     await page.getByTestId("landing-hero-tab-windows").click();
 

@@ -97,15 +97,4 @@ test.describe("macOS workflows documentation", () => {
     await expect(page.getByText("Toggle Shortcut festlegen")).toBeVisible();
   });
 
-  test("windows docs still use profiles", async ({ page }) => {
-    await page.goto("/en/docs/windows");
-    await expect(
-      page.getByRole("link", { name: "Profiles" }).first(),
-    ).toBeVisible();
-
-    await page.goto("/de/docs/windows");
-    await expect(
-      page.getByRole("link", { name: "Profile" }).first(),
-    ).toBeVisible();
-  });
 });

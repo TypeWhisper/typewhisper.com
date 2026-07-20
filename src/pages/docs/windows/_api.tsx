@@ -1,297 +1,166 @@
-import type { Locale } from "@/i18n/index";
+import { Screenshot } from "@/components/ui/screenshot";
+import { screenshotPath, type Locale } from "@/i18n/index";
+
+type Endpoint = [method: string, path: string, descriptionDe: string, descriptionEn: string];
+
+const endpoints: Endpoint[] = [
+  ["GET", "/v1/status", "Server-, Engine- und Modellstatus", "Server, engine, and model status"],
+  ["GET", "/v1/models", "Verfügbare lokale und Cloud-Modelle", "Available local and cloud models"],
+  ["POST", "/v1/transcribe", "Multipart- oder Raw-Audio transkribieren", "Transcribe multipart or raw audio"],
+  ["POST", "/v1/transcribe/local-file", "Lokalen Windows-Dateipfad transkribieren", "Transcribe a local Windows file path"],
+  ["GET", "/v1/history", "Verlauf durchsuchen und seitenweise lesen", "Search and paginate history"],
+  ["DELETE", "/v1/history", "Verlaufseintrag anhand seiner ID löschen", "Delete a history entry by ID"],
+  ["POST", "/v1/dictation/start", "Diktataufnahme starten", "Start dictation recording"],
+  ["POST", "/v1/dictation/stop", "Diktataufnahme beenden", "Stop dictation recording"],
+  ["GET", "/v1/dictation/status", "Aktuellen Diktatstatus lesen", "Read current dictation state"],
+  ["GET", "/v1/dictation/transcription", "Diktatergebnis über die Session-ID abrufen", "Poll a dictation result by session ID"],
+  ["POST", "/v1/recorder/start", "Recorder-Sitzung starten", "Start a recorder session"],
+  ["POST", "/v1/recorder/stop", "Recorder-Sitzung stoppen", "Stop a recorder session"],
+  ["GET", "/v1/recorder/status", "Recorder-Status lesen", "Read recorder state"],
+  ["GET", "/v1/recorder/session", "Recorder-Sitzung über ihre ID lesen", "Read a recorder session by ID"],
+  ["GET", "/v1/dictionary/terms", "Aktivierte Wörterbuchbegriffe lesen", "List enabled dictionary terms"],
+  ["PUT", "/v1/dictionary/terms", "Begriffe ergänzen oder ersetzen", "Append or replace dictionary terms"],
+  ["DELETE", "/v1/dictionary/terms", "Einen Begriff löschen", "Delete one dictionary term"],
+  ["GET", "/v1/dictionary/corrections", "Aktivierte Korrekturen lesen", "List enabled dictionary corrections"],
+  ["PUT", "/v1/dictionary/corrections", "Eine Korrektur anlegen oder aktualisieren", "Create or update a correction"],
+  ["DELETE", "/v1/dictionary/corrections", "Eine Korrektur löschen", "Delete a correction"],
+];
 
 export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
 
-  const optionalParameters = isDe
-    ? [
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            language
-          </code>{" "}
-          - ISO-639-1-Code (z.B.{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            en
-          </code>
-          ,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            de
-          </code>
-          ). Weglassen für automatische Erkennung.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            task
-          </code>{" "}
-          -{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            transcribe
-          </code>{" "}
-          (Standard) oder{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            translate
-          </code>
-          .
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            target_language
-          </code>{" "}
-          - ISO-639-1-Code für die Zielsprache der Übersetzung (z.B.{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            de
-          </code>
-          ,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            fr
-          </code>
-          ). Wird mit Canary oder Marian verwendet.
-        </>,
-      ]
-    : [
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            language
-          </code>{" "}
-          - ISO 639-1 code (e.g.,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            en
-          </code>
-          ,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            de
-          </code>
-          ). Omit for auto-detection.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            task
-          </code>{" "}
-          -{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            transcribe
-          </code>{" "}
-          (default) or{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            translate
-          </code>
-          .
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            target_language
-          </code>{" "}
-          - ISO 639-1 code for translation target language (e.g.,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            de
-          </code>
-          ,{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            fr
-          </code>
-          ). Used with Canary or Marian translation.
-        </>,
-      ];
-
-  const commonErrorCodes = isDe
-    ? [
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            400
-          </code>{" "}
-          - Fehlendes oder ungültiges{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            file
-          </code>{" "}
-          -Feld, nicht unterstütztes Audioformat oder ungültiger Parameterwert.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            503
-          </code>{" "}
-          - Kein Modell ist geladen. Lade ein Modell herunter und aktiviere es
-          zuerst in den Einstellungen.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            500
-          </code>{" "}
-          - Interner Fehler während der Transkription. Prüfe die App-Logs für
-          Details.
-        </>,
-      ]
-    : [
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            400
-          </code>{" "}
-          - Missing or invalid{" "}
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            file
-          </code>{" "}
-          field, unsupported audio format, or invalid parameter value.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            503
-          </code>{" "}
-          - No model is loaded. Download and activate a model in Settings first.
-        </>,
-        <>
-          <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-            500
-          </code>{" "}
-          - Internal error during transcription. Check the app logs for details.
-        </>,
-      ];
-
   return (
     <div>
-      <h1 className="font-display text-3xl font-bold tracking-tight">
-        HTTP API
-      </h1>
+      <h1 className="font-display text-3xl font-bold tracking-tight">HTTP API</h1>
       <p className="mt-3 text-muted-foreground">
         {isDe
-          ? "TypeWhisper enthält eine lokale REST-API für die Integration mit externen Tools und Skripten."
-          : "TypeWhisper includes a local REST API for integration with external tools and scripts."}
+          ? "Steuere Transkription, Diktat, Recorder, Verlauf und Wörterbuch über eine lokale HTTP-Schnittstelle."
+          : "Control transcription, dictation, recorder, history, and dictionary through a local HTTP interface."}
       </p>
 
-      <div className="mt-4 rounded-lg border border-yellow-500/30 bg-yellow-500/5 p-4">
-        <p className="text-sm text-muted-foreground">
-          <strong>{isDe ? "Hinweis:" : "Note:"}</strong>{" "}
-          {isDe
-            ? "Die API ist standardmäßig deaktiviert. Aktiviere sie unter Settings > API und konfiguriere den Port (Standard: 9876). Die API akzeptiert nur Verbindungen von localhost."
-            : "The API is disabled by default. Enable it in Settings > API and configure the port (default: 9876). The API only accepts connections from localhost."}
-        </p>
+      <div className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-muted-foreground">
+        <strong className="text-foreground">{isDe ? "Nur lokal:" : "Local only:"}</strong>{" "}
+        {isDe
+          ? "Der Server bindet ausschließlich an localhost beziehungsweise 127.0.0.1. Er ist standardmäßig deaktiviert und verwendet Port 8978."
+          : "The server binds only to localhost and 127.0.0.1. It is disabled by default and uses port 8978."}
       </div>
 
       <div className="mt-8 space-y-6">
-        <div className="rounded-2xl bg-card p-6">
+        <section className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            {isDe ? "Status prüfen" : "Check Status"}
+            {isDe ? "Server aktivieren" : "Enable the server"}
           </h2>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <p className="text-muted-foreground"># Check if the API is ready</p>
-            <p>curl http://localhost:9876/v1/status</p>
+          <ol className="mt-3 list-inside list-decimal space-y-2 text-sm text-muted-foreground">
+            <li>{isDe ? "Öffne Einstellungen > Erweitert > API Server." : "Open Settings > Advanced > API Server."}</li>
+            <li>{isDe ? "Aktiviere den API-Server und behalte Port 8978 oder trage einen freien lokalen Port ein." : "Enable the API server and keep port 8978, or choose another available local port."}</li>
+            <li>{isDe ? "Prüfe den Status in PowerShell:" : "Check the status from PowerShell:"}</li>
+          </ol>
+          <div className="mt-4 overflow-x-auto rounded-md bg-background p-4 font-mono text-sm">
+            curl.exe http://localhost:8978/v1/status
           </div>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <pre className="text-muted-foreground">{`{
-  "status": "ready",
-  "engine": "parakeet",
-  "model": "nvidia_parakeet-tdt-0.6b-v2",
-  "supports_streaming": false,
-  "supports_translation": true
-}`}</pre>
-          </div>
-        </div>
+          <Screenshot
+            src={screenshotPath(locale, "/screenshots/windows/advanced.png")}
+            alt={isDe ? "API-Server-Einstellungen im Bereich Erweitert" : "API server settings in the Advanced section"}
+            className="mt-5 aspect-[31/20] w-full rounded-xl border border-border object-cover"
+            loading="eager"
+          />
+        </section>
 
-        <div className="rounded-2xl bg-card p-6">
+        <section className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            {isDe ? "Audio transkribieren" : "Transcribe Audio"}
+            {isDe ? "Discovery und Token" : "Discovery and token"}
           </h2>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <p className="text-muted-foreground">
-              # Send an audio file for transcription
-            </p>
-            <p>curl -X POST http://localhost:9876/v1/transcribe \</p>
-            <p className="pl-4">-F &quot;file=@recording.wav&quot; \</p>
-            <p className="pl-4">-F &quot;language=en&quot;</p>
-          </div>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <pre className="text-muted-foreground">{`{
-  "text": "Hello, world!",
-  "language": "en",
-  "duration": 2.5,
-  "processing_time": 0.8,
-  "engine": "parakeet",
-  "model": "nvidia_parakeet-tdt-0.6b-v2"
-}`}</pre>
-          </div>
-          <div className="mt-4">
-            <h3 className="text-sm font-semibold">
-              {isDe ? "Optionale Parameter" : "Optional Parameters"}
-            </h3>
-            <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
-              {optionalParameters.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">
-            {isDe ? "Modelle auflisten" : "List Models"}
-          </h2>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <p className="text-muted-foreground">
-              # Get available models (local + cloud)
-            </p>
-            <p>curl http://localhost:9876/v1/models</p>
-          </div>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <pre className="text-muted-foreground">{`{
-  "models": [
-    {
-      "id": "nvidia_parakeet-tdt-0.6b-v2",
-      "engine": "parakeet",
-      "downloaded": true,
-      "active": true
-    },
-    {
-      "id": "nvidia_canary-180m-flash",
-      "engine": "canary",
-      "downloaded": true,
-      "active": false
-    },
-    {
-      "id": "whisper-large-v3",
-      "engine": "groq",
-      "downloaded": true,
-      "active": false
-    },
-    {
-      "id": "gpt-4o-transcribe",
-      "engine": "openai",
-      "downloaded": true,
-      "active": false
-    }
-  ]
-}`}</pre>
-          </div>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {isDe
-              ? "Cloud-Modelle erscheinen, sobald du in den Einstellungen einen API-Key für den jeweiligen Anbieter konfiguriert hast."
-              : "Cloud models appear once you have configured an API key for the respective provider in Settings."}
+          <p className="mt-2 text-sm text-muted-foreground">
+            {isDe ? "Beim Start schreibt der Server zwei Discovery-Dateien nach " : "When it starts, the server writes two discovery files to "}
+            <code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs">%LOCALAPPDATA%\TypeWhisper-UserData</code>
+            {isDe ? ": " : ": "}
+            <code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs">api-discovery.json</code>
+            {" "}
+            {isDe ? "mit Version, Port und Token sowie die ältere Datei " : "with version, port, and token, plus the legacy "}
+            <code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs">api-port</code>.
           </p>
-        </div>
+          <pre className="mt-4 overflow-x-auto rounded-md bg-background p-4 font-mono text-sm text-muted-foreground">{`{
+  "version": 1,
+  "port": 8978,
+  "token": "..."
+}`}</pre>
+          <p className="mt-4 text-sm text-muted-foreground">
+            {isDe
+              ? "Token-Authentifizierung ist optional. Wenn „API-Token erforderlich“ aktiv ist, bleibt nur /v1/status öffentlich. Sende den Token bei allen anderen Anfragen als Bearer-Token oder im Header X-TypeWhisper-API-Token."
+              : "Token authentication is optional. When Require API Token is enabled, only /v1/status remains public. Send the token with every other request as a bearer token or the X-TypeWhisper-API-Token header."}
+          </p>
+          <div className="mt-4 overflow-x-auto rounded-md bg-background p-4 font-mono text-xs leading-6">
+            <p>$discovery = Get-Content "$env:LOCALAPPDATA\TypeWhisper-UserData\api-discovery.json" | ConvertFrom-Json</p>
+            <p>curl.exe -H "Authorization: Bearer $($discovery.token)" "http://localhost:$($discovery.port)/v1/models"</p>
+          </div>
+        </section>
 
-        <div className="rounded-2xl bg-card p-6">
+        <section className="rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">
-            {isDe ? "Fehlerantworten" : "Error Responses"}
+            {isDe ? "Audio transkribieren" : "Transcribe audio"}
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {isDe
-              ? "Die API gibt Standard-HTTP-Statuscodes mit einem JSON-Fehlerkörper zurück:"
-              : "The API returns standard HTTP status codes with a JSON error body:"}
+              ? "Sende eine Datei als multipart/form-data. language und language_hint schließen sich gegenseitig aus; language_hint darf mehrfach und in Prioritätsreihenfolge vorkommen."
+              : "Send a file as multipart/form-data. language and language_hint are mutually exclusive; language_hint may be repeated in priority order."}
           </p>
-          <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-            <pre className="text-muted-foreground">{`{
-  "error": "No model loaded",
-  "code": "MODEL_NOT_LOADED"
-}`}</pre>
+          <pre className="mt-4 overflow-x-auto rounded-md bg-background p-4 font-mono text-sm">{`curl.exe -X POST http://localhost:8978/v1/transcribe \`
+  -F "file=@recording.wav" \`
+  -F "language_hint=de" \`
+  -F "language_hint=en" \`
+  -F "response_format=verbose_json"`}</pre>
+          <p className="mt-4 text-sm text-muted-foreground">
+            {isDe
+              ? "Weitere Felder: task (transcribe oder translate), target_language, prompt, engine und model. Mit await_download=1 wartet die Anfrage bei unterstützten lokalen Engines auf Download oder Wiederherstellung des Modells."
+              : "Additional fields: task (transcribe or translate), target_language, prompt, engine, and model. Add await_download=1 to wait for a supported local engine to download or restore the model."}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {isDe
+              ? "Für bereits lokale Dateien akzeptiert /v1/transcribe/local-file einen Windows-Pfad als JSON. Dadurch muss eine große Datei nicht nochmals durch den API-Prozess hochgeladen werden."
+              : "For files already on this machine, /v1/transcribe/local-file accepts a Windows path as JSON. This avoids uploading a large local file through the API process."}
+          </p>
+        </section>
+
+        <section className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {isDe ? "Stabile Endpunkte" : "Stable endpoints"}
+          </h2>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[42rem] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left">
+                  <th className="pb-2 pr-4 font-semibold">{isDe ? "Methode" : "Method"}</th>
+                  <th className="pb-2 pr-4 font-semibold">Route</th>
+                  <th className="pb-2 font-semibold">{isDe ? "Zweck" : "Purpose"}</th>
+                </tr>
+              </thead>
+              <tbody className="text-muted-foreground">
+                {endpoints.map(([method, path, descriptionDe, descriptionEn]) => (
+                  <tr key={`${method}-${path}`} className="border-b border-border/50 last:border-0">
+                    <td className="py-2.5 pr-4 font-mono text-xs text-foreground">{method}</td>
+                    <td className="py-2.5 pr-4 font-mono text-xs">{path}</td>
+                    <td className="py-2.5">{isDe ? descriptionDe : descriptionEn}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="mt-4">
-            <h3 className="text-sm font-semibold">
-              {isDe ? "Häufige Fehlercodes" : "Common Error Codes"}
-            </h3>
-            <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
-              {commonErrorCodes.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </section>
+
+        <section className="rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {isDe ? "Workflow-Kompatibilitätsrouten" : "Workflow compatibility routes"}
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            <code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs">/v1/rules</code>
+            {" "}{isDe ? "und " : "and "}
+            <code className="rounded bg-background px-1.5 py-0.5 font-mono text-xs">/v1/profiles</code>
+            {" "}
+            {isDe
+              ? "sowie ihre PUT-Routen /toggle bleiben für bestehende Integrationen erhalten. Beide liefern die heutige Workflow-Konfiguration; für neue Oberflächen und Dokumentation heißt das Konzept Workflows."
+              : "and their PUT /toggle routes remain available for existing integrations. Both expose the current workflow configuration; new interfaces and documentation call the concept Workflows."}
+          </p>
+        </section>
       </div>
     </div>
   );
