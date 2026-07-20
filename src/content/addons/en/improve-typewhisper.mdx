@@ -1,0 +1,63 @@
+---
+slug: improve-typewhisper
+name: Improve TypeWhisper
+author: TypeWhisper
+version: 0.1.0
+icon: ShieldCheck
+description: Review and manually contribute corrected dictation text to help improve TypeWhisper.
+categories:
+  - utility
+platforms:
+  - mac
+source: official
+id: com.typewhisper.improve
+minAppVersion: 1.6.0
+principalClass: ContributorPlugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ContributorPlugin
+featured: true
+---
+
+## About
+
+Improve TypeWhisper is an optional marketplace add-on for contributing corrections that you made to dictated text. Collection is disabled by default. Installing the add-on does not upload existing history, unchanged dictations, or previously collected development data.
+
+When collection is enabled, a correction appears locally only after you edit text inserted by TypeWhisper and commit that edit. You choose which entries to send, see both complete text versions in the preview, and confirm the upload a second time.
+
+## What Is Included
+
+**Included**
+
+- Complete text before and after your manual correction
+- Language, transcription engine, model, app and platform versions
+- Correction timestamp and commit signal
+
+**Excluded**
+
+- Audio
+- Target application and bundle identifier
+- Window title and URL
+- Unchanged dictations and general history
+
+The full before-and-after pair is shown because a fragment without context may be ambiguous or unsuitable for training. Nothing is sent automatically.
+
+## Storage and Review
+
+- Pending corrections stay as private local files until you select and send them.
+- The anonymous contributor credential is stored in the macOS Keychain.
+- Submitted text is sent over TLS and stored as application-level AES-GCM ciphertext.
+- Authorized TypeWhisper reviewers and a private Codex/OpenAI validation workflow may inspect submitted pairs for quality.
+- Rejected, pending, or quarantined contributions that are not incorporated into a dataset are deleted automatically after 90 days.
+- You can delete a submitted correction until it has been incorporated into a validated dataset snapshot.
+- After incorporation into a dataset or model, removing it from existing artifacts or learned model parameters may no longer be technically possible.
+
+Read the complete [TypeWhisper Privacy Policy](/en/privacy/) before contributing.
+
+## Setup
+
+1. Install **Improve TypeWhisper** from Settings > Integrations > Discover.
+2. Open the add-on settings and enable **Collect corrections**.
+3. Dictate normally and manually correct inserted text in the target application.
+4. Review the complete before-and-after pair in the local queue.
+5. Select only the corrections you want to contribute and confirm **Send**.
+
+You can disable collection at any time. Disabling collection stops new entries but does not upload or delete existing local entries.

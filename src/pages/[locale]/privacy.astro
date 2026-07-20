@@ -16,7 +16,7 @@ const { locale } = Astro.props;
 const securityReviewHref = localePath(locale, "/business/legal-security-review");
 
 type PrivacySection =
-  | { id: "overview" | "dataCollection" | "analytics" | "premiumSync" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
+  | { id: "overview" | "dataCollection" | "analytics" | "premiumSync" | "contributions" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
   | { id: "localStorage"; kind: "list" }
   | { id: "securityReview"; kind: "link" };
 
@@ -26,6 +26,7 @@ const sections: PrivacySection[] = [
   { id: "analytics", kind: "simple" },
   { id: "localStorage", kind: "list" },
   { id: "premiumSync", kind: "simple" },
+  { id: "contributions", kind: "simple" },
   { id: "network", kind: "simple" },
   { id: "thirdParty", kind: "simple" },
   { id: "securityReview", kind: "link" },
