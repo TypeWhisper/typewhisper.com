@@ -111,10 +111,22 @@ export default function DocsWindowsInstallation({ locale = "en" }: { locale?: Lo
             >
               TypeWhisper-win-x64-Setup.exe
             </a>
-            <a href={ARM64_SETUP_URL} className="text-primary hover:underline">
+            <a
+              href={ARM64_SETUP_URL}
+              data-download-platform="windows"
+              data-download-target="windows_github_installer_arm64"
+              data-tracking-placement="docs"
+              className="text-primary hover:underline"
+            >
               TypeWhisper-win-arm64-Setup.exe
             </a>
-            <a href={windowsReleaseUrl} className="text-primary hover:underline">
+            <a
+              href={windowsReleaseUrl}
+              data-download-platform="windows"
+              data-download-target="windows_github_releases"
+              data-tracking-placement="docs"
+              className="text-primary hover:underline"
+            >
               {isDe ? "Alle Releases" : "All releases"}
             </a>
           </div>

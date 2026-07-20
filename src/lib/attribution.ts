@@ -13,6 +13,7 @@ export type DownloadTarget =
   | "mac_github_releases"
   | "mac_homebrew"
   | "windows_github_installer"
+  | "windows_github_installer_arm64"
   | "windows_github_releases"
   | "windows_store"
   | "ios_testflight";

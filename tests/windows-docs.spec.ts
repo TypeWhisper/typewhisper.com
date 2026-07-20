@@ -74,8 +74,11 @@ test.describe("Windows documentation", () => {
 
     const x64 = page.getByRole("link", { name: "TypeWhisper-win-x64-Setup.exe" });
     const arm64 = page.getByRole("link", { name: "TypeWhisper-win-arm64-Setup.exe" });
+    const releases = page.getByRole("link", { name: "All releases" });
     await expect(x64).toHaveAttribute("href", /github\.com\/TypeWhisper\/typewhisper-win\/releases/);
     await expect(arm64).toHaveAttribute("href", /TypeWhisper-win-arm64-Setup\.exe$/);
+    await expect(arm64).toHaveAttribute("data-download-target", "windows_github_installer_arm64");
+    await expect(releases).toHaveAttribute("data-download-target", "windows_github_releases");
     await expect(page.getByRole("link", { name: "Open TypeWhisper in the Microsoft Store" })).toHaveAttribute(
       "href",
       /^https:\/\/apps\.microsoft\.com\//,
