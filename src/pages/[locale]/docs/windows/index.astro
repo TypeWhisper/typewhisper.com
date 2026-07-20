@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import { Screenshot } from "@/components/ui/screenshot";
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { Download, Globe, Settings, Sparkles } from "lucide-react";
+import { Download, FileAudio, Globe, Sparkles, Terminal, Workflow, Wrench } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -25,10 +25,13 @@ const copy = locale === "de"
       heading: "Windows-Dokumentation",
       intro: "Die Windows-App ist stabil für den täglichen Einsatz mit systemweitem Diktat, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets und Integrationen.",
       cards: [
-        ["installation", "Installation", "Installationsanleitung, Systemanforderungen und erster Start.", Download],
-        ["features", "Funktionen", "Aktueller Funktionsumfang, Plattformgrenzen und Workflow-Hinweise.", Sparkles],
-        ["api", "HTTP API", "Aktuelle API für lokale Tools und Automatisierung.", Globe],
-        ["profiles", "Profile", "App- und seitenbezogene Einstellungen für den täglichen Einsatz.", Settings],
+        ["installation", "Installation", "Store, Installer, vierstufiges Onboarding, Updates und Deinstallation.", Download],
+        ["features", "Funktionen", "Diktat, Tastenkürzel, Modelle, Wörterbuch, Recorder und Integrationen.", Sparkles],
+        ["file-transcription", "Datei-Transkription", "Queue, Formate, Export und Watch Folder.", FileAudio],
+        ["workflows", "Workflows", "Vorlagen, Trigger, Nachbearbeitung und Ausgabe.", Workflow],
+        ["api", "HTTP API", "Lokale API für Transkription, Diktat, Recorder und Wörterbuch.", Globe],
+        ["cli", "CLI Tool", "TypeWhisper aus PowerShell und Skripten verwenden.", Terminal],
+        ["troubleshooting", "Fehlerbehebung", "Installation, Mikrofon, Einfügen, Modelle und API diagnostizieren.", Wrench],
       ],
     }
   : {
@@ -37,10 +40,13 @@ const copy = locale === "de"
       heading: "Windows Documentation",
       intro: "The Windows app is stable for daily use with system-wide dictation, file transcription, workflows, history, dictionary, snippets, and integrations.",
       cards: [
-        ["installation", "Installation", "Install guide, system requirements, and first setup.", Download],
-        ["features", "Features", "Current feature set, platform constraints, and workflow notes.", Sparkles],
-        ["api", "HTTP API", "Current API surface for local tooling and automation.", Globe],
-        ["profiles", "Profiles", "Per-app and per-site settings for daily use.", Settings],
+        ["installation", "Installation", "Store, installers, four-step onboarding, updates, and uninstall.", Download],
+        ["features", "Features", "Dictation, hotkeys, models, dictionary, recorder, and integrations.", Sparkles],
+        ["file-transcription", "File Transcription", "Queue, formats, export, and watch folder.", FileAudio],
+        ["workflows", "Workflows", "Templates, triggers, post-processing, and output.", Workflow],
+        ["api", "HTTP API", "Local API for transcription, dictation, recorder, and dictionary.", Globe],
+        ["cli", "CLI Tool", "Use TypeWhisper from PowerShell and scripts.", Terminal],
+        ["troubleshooting", "Troubleshooting", "Diagnose installation, microphone, insertion, models, and API.", Wrench],
       ],
     };
 ---
@@ -64,7 +70,7 @@ const copy = locale === "de"
     </p>
     <Screenshot
       src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
-      alt={locale === "de" ? "TypeWhisper Windows-Dashboard" : "TypeWhisper Windows dashboard"}
+      alt={locale === "de" ? "TypeWhisper-Dashboard unter Windows" : "TypeWhisper dashboard on Windows"}
       className="mt-8 aspect-[31/20] w-full rounded-xl border border-border object-cover"
       loading="eager"
     />

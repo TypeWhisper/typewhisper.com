@@ -116,6 +116,10 @@ test("attributes download and checkout events without blocking navigation", asyn
 }) => {
   await page.addInitScript(() => {
     const events: unknown[][] = [];
+    Object.defineProperty(navigator, "userAgent", {
+      value:
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    });
     Object.assign(window, {
       __plausibleEvents: events,
       plausible: (...args: unknown[]) => events.push(args),
