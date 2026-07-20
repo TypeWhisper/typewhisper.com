@@ -9,6 +9,7 @@ import {
   isCommunityPlugin,
   categoryKeys,
   platformKeys,
+  sourceKeys,
 } from "@/data/addons";
 import { t, locales } from "@/i18n/index";
 import { canonicalPath } from "@/lib/locale-routes";
@@ -16,13 +17,14 @@ import {
   Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
   AudioLines, Waves, Mic, Plug, AudioWaveform, Gem, Terminal,
   Captions, Cloud, Flame, Globe, HardDrive, Mountain, Search,
-  ArrowLeft, ExternalLink,
+  ShieldCheck, ArrowLeft, ExternalLink,
 } from "lucide-react";
 
 const iconMap: Record<string, any> = {
   Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
   AudioLines, Waves, Mic, Plug, AudioWaveform, Gem, Terminal,
   Captions, Cloud, Flame, Globe, HardDrive, Mountain, Search,
+  ShieldCheck,
 };
 
 export function getStaticPaths() {
@@ -79,7 +81,7 @@ const sourceLinks = plugin.sourceUrls
           <div class="flex items-center gap-3">
             <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
             <Badge variant="secondary" className="text-[10px]">
-              {plugin.source === "bundled" ? t(locale, "addons.bundled") : t(locale, "addons.community")}
+              {t(locale, sourceKeys[plugin.source])}
             </Badge>
           </div>
           <p class="mt-0.5 text-sm text-muted-foreground">

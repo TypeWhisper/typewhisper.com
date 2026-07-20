@@ -1,0 +1,63 @@
+---
+slug: improve-typewhisper
+name: Improve TypeWhisper
+author: TypeWhisper
+version: 0.1.0
+icon: ShieldCheck
+description: Korrigierte Diktattexte prüfen und manuell zur Verbesserung von TypeWhisper beitragen.
+categories:
+  - utility
+platforms:
+  - mac
+source: official
+id: com.typewhisper.improve
+minAppVersion: 1.6.0
+principalClass: ContributorPlugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ContributorPlugin
+featured: true
+---
+
+## Über das Add-on
+
+Improve TypeWhisper ist ein optionales Marketplace-Add-on, mit dem du eigene Korrekturen an diktiertem Text beitragen kannst. Die Sammlung ist standardmäßig deaktiviert. Durch die Installation werden weder vorhandener Verlauf noch unveränderte Diktate oder bereits vorhandene Entwicklungsdaten hochgeladen.
+
+Nach der Aktivierung erscheint eine Korrektur nur lokal, wenn du von TypeWhisper eingefügten Text in der Zielanwendung bearbeitest und die Änderung abschließt. Du bestimmst, welche Einträge gesendet werden, siehst beide vollständigen Textversionen in der Vorschau und bestätigst den Upload ein zweites Mal.
+
+## Enthaltene und ausgeschlossene Daten
+
+**Enthalten**
+
+- Vollständiger Text vor und nach deiner manuellen Korrektur
+- Sprache, Transkriptions-Engine, Modell, App- und Plattformversion
+- Zeitstempel und Abschlusssignal der Korrektur
+
+**Ausgeschlossen**
+
+- Audio
+- Ziel-App und Bundle-ID
+- Fenstertitel und URL
+- Unveränderte Diktate und allgemeiner Verlauf
+
+Das vollständige Vorher-/Nachher-Paar wird angezeigt, weil ein Ausschnitt ohne Kontext mehrdeutig oder für das Training ungeeignet sein kann. Es wird nichts automatisch versendet.
+
+## Speicherung und Prüfung
+
+- Ausstehende Korrekturen bleiben als private lokale Dateien gespeichert, bis du sie auswählst und sendest.
+- Der anonyme Contributor-Zugang liegt im macOS-Schlüsselbund.
+- Übermittelte Texte werden über TLS übertragen und serverseitig zusätzlich als AES-GCM-Ciphertext gespeichert.
+- Autorisierte TypeWhisper-Prüfer und ein privater Validierungsablauf mit Codex/OpenAI können eingesendete Paare zur Qualitätsprüfung einsehen.
+- Abgelehnte, ausstehende oder zurückgestellte Beiträge, die nicht in einen Datensatz übernommen wurden, werden nach 90 Tagen automatisch gelöscht.
+- Du kannst eine übermittelte Korrektur löschen, solange sie noch nicht in einen validierten Datensatz-Snapshot übernommen wurde.
+- Nach der Übernahme in einen Datensatz oder ein Modell kann eine Entfernung aus bestehenden Artefakten oder erlernten Modellparametern technisch nicht mehr möglich sein.
+
+Lies vor dem Beitragen die vollständige [TypeWhisper-Datenschutzerklärung](/de/privacy/).
+
+## Einrichtung
+
+1. Installiere **Improve TypeWhisper** unter Einstellungen > Integrationen > Entdecken.
+2. Öffne die Add-on-Einstellungen und aktiviere **Korrekturen sammeln**.
+3. Diktiere wie gewohnt und korrigiere den eingefügten Text manuell in der Zielanwendung.
+4. Prüfe das vollständige Vorher-/Nachher-Paar in der lokalen Liste.
+5. Wähle nur gewünschte Korrekturen aus und bestätige **Senden**.
+
+Du kannst die Sammlung jederzeit deaktivieren. Dadurch entstehen keine neuen Einträge; vorhandene lokale Einträge werden weder hochgeladen noch gelöscht.

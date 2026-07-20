@@ -20,11 +20,19 @@ import {
   HardDrive,
   Mountain,
   Search,
+  ShieldCheck,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
-import { type Plugin, type PluginCategory, type PluginPlatform, categoryKeys, platformKeys } from "@/data/addons";
+import {
+  type Plugin,
+  type PluginCategory,
+  type PluginPlatform,
+  categoryKeys,
+  platformKeys,
+  sourceKeys,
+} from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -49,6 +57,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   HardDrive,
   Mountain,
   Search,
+  ShieldCheck,
 };
 
 interface AddonCardProps {
@@ -96,7 +105,7 @@ export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: Addon
           </div>
         </div>
         <Badge variant="secondary" className="text-[10px]">
-          {plugin.source === "bundled" ? t(locale, "addons.bundled") : t(locale, "addons.community")}
+          {t(locale, sourceKeys[plugin.source])}
         </Badge>
       </div>
       <p className="mt-3 text-sm text-muted-foreground">{plugin.description}</p>

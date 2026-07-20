@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
-import type { PluginSource } from "@/data/addons";
+import { sourceKeys as pluginSourceKeys, type PluginSource } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
 
-const sources: (PluginSource | "all")[] = ["all", "bundled", "community"];
+const sources: (PluginSource | "all")[] = ["all", "bundled", "official", "community"];
 
-const sourceKeys: Record<PluginSource | "all", string> = {
+const filterSourceKeys: Record<PluginSource | "all", string> = {
   all: "addons.allSources",
-  bundled: "addons.bundled",
-  community: "addons.community",
+  ...pluginSourceKeys,
 };
 
 interface SourceFilterProps {
@@ -27,7 +26,7 @@ export function SourceFilter({ selected, onChange, locale = "en" }: SourceFilter
           className="rounded-full"
           onClick={() => onChange(s)}
         >
-          {t(locale, sourceKeys[s])}
+          {t(locale, filterSourceKeys[s])}
         </Button>
       ))}
     </div>

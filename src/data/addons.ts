@@ -9,11 +9,12 @@ export type PluginCategory =
   | "tts"
   | "action"
   | "post-processing"
-  | "memory";
+  | "memory"
+  | "utility";
 
 export type PluginPlatform = "mac" | "windows" | "ios";
 
-export type PluginSource = "bundled" | "community";
+export type PluginSource = "bundled" | "official" | "community";
 
 export interface PluginDownload {
   url: string;
@@ -60,6 +61,7 @@ export const categoryLabels: Record<PluginCategory, string> = {
   action: "Action",
   "post-processing": "Post-Processing",
   memory: "Memory",
+  utility: "Utility",
 };
 
 export const categoryKeys: Record<PluginCategory, string> = {
@@ -69,6 +71,13 @@ export const categoryKeys: Record<PluginCategory, string> = {
   action: "addons.category.action",
   "post-processing": "addons.category.postProcessing",
   memory: "addons.category.memory",
+  utility: "addons.category.utility",
+};
+
+export const sourceKeys: Record<PluginSource, string> = {
+  bundled: "addons.bundled",
+  official: "addons.official",
+  community: "addons.community",
 };
 
 export const platformLabels: Record<PluginPlatform, string> = {
