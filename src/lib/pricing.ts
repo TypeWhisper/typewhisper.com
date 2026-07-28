@@ -40,7 +40,7 @@ export const commercialTiers: CommercialTier[] = [
   {
     id: "individual",
     name: "Individual",
-    devices: 2,
+    devices: 3,
     price: { monthly: 5, lifetime: 99 },
     checkout: {
       monthly:
