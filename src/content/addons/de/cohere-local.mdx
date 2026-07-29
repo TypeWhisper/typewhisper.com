@@ -1,0 +1,270 @@
+---
+slug: cohere-local
+name: Cohere Transcribe (Local)
+author: TypeWhisper
+version: 0.1.0
+icon: AudioWaveform
+brandLogo: cohere
+description: Lokale Spracherkennung mit Cohere Transcribe 03-2026 über GGUF und CrispASR auf macOS und Windows.
+categories:
+  - transcription
+platforms:
+  - mac
+  - windows
+source: official
+id: com.typewhisper.cohere-transcribe
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CohereLocalPlugin
+sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CohereLocalPlugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.CohereTranscribe
+featured: false
+---
+
+## Über
+
+Cohere Transcribe (Local) ergänzt TypeWhisper um das offene Modell Cohere Transcribe 03-2026 als eigenständigen lokalen Anbieter. Es verwendet festgeschriebene GGUF-Modellgewichte über CrispASR, mit Metal-Beschleunigung auf Apple Silicon sowie CPU, NVIDIA CUDA oder AMD Vulkan unter Windows.
+
+Modell und Laufzeit werden beim Einrichten des Add-ons heruntergeladen. Sobald die erforderlichen Dateien vorhanden sind, wird Audio auf deinem Computer transkribiert und nicht an die Cohere-Cloud-API gesendet. Dieses Add-on ist vom bestehenden Cohere-Cloud-Anbieter getrennt.
+
+## Releases und Anforderungen
+
+<table>
+  <thead>
+    <tr>
+      <th>Plattform</th>
+      <th>Add-on-Version</th>
+      <th>Anforderungen</th>
+      <th>Release</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>macOS</td>
+      <td><code>0.1.0</code></td>
+      <td>TypeWhisper <code>1.5.0</code> oder neuer, macOS <code>14.0</code> oder neuer, Apple Silicon (<code>arm64</code>)</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v0.1.0">macOS-Release 0.1.0</a></td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td><code>1.0.1</code></td>
+      <td>TypeWhisper <code>1.0.6</code> oder neuer, Windows x64</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.0.1">Windows-Release 1.0.1</a></td>
+    </tr>
+  </tbody>
+</table>
+
+## Modelle
+
+Nur die ausgewählte Quantisierung wird geladen. Eine größere Datei bedeutet eine höhere numerische Präzision, aber die kontrollierten Benchmarks unten zeigen keine durchgehend bessere Genauigkeit bei steigender Quantisierungsgröße.
+
+<table>
+  <thead>
+    <tr>
+      <th>Modell</th>
+      <th>ID</th>
+      <th>Download</th>
+      <th>Empfehlung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kompakt (Q4_K)</td>
+      <td><code>cohere-transcribe-03-2026-q4_k</code></td>
+      <td>1,51 GB</td>
+      <td>Kleinster Download und geringster Speicherbedarf.</td>
+    </tr>
+    <tr>
+      <td>Schnell (Q5_0)</td>
+      <td><code>cohere-transcribe-03-2026-q5_0</code></td>
+      <td>1,74 GB</td>
+      <td><strong>Empfohlen.</strong> Bestes getestetes Verhältnis aus Größe, Geschwindigkeit und Genauigkeit.</td>
+    </tr>
+    <tr>
+      <td>Höhere Präzision (Q6_K)</td>
+      <td><code>cohere-transcribe-03-2026-q6_k</code></td>
+      <td>1,98 GB</td>
+      <td>Mittlere numerische Präzision; bisher kein allgemeiner Genauigkeitsgewinn gemessen.</td>
+    </tr>
+    <tr>
+      <td>Maximale Präzision (Q8_0)</td>
+      <td><code>cohere-transcribe-03-2026-q8_0</code></td>
+      <td>2,42 GB</td>
+      <td>Experimentelle Vergleichsoption; bisher kein allgemeiner Genauigkeitsgewinn gemessen.</td>
+    </tr>
+  </tbody>
+</table>
+
+Die macOS-Einstellungen setzen für Q4_K, Q5_0 und Q6_K einen Mac mit mindestens 8 GB voraus. Für Q8_0 wird ein Mac mit mindestens 16 GB empfohlen.
+
+## Funktionen und Datenschutz
+
+- 14 unterstützte Sprachen: Englisch, Französisch, Deutsch, Spanisch, Italienisch, Portugiesisch, Niederländisch, Polnisch, Griechisch, Arabisch, Japanisch, Mandarin-Chinesisch, Vietnamesisch und Koreanisch
+- Obligatorische Silero-Sprachaktivitätserkennung vor jeder Transkription, um Halluzinationen bei Stille und leisem Rauschen zu unterdrücken
+- Batch-Transkription für Diktate und Dateitranskription
+- Kein Cloud-API-Schlüssel erforderlich; ein optionales Hugging-Face-Token kann die Download-Limits erhöhen
+- Kein Streaming, keine Übersetzung, Sprechertrennung oder Verstärkung von Wörterbuchbegriffen
+- Modell-, Laufzeit- und VAD-Dateien sind festgeschrieben und werden per Prüfsumme verifiziert
+- Cohere-Modellgewichte stehen unter Apache 2.0; CrispASR und das VAD-Modell unter der MIT-Lizenz
+
+## Plattformunterschiede
+
+<table>
+  <thead>
+    <tr>
+      <th>Verhalten</th>
+      <th>macOS</th>
+      <th>Windows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Laufzeit</td>
+      <td>CrispASR mit Metal</td>
+      <td>CrispASR mit CPU, NVIDIA CUDA oder AMD Vulkan</td>
+    </tr>
+    <tr>
+      <td>Sprachauswahl</td>
+      <td>Eine unterstützte Sprache muss explizit ausgewählt werden</td>
+      <td>Verwendet einen expliziten Sprachhinweis, falls vorhanden; andernfalls lokale ECAPA-Spracherkennung</td>
+    </tr>
+    <tr>
+      <td>Backend-Auswahl</td>
+      <td>Metal auf Apple Silicon</td>
+      <td>Automatische lokale Backend-Auswahl mit Fallback oder ein ausgewähltes Backend</td>
+    </tr>
+    <tr>
+      <td>Modell-Lebenszyklus</td>
+      <td>Das ausgewählte Modell bleibt geladen und folgt der TypeWhisper-Richtlinie für lokale Modelle</td>
+      <td>Ein verwalteter lokaler Begleitprozess bleibt geladen und wird beim Entladen oder Beenden von TypeWhisper gestoppt</td>
+    </tr>
+  </tbody>
+</table>
+
+## Benchmarks
+
+Dies sind kontrollierte FLEURS-Vergleiche und kein Versprechen, dass jedes Mikrofon, jeder Akzent oder jedes frei gesprochene Diktat dieselben Ergebnisse erzielt.
+
+### Richtungsweisender macOS-Quantisierungsvergleich
+
+Dieser Lauf zur Produktauswahl verwendete einen Apple M1 Pro mit 16 GiB gemeinsamem Arbeitsspeicher, CrispASR 0.8.24 mit Metal und obligatorischer Silero-VAD sowie dieselben ersten fünf FLEURS-Clips für jeweils 13 Sprachen. Jede Quantisierung verarbeitete 65 Clips. WER war die primäre Metrik, außer für Japanisch, Mandarin-Chinesisch und Koreanisch, wo CER verwendet wurde.
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantisierung</th>
+      <th>Modellgröße</th>
+      <th>Laufzeit für 65 Clips</th>
+      <th>Peak RSS</th>
+      <th>Primärer Makrofehler</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q4_K</td>
+      <td>1,51 GB</td>
+      <td>50,77 s</td>
+      <td>1,52 GiB</td>
+      <td>7,99 %</td>
+    </tr>
+    <tr>
+      <td>Q5_0</td>
+      <td>1,74 GB</td>
+      <td><strong>44,00 s</strong></td>
+      <td>1,86 GiB</td>
+      <td><strong>7,60 %</strong></td>
+    </tr>
+    <tr>
+      <td>Q6_K</td>
+      <td>1,98 GB</td>
+      <td>44,04 s</td>
+      <td>1,97 GiB</td>
+      <td>7,79 %</td>
+    </tr>
+    <tr>
+      <td>Q8_0</td>
+      <td>2,42 GB</td>
+      <td>49,21 s</td>
+      <td>2,37 GiB</td>
+      <td>7,70 %</td>
+    </tr>
+  </tbody>
+</table>
+
+Q5_0 bot in diesem kleinen Lauf das beste gemessene Gesamtverhältnis. Q4_K blieb eine glaubwürdige kompakte Option, während Q6_K und Q8_0 keinen allgemeinen Genauigkeitsvorteil zeigten. [macOS-Issue #1031](https://github.com/TypeWhisper/typewhisper-mac/issues/1031) enthält die Werte pro Sprache, Methodik, Startzeitmessungen und Einschränkungen.
+
+### Kontrollierter Windows-Quantisierungsbenchmark
+
+Der Windows-Lauf verwendete einen AMD Ryzen 7 7800X3D, eine NVIDIA GeForce RTX 4060 Ti, 32 GB Systemspeicher und CrispASR 0.8.24 mit CUDA. Er verarbeitete dieselben 50 Clips in allen 14 Sprachen mit allen vier Varianten: insgesamt 2.800 Sprachtranskriptionen.
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantisierung</th>
+      <th>Non-CJK-Makro-WER</th>
+      <th>CJK-Makro-CER</th>
+      <th>Gewichtete RTFx</th>
+      <th>Startzeit</th>
+      <th>Peak Working Set</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q4_K</td>
+      <td><strong>7,67 %</strong></td>
+      <td>8,30 %</td>
+      <td>32,27x</td>
+      <td>3,39 s</td>
+      <td><strong>1,66 GiB</strong></td>
+    </tr>
+    <tr>
+      <td>Q5_0</td>
+      <td>7,90 %</td>
+      <td>8,29 %</td>
+      <td><strong>32,69x</strong></td>
+      <td><strong>2,79 s</strong></td>
+      <td>1,87 GiB</td>
+    </tr>
+    <tr>
+      <td>Q6_K</td>
+      <td>7,89 %</td>
+      <td><strong>8,27 %</strong></td>
+      <td>32,64x</td>
+      <td>3,29 s</td>
+      <td>2,10 GiB</td>
+    </tr>
+    <tr>
+      <td>Q8_0</td>
+      <td>7,93 %</td>
+      <td><strong>8,27 %</strong></td>
+      <td>31,78x</td>
+      <td>3,80 s</td>
+      <td>2,51 GiB</td>
+    </tr>
+  </tbody>
+</table>
+
+Alle 2.800 Sprachclips wurden erfolgreich verarbeitet, und die obligatorische VAD lieferte bei allen 12 Prüfungen mit Stille und leisem Rauschen ein leeres Ergebnis. Das Peak Working Set misst Prozessspeicher, nicht GPU-VRAM. [Windows-Issue #339](https://github.com/TypeWhisper/typewhisper-win/issues/339) enthält Ergebnisse pro Sprache, exakte Revisionen, Reproduktionsschritte und Einschränkungen.
+
+### Früherer Cohere-vs-Parakeet-Vergleich
+
+Ein früherer FLEURS-Vergleich über 13 Sprachen zeigte den Cohere-Kandidaten besonders stark für Deutsch, Spanisch, Polnisch, Japanisch, Mandarin-Chinesisch, Koreanisch, Vietnamesisch und Arabisch. Parakeet blieb deutlich schneller und kleiner und schnitt für Englisch und Italienisch besser ab.
+
+Dieser Vergleich in [macOS-Issue #1031](https://github.com/TypeWhisper/typewhisper-mac/issues/1031) untersuchte den früheren Core-ML-Kandidaten. Er half dabei, Cohere als optionales, sprachspezifisches lokales Modell einzuordnen, seine Zahlen dürfen aber nicht als Messwerte des veröffentlichten GGUF-/CrispASR-Add-ons behandelt werden.
+
+## Einrichtung
+
+1. Öffne TypeWhisper Einstellungen > Integrationen > Entdecken.
+2. Installiere **Cohere Transcribe (Local)** und öffne die Einstellungen.
+3. Füge nur dann ein Hugging-Face-Token hinzu, wenn anonyme Downloads limitiert werden.
+4. Wähle eine Quantisierung. Beginne mit **Schnell (Q5_0)**, sofern Downloadgröße oder Speicherbedarf nicht wichtiger sind.
+5. Lasse die Backend-Auswahl unter Windows auf automatisch oder wähle CPU, NVIDIA CUDA oder AMD Vulkan.
+6. Lade und aktiviere das ausgewählte Modell.
+7. Wähle Cohere Transcribe (Local) als Transkriptions-Engine in den Einstellungen oder in einem Profil.
+8. Wähle unter macOS vor der Transkription explizit eine der 14 unterstützten Sprachen aus.
+
+## Hinweise
+
+- Das Add-on lädt Modell- und Laufzeitdateien separat herunter; sie sind nicht im Add-on-Bundle enthalten.
+- Es wird immer nur eine Cohere-Quantisierung gleichzeitig geladen.
+- Wörterbuchkorrekturen können nach der Transkription weiterhin angewendet werden, aber Cohere unterstützt keine Verstärkung von Wörterbuchbegriffen während der Inferenz.
+- Verwende das bestehende Cohere-Add-on, wenn du ausdrücklich die Cohere-Cloud-Transcribe-API nutzen möchtest.
