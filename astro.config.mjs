@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
+import remarkGfm from "remark-gfm";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -16,7 +17,9 @@ export default defineConfig({
   },
   integrations: [
     react(),
-    mdx(),
+    mdx({
+      remarkPlugins: [remarkGfm],
+    }),
     sitemap({
       i18n: {
         defaultLocale: "en",
