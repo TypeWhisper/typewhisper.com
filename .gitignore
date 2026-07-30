@@ -1,9 +1,11 @@
 node_modules
 dist
+.astro/
 .DS_Store
 *.local
 src/data/releases.json
 src/data/downloads.json
 src/data/community-plugins.json
+src/data/social-stats.json
 playwright-report
 test-results
