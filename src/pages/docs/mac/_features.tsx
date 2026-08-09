@@ -61,6 +61,42 @@ export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) 
             <p className="mt-2 text-sm text-muted-foreground">
               {t(locale, "docs.mac.features.dictionary.desc3")}
             </p>
+            <div className="mt-4 rounded-xl border border-border/70 bg-background p-4">
+              <h3 className="text-sm font-semibold">
+                {t(locale, "docs.mac.features.dictionary.boostingTitle")}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t(locale, "docs.mac.features.dictionary.boostingDesc")}
+              </p>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li>
+                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Auto</code>{" "}
+                  {t(locale, "docs.mac.features.dictionary.boostingAuto")}
+                </li>
+                <li>
+                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Strong (0.50)</code>{" "}
+                  {t(locale, "docs.mac.features.dictionary.boostingStrong")}
+                </li>
+                <li>
+                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Balanced (0.65)</code>{" "}
+                  {t(locale, "docs.mac.features.dictionary.boostingBalanced")}
+                </li>
+                <li>
+                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Precise (0.80)</code>{" "}
+                  {t(locale, "docs.mac.features.dictionary.boostingPrecise")}
+                </li>
+                <li>
+                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Advanced (0.40–0.95)</code>{" "}
+                  {t(locale, "docs.mac.features.dictionary.boostingAdvanced")}
+                </li>
+              </ul>
+              <p className="mt-3 text-sm text-muted-foreground">
+                {t(locale, "docs.mac.features.dictionary.boostingExample")}
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t(locale, "docs.mac.features.dictionary.boostingNote")}
+              </p>
+            </div>
             <h3 className="mt-4 text-sm font-semibold">
               {t(locale, "docs.mac.features.dictionary.autoLearnTitle")}
             </h3>
