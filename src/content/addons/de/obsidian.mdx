@@ -2,16 +2,17 @@
 slug: obsidian
 name: Obsidian
 author: TypeWhisper
-version: 1.0.0
+version: 1.1.0
 icon: Gem
 brandLogo: obsidian
-description: Speichere Transkriptionen direkt in deinem Obsidian Vault mit automatischer Erkennung, Daily Notes und Frontmatter-Unterstützung.
+description: Speichere Transkriptionen als anpassbare Markdown-Notizen in deinem Obsidian-Vault, auf Wunsch mit YAML-Frontmatter, Tagesnotizen, Auto-Export und Live-Sync.
 categories:
   - action
 platforms:
   - mac
   - windows
 source: bundled
+minAppVersion: 1.6.0
 apiDocsUrl: https://obsidian.md
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin
 sourceUrls:
@@ -19,32 +20,226 @@ sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Obsidian
 ---
 
-## Über
+## Überblick
 
-Das Obsidian Plugin ermöglicht es dir, Transkriptionen direkt in deinem Obsidian Vault zu speichern. Es funktioniert als Action Plugin, das automatisch den Speicherort deines Vaults erkennt und Notizen aus Spracheingaben erstellt. Es unterstützt Daily Notes Integration, YAML Frontmatter und konfigurierbare Dateinamensvorlagen.
+Das Obsidian-Plugin speichert TypeWhisper-Transkriptionen als normale Markdown-Dateien direkt in einem Ordner deines Vaults. Du kannst einzelne Notizen über ein Workflow-Action-Ziel erstellen oder mit **Auto-Export** jede abgeschlossene Transkription automatisch ablegen.
 
-## Features
+Version `1.1.0` erweitert die macOS-Version um frei konfigurierbare Markdown-Notizvorlagen, zusätzliche Metadaten und Live-Sync für spätere Korrekturen im TypeWhisper-Verlauf. Sie benötigt TypeWhisper `1.6.0` oder neuer auf macOS.
 
-- Automatische Vault-Erkennung
-- Konfigurierbarer Unterordner für Transkriptionen
-- Dateinamensvorlagen mit Platzhaltern: `{{DATE}}`, `{{TIME}}`, `{{APP}}`, `{{LANG}}`
-- Daily-Note-Modus - Transkriptionen an die heutige Daily Note anhängen
-- YAML Frontmatter mit Metadaten (Datum, Sprache, Quell-App)
-- Auto-Export - jede Transkription automatisch speichern ohne manuellen Auslöser
+Quellen: [macOS-Plugin-Code](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin), [Implementierungs-PR #1089](https://github.com/TypeWhisper/typewhisper-mac/pull/1089)
 
-## Konfiguration
+Der grundlegende Ablauf ist:
 
-- **Vault-Pfad** - Wird automatisch von Obsidian erkannt oder manuell festgelegt.
-- **Unterordner** - Optionaler Unterordner innerhalb des Vaults für Transkriptionen.
-- **Dateinamensvorlage** - Passe Dateinamen mit den Platzhaltern `{{DATE}}`, `{{TIME}}`, `{{APP}}`, `{{LANG}}` an.
-- **Daily Note** - Transkriptionen an die heutige Daily Note anhängen statt separate Dateien zu erstellen.
-- **Frontmatter** - YAML Frontmatter mit Metadaten zu jeder Notiz hinzufügen.
-- **Auto-Export** - Jede Transkription automatisch in Obsidian speichern.
+`Diktat → optionale Workflow-Aufbereitung → Obsidian-Action oder Auto-Export → Markdown-Datei im Vault`
+
+## Plattformen und Versionen
+
+| Plattform | Version | Funktionsumfang |
+| --- | --- | --- |
+| macOS | `1.1.0` | Notiz- und Dateinamensvorlagen, Tagesnotizen, YAML-Frontmatter, Auto-Export und Live-Sync. Erfordert TypeWhisper `1.6.0` oder neuer. |
+| Windows | `1.0.0` | Vault-Auswahl, Unterordner, einfache Dateinamensvorlage, Tagesnotiz-Modus und automatisch erzeugtes YAML-Frontmatter. Notizvorlagen, Auto-Export und Live-Sync aus `1.1.0` sind dort noch nicht verfügbar. |
+
+Der Screenshot oben zeigt die aktuelle macOS-Konfiguration von Version `1.1.0`. Die folgenden Abschnitte beschreiben diesen Funktionsumfang; die Abweichungen unter Windows stehen in der Plattformtabelle.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
-2. Finde das Obsidian Plugin und wähle deinen Vault (automatisch erkannt oder manuell durchsuchen)
-3. Konfiguriere Unterordner und Dateinamensvorlage nach deinen Wünschen
-4. Aktiviere optional den Daily-Note-Modus und YAML Frontmatter
-5. Verwende Obsidian als Ziel-Aktion in deinen benutzerdefinierten Prompts
+1. Öffne **Einstellungen > Integrationen** in TypeWhisper und öffne die Konfiguration von **Obsidian**.
+2. Wähle einen erkannten Vault aus. Falls er nicht in der Liste erscheint, wähle **Durchsuchen ...** und öffne den Vault-Ordner manuell.
+3. Lege optional einen **Unterordner** fest. Der Standard `TypeWhisper` speichert Notizen beispielsweise unter `<Vault>/TypeWhisper/`.
+4. Entscheide dich zwischen einzelnen Notizen und dem **Tagesnotiz-Modus**.
+5. Passe Dateiname, Notizvorlage, Frontmatter und Tags an.
+6. Wähle anschließend, ob du gezielt über das Action-Ziel **Save to Obsidian** exportieren oder **Auto-Export** für jede Transkription aktivieren möchtest.
+
+Das Plugin erstellt den konfigurierten Unterordner bei Bedarf. Bei einzelnen Notizen verhindert es Überschreiben durch nummerierte Dateinamen wie `Notiz 1.md`, wenn ein Name bereits existiert.
+
+## Zwei Wege zum Export
+
+### Gezielter Export über einen Workflow
+
+Verwende ein Action-Ziel, wenn nur bestimmte Diktate in Obsidian landen oder zuvor von einem LLM strukturiert werden sollen:
+
+1. Erstelle unter **Einstellungen > Workflows** einen eigenen Workflow.
+2. Kopiere die **Workflow-Anweisung** aus den Obsidian-Einstellungen oder schreibe eine eigene.
+3. Wähle **Save to Obsidian** als **Action-Ziel**.
+4. Weise dem Workflow einen manuellen Kurzbefehl oder passende Regeln zu.
+
+Die mitgelieferte Anweisung bereinigt das Diktat und gibt nur Obsidian-kompatibles Markdown aus. Da der Workflow ein Action-Ziel verwendet, wird sein Ergebnis als Notiz gespeichert und nicht zusätzlich in die aktive App eingefügt. Weitere Details zu Auslösern, Regeln und Action-Zielen findest du in der [Workflow-Dokumentation](/de/docs/mac/workflows/).
+
+### Automatischer Export
+
+Aktiviere **Auto-Export**, um jede abgeschlossene Transkription in den gewählten Vault zu schreiben. Das eignet sich als vollständiges Sprachjournal oder Archiv. Wenn dieselbe Transkription bereits über das Workflow-Action-Ziel exportiert wurde, ordnet Version `1.1.0` den Abschluss der vorhandenen Notiz zu, statt durch Auto-Export eine zweite Datei anzulegen.
+
+## Dateinamen
+
+Die Standardvorlage lautet:
+
+```text
+{{DATE}} {{TIME}} {{APP}}
+```
+
+So entsteht beispielsweise `2026-08-10 17-23-52 Safari.md`. Die Vorschau in den Plugin-Einstellungen zeigt den aktuellen Namen vor dem Export.
+
+| Platzhalter | Ergebnis |
+| --- | --- |
+| `{{DATE}}` | Datum im Format `YYYY-MM-DD` |
+| `{{TIME}}` | Uhrzeit im dateisicheren Format `HH-MM-SS` |
+| `{{APP}}` | Name der aktiven App, zum Beispiel `Safari` |
+| `{{LANGUAGE}}` | Erkannte Sprache, zum Beispiel `de` oder `en` |
+
+Für Obsidian- und Dateisystem-kompatible Namen entfernt das Plugin unzulässige Zeichen wie `/`, `:`, `*`, `?`, `"`, `<`, `>`, `|`, `[` und `]`.
+
+## Notizvorlagen
+
+Die **Notizvorlage** bestimmt den vollständigen Markdown-Inhalt einer einzelnen Notiz. Der Standard `{{TRANSCRIPT}}` speichert nur das fertig verarbeitete Transkript. Du kannst Überschriften, Obsidian-Callouts, Links und Metadaten direkt in die Vorlage aufnehmen.
+
+| Platzhalter | Inhalt |
+| --- | --- |
+| `{{TRANSCRIPT}}` | Fertiges, gegebenenfalls durch den Workflow aufbereitetes Transkript |
+| `{{RAW_TRANSCRIPT}}` | Ursprüngliches Transkript vor der Workflow-Aufbereitung |
+| `{{DATE}}` | Aufnahmedatum als `YYYY-MM-DD` |
+| `{{TIME}}` | Aufnahmezeit als `HH-MM-SS` |
+| `{{APP}}` | Aktive App |
+| `{{LANGUAGE}}` | Erkannte Sprache |
+| `{{URL}}` | Aktive URL, wenn die Quell-App sie bereitstellt |
+| `{{ENGINE}}` | Verwendete Transkriptions-Engine |
+| `{{MODEL}}` | Verwendetes Modell, falls vorhanden |
+| `{{DURATION}}` | Aufnahmedauer in Sekunden mit einer Nachkommastelle |
+| `{{WORDS}}` | Anzahl der Wörter im fertigen Transkript |
+
+Nicht verfügbare optionale Metadaten werden als leerer Wert eingesetzt. Bei einem Workflow-Export können Engine, Modell und Dauer erst mit dem Abschlussereignis vorliegen; mit aktiviertem Live-Sync ergänzt das Plugin diese Daten in derselben Notiz.
+
+## Beispiele
+
+### 1. Strukturierte Besprechungsnotiz
+
+Dateiname:
+
+```text
+{{DATE}} Meeting
+```
+
+Notizvorlage:
+
+```markdown
+# Meeting vom {{DATE}}
+
+{{TRANSCRIPT}}
+
+---
+Quelle: {{APP}}
+Dauer: {{DURATION}} Sekunden · {{WORDS}} Wörter
+```
+
+Kombiniere diese Vorlage mit einem Workflow, der das Diktat in die Abschnitte **Zusammenfassung**, **Entscheidungen** und **Aufgaben** gliedert. Das Workflow-Ergebnis ersetzt `{{TRANSCRIPT}}`; `{{RAW_TRANSCRIPT}}` bleibt verfügbar, wenn du zusätzlich das ursprüngliche Diktat archivieren möchtest.
+
+### 2. Recherche-Notiz mit Quelle
+
+Dateiname:
+
+```text
+{{DATE}} {{APP}} Recherche
+```
+
+Notizvorlage:
+
+```markdown
+# Recherche
+
+{{TRANSCRIPT}}
+
+> [!info] Quelle
+> {{URL}}
+
+Sprache: `{{LANGUAGE}}` · Engine: `{{ENGINE}}`
+```
+
+Wenn die aktive App keine URL an TypeWhisper übermittelt, bleibt `{{URL}}` leer.
+
+### 3. Fertiges und ursprüngliches Transkript vergleichen
+
+```markdown
+# Überarbeitete Notiz
+
+{{TRANSCRIPT}}
+
+<details>
+<summary>Ursprüngliches Diktat</summary>
+
+{{RAW_TRANSCRIPT}}
+
+</details>
+```
+
+Das ist nützlich, wenn ein Workflow Füllwörter entfernt oder gesprochenen Text neu strukturiert, du aber den Rohtext in derselben Datei behalten möchtest.
+
+## YAML-Frontmatter
+
+Mit **YAML-Frontmatter** ergänzt das Plugin am Dateianfang Obsidian Properties. Je nach verfügbarem Kontext können Datum, App, Bundle-ID, URL, Sprache, Engine, Modell, Dauer, Wortzahl, Verarbeitungsschritte und deine Tags enthalten sein.
+
+Beispiel:
+
+```yaml
+---
+date: 2026-08-10T15:23:52Z
+app: "Safari"
+bundleId: "com.apple.Safari"
+url: "https://example.com/article"
+language: "de"
+engine: "parakeet"
+model: "TDT"
+duration: 42.5
+words: 118
+tags:
+  - "typewhisper"
+  - "recherche"
+---
+```
+
+Tags werden in den Einstellungen kommasepariert eingegeben. Das Frontmatter steht zusätzlich vor deiner Notizvorlage; du musst es daher nicht selbst in die Vorlage schreiben.
+
+## Tagesnotiz-Modus
+
+Im **Tagesnotiz-Modus** erstellt das Plugin nicht für jedes Diktat eine neue Datei. Es hängt alle Einträge an eine gemeinsame Datei an, standardmäßig `YYYY-MM-DD.md`.
+
+Für neue Einträge stehen vier Anhangsformate zur Verfügung:
+
+| Format | Vorlage | Ergebnis |
+| --- | --- | --- |
+| Zeitstempelabschnitt | `## {{TIME}}` + `{{TEXT}}` | Jeder Eintrag erhält eine Überschrift wie `## 17:23`; Abschnitte werden durch eine horizontale Linie getrennt. |
+| Einfach anhängen | `{{TEXT}}` | Fügt den fertigen Text als eigenen Absatz an. |
+| Aufzählung | `- {{TEXT}}` | Fügt jeden Eintrag als Listenpunkt an. |
+| Benutzerdefiniert | Eigene Vorlage | Unterstützt `{{TEXT}}`, `{{TIME}}`, `{{DATE}}`, `{{APP}}`, `{{LANGUAGE}}` und `{{URL}}`. |
+
+Beispiel für ein Quelljournal:
+
+```markdown
+### {{TIME}} · {{APP}}
+
+{{TEXT}}
+
+Quelle: {{URL}}
+```
+
+Frontmatter wird beim Erstellen einer neuen Tagesdatei einmalig geschrieben. Eine allgemeine Tagesdatei wie `{{DATE}}.md` erhält bewusst keine app-spezifischen Properties; enthält ihr Dateiname `{{APP}}`, können diese Metadaten ergänzt werden.
+
+## Live-Sync für Verlaufskorrekturen
+
+**Verlaufsänderungen live synchronisieren** ist standardmäßig aktiviert und gilt nur für einzelne Notizen. Wenn du das zugehörige Transkript später im TypeWhisper-Verlauf korrigierst, schreibt das Plugin dieselbe Markdown-Datei mit dem aktualisierten Text und den aktuellen Metadaten neu. Die Zuordnung bleibt über App- und Plugin-Neustarts erhalten.
+
+Beachte dabei:
+
+- Die Datei wird aus der konfigurierten Notizvorlage neu erzeugt. Manuelle Änderungen an dieser Datei in Obsidian können deshalb überschrieben werden.
+- Der Tagesnotiz-Modus bleibt absichtlich append-only; Live-Sync ist dort deaktiviert, damit eine Korrektur nicht den falschen Abschnitt verändert.
+- Das Plugin verfolgt höchstens die neuesten 500 Zuordnungen und entfernt Zuordnungen nach 30 Tagen.
+- Aktualisiert werden nur vorhandene Markdown-Dateien innerhalb des aktuell konfigurierten Vaults. Dateien außerhalb des Vaults werden nicht verändert.
+
+Wenn du exportierte Notizen anschließend hauptsächlich in Obsidian weiterbearbeitest, deaktiviere Live-Sync, um diese Änderungen zu schützen.
+
+## Empfohlene Konfigurationen
+
+| Ziel | Einstellungen |
+| --- | --- |
+| Nur ausgewählte, aufbereitete Notizen | Auto-Export aus; eigener Workflow mit Action-Ziel **Save to Obsidian**; Live-Sync an |
+| Vollständiges Transkriptionsarchiv | Auto-Export an; einzelne Notizen; Dateiname `{{DATE}} {{TIME}} {{APP}}` |
+| Laufendes Sprachjournal | Auto-Export an; Tagesnotiz-Modus an; Zeitstempelabschnitt oder Aufzählung |
+| Notizen nach dem Export manuell in Obsidian pflegen | Einzelne Notizen; Live-Sync aus |
