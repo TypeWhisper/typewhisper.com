@@ -1,0 +1,173 @@
+---
+slug: mcp-client
+name: MCP Client
+author: TypeWhisper
+version: 0.1.0
+icon: Plug
+description: Verbinde TypeWhisper-Workflows über stdio mit lokalen MCP-Tools und mache aus diktiertem oder ausgewähltem Text feste Aktionen.
+categories:
+  - action
+platforms:
+  - mac
+source: official
+id: com.typewhisper.mcp-client
+minAppVersion: 1.6.0
+principalClass: MCPClientPlugin
+apiDocsUrl: https://modelcontextprotocol.io/docs/getting-started/intro
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin
+featured: false
+---
+
+## Über
+
+MCP Client macht Tools lokaler [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro)-Server als TypeWhisper-Workflow-Aktionen verfügbar. Du legst einen wiederverwendbaren stdio-Server an, lässt seine Tools erkennen und erstellst daraus eine oder mehrere benannte Aktionen. Dabei ordnest du Workflow-Text und Kontext fest den Argumenten eines Tools zu.
+
+Sobald ein Workflow mit diesem **Action-Ziel** abgeschlossen ist, ruft TypeWhisper das ausgewählte Tool automatisch auf, statt den verarbeiteten Text einzufügen. Das Tool wird bei der Einrichtung festgelegt. Diktierter oder ausgewählter Text kann zur Laufzeit kein anderes Tool auswählen.
+
+Version `0.1.0` benötigt TypeWhisper `1.6.0` oder neuer auf macOS.
+
+Quellen: [MCP-Client-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin), [Implementierungs-Pull-Request](https://github.com/TypeWhisper/typewhisper-mac/pull/1087)
+
+## Verwendungszwecke
+
+- Aus einem Besprechungstranskript Aufgaben über den MCP-Server einer Aufgaben-App erstellen.
+- Diktierte Notizen ohne Kopieren und Einfügen als Datei oder Datensatz speichern.
+- Über ein Tool eines lokalen MCP-Prozesses Issues, CRM-Einträge oder Datenbankzeilen anlegen.
+- Ausgewählten Text oder Inhalte der Zwischenablage an eine wiederholbare Automation übergeben.
+- Aus einem MCP-Server mehrere TypeWhisper-Aktionen mit jeweils festem Tool und eigener Argumentzuordnung erstellen.
+
+Der grundlegende Ablauf:
+
+`Diktat oder ausgewählter Text → TypeWhisper-Workflow → gespeicherte MCP-Aktion → festes MCP-Tool`
+
+## So funktionieren Aktionen
+
+Jede Aktion wählt genau einen konfigurierten Server und ein erkanntes Tool aus. TypeWhisper liest dessen Eingabeschema und kann Argumente aus diesen Quellen befüllen:
+
+- Verarbeiteter Workflow-Text
+- Originaltranskript
+- Aktuelles Stapelelement
+- Eigenschaft im Workflow-JSON
+- Name, Bundle-ID oder URL der aktiven App
+- Erkannte Sprache
+- Typisierter fester Wert
+- Vollständiges JSON-Objekt für komplexe Schemas
+
+Der Modus **Einzeln** sendet nach Abschluss des Workflows einen Tool-Aufruf. Der Modus **Stapel** erwartet als verarbeitetes Workflow-Ergebnis ein JSON-Array, prüft alle Elemente vor dem ersten Aufruf und führt danach bis zu 100 Aufrufe nacheinander aus.
+
+## Tutorial: Besprechungsnotizen als Markdown speichern
+
+Dieses Beispiel verwendet den offiziellen [Filesystem MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem), um aus groben Besprechungsnotizen eine Markdown-Datei zu erstellen. Der Server kann nur auf Verzeichnisse zugreifen, die du ihm ausdrücklich übergibst.
+
+### Vorbereitung
+
+- Installiere und aktiviere **MCP Client** unter **Einstellungen > Integrationen > Entdecken**.
+- Stelle sicher, dass Node.js und `npx` installiert sind. Führe bei Bedarf `command -v npx` im Terminal aus, um den absoluten Pfad zur Programmdatei zu ermitteln.
+- Erstelle ein eigenes Verzeichnis, zum Beispiel `/Users/deinname/Documents/TypeWhisper-MCP`. Gib dem Beispielserver keinen Zugriff auf dein vollständiges Benutzerverzeichnis.
+
+### 1. Filesystem-Server hinzufügen
+
+Öffne **Einstellungen > Integrationen > MCP Client** und wähle **Server > Server hinzufügen**.
+
+| Feld | Wert |
+| --- | --- |
+| **Name** | `Lokale Besprechungsnotizen` |
+| **Befehl** | `npx` oder der absolute Pfad aus `command -v npx` |
+| **Argument 1** | `-y` |
+| **Argument 2** | `@modelcontextprotocol/server-filesystem` |
+| **Argument 3** | `/Users/deinname/Documents/TypeWhisper-MCP` |
+
+Füge jedes Argument als eigene Zeile hinzu, ersetze `deinname` durch deinen macOS-Benutzernamen und bestätige, dass TypeWhisper den Prozess mit deinen Benutzerrechten starten darf. Wähle **Verbinden & Tools laden** und speichere den Server, sobald die Tool-Liste geladen wurde.
+
+Die erste Verbindung kann länger dauern, weil `npx` das Serverpaket herunterladen kann. TypeWhisper startet Befehl und Argumente direkt, ohne sie als Shell-Befehl auszuwerten.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/de/plugins/mcp-client-servers.webp" type="image/webp" />
+    <img src="/screenshots/de/plugins/mcp-client-servers.png" alt="MCP-Client-Serverliste mit einem konfigurierten lokalen Task-Server" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>Server sind wiederverwendbar. Ein Server kann Tools für mehrere getrennte Workflow-Aktionen bereitstellen.</figcaption>
+</figure>
+
+Befehl und Argumente entsprechen der [offiziellen NPX-Konfiguration](https://github.com/modelcontextprotocol/servers/blob/main/src/filesystem/README.md#npx) des Filesystem MCP Servers.
+
+### 2. MCP-Aktion erstellen
+
+Öffne den Tab **Aktionen** und wähle **Aktion hinzufügen**. Konfiguriere:
+
+| Feld | Wert |
+| --- | --- |
+| **Name** | `Besprechungsnotizen speichern` |
+| **SF Symbol** | `doc.text` |
+| **Server** | `Lokale Besprechungsnotizen` |
+| **Modus** | **Einzeln** |
+| **MCP-Tool** | `write_file` |
+| **path** | Quelle: **Fester Wert**; Wert: `/Users/deinname/Documents/TypeWhisper-MCP/latest-meeting-notes.md` |
+| **content** | Quelle: **Verarbeiteter Workflow-Text** |
+
+Lass **Unverarbeitete JSON-Argumente** für dieses Beispiel deaktiviert. Das offizielle Tool `write_file` ist als destruktiv markiert, weil es eine bestehende Datei überschreiben kann. Bestätige deshalb vor dem Speichern die automatische Ausführung.
+
+### 3. TypeWhisper-Workflow erstellen
+
+Öffne **Einstellungen > Workflows** und erstelle einen eigenen Workflow mit dem Namen **Besprechungsnotizen als Markdown**. Verwende diese Anweisung:
+
+```text
+Formatiere diese groben Besprechungsnotizen als kompaktes Markdown mit den
+Überschriften Zusammenfassung, Entscheidungen und Aufgaben. Behalte Namen,
+Termine und Zusagen bei. Gib ausschließlich Markdown zurück.
+```
+
+Wähle **Besprechungsnotizen speichern** als **Action-Ziel** des Workflows und lege einen manuellen Kurzbefehl fest. So bleibt der Schreibvorgang bewusst ausgelöst und läuft nicht bei jedem Diktat in einer weit gefassten App-Regel.
+
+Der [Workflow-Leitfaden](/de/docs/mac/workflows/) erklärt App- und Website-Regeln, manuelle Kurzbefehle, die Provider-Auswahl und Ausgabeformate.
+
+### 4. Ausführen
+
+Starte den Workflow und diktiere zum Beispiel:
+
+```text
+Wir haben entschieden, die Beta am Freitag zu veröffentlichen. Alex erstellt
+bis Donnerstag die Release Notes und Sam prüft morgen die Onboarding-Texte.
+```
+
+TypeWhisper strukturiert den Text, übergibt das Markdown als Argument `content` und schreibt es in `latest-meeting-notes.md`. Da der Workflow an eine Aktion weiterleitet, wird der verarbeitete Text nicht in die aktive App eingefügt.
+
+Im Tab **Aktivität** kannst du Verbindungen und Aktionsergebnisse prüfen. Die Zusammenfassungen enthalten keine Transkripte, vollständigen Argumente oder geheimen Werte.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/de/plugins/mcp-client-activity.webp" type="image/webp" />
+    <img src="/screenshots/de/plugins/mcp-client-activity.png" alt="MCP-Client-Aktivitätsliste mit einer erfolgreichen Tool-Erkennung" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>Die Aktivitätsliste zeigt begrenzte Verbindungs- und Ergebniszusammenfassungen, ohne den Workflow-Inhalt aufzunehmen.</figcaption>
+</figure>
+
+## Beispiel: Mehrere Aufgaben aus einer Besprechung erstellen
+
+Wenn dein MCP-Server ein Tool wie `create_task` bereitstellt, kannst du mit dem Modus **Stapel** aus einem Transkript mehrere Aufrufe erzeugen. Weise den Workflow an, ausschließlich ein JSON-Array auszugeben, dessen Elemente dem Tool-Schema entsprechen:
+
+```json
+[
+  {"title":"Überarbeitetes Angebot senden"},
+  {"title":"Kunden-Follow-up terminieren"}
+]
+```
+
+Wähle **Unverarbeitete JSON-Argumente > Aktuelles Stapelelement**, wenn jedes Element bereits zu den Argumenten des ausgewählten Tools passt. TypeWhisper prüft das vollständige Array vor dem ersten Aufruf, arbeitet die Elemente der Reihe nach ab und wiederholt Schreibvorgänge nach einem unklaren Verbindungsabbruch nicht automatisch.
+
+## Sicherheit und Datenschutz
+
+- Füge nur MCP-Befehle hinzu, denen du vertraust. Der Serverprozess läuft mit deinen macOS-Benutzerrechten und kann auf die für diesen Benutzer verfügbaren Dateien und Dienste zugreifen.
+- Befehle werden nicht über eine Shell ausgewertet. TypeWhisper übergibt Programmdatei, Argumente und Umgebungswerte getrennt.
+- Markiere sensible Umgebungswerte als **Geheim**, damit sie im macOS-Schlüsselbund gespeichert werden. Beim Start erhält der konfigurierte Serverprozess diese Werte trotzdem.
+- Der ausgewählte MCP-Server erhält die Argumente, die du seinem Tool zuordnest. Prüfe Datenschutz und Netzwerkverhalten des Servers, bevor du sensible Diktate übergibst.
+- Tool-Aufrufe werden nicht automatisch wiederholt, nachdem sie möglicherweise übertragen wurden. So entstehen nicht unbemerkt doppelte externe Schreibvorgänge.
+- Wenn ein Tool verschwindet oder sich sein Eingabeschema ändert, blockiert TypeWhisper die Aktion, bis du ihre Konfiguration aktualisierst.
+
+## Aktuelle Einschränkungen
+
+- Nur lokale MCP-Server über stdio; Streamable HTTP und ältere HTTP/SSE-Transporte werden nicht unterstützt.
+- Kein OAuth-, Bearer-Token- oder Browser-Anmeldeablauf.
+- Nur Tools; MCP-Ressourcen, Prompts, Sampling, Elicitation, Roots und vom Server bereitgestellte Oberflächen werden nicht unterstützt.
+- Pro gespeicherter Aktion ein Server und ein festes Tool. Erstelle weitere Aktionen für andere Tools.
+- MCP-Konfigurationen werden nicht aus Codex, Claude Desktop oder anderen Clients importiert.
