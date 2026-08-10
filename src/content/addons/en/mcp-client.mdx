@@ -1,0 +1,172 @@
+---
+slug: mcp-client
+name: MCP Client
+author: TypeWhisper
+version: 0.1.0
+icon: Plug
+description: Connect TypeWhisper workflows to local MCP tools over stdio and turn dictated or selected text into fixed actions.
+categories:
+  - action
+platforms:
+  - mac
+source: official
+id: com.typewhisper.mcp-client
+minAppVersion: 1.6.0
+principalClass: MCPClientPlugin
+apiDocsUrl: https://modelcontextprotocol.io/docs/getting-started/intro
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin
+featured: false
+---
+
+## About
+
+MCP Client turns tools from local [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro) servers into TypeWhisper workflow actions. Add a reusable stdio server, discover its tools, and create one or more named actions that bind workflow text and context to a fixed tool.
+
+When a workflow using that **Action Target** completes, TypeWhisper calls the selected tool automatically instead of inserting the processed text. The tool is chosen while you configure the action; dictated or selected text cannot choose a different tool at runtime.
+
+Version `0.1.0` requires TypeWhisper `1.6.0` or newer on macOS.
+
+Sources: [MCP Client source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin), [implementation pull request](https://github.com/TypeWhisper/typewhisper-mac/pull/1087)
+
+## What You Can Use It For
+
+- Turn a meeting transcript into tasks through a task app's MCP server.
+- Save dictated notes as files or records without copying and pasting.
+- Create issues, CRM entries, or database rows through a tool exposed by a local MCP process.
+- Send selected text or clipboard content into a repeatable automation.
+- Create several TypeWhisper actions from one MCP server, each with its own fixed tool and argument mapping.
+
+The basic flow is:
+
+`Dictation or selected text → TypeWhisper workflow → saved MCP action → fixed MCP tool`
+
+## How Actions Work
+
+Each action selects one configured server and one discovered tool. TypeWhisper reads the tool's input schema and lets you map its arguments from:
+
+- Processed workflow text
+- Original transcript
+- The current batch item
+- A property in workflow JSON
+- Active application name, bundle identifier, or URL
+- Detected language
+- A typed literal value
+- A complete JSON object for complex schemas
+
+**Single** mode sends one tool call when the workflow completes. **Batch** mode expects the processed workflow result to be a JSON array, validates every item before the first call, and then runs up to 100 calls sequentially.
+
+## Tutorial: Save Meeting Notes as Markdown
+
+This example uses the official [Filesystem MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem) to turn rough meeting notes into a Markdown file. The server can only access directories you explicitly pass to it.
+
+### Before You Start
+
+- Install and enable **MCP Client** from **Settings > Integrations > Discover**.
+- Make sure Node.js and `npx` are installed. Run `command -v npx` in Terminal if you need the absolute executable path.
+- Create a dedicated directory, for example `/Users/yourname/Documents/TypeWhisper-MCP`. Do not grant the example server access to your entire home directory.
+
+### 1. Add the Filesystem Server
+
+Open **Settings > Integrations > MCP Client**, then select **Servers > Add Server**.
+
+| Field | Value |
+| --- | --- |
+| **Name** | `Local Meeting Notes` |
+| **Command** | `npx` or the absolute path returned by `command -v npx` |
+| **Argument 1** | `-y` |
+| **Argument 2** | `@modelcontextprotocol/server-filesystem@2026.7.10` |
+| **Argument 3** | `/Users/yourname/Documents/TypeWhisper-MCP` |
+
+Add every argument as a separate row, replace `yourname` with your macOS user name, and confirm that TypeWhisper may launch the process with your user permissions. Select **Connect & Load Tools**, then save the server after the tool list loads.
+
+The first connection may take longer because `npx` can download the server package. The command and its arguments are launched directly, not interpreted as a shell command.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/en/plugins/mcp-client-servers.webp" type="image/webp" />
+    <img src="/screenshots/en/plugins/mcp-client-servers.png" alt="MCP Client server list with a configured local task server" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>Servers are reusable. One server can provide tools for several separate workflow actions.</figcaption>
+</figure>
+
+The command and arguments above follow the Filesystem MCP Server's [official NPX configuration](https://github.com/modelcontextprotocol/servers/blob/main/src/filesystem/README.md#npx).
+
+### 2. Create the MCP Action
+
+Open the **Actions** tab and select **Add Action**. Configure:
+
+| Field | Value |
+| --- | --- |
+| **Name** | `Save Meeting Notes` |
+| **SF Symbol** | `doc.text` |
+| **Server** | `Local Meeting Notes` |
+| **Mode** | **Single** |
+| **MCP Tool** | `write_file` |
+| **path** | Source: **Literal value**; value: `/Users/yourname/Documents/TypeWhisper-MCP/latest-meeting-notes.md` |
+| **content** | Source: **Processed workflow text** |
+
+Keep **Raw JSON Arguments** disabled for this example. The official `write_file` tool is marked destructive because it can overwrite an existing file, so acknowledge the automatic write before saving the action.
+
+### 3. Create the TypeWhisper Workflow
+
+Open **Settings > Workflows** and add a custom workflow named **Meeting Notes to Markdown**. Use this instruction:
+
+```text
+Turn these rough meeting notes into concise Markdown with the headings Summary,
+Decisions, and Action Items. Keep names, dates, and commitments. Return Markdown only.
+```
+
+Choose **Save Meeting Notes** as the workflow's **Action Target** and assign a manual shortcut. A manual shortcut keeps this write action intentional instead of running it for every dictation in a broadly matched app.
+
+See the [Workflows guide](/en/docs/mac/workflows/) for workflow matching, manual shortcuts, provider selection, and output formats.
+
+### 4. Run It
+
+Trigger the workflow and dictate, for example:
+
+```text
+We decided to ship the beta on Friday. Alex will prepare the release notes by
+Thursday, and Sam will confirm the onboarding copy tomorrow.
+```
+
+TypeWhisper structures the text, sends the Markdown as the `content` argument, and writes it to `latest-meeting-notes.md`. Because the workflow targets an action, the processed text is not inserted into the foreground app.
+
+Open the **Activity** tab to confirm server connections and action results. Activity summaries omit transcripts, complete arguments, and secret values.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/en/plugins/mcp-client-activity.webp" type="image/webp" />
+    <img src="/screenshots/en/plugins/mcp-client-activity.png" alt="MCP Client activity list showing a successful tool discovery" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>The activity list shows bounded connection and result summaries without including the workflow content.</figcaption>
+</figure>
+
+## Example: Create Several Tasks from One Meeting
+
+If your MCP server exposes a tool such as `create_task`, use **Batch** mode to turn one transcript into several calls. Ask the workflow to return only a JSON array whose items match the tool schema:
+
+```json
+[
+  {"title":"Send the revised proposal"},
+  {"title":"Schedule the customer follow-up"}
+]
+```
+
+Select **Raw JSON Arguments > Current batch item** when each array item already matches the selected tool's arguments. TypeWhisper validates the complete array before the first call, runs the items in order, and does not automatically retry writes after an indeterminate connection failure.
+
+## Security and Privacy
+
+- Only add MCP commands that you trust. The server process runs with your macOS user permissions and can access files and services available to that user.
+- Commands are not evaluated through a shell. The executable, arguments, and environment values are passed separately.
+- Mark sensitive environment values as **Secret** to store them in the macOS Keychain. They are still passed to the configured server process when it starts.
+- The selected MCP server receives the arguments you map to its tool. Check that server's privacy policy and network behavior before sending sensitive dictation.
+- Tool calls are not automatically retried after they may have been transmitted, which avoids silently duplicating external writes.
+- If a tool disappears or its input schema changes, TypeWhisper blocks the action until you refresh its configuration.
+
+## Current Limits
+
+- Local stdio MCP servers only; Streamable HTTP and legacy HTTP/SSE transports are not supported.
+- No OAuth, bearer-token, or browser-based authentication flow.
+- Tools only; MCP resources, prompts, sampling, elicitation, roots, and server-provided UI are not supported.
+- One server and one fixed tool per saved action. Create more actions when you need other tools.
+- MCP configurations are not imported from Codex, Claude Desktop, or other clients.
