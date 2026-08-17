@@ -225,20 +225,24 @@ test.describe("localized landing video", () => {
 test("landing islands hydrate before scroll reveal classes change", async ({
   page,
 }) => {
-  const hydrationErrors: string[] = [];
+  const browserErrors: string[] = [];
   page.on("console", (message) => {
-    if (
-      message.type() === "error" &&
-      message.text().includes("A tree hydrated but some attributes")
-    ) {
-      hydrationErrors.push(message.text());
+    if (message.type() === "error") {
+      browserErrors.push(message.text());
     }
   });
+  page.on("pageerror", (error) => browserErrors.push(error.message));
 
   await page.goto("/de/");
-  await page.locator("#features").scrollIntoViewIfNeeded();
-  await page.getByTestId("premium-features").scrollIntoViewIfNeeded();
-  await page.waitForTimeout(500);
+  const premiumFeatures = page.getByTestId("premium-features");
+  const premiumIsland = premiumFeatures.locator("xpath=ancestor::astro-island");
+  const premiumEyebrow = premiumFeatures.locator("p").first();
 
-  expect(hydrationErrors).toEqual([]);
+  await premiumFeatures.scrollIntoViewIfNeeded();
+  await expect(premiumIsland).not.toHaveAttribute("ssr", "");
+  await premiumEyebrow.scrollIntoViewIfNeeded();
+  await expect(premiumEyebrow).toHaveClass(/\breveal-fade-visible\b/);
+  await expect(premiumEyebrow).not.toHaveClass(/\breveal-fade-hidden\b/);
+
+  expect(browserErrors).toEqual([]);
 });
