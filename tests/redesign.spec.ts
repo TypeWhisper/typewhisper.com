@@ -221,3 +221,24 @@ test.describe("localized landing video", () => {
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(390);
   });
 });
+
+test("landing islands hydrate before scroll reveal classes change", async ({
+  page,
+}) => {
+  const hydrationErrors: string[] = [];
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      message.text().includes("A tree hydrated but some attributes")
+    ) {
+      hydrationErrors.push(message.text());
+    }
+  });
+
+  await page.goto("/de/");
+  await page.locator("#features").scrollIntoViewIfNeeded();
+  await page.getByTestId("premium-features").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+
+  expect(hydrationErrors).toEqual([]);
+});
