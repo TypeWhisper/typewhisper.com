@@ -220,6 +220,21 @@ test.describe("localized landing video", () => {
     expect(bounds!.x).toBeGreaterThanOrEqual(0);
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(390);
   });
+
+  test("landing page does not overflow the mobile viewport", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/de/");
+    await page.getByTestId("landing-platform-grid").scrollIntoViewIfNeeded();
+
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      content: document.documentElement.scrollWidth,
+    }));
+
+    expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
+  });
 });
 
 test("landing islands hydrate before scroll reveal classes change", async ({
