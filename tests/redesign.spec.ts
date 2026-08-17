@@ -221,3 +221,28 @@ test.describe("localized landing video", () => {
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(390);
   });
 });
+
+test("landing islands hydrate before scroll reveal classes change", async ({
+  page,
+}) => {
+  const browserErrors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") {
+      browserErrors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => browserErrors.push(error.message));
+
+  await page.goto("/de/");
+  const premiumFeatures = page.getByTestId("premium-features");
+  const premiumIsland = premiumFeatures.locator("xpath=ancestor::astro-island");
+  const premiumEyebrow = premiumFeatures.locator("p").first();
+
+  await premiumFeatures.scrollIntoViewIfNeeded();
+  await expect(premiumIsland).not.toHaveAttribute("ssr", "");
+  await premiumEyebrow.scrollIntoViewIfNeeded();
+  await expect(premiumEyebrow).toHaveClass(/\breveal-fade-visible\b/);
+  await expect(premiumEyebrow).not.toHaveClass(/\breveal-fade-hidden\b/);
+
+  expect(browserErrors).toEqual([]);
+});

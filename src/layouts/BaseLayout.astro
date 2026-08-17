@@ -131,7 +131,27 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
           });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         var selector = revealClasses.map(function(c) { return '.' + c.hidden; }).join(', ');
-        document.querySelectorAll(selector).forEach(function(el) { observer.observe(el); });
+
+        function observeRevealElements(root) {
+          if (root.matches && root.matches(selector)) observer.observe(root);
+          root.querySelectorAll(selector).forEach(function(el) { observer.observe(el); });
+        }
+
+        document.querySelectorAll(selector).forEach(function(el) {
+          if (!el.closest('astro-island')) observer.observe(el);
+        });
+
+        document.querySelectorAll('astro-island').forEach(function(island) {
+          if (island.hasAttribute('ssr')) {
+            island.addEventListener('astro:hydrate', function() {
+              setTimeout(function() {
+                observeRevealElements(island);
+              }, 100);
+            }, { once: true });
+          } else {
+            observeRevealElements(island);
+          }
+        });
       })();
     </script>
     <script>
