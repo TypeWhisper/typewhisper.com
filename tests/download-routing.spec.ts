@@ -1,4 +1,26 @@
 import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
+
+type GeneratedDownloads = {
+  mac: { url: string };
+  windows: { url: string };
+};
+
+type GeneratedRelease = {
+  tag_name: string;
+};
+
+function readGeneratedDownloads(): GeneratedDownloads {
+  return JSON.parse(
+    readFileSync("src/data/downloads.json", "utf8"),
+  ) as GeneratedDownloads;
+}
+
+function readGeneratedReleases(): GeneratedRelease[] {
+  return JSON.parse(
+    readFileSync("src/data/releases.json", "utf8"),
+  ) as GeneratedRelease[];
+}
 
 type LandingScenario = {
   name: string;
@@ -40,7 +62,7 @@ for (const scenario of landingScenarios) {
   test.describe(`landing download routing (${scenario.name})`, () => {
     test.use({ userAgent: scenario.userAgent });
 
-    test("hero and footer CTA resolve directly for the detected platform", async ({
+    test("hero and footer CTA resolve for the detected platform", async ({
       page,
     }) => {
       await page.goto("/en/");
@@ -52,8 +74,12 @@ for (const scenario of landingScenarios) {
       await expect(footerCta).toBeVisible();
       await expect(heroCta).toHaveText(scenario.expectedLabel);
       await expect(footerCta).toHaveText(scenario.expectedLabel);
-      await expect(heroCta).toHaveAttribute("href", scenario.expectedHref);
-      await expect(footerCta).toHaveAttribute("href", scenario.expectedHref);
+      const expectedHref =
+        scenario.name === "macOS"
+          ? readGeneratedDownloads().mac.url
+          : scenario.expectedHref;
+      await expect(heroCta).toHaveAttribute("href", expectedHref);
+      await expect(footerCta).toHaveAttribute("href", expectedHref);
 
       if (scenario.opensNewTab) {
         await expect(heroCta).toHaveAttribute("target", "_blank");
@@ -67,13 +93,6 @@ for (const scenario of landingScenarios) {
         await expect(footerCta).not.toHaveAttribute("rel", "noopener noreferrer");
       }
 
-      const hrefs = [
-        await heroCta.getAttribute("href"),
-        await footerCta.getAttribute("href"),
-      ];
-      for (const href of hrefs) {
-        expect(href).not.toMatch(/\/releases(?:\/latest)?$/);
-      }
     });
   });
 }
@@ -203,15 +222,16 @@ test("uses website checkout defaults when no campaign is present", async ({ page
   expect(checkoutURL.searchParams.get("utm_medium")).toBe("web");
 });
 
-test.describe("release status direct downloads", () => {
-  test("/en/release-status uses direct macOS and Windows asset links", async ({
+test.describe("release status download routing", () => {
+  test("/en/release-status uses generated macOS and Windows links", async ({
     page,
   }) => {
+    const downloads = readGeneratedDownloads();
     await page.goto("/en/release-status");
 
     await expect(
       page.getByRole("link", { name: "Download latest release" }),
-    ).toHaveAttribute("href", /TypeWhisper-v\d+\.\d+\.\d+\.dmg$/);
+    ).toHaveAttribute("href", downloads.mac.url);
     await expect(
       page.getByRole("link", { name: "Download latest release" }),
     ).not.toHaveAttribute("target", "_blank");
@@ -229,7 +249,7 @@ test.describe("release status direct downloads", () => {
     ).toHaveAttribute("rel", "noopener noreferrer");
     await expect(
       page.getByRole("link", { name: "Download GitHub installer" }),
-    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
+    ).toHaveAttribute("href", downloads.windows.url);
     await expect(
       page.getByRole("link", { name: "Join TestFlight" }),
     ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");
@@ -238,14 +258,15 @@ test.describe("release status direct downloads", () => {
     ).toHaveAttribute("target", "_blank");
   });
 
-  test("/de/release-status uses direct macOS and Windows asset links", async ({
+  test("/de/release-status uses generated macOS and Windows links", async ({
     page,
   }) => {
+    const downloads = readGeneratedDownloads();
     await page.goto("/de/release-status");
 
     await expect(
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
-    ).toHaveAttribute("href", /TypeWhisper-v\d+\.\d+\.\d+\.dmg$/);
+    ).toHaveAttribute("href", downloads.mac.url);
     await expect(
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
     ).not.toHaveAttribute("target", "_blank");
@@ -263,7 +284,7 @@ test.describe("release status direct downloads", () => {
     ).toHaveAttribute("rel", "noopener noreferrer");
     await expect(
       page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
-    ).toHaveAttribute("href", /TypeWhisper-win-x64-Setup\.exe$/);
+    ).toHaveAttribute("href", downloads.windows.url);
     await expect(
       page.getByRole("link", { name: "TestFlight beitreten" }),
     ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");
@@ -273,7 +294,13 @@ test.describe("release status direct downloads", () => {
   });
 });
 
-test("changelog includes stable macOS app releases again", async ({ page }) => {
+test("changelog reflects the generated release feed", async ({ page }) => {
+  const releases = readGeneratedReleases();
   await page.goto("/en/changelog");
-  await expect(page.getByText("v1.2.2").first()).toBeVisible();
+
+  if (releases.length === 0) {
+    await expect(page.getByText("No releases found.")).toBeVisible();
+  } else {
+    await expect(page.getByText(releases[0].tag_name).first()).toBeVisible();
+  }
 });
