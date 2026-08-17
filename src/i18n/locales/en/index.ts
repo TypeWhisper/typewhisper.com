@@ -10,6 +10,7 @@ import openSourceAccessibility from "./open-source-accessibility.json";
 import privacy from "./privacy.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
+import platformReleases from "./platform-releases.json";
 
 const translations = {
   ...common,
@@ -24,6 +25,7 @@ const translations = {
   ...privacy,
   ...docsCommon,
   ...docsMac,
+  ...platformReleases,
 } satisfies Record<string, string>;
 
 export default translations;

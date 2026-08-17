@@ -17,6 +17,7 @@ const requiredChunks = [
   "docs/common.json",
   "docs/mac.json",
 ];
+const overrideChunks = ["platform-releases.json"];
 
 function readChunk(locale, chunkPath) {
   const fullPath = path.join(localeRoot, locale, chunkPath);
@@ -57,6 +58,18 @@ function loadLocale(locale) {
         );
       }
       seen.set(key, chunkPath);
+      translations[key] = value;
+    }
+  }
+
+  for (const chunkPath of overrideChunks) {
+    const chunk = readChunk(locale, chunkPath);
+    for (const [key, value] of Object.entries(chunk)) {
+      if (!seen.has(key)) {
+        throw new Error(
+          `${locale}: ${chunkPath} overrides unknown key ${key}`,
+        );
+      }
       translations[key] = value;
     }
   }

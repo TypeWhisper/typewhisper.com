@@ -1,0 +1,11 @@
+{
+  "platforms.mac.description": "Stable 1.6 release with faster and more resilient recording, Backup & Restore, calendar-aware meeting capture, and expanded integrations.",
+  "platforms.mac.status": "1.6 Stable",
+  "releaseStatus.mac.intro": "macOS 1.6 is the supported stable release.",
+  "releaseStatus.mac.detail": "This is the official path for daily use, documentation, support, and stable updates.",
+  "releaseStatus.mac.title": "macOS 1.6",
+  "releaseStatus.mac.description": "Stable 1.6 direct-download release with faster and more resilient audio capture, Backup & Restore, calendar-aware meeting recording, live transcript updates, improved Whisper Mode, and expanded automation integrations.",
+  "hero.platformTabs.stage.mac": "Stable 1.6",
+  "support.mac.title": "macOS 1.6",
+  "support.mac.description": "Stable release support for installation, permissions, faster audio capture, meeting recording, Backup & Restore, dictation, file transcription, workflows, integrations, local APIs, and model management."
+}

@@ -39,6 +39,39 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {t(locale, "docs.mac.installation.highlights.title")}
+          </h2>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {[1, 2, 3, 4].map((item) => (
+              <li key={item} className="flex gap-2">
+                <span aria-hidden="true">&bull;</span>
+                <span>{t(locale, `docs.mac.installation.highlights.item${item}`)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-semibold">
+              {t(locale, "docs.mac.installation.upgrade.title")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.installation.upgrade.desc")}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
+            <h2 className="text-lg font-semibold">
+              {t(locale, "docs.mac.installation.sync.title")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.installation.sync.desc")}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.requirements.title")}</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             <li>&bull; {t(locale, "docs.mac.installation.requirements.macos")}</li>
