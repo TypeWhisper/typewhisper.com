@@ -74,7 +74,10 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
           {t(locale, "platforms.subtitle")}
         </p>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+        <div
+          className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3"
+          data-testid="landing-platform-grid"
+        >
           {platforms.map((p) => (
             <div
               key={p.name}
