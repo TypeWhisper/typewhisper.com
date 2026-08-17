@@ -31,7 +31,7 @@ const docsPathByPlatform: Record<HeroPlatform, string> = {
 
 // Reduce a release version like "v1.4.0" or "1.4" to a "Major.Minor" label
 // for the hero headline. Returns null when the input cannot be parsed.
-function shortVersion(version: string | undefined): string | null {
+function shortVersion(version: string | null | undefined): string | null {
   if (!version) return null;
   const match = version.replace(/^v/i, "").match(/^(\d+)\.(\d+)/);
   return match ? `${match[1]}.${match[2]}` : null;

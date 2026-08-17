@@ -112,7 +112,7 @@ export function getPlatformDownloadTarget(
           label: t(locale, "platforms.mac.download"),
           platform: platform === "other" ? "mac" : platform,
           target: "mac_dmg",
-          version: downloads.mac.version,
+          version: downloads.mac.version ?? undefined,
           opensNewTab: false,
         };
     }
@@ -141,7 +141,7 @@ export function getPlatformDownloadTarget(
         label: t(locale, "nav.downloadMac"),
         platform,
         target: "mac_dmg",
-        version: downloads.mac.version,
+        version: downloads.mac.version ?? undefined,
         opensNewTab: false,
       };
     case "other":
@@ -151,7 +151,7 @@ export function getPlatformDownloadTarget(
         label: t(locale, "nav.download"),
         platform: "mac",
         target: "mac_dmg",
-        version: downloads.mac.version,
+        version: downloads.mac.version ?? undefined,
         opensNewTab: false,
       };
   }
