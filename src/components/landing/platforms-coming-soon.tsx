@@ -1,8 +1,10 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Clock3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getPlatformDownloadTarget } from "@/lib/platform-download";
-import type { Platform } from "@/lib/platform-download";
-import type { DownloadTarget } from "@/lib/attribution";
+import {
+  getPlatformDownloadTarget,
+  type Platform,
+  type PlatformDownloadTarget,
+} from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 interface PlatformInfo {
@@ -11,11 +13,7 @@ interface PlatformInfo {
   description: string;
   status: string;
   statusClassName: string;
-  downloadHref: string;
-  downloadLabel: string;
-  downloadTarget: DownloadTarget;
-  downloadVersion?: string;
-  downloadOpensNewTab: boolean;
+  download: PlatformDownloadTarget;
 }
 
 function getPlatforms(locale: Locale): PlatformInfo[] {
@@ -30,11 +28,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.mac.description"),
       status: t(locale, "platforms.mac.status"),
       statusClassName: "bg-emerald-500/10 text-emerald-700",
-      downloadHref: macDownload.href,
-      downloadLabel: macDownload.label,
-      downloadTarget: macDownload.target,
-      downloadVersion: macDownload.version,
-      downloadOpensNewTab: macDownload.opensNewTab,
+      download: macDownload,
     },
     {
       platform: "windows",
@@ -42,21 +36,15 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.win.description"),
       status: t(locale, "platforms.win.status"),
       statusClassName: "bg-amber-500/10 text-amber-700",
-      downloadHref: windowsDownload.href,
-      downloadLabel: windowsDownload.label,
-      downloadTarget: windowsDownload.target,
-      downloadOpensNewTab: windowsDownload.opensNewTab,
+      download: windowsDownload,
     },
     {
       platform: "ios",
       name: t(locale, "platforms.ios.name"),
       description: t(locale, "platforms.ios.description"),
       status: t(locale, "platforms.ios.status"),
-      statusClassName: "bg-rose-500/10 text-rose-700",
-      downloadHref: iosDownload.href,
-      downloadLabel: iosDownload.label,
-      downloadTarget: iosDownload.target,
-      downloadOpensNewTab: iosDownload.opensNewTab,
+      statusClassName: "bg-amber-500/10 text-amber-700 dark:text-amber-300",
+      download: iosDownload,
     },
   ];
 }
@@ -88,21 +76,28 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
               </span>
               <h3 className="mt-5 text-2xl font-bold text-card-foreground">{p.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
-              <Button size="pill" className="mt-6" asChild>
-                <a
-                  href={p.downloadHref}
-                  target={p.downloadOpensNewTab ? "_blank" : undefined}
-                  rel={p.downloadOpensNewTab ? "noopener noreferrer" : undefined}
-                  data-download-social-trigger
-                  data-download-platform={p.platform}
-                  data-download-target={p.downloadTarget}
-                  data-download-version={p.downloadVersion}
-                  data-tracking-placement="landing"
-                >
-                  {p.downloadLabel}
-                  <ArrowUpRight className="size-4" />
-                </a>
-              </Button>
+              {p.download.available ? (
+                <Button size="pill" className="mt-6" asChild>
+                  <a
+                    href={p.download.href}
+                    target={p.download.opensNewTab ? "_blank" : undefined}
+                    rel={p.download.opensNewTab ? "noopener noreferrer" : undefined}
+                    data-download-social-trigger
+                    data-download-platform={p.platform}
+                    data-download-target={p.download.target}
+                    data-download-version={p.download.version}
+                    data-tracking-placement="landing"
+                  >
+                    {p.download.label}
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                </Button>
+              ) : (
+                <Button size="pill" className="mt-6" disabled>
+                  {p.download.label}
+                  <Clock3 className="size-4" />
+                </Button>
+              )}
             </div>
           ))}
         </div>

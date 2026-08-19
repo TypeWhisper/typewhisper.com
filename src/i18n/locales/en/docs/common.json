@@ -1,6 +1,6 @@
 {
   "docs.title": "Documentation",
-  "docs.subtitle": "macOS and Windows are stable desktop releases, with app-aware dictation, stronger workflow output controls, automatic correction learning, resilient cloud uploads, and improved fullscreen indicators. iOS is available as an early alpha preview.",
+  "docs.subtitle": "macOS and Windows are stable desktop releases, with app-aware dictation, stronger workflow output controls, automatic correction learning, resilient cloud uploads, and improved fullscreen indicators. The iOS release is pending Apple review.",
   "docs.allPlatforms": "All Platforms",
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
@@ -25,6 +25,6 @@
   "docs.win.release.cliDescription": "The optional Windows CLI uses the local HTTP API.",
   "docs.win.release.troubleshootingDescription": "Solutions for common Windows installation, recording, insertion, and automation problems.",
   "docs.ios.title": "iOS",
-  "docs.ios.badge": "Alpha",
-  "docs.ios.description": "Early alpha preview via TestFlight for iPhone and iPad."
+  "docs.ios.badge": "Review Pending",
+  "docs.ios.description": "Submitted to Apple and waiting for App Store approval."
 }

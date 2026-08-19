@@ -1,4 +1,4 @@
-import { Download, Menu, Moon, Sun } from "lucide-react";
+import { Clock3, Download, Menu, Moon, Sun } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
 import { GitHubIcon } from "@/components/ui/github-icon";
@@ -77,7 +77,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
 
         <div className="flex items-center gap-1">
           {/* Desktop Download CTA */}
-          {showDownloadCta && (
+          {showDownloadCta && (download.available ? (
             <Button
               size="sm"
               className="hidden md:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
@@ -98,7 +98,17 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 {download.label}
               </a>
             </Button>
-          )}
+          ) : (
+            <Button
+              size="sm"
+              className="hidden md:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
+              disabled
+              data-testid="header-download"
+            >
+              <Clock3 className="size-4" />
+              {download.label}
+            </Button>
+          ))}
 
           {/* Language Switcher */}
           <a
@@ -175,7 +185,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             </SheetTrigger>
             <SheetContent side="right" className="pt-12">
               <nav className="flex flex-col gap-1 px-4">
-                {showDownloadCta && (
+                {showDownloadCta && (download.available ? (
                   <Button
                     asChild
                     className="mb-3 w-full rounded-full"
@@ -196,7 +206,16 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                       {download.label}
                     </a>
                   </Button>
-                )}
+                ) : (
+                  <Button
+                    className="mb-3 w-full rounded-full"
+                    disabled
+                    data-testid="header-download-mobile"
+                  >
+                    <Clock3 className="size-4" />
+                    {download.label}
+                  </Button>
+                ))}
                 {navLinks.map((link) => (
                   <a
                     key={link.href}

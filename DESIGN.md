@@ -5,7 +5,7 @@ Always read this file before making visual changes. Do not deviate without expli
 
 ## Product Context
 
-- **What this is:** Marketing site for TypeWhisper, a privacy-first dictation app (macOS, Windows beta, iOS alpha).
+- **What this is:** Marketing site for TypeWhisper, a privacy-first dictation app (macOS and Windows stable, iOS pending Apple review).
 - **Who it's for:** Developers, writers, professionals; secondary: business/legal buyers.
 - **Positioning:** Free, local-first, open ecosystem (add-on marketplace + SDK), made in Germany.
 - **Project type:** Marketing site + docs, statically built with Astro 6 + Tailwind 4 + React islands, EN/DE.

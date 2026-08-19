@@ -26,8 +26,8 @@ type LandingScenario = {
   name: string;
   userAgent: string;
   expectedLabel: string;
-  expectedHref: RegExp | string;
-  opensNewTab: boolean;
+  expectedHref?: RegExp | string;
+  opensNewTab?: boolean;
 };
 
 const landingScenarios: LandingScenario[] = [
@@ -52,9 +52,7 @@ const landingScenarios: LandingScenario[] = [
     name: "iOS",
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Mobile/15E148 Safari/604.1",
-    expectedLabel: "Join iOS Alpha",
-    expectedHref: "https://testflight.apple.com/join/kcCS3hcZ",
-    opensNewTab: true,
+    expectedLabel: "Coming soon",
   },
 ];
 
@@ -74,6 +72,15 @@ for (const scenario of landingScenarios) {
       await expect(footerCta).toBeVisible();
       await expect(heroCta).toHaveText(scenario.expectedLabel);
       await expect(footerCta).toHaveText(scenario.expectedLabel);
+
+      if (!scenario.expectedHref) {
+        await expect(heroCta).toBeDisabled();
+        await expect(footerCta).toBeDisabled();
+        await expect(heroCta).not.toHaveAttribute("href");
+        await expect(footerCta).not.toHaveAttribute("href");
+        return;
+      }
+
       const expectedHref =
         scenario.name === "macOS"
           ? readGeneratedDownloads().mac.url
@@ -250,12 +257,8 @@ test.describe("release status download routing", () => {
     await expect(
       page.getByRole("link", { name: "Download GitHub installer" }),
     ).toHaveAttribute("href", downloads.windows.url);
-    await expect(
-      page.getByRole("link", { name: "Join TestFlight" }),
-    ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");
-    await expect(
-      page.getByRole("link", { name: "Join TestFlight" }),
-    ).toHaveAttribute("target", "_blank");
+    await expect(page.getByText("Coming soon to the App Store", { exact: true })).toBeVisible();
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
   });
 
   test("/de/release-status uses generated macOS and Windows links", async ({
@@ -285,13 +288,22 @@ test.describe("release status download routing", () => {
     await expect(
       page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
     ).toHaveAttribute("href", downloads.windows.url);
-    await expect(
-      page.getByRole("link", { name: "TestFlight beitreten" }),
-    ).toHaveAttribute("href", "https://testflight.apple.com/join/kcCS3hcZ");
-    await expect(
-      page.getByRole("link", { name: "TestFlight beitreten" }),
-    ).toHaveAttribute("target", "_blank");
+    await expect(page.getByText("Bald im App Store", { exact: true })).toBeVisible();
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
   });
+});
+
+test("public iOS pages show Apple review status without beta links", async ({
+  page,
+}) => {
+  for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
+    await page.goto(path);
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
+  }
+
+  await page.goto("/en/docs/ios");
+  await expect(page.getByText("Coming soon to the App Store", { exact: true })).toBeVisible();
+  await expect(page.getByText("Pending Apple Review", { exact: true }).first()).toBeVisible();
 });
 
 test("macOS installation docs use the generated stable download", async ({

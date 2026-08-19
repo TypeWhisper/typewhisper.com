@@ -19,21 +19,27 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
             {t(locale, "downloadCta.subtitle")}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button size="pill" asChild>
-              <a
-                href={download.href}
-                target={download.opensNewTab ? "_blank" : undefined}
-                rel={download.opensNewTab ? "noopener noreferrer" : undefined}
-                data-testid="landing-footer-download"
-                data-download-social-trigger
-                data-download-platform={download.platform}
-                data-download-target={download.target}
-                data-download-version={download.version}
-                data-tracking-placement="landing"
-              >
+            {download.available ? (
+              <Button size="pill" asChild>
+                <a
+                  href={download.href}
+                  target={download.opensNewTab ? "_blank" : undefined}
+                  rel={download.opensNewTab ? "noopener noreferrer" : undefined}
+                  data-testid="landing-footer-download"
+                  data-download-social-trigger
+                  data-download-platform={download.platform}
+                  data-download-target={download.target}
+                  data-download-version={download.version}
+                  data-tracking-placement="landing"
+                >
+                  {download.label}
+                </a>
+              </Button>
+            ) : (
+              <Button size="pill" disabled data-testid="landing-footer-download">
                 {download.label}
-              </a>
-            </Button>
+              </Button>
+            )}
             <Button variant="link-arrow" asChild>
               <a href={localePath(locale, "/release-status")} className="inline-flex items-center gap-1 text-primary">
                 {t(locale, "downloadCta.releaseStatus")}
