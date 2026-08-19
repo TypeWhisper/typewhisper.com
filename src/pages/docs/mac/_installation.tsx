@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { t, type Locale } from "@/i18n/index";
+import { macDmgUrl } from "@/lib/platform-download";
 
 export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale }) {
   const [copied, setCopied] = useState(false);
@@ -39,6 +40,39 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
         </div>
 
         <div className="mt-6 rounded-2xl bg-card p-6">
+          <h2 className="text-lg font-semibold">
+            {t(locale, "docs.mac.installation.highlights.title")}
+          </h2>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            {[1, 2, 3, 4].map((item) => (
+              <li key={item} className="flex gap-2">
+                <span aria-hidden="true">&bull;</span>
+                <span>{t(locale, `docs.mac.installation.highlights.item${item}`)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-semibold">
+              {t(locale, "docs.mac.installation.upgrade.title")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.installation.upgrade.desc")}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
+            <h2 className="text-lg font-semibold">
+              {t(locale, "docs.mac.installation.sync.title")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.installation.sync.desc")}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-card p-6">
           <h2 className="text-lg font-semibold">{t(locale, "docs.mac.installation.requirements.title")}</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             <li>&bull; {t(locale, "docs.mac.installation.requirements.macos")}</li>
@@ -54,11 +88,10 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
           <p className="mt-3 text-sm text-muted-foreground">
             {t(locale, "docs.mac.installation.download.descBefore")}{" "}
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac/releases"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={macDmgUrl}
+              data-download-social-trigger
               data-download-platform="mac"
-              data-download-target="mac_github_releases"
+              data-download-target="mac_dmg"
               data-tracking-placement="docs"
               className="text-primary hover:underline"
             >

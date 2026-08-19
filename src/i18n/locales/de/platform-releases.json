@@ -1,0 +1,11 @@
+{
+  "platforms.mac.description": "Stabiles 1.6-Release mit schnellerer, robusterer Aufnahme, Backup & Restore, kalendergestützten Meeting-Aufnahmen und erweiterten Integrationen.",
+  "platforms.mac.status": "1.6 Stabil",
+  "releaseStatus.mac.intro": "macOS 1.6 ist das unterstützte stabile Release.",
+  "releaseStatus.mac.detail": "Dies ist der offizielle Pfad für den täglichen Gebrauch, Dokumentation, Support und stabile Updates.",
+  "releaseStatus.mac.title": "macOS 1.6",
+  "releaseStatus.mac.description": "Stabiles Direct-Download-Release 1.6 mit schnellerer, robusterer Audioaufnahme, Backup & Restore, kalendergestützten Meeting-Aufnahmen, Live-Transkript-Updates, verbessertem Flüstermodus und erweiterten Automatisierungs-Integrationen.",
+  "hero.platformTabs.stage.mac": "1.6 Stabil",
+  "support.mac.title": "macOS 1.6",
+  "support.mac.description": "Stabiler Release-Support für Installation, Berechtigungen, schnellere Audioaufnahme, Meeting-Aufnahmen, Backup & Restore, Diktieren, Datei-Transkription, Workflows, Integrationen, lokale APIs und Modellverwaltung."
+}

@@ -97,4 +97,33 @@ test.describe("macOS workflows documentation", () => {
     await expect(page.getByText("Toggle Shortcut festlegen")).toBeVisible();
   });
 
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} macOS docs present the 1.6 release`, async ({ page }) => {
+      await page.goto(`/${locale}/docs/mac`);
+      await expect(
+        page.getByText(locale === "de" ? "1.6 Stabil" : "1.6 Stable", {
+          exact: true,
+        }),
+      ).toBeVisible();
+
+      await page.goto(`/${locale}/docs/mac/installation`);
+      await expect(
+        page.getByRole("heading", { level: 2, name: "macOS 1.6" }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("heading", {
+          level: 2,
+          name: locale === "de" ? "Neu in 1.6" : "What's new in 1.6",
+        }),
+      ).toBeVisible();
+      await expect(page.getByText("Backup & Restore").first()).toBeVisible();
+      await expect(
+        page.getByText(
+          locale === "de"
+            ? /Automatischer privater iCloud-Sync bleibt in 1\.6 nicht verfügbar/
+            : /Automatic private iCloud sync remains unavailable in 1\.6/,
+        ),
+      ).toBeVisible();
+    });
+  }
 });
