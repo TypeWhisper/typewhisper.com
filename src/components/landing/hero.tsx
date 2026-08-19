@@ -71,6 +71,10 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
     locale,
     heroScreenshotByPlatform[selectedPlatform],
   );
+  const heroScreenshotAlt = t(
+    locale,
+    selectedPlatform === "ios" ? "hero.imgAlt.ios" : "hero.imgAlt",
+  );
 
   return (
     <section
@@ -157,15 +161,23 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
         </div>
 
         <div className="mt-10 sm:mt-14 reveal-scale-hidden">
-          <Screenshot
-            src={heroScreenshot}
-            alt={t(locale, "hero.imgAlt")}
-            className="mx-auto max-w-3xl w-full max-h-[30vh] sm:max-h-none object-contain object-top"
-          />
-          {selectedPlatform === "ios" && (
-            <p className="mx-auto mt-3 max-w-xl text-center text-xs text-muted-foreground">
-              {t(locale, "hero.shotNotice.nonMac")}
-            </p>
+          {selectedPlatform === "ios" ? (
+            <div
+              data-testid="landing-ios-hero-visual"
+              className="mx-auto w-fit max-w-full overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-2xl shadow-black/15"
+            >
+              <Screenshot
+                src={heroScreenshot}
+                alt={heroScreenshotAlt}
+                className="mx-auto max-h-96 w-auto max-w-full rounded-xl object-contain sm:max-h-[34rem]"
+              />
+            </div>
+          ) : (
+            <Screenshot
+              src={heroScreenshot}
+              alt={heroScreenshotAlt}
+              className="mx-auto max-h-[30vh] w-full max-w-3xl object-contain object-top sm:max-h-none"
+            />
           )}
         </div>
       </div>
