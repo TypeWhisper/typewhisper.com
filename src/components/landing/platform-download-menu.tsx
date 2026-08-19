@@ -1,4 +1,4 @@
-import { ChevronDown, Download, Monitor, Smartphone } from "lucide-react";
+import { ChevronDown, Clock3, Download, Monitor } from "lucide-react";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
@@ -12,7 +12,8 @@ export function PlatformDownloadMenu({
   const resolvedLabel = label ?? t(locale, "platformMenu.label");
   const macDownload = getPlatformDownloadTarget("mac", locale, "landing");
   const windowsDownload = getPlatformDownloadTarget("windows", locale, "landing");
-  const iosDownload = getPlatformDownloadTarget("ios", locale, "landing");
+
+  if (!macDownload.available || !windowsDownload.available) return null;
 
   return (
     <details className="group relative w-full sm:w-auto">
@@ -49,19 +50,13 @@ export function PlatformDownloadMenu({
           <Monitor className="size-4" />
           {t(locale, "platformMenu.win")}
         </a>
-        <a
-          href={iosDownload.href}
-          target={iosDownload.opensNewTab ? "_blank" : undefined}
-          rel={iosDownload.opensNewTab ? "noopener noreferrer" : undefined}
-          data-download-social-trigger
-          data-download-platform={iosDownload.platform}
-          data-download-target={iosDownload.target}
-          data-tracking-placement="platform_menu"
-          className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-popover-foreground transition-colors hover:bg-accent"
+        <span
+          aria-disabled="true"
+          className="flex cursor-not-allowed items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-muted-foreground"
         >
-          <Smartphone className="size-4" />
+          <Clock3 className="size-4" />
           {t(locale, "platformMenu.ios")}
-        </a>
+        </span>
       </div>
     </details>
   );

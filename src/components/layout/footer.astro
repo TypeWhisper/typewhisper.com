@@ -53,7 +53,7 @@ const { locale = "en" } = Astro.props;
           <a href={localePath(locale, "/support")} class="transition-colors hover:text-foreground">{t(locale, "footer.support")}</a>
           <a href={localePath(locale, "/changelog")} class="transition-colors hover:text-foreground">{t(locale, "footer.changelog")}</a>
           <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.windows")}</a>
-          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.iosAlpha")}</a>
+          <span>{t(locale, "footer.iosPending")}</span>
         </div>
         <div class="flex flex-wrap gap-x-6 gap-y-2">
           <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.discord")}</a>

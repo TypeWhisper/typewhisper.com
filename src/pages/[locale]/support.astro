@@ -58,7 +58,7 @@ const { locale } = Astro.props;
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
           <a href="https://github.com/TypeWhisper/typewhisper-ios/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.reportIssue")}</a>
-          <a href="https://testflight.apple.com/join/kcCS3hcZ" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.testflight")}</a>
+          <span class="font-medium text-muted-foreground">{t(locale, "support.ios.releasePending")}</span>
         </div>
       </section>
     </div>

@@ -15,14 +15,14 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const copy = locale === "de"
   ? {
-      description: "TypeWhisper für iOS Alpha via TestFlight. Frühe Vorschau auf lokale Transkription für iPhone und iPad.",
-      releaseTitle: "iOS ist derzeit eine Alpha-Vorschau.",
-      releaseDescription: "Behandle den iPhone- und iPad-Build als experimentelles TestFlight-Release, nicht als breiten produktiven Rollout.",
+      description: "TypeWhisper für iPhone und iPad wurde bei Apple eingereicht und wartet auf die Freigabe für den App Store.",
+      releaseTitle: "Das iOS-Release wartet auf Apples Prüfung.",
+      releaseDescription: "TypeWhisper erscheint im App Store, sobald Apple die Prüfung abgeschlossen und das Release freigegeben hat.",
     }
   : {
-      description: "TypeWhisper for iOS alpha via TestFlight. Early on-device transcription preview for iPhone and iPad.",
-      releaseTitle: "iOS is currently an alpha preview.",
-      releaseDescription: "Treat the iPhone and iPad build as an experimental TestFlight release, not as a broad production rollout.",
+      description: "TypeWhisper for iPhone and iPad has been submitted to Apple and is waiting for App Store approval.",
+      releaseTitle: "The iOS release is pending Apple review.",
+      releaseDescription: "TypeWhisper will appear in the App Store once Apple completes its review and approves the release.",
     };
 ---
 <DocsLayout
@@ -30,7 +30,7 @@ const copy = locale === "de"
   description={copy.description}
   canonicalPath={canonicalPath(locale, "/docs/ios")}
   locale={locale}
-  releaseStage="alpha"
+  releaseStage="pending"
   releaseTitle={copy.releaseTitle}
   releaseDescription={copy.releaseDescription}
 >

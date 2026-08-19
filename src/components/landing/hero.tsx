@@ -37,8 +37,7 @@ function shortVersion(version: string | null | undefined): string | null {
   return match ? `${match[1]}.${match[2]}` : null;
 }
 
-// iOS has no concrete versioned download (TestFlight only), so we omit the
-// version suffix in the hero headline for it.
+// iOS is pending Apple review, so there is no public version yet.
 const versionByPlatform: Record<HeroPlatform, string | null> = {
   mac: shortVersion(downloads.mac.version),
   windows: shortVersion(downloads.windows.version),
@@ -100,21 +99,27 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
-            <Button size="pill" asChild>
-              <a
-                href={download.href}
-                target={download.opensNewTab ? "_blank" : undefined}
-                rel={download.opensNewTab ? "noopener noreferrer" : undefined}
-                data-testid="landing-hero-download"
-                data-download-social-trigger
-                data-download-platform={download.platform}
-                data-download-target={download.target}
-                data-download-version={download.version}
-                data-tracking-placement="hero"
-              >
+            {download.available ? (
+              <Button size="pill" asChild>
+                <a
+                  href={download.href}
+                  target={download.opensNewTab ? "_blank" : undefined}
+                  rel={download.opensNewTab ? "noopener noreferrer" : undefined}
+                  data-testid="landing-hero-download"
+                  data-download-social-trigger
+                  data-download-platform={download.platform}
+                  data-download-target={download.target}
+                  data-download-version={download.version}
+                  data-tracking-placement="hero"
+                >
+                  {download.label}
+                </a>
+              </Button>
+            ) : (
+              <Button size="pill" disabled data-testid="landing-hero-download">
                 {download.label}
-              </a>
-            </Button>
+              </Button>
+            )}
 
             <Button variant="link-arrow" asChild>
               <a

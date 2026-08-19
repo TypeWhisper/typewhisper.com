@@ -2,7 +2,7 @@
 import { t, type Locale } from "@/i18n/index";
 
 interface Props {
-  stage: "stable" | "beta" | "alpha";
+  stage: "stable" | "beta" | "alpha" | "pending";
   title: string;
   description: string;
   locale?: Locale;
@@ -25,6 +25,11 @@ const toneMap = {
     container: "border-rose-500/20 bg-rose-500/5",
     label: "text-rose-700 dark:text-rose-300",
     labelKey: "releaseStage.alpha",
+  },
+  pending: {
+    container: "border-amber-500/20 bg-amber-500/5",
+    label: "text-amber-700 dark:text-amber-300",
+    labelKey: "releaseStage.pending",
   },
 } as const;
 

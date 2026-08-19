@@ -6,8 +6,6 @@ export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
-export const iosTestFlightUrl =
-  "https://testflight.apple.com/join/kcCS3hcZ";
 const windowsStoreProductUrl =
   "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 const windowsStoreCampaignId = "DevShareMCLPCS";
@@ -28,7 +26,8 @@ export const discordUrl = "https://discord.gg/pUFR4a65SD";
 export type Platform = "mac" | "windows" | "ios" | "other";
 export type DownloadTargetContext = "nav" | "landing";
 
-export interface PlatformDownloadTarget {
+interface AvailablePlatformDownloadTarget {
+  available: true;
   href: string;
   label: string;
   platform: Platform;
@@ -36,6 +35,16 @@ export interface PlatformDownloadTarget {
   version?: string;
   opensNewTab: boolean;
 }
+
+interface PendingPlatformDownloadTarget {
+  available: false;
+  label: string;
+  platform: "ios";
+}
+
+export type PlatformDownloadTarget =
+  | AvailablePlatformDownloadTarget
+  | PendingPlatformDownloadTarget;
 
 export function getWindowsStoreUrl(locale: Locale): string {
   const params = new URLSearchParams({
@@ -90,6 +99,7 @@ export function getPlatformDownloadTarget(
     switch (platform) {
       case "windows":
         return {
+          available: true,
           href: getWindowsStoreUrl(locale),
           label: t(locale, "platforms.win.download"),
           platform,
@@ -98,16 +108,15 @@ export function getPlatformDownloadTarget(
         };
       case "ios":
         return {
-          href: iosTestFlightUrl,
+          available: false,
           label: t(locale, "platforms.ios.download"),
           platform,
-          target: "ios_testflight",
-          opensNewTab: true,
         };
       case "mac":
       case "other":
       default:
         return {
+          available: true,
           href: macDmgUrl,
           label: t(locale, "platforms.mac.download"),
           platform: platform === "other" ? "mac" : platform,
@@ -121,6 +130,7 @@ export function getPlatformDownloadTarget(
   switch (platform) {
     case "windows":
       return {
+        available: true,
         href: getWindowsStoreUrl(locale),
         label: t(locale, "nav.downloadWindows"),
         platform,
@@ -129,14 +139,13 @@ export function getPlatformDownloadTarget(
       };
     case "ios":
       return {
-        href: iosTestFlightUrl,
+        available: false,
         label: t(locale, "nav.downloadIos"),
         platform,
-        target: "ios_testflight",
-        opensNewTab: true,
       };
     case "mac":
       return {
+        available: true,
         href: macDmgUrl,
         label: t(locale, "nav.downloadMac"),
         platform,
@@ -147,6 +156,7 @@ export function getPlatformDownloadTarget(
     case "other":
     default:
       return {
+        available: true,
         href: macDmgUrl,
         label: t(locale, "nav.download"),
         platform: "mac",
