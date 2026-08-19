@@ -22,7 +22,7 @@ Sendefertiger Content-Pack mit aktuellen, verifizierten Links aus der Website-St
 ## Product Status
 
 - macOS: stable
-- Windows: beta
+- Windows: stable
 - iOS: coming soon (pending Apple review)
 
 ## German Reddit
@@ -49,7 +49,7 @@ Discord: https://discord.gg/pUFR4a65SD
 
 Aktueller Plattform-Stand:
 macOS = stable
-Windows = beta
+Windows = stable
 iOS = coming soon (pending Apple review)
 
 TypeWhisper ist inzwischen nicht nur eine Dictation-App, sondern eher eine Speech-to-Text-/Workflow-Plattform mit lokalen Engines, Add-ons, Profilen sowie CLI/API für Integrationen. Falls ihr in anderen passenden Communities unterwegs seid, etwa rund um macOS, AI-Tools, Accessibility, Productivity oder DevTools, könnt ihr die Links dort gern auch weiterposten.
@@ -134,7 +134,7 @@ Support: https://www.typewhisper.com/en/support/
 
 Current platform status:
 macOS = stable
-Windows = beta
+Windows = stable
 iOS = coming soon (pending Apple review)
 
 If you know other builder or productivity communities where this would be relevant, feel free to repost it there.
@@ -184,7 +184,7 @@ https://discord.gg/pUFR4a65SD
 
 Current platform status:
 macOS stable
-Windows beta
+Windows stable
 iOS coming soon (pending Apple review)
 
 TypeWhisper seems increasingly useful both as a dictation app and as a speech-to-text workflow platform, especially with profiles, add-ons, and local model options. If you're in other macOS, AI, productivity, accessibility, or devtool communities, feel free to repost this there too.
@@ -211,7 +211,7 @@ For anyone getting started or going deeper:
 
 Platform status:
 - macOS: stable
-- Windows: beta
+- Windows: stable
 - iOS: coming soon (pending Apple review)
 
 If you're in other relevant communities, feel free to repost this there.
@@ -236,7 +236,7 @@ Discord: https://discord.gg/pUFR4a65SD
 
 Current platform status:
 macOS stable
-Windows beta
+Windows stable
 iOS coming soon (pending Apple review)
 
 Feel free to forward this to other relevant teams or communities if useful.
