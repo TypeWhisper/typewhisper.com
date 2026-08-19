@@ -294,6 +294,23 @@ test.describe("release status download routing", () => {
   });
 });
 
+test("macOS installation docs use the generated stable download", async ({
+  page,
+}) => {
+  const downloads = readGeneratedDownloads();
+
+  for (const locale of ["en", "de"] as const) {
+    await page.goto(`/${locale}/docs/mac/installation`);
+
+    const download = page.locator(
+      '[data-download-platform="mac"][data-tracking-placement="docs"]',
+    );
+    await expect(download).toHaveAttribute("href", downloads.mac.url);
+    await expect(download).toHaveAttribute("data-download-target", "mac_dmg");
+    await expect(download).not.toHaveAttribute("target", "_blank");
+  }
+});
+
 test("changelog reflects the generated release feed", async ({ page }) => {
   const releases = readGeneratedReleases();
   await page.goto("/en/changelog");

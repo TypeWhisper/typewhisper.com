@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { t, type Locale } from "@/i18n/index";
+import { macDmgUrl } from "@/lib/platform-download";
 
 export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale }) {
   const [copied, setCopied] = useState(false);
@@ -87,11 +88,10 @@ export default function DocsMacInstallation({ locale = "en" }: { locale?: Locale
           <p className="mt-3 text-sm text-muted-foreground">
             {t(locale, "docs.mac.installation.download.descBefore")}{" "}
             <a
-              href="https://github.com/TypeWhisper/typewhisper-mac/releases"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={macDmgUrl}
+              data-download-social-trigger
               data-download-platform="mac"
-              data-download-target="mac_github_releases"
+              data-download-target="mac_dmg"
               data-tracking-placement="docs"
               className="text-primary hover:underline"
             >
