@@ -31,23 +31,25 @@ function PremiumFeatureBlock({ feature }: { feature: PremiumFeature }) {
 
 export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
   const platform = useSyncedLandingPlatform();
+  const isIos = platform === "ios";
+  const keyPrefix = isIos ? "premiumFeatures.ios" : "premiumFeatures";
   const features: PremiumFeature[] = [
     {
-      title: t(locale, "premiumFeatures.sync.title"),
-      description: t(locale, "premiumFeatures.sync.description"),
+      title: t(locale, `${keyPrefix}.sync.title`),
+      description: t(locale, `${keyPrefix}.sync.description`),
       items: [
-        t(locale, "premiumFeatures.sync.item1"),
-        t(locale, "premiumFeatures.sync.item2"),
-        t(locale, "premiumFeatures.sync.item3"),
+        t(locale, `${keyPrefix}.sync.item1`),
+        t(locale, `${keyPrefix}.sync.item2`),
+        t(locale, `${keyPrefix}.sync.item3`),
       ],
     },
     {
-      title: t(locale, "premiumFeatures.dictionary.title"),
-      description: t(locale, "premiumFeatures.dictionary.description"),
+      title: t(locale, `${keyPrefix}.dictionary.title`),
+      description: t(locale, `${keyPrefix}.dictionary.description`),
       items: [
-        t(locale, "premiumFeatures.dictionary.item1"),
-        t(locale, "premiumFeatures.dictionary.item2"),
-        t(locale, "premiumFeatures.dictionary.item3"),
+        t(locale, `${keyPrefix}.dictionary.item1`),
+        t(locale, `${keyPrefix}.dictionary.item2`),
+        t(locale, `${keyPrefix}.dictionary.item3`),
       ],
     },
   ];
@@ -65,22 +67,27 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="reveal-fade-hidden text-sm font-semibold uppercase tracking-wide text-primary">
-            {t(locale, "premiumFeatures.eyebrow")}
+            {t(locale, `${keyPrefix}.eyebrow`)}
           </p>
           <h2 className="reveal-fade-hidden mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            {t(locale, "premiumFeatures.title")}
+            {t(locale, `${keyPrefix}.title`)}
           </h2>
           <p className="reveal-fade-hidden mt-4 text-lg text-muted-foreground">
-            {t(locale, "premiumFeatures.subtitle")}
+            {t(locale, `${keyPrefix}.subtitle`)}
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:items-stretch">
-          <div className="reveal-hidden flex overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-2xl shadow-black/20">
+        <div
+          className={`mt-12 grid gap-6 ${isIos ? "lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-start lg:justify-center" : "lg:grid-cols-2 lg:items-stretch"}`}
+        >
+          <div
+            data-testid={isIos ? "ios-premium-visual" : undefined}
+            className={`reveal-hidden flex overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-2xl shadow-black/20 ${isIos ? "mx-auto w-full max-w-56 sm:max-w-72" : ""}`}
+          >
             <Screenshot
               src={premiumScreenshot}
-              alt={t(locale, "premiumFeatures.screenshotAlt")}
-              className="h-full w-full rounded-xl object-contain"
+              alt={t(locale, `${keyPrefix}.screenshotAlt`)}
+              className={`${isIos ? "h-auto" : "h-full object-contain"} w-full rounded-xl`}
               loading="lazy"
             />
           </div>
@@ -94,14 +101,14 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
 
         <div className="reveal-hidden mt-8 flex flex-col items-center gap-3 text-center">
           <p className="max-w-2xl text-sm text-muted-foreground">
-            {t(locale, "premiumFeatures.licenseNote")}
+            {t(locale, `${keyPrefix}.licenseNote`)}
           </p>
           <Button variant="link-arrow" asChild>
             <a
               href={localePath(locale, "/pricing")}
               className="inline-flex items-center gap-1 text-primary"
             >
-              {t(locale, "premiumFeatures.cta")}
+              {t(locale, `${keyPrefix}.cta`)}
               <ArrowRight className="size-4" aria-hidden="true" />
             </a>
           </Button>

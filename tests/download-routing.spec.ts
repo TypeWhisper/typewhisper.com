@@ -97,9 +97,11 @@ for (const scenario of landingScenarios) {
         await expect(heroCta).not.toHaveAttribute("target", "_blank");
         await expect(footerCta).not.toHaveAttribute("target", "_blank");
         await expect(heroCta).not.toHaveAttribute("rel", "noopener noreferrer");
-        await expect(footerCta).not.toHaveAttribute("rel", "noopener noreferrer");
+        await expect(footerCta).not.toHaveAttribute(
+          "rel",
+          "noopener noreferrer",
+        );
       }
-
     });
   });
 }
@@ -108,32 +110,41 @@ test("download clicks show the social follow banner", async ({ page }) => {
   await page.goto("/en/");
 
   await page.evaluate(() => {
-    const element = document.querySelector('[data-testid="landing-hero-download"]');
+    const element = document.querySelector(
+      '[data-testid="landing-hero-download"]',
+    );
     element?.addEventListener("click", (event) => event.preventDefault(), {
       once: true,
       capture: true,
     });
-    element?.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    element?.dispatchEvent(
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
   });
 
   const banner = page.getByTestId("download-social-banner");
   await expect(banner).toBeVisible();
-  await expect(page.getByRole("dialog", { name: "Stay close to TypeWhisper" })).toBeVisible();
+  await expect(
+    page.getByRole("dialog", { name: "Stay close to TypeWhisper" }),
+  ).toBeVisible();
   await expect(banner).toContainText("Download started");
-  await expect(banner.getByRole("link", { name: "Follow on X" })).toHaveAttribute(
+  await expect(
+    banner.getByRole("link", { name: "Follow on X" }),
+  ).toHaveAttribute(
     "href",
     "https://x.com/intent/follow?screen_name=Type_Whisper",
   );
   await expect(
     banner.getByRole("link", { name: "Share on Reddit" }),
   ).toHaveAttribute("href", /^https:\/\/www\.reddit\.com\/submit\?/);
-  await expect(banner.getByRole("link", { name: "Join Discord" })).toHaveAttribute(
-    "href",
-    "https://discord.gg/pUFR4a65SD",
-  );
+  await expect(
+    banner.getByRole("link", { name: "Join Discord" }),
+  ).toHaveAttribute("href", "https://discord.gg/pUFR4a65SD");
   await expect(banner.locator("[data-social-icon='x'] svg")).toBeVisible();
   await expect(banner.locator("[data-social-icon='reddit'] svg")).toBeVisible();
-  await expect(banner.locator("[data-social-icon='discord'] svg")).toBeVisible();
+  await expect(
+    banner.locator("[data-social-icon='discord'] svg"),
+  ).toBeVisible();
   await expect(banner.locator("[data-social-icon='github'] svg")).toBeVisible();
 });
 
@@ -160,11 +171,15 @@ test("attributes download and checkout events without blocking navigation", asyn
       once: true,
       capture: true,
     });
-    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    element.dispatchEvent(
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
   });
 
   const downloadEvents = await page.evaluate(
-    () => (window as typeof window & { __plausibleEvents: unknown[][] }).__plausibleEvents,
+    () =>
+      (window as typeof window & { __plausibleEvents: unknown[][] })
+        .__plausibleEvents,
   );
   expect(downloadEvents).toHaveLength(1);
   expect(downloadEvents[0]).toEqual([
@@ -180,13 +195,17 @@ test("attributes download and checkout events without blocking navigation", asyn
   ]);
 
   await page.goto("/en/pricing");
-  const checkout = page.locator("[data-checkout-tier='individual'][data-checkout-billing-period='monthly']");
+  const checkout = page.locator(
+    "[data-checkout-tier='individual'][data-checkout-billing-period='monthly']",
+  );
   await checkout.evaluate((element) => {
     element.addEventListener("click", (event) => event.preventDefault(), {
       once: true,
       capture: true,
     });
-    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    element.dispatchEvent(
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
   });
 
   const checkoutURL = new URL((await checkout.getAttribute("href"))!);
@@ -198,7 +217,9 @@ test("attributes download and checkout events without blocking navigation", asyn
   );
 
   const allEvents = await page.evaluate(
-    () => (window as typeof window & { __plausibleEvents: unknown[][] }).__plausibleEvents,
+    () =>
+      (window as typeof window & { __plausibleEvents: unknown[][] })
+        .__plausibleEvents,
   );
   expect(allEvents.at(-1)).toEqual([
     "Checkout Started",
@@ -213,7 +234,9 @@ test("attributes download and checkout events without blocking navigation", asyn
   ]);
 });
 
-test("uses website checkout defaults when no campaign is present", async ({ page }) => {
+test("uses website checkout defaults when no campaign is present", async ({
+  page,
+}) => {
   await page.goto("/en/pricing");
   const checkout = page.locator("[data-checkout-tier='bronze']");
   await checkout.evaluate((element) => {
@@ -221,11 +244,15 @@ test("uses website checkout defaults when no campaign is present", async ({ page
       once: true,
       capture: true,
     });
-    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    element.dispatchEvent(
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
   });
 
   const checkoutURL = new URL((await checkout.getAttribute("href"))!);
-  expect(checkoutURL.searchParams.get("utm_source")).toBe("typewhisper_website");
+  expect(checkoutURL.searchParams.get("utm_source")).toBe(
+    "typewhisper_website",
+  );
   expect(checkoutURL.searchParams.get("utm_medium")).toBe("web");
 });
 
@@ -257,8 +284,12 @@ test.describe("release status download routing", () => {
     await expect(
       page.getByRole("link", { name: "Download GitHub installer" }),
     ).toHaveAttribute("href", downloads.windows.url);
-    await expect(page.getByText("Coming soon to the App Store", { exact: true })).toBeVisible();
-    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
+    await expect(
+      page.getByText("Coming soon to the App Store", { exact: true }),
+    ).toBeVisible();
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
+      0,
+    );
   });
 
   test("/de/release-status uses generated macOS and Windows links", async ({
@@ -288,8 +319,12 @@ test.describe("release status download routing", () => {
     await expect(
       page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
     ).toHaveAttribute("href", downloads.windows.url);
-    await expect(page.getByText("Bald im App Store", { exact: true })).toBeVisible();
-    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
+    await expect(
+      page.getByText("Bald im App Store", { exact: true }),
+    ).toBeVisible();
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
+      0,
+    );
   });
 });
 
@@ -298,12 +333,116 @@ test("public iOS pages show Apple review status without beta links", async ({
 }) => {
   for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
     await page.goto(path);
-    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
+    await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
+      0,
+    );
   }
 
   await page.goto("/en/docs/ios");
-  await expect(page.getByText("Coming soon to the App Store", { exact: true })).toBeVisible();
-  await expect(page.getByText("Pending Apple Review", { exact: true }).first()).toBeVisible();
+  await expect(
+    page.getByText("Coming soon to the App Store", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Pending Apple Review", { exact: true }).first(),
+  ).toBeVisible();
+});
+
+test.describe("iOS coming-soon media", () => {
+  test("English landing uses the localized App Preview", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/en/");
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-landing-platform",
+      "windows",
+    );
+    const iosTab = page.getByTestId("landing-hero-tab-ios");
+    await iosTab.click();
+    await expect(iosTab).toHaveAttribute("aria-selected", "true");
+
+    await expect(page.getByTestId("landing-hero-download")).toBeDisabled();
+    await expect(
+      page.locator('source[src="/ios-app-preview-de.mp4"]'),
+    ).toHaveCount(0);
+    const howItWorks = page.getByTestId("how-it-works");
+    await howItWorks.scrollIntoViewIfNeeded();
+    await expect(
+      howItWorks.locator("xpath=ancestor::astro-island"),
+    ).not.toHaveAttribute("ssr", "");
+    await expect(
+      page.getByTestId("how-it-works-video").locator("source"),
+    ).toHaveAttribute("src", "/ios-app-preview-en.mp4");
+    expect((await request.get("/ios-app-preview-en.mp4")).ok()).toBeTruthy();
+
+    const watchPreview = page.getByTestId("ios-watch-preview");
+    await expect(watchPreview).toContainText("Record from Apple Watch");
+    await expect(watchPreview.locator("img")).toHaveCount(3);
+
+    for (const name of ["01-ready", "02-recording", "03-recent"]) {
+      const path = `/screenshots/en/ios/watch/${name}.webp`;
+      await expect(watchPreview.locator(`img[src="${path}"]`)).toBeVisible();
+      expect((await request.get(path)).ok()).toBeTruthy();
+    }
+  });
+
+  test("German landing keeps the localized video and Watch screenshots", async ({
+    page,
+  }) => {
+    await page.goto("/de/");
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-landing-platform",
+      "windows",
+    );
+    const iosTab = page.getByTestId("landing-hero-tab-ios");
+    await iosTab.click();
+    await expect(iosTab).toHaveAttribute("aria-selected", "true");
+
+    const howItWorks = page.getByTestId("how-it-works");
+    await howItWorks.scrollIntoViewIfNeeded();
+    await expect(
+      howItWorks.locator("xpath=ancestor::astro-island"),
+    ).not.toHaveAttribute("ssr", "");
+    await expect(
+      page.getByTestId("how-it-works-video").locator("source"),
+    ).toHaveAttribute("src", "/ios-app-preview-de.mp4");
+    await expect(
+      page.getByTestId("ios-watch-preview").locator("img"),
+    ).toHaveCount(3);
+  });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} iOS docs show localized iPhone and Watch media`, async ({
+      page,
+      request,
+    }) => {
+      await page.goto(`/${locale}/docs/ios`);
+
+      await expect(
+        page.getByRole("heading", { level: 1, name: "iOS" }),
+      ).toBeVisible();
+      await expect(page.locator('a[href*="apps.apple.com"]')).toHaveCount(0);
+      await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
+        0,
+      );
+
+      for (const name of ["01-recording", "03-keyboard", "05-profiles"]) {
+        const path = `/screenshots/${locale}/ios/${name}.png`;
+        await expect(page.locator(`img[src="${path}"]`)).toBeVisible();
+        expect((await request.get(path)).ok()).toBeTruthy();
+      }
+
+      for (const name of ["01-ready", "02-recording", "03-recent"]) {
+        const path = `/screenshots/${locale}/ios/watch/${name}.webp`;
+        await expect(page.locator(`img[src="${path}"]`)).toBeVisible();
+        expect((await request.get(path)).ok()).toBeTruthy();
+      }
+
+      const previewPath = `/ios-app-preview-${locale}.mp4`;
+      await expect(page.locator(`source[src="${previewPath}"]`)).toHaveCount(1);
+      expect((await request.get(previewPath)).ok()).toBeTruthy();
+    });
+  }
 });
 
 test("macOS installation docs use the generated stable download", async ({

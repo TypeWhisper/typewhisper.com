@@ -46,32 +46,33 @@ function FeatureCard({
 
 function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
   const screenshots = featureScreenshotsByPlatform[platform];
+  const keyPrefix = platform === "ios" ? "features.ios" : "features";
 
   return [
     {
-      title: t(locale, "features.private.title"),
-      description: t(locale, "features.private.description"),
+      title: t(locale, `${keyPrefix}.private.title`),
+      description: t(locale, `${keyPrefix}.private.description`),
       span: "col-span-2",
       screenshot: screenshotPath(locale, screenshots.private),
     },
     {
-      title: t(locale, "features.dictation.title"),
-      description: t(locale, "features.dictation.description"),
+      title: t(locale, `${keyPrefix}.dictation.title`),
+      description: t(locale, `${keyPrefix}.dictation.description`),
       screenshot: screenshotPath(locale, screenshots.dictation),
     },
     {
-      title: t(locale, "features.prompts.title"),
-      description: t(locale, "features.prompts.description"),
+      title: t(locale, `${keyPrefix}.prompts.title`),
+      description: t(locale, `${keyPrefix}.prompts.description`),
       screenshot: screenshotPath(locale, screenshots.prompts),
     },
     {
-      title: t(locale, "features.profiles.title"),
-      description: t(locale, "features.profiles.description"),
+      title: t(locale, `${keyPrefix}.profiles.title`),
+      description: t(locale, `${keyPrefix}.profiles.description`),
       screenshot: screenshotPath(locale, screenshots.profiles),
     },
     {
-      title: t(locale, "features.transcription.title"),
-      description: t(locale, "features.transcription.description"),
+      title: t(locale, `${keyPrefix}.transcription.title`),
+      description: t(locale, `${keyPrefix}.transcription.description`),
       screenshot: screenshotPath(locale, screenshots.transcription),
     },
   ];
@@ -80,11 +81,13 @@ function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
 export function Features({ locale = "en" }: { locale?: Locale }) {
   const platform = useSyncedLandingPlatform();
   const features = getFeatures(locale, platform);
+  const isIos = platform === "ios";
+  const keyPrefix = isIos ? "features.ios" : "features";
   const fullWidthFeatures = features.filter(
-    (feature) => feature.span === "col-span-2"
+    (feature) => feature.span === "col-span-2",
   );
   const bentoFeatures = features.filter(
-    (feature) => feature.span !== "col-span-2"
+    (feature) => feature.span !== "col-span-2",
   );
   const bentoColumns = [
     bentoFeatures.filter((_, i) => i % 2 === 0),
@@ -95,33 +98,72 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
     <section id="features" className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          {t(locale, "features.title")}
+          {t(locale, `${keyPrefix}.title`)}
         </h2>
         <p className="reveal-fade-hidden mt-4 text-center text-lg text-muted-foreground">
-          {t(locale, "features.subtitle")}
+          {t(locale, `${keyPrefix}.subtitle`)}
         </p>
 
-        <div className="mt-12 space-y-4">
-          {fullWidthFeatures.map((feature) => (
-            <FeatureCard key={feature.title} feature={feature} />
-          ))}
+        {isIos ? (
+          <div className="mt-10" data-testid="ios-feature-layout">
+            <div
+              className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:mx-auto sm:max-w-4xl sm:justify-center sm:overflow-visible sm:px-0"
+              data-testid="ios-feature-gallery"
+            >
+              {features.slice(1, 4).map((feature) => (
+                <div
+                  key={feature.title}
+                  className="reveal-scale-hidden w-[12.5rem] flex-none snap-center overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-xl shadow-black/10 sm:w-[13.5rem] lg:w-56"
+                >
+                  <Screenshot
+                    src={feature.screenshot!}
+                    alt={feature.title}
+                    className="w-full rounded-xl"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
 
-          <div className="grid gap-4 sm:hidden">
-            {bentoFeatures.map((feature) => (
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="reveal-hidden rounded-2xl border border-border bg-card p-5 sm:p-6"
+                >
+                  <h3 className="text-lg font-semibold text-card-foreground sm:text-xl">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-12 space-y-4">
+            {fullWidthFeatures.map((feature) => (
               <FeatureCard key={feature.title} feature={feature} />
             ))}
-          </div>
 
-          <div className="hidden gap-4 sm:grid sm:grid-cols-2 sm:items-start">
-            {bentoColumns.map((column, i) => (
-              <div key={i} className="flex flex-col gap-4">
-                {column.map((feature) => (
-                  <FeatureCard key={feature.title} feature={feature} />
-                ))}
-              </div>
-            ))}
+            <div className="grid gap-4 sm:hidden">
+              {bentoFeatures.map((feature) => (
+                <FeatureCard key={feature.title} feature={feature} />
+              ))}
+            </div>
+
+            <div className="hidden gap-4 sm:grid sm:grid-cols-2 sm:items-start">
+              {bentoColumns.map((column, i) => (
+                <div key={i} className="flex flex-col gap-4">
+                  {column.map((feature) => (
+                    <FeatureCard key={feature.title} feature={feature} />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
