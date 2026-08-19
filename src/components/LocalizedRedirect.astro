@@ -1,16 +1,48 @@
 ---
+import { t } from "@/i18n/index";
+
 interface Props {
   path: string;
+  socialCard?: boolean;
 }
 
-const { path } = Astro.props;
+const { path, socialCard = false } = Astro.props;
 const targetPath = path.startsWith("/") ? path : `/${path}`;
 const fallbackPath = targetPath === "/" ? "/en/" : `/en${targetPath}`;
+const canonicalUrl = `https://www.typewhisper.com${fallbackPath}`;
+const title = t("en", "landing.title");
+const description = t("en", "landing.description");
+const ogImage = "https://www.typewhisper.com/og-image.png?v=20260819";
 ---
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    {socialCard && (
+      <>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:secure_url" content={ogImage} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="TypeWhisper logo on a dark background" />
+        <meta property="og:site_name" content="TypeWhisper" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@Type_Whisper" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content="TypeWhisper logo on a dark background" />
+      </>
+    )}
     <script is:inline define:vars={{ targetPath }}>
       (function() {
         var lang = (navigator.language || "en").toLowerCase();
