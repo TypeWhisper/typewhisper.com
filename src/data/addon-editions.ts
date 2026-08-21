@@ -24,7 +24,6 @@ export interface AddonEdition {
   sourceUrl?: string;
   releaseUrl?: string;
   screenshots?: AddonEditionScreenshot[];
-  hasCustomGuide?: boolean;
 }
 
 export interface AddonEditionModule {
@@ -39,6 +38,14 @@ const editionModulesEn = import.meta.glob<AddonEditionModule>(
 const editionModulesDe = import.meta.glob<AddonEditionModule>(
   "../content/addon-editions/de/**/*.mdx",
   { eager: true },
+);
+const editionSourcesEn = import.meta.glob<string>(
+  "../content/addon-editions/en/**/*.mdx",
+  { eager: true, query: "?raw", import: "default" },
+);
+const editionSourcesDe = import.meta.glob<string>(
+  "../content/addon-editions/de/**/*.mdx",
+  { eager: true, query: "?raw", import: "default" },
 );
 
 export const editionPlatformSlugs: Record<PluginPlatform, string> = {
@@ -76,6 +83,28 @@ export function getDefaultAddonEditionScreenshot(
 
 function getModules(locale: Locale) {
   return locale === "de" ? editionModulesDe : editionModulesEn;
+}
+
+function getSources(locale: Locale) {
+  return locale === "de" ? editionSourcesDe : editionSourcesEn;
+}
+
+/** Reports whether an edition MDX file contains a guide below its frontmatter. */
+export function addonEditionHasGuide(
+  familySlug: string,
+  platform: PluginPlatform,
+  locale: Locale = "en",
+): boolean {
+  const filename = `${editionPlatformSlugs[platform]}.mdx`;
+  const source = Object.entries(getSources(locale)).find(([modulePath]) =>
+    modulePath.endsWith(`/${familySlug}/${filename}`),
+  )?.[1];
+
+  if (!source) {
+    return false;
+  }
+
+  return source.replace(/^---\n[\s\S]*?\n---\n?/, "").trim().length > 0;
 }
 
 export function getAddonEditionModules(

@@ -12,6 +12,10 @@ function frontmatter(content) {
   return match[1];
 }
 
+function body(content) {
+  return content.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
+}
+
 function scalar(data, key) {
   return data.match(new RegExp(`^${key}: ["']?([^"'\\n]+)["']?$`, "m"))?.[1];
 }
@@ -156,6 +160,85 @@ test("existing screenshots are available to their platform editions", async () =
     await access(
       path.resolve(`public/screenshots/windows/plugins/${id}.webp`),
     );
+  }
+});
+
+test("every platform edition has a detailed guide source", async () => {
+  const families = await crossPlatformFamilies("en");
+  const capabilityMap = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-capabilities.json"),
+      "utf8",
+    ),
+  );
+  const validCapabilities = new Set([
+    "transcription",
+    "llm",
+    "tts",
+    "action",
+    "post-processing",
+    "memory",
+    "utility",
+  ]);
+
+  assert.deepEqual(Object.keys(capabilityMap).sort(), families);
+  assert.deepEqual(capabilityMap.cohere.mac, ["transcription"]);
+  assert.deepEqual(capabilityMap.cohere.windows, ["llm"]);
+  assert.deepEqual(capabilityMap.fireworks.mac, ["transcription", "llm"]);
+  assert.deepEqual(capabilityMap.fireworks.windows, ["llm"]);
+  assert.deepEqual(capabilityMap.soniox.mac, ["transcription", "tts"]);
+  assert.deepEqual(capabilityMap.soniox.windows, ["transcription"]);
+
+  for (const locale of LOCALES) {
+    for (const slug of families) {
+      const familyGuide = body(
+        await readFile(
+          path.resolve(`src/content/addons/${locale}/${slug}.mdx`),
+          "utf8",
+        ),
+      );
+      const macEdition = await readFile(
+        path.resolve(`src/content/addon-editions/${locale}/${slug}/macos.mdx`),
+        "utf8",
+      );
+      const windowsEdition = await readFile(
+        path.resolve(`src/content/addon-editions/${locale}/${slug}/windows.mdx`),
+        "utf8",
+      );
+      const macGuide = body(macEdition) || familyGuide;
+      const windowsGuide = body(windowsEdition);
+
+      assert.match(macGuide, /^##\s+/m, `${locale}/${slug}/macOS needs a detailed guide`);
+      assert.match(
+        macGuide,
+        locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+        `${locale}/${slug}/macOS needs setup instructions`,
+      );
+
+      for (const platform of PLATFORMS) {
+        const capabilities = capabilityMap[slug][platform];
+        assert.ok(capabilities.length > 0, `${slug}/${platform} needs capabilities`);
+        for (const capability of capabilities) {
+          assert.ok(
+            validCapabilities.has(capability),
+            `${slug}/${platform} has invalid capability ${capability}`,
+          );
+        }
+      }
+
+      if (windowsGuide) {
+        assert.match(
+          windowsGuide,
+          locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+          `${locale}/${slug}/Windows custom guide needs setup instructions`,
+        );
+      } else {
+        assert.ok(
+          list(frontmatter(windowsEdition), "configuration").length > 0,
+          `${locale}/${slug}/Windows generated guide needs configuration steps`,
+        );
+      }
+    }
   }
 });
 

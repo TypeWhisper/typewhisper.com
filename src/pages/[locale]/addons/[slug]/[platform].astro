@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import AddonEditionGuide from "@/components/addons/addon-edition-guide.astro";
 import AddonEditionSwitcher from "@/components/addons/addon-edition-switcher.astro";
 import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import {
+  addonEditionHasGuide,
   editionPlatformSlugs,
   getDefaultAddonEditionScreenshot,
   getAddonEditionModules,
@@ -11,6 +13,7 @@ import {
 } from "@/data/addon-editions";
 import {
   getPlugin,
+  getPluginModule,
   platformKeys,
   sourceKeys,
   type Plugin,
@@ -68,6 +71,13 @@ if (!editionModule) {
 }
 
 const edition = editionModule.frontmatter;
+const editionHasGuide = addonEditionHasGuide(plugin.slug, platform, locale);
+const familyModule = platform === "mac"
+  ? getPluginModule(plugin.slug, locale)
+  : undefined;
+const GuideContent = editionHasGuide
+  ? editionModule.default
+  : familyModule?.default;
 const platformLabel = t(locale, platformKeys[platform]);
 const familyPath = canonicalPath(locale, `/addons/${plugin.slug}`);
 const editionPath = `${familyPath}/${editionPlatformSlugs[platform]}`;
@@ -273,10 +283,12 @@ const screenshots = editionScreenshots.map((screenshot) => {
         </div>
       )}
 
-      {edition.hasCustomGuide && (
+      {GuideContent ? (
         <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none border-t pt-8 sm:mt-12 sm:pt-10">
-          <editionModule.default />
+          <GuideContent />
         </div>
+      ) : (
+        <AddonEditionGuide edition={edition} plugin={plugin} locale={locale} />
       )}
     </div>
   </div>
