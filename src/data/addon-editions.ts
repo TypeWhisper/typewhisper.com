@@ -1,11 +1,13 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/index";
 import type { PluginPlatform } from "@/data/addons";
+import screenshotManifest from "@/data/addon-edition-screenshots.json";
 
 export interface AddonEditionScreenshot {
   src: string;
   alt: string;
   caption?: string;
+  localized?: boolean;
 }
 
 export interface AddonEdition {
@@ -46,6 +48,31 @@ export const editionPlatformSlugs: Record<PluginPlatform, string> = {
 };
 
 const platformOrder: PluginPlatform[] = ["mac", "windows", "ios"];
+const windowsScreenshotPluginIds = new Set(screenshotManifest.windows);
+
+export function getDefaultAddonEditionScreenshot(
+  edition: AddonEdition,
+): Pick<AddonEditionScreenshot, "src" | "localized"> | undefined {
+  if (edition.platform === "mac") {
+    return {
+      src: `/screenshots/plugins/${edition.familySlug}.png`,
+      localized: true,
+    };
+  }
+
+  if (
+    edition.platform === "windows" &&
+    edition.id &&
+    windowsScreenshotPluginIds.has(edition.id)
+  ) {
+    return {
+      src: `/screenshots/windows/plugins/${edition.id}.png`,
+      localized: false,
+    };
+  }
+
+  return undefined;
+}
 
 function getModules(locale: Locale) {
   return locale === "de" ? editionModulesDe : editionModulesEn;

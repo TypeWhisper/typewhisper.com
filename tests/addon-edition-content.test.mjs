@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readdir, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const LOCALES = ["de", "en"];
@@ -85,15 +85,60 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
           );
         }
 
-        if (slug !== "obsidian") {
-          assert.equal(
-            scalar(data, "screenshots"),
-            undefined,
-            `${locale}/${slug}/${filename} must wait for its original screenshot`,
-          );
-        }
       }
     }
+  }
+});
+
+test("existing screenshots are available to their platform editions", async () => {
+  const families = await crossPlatformFamilies("en");
+
+  for (const locale of LOCALES) {
+    for (const slug of families) {
+      await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.png`));
+      await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.webp`));
+    }
+  }
+
+  const screenshotManifest = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-screenshots.json"),
+      "utf8",
+    ),
+  );
+  const windowsScreenshotIds = new Set(screenshotManifest.windows);
+  const windowsEditions = await Promise.all(
+    families.map(async (slug) => {
+      const data = frontmatter(
+        await readFile(
+          path.resolve(`src/content/addon-editions/en/${slug}/windows.mdx`),
+          "utf8",
+        ),
+      );
+      return { slug, id: scalar(data, "id") };
+    }),
+  );
+
+  assert.equal(windowsScreenshotIds.size, 29);
+  assert.deepEqual(
+    windowsEditions
+      .filter(({ id }) => !windowsScreenshotIds.has(id))
+      .map(({ slug }) => slug)
+      .sort(),
+    ["file-memory", "granite"],
+  );
+
+  for (const id of windowsScreenshotIds) {
+    assert.ok(
+      windowsEditions.some((edition) => edition.id === id),
+      `Windows screenshot ${id} must belong to an edition`,
+    );
+    await access(
+      path.resolve(`public/screenshots/windows/plugins/${id}.png`),
+    );
+    await access(
+      path.resolve(`public/screenshots/windows/plugins/${id}.webp`),
+    );
   }
 });
 

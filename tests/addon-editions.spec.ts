@@ -30,12 +30,20 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
     await expect(page.getByText("Cloudbasierte Sprach-zu-Text-Verarbeitung")).toBeVisible();
     await expect(page.getByText("1.0.4", { exact: true })).toBeVisible();
+    await expect(
+      page.locator('img[src="/screenshots/de/plugins/cohere.png"]'),
+    ).toBeVisible();
 
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
     await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/?$/);
     await expect(page.getByText("LLM-Anbieter für Workflow-Prompts")).toBeVisible();
     await expect(page.getByText("Cloudbasierte Sprach-zu-Text-Verarbeitung")).toHaveCount(0);
     await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.png"]',
+      ),
+    ).toBeVisible();
   });
 
   test("edition switch keeps platform-specific metadata and content separate", async ({

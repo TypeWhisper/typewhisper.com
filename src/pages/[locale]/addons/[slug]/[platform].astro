@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import {
   editionPlatformSlugs,
+  getDefaultAddonEditionScreenshot,
   getAddonEditionModules,
   getAddonEditions,
 } from "@/data/addon-editions";
@@ -74,8 +75,20 @@ const pageTitle = `${plugin.name} ${t(locale, "addons.editions.for")} ${platform
 const showBrandLogo = plugin.brandLogo
   ? canRenderBrandLogo(plugin.brandLogo, "addon")
   : false;
-const screenshots = (edition.screenshots ?? []).map((screenshot) => {
-  const localizedSrc = screenshotPath(locale, screenshot.src);
+const configuredScreenshots = edition.screenshots ?? [];
+const defaultScreenshot = getDefaultAddonEditionScreenshot(edition);
+const editionScreenshots = configuredScreenshots.length > 0
+  ? configuredScreenshots
+  : defaultScreenshot
+    ? [{
+        ...defaultScreenshot,
+        alt: `${plugin.name} ${platformLabel} ${t(locale, "addons.settingsAlt")}`,
+      }]
+    : [];
+const screenshots = editionScreenshots.map((screenshot) => {
+  const localizedSrc = screenshot.localized === false
+    ? screenshot.src
+    : screenshotPath(locale, screenshot.src);
   return {
     ...screenshot,
     src: localizedSrc,
