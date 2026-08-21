@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-const ADDONS_DIR = path.resolve("src/content/addons");
+const ADDON_CONTENT_DIRS = [
+  path.resolve("src/content/addons"),
+  path.resolve("src/content/addon-editions"),
+];
 const LEGACY_MAC_PLUGIN_SOURCE_PREFIX =
   "https://github.com/TypeWhisper/typewhisper-mac/tree/main/Plugins/";
 
@@ -25,7 +28,9 @@ async function collectMdxFiles(dir) {
 }
 
 test("add-on source links do not point at the old macOS plugin directory", async () => {
-  const mdxFiles = await collectMdxFiles(ADDONS_DIR);
+  const mdxFiles = (
+    await Promise.all(ADDON_CONTENT_DIRS.map((dir) => collectMdxFiles(dir)))
+  ).flat();
   const staleLinks = [];
 
   for (const file of mdxFiles) {

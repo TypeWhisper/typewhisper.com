@@ -1,0 +1,70 @@
+---
+import { Laptop, Monitor } from "lucide-react";
+import {
+  editionPlatformSlugs,
+  type AddonEdition,
+} from "@/data/addon-editions";
+import { platformKeys, type PluginPlatform } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
+
+interface Props {
+  editions: AddonEdition[];
+  familyPath: string;
+  locale: Locale;
+  currentPlatform: PluginPlatform;
+}
+
+const { editions, familyPath, locale, currentPlatform } = Astro.props;
+const platformIcons: Partial<Record<PluginPlatform, typeof Laptop>> = {
+  mac: Laptop,
+  windows: Monitor,
+};
+---
+
+<nav
+  aria-label={t(locale, "addons.editions.switchLabel")}
+  class="rounded-2xl border bg-card p-1.5 shadow-sm"
+  data-testid="addon-edition-switcher"
+>
+  <div class="grid grid-cols-2 gap-1.5">
+    {editions.map((edition) => {
+      const Icon = platformIcons[edition.platform] ?? Laptop;
+      const isCurrent = edition.platform === currentPlatform;
+      const label = t(locale, platformKeys[edition.platform]);
+
+      return (
+        <a
+          href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
+          aria-current={isCurrent ? "page" : undefined}
+          data-platform={edition.platform}
+          class:list={[
+            "group flex min-h-14 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
+            isCurrent
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:bg-accent hover:text-foreground",
+          ]}
+        >
+          <span
+            class:list={[
+              "flex size-8 shrink-0 items-center justify-center rounded-lg",
+              isCurrent ? "bg-white/15" : "bg-muted",
+            ]}
+          >
+            <Icon className="size-4" aria-hidden="true" />
+          </span>
+          <span class="min-w-0">
+            <span class="block text-sm font-semibold">{label}</span>
+            <span
+              class:list={[
+                "block text-xs",
+                isCurrent ? "text-primary-foreground/75" : "text-muted-foreground",
+              ]}
+            >
+              {t(locale, "addons.editions.version")} {edition.version}
+            </span>
+          </span>
+        </a>
+      );
+    })}
+  </div>
+</nav>

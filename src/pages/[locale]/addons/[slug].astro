@@ -3,6 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import CommunityContent from "@/components/addons/community-content";
+import AddonEditionCard from "@/components/addons/addon-edition-card.astro";
+import { getAddonEditions } from "@/data/addon-editions";
 import {
   getPlugins,
   getPluginModule,
@@ -38,6 +40,7 @@ export function getStaticPaths() {
 
 const { locale, plugin } = Astro.props;
 const mod = getPluginModule(plugin.slug, locale);
+const editions = getAddonEditions(plugin.slug, locale);
 const Icon = iconMap[plugin.icon];
 const isCommunity = isCommunityPlugin(plugin);
 const showBrandLogo = plugin.brandLogo
@@ -61,84 +64,149 @@ const sourceLinks = plugin.sourceUrls
   locale={locale}
 >
   <div class="py-16 sm:py-20">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6">
+    <div class:list={["mx-auto px-4 sm:px-6", editions.length > 0 ? "max-w-5xl" : "max-w-4xl"]}>
       <a href={canonicalPath(locale, "/addons")} class="mb-6 inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
         <ArrowLeft className="size-4" />
         {t(locale, "addons.backToAddons")}
       </a>
 
-      <div class="flex items-start gap-4">
-        <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
-          {showBrandLogo && plugin.brandLogo ? (
-            <BrandLogo brand={plugin.brandLogo} context="addon" className="size-8 rounded-lg" alt={plugin.name} />
-          ) : plugin.iconUrl ? (
-            <img src={plugin.iconUrl} alt={plugin.name} class="size-8 rounded-lg" />
-          ) : Icon ? (
-            <Icon className="size-7 text-muted-foreground" />
+      {editions.length > 0 ? (
+        <>
+          <header class="border-b pb-8 sm:pb-10" data-testid="addon-edition-family">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              {t(locale, "addons.editions.eyebrow")}
+            </p>
+            <div class="mt-4 flex items-start gap-4">
+              <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl border bg-card shadow-sm">
+                {showBrandLogo && plugin.brandLogo ? (
+                  <BrandLogo brand={plugin.brandLogo} context="addon" className="size-8 rounded-lg" alt={plugin.name} />
+                ) : plugin.iconUrl ? (
+                  <img src={plugin.iconUrl} alt={plugin.name} class="size-8 rounded-lg" />
+                ) : Icon ? (
+                  <Icon className="size-7 text-muted-foreground" />
+                ) : null}
+              </div>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-3">
+                  <h1 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">{plugin.name}</h1>
+                  <Badge variant="secondary" className="text-[10px]">
+                    {t(locale, sourceKeys[plugin.source])}
+                  </Badge>
+                </div>
+                <p class="mt-2 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+                  {plugin.description}
+                </p>
+                <p class="mt-2 text-sm text-muted-foreground">
+                  {t(locale, "addons.by")} {plugin.author}
+                </p>
+              </div>
+            </div>
+
+            {plugin.apiDocsUrl && (
+              <a href={plugin.apiDocsUrl} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60">
+                <ExternalLink className="size-3.5" /> {t(locale, "addons.apiDocs")}
+              </a>
+            )}
+          </header>
+
+          <section class="mt-10" aria-labelledby="edition-heading">
+            <div class="max-w-2xl">
+              <h2 id="edition-heading" class="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+                {t(locale, "addons.editions.heading")}
+              </h2>
+              <p class="mt-3 leading-7 text-muted-foreground">
+                {t(locale, "addons.editions.description")}
+              </p>
+            </div>
+
+            <div class="mt-7 grid gap-5 md:grid-cols-2">
+              {editions.map((edition) => (
+                <AddonEditionCard
+                  edition={edition}
+                  familyPath={canonicalPath(locale, `/addons/${plugin.slug}`)}
+                  locale={locale}
+                />
+              ))}
+            </div>
+          </section>
+
+        </>
+      ) : (
+        <>
+          <div class="flex items-start gap-4">
+            <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
+              {showBrandLogo && plugin.brandLogo ? (
+                <BrandLogo brand={plugin.brandLogo} context="addon" className="size-8 rounded-lg" alt={plugin.name} />
+              ) : plugin.iconUrl ? (
+                <img src={plugin.iconUrl} alt={plugin.name} class="size-8 rounded-lg" />
+              ) : Icon ? (
+                <Icon className="size-7 text-muted-foreground" />
+              ) : null}
+            </div>
+            <div>
+              <div class="flex items-center gap-3">
+                <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
+                <Badge variant="secondary" className="text-[10px]">
+                  {t(locale, sourceKeys[plugin.source])}
+                </Badge>
+              </div>
+              <p class="mt-0.5 text-sm text-muted-foreground">
+                {t(locale, "addons.by")} {plugin.authorUrl ? (
+                  <a href={plugin.authorUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{plugin.author}</a>
+                ) : plugin.author}
+              </p>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                {plugin.categories.map((cat) => (
+                  <Badge variant="outline" className="text-[10px]">{t(locale, categoryKeys[cat])}</Badge>
+                ))}
+                {plugin.platforms.map((platform) => (
+                  <Badge variant="outline" className="text-[10px] border-primary/30 text-primary/70">{t(locale, platformKeys[platform])}</Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {(plugin.apiDocsUrl || sourceLinks.length > 0 || plugin.homepage) && (
+            <div class="mt-6 flex flex-wrap gap-4">
+              {plugin.homepage && (
+                <a href={plugin.homepage} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                  <ExternalLink className="size-3.5" /> {t(locale, "addons.homepage")}
+                </a>
+              )}
+              {plugin.apiDocsUrl && (
+                <a href={plugin.apiDocsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                  <ExternalLink className="size-3.5" /> {t(locale, "addons.apiDocs")}
+                </a>
+              )}
+              {sourceLinks.map((sourceLink) => (
+                <a href={sourceLink.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                  <ExternalLink className="size-3.5" /> {sourceLink.label}
+                </a>
+              ))}
+            </div>
+          )}
+
+          <div class="mt-8">
+            <picture>
+              <source srcset={`/screenshots/${locale}/plugins/${plugin.slug}.webp`} type="image/webp" />
+              <img
+                src={`/screenshots/${locale}/plugins/${plugin.slug}.png`}
+                alt={`${plugin.name} ${t(locale, "addons.settingsAlt")}`}
+                class="rounded-2xl border shadow-lg"
+                onerror="this.parentElement.style.display='none'"
+              />
+            </picture>
+          </div>
+
+          {mod ? (
+            <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none">
+              <mod.default />
+            </div>
+          ) : isCommunity ? (
+            <CommunityContent client:load plugin={plugin} />
           ) : null}
-        </div>
-        <div>
-          <div class="flex items-center gap-3">
-            <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
-            <Badge variant="secondary" className="text-[10px]">
-              {t(locale, sourceKeys[plugin.source])}
-            </Badge>
-          </div>
-          <p class="mt-0.5 text-sm text-muted-foreground">
-            {t(locale, "addons.by")} {plugin.authorUrl ? (
-              <a href={plugin.authorUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{plugin.author}</a>
-            ) : plugin.author}
-          </p>
-          <div class="mt-2 flex flex-wrap gap-1.5">
-            {plugin.categories.map((cat) => (
-              <Badge variant="outline" className="text-[10px]">{t(locale, categoryKeys[cat])}</Badge>
-            ))}
-            {plugin.platforms.map((platform) => (
-              <Badge variant="outline" className="text-[10px] border-primary/30 text-primary/70">{t(locale, platformKeys[platform])}</Badge>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {(plugin.apiDocsUrl || sourceLinks.length > 0 || plugin.homepage) && (
-        <div class="mt-6 flex flex-wrap gap-4">
-          {plugin.homepage && (
-            <a href={plugin.homepage} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> {t(locale, "addons.homepage")}
-            </a>
-          )}
-          {plugin.apiDocsUrl && (
-            <a href={plugin.apiDocsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> {t(locale, "addons.apiDocs")}
-            </a>
-          )}
-          {sourceLinks.map((sourceLink) => (
-            <a href={sourceLink.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-              <ExternalLink className="size-3.5" /> {sourceLink.label}
-            </a>
-          ))}
-        </div>
+        </>
       )}
-
-      <div class="mt-8">
-        <picture>
-          <source srcset={`/screenshots/${locale}/plugins/${plugin.slug}.webp`} type="image/webp" />
-          <img
-            src={`/screenshots/${locale}/plugins/${plugin.slug}.png`}
-            alt={`${plugin.name} ${t(locale, "addons.settingsAlt")}`}
-            class="rounded-2xl border shadow-lg"
-            onerror="this.parentElement.style.display='none'"
-          />
-        </picture>
-      </div>
-
-      {mod ? (
-        <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none">
-          <mod.default />
-        </div>
-      ) : isCommunity ? (
-        <CommunityContent client:load plugin={plugin} />
-      ) : null}
     </div>
   </div>
 </BaseLayout>

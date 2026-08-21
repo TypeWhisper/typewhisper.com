@@ -1,0 +1,75 @@
+---
+import { ArrowRight, Check, Laptop, Monitor } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  editionPlatformSlugs,
+  type AddonEdition,
+} from "@/data/addon-editions";
+import { platformKeys, type PluginPlatform } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
+
+interface Props {
+  edition: AddonEdition;
+  familyPath: string;
+  locale: Locale;
+}
+
+const { edition, familyPath, locale } = Astro.props;
+const platformIcons: Partial<Record<PluginPlatform, typeof Laptop>> = {
+  mac: Laptop,
+  windows: Monitor,
+};
+const Icon = platformIcons[edition.platform] ?? Laptop;
+const platformLabel = t(locale, platformKeys[edition.platform]);
+---
+
+<article
+  class="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/35"
+  data-testid="addon-edition-card"
+  data-platform={edition.platform}
+>
+  <div class="border-b bg-muted/35 p-5 sm:p-6">
+    <div class="flex items-start justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="flex size-11 items-center justify-center rounded-xl border bg-background text-primary shadow-sm">
+          <Icon className="size-5" aria-hidden="true" />
+        </span>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            {t(locale, "addons.editions.platformEdition")}
+          </p>
+          <h3 class="mt-0.5 font-display text-xl font-semibold">{platformLabel}</h3>
+        </div>
+      </div>
+      <Badge variant="outline" className="shrink-0 bg-background/70">
+        v{edition.version}
+      </Badge>
+    </div>
+  </div>
+
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+    <p class="text-sm leading-6 text-muted-foreground">{edition.description}</p>
+
+    {edition.highlights && edition.highlights.length > 0 && (
+      <ul class="mt-5 space-y-2.5" aria-label={t(locale, "addons.editions.highlights")}>
+        {edition.highlights.slice(0, 4).map((highlight) => (
+          <li class="flex gap-2.5 text-sm leading-5">
+            <span class="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Check className="size-3" aria-hidden="true" />
+            </span>
+            <span>{highlight}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="mt-auto pt-6">
+      <a
+        href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
+        class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+      >
+        {t(locale, "addons.editions.openEdition")} <ArrowRight className="size-4" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</article>

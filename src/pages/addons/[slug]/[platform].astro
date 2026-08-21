@@ -1,0 +1,20 @@
+---
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
+import {
+  editionPlatformSlugs,
+  getAddonEditionModules,
+} from "@/data/addon-editions";
+
+export function getStaticPaths() {
+  return getAddonEditionModules("en").map((mod) => ({
+    params: {
+      slug: mod.frontmatter.familySlug,
+      platform: editionPlatformSlugs[mod.frontmatter.platform],
+    },
+  }));
+}
+
+const { slug, platform } = Astro.params;
+---
+
+<LocalizedRedirect path={`/addons/${slug}/${platform}`} />

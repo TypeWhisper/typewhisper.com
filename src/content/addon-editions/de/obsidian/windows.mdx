@@ -1,0 +1,104 @@
+---
+familySlug: obsidian
+platform: windows
+version: 1.0.0
+description: Speichere ausgewählte Transkriptionen über ein Workflow-Action-Ziel als einzelne Markdown-Dateien oder fortlaufende Tagesnotizen.
+id: com.typewhisper.obsidian
+requirements:
+  - TypeWhisper für Windows
+  - Ein lokaler oder synchronisierter Obsidian-Vault
+highlights:
+  - Automatische Erkennung vorhandener Obsidian-Vaults
+  - Einzelne Markdown-Dateien mit YAML-Frontmatter
+  - Tagesnotiz-Modus mit Zeitstempelabschnitten
+  - Eigene Unterordner und Dateinamensvorlagen
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Obsidian
+releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-obsidian-v1.0.0
+hasCustomGuide: true
+---
+
+## Überblick
+
+Die Windows-Edition stellt das Workflow-Action-Ziel **Save to Obsidian** bereit. Ein Workflow kann seinen fertig verarbeiteten Text damit als Markdown-Datei in einem gewählten Vault speichern, statt ihn in die aktive Anwendung einzufügen.
+
+`Diktat → optionaler Workflow → Save to Obsidian → Markdown-Datei im Vault`
+
+Version `1.0.0` konzentriert sich auf gezielte Exporte. Du kannst für jedes Diktat eine eigene Datei erzeugen oder alle Einträge eines Tages in einer gemeinsamen Tagesnotiz sammeln.
+
+Quelle: [Obsidian-Plugin für Windows](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Obsidian)
+
+## Einrichtung
+
+1. Öffne **Integrationen** in TypeWhisper für Windows und installiere beziehungsweise aktiviere **Obsidian**.
+2. Öffne die Add-on-Einstellungen und wähle einen erkannten Vault aus.
+3. Falls der Vault nicht erkannt wird, trage seinen Pfad ein oder wähle ihn über **Browse...** aus.
+4. Lege optional einen Unterordner fest. Der Standard ist `TypeWhisper`.
+5. Passe die Dateinamensvorlage an oder aktiviere den Tagesnotiz-Modus.
+6. Erstelle einen Workflow und wähle **Save to Obsidian** als Action-Ziel.
+
+Das Add-on liest die lokale Obsidian-Konfiguration, um bekannte Vaults zu finden. Bei einem manuell gewählten Ordner zeigt die Statuszeile an, ob der Ordner existiert und eine `.obsidian`-Konfiguration enthält.
+
+## Einstellungen der Windows-Edition
+
+| Einstellung | Wirkung |
+| --- | --- |
+| **Obsidian Vault** | Wählt einen automatisch erkannten Vault aus. |
+| **Vault Path** | Zeigt oder speichert den vollständigen Vault-Pfad. Ein anderer Ordner kann manuell eingetragen werden. |
+| **Browse...** | Öffnet die Windows-Ordnerauswahl. |
+| **Subfolder** | Legt den Zielordner innerhalb des Vaults fest. Fehlende Ordner werden beim Export erzeugt. |
+| **Daily note mode** | Hängt alle Exporte eines Tages an eine gemeinsame Datei `YYYY-MM-DD.md` an. |
+| **Filename Template** | Bestimmt den Namen einzelner Notizen. Unterstützt `{{date}}`, `{{time}}` und `{{app}}`. |
+
+Die Standardvorlage für einzelne Notizen lautet:
+
+```text
+{{date}} {{time}} Transcription
+```
+
+So entsteht beispielsweise `2026-08-21 11-42-08 Transcription.md`. Ist der Name bereits vergeben, ergänzt das Add-on eine fortlaufende Nummer, ohne die vorhandene Datei zu überschreiben.
+
+## Einzelne Notizen
+
+Ohne Tagesnotiz-Modus erzeugt jeder Workflow-Aufruf eine eigene Markdown-Datei. Die Windows-Edition setzt automatisch YAML-Frontmatter vor den verarbeiteten Text:
+
+```yaml
+---
+date: 2026-08-21 11:42:08
+source: TypeWhisper
+app: "Microsoft Word"
+language: de
+---
+
+Fertig verarbeiteter Workflow-Text
+```
+
+`app` und `language` erscheinen nur, wenn TypeWhisper diese Werte an das Action-Ziel übergibt.
+
+## Tagesnotiz-Modus
+
+Im Tagesnotiz-Modus verwendet die Windows-Edition immer eine Datei mit dem Namen `YYYY-MM-DD.md`. Neue Diktate werden als Abschnitte angehängt:
+
+```markdown
+## 11:42
+
+> Source: Microsoft Word
+> Language: de
+
+Fertig verarbeiteter Workflow-Text
+```
+
+Beim ersten Eintrag erstellt das Add-on zusätzlich eine Datumsüberschrift. Die Dateinamensvorlage gilt in diesem Modus nicht.
+
+## Beispiel: strukturierte Besprechungsnotiz
+
+Erstelle einen Workflow, der ein gesprochenes Protokoll in **Zusammenfassung**, **Entscheidungen** und **Aufgaben** gliedert. Wähle anschließend **Save to Obsidian** als Action-Ziel. Die Windows-Edition speichert genau den vom Workflow erzeugten Markdown-Text und ergänzt bei einzelnen Notizen automatisch das Frontmatter.
+
+Für ein fortlaufendes Tagesjournal aktivierst du stattdessen den Tagesnotiz-Modus. Jeder Workflow-Aufruf wird dann mit Uhrzeit, optionaler Quell-App und Sprache an die Tagesdatei angehängt.
+
+## Aktuelle Grenzen
+
+- Der Export wird über das Workflow-Action-Ziel ausgelöst; es gibt keinen automatischen Export jeder abgeschlossenen Transkription.
+- Der Inhalt einzelner Notizen hat keine frei konfigurierbare Notizvorlage.
+- YAML-Frontmatter für einzelne Notizen wird automatisch erzeugt und besitzt keine eigenen Tag-Einstellungen.
+- Spätere Änderungen im TypeWhisper-Verlauf werden nicht mit bereits exportierten Dateien synchronisiert.
+- Das Format der angehängten Tagesnotizabschnitte ist fest vorgegeben.
