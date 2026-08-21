@@ -1,0 +1,173 @@
+---
+import { Badge } from "@/components/ui/badge";
+import { getAddonEditionCapabilities } from "@/data/addon-edition-capabilities";
+import type { AddonEdition } from "@/data/addon-editions";
+import {
+  categoryKeys,
+  type Plugin,
+  type PluginCategory,
+} from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
+import { BookOpen, Lightbulb, ListChecks } from "lucide-react";
+
+interface Props {
+  edition: AddonEdition;
+  plugin: Plugin;
+  locale: Locale;
+}
+
+const { edition, plugin, locale } = Astro.props;
+const capabilities = getAddonEditionCapabilities(
+  edition.familySlug,
+  edition.platform,
+);
+
+const format = (key: string) =>
+  t(locale, key).replaceAll("{name}", plugin.name);
+
+const activationKeyByCapability: Record<PluginCategory, string> = {
+  transcription: "addons.editions.guide.activate.transcription",
+  llm: "addons.editions.guide.activate.llm",
+  tts: "addons.editions.guide.activate.tts",
+  action: "addons.editions.guide.activate.action",
+  "post-processing": "addons.editions.guide.activate.postProcessing",
+  memory: "addons.editions.guide.activate.memory",
+  utility: "addons.editions.guide.activate.utility",
+};
+
+const exampleKeyByCapability: Record<PluginCategory, string> = {
+  transcription: "addons.editions.guide.example.transcription",
+  llm: "addons.editions.guide.example.llm",
+  tts: "addons.editions.guide.example.tts",
+  action: "addons.editions.guide.example.action",
+  "post-processing": "addons.editions.guide.example.postProcessing",
+  memory: "addons.editions.guide.example.memory",
+  utility: "addons.editions.guide.example.utility",
+};
+
+const exampleOverrides: Partial<Record<string, string>> = {
+  "live-transcript": "addons.editions.guide.example.liveTranscript",
+  webhook: "addons.editions.guide.example.webhook",
+};
+
+const configuration = edition.configuration ?? [];
+const hasSeparateSettings = !configuration.some((item) =>
+  /no separate add-on|keine separate add-on/i.test(item),
+);
+const setupSteps = [
+  format("addons.editions.guide.install"),
+  ...(hasSeparateSettings
+    ? [t(locale, "addons.editions.guide.openSettings")]
+    : []),
+  ...configuration,
+  ...capabilities.map((capability) =>
+    format(activationKeyByCapability[capability]),
+  ),
+];
+const examples = capabilities.map((capability) => ({
+  capability,
+  text: format(
+    exampleOverrides[edition.familySlug]
+      ?? exampleKeyByCapability[capability],
+  ),
+}));
+const searchableCopy = [
+  edition.description,
+  ...(edition.highlights ?? []),
+  ...configuration,
+].join(" ").toLocaleLowerCase(locale);
+const isLocal = /\blocal\b|offline|on-device|without uploading|\blokal\b|ohne .*hochzuladen|auf deinem gerät/.test(
+  searchableCopy,
+);
+const isCloud = /cloud|api key|api-key|api token|api-token|service account|service-account/.test(
+  searchableCopy,
+);
+---
+
+<section
+  class="mt-10 border-t pt-8 sm:mt-12 sm:pt-10"
+  aria-labelledby="edition-guide-heading"
+  data-testid="addon-edition-guide"
+>
+  <div class="max-w-3xl">
+    <div class="flex items-center gap-3">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <BookOpen className="size-5" aria-hidden="true" />
+      </span>
+      <div>
+        <h2 id="edition-guide-heading" class="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          {t(locale, "addons.editions.guide.heading")}
+        </h2>
+        <p class="mt-1 text-sm leading-6 text-muted-foreground sm:text-base">
+          {t(locale, "addons.editions.guide.description")}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        {t(locale, "addons.editions.guide.capabilities")}
+      </p>
+      <div class="mt-2 flex flex-wrap gap-2">
+        {capabilities.map((capability) => (
+          <Badge variant="outline" className="border-primary/30 text-primary">
+            {t(locale, categoryKeys[capability])}
+          </Badge>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:gap-14">
+    <section aria-labelledby="edition-guide-setup">
+      <div class="flex items-center gap-2.5">
+        <ListChecks className="size-5 text-primary" aria-hidden="true" />
+        <h3 id="edition-guide-setup" class="font-display text-xl font-bold">
+          {t(locale, "addons.editions.guide.setup")}
+        </h3>
+      </div>
+      <ol class="mt-5 space-y-4">
+        {setupSteps.map((step, index) => (
+          <li class="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+            <span class="flex size-8 items-center justify-center rounded-full border bg-card font-mono text-xs font-semibold text-foreground">
+              {index + 1}
+            </span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <aside aria-labelledby="edition-guide-examples">
+      <div class="flex items-center gap-2.5">
+        <Lightbulb className="size-5 text-primary" aria-hidden="true" />
+        <h3 id="edition-guide-examples" class="font-display text-xl font-bold">
+          {t(locale, "addons.editions.guide.examples")}
+        </h3>
+      </div>
+      <div class="mt-5 space-y-4">
+        {examples.map((example) => (
+          <div class="rounded-xl border-l-2 border-primary bg-muted/45 px-4 py-3.5">
+            <p class="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+              {t(locale, categoryKeys[example.capability])}
+            </p>
+            <p class="mt-1.5 text-sm leading-6 text-muted-foreground">
+              {example.text}
+            </p>
+          </div>
+        ))}
+      </div>
+    </aside>
+  </div>
+
+  {(isLocal || isCloud) && (
+    <p class="mt-9 max-w-3xl rounded-xl border bg-card px-4 py-3 text-sm leading-6 text-muted-foreground">
+      {t(
+        locale,
+        isLocal
+          ? "addons.editions.guide.localProcessing"
+          : "addons.editions.guide.cloudProcessing",
+      )}
+    </p>
+  )}
+</section>

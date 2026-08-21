@@ -33,6 +33,13 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.locator('img[src="/screenshots/de/plugins/cohere.png"]'),
     ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Über" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Einrichtung" }),
+    ).toBeVisible();
+    await expect(page.getByText("Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund")).toBeVisible();
 
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
     await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/?$/);
@@ -44,6 +51,19 @@ test.describe("add-on platform editions", () => {
         'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.png"]',
       ),
     ).toBeVisible();
+    const guide = page.getByTestId("addon-edition-guide");
+    await expect(guide).toBeVisible();
+    await expect(
+      guide.getByRole("heading", { level: 2, name: "Anleitung für diese Edition" }),
+    ).toBeVisible();
+    await expect(
+      guide.getByRole("heading", { level: 3, name: "Einrichtung" }),
+    ).toBeVisible();
+    await expect(
+      guide.getByRole("heading", { level: 3, name: "In der Praxis" }),
+    ).toBeVisible();
+    await expect(guide.getByText("LLM", { exact: true })).toHaveCount(2);
+    await expect(page.getByText("macOS-Schlüsselbund")).toHaveCount(0);
   });
 
   test("edition switch keeps platform-specific metadata and content separate", async ({

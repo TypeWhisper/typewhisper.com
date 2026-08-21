@@ -1,0 +1,126 @@
+{
+  "assemblyai": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "cerebras": {
+    "mac": ["llm"],
+    "windows": ["llm"]
+  },
+  "claude": {
+    "mac": ["llm"],
+    "windows": ["llm"]
+  },
+  "cloudflare-asr": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "cohere": {
+    "mac": ["transcription"],
+    "windows": ["llm"]
+  },
+  "cohere-local": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "deepgram": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "elevenlabs": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "file-memory": {
+    "mac": ["memory"],
+    "windows": ["memory"]
+  },
+  "fireworks": {
+    "mac": ["transcription", "llm"],
+    "windows": ["llm"]
+  },
+  "gemini": {
+    "mac": ["transcription", "llm"],
+    "windows": ["llm"]
+  },
+  "gladia": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "google-cloud-stt": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "granite": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "groq": {
+    "mac": ["transcription", "llm"],
+    "windows": ["transcription", "llm"]
+  },
+  "linear": {
+    "mac": ["action"],
+    "windows": ["action"]
+  },
+  "live-transcript": {
+    "mac": ["utility"],
+    "windows": ["utility"]
+  },
+  "obsidian": {
+    "mac": ["action"],
+    "windows": ["action"]
+  },
+  "openai": {
+    "mac": ["transcription", "llm", "tts"],
+    "windows": ["transcription", "llm", "tts"]
+  },
+  "openai-compatible": {
+    "mac": ["transcription", "llm"],
+    "windows": ["transcription", "llm"]
+  },
+  "openai-vector-memory": {
+    "mac": ["memory"],
+    "windows": ["memory"]
+  },
+  "openrouter": {
+    "mac": ["transcription", "llm"],
+    "windows": ["transcription", "llm"]
+  },
+  "qwen3-asr": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "reson8": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "script-runner": {
+    "mac": ["post-processing"],
+    "windows": ["post-processing"]
+  },
+  "smallest-pulse": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "soniox": {
+    "mac": ["transcription", "tts"],
+    "windows": ["transcription"]
+  },
+  "speechmatics": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "supertonic": {
+    "mac": ["tts"],
+    "windows": ["tts"]
+  },
+  "voxtral": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
+  "webhook": {
+    "mac": ["utility"],
+    "windows": ["utility"]
+  }
+}
