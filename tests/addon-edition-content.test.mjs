@@ -43,6 +43,22 @@ async function crossPlatformFamilies(locale) {
   return slugs.sort();
 }
 
+async function editionFamilies(locale, platform) {
+  const dir = path.resolve(`src/content/addon-editions/${locale}`);
+  const filename = platform === "mac" ? "macos.mdx" : "windows.mdx";
+  const entries = (await readdir(dir, { withFileTypes: true })).filter((entry) =>
+    entry.isDirectory(),
+  );
+  const families = await Promise.all(
+    entries.map(async (entry) => {
+      const files = await readdir(path.join(dir, entry.name));
+      return files.includes(filename) ? entry.name : undefined;
+    }),
+  );
+
+  return families.filter(Boolean).sort();
+}
+
 test("every cross-platform add-on has independent localized macOS and Windows editions", async () => {
   const [deFamilies, enFamilies] = await Promise.all(
     LOCALES.map((locale) => crossPlatformFamilies(locale)),
@@ -91,10 +107,11 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
 });
 
 test("existing screenshots are available to their platform editions", async () => {
-  const families = await crossPlatformFamilies("en");
+  const macFamilies = await editionFamilies("en", "mac");
+  const windowsFamilies = await crossPlatformFamilies("en");
 
   for (const locale of LOCALES) {
-    for (const slug of families) {
+    for (const slug of macFamilies) {
       await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.png`));
       await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.webp`));
     }
@@ -108,7 +125,7 @@ test("existing screenshots are available to their platform editions", async () =
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
   const windowsEditions = await Promise.all(
-    families.map(async (slug) => {
+    windowsFamilies.map(async (slug) => {
       const data = frontmatter(
         await readFile(
           path.resolve(`src/content/addon-editions/en/${slug}/windows.mdx`),
