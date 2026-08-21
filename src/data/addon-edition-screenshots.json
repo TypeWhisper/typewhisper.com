@@ -1,0 +1,33 @@
+{
+  "windows": [
+    "com.typewhisper.assemblyai",
+    "com.typewhisper.cerebras",
+    "com.typewhisper.claude",
+    "com.typewhisper.cloudflare-asr",
+    "com.typewhisper.cohere-transcribe",
+    "com.typewhisper.cohere",
+    "com.typewhisper.deepgram",
+    "com.typewhisper.elevenlabs",
+    "com.typewhisper.fireworks",
+    "com.typewhisper.gemini",
+    "com.typewhisper.gladia",
+    "com.typewhisper.google-cloud-stt",
+    "com.typewhisper.groq",
+    "com.typewhisper.linear",
+    "com.typewhisper.live-transcript",
+    "com.typewhisper.obsidian",
+    "com.typewhisper.openai-compatible",
+    "com.typewhisper.openai-vector-memory",
+    "com.typewhisper.openai",
+    "com.typewhisper.openrouter",
+    "com.typewhisper.qwen3-stt",
+    "com.typewhisper.reson8",
+    "com.typewhisper.script",
+    "com.typewhisper.smallest-ai",
+    "com.typewhisper.soniox",
+    "com.typewhisper.speechmatics",
+    "com.typewhisper.supertonic-tts",
+    "com.typewhisper.voxtral",
+    "com.typewhisper.webhook"
+  ]
+}
