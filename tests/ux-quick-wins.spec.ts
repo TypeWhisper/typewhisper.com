@@ -188,18 +188,24 @@ test.describe("addons search", () => {
       {
         code: "en",
         search: "smallest",
-        category: "Transcription",
-        detailText: "Smallest Pulse adds cloud speech-to-text",
-        languageModeText: "Language Modes",
-        screenshotAlt: "Smallest Pulse settings",
+        macHeading: "Smallest Pulse for macOS",
+        macDescription:
+          "Cloud transcription through the Smallest AI Pulse API with a selectable language mode.",
+        languageModeText: "Selectable language mode",
+        windowsHeading: "Smallest Pulse for Windows",
+        windowsDescription:
+          "Cloud transcription through the Smallest AI Pulse API.",
       },
       {
         code: "de",
         search: "smallest",
-        category: "Transkription",
-        detailText: "Smallest Pulse erweitert TypeWhisper",
-        languageModeText: "Sprachmodi",
-        screenshotAlt: "Smallest Pulse Einstellungen",
+        macHeading: "Smallest Pulse für macOS",
+        macDescription:
+          "Cloud-Transkription über die Smallest AI Pulse API mit wählbarem Sprachmodus.",
+        languageModeText: "Wählbarer Sprachmodus",
+        windowsHeading: "Smallest Pulse für Windows",
+        windowsDescription:
+          "Cloud-Transkription über die Smallest AI Pulse API.",
       },
     ] as const;
 
@@ -223,14 +229,26 @@ test.describe("addons search", () => {
       await expect(
         page.getByRole("heading", { level: 1, name: "Smallest Pulse" }),
       ).toBeVisible();
-      await expect(page.getByText(locale.category).first()).toBeVisible();
       await expect(page.getByText("macOS").first()).toBeVisible();
       await expect(page.getByText("Windows").first()).toBeVisible();
-      await expect(page.getByText(locale.detailText).first()).toBeVisible();
+
+      const editionCards = page.getByTestId("addon-edition-card");
+      await expect(editionCards).toHaveCount(2);
+
+      await page.goto(`/${locale.code}/addons/smallest-pulse/macos`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: locale.macHeading }),
+      ).toBeVisible();
+      await expect(page.getByText(locale.macDescription).first()).toBeVisible();
       await expect(page.getByText(locale.languageModeText).first()).toBeVisible();
       await expect(page.getByText("com.typewhisper.smallest-pulse").first()).toBeVisible();
+
+      await page.goto(`/${locale.code}/addons/smallest-pulse/windows`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: locale.windowsHeading }),
+      ).toBeVisible();
+      await expect(page.getByText(locale.windowsDescription).first()).toBeVisible();
       await expect(page.getByText("com.typewhisper.smallest-ai").first()).toBeVisible();
-      await expect(page.getByAltText(locale.screenshotAlt)).toBeVisible();
     }
   });
 
