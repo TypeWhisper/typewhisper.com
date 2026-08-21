@@ -26,7 +26,7 @@ export interface Plugin {
   slug: string;
   name: string;
   author: string;
-  version: string;
+  version?: string;
   icon: string;
   description: string;
   categories: PluginCategory[];

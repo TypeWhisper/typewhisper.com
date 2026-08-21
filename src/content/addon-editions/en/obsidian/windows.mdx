@@ -1,0 +1,104 @@
+---
+familySlug: obsidian
+platform: windows
+version: 1.0.0
+description: Save selected transcriptions through a workflow action target as individual Markdown files or continuous daily notes.
+id: com.typewhisper.obsidian
+requirements:
+  - TypeWhisper for Windows
+  - A local or synchronized Obsidian vault
+highlights:
+  - Automatic detection of existing Obsidian vaults
+  - Individual Markdown files with YAML frontmatter
+  - Daily Note Mode with timestamp sections
+  - Custom subfolders and filename templates
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Obsidian
+releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-obsidian-v1.0.0
+hasCustomGuide: true
+---
+
+## Overview
+
+The Windows edition provides the **Save to Obsidian** workflow action target. A workflow can use it to save its final processed text as a Markdown file inside a selected vault instead of inserting the text into the foreground application.
+
+`Dictation → optional workflow → Save to Obsidian → Markdown file in the vault`
+
+Version `1.0.0` focuses on selected exports. You can create a separate file for each dictation or collect all entries from one day in a shared daily note.
+
+Source: [Obsidian plugin for Windows](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Obsidian)
+
+## Setup
+
+1. Open **Integrations** in TypeWhisper for Windows and install or enable **Obsidian**.
+2. Open the add-on settings and select a detected vault.
+3. If the vault is not detected, enter its path or select it with **Browse...**.
+4. Optionally choose a subfolder. The default is `TypeWhisper`.
+5. Customize the filename template or enable Daily Note Mode.
+6. Create a workflow and select **Save to Obsidian** as its action target.
+
+The add-on reads the local Obsidian configuration to find known vaults. For a manually selected folder, the status line indicates whether the folder exists and contains an `.obsidian` configuration.
+
+## Settings in the Windows edition
+
+| Setting | Effect |
+| --- | --- |
+| **Obsidian Vault** | Selects an automatically detected vault. |
+| **Vault Path** | Displays or stores the full vault path. You can enter another folder manually. |
+| **Browse...** | Opens the Windows folder picker. |
+| **Subfolder** | Sets the destination folder inside the vault. Missing folders are created during export. |
+| **Daily note mode** | Appends every export from one day to a shared `YYYY-MM-DD.md` file. |
+| **Filename Template** | Sets the name of individual notes. Supports `{{date}}`, `{{time}}`, and `{{app}}`. |
+
+The default template for individual notes is:
+
+```text
+{{date}} {{time}} Transcription
+```
+
+This creates a filename such as `2026-08-21 11-42-08 Transcription.md`. If that name already exists, the add-on appends a number instead of overwriting the existing file.
+
+## Individual notes
+
+Without Daily Note Mode, every workflow invocation creates a separate Markdown file. The Windows edition automatically places YAML frontmatter before the processed text:
+
+```yaml
+---
+date: 2026-08-21 11:42:08
+source: TypeWhisper
+app: "Microsoft Word"
+language: en
+---
+
+Final processed workflow text
+```
+
+`app` and `language` appear only when TypeWhisper passes those values to the action target.
+
+## Daily Note Mode
+
+In Daily Note Mode, the Windows edition always uses a file named `YYYY-MM-DD.md`. New dictations are appended as sections:
+
+```markdown
+## 11:42
+
+> Source: Microsoft Word
+> Language: en
+
+Final processed workflow text
+```
+
+The add-on also creates a date heading for the first entry. The filename template does not apply in this mode.
+
+## Example: structured meeting notes
+
+Create a workflow that organizes a spoken meeting record into **Summary**, **Decisions**, and **Action Items**. Then select **Save to Obsidian** as its action target. The Windows edition saves the exact Markdown text produced by the workflow and automatically adds frontmatter for individual notes.
+
+For a continuous daily journal, enable Daily Note Mode instead. Each workflow invocation is appended to the daily file with a timestamp and, when available, the source app and language.
+
+## Current limitations
+
+- Export is triggered through the workflow action target; there is no automatic export for every completed transcription.
+- Individual note bodies do not have a freely configurable note template.
+- YAML frontmatter for individual notes is generated automatically and has no custom tag settings.
+- Later edits in TypeWhisper History are not synchronized with files that have already been exported.
+- The format of appended daily-note sections is fixed.

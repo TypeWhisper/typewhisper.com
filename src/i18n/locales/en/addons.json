@@ -32,5 +32,22 @@
   "addons.develop.description": "Learn how to build TypeWhisper plugins with Swift. Documentation for the Plugin SDK.",
   "addons.featured": "Featured add-ons",
   "addons.searchPlaceholder": "Search add-ons",
-  "addons.clearAll": "Clear all filters"
+  "addons.clearAll": "Clear all filters",
+  "addons.editions.eyebrow": "Platform editions",
+  "addons.editions.heading": "Choose your platform",
+  "addons.editions.description": "This add-on has separate macOS and Windows editions. Each page documents the features, settings, requirements, and screenshots for that platform.",
+  "addons.editions.platformEdition": "Platform edition",
+  "addons.editions.version": "Version",
+  "addons.editions.highlights": "Edition highlights",
+  "addons.editions.openEdition": "View this edition",
+  "addons.editions.switchLabel": "Choose platform edition",
+  "addons.editions.for": "for",
+  "addons.editions.backToFamily": "All platform editions",
+  "addons.editions.requirements": "Requirements",
+  "addons.editions.pluginId": "Plugin ID",
+  "addons.editions.screenshots": "Inside this edition",
+  "addons.editions.features": "Features in this edition",
+  "addons.editions.settings": "Settings in this edition",
+  "addons.editions.release": "Release",
+  "addons.editions.otherEdition": "Also available on"
 }
