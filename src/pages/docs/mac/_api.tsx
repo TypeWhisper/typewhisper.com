@@ -323,21 +323,22 @@ curl -X DELETE http://localhost:8978/v1/dictionary/corrections \\
             {t(locale, "docs.mac.api.settings.description")}
           </p>
           <CodeBlock
-            code={`TYPEWHISPER_API_TOKEN="$(jq -r '.token' \\
-  "$HOME/Library/Application Support/TypeWhisper/api-discovery.json")"
+            code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
+TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
+TYPEWHISPER_API_TOKEN="$(jq -r '.token' "$DISCOVERY")"
 
 (
   settings_backup_tmp="$(mktemp ./typewhisper-settings.json.tmp.XXXXXX)" || exit
   trap 'rm -f "$settings_backup_tmp"' EXIT
   curl --fail --silent --show-error \\
-    http://localhost:8978/v1/settings/export \\
+    "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/export" \\
     -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
     --output "$settings_backup_tmp" && \\
     mv "$settings_backup_tmp" typewhisper-settings.json
 )
 
 curl --fail --silent --show-error -X POST \\
-  http://localhost:8978/v1/settings/import \\
+  "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/import" \\
   -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
   -H "Content-Type: application/json" \\
   --data-binary @typewhisper-settings.json`}
