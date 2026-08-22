@@ -335,8 +335,7 @@ TYPEWHISPER_API_TOKEN="$(jq -r '.token' "$DISCOVERY")"
     -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
     --output "$settings_backup_tmp" && \\
     mv "$settings_backup_tmp" typewhisper-settings.json
-)
-
+) && \\
 curl --fail --silent --show-error -X POST \\
   "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/import" \\
   -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
