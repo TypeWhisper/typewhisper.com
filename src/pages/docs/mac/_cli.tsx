@@ -63,6 +63,26 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                   <p>typewhisper transcribe recording.wav</p>
                 </div>
               </div>
+
+              <div>
+                <h3 className="text-sm font-semibold">export</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {t(locale, "docs.mac.cli.commands.export")}
+                </p>
+                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
+                  <p>typewhisper export typewhisper-settings.json</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold">import</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {t(locale, "docs.mac.cli.commands.import")}
+                </p>
+                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
+                  <p>typewhisper import typewhisper-settings.json</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -71,6 +91,27 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
             <div className="mt-3 space-y-3 text-sm text-muted-foreground">
               <p>{t(locale, "docs.mac.cli.fileSize.localFiles")}</p>
               <p>{t(locale, "docs.mac.cli.fileSize.stdin")}</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.settings.title")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.cli.settings.description")}
+            </p>
+            <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
+              <p>mkdir -p ~/.config/typewhisper</p>
+              <p>typewhisper export ~/.config/typewhisper/settings.json</p>
+              <p>typewhisper import ~/.config/typewhisper/settings.json</p>
+              <p>typewhisper import ~/.config/typewhisper/settings.json --json</p>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">
+              {t(locale, "docs.mac.cli.settings.behavior")}
+            </p>
+            <div className="mt-4 rounded-md border border-amber-500/20 bg-amber-500/5 p-3">
+              <p className="text-sm text-muted-foreground">
+                {t(locale, "docs.mac.cli.settings.warning")}
+              </p>
             </div>
           </div>
 
@@ -100,10 +141,36 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                   <tr className="border-b border-border/50">
                     <td className="py-2 pr-4">
                       <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --api-token
+                      </code>
+                    </td>
+                    <td className="py-2">
+                      {t(locale, "docs.mac.cli.options.apiToken")}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --dev
+                      </code>
+                    </td>
+                    <td className="py-2">{t(locale, "docs.mac.cli.options.dev")}</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                         --json
                       </code>
                     </td>
                     <td className="py-2">{t(locale, "docs.mac.cli.options.json")}</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --help / -h / --version
+                      </code>
+                    </td>
+                    <td className="py-2">{t(locale, "docs.mac.cli.options.helpVersion")}</td>
                   </tr>
                   <tr className="border-b border-border/50">
                     <td className="py-2 pr-4">
@@ -118,6 +185,16 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                   <tr className="border-b border-border/50">
                     <td className="py-2 pr-4">
                       <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --language-hint
+                      </code>
+                    </td>
+                    <td className="py-2">
+                      {t(locale, "docs.mac.cli.options.languageHint")}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                         --task
                       </code>
                     </td>
@@ -125,7 +202,7 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                       {t(locale, "docs.mac.cli.options.task")}
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="border-b border-border/50">
                     <td className="py-2 pr-4">
                       <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
                         --translate-to
@@ -133,6 +210,42 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                     </td>
                     <td className="py-2">
                       {t(locale, "docs.mac.cli.options.translateTo")}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --engine
+                      </code>
+                    </td>
+                    <td className="py-2">{t(locale, "docs.mac.cli.options.engine")}</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --model
+                      </code>
+                    </td>
+                    <td className="py-2">{t(locale, "docs.mac.cli.options.model")}</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --await-download
+                      </code>
+                    </td>
+                    <td className="py-2">
+                      {t(locale, "docs.mac.cli.options.awaitDownload")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">
+                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
+                        --no-corrections
+                      </code>
+                    </td>
+                    <td className="py-2">
+                      {t(locale, "docs.mac.cli.options.noCorrections")}
                     </td>
                   </tr>
                 </tbody>
@@ -191,6 +304,25 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
                 </p>
                 <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
                   <p>typewhisper --port 9000 status</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  {t(locale, "docs.mac.cli.examples.backupDotfiles")}
+                </p>
+                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
+                  <p>mkdir -p ~/.config/typewhisper</p>
+                  <p>typewhisper export ~/.config/typewhisper/settings.json</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  {t(locale, "docs.mac.cli.examples.importJson")}
+                </p>
+                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
+                  <p>typewhisper import settings.json --json</p>
                 </div>
               </div>
             </div>
