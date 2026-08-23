@@ -37,7 +37,7 @@ function shortVersion(version: string | null | undefined): string | null {
   return match ? `${match[1]}.${match[2]}` : null;
 }
 
-// iOS is pending Apple review, so there is no public version yet.
+// iOS is not public yet, so there is no public version to advertise.
 const versionByPlatform: Record<HeroPlatform, string | null> = {
   mac: shortVersion(downloads.mac.version),
   windows: shortVersion(downloads.windows.version),
@@ -82,7 +82,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
       className="hero-surface relative overflow-hidden py-16 sm:py-32 lg:py-40"
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <HeroPlatformSwitcher
             locale={locale}
             selected={selectedPlatform}
@@ -90,15 +90,22 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             detectedHint={detectedHintPlatform}
           />
 
-          <h1 className="mt-6 text-5xl font-bold tracking-tighter text-foreground sm:text-6xl lg:text-7xl">
+          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.24em] text-primary sm:text-sm">
+            {t(locale, "hero.title.brand")}
             {versionByPlatform[selectedPlatform]
-              ? `${t(locale, "hero.title.brand")} ${versionByPlatform[selectedPlatform]},`
-              : t(locale, "hero.title.brand")}
+              ? ` ${versionByPlatform[selectedPlatform]}`
+              : ""}
+            <span className="mx-2 text-muted-foreground/60" aria-hidden="true">·</span>
+            {t(locale, `hero.eyebrow.${selectedPlatform}`)}
+          </p>
+
+          <h1 className="mt-4 text-5xl font-bold tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
+            {t(locale, `hero.title.line1.${selectedPlatform}`)}
             <br />
             {t(locale, `hero.title.line2.${selectedPlatform}`)}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             {t(locale, `hero.subtitle.${selectedPlatform}`)}
           </p>
 
@@ -156,7 +163,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-14">
+        <div className="mt-12 sm:mt-16">
           <HeroDemo locale={locale} />
         </div>
 

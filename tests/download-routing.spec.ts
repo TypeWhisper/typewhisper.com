@@ -52,7 +52,7 @@ const landingScenarios: LandingScenario[] = [
     name: "iOS",
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Mobile/15E148 Safari/604.1",
-    expectedLabel: "Coming soon",
+    expectedLabel: "Not public yet",
   },
 ];
 
@@ -285,7 +285,7 @@ test.describe("release status download routing", () => {
       page.getByRole("link", { name: "Download GitHub installer" }),
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
-      page.getByText("Coming soon to the App Store", { exact: true }),
+      page.getByText("Not in the App Store yet", { exact: true }),
     ).toBeVisible();
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
@@ -320,7 +320,7 @@ test.describe("release status download routing", () => {
       page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
-      page.getByText("Bald im App Store", { exact: true }),
+      page.getByText("Noch nicht im App Store", { exact: true }),
     ).toBeVisible();
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
@@ -328,7 +328,7 @@ test.describe("release status download routing", () => {
   });
 });
 
-test("public iOS pages show Apple review status without beta links", async ({
+test("public iOS pages show release-preparation status without beta links", async ({
   page,
 }) => {
   for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
@@ -343,7 +343,7 @@ test("public iOS pages show Apple review status without beta links", async ({
     page.getByText("Coming soon to the App Store", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("Pending Apple Review", { exact: true }).first(),
+    page.getByText("App Store release in preparation", { exact: true }).first(),
   ).toBeVisible();
 });
 

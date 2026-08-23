@@ -17,7 +17,7 @@
   "business.feature.compliance.title": "Compliance-friendly",
   "business.feature.compliance.description": "On-device transcription. No voice data leaves the machine unless you opt into a cloud engine.",
   "business.feature.prioritySupport.title": "Priority support",
-  "business.feature.prioritySupport.description": "Direct line to the team on licensing@typewhisper.com for setup, rollout, and issue triage.",
+  "business.feature.prioritySupport.description": "Direct line to the team on hello@typewhisper.com for setup, rollout, and issue triage.",
   "business.feature.auditable.title": "Auditable source",
   "business.feature.auditable.description": "Full source is on GitHub under GPLv3. Security reviewers can audit what ships on your devices.",
   "business.trust.title": "Built to survive a security review.",

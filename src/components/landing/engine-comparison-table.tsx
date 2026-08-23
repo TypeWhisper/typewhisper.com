@@ -14,6 +14,10 @@ interface ComparisonRow {
   values: (boolean | string)[];
 }
 
+function comparisonValue(locale: Locale, key: string): string {
+  return t(locale, `engineComparison.value.${key}`);
+}
+
 function getMacEngines(locale: Locale): Engine[] {
   return [
     {
@@ -36,27 +40,55 @@ function getMacEngines(locale: Locale): Engine[] {
 
 function getMacRows(locale: Locale): ComparisonRow[] {
   return [
-    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "25 European", "~40"] },
+    {
+      label: t(locale, "engineComparison.row.languages"),
+      values: ["99+", comparisonValue(locale, "european25"), "~40"],
+    },
     { label: t(locale, "engineComparison.row.streaming"), values: [true, false, true] },
-    { label: t(locale, "engineComparison.row.translation"), values: ["20 languages", "20 languages", "20 languages"] },
-    { label: t(locale, "engineComparison.row.speed"), values: ["Fast", "Up to 5x faster", "Fast"] },
+    {
+      label: t(locale, "engineComparison.row.translation"),
+      values: Array(3).fill(comparisonValue(locale, "languages20")),
+    },
+    {
+      label: t(locale, "engineComparison.row.speed"),
+      values: [
+        comparisonValue(locale, "fast"),
+        comparisonValue(locale, "upToFiveTimesFaster"),
+        comparisonValue(locale, "fast"),
+      ],
+    },
     {
       label: t(locale, "engineComparison.row.modelSizes"),
-      values: ["Tiny to Large v3", "1.1B params", "System-managed"],
+      values: [
+        comparisonValue(locale, "tinyToLargeV3"),
+        comparisonValue(locale, "params1_1b"),
+        comparisonValue(locale, "systemManaged"),
+      ],
     },
     {
       label: t(locale, "engineComparison.row.modelDownload"),
-      values: ["Manual in-app", "Manual in-app", "Automatic by macOS"],
+      values: [
+        comparisonValue(locale, "manualInApp"),
+        comparisonValue(locale, "manualInApp"),
+        comparisonValue(locale, "automaticByMacos"),
+      ],
     },
     {
       label: t(locale, "engineComparison.row.bestFor"),
       values: [
-        "Multilingual & translation",
-        "European languages",
-        "Quick setup",
+        comparisonValue(locale, "multilingualTranslation"),
+        comparisonValue(locale, "europeanLanguages"),
+        comparisonValue(locale, "quickSetup"),
       ],
     },
-    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Excellent", "Good"] },
+    {
+      label: t(locale, "engineComparison.row.accuracy"),
+      values: [
+        comparisonValue(locale, "excellent"),
+        comparisonValue(locale, "excellent"),
+        comparisonValue(locale, "good"),
+      ],
+    },
   ];
 }
 
@@ -79,12 +111,33 @@ function getWindowsRows(locale: Locale): ComparisonRow[] {
   return [
     { label: t(locale, "engineComparison.row.languages"), values: ["25+", "4 (EN/DE/FR/ES)"] },
     { label: t(locale, "engineComparison.row.streaming"), values: [false, false] },
-    { label: t(locale, "engineComparison.row.translation"), values: ["Via Marian/Cloud", "Built-in"] },
-    { label: t(locale, "engineComparison.row.speed"), values: ["Very fast", "Fast"] },
-    { label: t(locale, "engineComparison.row.modelSizes"), values: ["0.6B params", "180M params"] },
-    { label: t(locale, "engineComparison.row.modelDownload"), values: ["Automatic", "Automatic"] },
-    { label: t(locale, "engineComparison.row.bestFor"), values: ["European languages", "Quick multilingual"] },
-    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Good"] },
+    {
+      label: t(locale, "engineComparison.row.translation"),
+      values: [comparisonValue(locale, "viaMarianCloud"), comparisonValue(locale, "builtIn")],
+    },
+    {
+      label: t(locale, "engineComparison.row.speed"),
+      values: [comparisonValue(locale, "veryFast"), comparisonValue(locale, "fast")],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelSizes"),
+      values: [comparisonValue(locale, "params0_6b"), comparisonValue(locale, "params180m")],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelDownload"),
+      values: Array(2).fill(comparisonValue(locale, "automatic")),
+    },
+    {
+      label: t(locale, "engineComparison.row.bestFor"),
+      values: [
+        comparisonValue(locale, "europeanLanguages"),
+        comparisonValue(locale, "quickMultilingual"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.accuracy"),
+      values: [comparisonValue(locale, "excellent"), comparisonValue(locale, "good")],
+    },
   ];
 }
 
@@ -100,19 +153,59 @@ function getIosEngines(locale: Locale): Engine[] {
       badge: t(locale, "engineComparison.ios.engine2.badge"),
       description: t(locale, "engineComparison.ios.engine2.description"),
     },
+    {
+      name: t(locale, "engineComparison.ios.engine3.name"),
+      badge: t(locale, "engineComparison.ios.engine3.badge"),
+      description: t(locale, "engineComparison.ios.engine3.description"),
+    },
   ];
 }
 
 function getIosRows(locale: Locale): ComparisonRow[] {
   return [
-    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "~40"] },
-    { label: t(locale, "engineComparison.row.streaming"), values: [true, true] },
-    { label: t(locale, "engineComparison.row.translation"), values: ["20 languages", "20 languages"] },
-    { label: t(locale, "engineComparison.row.speed"), values: ["Fast", "Fast"] },
-    { label: t(locale, "engineComparison.row.modelSizes"), values: ["Tiny to Large v3", "System-managed"] },
-    { label: t(locale, "engineComparison.row.modelDownload"), values: ["Manual in-app", "Automatic"] },
-    { label: t(locale, "engineComparison.row.bestFor"), values: ["Multilingual & translation", "Quick setup"] },
-    { label: t(locale, "engineComparison.row.accuracy"), values: ["Excellent", "Good"] },
+    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "~40", "25+"] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [true, true, true] },
+    { label: t(locale, "engineComparison.row.translation"), values: ["Apple Translate", "Apple Translate", "Apple Translate"] },
+    {
+      label: t(locale, "engineComparison.row.speed"),
+      values: [
+        comparisonValue(locale, "fast"),
+        comparisonValue(locale, "fast"),
+        comparisonValue(locale, "veryFast"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelSizes"),
+      values: [
+        comparisonValue(locale, "tinyToLargeV3"),
+        comparisonValue(locale, "systemManaged"),
+        comparisonValue(locale, "params1_1b"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelDownload"),
+      values: [
+        comparisonValue(locale, "manualInApp"),
+        comparisonValue(locale, "automatic"),
+        comparisonValue(locale, "manualInApp"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.bestFor"),
+      values: [
+        comparisonValue(locale, "multilingual"),
+        comparisonValue(locale, "quickSetup"),
+        comparisonValue(locale, "europeanLanguages"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.accuracy"),
+      values: [
+        comparisonValue(locale, "excellent"),
+        comparisonValue(locale, "good"),
+        comparisonValue(locale, "excellent"),
+      ],
+    },
   ];
 }
 
@@ -127,12 +220,12 @@ function getEngineData(platform: Platform, locale: Locale): { engines: Engine[];
   }
 }
 
-function CellValue({ value }: { value: boolean | string }) {
+function CellValue({ value, locale }: { value: boolean | string; locale: Locale }) {
   if (typeof value === "boolean") {
     return value ? (
-      <Check className="size-5 text-green-600 dark:text-green-400" aria-label="Yes" />
+      <Check className="size-5 text-green-600 dark:text-green-400" aria-label={comparisonValue(locale, "yes")} />
     ) : (
-      <X className="size-5 text-muted-foreground/50" aria-label="No" />
+      <X className="size-5 text-muted-foreground/50" aria-label={comparisonValue(locale, "no")} />
     );
   }
   return <span>{value}</span>;
@@ -180,7 +273,7 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
                 </td>
                 {row.values.map((value, j) => (
                   <td key={engines[j].name} className="py-4 px-4">
-                    <CellValue value={value} />
+                    <CellValue value={value} locale={locale} />
                   </td>
                 ))}
               </tr>
@@ -227,7 +320,7 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
                     {row.label}
                   </span>
                   <span className="text-sm font-medium">
-                    <CellValue value={row.values[engines.indexOf(engine)]} />
+                    <CellValue value={row.values[engines.indexOf(engine)]} locale={locale} />
                   </span>
                 </div>
               ))}
