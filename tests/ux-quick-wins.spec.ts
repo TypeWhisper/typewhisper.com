@@ -139,23 +139,31 @@ test.describe("brand logos", () => {
 });
 
 test.describe("addons search", () => {
-  test("Filler Words addon appears in both locales and has detail screenshots", async ({
+  test("Filler Words addon exposes both platform editions in both locales", async ({
     page,
   }) => {
     const locales = [
       {
         code: "en",
         search: "filler",
-        category: "Post-Processing",
+        macHeading: "Filler Words for macOS",
         detailText: "Filler Words removes configurable filler words",
-        screenshotAlt: "Filler Words settings",
+        macScreenshotAlt: "Filler Words macOS settings",
+        windowsHeading: "Filler Words for Windows",
+        windowsDescription:
+          "Locally removes configurable English, German, and Japanese filler words from transcriptions.",
+        windowsScreenshotAlt: "Filler Words Windows settings",
       },
       {
         code: "de",
         search: "füll",
-        category: "Nachbearbeitung",
+        macHeading: "Filler Words für macOS",
         detailText: "Filler Words entfernt konfigurierbare Füllwörter",
-        screenshotAlt: "Filler Words Einstellungen",
+        macScreenshotAlt: "Filler Words macOS Einstellungen",
+        windowsHeading: "Filler Words für Windows",
+        windowsDescription:
+          "Entfernt konfigurierbare englische, deutsche und japanische Füllwörter lokal aus Transkriptionen.",
+        windowsScreenshotAlt: "Filler Words Windows Einstellungen",
       },
     ] as const;
 
@@ -176,10 +184,30 @@ test.describe("addons search", () => {
       await expect(
         page.getByRole("heading", { level: 1, name: "Filler Words" }),
       ).toBeVisible();
-      await expect(page.getByText(locale.category).first()).toBeVisible();
-      await expect(page.getByText("macOS").first()).toBeVisible();
+      const editionCards = page.getByTestId("addon-edition-card");
+      await expect(editionCards).toHaveCount(2);
+      await expect(
+        page.locator('[data-testid="addon-edition-card"][data-platform="mac"]'),
+      ).toBeVisible();
+      await expect(
+        page.locator(
+          '[data-testid="addon-edition-card"][data-platform="windows"]',
+        ),
+      ).toBeVisible();
+
+      await page.goto(`/${locale.code}/addons/filler-words/macos`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: locale.macHeading }),
+      ).toBeVisible();
       await expect(page.getByText(locale.detailText).first()).toBeVisible();
-      await expect(page.getByAltText(locale.screenshotAlt)).toBeVisible();
+      await expect(page.getByAltText(locale.macScreenshotAlt)).toBeVisible();
+
+      await page.goto(`/${locale.code}/addons/filler-words/windows`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: locale.windowsHeading }),
+      ).toBeVisible();
+      await expect(page.getByText(locale.windowsDescription).first()).toBeVisible();
+      await expect(page.getByAltText(locale.windowsScreenshotAlt)).toBeVisible();
     }
   });
 

@@ -7,13 +7,16 @@ const LOCALES = ["de", "en"];
 const PLATFORMS = ["mac", "windows"];
 
 function frontmatter(content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  const match = content.replace(/\r\n/g, "\n").match(/^---\n([\s\S]*?)\n---/);
   assert.ok(match, "expected MDX frontmatter");
   return match[1];
 }
 
 function body(content) {
-  return content.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
+  return content
+    .replace(/\r\n/g, "\n")
+    .replace(/^---\n[\s\S]*?\n---\n?/, "")
+    .trim();
 }
 
 function scalar(data, key) {
@@ -107,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 32);
+  assert.equal(deFamilies.length, 33);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -173,8 +176,8 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
 
-  assert.equal(windowsAddons.length, 36);
-  assert.equal(windowsScreenshotIds.size, 32);
+  assert.equal(windowsAddons.length, 37);
+  assert.equal(windowsScreenshotIds.size, 33);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))

@@ -35,6 +35,10 @@
     "mac": ["memory"],
     "windows": ["memory"]
   },
+  "filler-words": {
+    "mac": ["post-processing"],
+    "windows": ["post-processing"]
+  },
   "fireworks": {
     "mac": ["transcription", "llm"],
     "windows": ["llm"]

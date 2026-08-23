@@ -9,6 +9,7 @@
     "com.typewhisper.cohere",
     "com.typewhisper.deepgram",
     "com.typewhisper.elevenlabs",
+    "com.typewhisper.filler-words",
     "com.typewhisper.fireworks",
     "com.typewhisper.gemini",
     "com.typewhisper.gemma-local",
