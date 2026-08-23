@@ -1,0 +1,18 @@
+---
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
+import { iosDocSlugs, type IosDocSlug } from "@/data/ios-docs";
+
+interface Props {
+  section: IosDocSlug;
+}
+
+export function getStaticPaths() {
+  return iosDocSlugs.map((section) => ({
+    params: { section },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+---
+<LocalizedRedirect path={`/docs/ios/${section}`} />

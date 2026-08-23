@@ -1,0 +1,40 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsIOSGuide from "@/pages/docs/ios/_guide";
+import {
+  getIosDocPage,
+  iosDocSlugs,
+  type IosDocSlug,
+} from "@/data/ios-docs";
+import { locales, t, type Locale } from "@/i18n/index";
+import { canonicalPath } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+  section: IosDocSlug;
+}
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    iosDocSlugs.map((section) => ({
+      params: { locale, section },
+      props: { locale, section },
+    })),
+  );
+}
+
+const { locale, section } = Astro.props;
+const page = getIosDocPage(locale, section);
+---
+<DocsLayout
+  title={`${page.title} - iOS - TypeWhisper`}
+  description={page.description}
+  canonicalPath={canonicalPath(locale, `/docs/ios/${section}`)}
+  locale={locale}
+  platform="ios"
+  releaseStage="pending"
+  releaseTitle={t(locale, "docs.ios.release.title")}
+  releaseDescription={t(locale, "docs.ios.release.description")}
+>
+  <DocsIOSGuide locale={locale} slug={section} />
+</DocsLayout>

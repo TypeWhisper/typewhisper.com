@@ -1,7 +1,7 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import DocsIOS from "@/pages/docs/_ios.tsx";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -13,26 +13,19 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const copy = locale === "de"
-  ? {
-      description: "TypeWhisper für iPhone, iPad und Apple Watch mit lokaler Spracherkennung, Diktier-Tastatur, Profilen und Übersetzung. Das Release wartet auf Apples Prüfung.",
-      releaseTitle: "Das iOS-Release wartet auf Apples Prüfung.",
-      releaseDescription: "TypeWhisper erscheint im App Store, sobald Apple die Prüfung abgeschlossen und das Release freigegeben hat.",
-    }
-  : {
-      description: "TypeWhisper for iPhone, iPad, and Apple Watch with on-device speech-to-text, a voice keyboard, profiles, and translation. The release is pending Apple review.",
-      releaseTitle: "The iOS release is pending Apple review.",
-      releaseDescription: "TypeWhisper will appear in the App Store once Apple completes its review and approves the release.",
-    };
+const description = locale === "de"
+  ? "Ausführliche TypeWhisper-Anleitung für iPhone, iPad und Apple Watch: Einrichtung, Diktier-Tastatur, Profile, Capture Inbox, Dateien, Kurzbefehle, Datenschutz, Premium und Fehlerbehebung."
+  : "Complete TypeWhisper guidance for iPhone, iPad, and Apple Watch: setup, voice keyboard, profiles, Capture Inbox, files, Shortcuts, privacy, Premium, and troubleshooting.";
 ---
 <DocsLayout
   title="iOS - TypeWhisper"
-  description={copy.description}
+  description={description}
   canonicalPath={canonicalPath(locale, "/docs/ios")}
   locale={locale}
+  platform="ios"
   releaseStage="pending"
-  releaseTitle={copy.releaseTitle}
-  releaseDescription={copy.releaseDescription}
+  releaseTitle={t(locale, "docs.ios.release.title")}
+  releaseDescription={t(locale, "docs.ios.release.description")}
 >
   <DocsIOS locale={locale} />
 </DocsLayout>
