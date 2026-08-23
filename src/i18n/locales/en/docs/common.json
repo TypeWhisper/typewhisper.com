@@ -1,6 +1,6 @@
 {
   "docs.title": "Documentation",
-  "docs.subtitle": "macOS and Windows are stable desktop releases, with app-aware dictation, stronger workflow output controls, automatic correction learning, resilient cloud uploads, and improved fullscreen indicators. The iOS release is pending Apple review.",
+  "docs.subtitle": "Choose your platform for complete setup, daily-use, and troubleshooting guides. macOS 1.6 and Windows 1.0.8 are stable; iOS 1.0 is being prepared for the App Store.",
   "docs.allPlatforms": "All Platforms",
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
@@ -12,6 +12,12 @@
   "docs.sidebar.cliTool": "CLI Tool",
   "docs.sidebar.rules": "Rules",
   "docs.sidebar.troubleshooting": "Troubleshooting",
+  "docs.sidebar.dictationKeyboard": "Dictation & Keyboard",
+  "docs.sidebar.profilesProcessing": "Profiles & Processing",
+  "docs.sidebar.filesHistoryInbox": "Files, History & Inbox",
+  "docs.sidebar.dictionarySnippets": "Dictionary & Snippets",
+  "docs.sidebar.watchShortcuts": "Watch & Shortcuts",
+  "docs.sidebar.privacyPremium": "Privacy & Premium",
   "docs.win.title": "Windows",
   "docs.win.badge": "Stable",
   "docs.win.description": "Stable Windows docs for installation, dictation, file transcription, workflows, and local automation.",
@@ -25,6 +31,6 @@
   "docs.win.release.cliDescription": "The optional Windows CLI uses the local HTTP API.",
   "docs.win.release.troubleshootingDescription": "Solutions for common Windows installation, recording, insertion, and automation problems.",
   "docs.ios.title": "iOS",
-  "docs.ios.badge": "Review Pending",
-  "docs.ios.description": "Submitted to Apple and waiting for App Store approval."
+  "docs.ios.badge": "In preparation",
+  "docs.ios.description": "Detailed guidance for iPhone, iPad, and Apple Watch. Version 1.0 is not publicly available in the App Store yet."
 }

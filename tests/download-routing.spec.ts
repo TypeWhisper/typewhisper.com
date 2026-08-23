@@ -340,10 +340,10 @@ test("public iOS pages show release-preparation status without beta links", asyn
 
   await page.goto("/en/docs/ios");
   await expect(
-    page.getByText("Coming soon to the App Store", { exact: true }),
+    page.getByText("App Store release in preparation", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("App Store release in preparation", { exact: true }).first(),
+    page.getByText("Version 1.0 in preparation", { exact: true }).first(),
   ).toBeVisible();
 });
 

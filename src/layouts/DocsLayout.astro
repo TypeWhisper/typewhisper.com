@@ -9,7 +9,7 @@ interface Props {
   description: string;
   canonicalPath: string;
   locale?: Locale;
-  platform?: "mac" | "windows" | null;
+  platform?: "mac" | "windows" | "ios" | null;
   releaseStage?: "stable" | "beta" | "alpha" | "pending" | null;
   releaseTitle?: string;
   releaseDescription?: string;
@@ -48,8 +48,21 @@ const windowsSidebarLinks = [
   { href: localePath(locale, "/docs/windows/troubleshooting"), label: t(locale, "docs.sidebar.troubleshooting") },
 ];
 
+const iosSidebarLinks = [
+  { href: localePath(locale, "/docs/ios"), label: t(locale, "docs.sidebar.overview") },
+  { href: localePath(locale, "/docs/ios/installation"), label: t(locale, "docs.sidebar.installation") },
+  { href: localePath(locale, "/docs/ios/dictation-and-keyboard"), label: t(locale, "docs.sidebar.dictationKeyboard") },
+  { href: localePath(locale, "/docs/ios/profiles-and-processing"), label: t(locale, "docs.sidebar.profilesProcessing") },
+  { href: localePath(locale, "/docs/ios/files-history-and-inbox"), label: t(locale, "docs.sidebar.filesHistoryInbox") },
+  { href: localePath(locale, "/docs/ios/dictionary-and-snippets"), label: t(locale, "docs.sidebar.dictionarySnippets") },
+  { href: localePath(locale, "/docs/ios/watch-and-shortcuts"), label: t(locale, "docs.sidebar.watchShortcuts") },
+  { href: localePath(locale, "/docs/ios/privacy-and-premium"), label: t(locale, "docs.sidebar.privacyPremium") },
+  { href: localePath(locale, "/docs/ios/troubleshooting"), label: t(locale, "docs.sidebar.troubleshooting") },
+];
+
 const sidebarLinks = platform === "mac" ? macSidebarLinks
   : platform === "windows" ? windowsSidebarLinks
+  : platform === "ios" ? iosSidebarLinks
   : null;
 
 const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
