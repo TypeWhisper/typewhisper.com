@@ -2,7 +2,7 @@
 slug: whisper-cpp
 name: whisper.cpp (Local)
 author: TypeWhisper
-version: 1.0.0
+version: 1.0.3
 icon: Cpu
 description: Offline Windows transcription via Whisper.net and whisper.cpp model files.
 categories:
@@ -10,6 +10,7 @@ categories:
 platforms:
   - windows
 source: bundled
+id: com.typewhisper.whisper-cpp
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
@@ -24,9 +25,12 @@ whisper.cpp (Local) adds offline Whisper transcription to TypeWhisper for Window
 - Offline Whisper transcription on Windows
 - Uses Whisper.net with whisper.cpp runtime files
 - Built-in GGML model downloads
+- Download, load, unload, and remove controls for local models
 - Automatic language detection
 - Prompt support for transcription context
 - Translation support
+- Automatic, CPU, NVIDIA CUDA, AMD Vulkan, and custom AMD ROCm acceleration options
+- Runtime diagnostics with restart requirements and explicit CPU fallback reasons
 - No API key or cloud account required
 
 ## Transcription Models
@@ -51,6 +55,7 @@ whisper.cpp (Local) adds offline Whisper transcription to TypeWhisper for Window
 - **Model** - Choose the Whisper model to download and load.
 - **Prompt** - Optional context can be passed into the transcription processor.
 - **Translate** - Enables Whisper translation when requested by TypeWhisper.
+- **Acceleration** - Use automatic selection, CPU, NVIDIA CUDA, AMD Vulkan, or a custom ROCm `whisper.dll` path.
 
 ## Setup
 
@@ -64,3 +69,4 @@ whisper.cpp (Local) adds offline Whisper transcription to TypeWhisper for Window
 - Models are stored under the plugin data directory.
 - Quantized Q5_0 variants reduce download size compared with full models.
 - Larger Whisper models can improve accuracy but require more disk space and memory.
+- CUDA can be installed by TypeWhisper; Vulkan requires a compatible AMD driver, while ROCm uses `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH`.

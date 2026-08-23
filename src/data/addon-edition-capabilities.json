@@ -126,5 +126,9 @@
   "webhook": {
     "mac": ["utility"],
     "windows": ["utility"]
+  },
+  "xai-grok": {
+    "mac": ["transcription", "llm", "tts"],
+    "windows": ["transcription", "llm", "tts"]
   }
 }
