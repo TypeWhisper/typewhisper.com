@@ -5,6 +5,7 @@ test.describe("add-on platform editions", () => {
     page,
   }) => {
     for (const slug of [
+      "authenticated-cli",
       "assemblyai",
       "cohere",
       "qwen3-asr",
@@ -42,15 +43,22 @@ test.describe("add-on platform editions", () => {
       ),
     ).toBeVisible();
 
-    for (const [slug, id] of [
-      ["authenticated-cli", "com.typewhisper.authenticated-cli"],
-      ["gemma-local", "com.typewhisper.gemma-local"],
-    ]) {
-      await page.goto(`/en/addons/${slug}/`);
-      await expect(
-        page.locator(`img[src="/screenshots/windows/plugins/${id}.png"]`),
-      ).toBeVisible();
-    }
+    await page.goto("/en/addons/authenticated-cli/windows/");
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.authenticated-cli.png"]',
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Status preview only; workflow processing remains disabled"),
+    ).toBeVisible();
+
+    await page.goto("/en/addons/gemma-local/");
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.gemma-local.png"]',
+      ),
+    ).toBeVisible();
   });
 
   test("Cohere documents different capabilities on each platform", async ({ page }) => {

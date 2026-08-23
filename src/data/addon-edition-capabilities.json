@@ -1,4 +1,8 @@
 {
+  "authenticated-cli": {
+    "mac": ["llm"],
+    "windows": ["llm"]
+  },
   "assemblyai": {
     "mac": ["transcription"],
     "windows": ["transcription"]

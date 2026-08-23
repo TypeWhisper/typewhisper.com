@@ -1,0 +1,72 @@
+---
+familySlug: "authenticated-cli"
+platform: "mac"
+version: "1.0.0"
+description: "Nutze bestehende Anmeldungen von Codex, Claude Code und Antigravity als isolierte LLM-Anbieter unter macOS."
+id: "com.typewhisper.authenticated-cli"
+minAppVersion: "1.6.0"
+minOsVersion: "14.0"
+requirements:
+  - "TypeWhisper 1.6.0 oder neuer"
+  - "macOS 14.0 oder neuer"
+  - "Eine unterstützte, im Terminal angemeldete CLI"
+highlights:
+  - "Separate Workflow-Anbieter für Codex CLI, Claude Code CLI und Antigravity CLI"
+  - "Automatische Erkennung von Homebrew und üblichen Pfaden mit manueller Programmauswahl"
+  - "Prüfung von Anmeldung, Version, Programmintegrität und Sicherheitsfunktionen"
+  - "Automatisch aktualisierte Codex- und Antigravity-Modelle mit modellabhängiger Effort-Auswahl"
+  - "Isolierte temporäre Arbeitsverzeichnisse ohne Zugriff auf Projektregeln oder frühere Sitzungen"
+  - "Dokumentationsbasierte Best-Effort-Integration für Antigravity"
+configuration:
+  - "CLI-Status und Modelle aktualisieren, ein Programm auswählen und Modell sowie Effort global oder pro Workflow festlegen"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin"
+---
+
+## Einrichtung unter macOS
+
+1. Installiere Codex CLI, Claude Code CLI oder Antigravity CLI nach der offiziellen Anleitung des Anbieters.
+2. Öffne das Terminal und melde dich über die CLI selbst an. Führe zum Beispiel `codex login` oder den entsprechenden Anmeldebefehl von Claude Code aus.
+3. Öffne TypeWhisper Einstellungen > Plugins und konfiguriere **Authentifizierte Provider-CLIs**.
+4. Klicke auf **Erneut prüfen**. Falls mehrere Installationen vorhanden sind, wählst du mit **Auswählen…** das gewünschte Programm aus.
+5. Warte, bis der Anbieter **Bereit** anzeigt, und wähle ihn anschließend global oder für einen einzelnen Workflow. Je nach CLI kannst du zusätzlich Modell und Effort festlegen.
+
+Das Add-on durchsucht übliche native Installationsorte einschließlich Homebrew. Nach einer manuellen Auswahl kannst du jederzeit zur automatischen Erkennung zurückkehren.
+
+## Anbieter und Verfügbarkeit
+
+| Anbieter | Befehl | Wann er verfügbar wird |
+| --- | --- | --- |
+| Codex CLI | `codex` | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und alle benötigten Isolationsoptionen werden unterstützt |
+| Claude Code CLI | `claude` | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und ein sicherer nicht interaktiver Modus wird unterstützt |
+| Antigravity CLI | `agy` | `agy models` bestätigt die Anmeldung und die dokumentierten Headless-, Sandbox- und Strukturausgabe-Optionen sind vorhanden; die Integration ist Best Effort |
+
+TypeWhisper prüft die erkannte Version, Anmeldung und erforderlichen Funktionen regelmäßig erneut. Abgemeldete, inkompatible, mehrdeutige oder nicht ausreichend isolierte Installationen werden abgelehnt, statt Schutzvorkehrungen stillschweigend zu reduzieren.
+
+## Automatische Modell- und Effort-Auswahl
+
+Für Codex fragt TypeWhisper die sichtbaren Modelle direkt über `model/list` beim App Server der installierten und angemeldeten CLI ab. Zusammen mit jedem Modell kommen dessen unterstützte `supportedReasoningEfforts`, der `defaultReasoningEffort` und die Information, welches Modell Codex als Standard markiert. Dadurch folgen Modell- und Effort-Auswahl automatisch Änderungen des angemeldeten Kontos, statt feste Codex-Listen in das Add-on einzubauen.
+
+Antigravity-Modelle werden mit `agy models` geladen. Die dokumentierten Effort-Stufen sind **Low**, **Medium** und **High**. Claude Code dokumentiert **Low**, **Medium**, **High**, **XHigh**, **Max** und **Ultracode**, stellt in der Headless-CLI aber keine vergleichbare maschinenlesbare Modellliste bereit.
+
+Die Listen werden beim Start des Add-ons und mit **Erneut prüfen** aktualisiert und lokal zwischengespeichert. Falls eine Aktualisierung vorübergehend fehlschlägt, bleibt die zuletzt erfolgreiche Liste verfügbar. **Provider-Standard** speichert keinen konkreten Wert, sondern folgt bei jeder Anfrage dem jeweiligen CLI- beziehungsweise Modellstandard. Modell und Effort lassen sich sowohl in den globalen LLM-Fallbacks als auch als Override eines einzelnen Workflows auswählen.
+
+## Isolation und Datenschutz
+
+TypeWhisper übergibt für jeden Workflow nur zwei Textfelder: die Workflow-Anweisung und das Transkript beziehungsweise den ausgewählten Eingabetext. Nicht übergeben werden Mikrofon-Audio, Aufnahmen, CLI-Anmeldedaten, TypeWhisper-Einstellungen, weiterer App-Kontext, MCP-Tools, Projektanweisungen, Memories oder frühere CLI-Sitzungen.
+
+Jede Anfrage läuft nicht interaktiv in einem neuen privaten temporären Verzeichnis und unterliegt einem Zeitlimit sowie Größenlimits für Ein- und Ausgabe. Codex läuft sitzungslos in einer schreibgeschützten Sandbox; Freigaben, Tools, Webzugriff, Projektanweisungen, Memories, Multi-Agent-Funktionen und Sitzungsspeicherung sind deaktiviert. Claude Code läuft ohne Tools, MCP-Zugriff, Browserzugriff, Slash-Befehle oder dauerhafte Sitzungen. Antigravity wird als strukturierte Einmalanfrage mit `--sandbox` im leeren temporären Arbeitsverzeichnis gestartet.
+
+Der gewählte Anbieter erhält den Prompt-Text weiterhin über seinen Cloud-Dienst. Prüfe Tarif, Nutzungslimits und Datenschutzregeln des Anbieterkontos, bevor du sensible Texte verarbeitest.
+
+## Antigravity: Best Effort
+
+Die Antigravity-Unterstützung folgt dem offiziell dokumentierten Headless-Vertrag: TypeWhisper prüft `agy --version`, die benötigten Headless-Optionen und `agy models`, lädt daraus die Modelle und verarbeitet Anfragen mit strukturierter JSON-Ausgabe, Sandbox und Zeitlimit. Dieser Ablauf ist durch einen vollständigen Fake-CLI-Integrationstest abgedeckt.
+
+Für einen Live-Test stand uns jedoch kein angemeldeter Antigravity-Zugang zur Verfügung. Deshalb kennzeichnen wir diese Integration bis zu einer erfolgreichen Prüfung mit einer echten Installation ausdrücklich als **Best Effort**.
+
+## Problembehebung
+
+- **Nicht installiert:** Installiere die native CLI oder wähle das Programm manuell aus. Shell-Aliasse lassen sich nicht auswählen; ausführbare Shims und Symlinks müssen die Integritäts- und Berechtigungsprüfung bestehen.
+- **Anmeldung erforderlich:** Schließe die Anmeldung des Anbieters im Terminal ab und klicke anschließend auf **Erneut prüfen**.
+- **Inkompatibel:** Aktualisiere die CLI, damit alle benötigten nicht interaktiven und isolierenden Funktionen verfügbar sind.
+- **Prüfung fehlgeschlagen:** Stelle sicher, dass das Programm lokal liegt, nicht von anderen Benutzern verändert werden kann und im Terminal startet.

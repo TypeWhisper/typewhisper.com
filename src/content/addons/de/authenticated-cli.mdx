@@ -2,60 +2,48 @@
 slug: authenticated-cli
 name: Authentifizierte Provider-CLIs
 author: TypeWhisper
-version: 1.0.0
 icon: Terminal
-description: Nutze bestehende Anmeldungen der Codex CLI und Claude Code CLI als isolierte LLM-Anbieter für Windows-Workflows.
+description: Nutze bereits angemeldete Provider-CLIs als isolierte LLM-Anbieter unter macOS und Windows.
 categories:
   - llm
 platforms:
+  - mac
   - windows
 source: bundled
 id: com.typewhisper.authenticated-cli
-minAppVersion: 1.0.9
-sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin
 sourceUrls:
+  mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli
 ---
 
 ## Über
 
-Authentifizierte Provider-CLIs stellt eine bestehende Anmeldung der Codex CLI oder Claude Code CLI als LLM-Anbieter in TypeWhisper für Windows bereit. TypeWhisper ruft die installierte native CLI auf, ohne ihre Anmeldedaten zu importieren oder zu speichern.
+Authentifizierte Provider-CLIs machen bereits in unterstützten CLIs angemeldete Konten als LLM-Anbieter in TypeWhisper verfügbar. TypeWhisper startet für jede Anfrage die lokal installierte CLI, ohne deren Anmeldedaten zu importieren oder zu speichern.
 
-## Funktionen
+Die Editionen für macOS und Windows sind eigenständige Implementierungen mit eigenen Voraussetzungen und Schutzvorkehrungen. Wähle oben deine Plattform, um die passende Einrichtung und den genauen Funktionsumfang zu sehen.
 
-- Separate Anbieter für Codex CLI und Claude Code CLI in Prompt-Workflows
-- Automatische Erkennung nativer CLI-Installationen und Auswahl bei mehreren gefundenen Installationen
-- Prüfung von Anmeldung, Version und erforderlichen Sicherheitsfunktionen, bevor ein Anbieter verfügbar wird
-- Manuelle Statusaktualisierung und regelmäßige Prüfungen im Hintergrund
-- Provider-Standardmodell mit strukturierten Textergebnissen
-- Isolierte temporäre Arbeitsverzeichnisse, Zeitlimits und Größenlimits für Ein- und Ausgabe
-- Codex läuft sitzungslos in einer schreibgeschützten Sandbox; Freigaben, Tools, Webzugriff, Projektanweisungen, Memories und Multi-Agent-Funktionen sind deaktiviert
-- Claude Code läuft im sicheren Modus ohne Tools, MCP-Zugriff, Browserzugriff, Slash-Befehle oder Sitzungsspeicherung
+## Was TypeWhisper übergibt
+
+Nur die Workflow-Anweisung und das Transkript beziehungsweise der ausgewählte Eingabetext werden an die gewählte CLI übergeben. TypeWhisper sendet dabei weder Audio noch CLI-Anmeldedaten, weiteren App-Kontext, MCP-Tools, Projektregeln oder frühere CLI-Sitzungen.
+
+Der Anbieter hinter der CLI verarbeitet den Text weiterhin über seinen Cloud-Dienst. Die Tarif-, Nutzungslimit- und Datenschutzregeln des jeweiligen Kontos gelten weiterhin.
 
 ## Unterstützte CLIs
 
-| CLI | Windows-Programmdatei | Verfügbarkeit |
+| Anbieter | macOS | Windows |
 | --- | --- | --- |
-| Codex CLI | `codex.exe` | Verfügbar, wenn sie installiert und angemeldet ist und die benötigten Sicherheitsoptionen unterstützt |
-| Claude Code CLI | `claude.exe` | Verfügbar, wenn sie installiert und angemeldet ist und die benötigten Sicherheitsoptionen unterstützt |
-| Antigravity CLI | `agy.exe` | Wird zur Statusanzeige aufgeführt, ist aber derzeit deaktiviert, weil die erforderlichen Isolationsfunktionen fehlen |
+| Codex CLI | Unterstützt über `codex` | Unterstützt über `codex.exe` |
+| Claude Code CLI | Unterstützt über `claude` | Unterstützt über `claude.exe` |
+| Antigravity CLI | Dokumentationsbasierte Best-Effort-Verarbeitung über `agy` | Nur Statusvorschau über `agy.exe`; keine Verarbeitung |
 
-## Konfiguration
+## Zentrale Funktionen
 
-- **Status aktualisieren** - Prüft installierte CLIs, Versionen, Anmeldestatus und unterstützte Sicherheitsfunktionen.
-- **Installation auswählen** - Erscheint, wenn mehrere native Installationen gefunden wurden oder eine zuvor gewählte Programmdatei fehlt.
-- **Einrichtungsanleitung** - Öffnet die offizielle Einrichtungsdokumentation der jeweiligen CLI.
-
-## Einrichtung
-
-1. Installiere Codex CLI oder Claude Code CLI und melde dich im Terminal an.
-2. Öffne TypeWhisper Einstellungen > Integrationen und konfiguriere **Authentifizierte Provider-CLIs**.
-3. Aktualisiere den Status und wähle eine Installation aus, falls Windows mehrere findet.
-4. Warte, bis der Anbieter als **Bereit** angezeigt wird.
-5. Wähle **Codex CLI** oder **Claude Code CLI** als LLM-Anbieter in einem Workflow.
-
-## Hinweise
-
-- Unterstützt werden nur native `.exe`-Installationen.
-- Der jeweilige Anbieter verarbeitet Prompts weiterhin über seinen Cloud-Dienst. Dabei können eigene Tarif-, Nutzungslimit- und Datenschutzregeln gelten.
-- TypeWhisper lehnt abgemeldete, inkompatible, mehrdeutige oder nicht ausreichend isolierte CLI-Installationen ab, anstatt sie mit schwächeren Schutzvorkehrungen zu starten.
+- Separate Anbieter für die von der gewählten Plattform unterstützten CLIs
+- Automatische Erkennung üblicher nativer Installationsorte
+- Manuelle Auswahl der Programmdatei bei mehreren Installationen oder ungeeigneter automatischer Erkennung
+- Prüfung von Version, Anmeldung und Sicherheitsfunktionen, bevor ein Anbieter verfügbar wird
+- Manuelle Statusaktualisierung und regelmäßige Prüfungen im Hintergrund
+- Temporäre Arbeitsverzeichnisse pro Anfrage, Zeitlimits und strenge Größenlimits für Ein- und Ausgabe
+- Strukturierte Textergebnisse ohne Zugriff auf TypeWhisper-Audio oder weitere App-Daten
+- Unter macOS automatisch aktualisierte Codex- und Antigravity-Modelle sowie globale und workflow-spezifische Effort-Auswahl

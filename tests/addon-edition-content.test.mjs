@@ -110,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 33);
+  assert.equal(deFamilies.length, 34);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
