@@ -2,7 +2,7 @@
 slug: whisper-cpp
 name: whisper.cpp (Local)
 author: TypeWhisper
-version: 1.0.0
+version: 1.0.3
 icon: Cpu
 description: Offline-Transkription unter Windows über Whisper.net und whisper.cpp-Modelldateien.
 categories:
@@ -10,6 +10,7 @@ categories:
 platforms:
   - windows
 source: bundled
+id: com.typewhisper.whisper-cpp
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
@@ -24,9 +25,12 @@ whisper.cpp (Local) ergänzt TypeWhisper unter Windows um Offline-Whisper-Transk
 - Offline-Whisper-Transkription unter Windows
 - Nutzt Whisper.net mit whisper.cpp-Runtime-Dateien
 - Integrierte GGML-Modell-Downloads
+- Steuerelemente zum Herunterladen, Laden, Entladen und Entfernen lokaler Modelle
 - Automatische Spracherkennung
 - Prompt-Unterstützung für Transkriptionskontext
 - Übersetzungsunterstützung
+- Automatische, CPU-, NVIDIA-CUDA-, AMD-Vulkan- und benutzerdefinierte AMD-ROCm-Beschleunigung
+- Runtime-Diagnose mit Neustartanforderungen und nachvollziehbaren Gründen für den CPU-Fallback
 - Kein API-Schlüssel oder Cloud-Konto erforderlich
 
 ## Transkriptionsmodelle
@@ -51,6 +55,7 @@ whisper.cpp (Local) ergänzt TypeWhisper unter Windows um Offline-Whisper-Transk
 - **Modell** - Wähle das Whisper-Modell, das heruntergeladen und geladen werden soll.
 - **Prompt** - Optionaler Kontext kann an den Transkriptionsprozessor übergeben werden.
 - **Übersetzen** - Aktiviert Whisper-Übersetzung, wenn TypeWhisper sie anfordert.
+- **Beschleunigung** - Nutze die automatische Auswahl, CPU, NVIDIA CUDA, AMD Vulkan oder einen eigenen ROCm-Pfad zu `whisper.dll`.
 
 ## Einrichtung
 
@@ -64,3 +69,4 @@ whisper.cpp (Local) ergänzt TypeWhisper unter Windows um Offline-Whisper-Transk
 - Modelle werden im Plugin-Datenverzeichnis gespeichert.
 - Quantisierte Q5_0-Varianten reduzieren die Downloadgröße gegenüber vollständigen Modellen.
 - Größere Whisper-Modelle können die Genauigkeit verbessern, benötigen aber mehr Speicherplatz und Arbeitsspeicher.
+- TypeWhisper kann CUDA installieren; Vulkan benötigt einen kompatiblen AMD-Treiber, ROCm den Pfad in `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH`.

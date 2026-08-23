@@ -21,8 +21,11 @@ function scalar(data, key) {
 }
 
 function list(data, key) {
-  const block = data.match(new RegExp(`^${key}:\\n((?:  - .+\\n?)+)`, "m"))?.[1] ?? "";
-  return [...block.matchAll(/^  - ["']?(.+?)["']?$/gm)].map((match) => match[1]);
+  const block =
+    data.match(new RegExp(`^${key}:\\n((?:  - .+\\n?)+)`, "m"))?.[1] ?? "";
+  return [...block.matchAll(/^  - ["']?(.+?)["']?$/gm)].map(
+    (match) => match[1],
+  );
 }
 
 async function crossPlatformFamilies(locale) {
@@ -47,11 +50,46 @@ async function crossPlatformFamilies(locale) {
   return slugs.sort();
 }
 
+async function windowsAddonInventory(locale) {
+  const dir = path.resolve(`src/content/addons/${locale}`);
+  const files = (await readdir(dir)).filter((file) => file.endsWith(".mdx"));
+  const addons = [];
+
+  for (const file of files) {
+    const data = frontmatter(await readFile(path.join(dir, file), "utf8"));
+    const platforms = list(data, "platforms");
+    if (!platforms.includes("windows")) {
+      continue;
+    }
+
+    const slug = scalar(data, "slug");
+    let id = scalar(data, "id");
+    if (platforms.includes("mac")) {
+      id = scalar(
+        frontmatter(
+          await readFile(
+            path.resolve(
+              `src/content/addon-editions/${locale}/${slug}/windows.mdx`,
+            ),
+            "utf8",
+          ),
+        ),
+        "id",
+      );
+    }
+
+    assert.ok(id, `${locale}/${slug} needs a Windows plugin ID`);
+    addons.push({ id, slug });
+  }
+
+  return addons.sort((a, b) => a.slug.localeCompare(b.slug));
+}
+
 async function editionFamilies(locale, platform) {
   const dir = path.resolve(`src/content/addon-editions/${locale}`);
   const filename = platform === "mac" ? "macos.mdx" : "windows.mdx";
-  const entries = (await readdir(dir, { withFileTypes: true })).filter((entry) =>
-    entry.isDirectory(),
+  const entries = (await readdir(dir, { withFileTypes: true })).filter(
+    (entry) => entry.isDirectory(),
   );
   const families = await Promise.all(
     entries.map(async (entry) => {
@@ -69,7 +107,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 31);
+  assert.equal(deFamilies.length, 32);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -99,25 +137,31 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
         );
         const releaseUrl = scalar(data, "releaseUrl");
         if (releaseUrl) {
+          const releaseVersion =
+            scalar(data, "releaseVersion") || scalar(data, "version");
+          assert.match(releaseVersion, /^\d+\.\d+\.\d+$/);
           assert.ok(
-            releaseUrl.endsWith(`-v${scalar(data, "version")}`),
-            `${locale}/${slug}/${filename} must link its displayed release`,
+            releaseUrl.endsWith(`-v${releaseVersion}`),
+            `${locale}/${slug}/${filename} must link its release version`,
           );
         }
-
       }
     }
   }
 });
 
-test("existing screenshots are available to their platform editions", async () => {
+test("Windows screenshots cover every documented add-on that has a settings dialog", async () => {
   const macFamilies = await editionFamilies("en", "mac");
-  const windowsFamilies = await crossPlatformFamilies("en");
+  const windowsAddons = await windowsAddonInventory("en");
 
   for (const locale of LOCALES) {
     for (const slug of macFamilies) {
-      await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.png`));
-      await access(path.resolve(`public/screenshots/${locale}/plugins/${slug}.webp`));
+      await access(
+        path.resolve(`public/screenshots/${locale}/plugins/${slug}.png`),
+      );
+      await access(
+        path.resolve(`public/screenshots/${locale}/plugins/${slug}.webp`),
+      );
     }
   }
 
@@ -128,38 +172,24 @@ test("existing screenshots are available to their platform editions", async () =
     ),
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
-  const windowsEditions = await Promise.all(
-    windowsFamilies.map(async (slug) => {
-      const data = frontmatter(
-        await readFile(
-          path.resolve(`src/content/addon-editions/en/${slug}/windows.mdx`),
-          "utf8",
-        ),
-      );
-      return { slug, id: scalar(data, "id") };
-    }),
-  );
 
-  assert.equal(windowsScreenshotIds.size, 29);
+  assert.equal(windowsAddons.length, 36);
+  assert.equal(windowsScreenshotIds.size, 32);
   assert.deepEqual(
-    windowsEditions
+    windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
       .map(({ slug }) => slug)
       .sort(),
-    ["file-memory", "granite"],
+    ["file-memory", "granite", "sherpa-onnx", "whisper-cpp"],
   );
 
   for (const id of windowsScreenshotIds) {
     assert.ok(
-      windowsEditions.some((edition) => edition.id === id),
-      `Windows screenshot ${id} must belong to an edition`,
+      windowsAddons.some((addon) => addon.id === id),
+      `Windows screenshot ${id} must belong to a documented add-on`,
     );
-    await access(
-      path.resolve(`public/screenshots/windows/plugins/${id}.png`),
-    );
-    await access(
-      path.resolve(`public/screenshots/windows/plugins/${id}.webp`),
-    );
+    await access(path.resolve(`public/screenshots/windows/plugins/${id}.png`));
+    await access(path.resolve(`public/screenshots/windows/plugins/${id}.webp`));
   }
 });
 
@@ -202,13 +232,19 @@ test("every platform edition has a detailed guide source", async () => {
         "utf8",
       );
       const windowsEdition = await readFile(
-        path.resolve(`src/content/addon-editions/${locale}/${slug}/windows.mdx`),
+        path.resolve(
+          `src/content/addon-editions/${locale}/${slug}/windows.mdx`,
+        ),
         "utf8",
       );
       const macGuide = body(macEdition) || familyGuide;
       const windowsGuide = body(windowsEdition);
 
-      assert.match(macGuide, /^##\s+/m, `${locale}/${slug}/macOS needs a detailed guide`);
+      assert.match(
+        macGuide,
+        /^##\s+/m,
+        `${locale}/${slug}/macOS needs a detailed guide`,
+      );
       assert.match(
         macGuide,
         locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
@@ -217,7 +253,10 @@ test("every platform edition has a detailed guide source", async () => {
 
       for (const platform of PLATFORMS) {
         const capabilities = capabilityMap[slug][platform];
-        assert.ok(capabilities.length > 0, `${slug}/${platform} needs capabilities`);
+        assert.ok(
+          capabilities.length > 0,
+          `${slug}/${platform} needs capabilities`,
+        );
         for (const capability of capabilities) {
           assert.ok(
             validCapabilities.has(capability),
@@ -268,8 +307,13 @@ test("localized editions keep platform identity, source, and version in sync", a
         "id",
         "sourceUrl",
         "releaseUrl",
+        "releaseVersion",
       ]) {
-        assert.equal(scalar(de, key), scalar(en, key), `${slug}/${filename}: ${key}`);
+        assert.equal(
+          scalar(de, key),
+          scalar(en, key),
+          `${slug}/${filename}: ${key}`,
+        );
       }
     }
   }

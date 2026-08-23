@@ -4,7 +4,13 @@ test.describe("add-on platform editions", () => {
   test("cross-platform families group independent macOS and Windows editions", async ({
     page,
   }) => {
-    for (const slug of ["assemblyai", "cohere", "qwen3-asr", "obsidian"]) {
+    for (const slug of [
+      "assemblyai",
+      "cohere",
+      "qwen3-asr",
+      "obsidian",
+      "xai-grok",
+    ]) {
       await page.goto(`/de/addons/${slug}/`);
 
       await expect(page.getByTestId("addon-edition-family")).toBeVisible();
@@ -20,6 +26,30 @@ test.describe("add-on platform editions", () => {
       await expect(
         cards.filter({ hasText: "Windows" }).getByRole("link"),
       ).toHaveAttribute("href", `/de/addons/${slug}/windows`);
+    }
+  });
+
+  test("PR 405 screenshots cover cross-platform and Windows-only add-ons", async ({
+    page,
+  }) => {
+    await page.goto("/en/addons/xai-grok/windows/");
+    await expect(
+      page.locator('img[src="/screenshots/windows/plugins/com.typewhisper.xai.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        "Low-latency and text-normalization controls for speech output",
+      ),
+    ).toBeVisible();
+
+    for (const [slug, id] of [
+      ["authenticated-cli", "com.typewhisper.authenticated-cli"],
+      ["gemma-local", "com.typewhisper.gemma-local"],
+    ]) {
+      await page.goto(`/en/addons/${slug}/`);
+      await expect(
+        page.locator(`img[src="/screenshots/windows/plugins/${id}.png"]`),
+      ).toBeVisible();
     }
   });
 

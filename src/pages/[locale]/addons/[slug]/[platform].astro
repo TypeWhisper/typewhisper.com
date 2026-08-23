@@ -203,7 +203,7 @@ const screenshots = editionScreenshots.map((screenshot) => {
           )}
           {edition.releaseUrl && (
             <a href={edition.releaseUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-1.5 rounded-lg text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60">
-              <ExternalLink className="size-3.5" aria-hidden="true" /> {t(locale, "addons.editions.release")} {edition.version}
+              <ExternalLink className="size-3.5" aria-hidden="true" /> {t(locale, "addons.editions.release")} {edition.releaseVersion ?? edition.version}
             </a>
           )}
         </div>

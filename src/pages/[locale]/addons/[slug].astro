@@ -4,7 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import CommunityContent from "@/components/addons/community-content";
 import AddonEditionCard from "@/components/addons/addon-edition-card.astro";
-import { getAddonEditions } from "@/data/addon-editions";
+import {
+  getAddonEditions,
+  getDefaultAddonDetailScreenshot,
+} from "@/data/addon-editions";
 import {
   getPlugins,
   getPluginModule,
@@ -13,7 +16,7 @@ import {
   platformKeys,
   sourceKeys,
 } from "@/data/addons";
-import { t, locales } from "@/i18n/index";
+import { screenshotPath, t, locales, webpPath } from "@/i18n/index";
 import { canonicalPath } from "@/lib/locale-routes";
 import {
   Zap, Brain, Sparkles, Send, SquareKanban, Cpu, Radio,
@@ -46,6 +49,12 @@ const isCommunity = isCommunityPlugin(plugin);
 const showBrandLogo = plugin.brandLogo
   ? canRenderBrandLogo(plugin.brandLogo, "addon")
   : false;
+const defaultScreenshot = getDefaultAddonDetailScreenshot(plugin);
+const defaultScreenshotSrc = defaultScreenshot
+  ? defaultScreenshot.localized === false
+    ? defaultScreenshot.src
+    : screenshotPath(locale, defaultScreenshot.src)
+  : undefined;
 const sourceLinks = plugin.sourceUrls
   ? Object.entries(plugin.sourceUrls)
       .filter(([, url]) => Boolean(url))
@@ -186,17 +195,18 @@ const sourceLinks = plugin.sourceUrls
             </div>
           )}
 
-          <div class="mt-8">
-            <picture>
-              <source srcset={`/screenshots/${locale}/plugins/${plugin.slug}.webp`} type="image/webp" />
-              <img
-                src={`/screenshots/${locale}/plugins/${plugin.slug}.png`}
-                alt={`${plugin.name} ${t(locale, "addons.settingsAlt")}`}
-                class="rounded-2xl border shadow-lg"
-                onerror="this.parentElement.style.display='none'"
-              />
-            </picture>
-          </div>
+          {defaultScreenshotSrc && (
+            <div class="mt-8">
+              <picture>
+                <source srcset={webpPath(defaultScreenshotSrc)} type="image/webp" />
+                <img
+                  src={defaultScreenshotSrc}
+                  alt={`${plugin.name} ${t(locale, "addons.settingsAlt")}`}
+                  class="rounded-2xl border shadow-lg"
+                />
+              </picture>
+            </div>
+          )}
 
           {mod ? (
             <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none">

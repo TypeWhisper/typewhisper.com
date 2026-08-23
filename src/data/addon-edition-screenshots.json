@@ -1,6 +1,7 @@
 {
   "windows": [
     "com.typewhisper.assemblyai",
+    "com.typewhisper.authenticated-cli",
     "com.typewhisper.cerebras",
     "com.typewhisper.claude",
     "com.typewhisper.cloudflare-asr",
@@ -10,6 +11,7 @@
     "com.typewhisper.elevenlabs",
     "com.typewhisper.fireworks",
     "com.typewhisper.gemini",
+    "com.typewhisper.gemma-local",
     "com.typewhisper.gladia",
     "com.typewhisper.google-cloud-stt",
     "com.typewhisper.groq",
@@ -28,6 +30,7 @@
     "com.typewhisper.speechmatics",
     "com.typewhisper.supertonic-tts",
     "com.typewhisper.voxtral",
-    "com.typewhisper.webhook"
+    "com.typewhisper.webhook",
+    "com.typewhisper.xai"
   ]
 }
