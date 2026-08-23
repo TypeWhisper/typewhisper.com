@@ -1,19 +1,22 @@
 import { EngineComparisonTable } from "@/components/landing/engine-comparison-table";
-import { usePlatform } from "@/hooks/use-platform";
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 import { t, type Locale } from "@/i18n/index";
 
 function getSubtitle(locale: Locale, platform: string): string {
   switch (platform) {
     case "mac":
-    case "other":
       return t(locale, "engineComparison.subtitle.mac");
-    default:
+    case "ios":
+      return t(locale, "engineComparison.subtitle.ios");
+    case "windows":
       return t(locale, "engineComparison.subtitle.other");
+    default:
+      return t(locale, "engineComparison.subtitle.mac");
   }
 }
 
 export function EngineComparison({ locale = "en" }: { locale?: Locale }) {
-  const platform = usePlatform();
+  const platform = useSyncedLandingPlatform();
 
   return (
     <section className="bg-secondary py-20 sm:py-28">

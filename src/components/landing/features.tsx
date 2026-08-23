@@ -46,7 +46,7 @@ function FeatureCard({
 
 function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
   const screenshots = featureScreenshotsByPlatform[platform];
-  const keyPrefix = platform === "ios" ? "features.ios" : "features";
+  const keyPrefix = `features.${platform}`;
 
   return [
     {
@@ -82,7 +82,7 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
   const platform = useSyncedLandingPlatform();
   const features = getFeatures(locale, platform);
   const isIos = platform === "ios";
-  const keyPrefix = isIos ? "features.ios" : "features";
+  const keyPrefix = `features.${platform}`;
   const fullWidthFeatures = features.filter(
     (feature) => feature.span === "col-span-2",
   );

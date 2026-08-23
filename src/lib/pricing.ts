@@ -34,7 +34,7 @@ export const currencySymbol = "\u20AC";
 
 export const polarOrganizationUrl = "https://polar.sh/typewhisper";
 export const polarCustomerPortalUrl = "https://polar.sh/typewhisper/portal";
-export const salesEmail = "licensing@typewhisper.com";
+export const salesEmail = "hello@typewhisper.com";
 
 export const commercialTiers: CommercialTier[] = [
   {
