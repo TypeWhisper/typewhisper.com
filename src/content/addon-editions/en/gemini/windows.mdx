@@ -1,19 +1,22 @@
 ---
 familySlug: "gemini"
 platform: "windows"
-version: "1.1.0"
-description: "Google Gemini as an LLM provider for prompt actions and translations."
+version: "1.2.1"
+description: "Google Gemini and Gemma as LLM providers with a dynamic chat-model catalog for prompt workflows."
 id: "com.typewhisper.gemini"
+minAppVersion: "1.0.9"
 requirements:
-  - "TypeWhisper for Windows"
+  - "TypeWhisper 1.0.9 or newer"
   - "Windows 10 or newer"
 highlights:
-  - "LLM provider for workflow prompts"
+  - "Gemini and Gemma LLM models for workflow prompts"
+  - "Refreshable model catalog filtered to compatible chat models"
+  - "Built-in Gemini aliases when no catalog has been fetched"
   - "Support for translation requests"
   - "Support for parallel hedged LLM requests"
-  - "Processing through the respective cloud provider"
 configuration:
   - "Store and validate the API key in encrypted TypeWhisper for Windows settings"
+  - "Refresh the available Gemini and Gemma models, then choose a model for each workflow"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gemini"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.1.0
+releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.2.1
 ---

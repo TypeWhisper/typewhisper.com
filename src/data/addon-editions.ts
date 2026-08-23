@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/index";
-import type { PluginPlatform } from "@/data/addons";
+import type { Plugin, PluginPlatform } from "@/data/addons";
 import screenshotManifest from "@/data/addon-edition-screenshots.json";
 
 export interface AddonEditionScreenshot {
@@ -57,6 +57,19 @@ export const editionPlatformSlugs: Record<PluginPlatform, string> = {
 const platformOrder: PluginPlatform[] = ["mac", "windows", "ios"];
 const windowsScreenshotPluginIds = new Set(screenshotManifest.windows);
 
+function getWindowsAddonScreenshot(
+  pluginId?: string,
+): Pick<AddonEditionScreenshot, "src" | "localized"> | undefined {
+  if (!pluginId || !windowsScreenshotPluginIds.has(pluginId)) {
+    return undefined;
+  }
+
+  return {
+    src: `/screenshots/windows/plugins/${pluginId}.png`,
+    localized: false,
+  };
+}
+
 export function getDefaultAddonEditionScreenshot(
   edition: AddonEdition,
 ): Pick<AddonEditionScreenshot, "src" | "localized"> | undefined {
@@ -67,18 +80,24 @@ export function getDefaultAddonEditionScreenshot(
     };
   }
 
-  if (
-    edition.platform === "windows" &&
-    edition.id &&
-    windowsScreenshotPluginIds.has(edition.id)
-  ) {
-    return {
-      src: `/screenshots/windows/plugins/${edition.id}.png`,
-      localized: false,
-    };
+  if (edition.platform === "windows") {
+    return getWindowsAddonScreenshot(edition.id);
   }
 
   return undefined;
+}
+
+export function getDefaultAddonDetailScreenshot(
+  plugin: Pick<Plugin, "id" | "platforms" | "slug">,
+): Pick<AddonEditionScreenshot, "src" | "localized"> | undefined {
+  if (plugin.platforms.length === 1 && plugin.platforms[0] === "windows") {
+    return getWindowsAddonScreenshot(plugin.id);
+  }
+
+  return {
+    src: `/screenshots/plugins/${plugin.slug}.png`,
+    localized: true,
+  };
 }
 
 function getModules(locale: Locale) {

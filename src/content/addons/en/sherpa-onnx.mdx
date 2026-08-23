@@ -2,7 +2,7 @@
 slug: sherpa-onnx
 name: Local Models (sherpa-onnx)
 author: TypeWhisper
-version: 1.0.1
+version: 1.0.5
 icon: AudioLines
 description: Offline Windows transcription with sherpa-onnx models, including Parakeet and Canary.
 categories:
@@ -10,6 +10,7 @@ categories:
 platforms:
   - windows
 source: bundled
+id: com.typewhisper.sherpa-onnx
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
@@ -23,7 +24,9 @@ Local Models (sherpa-onnx) adds offline transcription to TypeWhisper for Windows
 
 - Offline transcription on Windows through sherpa-onnx
 - Downloadable model files from Hugging Face
-- CPU provider configuration
+- Automatic, CPU, or NVIDIA CUDA acceleration
+- Managed CUDA runtime installation with a safety probe and CPU fallback
+- Download, load, unload, and remove controls for local models
 - Parakeet model with broad language coverage
 - Canary model with English, German, French, and Spanish support
 - Translation support when the Canary model is selected
@@ -41,6 +44,7 @@ Local Models (sherpa-onnx) adds offline transcription to TypeWhisper for Windows
 - **Model** - Select either Parakeet TDT 0.6B or Canary 180M Flash.
 - **Download** - Downloads all required ONNX model files and token files.
 - **Language** - Canary supports `en`, `de`, `fr`, and `es`.
+- **Acceleration** - Use automatic selection, CPU, or NVIDIA CUDA. A changed runtime may require reloading the model.
 
 ## Setup
 
@@ -53,4 +57,5 @@ Local Models (sherpa-onnx) adds offline transcription to TypeWhisper for Windows
 
 - Parakeet is the recommended model for general offline transcription.
 - Canary is the option to use when you need translation support.
+- If the CUDA runtime cannot be loaded safely, TypeWhisper reports the reason and falls back to CPU.
 - The plugin stores model files under the plugin data directory in `Models/<model-id>/`.

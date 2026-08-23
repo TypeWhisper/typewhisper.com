@@ -2,7 +2,7 @@
 slug: sherpa-onnx
 name: Lokale Modelle (sherpa-onnx)
 author: TypeWhisper
-version: 1.0.1
+version: 1.0.5
 icon: AudioLines
 description: Offline-Transkription unter Windows mit sherpa-onnx-Modellen, inklusive Parakeet und Canary.
 categories:
@@ -10,6 +10,7 @@ categories:
 platforms:
   - windows
 source: bundled
+id: com.typewhisper.sherpa-onnx
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
@@ -23,7 +24,9 @@ Lokale Modelle (sherpa-onnx) ergänzt TypeWhisper unter Windows um Offline-Trans
 
 - Offline-Transkription unter Windows über sherpa-onnx
 - Herunterladbare Modelldateien von Hugging Face
-- CPU-Provider-Konfiguration
+- Automatische, CPU- oder NVIDIA-CUDA-Beschleunigung
+- Verwaltete CUDA-Runtime-Installation mit Sicherheitsprüfung und CPU-Fallback
+- Steuerelemente zum Herunterladen, Laden, Entladen und Entfernen lokaler Modelle
 - Parakeet-Modell mit breiter Sprachabdeckung
 - Canary-Modell mit Unterstützung für Englisch, Deutsch, Französisch und Spanisch
 - Übersetzungsunterstützung, wenn das Canary-Modell ausgewählt ist
@@ -41,6 +44,7 @@ Lokale Modelle (sherpa-onnx) ergänzt TypeWhisper unter Windows um Offline-Trans
 - **Modell** - Wähle Parakeet TDT 0.6B oder Canary 180M Flash.
 - **Download** - Lädt alle erforderlichen ONNX-Modelldateien und Token-Dateien herunter.
 - **Sprache** - Canary unterstützt `en`, `de`, `fr` und `es`.
+- **Beschleunigung** - Nutze die automatische Auswahl, CPU oder NVIDIA CUDA. Ein Runtime-Wechsel kann ein erneutes Laden des Modells erfordern.
 
 ## Einrichtung
 
@@ -53,4 +57,5 @@ Lokale Modelle (sherpa-onnx) ergänzt TypeWhisper unter Windows um Offline-Trans
 
 - Parakeet ist das empfohlene Modell für allgemeine Offline-Transkription.
 - Canary ist die Option, wenn du Übersetzungsunterstützung brauchst.
+- Kann die CUDA-Runtime nicht sicher geladen werden, zeigt TypeWhisper den Grund an und fällt auf die CPU zurück.
 - Das Plugin speichert Modelldateien im Plugin-Datenverzeichnis unter `Models/<model-id>/`.

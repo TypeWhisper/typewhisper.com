@@ -1,0 +1,61 @@
+---
+slug: authenticated-cli
+name: Authentifizierte Provider-CLIs
+author: TypeWhisper
+version: 1.0.0
+icon: Terminal
+description: Nutze bestehende Anmeldungen der Codex CLI und Claude Code CLI als isolierte LLM-Anbieter für Windows-Workflows.
+categories:
+  - llm
+platforms:
+  - windows
+source: bundled
+id: com.typewhisper.authenticated-cli
+minAppVersion: 1.0.9
+sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli
+sourceUrls:
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli
+---
+
+## Über
+
+Authentifizierte Provider-CLIs stellt eine bestehende Anmeldung der Codex CLI oder Claude Code CLI als LLM-Anbieter in TypeWhisper für Windows bereit. TypeWhisper ruft die installierte native CLI auf, ohne ihre Anmeldedaten zu importieren oder zu speichern.
+
+## Funktionen
+
+- Separate Anbieter für Codex CLI und Claude Code CLI in Prompt-Workflows
+- Automatische Erkennung nativer CLI-Installationen und Auswahl bei mehreren gefundenen Installationen
+- Prüfung von Anmeldung, Version und erforderlichen Sicherheitsfunktionen, bevor ein Anbieter verfügbar wird
+- Manuelle Statusaktualisierung und regelmäßige Prüfungen im Hintergrund
+- Provider-Standardmodell mit strukturierten Textergebnissen
+- Isolierte temporäre Arbeitsverzeichnisse, Zeitlimits und Größenlimits für Ein- und Ausgabe
+- Codex läuft sitzungslos in einer schreibgeschützten Sandbox; Freigaben, Tools, Webzugriff, Projektanweisungen, Memories und Multi-Agent-Funktionen sind deaktiviert
+- Claude Code läuft im sicheren Modus ohne Tools, MCP-Zugriff, Browserzugriff, Slash-Befehle oder Sitzungsspeicherung
+
+## Unterstützte CLIs
+
+| CLI | Windows-Programmdatei | Verfügbarkeit |
+| --- | --- | --- |
+| Codex CLI | `codex.exe` | Verfügbar, wenn sie installiert und angemeldet ist und die benötigten Sicherheitsoptionen unterstützt |
+| Claude Code CLI | `claude.exe` | Verfügbar, wenn sie installiert und angemeldet ist und die benötigten Sicherheitsoptionen unterstützt |
+| Antigravity CLI | `agy.exe` | Wird zur Statusanzeige aufgeführt, ist aber derzeit deaktiviert, weil die erforderlichen Isolationsfunktionen fehlen |
+
+## Konfiguration
+
+- **Status aktualisieren** - Prüft installierte CLIs, Versionen, Anmeldestatus und unterstützte Sicherheitsfunktionen.
+- **Installation auswählen** - Erscheint, wenn mehrere native Installationen gefunden wurden oder eine zuvor gewählte Programmdatei fehlt.
+- **Einrichtungsanleitung** - Öffnet die offizielle Einrichtungsdokumentation der jeweiligen CLI.
+
+## Einrichtung
+
+1. Installiere Codex CLI oder Claude Code CLI und melde dich im Terminal an.
+2. Öffne TypeWhisper Einstellungen > Integrationen und konfiguriere **Authentifizierte Provider-CLIs**.
+3. Aktualisiere den Status und wähle eine Installation aus, falls Windows mehrere findet.
+4. Warte, bis der Anbieter als **Bereit** angezeigt wird.
+5. Wähle **Codex CLI** oder **Claude Code CLI** als LLM-Anbieter in einem Workflow.
+
+## Hinweise
+
+- Unterstützt werden nur native `.exe`-Installationen.
+- Der jeweilige Anbieter verarbeitet Prompts weiterhin über seinen Cloud-Dienst. Dabei können eigene Tarif-, Nutzungslimit- und Datenschutzregeln gelten.
+- TypeWhisper lehnt abgemeldete, inkompatible, mehrdeutige oder nicht ausreichend isolierte CLI-Installationen ab, anstatt sie mit schwächeren Schutzvorkehrungen zu starten.
