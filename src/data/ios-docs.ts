@@ -101,7 +101,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/01-recording.webp",
+          path: "/screenshots/ios/01-recording.png",
           alt: "TypeWhisper recording with live transcription on iPhone",
           layout: "phone",
         },
@@ -176,7 +176,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
             "iOS keyboard extensions cannot capture microphone audio directly. The microphone button opens TypeWhisper, which records and transcribes, while the extension only exchanges the selected state and result through the shared app container.",
         },
         image: {
-          path: "/screenshots/ios/03-keyboard.webp",
+          path: "/screenshots/ios/03-keyboard.png",
           alt: "TypeWhisper voice keyboard in an iPhone text field",
           layout: "phone",
         },
@@ -257,7 +257,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/ipad/05-profiles.webp",
+          path: "/screenshots/ios/ipad/05-profiles.png",
           alt: "TypeWhisper profile settings on iPad",
           layout: "tablet",
         },
@@ -314,7 +314,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Append another recording, edit the result, or mark an Inbox item complete.",
         ],
         image: {
-          path: "/screenshots/ios/04-history.webp",
+          path: "/screenshots/ios/04-history.png",
           alt: "TypeWhisper History and Capture Inbox on iPhone",
           layout: "phone",
         },
@@ -326,7 +326,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "On iPad, the sidebar separates Inbox, all History, and device sources. Select an item to review it, fix a failed processing route, or mark it complete.",
         ],
         image: {
-          path: "/screenshots/ios/ipad/03-inbox.webp",
+          path: "/screenshots/ios/ipad/03-inbox.png",
           alt: "TypeWhisper Capture Inbox and device filters on iPad",
           layout: "tablet",
         },
@@ -362,7 +362,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/06-dictionary.webp",
+          path: "/screenshots/ios/06-dictionary.png",
           alt: "TypeWhisper dictionary and correction learning on iPhone",
           layout: "phone",
         },
@@ -459,7 +459,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
       {
         title: "See the Watch flow",
         image: {
-          path: "/screenshots/ios/watch/02-recording.webp",
+          path: "/screenshots/ios/watch/02-recording.png",
           alt: "TypeWhisper recording in progress on Apple Watch",
           layout: "wide",
         },
@@ -654,7 +654,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/01-recording.webp",
+          path: "/screenshots/ios/01-recording.png",
           alt: "TypeWhisper-Aufnahme mit Live-Transkription auf dem iPhone",
           layout: "phone",
         },
@@ -729,7 +729,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
             "iOS-Tastaturerweiterungen dürfen Mikrofon-Audio nicht direkt aufnehmen. Die Taste öffnet TypeWhisper für Aufnahme und Transkription; die Erweiterung tauscht nur gewählten Zustand und Ergebnis über den gemeinsamen App-Container aus.",
         },
         image: {
-          path: "/screenshots/ios/03-keyboard.webp",
+          path: "/screenshots/ios/03-keyboard.png",
           alt: "TypeWhisper-Diktier-Tastatur in einem iPhone-Textfeld",
           layout: "phone",
         },
@@ -810,7 +810,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/ipad/05-profiles.webp",
+          path: "/screenshots/ios/ipad/05-profiles.png",
           alt: "TypeWhisper-Profileinstellungen auf dem iPad",
           layout: "tablet",
         },
@@ -867,7 +867,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Eine weitere Aufnahme anhängen, den Text bearbeiten oder einen Inbox-Eintrag abschließen.",
         ],
         image: {
-          path: "/screenshots/ios/04-history.webp",
+          path: "/screenshots/ios/04-history.png",
           alt: "TypeWhisper-Verlauf und Capture Inbox auf dem iPhone",
           layout: "phone",
         },
@@ -879,7 +879,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Auf dem iPad trennt die Seitenleiste Inbox, gesamten Verlauf und Gerätequellen. Wähle einen Eintrag, prüfe ihn, korrigiere eine fehlgeschlagene Verarbeitung oder markiere ihn als erledigt.",
         ],
         image: {
-          path: "/screenshots/ios/ipad/03-inbox.webp",
+          path: "/screenshots/ios/ipad/03-inbox.png",
           alt: "TypeWhisper Capture Inbox und Gerätefilter auf dem iPad",
           layout: "tablet",
         },
@@ -915,7 +915,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         image: {
-          path: "/screenshots/ios/06-dictionary.webp",
+          path: "/screenshots/ios/06-dictionary.png",
           alt: "TypeWhisper-Wörterbuch und Korrektur-Lernen auf dem iPhone",
           layout: "phone",
         },
@@ -1012,7 +1012,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Watch-Ablauf ansehen",
         image: {
-          path: "/screenshots/ios/watch/02-recording.webp",
+          path: "/screenshots/ios/watch/02-recording.png",
           alt: "Laufende TypeWhisper-Aufnahme auf der Apple Watch",
           layout: "wide",
         },

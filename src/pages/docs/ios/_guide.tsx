@@ -102,16 +102,18 @@ export default function DocsIOSGuide({
                 )}
 
                 {section.code && (
-                  <div className="mt-6 flex flex-wrap gap-2" aria-label={isDe ? "Snippet-Platzhalter" : "Snippet placeholders"}>
+                  <ul
+                    className="mt-6 flex list-none flex-wrap gap-2 p-0"
+                    aria-label={isDe ? "Snippet-Platzhalter" : "Snippet placeholders"}
+                  >
                     {section.code.map((entry) => (
-                      <code
-                        key={entry}
-                        className="rounded-md border border-border bg-card px-2.5 py-1.5 font-mono text-xs text-foreground"
-                      >
-                        {entry}
-                      </code>
+                      <li key={entry}>
+                        <code className="block rounded-md border border-border bg-card px-2.5 py-1.5 font-mono text-xs text-foreground">
+                          {entry}
+                        </code>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
 
                 {section.callout && (

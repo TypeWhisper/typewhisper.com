@@ -35,7 +35,29 @@ const phoneScreenshots = [
   },
 ] as const;
 
-const watchScreenshots = ["01-ready.webp", "02-recording.webp", "03-recent.webp"] as const;
+const watchScreenshots = [
+  {
+    filename: "01-ready.png",
+    alt: {
+      en: "TypeWhisper ready to record on Apple Watch",
+      de: "TypeWhisper aufnahmebereit auf der Apple Watch",
+    },
+  },
+  {
+    filename: "02-recording.png",
+    alt: {
+      en: "TypeWhisper recording in progress on Apple Watch",
+      de: "Laufende TypeWhisper-Aufnahme auf der Apple Watch",
+    },
+  },
+  {
+    filename: "03-recent.png",
+    alt: {
+      en: "Recent TypeWhisper recordings on Apple Watch",
+      de: "Letzte TypeWhisper-Aufnahmen auf der Apple Watch",
+    },
+  },
+] as const;
 
 export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
@@ -171,7 +193,7 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
         </div>
         <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-xl shadow-black/10">
           <Screenshot
-            src={screenshotPath(locale, "/screenshots/ios/ipad/03-inbox.webp")}
+            src={screenshotPath(locale, "/screenshots/ios/ipad/03-inbox.png")}
             alt={isDe ? "TypeWhisper Capture Inbox auf dem iPad" : "TypeWhisper Capture Inbox on iPad"}
             className="w-full rounded-xl"
             loading="lazy"
@@ -189,11 +211,11 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
             : "Start a focused recording on Apple Watch, transfer it to iPhone, and review the result in Capture Inbox."}
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          {watchScreenshots.map((filename, index) => (
-            <div key={filename} className="overflow-hidden rounded-2xl border border-border bg-card p-1.5">
+          {watchScreenshots.map((screenshot) => (
+            <div key={screenshot.filename} className="overflow-hidden rounded-2xl border border-border bg-card p-1.5">
               <Screenshot
-                src={screenshotPath(locale, `/screenshots/ios/watch/${filename}`)}
-                alt={isDe ? `TypeWhisper Apple Watch Ansicht ${index + 1}` : `TypeWhisper Apple Watch view ${index + 1}`}
+                src={screenshotPath(locale, `/screenshots/ios/watch/${screenshot.filename}`)}
+                alt={screenshot.alt[locale]}
                 className="w-full rounded-xl"
                 loading="lazy"
               />

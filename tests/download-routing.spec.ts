@@ -433,9 +433,12 @@ test.describe("iOS coming-soon media", () => {
       }
 
       for (const name of ["01-ready", "02-recording", "03-recent"]) {
-        const path = `/screenshots/${locale}/ios/watch/${name}.webp`;
-        await expect(page.locator(`img[src="${path}"]`)).toBeVisible();
-        expect((await request.get(path)).ok()).toBeTruthy();
+        const pngPath = `/screenshots/${locale}/ios/watch/${name}.png`;
+        const webpPath = `/screenshots/${locale}/ios/watch/${name}.webp`;
+        await expect(page.locator(`img[src="${pngPath}"]`)).toBeVisible();
+        await expect(page.locator(`source[srcset="${webpPath}"]`)).toHaveCount(1);
+        expect((await request.get(pngPath)).ok()).toBeTruthy();
+        expect((await request.get(webpPath)).ok()).toBeTruthy();
       }
 
       const previewPath = `/ios-app-preview-${locale}.mp4`;

@@ -1,15 +1,11 @@
 import { expect, test } from "@playwright/test";
+import { getIosDocTitle, iosDocSlugs } from "../src/data/ios-docs";
 
-const guidePages = [
-  ["installation", "Installation and first setup", "Installation und erste Einrichtung"],
-  ["dictation-and-keyboard", "Dictation and the voice keyboard", "Diktat und Diktier-Tastatur"],
-  ["profiles-and-processing", "Profiles, engines, and processing", "Profile, Engines und Verarbeitung"],
-  ["files-history-and-inbox", "Files, History, and Capture Inbox", "Dateien, Verlauf und Capture Inbox"],
-  ["dictionary-and-snippets", "Dictionary and snippets", "Wörterbuch und Snippets"],
-  ["watch-and-shortcuts", "Apple Watch, Shortcuts, widgets, and Action Button", "Apple Watch, Kurzbefehle, Widgets und Aktionstaste"],
-  ["privacy-and-premium", "Privacy, cloud providers, and Premium", "Datenschutz, Cloud-Anbieter und Premium"],
-  ["troubleshooting", "Troubleshooting iPhone, iPad, keyboard, and Watch", "Fehlerbehebung für iPhone, iPad, Tastatur und Watch"],
-] as const;
+const guidePages = iosDocSlugs.map((slug) => [
+  slug,
+  getIosDocTitle("en", slug),
+  getIosDocTitle("de", slug),
+] as const);
 
 test.describe("detailed iOS documentation", () => {
   test("overview links every guide and uses current Studio media", async ({ page }) => {
@@ -23,8 +19,11 @@ test.describe("detailed iOS documentation", () => {
 
     await expect(page.locator('source[src="/ios-app-preview-en.mp4"]')).toHaveCount(1);
     await expect(
-      page.locator('img[src="/screenshots/en/ios/ipad/03-inbox.webp"]'),
+      page.locator('img[src="/screenshots/en/ios/ipad/03-inbox.png"]'),
     ).toBeVisible();
+    await expect(
+      page.locator('source[srcset="/screenshots/en/ios/ipad/03-inbox.webp"]'),
+    ).toHaveCount(1);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(0);
     await expect(page.locator('a[href*="apps.apple.com"]')).toHaveCount(0);
   });
@@ -58,7 +57,7 @@ test.describe("detailed iOS documentation", () => {
   test("Inbox, Shortcuts, privacy, and Premium behavior are documented", async ({ page }) => {
     await page.goto("/en/docs/ios/files-history-and-inbox");
     await expect(page.getByText(/Quick Dictations, Apple Watch recordings, calendar drafts/)).toBeVisible();
-    await expect(page.locator('img[src="/screenshots/en/ios/ipad/03-inbox.webp"]')).toBeVisible();
+    await expect(page.locator('img[src="/screenshots/en/ios/ipad/03-inbox.png"]')).toBeVisible();
 
     await page.goto("/en/docs/ios/watch-and-shortcuts");
     await expect(page.getByText(/Get Last Transcription returns/)).toBeVisible();
@@ -68,6 +67,14 @@ test.describe("detailed iOS documentation", () => {
     await expect(page.getByText(/Normal keyboard typing works without Full Access/)).toBeVisible();
     await expect(page.getByText(/History and Inbox text and metadata/)).toBeVisible();
     await expect(page.getByText(/does not pass through the TypeWhisper entitlement service/)).toBeVisible();
+  });
+
+  test("snippet placeholders expose localized list semantics", async ({ page }) => {
+    await page.goto("/en/docs/ios/dictionary-and-snippets");
+
+    const placeholders = page.getByRole("list", { name: "Snippet placeholders" });
+    await expect(placeholders).toBeVisible();
+    await expect(placeholders.getByRole("listitem")).toHaveCount(5);
   });
 
   test("iOS docs do not overflow a phone viewport", async ({ page }) => {

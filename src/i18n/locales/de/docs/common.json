@@ -32,5 +32,7 @@
   "docs.win.release.troubleshootingDescription": "Lösungen für typische Probleme bei Installation, Aufnahme, Einfügen und Automatisierung unter Windows.",
   "docs.ios.title": "iOS",
   "docs.ios.badge": "In Vorbereitung",
-  "docs.ios.description": "Ausführliche Anleitung für iPhone, iPad und Apple Watch. Version 1.0 ist noch nicht öffentlich im App Store verfügbar."
+  "docs.ios.description": "Ausführliche Anleitung für iPhone, iPad und Apple Watch. Version 1.0 ist noch nicht öffentlich im App Store verfügbar.",
+  "docs.ios.release.title": "iOS 1.0 wird noch für den App Store vorbereitet.",
+  "docs.ios.release.description": "Es gibt derzeit keinen öffentlichen Download und keinen bestätigten Veröffentlichungstermin."
 }
