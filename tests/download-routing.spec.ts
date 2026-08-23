@@ -354,9 +354,25 @@ test("public iOS pages expose the stable App Store release without beta links", 
   await expect(
     page.getByRole("link", { name: "Email iOS support" }),
   ).toHaveAttribute("href", "mailto:hello@typewhisper.com");
-  await expect(
-    page.getByRole("link", { name: "Open the App Store" }),
-  ).toHaveAttribute("href", IOS_APP_STORE_URL);
+  const supportAppStoreLink = page.getByRole("link", {
+    name: "Open the App Store",
+  });
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "href",
+    IOS_APP_STORE_URL,
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-download-target",
+    "ios_app_store",
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-download-version",
+    "1.0",
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-tracking-placement",
+    "support",
+  );
 });
 
 test.describe("iOS App Store media", () => {
