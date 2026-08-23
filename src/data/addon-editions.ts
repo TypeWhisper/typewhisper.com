@@ -23,6 +23,7 @@ export interface AddonEdition {
   configuration?: string[];
   sourceUrl?: string;
   releaseUrl?: string;
+  releaseVersion?: string;
   screenshots?: AddonEditionScreenshot[];
 }
 
@@ -160,7 +161,7 @@ export function getAddonEditionModule(
 export function getEditionPlatformFromSlug(
   platformSlug: string,
 ): PluginPlatform | undefined {
-  return (Object.entries(editionPlatformSlugs) as [PluginPlatform, string][]).find(
-    ([, slug]) => slug === platformSlug,
-  )?.[0];
+  return (
+    Object.entries(editionPlatformSlugs) as [PluginPlatform, string][]
+  ).find(([, slug]) => slug === platformSlug)?.[0];
 }
