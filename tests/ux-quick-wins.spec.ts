@@ -184,9 +184,16 @@ test.describe("addons search", () => {
       await expect(
         page.getByRole("heading", { level: 1, name: "Filler Words" }),
       ).toBeVisible();
-      await expect(page.getByText("macOS").first()).toBeVisible();
-      await expect(page.getByText("Windows").first()).toBeVisible();
-      await expect(page.getByTestId("addon-edition-card")).toHaveCount(2);
+      const editionCards = page.getByTestId("addon-edition-card");
+      await expect(editionCards).toHaveCount(2);
+      await expect(
+        page.locator('[data-testid="addon-edition-card"][data-platform="mac"]'),
+      ).toBeVisible();
+      await expect(
+        page.locator(
+          '[data-testid="addon-edition-card"][data-platform="windows"]',
+        ),
+      ).toBeVisible();
 
       await page.goto(`/${locale.code}/addons/filler-words/macos`);
       await expect(
