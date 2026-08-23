@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { discordUrl } from "@/lib/platform-download";
+import { discordUrl, iosAppStoreUrl } from "@/lib/platform-download";
 
 interface Props {
   locale: Locale;
@@ -57,8 +57,8 @@ const { locale } = Astro.props;
           {t(locale, "support.ios.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href="https://github.com/TypeWhisper/typewhisper-ios/issues" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.reportIssue")}</a>
-          <span class="font-medium text-muted-foreground">{t(locale, "support.ios.releasePending")}</span>
+          <a href="mailto:hello@typewhisper.com" class="text-primary hover:underline">{t(locale, "support.ios.contact")}</a>
+          <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{t(locale, "support.ios.appStore")}</a>
         </div>
       </section>
     </div>

@@ -6,7 +6,9 @@ export const campaignParameterNames = [
 ] as const;
 
 export type CampaignParameterName = (typeof campaignParameterNames)[number];
-export type CampaignAttribution = Partial<Record<CampaignParameterName, string>>;
+export type CampaignAttribution = Partial<
+  Record<CampaignParameterName, string>
+>;
 
 export type DownloadTarget =
   | "mac_dmg"
@@ -15,7 +17,8 @@ export type DownloadTarget =
   | "windows_github_installer"
   | "windows_github_installer_arm64"
   | "windows_github_releases"
-  | "windows_store";
+  | "windows_store"
+  | "ios_app_store";
 
 export type TrackingPlacement =
   | "business"
@@ -50,7 +53,9 @@ function normalizedCampaignValue(value: string | null): string | undefined {
   return normalized.slice(0, maximumCampaignValueLength);
 }
 
-export function campaignAttributionFromSearch(search: string): CampaignAttribution {
+export function campaignAttributionFromSearch(
+  search: string,
+): CampaignAttribution {
   const params = new URLSearchParams(search);
   const attribution: CampaignAttribution = {};
 
@@ -140,7 +145,10 @@ declare global {
   }
 }
 
-function sendPlausibleEvent(eventName: PlausibleEventName, props: PlausibleProps) {
+function sendPlausibleEvent(
+  eventName: PlausibleEventName,
+  props: PlausibleProps,
+) {
   try {
     window.plausible?.(eventName, { props });
   } catch {
@@ -150,7 +158,10 @@ function sendPlausibleEvent(eventName: PlausibleEventName, props: PlausibleProps
 
 export function initializeAttributionTracking(): void {
   try {
-    captureInitialCampaignAttribution(window.location.search, window.sessionStorage);
+    captureInitialCampaignAttribution(
+      window.location.search,
+      window.sessionStorage,
+    );
   } catch {
     // Session storage can be unavailable in hardened browser contexts.
   }

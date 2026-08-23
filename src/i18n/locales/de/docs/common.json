@@ -1,6 +1,6 @@
 {
   "docs.title": "Dokumentation",
-  "docs.subtitle": "Wähle deine Plattform für vollständige Installations-, Bedienungs- und Fehlerbehebungsanleitungen. macOS 1.6 und Windows 1.0.8 sind stabil; iOS 1.0 wird für den App Store vorbereitet.",
+  "docs.subtitle": "Wähle deine Plattform für vollständige Installations-, Bedienungs- und Fehlerbehebungsanleitungen zu den stabilen Releases macOS 1.6, Windows 1.0.8 und iOS 1.0.",
   "docs.allPlatforms": "Alle Plattformen",
   "docs.sidebar.overview": "Übersicht",
   "docs.sidebar.installation": "Installation",
@@ -31,8 +31,8 @@
   "docs.win.release.cliDescription": "Das optionale Windows-CLI nutzt die lokale HTTP API.",
   "docs.win.release.troubleshootingDescription": "Lösungen für typische Probleme bei Installation, Aufnahme, Einfügen und Automatisierung unter Windows.",
   "docs.ios.title": "iOS",
-  "docs.ios.badge": "In Vorbereitung",
-  "docs.ios.description": "Ausführliche Anleitung für iPhone, iPad und Apple Watch. Version 1.0 ist noch nicht öffentlich im App Store verfügbar.",
-  "docs.ios.release.title": "iOS 1.0 wird noch für den App Store vorbereitet.",
-  "docs.ios.release.description": "Es gibt derzeit keinen öffentlichen Download und keinen bestätigten Veröffentlichungstermin."
+  "docs.ios.badge": "1.0 Stabil",
+  "docs.ios.description": "Ausführliche Anleitung für die stabile Edition auf iPhone, iPad und Apple Watch.",
+  "docs.ios.release.title": "iOS 1.0 ist im App Store verfügbar.",
+  "docs.ios.release.description": "Lade TypeWhisper für iPhone und iPad. Die Apple-Watch-App ist enthalten."
 }

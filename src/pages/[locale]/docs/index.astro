@@ -17,8 +17,8 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const metaDescription = locale === "de"
-  ? "TypeWhisper-Dokumentation für macOS 1.6, Windows 1.0.8 und die in Vorbereitung befindliche iOS-Version 1.0."
-  : "TypeWhisper documentation for macOS 1.6, Windows 1.0.8, and the iOS 1.0 release currently in preparation.";
+  ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS 1.6, Windows 1.0.8 und iOS 1.0."
+  : "TypeWhisper documentation for the stable macOS 1.6, Windows 1.0.8, and iOS 1.0 releases.";
 ---
 <DocsLayout
   title={`${t(locale, "docs.title")} - TypeWhisper`}

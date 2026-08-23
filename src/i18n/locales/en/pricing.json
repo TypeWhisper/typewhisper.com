@@ -37,7 +37,7 @@
   "pricing.personal.price": "0 EUR",
   "pricing.personal.priceNote": "GPLv3 license. Free to install and run, including internal use.",
   "pricing.personal.feature.allFeatures": "Core dictation, local engines, workflows, add-ons, history, snippets, and APIs",
-  "pricing.personal.feature.allPlatforms": "macOS, Windows, iOS in preparation",
+  "pricing.personal.feature.allPlatforms": "macOS, Windows, and iOS",
   "pricing.personal.feature.local": "Local-first, no account required",
   "pricing.personal.feature.community": "Community support on Discord",
   "pricing.personal.feature.source": "Full source code on GitHub",

@@ -6,8 +6,10 @@ export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
-const windowsStoreProductUrl =
-  "https://apps.microsoft.com/detail/9pf42zcr0jr0";
+export const iosAppStoreUrl =
+  "https://apps.apple.com/app/typewhisper/id6759319267";
+export const iosVersion = "1.0";
+const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 const windowsStoreCampaignId = "DevShareMCLPCS";
 
 // Direct asset URLs for the latest stable release. Resolved at build time
@@ -16,8 +18,7 @@ const windowsStoreCampaignId = "DevShareMCLPCS";
 export const macDmgUrl: string = downloads.mac.url;
 export const windowsSetupUrl: string = downloads.windows.url;
 
-export const macGitHubUrl =
-  "https://github.com/TypeWhisper/typewhisper-mac";
+export const macGitHubUrl = "https://github.com/TypeWhisper/typewhisper-mac";
 export const windowsGitHubUrl =
   "https://github.com/TypeWhisper/typewhisper-win";
 export const orgGitHubUrl = "https://github.com/TypeWhisper";
@@ -43,8 +44,7 @@ interface PendingPlatformDownloadTarget {
 }
 
 export type PlatformDownloadTarget =
-  | AvailablePlatformDownloadTarget
-  | PendingPlatformDownloadTarget;
+  AvailablePlatformDownloadTarget | PendingPlatformDownloadTarget;
 
 export function getWindowsStoreUrl(locale: Locale): string {
   const params = new URLSearchParams({
@@ -72,10 +72,7 @@ export function detectPlatformFromUserAgent(userAgent: string): Platform {
     return "ios";
   }
 
-  if (
-    normalized.includes("macintosh") ||
-    normalized.includes("mac os x")
-  ) {
+  if (normalized.includes("macintosh") || normalized.includes("mac os x")) {
     return "mac";
   }
 
@@ -108,9 +105,13 @@ export function getPlatformDownloadTarget(
         };
       case "ios":
         return {
-          available: false,
+          available: true,
+          href: iosAppStoreUrl,
           label: t(locale, "platforms.ios.download"),
           platform,
+          target: "ios_app_store",
+          version: iosVersion,
+          opensNewTab: true,
         };
       case "mac":
       case "other":
@@ -139,9 +140,13 @@ export function getPlatformDownloadTarget(
       };
     case "ios":
       return {
-        available: false,
+        available: true,
+        href: iosAppStoreUrl,
         label: t(locale, "nav.downloadIos"),
         platform,
+        target: "ios_app_store",
+        version: iosVersion,
+        opensNewTab: true,
       };
     case "mac":
       return {

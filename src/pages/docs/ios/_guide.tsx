@@ -6,6 +6,7 @@ import {
   type IosDocSlug,
 } from "@/data/ios-docs";
 import { localePath, screenshotPath, type Locale } from "@/i18n/index";
+import { iosAppStoreUrl, iosVersion } from "@/lib/platform-download";
 
 function imageClass(layout: "phone" | "tablet" | "wide" = "wide") {
   if (layout === "phone") {
@@ -42,7 +43,20 @@ export default function DocsIOSGuide({
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-muted-foreground">
           <span>iOS / iPadOS 18+</span>
           <span>watchOS 11+</span>
-          <span>{isDe ? "Version 1.0 in Vorbereitung" : "Version 1.0 in preparation"}</span>
+          <span>{isDe ? "Version 1.0 stabil" : "Version 1.0 stable"}</span>
+          <a
+            href={iosAppStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-download-social-trigger
+            data-download-platform="ios"
+            data-download-target="ios_app_store"
+            data-download-version={iosVersion}
+            data-tracking-placement="docs"
+            className="text-primary hover:underline"
+          >
+            {isDe ? "App Store öffnen" : "Open the App Store"}
+          </a>
         </div>
       </header>
 
