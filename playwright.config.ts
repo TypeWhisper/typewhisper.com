@@ -1,6 +1,25 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const testPort = process.env.PLAYWRIGHT_PORT ?? "4321";
+export function parsePlaywrightPort(value: string | undefined): number {
+  const configuredValue = value ?? "4321";
+
+  if (!/^\d+$/.test(configuredValue)) {
+    throw new Error(
+      "PLAYWRIGHT_PORT must be an integer between 1 and 65535.",
+    );
+  }
+
+  const port = Number(configuredValue);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error(
+      "PLAYWRIGHT_PORT must be an integer between 1 and 65535.",
+    );
+  }
+
+  return port;
+}
+
+const testPort = parsePlaywrightPort(process.env.PLAYWRIGHT_PORT);
 const testBaseURL = `http://127.0.0.1:${testPort}`;
 
 export default defineConfig({
