@@ -7,13 +7,16 @@ const LOCALES = ["de", "en"];
 const PLATFORMS = ["mac", "windows"];
 
 function frontmatter(content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  const match = content.replace(/\r\n/g, "\n").match(/^---\n([\s\S]*?)\n---/);
   assert.ok(match, "expected MDX frontmatter");
   return match[1];
 }
 
 function body(content) {
-  return content.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
+  return content
+    .replace(/\r\n/g, "\n")
+    .replace(/^---\n[\s\S]*?\n---\n?/, "")
+    .trim();
 }
 
 function scalar(data, key) {
@@ -69,7 +72,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 31);
+  assert.equal(deFamilies.length, 32);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -140,7 +143,7 @@ test("existing screenshots are available to their platform editions", async () =
     }),
   );
 
-  assert.equal(windowsScreenshotIds.size, 29);
+  assert.equal(windowsScreenshotIds.size, 30);
   assert.deepEqual(
     windowsEditions
       .filter(({ id }) => !windowsScreenshotIds.has(id))

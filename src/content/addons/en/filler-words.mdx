@@ -2,27 +2,26 @@
 slug: filler-words
 name: Filler Words
 author: TypeWhisper
-version: 1.0.0
 icon: Captions
 description: Remove configurable filler words from transcriptions before they are inserted.
 categories:
   - post-processing
 platforms:
   - mac
+  - windows
 source: bundled
 id: com.typewhisper.filler-words
-minAppVersion: 1.0.0
-principalClass: FillerWordsPlugin
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/FillerWordsPlugin
 sourceUrls:
   mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/FillerWordsPlugin
+  windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.FillerWords
 ---
 
 ## About
 
 Filler Words removes configurable filler words from dictated text after transcription and before the final text is inserted. It is useful for cleaning up spontaneous speech without sending text to an external service or writing a custom script.
 
-The plugin matches words case-insensitively, respects word boundaries, and can remove adjacent punctuation around filler words such as "um," or "uh." The built-in defaults cover common English and German fillers.
+The plugin matches words case-insensitively, respects word boundaries, and can remove adjacent punctuation around filler words such as "um," or "uh." The built-in defaults cover common English, German, and Japanese fillers.
 
 ## Features
 
@@ -48,12 +47,26 @@ um
 umm
 äh
 ähm
+えっと
+えーっと
+ええと
+えーと
+えと
+なんか
+まぁ
+まあ
+あのー
+あのぉ
+そのー
+そのぉ
+うーん
+うーむ
 ```
 
 ## Configuration
 
 - **Filler words** - One word per line. Commas and semicolons are also accepted.
-- **Reset Defaults** - Restores the built-in English and German filler word list.
+- **Reset Defaults** - Restores the built-in English, German, and Japanese filler word list.
 
 ## Setup
 
