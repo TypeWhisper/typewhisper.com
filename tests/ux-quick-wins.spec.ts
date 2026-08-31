@@ -60,6 +60,39 @@ test.describe("docs platform logos", () => {
     await expect(page.locator('[data-platform-logo="macos"]').first()).toBeVisible();
     await expect(page.locator('[data-platform-logo="ios"]').first()).toBeVisible();
   });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} docs release badges include platform versions`, async ({
+      page,
+    }) => {
+      const windowsBadge = locale === "de" ? "1.0 Stabil" : "1.0 Stable";
+
+      await page.goto(`/${locale}/docs`);
+      await expect(page.locator("main")).toContainText("Windows 1.0.9");
+      await expect(
+        page.locator(`a[href="/${locale}/docs/mac"]`).getByText("1.6", {
+          exact: true,
+        }),
+      ).toBeVisible();
+      await expect(
+        page
+          .locator(`a[href="/${locale}/docs/windows"]`)
+          .getByText(windowsBadge, { exact: true }),
+      ).toBeVisible();
+      await expect(
+        page
+          .locator(`a[href="/${locale}/docs/ios"]`)
+          .getByText(locale === "de" ? "1.0 Stabil" : "1.0 Stable", {
+            exact: true,
+          }),
+      ).toBeVisible();
+
+      await page.goto(`/${locale}/docs/windows`);
+      await expect(
+        page.getByText(windowsBadge, { exact: true }).last(),
+      ).toBeVisible();
+    });
+  }
 });
 
 test.describe("brand logos", () => {

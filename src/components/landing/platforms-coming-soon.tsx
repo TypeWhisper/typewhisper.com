@@ -67,7 +67,7 @@ function getPlatforms(locale: Locale): PlatformInfo[] {
       description: t(locale, "platforms.ios.description"),
       status: t(locale, "platforms.ios.status"),
       statusClassName:
-        "bg-amber-500/10 text-amber-700 dark:text-amber-300",
+        "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
       download: getPlatformDownloadTarget("ios", locale, "landing"),
       docsPath: "/docs/ios",
       screenshot: screenshotPath(locale, "/screenshots/ios/04-history.webp"),
@@ -144,7 +144,9 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
                       <Button size="pill" asChild>
                         <a
                           href={item.download.href}
-                          target={item.download.opensNewTab ? "_blank" : undefined}
+                          target={
+                            item.download.opensNewTab ? "_blank" : undefined
+                          }
                           rel={
                             item.download.opensNewTab
                               ? "noopener noreferrer"

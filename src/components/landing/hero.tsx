@@ -9,7 +9,7 @@ import {
   IOSLogo,
 } from "@/components/ui/platform-logos";
 import { HeroDemo } from "@/components/landing/hero-demo";
-import { getPlatformDownloadTarget } from "@/lib/platform-download";
+import { getPlatformDownloadTarget, iosVersion } from "@/lib/platform-download";
 import {
   useLandingPlatformSelection,
   type LandingPlatform,
@@ -37,11 +37,10 @@ function shortVersion(version: string | null | undefined): string | null {
   return match ? `${match[1]}.${match[2]}` : null;
 }
 
-// iOS is not public yet, so there is no public version to advertise.
 const versionByPlatform: Record<HeroPlatform, string | null> = {
   mac: shortVersion(downloads.mac.version),
   windows: shortVersion(downloads.windows.version),
-  ios: null,
+  ios: shortVersion(iosVersion),
 };
 
 const logoByPlatform: Record<
@@ -95,7 +94,9 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             {versionByPlatform[selectedPlatform]
               ? ` ${versionByPlatform[selectedPlatform]}`
               : ""}
-            <span className="mx-2 text-muted-foreground/60" aria-hidden="true">·</span>
+            <span className="mx-2 text-muted-foreground/60" aria-hidden="true">
+              ·
+            </span>
             {t(locale, `hero.eyebrow.${selectedPlatform}`)}
           </p>
 

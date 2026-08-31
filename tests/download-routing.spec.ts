@@ -1,6 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
+const IOS_APP_STORE_URL_EN =
+  "https://apps.apple.com/us/app/typewhisper-app/id6759319267";
+const IOS_APP_STORE_URL_DE =
+  "https://apps.apple.com/de/app/typewhisper-app/id6759319267";
+
 type GeneratedDownloads = {
   mac: { url: string };
   windows: { url: string };
@@ -52,7 +57,9 @@ const landingScenarios: LandingScenario[] = [
     name: "iOS",
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Mobile/15E148 Safari/604.1",
-    expectedLabel: "Not public yet",
+    expectedLabel: "Download on the App Store",
+    expectedHref: IOS_APP_STORE_URL_EN,
+    opensNewTab: true,
   },
 ];
 
@@ -285,8 +292,8 @@ test.describe("release status download routing", () => {
       page.getByRole("link", { name: "Download GitHub installer" }),
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
-      page.getByText("Not in the App Store yet", { exact: true }),
-    ).toBeVisible();
+      page.getByRole("link", { name: "Download on the App Store" }),
+    ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
     );
@@ -320,15 +327,15 @@ test.describe("release status download routing", () => {
       page.getByRole("link", { name: "GitHub-Installer herunterladen" }),
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
-      page.getByText("Noch nicht im App Store", { exact: true }),
-    ).toBeVisible();
+      page.getByRole("link", { name: "Im App Store laden" }),
+    ).toHaveAttribute("href", IOS_APP_STORE_URL_DE);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
     );
   });
 });
 
-test("public iOS pages show release-preparation status without beta links", async ({
+test("public iOS pages expose the stable App Store release without beta links", async ({
   page,
 }) => {
   for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
@@ -338,16 +345,49 @@ test("public iOS pages show release-preparation status without beta links", asyn
     );
   }
 
+  await page.goto("/en/");
+  const footerAppStoreLink = page.locator(
+    'footer a[data-download-target="ios_app_store"]',
+  );
+  await expect(footerAppStoreLink).toHaveAttribute(
+    "data-tracking-placement",
+    "footer",
+  );
+
   await page.goto("/en/docs/ios");
   await expect(
-    page.getByText("App Store release in preparation", { exact: true }),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Download on the App Store" }),
+  ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
   await expect(
-    page.getByText("Version 1.0 in preparation", { exact: true }).first(),
+    page.getByText("Version 1.0 stable", { exact: true }),
   ).toBeVisible();
+
+  await page.goto("/en/support");
+  await expect(
+    page.getByRole("link", { name: "Email iOS support" }),
+  ).toHaveAttribute("href", "mailto:hello@typewhisper.com");
+  const supportAppStoreLink = page.getByRole("link", {
+    name: "Open the App Store",
+  });
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "href",
+    IOS_APP_STORE_URL_EN,
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-download-target",
+    "ios_app_store",
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-download-version",
+    "1.0",
+  );
+  await expect(supportAppStoreLink).toHaveAttribute(
+    "data-tracking-placement",
+    "support",
+  );
 });
 
-test.describe("iOS coming-soon media", () => {
+test.describe("iOS App Store media", () => {
   test("English landing uses the localized App Preview", async ({
     page,
     request,
@@ -361,7 +401,18 @@ test.describe("iOS coming-soon media", () => {
     await iosTab.click();
     await expect(iosTab).toHaveAttribute("aria-selected", "true");
 
-    await expect(page.getByTestId("landing-hero-download")).toBeDisabled();
+    await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
+      "href",
+      IOS_APP_STORE_URL_EN,
+    );
+    await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
+      "data-download-target",
+      "ios_app_store",
+    );
+    await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
+      "data-download-version",
+      "1.0",
+    );
     await expect(
       page.locator('source[src="/ios-app-preview-de.mp4"]'),
     ).toHaveCount(0);
@@ -397,6 +448,10 @@ test.describe("iOS coming-soon media", () => {
     const iosTab = page.getByTestId("landing-hero-tab-ios");
     await iosTab.click();
     await expect(iosTab).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
+      "href",
+      IOS_APP_STORE_URL_DE,
+    );
 
     const howItWorks = page.getByTestId("how-it-works");
     await howItWorks.scrollIntoViewIfNeeded();
@@ -421,7 +476,18 @@ test.describe("iOS coming-soon media", () => {
       await expect(
         page.getByRole("heading", { level: 1, name: "iOS" }),
       ).toBeVisible();
-      await expect(page.locator('a[href*="apps.apple.com"]')).toHaveCount(0);
+      const appStoreUrl =
+        locale === "de" ? IOS_APP_STORE_URL_DE : IOS_APP_STORE_URL_EN;
+      const appStoreLinks = page.locator(`a[href="${appStoreUrl}"]`);
+      await expect(appStoreLinks.first()).toBeVisible();
+      await expect(appStoreLinks.first()).toHaveAttribute(
+        "data-download-target",
+        "ios_app_store",
+      );
+      await expect(appStoreLinks.first()).toHaveAttribute(
+        "data-download-version",
+        "1.0",
+      );
       await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
         0,
       );
@@ -436,7 +502,9 @@ test.describe("iOS coming-soon media", () => {
         const pngPath = `/screenshots/${locale}/ios/watch/${name}.png`;
         const webpPath = `/screenshots/${locale}/ios/watch/${name}.webp`;
         await expect(page.locator(`img[src="${pngPath}"]`)).toBeVisible();
-        await expect(page.locator(`source[srcset="${webpPath}"]`)).toHaveCount(1);
+        await expect(page.locator(`source[srcset="${webpPath}"]`)).toHaveCount(
+          1,
+        );
         expect((await request.get(pngPath)).ok()).toBeTruthy();
         expect((await request.get(webpPath)).ok()).toBeTruthy();
       }

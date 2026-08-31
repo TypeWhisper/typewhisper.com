@@ -55,7 +55,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     description:
       "Requirements, permissions, local model setup, keyboard activation, and the first test recording for TypeWhisper on iPhone and iPad.",
     intro:
-      "TypeWhisper 1.0 is being prepared for its public App Store release. There is no public download link yet, but this guide documents the release setup so you know exactly what to expect.",
+      "TypeWhisper 1.0 is available from the App Store for iPhone and iPad. This guide takes you from installation through permissions, local models, keyboard setup, and your first recording.",
     sections: [
       {
         title: "Before you install",
@@ -68,7 +68,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         callout: {
           title: "Current availability",
           description:
-            "The public App Store release is still in preparation. Do not install builds or profiles offered by an unofficial source.",
+            "Download TypeWhisper only from the official App Store page linked in this documentation. Do not install builds or profiles offered by an unofficial source.",
         },
       },
       {
@@ -518,7 +518,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Open Settings > Premium",
             description:
-              "Sign in with Apple and activate or restore Premium when the public App Store version is available.",
+              "Sign in with Apple, then activate or restore Premium.",
           },
           {
             title: "Choose the sync mode",
@@ -549,9 +549,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
       "Start with the exact entry point that failed. A recording in the app, keyboard dictation, Watch transfer, file import, and sync each have a different dependency.",
     sections: [
       {
-        title: "The app is not in the App Store",
+        title: "The App Store download does not work",
         paragraphs: [
-          "That is currently expected. TypeWhisper 1.0 is still being prepared for public App Store release. This documentation is available ahead of the download so setup and privacy behavior are transparent.",
+          "Open the official App Store product page from the iOS overview. If the download is unavailable, confirm that the device runs iOS 18 or iPadOS 18 or later, check that you are signed in to the App Store, and retry. Include Apple's exact message when contacting support.",
         ],
       },
       {
@@ -608,7 +608,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     description:
       "Voraussetzungen, Berechtigungen, lokale Modelle, Tastatur-Aktivierung und die erste Testaufnahme mit TypeWhisper auf iPhone und iPad.",
     intro:
-      "TypeWhisper 1.0 wird für die öffentliche App-Store-Veröffentlichung vorbereitet. Einen öffentlichen Download-Link gibt es noch nicht, aber diese Anleitung beschreibt bereits den vollständigen Release-Ablauf.",
+      "TypeWhisper 1.0 ist für iPhone und iPad im App Store verfügbar. Diese Anleitung führt dich von der Installation über Berechtigungen und lokale Modelle bis zur Tastatur-Einrichtung und ersten Aufnahme.",
     sections: [
       {
         title: "Vor der Installation",
@@ -621,7 +621,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         callout: {
           title: "Aktuelle Verfügbarkeit",
           description:
-            "Das öffentliche App-Store-Release wird noch vorbereitet. Installiere keine Builds oder Profile aus inoffiziellen Quellen.",
+            "Lade TypeWhisper nur über die offizielle App-Store-Seite aus dieser Dokumentation. Installiere keine Builds oder Profile aus inoffiziellen Quellen.",
         },
       },
       {
@@ -1071,7 +1071,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Einstellungen > Premium öffnen",
             description:
-              "Melde dich mit Apple an und aktiviere oder stelle Premium wieder her, sobald die öffentliche App-Store-Version verfügbar ist.",
+              "Melde dich mit Apple an und aktiviere Premium oder stelle den Kauf wieder her.",
           },
           {
             title: "Sync-Modus wählen",
@@ -1102,9 +1102,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
       "Beginne beim genauen Einstiegspunkt des Fehlers. App-Aufnahme, Tastatur-Diktat, Watch-Transfer, Dateiimport und Sync haben jeweils andere Voraussetzungen.",
     sections: [
       {
-        title: "Die App ist nicht im App Store",
+        title: "Der App-Store-Download funktioniert nicht",
         paragraphs: [
-          "Das ist derzeit erwartbar. TypeWhisper 1.0 wird noch für die öffentliche App-Store-Veröffentlichung vorbereitet. Die Dokumentation ist schon verfügbar, damit Einrichtung und Datenschutz transparent sind.",
+          "Öffne die offizielle App-Store-Produktseite über die iOS-Übersicht. Falls der Download nicht verfügbar ist, prüfe iOS 18 beziehungsweise iPadOS 18 oder neuer, die Anmeldung im App Store und versuche es erneut. Nenne beim Support die genaue Meldung von Apple.",
         ],
       },
       {

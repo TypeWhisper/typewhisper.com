@@ -3,7 +3,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { getWindowsStoreUrl, macDmgUrl, windowsSetupUrl } from "@/lib/platform-download";
+import {
+  getWindowsStoreUrl,
+  getIosAppStoreUrl,
+  iosVersion,
+  macDmgUrl,
+  windowsSetupUrl,
+} from "@/lib/platform-download";
 
 interface Props {
   locale: Locale;
@@ -15,6 +21,7 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const windowsStoreUrl = getWindowsStoreUrl(locale);
+const iosAppStoreUrl = getIosAppStoreUrl(locale);
 ---
 
 <BaseLayout
@@ -43,7 +50,7 @@ const windowsStoreUrl = getWindowsStoreUrl(locale);
       />
 
       <ReleaseStageNotice
-        stage="pending"
+        stage="stable"
         title={t(locale, "releaseStatus.ios.intro")}
         description={t(locale, "releaseStatus.ios.detail")}
       />
@@ -79,7 +86,7 @@ const windowsStoreUrl = getWindowsStoreUrl(locale);
           {t(locale, "releaseStatus.ios.description")}
         </p>
         <div class="mt-4 flex flex-col gap-2 text-sm">
-          <span class="font-medium text-muted-foreground">{t(locale, "releaseStatus.ios.download")}</span>
+          <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="ios" data-download-target="ios_app_store" data-download-version={iosVersion} data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
           <a href={localePath(locale, "/docs/ios")} class="text-primary hover:underline">{t(locale, "releaseStatus.ios.docs")}</a>
         </div>
       </section>

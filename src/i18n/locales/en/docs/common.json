@@ -1,6 +1,6 @@
 {
   "docs.title": "Documentation",
-  "docs.subtitle": "Choose your platform for complete setup, daily-use, and troubleshooting guides. macOS 1.6 and Windows 1.0.8 are stable; iOS 1.0 is being prepared for the App Store.",
+  "docs.subtitle": "Choose your platform for complete setup, daily-use, and troubleshooting guides for stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.",
   "docs.allPlatforms": "All Platforms",
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
@@ -19,7 +19,7 @@
   "docs.sidebar.watchShortcuts": "Watch & Shortcuts",
   "docs.sidebar.privacyPremium": "Privacy & Premium",
   "docs.win.title": "Windows",
-  "docs.win.badge": "Stable",
+  "docs.win.badge": "1.0 Stable",
   "docs.win.description": "Stable Windows docs for installation, dictation, file transcription, workflows, and local automation.",
   "docs.win.release.title": "Windows is a stable desktop release.",
   "docs.win.release.indexDescription": "Use these docs for installation, daily dictation, file transcription, workflows, integrations, and local automation.",
@@ -31,8 +31,8 @@
   "docs.win.release.cliDescription": "The optional Windows CLI uses the local HTTP API.",
   "docs.win.release.troubleshootingDescription": "Solutions for common Windows installation, recording, insertion, and automation problems.",
   "docs.ios.title": "iOS",
-  "docs.ios.badge": "In preparation",
-  "docs.ios.description": "Detailed guidance for iPhone, iPad, and Apple Watch. Version 1.0 is not publicly available in the App Store yet.",
-  "docs.ios.release.title": "iOS 1.0 is still being prepared for the App Store.",
-  "docs.ios.release.description": "There is currently no public download or confirmed release date."
+  "docs.ios.badge": "1.0 Stable",
+  "docs.ios.description": "Detailed guidance for the stable iPhone, iPad, and Apple Watch edition.",
+  "docs.ios.release.title": "iOS 1.0 is available on the App Store.",
+  "docs.ios.release.description": "Download TypeWhisper for iPhone and iPad. The Apple Watch app is included."
 }
