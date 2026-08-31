@@ -1,6 +1,6 @@
 {
   "docs.title": "Dokumentation",
-  "docs.subtitle": "Wähle deine Plattform für vollständige Installations-, Bedienungs- und Fehlerbehebungsanleitungen zu den stabilen Releases macOS 1.6, Windows 1.0.8 und iOS 1.0.",
+  "docs.subtitle": "Wähle deine Plattform für vollständige Installations-, Bedienungs- und Fehlerbehebungsanleitungen zu den stabilen Releases macOS 1.6, Windows 1.0.9 und iOS 1.0.",
   "docs.allPlatforms": "Alle Plattformen",
   "docs.sidebar.overview": "Übersicht",
   "docs.sidebar.installation": "Installation",
@@ -19,7 +19,7 @@
   "docs.sidebar.watchShortcuts": "Watch & Kurzbefehle",
   "docs.sidebar.privacyPremium": "Datenschutz & Premium",
   "docs.win.title": "Windows",
-  "docs.win.badge": "Stabil",
+  "docs.win.badge": "1.0 Stabil",
   "docs.win.description": "Stabile Windows-Doku für Installation, Diktat, Datei-Transkription, Workflows und lokale Automatisierung.",
   "docs.win.release.title": "Windows ist ein stabiles Desktop-Release.",
   "docs.win.release.indexDescription": "Nutze diese Doku für Installation, tägliches Diktieren, Datei-Transkription, Workflows, Integrationen und lokale Automatisierung.",

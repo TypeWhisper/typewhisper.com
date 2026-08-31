@@ -1,6 +1,6 @@
 {
   "docs.title": "Documentation",
-  "docs.subtitle": "Choose your platform for complete setup, daily-use, and troubleshooting guides for stable macOS 1.6, Windows 1.0.8, and iOS 1.0 releases.",
+  "docs.subtitle": "Choose your platform for complete setup, daily-use, and troubleshooting guides for stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.",
   "docs.allPlatforms": "All Platforms",
   "docs.sidebar.overview": "Overview",
   "docs.sidebar.installation": "Installation",
@@ -19,7 +19,7 @@
   "docs.sidebar.watchShortcuts": "Watch & Shortcuts",
   "docs.sidebar.privacyPremium": "Privacy & Premium",
   "docs.win.title": "Windows",
-  "docs.win.badge": "Stable",
+  "docs.win.badge": "1.0 Stable",
   "docs.win.description": "Stable Windows docs for installation, dictation, file transcription, workflows, and local automation.",
   "docs.win.release.title": "Windows is a stable desktop release.",
   "docs.win.release.indexDescription": "Use these docs for installation, daily dictation, file transcription, workflows, integrations, and local automation.",

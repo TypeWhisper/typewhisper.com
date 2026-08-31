@@ -63,7 +63,7 @@ const copy = locale === "de"
   <div>
     <div class="flex flex-wrap items-center gap-3">
       <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-      <Badge variant="secondary">{locale === "de" ? "Stabil" : "Stable"}</Badge>
+      <Badge variant="secondary">{t(locale, "docs.win.badge")}</Badge>
     </div>
     <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
       {copy.intro}
