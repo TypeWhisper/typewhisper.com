@@ -26,7 +26,7 @@
   "hero.platformTabs.windows": "Windows",
   "hero.platformTabs.ios": "iOS",
   "hero.platformTabs.stage.mac": "Stable 1.6",
-  "hero.platformTabs.stage.windows": "Stable",
+  "hero.platformTabs.stage.windows": "Stable 1.0",
   "hero.platformTabs.stage.ios": "Stable 1.0",
   "hero.detectedHint.windows": "On Windows? Switch tab.",
   "hero.detectedHint.ios": "On iOS? Switch tab.",
