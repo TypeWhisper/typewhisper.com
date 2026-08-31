@@ -37,7 +37,7 @@ test.describe("detailed iOS documentation", () => {
       page.getByRole("link", { name: "Download on the App Store" }),
     ).toHaveAttribute(
       "href",
-      "https://apps.apple.com/app/typewhisper/id6759319267",
+      "https://apps.apple.com/us/app/typewhisper-app/id6759319267",
     );
   });
 
@@ -95,7 +95,7 @@ test.describe("detailed iOS documentation", () => {
       page.getByRole("link", { name: "Open the App Store" }),
     ).toHaveAttribute(
       "href",
-      "https://apps.apple.com/app/typewhisper/id6759319267",
+      "https://apps.apple.com/us/app/typewhisper-app/id6759319267",
     );
 
     await page.goto("/en/docs/ios/troubleshooting");

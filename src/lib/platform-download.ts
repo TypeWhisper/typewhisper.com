@@ -6,9 +6,8 @@ export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
-export const iosAppStoreUrl =
-  "https://apps.apple.com/app/typewhisper/id6759319267";
 export const iosVersion = "1.0";
+const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 const windowsStoreCampaignId = "DevShareMCLPCS";
 
@@ -54,6 +53,11 @@ export function getWindowsStoreUrl(locale: Locale): string {
   });
 
   return `${windowsStoreProductUrl}?${params.toString()}`;
+}
+
+export function getIosAppStoreUrl(locale: Locale): string {
+  const storefront = locale === "de" ? "de" : "us";
+  return `https://apps.apple.com/${storefront}/${iosAppStoreProductPath}`;
 }
 
 export function detectPlatformFromUserAgent(userAgent: string): Platform {
@@ -106,7 +110,7 @@ export function getPlatformDownloadTarget(
       case "ios":
         return {
           available: true,
-          href: iosAppStoreUrl,
+          href: getIosAppStoreUrl(locale),
           label: t(locale, "platforms.ios.download"),
           platform,
           target: "ios_app_store",
@@ -141,7 +145,7 @@ export function getPlatformDownloadTarget(
     case "ios":
       return {
         available: true,
-        href: iosAppStoreUrl,
+        href: getIosAppStoreUrl(locale),
         label: t(locale, "nav.downloadIos"),
         platform,
         target: "ios_app_store",

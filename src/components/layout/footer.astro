@@ -1,7 +1,7 @@
 ---
 import { Logo } from "@/components/ui/logo";
 import { Waveform } from "@/components/ui/waveform";
-import { discordUrl, iosAppStoreUrl, iosVersion } from "@/lib/platform-download";
+import { discordUrl, getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
 import type { Locale } from "@/i18n/index";
 import { t, localePath } from "@/i18n/index";
 
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { locale = "en" } = Astro.props;
+const iosAppStoreUrl = getIosAppStoreUrl(locale);
 ---
 
 <footer class="border-t border-border bg-card text-card-foreground">

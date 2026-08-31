@@ -4,7 +4,7 @@ import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import {
   discordUrl,
-  iosAppStoreUrl,
+  getIosAppStoreUrl,
   iosVersion,
 } from "@/lib/platform-download";
 
@@ -17,6 +17,7 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
+const iosAppStoreUrl = getIosAppStoreUrl(locale);
 ---
 
 <BaseLayout

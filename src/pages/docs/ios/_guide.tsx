@@ -6,7 +6,7 @@ import {
   type IosDocSlug,
 } from "@/data/ios-docs";
 import { localePath, screenshotPath, type Locale } from "@/i18n/index";
-import { iosAppStoreUrl, iosVersion } from "@/lib/platform-download";
+import { getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
 
 function imageClass(layout: "phone" | "tablet" | "wide" = "wide") {
   if (layout === "phone") {
@@ -27,6 +27,7 @@ export default function DocsIOSGuide({
 }) {
   const page = getIosDocPage(locale, slug);
   const isDe = locale === "de";
+  const iosAppStoreUrl = getIosAppStoreUrl(locale);
 
   return (
     <article>

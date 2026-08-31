@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
 import { getIosDocTitle, iosDocSlugs } from "@/data/ios-docs";
 import { localePath, screenshotPath, type Locale } from "@/i18n/index";
-import { iosAppStoreUrl, iosVersion } from "@/lib/platform-download";
+import { getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
 
 const phoneScreenshots = [
   {
@@ -63,6 +63,7 @@ const watchScreenshots = [
 
 export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
+  const iosAppStoreUrl = getIosAppStoreUrl(locale);
   const previewSrc = isDe
     ? "/ios-app-preview-de.mp4"
     : "/ios-app-preview-en.mp4";

@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
-const IOS_APP_STORE_URL = "https://apps.apple.com/app/typewhisper/id6759319267";
+const IOS_APP_STORE_URL_EN =
+  "https://apps.apple.com/us/app/typewhisper-app/id6759319267";
+const IOS_APP_STORE_URL_DE =
+  "https://apps.apple.com/de/app/typewhisper-app/id6759319267";
 
 type GeneratedDownloads = {
   mac: { url: string };
@@ -55,7 +58,7 @@ const landingScenarios: LandingScenario[] = [
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Mobile/15E148 Safari/604.1",
     expectedLabel: "Download on the App Store",
-    expectedHref: IOS_APP_STORE_URL,
+    expectedHref: IOS_APP_STORE_URL_EN,
     opensNewTab: true,
   },
 ];
@@ -290,7 +293,7 @@ test.describe("release status download routing", () => {
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
       page.getByRole("link", { name: "Download on the App Store" }),
-    ).toHaveAttribute("href", IOS_APP_STORE_URL);
+    ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
     );
@@ -325,7 +328,7 @@ test.describe("release status download routing", () => {
     ).toHaveAttribute("href", downloads.windows.url);
     await expect(
       page.getByRole("link", { name: "Im App Store laden" }),
-    ).toHaveAttribute("href", IOS_APP_STORE_URL);
+    ).toHaveAttribute("href", IOS_APP_STORE_URL_DE);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
     );
@@ -345,7 +348,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   await page.goto("/en/docs/ios");
   await expect(
     page.getByRole("link", { name: "Download on the App Store" }),
-  ).toHaveAttribute("href", IOS_APP_STORE_URL);
+  ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
   await expect(
     page.getByText("Version 1.0 stable", { exact: true }),
   ).toBeVisible();
@@ -359,7 +362,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   });
   await expect(supportAppStoreLink).toHaveAttribute(
     "href",
-    IOS_APP_STORE_URL,
+    IOS_APP_STORE_URL_EN,
   );
   await expect(supportAppStoreLink).toHaveAttribute(
     "data-download-target",
@@ -391,7 +394,7 @@ test.describe("iOS App Store media", () => {
 
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "href",
-      IOS_APP_STORE_URL,
+      IOS_APP_STORE_URL_EN,
     );
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "data-download-target",
@@ -438,7 +441,7 @@ test.describe("iOS App Store media", () => {
     await expect(iosTab).toHaveAttribute("aria-selected", "true");
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "href",
-      IOS_APP_STORE_URL,
+      IOS_APP_STORE_URL_DE,
     );
 
     const howItWorks = page.getByTestId("how-it-works");
@@ -464,7 +467,9 @@ test.describe("iOS App Store media", () => {
       await expect(
         page.getByRole("heading", { level: 1, name: "iOS" }),
       ).toBeVisible();
-      const appStoreLinks = page.locator(`a[href="${IOS_APP_STORE_URL}"]`);
+      const appStoreUrl =
+        locale === "de" ? IOS_APP_STORE_URL_DE : IOS_APP_STORE_URL_EN;
+      const appStoreLinks = page.locator(`a[href="${appStoreUrl}"]`);
       await expect(appStoreLinks.first()).toBeVisible();
       await expect(appStoreLinks.first()).toHaveAttribute(
         "data-download-target",
