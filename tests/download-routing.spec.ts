@@ -345,6 +345,15 @@ test("public iOS pages expose the stable App Store release without beta links", 
     );
   }
 
+  await page.goto("/en/");
+  const footerAppStoreLink = page.locator(
+    'footer a[data-download-target="ios_app_store"]',
+  );
+  await expect(footerAppStoreLink).toHaveAttribute(
+    "data-tracking-placement",
+    "footer",
+  );
+
   await page.goto("/en/docs/ios");
   await expect(
     page.getByRole("link", { name: "Download on the App Store" }),
