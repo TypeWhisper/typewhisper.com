@@ -19,7 +19,8 @@ export type BrandLogoId =
   | "slack"
   | "vscode"
   | "notion"
-  | "gmail";
+  | "gmail"
+  | "meta";
 
 export interface BrandLogoDefinition {
   id: BrandLogoId;
@@ -185,6 +186,15 @@ export const brandLogos = [
     contexts: ["addon"],
     fallback: "lucide",
     homepage: "https://www.gmail.com/",
+  },
+  {
+    id: "meta",
+    svglSearch: "meta",
+    expectedTitle: "Meta",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://ai.meta.com/",
+    brandGuidelinesUrl: "https://www.meta.com/brand/resources/meta/company-brand/",
   },
 ] as const satisfies readonly BrandLogoDefinition[];
 

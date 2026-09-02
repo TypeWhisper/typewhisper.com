@@ -1,0 +1,64 @@
+---
+slug: meta
+name: Meta
+author: TypeWhisper
+icon: AudioWaveform
+brandLogo: meta
+description: Muse Voice Transcribe für Cloud-Transkription und Muse Spark für LLM-Workflows unter Windows und macOS.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+  - windows
+source: bundled
+homepage: https://research.meta.ai/blog/introducing-muse-voice-transcribe
+apiDocsUrl: https://dev.meta.ai/docs/speech-to-text
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
+sourceUrls:
+  mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin"
+  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
+---
+
+## Über
+
+Das Add-on Meta verbindet TypeWhisper mit zwei Modellfamilien von Meta: Muse Voice Transcribe für cloudbasierte Sprache-zu-Text-Verarbeitung und Muse Spark für LLM-gestützte Workflows. Es ist für Windows und macOS verfügbar.
+
+Die Windows-Seite dokumentiert Version 1.0.1, die macOS-Seite Version 1.0.0. Beide Editionen verlinken direkt auf ihren Quellcode unter `main` und auf die veröffentlichten Plugin-Releases.
+
+## Muse Voice Transcribe
+
+- Echtzeit-Streaming-Transkription mit Endpunkterkennung
+- Sprechertrennung für Gespräche mit mehr als 20 Personen
+- Training mit mehr als 70 Sprachen, von denen Meta zum Start 25 umfassend geprüft hat
+- Code-Switching innerhalb von Sätzen und zwischen Sätzen
+- Biasing für Sprache, Schlüsselwörter und Kontext
+- Lange Audioaufnahmen von mehr als einer Stunde
+
+Windows 1.0.1 und macOS 1.0.0 stellen Batch-Transkription, Echtzeit-Streaming, Sprach- oder Wörterbuch-Biasing und optionale Sprechertrennung bereit. Übersetzungen werden nicht unterstützt.
+
+## Muse Spark
+
+Unter Windows und macOS kann dasselbe Add-on Muse Spark als LLM-Anbieter für TypeWhisper-Workflows verwendet werden. Es lädt kompatible Modelle aus der Meta-API und bietet Muse Spark 1.2 und 1.1 als Fallbacks an, solange der Katalog noch nicht geladen wurde. Der macOS-Fallback-Katalog enthält zusätzlich Muse Spark 1.2 Contributor und zeigt bei dessen Auswahl den Trainingshinweis an.
+
+## Wann Meta sinnvoll ist
+
+- Diktate, die zwei oder mehr Sprachen mischen
+- Live-Transkription, bei der Zwischenergebnisse schon während des Sprechens erscheinen sollen
+- Interviews, Besprechungen und andere Aufnahmen, bei denen Sprecherlabels wichtig sind
+- Fachsprache mit Namen, Produktbegriffen oder anderen wichtigen Schlüsselwörtern
+- Längere Aufnahmen, die in einem zusammenhängenden Transkriptionsablauf bleiben sollen
+
+## Einrichtung
+
+Unter Windows:
+
+1. Erstelle ein Projekt und einen API-Schlüssel für die Meta Model API.
+2. Installiere und aktiviere **Meta** unter **Einstellungen > Integrationen**.
+3. Hinterlege und teste den API-Key in den Add-on-Einstellungen.
+4. Wähle ein Muse-Voice-Transcribe-Modell für die Transkription und ein Muse-Spark-Modell für LLM-Workflows.
+5. Prüfe die Transkriptions-Engine zunächst in einem eigenen Testprofil, bevor du längere Aufnahmen verarbeitest.
+
+## Cloud-Verarbeitung und Datenschutz
+
+Muse Voice Transcribe ist ein Cloud-Anbieter. Wenn du diese Engine auswählst, werden Audio und die für die Transkription erforderliche Konfiguration an Meta gesendet. Prüfe vor dem Einsatz mit sensiblen Aufnahmen die aktuellen Bedingungen, Datenschutzinformationen, regionale Verfügbarkeit und Preise der Meta Model API.

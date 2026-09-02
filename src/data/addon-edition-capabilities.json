@@ -75,6 +75,10 @@
     "mac": ["utility"],
     "windows": ["utility"]
   },
+  "meta": {
+    "mac": ["transcription", "llm"],
+    "windows": ["transcription", "llm"]
+  },
   "obsidian": {
     "mac": ["action"],
     "windows": ["action"]

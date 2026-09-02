@@ -39,13 +39,13 @@ async function crossPlatformFamilies(locale) {
   for (const file of files) {
     const data = frontmatter(await readFile(path.join(dir, file), "utf8"));
     const platforms = list(data, "platforms");
-
     if (platforms.includes("mac") && platforms.includes("windows")) {
       assert.equal(
         scalar(data, "version"),
         undefined,
         `${locale}/${file} must not expose one shared version`,
       );
+
       slugs.push(scalar(data, "slug"));
     }
   }
@@ -110,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 34);
+  assert.equal(deFamilies.length, 35);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -154,7 +154,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
 });
 
 test("Windows screenshots cover every documented add-on that has a settings dialog", async () => {
-  const macFamilies = await editionFamilies("en", "mac");
+  const macFamilies = await crossPlatformFamilies("en");
   const windowsAddons = await windowsAddonInventory("en");
 
   for (const locale of LOCALES) {
@@ -176,8 +176,8 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
 
-  assert.equal(windowsAddons.length, 37);
-  assert.equal(windowsScreenshotIds.size, 33);
+  assert.equal(windowsAddons.length, 38);
+  assert.equal(windowsScreenshotIds.size, 34);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
@@ -280,6 +280,99 @@ test("every platform edition has a detailed guide source", async () => {
           `${locale}/${slug}/Windows generated guide needs configuration steps`,
         );
       }
+    }
+  }
+});
+
+test("Meta docs link the published Windows and macOS editions on main", async () => {
+  const capabilityMap = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-capabilities.json"),
+      "utf8",
+    ),
+  );
+  const filenames = {
+    mac: "macos.mdx",
+    windows: "windows.mdx",
+  };
+
+  for (const locale of LOCALES) {
+    const family = frontmatter(
+      await readFile(
+        path.resolve(`src/content/addons/${locale}/meta.mdx`),
+        "utf8",
+      ),
+    );
+
+    assert.equal(scalar(family, "status"), undefined);
+    assert.equal(scalar(family, "slug"), "meta");
+    assert.equal(scalar(family, "name"), "Meta");
+    assert.deepEqual(list(family, "platforms"), ["mac", "windows"]);
+    assert.deepEqual(list(family, "categories"), ["transcription", "llm"]);
+    assert.equal(scalar(family, "version"), undefined);
+    assert.equal(scalar(family, "id"), undefined);
+    assert.equal(scalar(family, "brandLogo"), "meta");
+
+    for (const [platform, filename] of Object.entries(filenames)) {
+      const content = await readFile(
+        path.resolve(
+          `src/content/addon-editions/${locale}/meta/${filename}`,
+        ),
+        "utf8",
+      );
+      const data = frontmatter(content);
+      const guide = body(content);
+
+      assert.equal(scalar(data, "familySlug"), "meta");
+      assert.equal(scalar(data, "platform"), platform);
+      assert.ok(list(data, "requirements").length >= 2);
+      assert.ok(list(data, "highlights").length >= 4);
+      assert.match(
+        guide,
+        locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+      );
+
+      if (platform === "windows") {
+        assert.equal(scalar(data, "status"), undefined);
+        assert.equal(scalar(data, "version"), "1.0.1");
+        assert.equal(scalar(data, "id"), "com.typewhisper.meta");
+        assert.equal(scalar(data, "minAppVersion"), "1.0.10");
+        assert.equal(
+          scalar(data, "sourceUrl"),
+          "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta",
+        );
+        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.0\.1$/);
+        assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
+      } else {
+        assert.equal(scalar(data, "status"), undefined);
+        assert.equal(scalar(data, "version"), "1.0.0");
+        assert.equal(scalar(data, "id"), "com.typewhisper.meta");
+        assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+        assert.equal(scalar(data, "minOsVersion"), "14.0");
+        assert.equal(
+          scalar(data, "sourceUrl"),
+          "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin",
+        );
+        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.0\.0$/);
+        assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
+      }
+    }
+  }
+
+  for (const filename of [
+    "com.typewhisper.meta.png",
+    "com.typewhisper.meta.webp",
+    "com.typewhisper.meta.de.png",
+    "com.typewhisper.meta.de.webp",
+  ]) {
+    await access(path.resolve(`public/screenshots/windows/plugins/${filename}`));
+  }
+
+  for (const locale of LOCALES) {
+    for (const extension of ["png", "webp"]) {
+      await access(
+        path.resolve(`public/screenshots/${locale}/plugins/meta.${extension}`),
+      );
     }
   }
 });

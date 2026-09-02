@@ -1,0 +1,96 @@
+---
+familySlug: "meta"
+platform: "mac"
+version: "1.0.0"
+description: "Muse Voice Transcribe for real-time and file transcription with optional speaker diarization, plus Muse Spark prompt processing."
+id: "com.typewhisper.meta"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+requirements:
+  - "TypeWhisper 1.7.0 or newer"
+  - "macOS 14 or newer"
+  - "Meta Model API access and an API key"
+highlights:
+  - "Real-time and uploaded-file transcription with Muse Voice Transcribe"
+  - "Optional speaker diarization for both live and uploaded audio"
+  - "Language and dictionary-term biasing in real-time and file transcription"
+  - "Muse Spark prompt processing for TypeWhisper workflows"
+  - "Dynamic model discovery with a locally cached catalog"
+  - "API key storage in the macOS Keychain"
+configuration:
+  - "Save the Meta Model API key in the macOS Keychain and refresh the model catalog"
+  - "Choose the Muse Voice Transcribe transcription model"
+  - "Enable speaker diarization when speaker-labelled output is needed"
+  - "Choose the Muse Spark prompt model used by workflows"
+  - "Review the training notice before selecting a Contributor model"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0"
+screenshots:
+  - src: "/screenshots/plugins/meta.png"
+    alt: "Meta settings in TypeWhisper for macOS"
+    caption: "Keychain-backed API key, Muse Voice Transcribe model, speaker diarization, and Muse Spark prompt model."
+    localized: true
+---
+
+## Availability
+
+Meta 1.0.0 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0). Its current source code is maintained on the repository's `main` branch.
+
+## What the macOS add-on does
+
+The Meta add-on combines two cloud capabilities:
+
+- **Muse Voice Transcribe** handles live dictation and uploaded audio files. It can return timestamps and, when enabled, speaker labels.
+- **Muse Spark** serves as a prompt model for TypeWhisper workflows.
+
+The add-on supports language hints and dictionary terms for both live and uploaded transcription. Translation is not supported.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **Meta Model API** | Enter the API key, reveal or hide it, save it in the macOS Keychain, and refresh the available models. **Remove** deletes the stored credential. |
+| **Transcription Model** | Selects the Muse Voice Transcribe model. Muse Voice Transcribe 1.0 is the built-in fallback. |
+| **Speaker diarization** | Switches Meta from push-to-talk mode to diarization mode. Speaker labels apply to both real-time and uploaded audio. |
+| **Prompt Model** | Selects the Muse Spark model used for workflow prompt processing. |
+
+The built-in prompt-model catalog contains Muse Spark 1.2, Muse Spark 1.1, and Muse Spark 1.2 Contributor. Contributor models display an explicit warning that prompts and completions may be used to train future Meta models.
+
+## Setup tutorial
+
+1. Create an API key in the Meta Model API developer portal.
+2. Open **TypeWhisper > Settings > Integrations**.
+3. Find **Meta** under **Discover**, install it, and make sure it is enabled.
+4. Open the add-on settings and paste the API key.
+5. Select **Save and Refresh Models**. A successful request shows **Connected** and stores the key in the macOS Keychain.
+6. Choose a **Transcription Model** and a **Prompt Model**.
+7. Enable **Speaker diarization** only for recordings where speaker-labelled output is useful.
+
+## Use Muse Voice Transcribe
+
+1. Open or create a TypeWhisper profile and select **Meta** as its transcription engine.
+2. Choose the expected language or languages. Supported selections are sent to Meta as language bias.
+3. Add names and specialist vocabulary to the TypeWhisper dictionary. Supported terms are forwarded as keywords in both live and file transcription.
+4. For interviews or meetings, enable **Speaker diarization** before recording or importing the file.
+5. Run a short test. In diarization mode, completed turns are formatted with labels such as `Speaker 1:` when Meta returns them.
+
+Real-time transcription streams 16 kHz PCM through Meta's WebSocket API. When recording stops, TypeWhisper waits for Meta's final event before completing the transcript.
+
+## Use Muse Spark in a workflow
+
+1. Create or edit a TypeWhisper workflow with prompt processing.
+2. Select **Meta** as the prompt provider.
+3. Choose the Muse Spark model configured in the add-on settings.
+4. Test the workflow on representative dictated text before applying it automatically.
+5. Avoid a Contributor model for sensitive content unless its displayed training notice fits your use case.
+
+## Troubleshooting
+
+- **Connection Failed:** Check the API key and Meta API availability, then select **Save and Refresh Models** again.
+- **A model is missing:** Refresh the catalog. Successfully loaded models are cached so the settings can still show them offline.
+- **No speaker labels appear:** Confirm that **Speaker diarization** was enabled before the live session or file transcription and that Meta returned speaker information.
+- **Translation fails:** Muse Voice Transcribe does not expose translation through this add-on.
+
+## Cloud processing and privacy
+
+Audio is sent to Meta for Muse Voice Transcribe, and workflow text is sent to Meta for Muse Spark. Prompt-processing requests set `store` to `false`, but Contributor models still show Meta's training warning. Review Meta's current terms, privacy information, regional availability, and pricing before using sensitive content.

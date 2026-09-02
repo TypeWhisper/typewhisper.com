@@ -175,6 +175,14 @@
       "logo": "/brand-logos/gmail/logo.svg",
       "brandUrl": null,
       "sourceUrl": "https://www.gmail.com"
+    },
+    "meta": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/meta/logo.svg",
+      "brandUrl": "https://about.meta.com/brand/resources/",
+      "sourceUrl": "https://about.meta.com/es/"
     }
   }
 }
