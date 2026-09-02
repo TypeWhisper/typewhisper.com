@@ -1,0 +1,101 @@
+---
+familySlug: "meta"
+platform: "windows"
+version: "1.0.1"
+description: "Muse Voice Transcribe für Echtzeit- und Datei-Transkription mit optionaler Sprechertrennung sowie Muse Spark für LLM-Workflows."
+id: "com.typewhisper.meta"
+minAppVersion: "1.0.10"
+requirements:
+  - "TypeWhisper 1.0.10 oder neuer"
+  - "Windows 10 oder neuer"
+  - "Zugang zur Meta Model API und ein API-Key"
+highlights:
+  - "Echtzeit- und Datei-Transkription mit Muse Voice Transcribe"
+  - "Optionale Sprechertrennung für Live- und hochgeladenes Audio"
+  - "Sprach- und Schlüsselwort-Biasing ohne Abschalten des Echtzeit-Streamings"
+  - "Muse Spark 1.2 und 1.1 für LLM-Workflows"
+  - "Automatische Erkennung kompatibler Transkriptions- und LLM-Modelle"
+  - "Fünf Stufen für den Denkaufwand von Muse Spark"
+configuration:
+  - "Meta-API-Key sicher speichern und mit Testen prüfen"
+  - "Modellkatalog von Meta aktualisieren oder integrierte Fallback-Modelle weiterverwenden"
+  - "Muse-Voice-Transcribe-Modell auswählen und optional die Sprechertrennung aktivieren"
+  - "Muse-Spark-Modell für LLM-Workflows auswählen"
+  - "Denkaufwand von Muse Spark auf Minimal, Niedrig, Mittel, Hoch oder X Hoch setzen"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.0.1"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.meta.de.png"
+    alt: "Meta-Einstellungen in TypeWhisper für Windows"
+    caption: "API-Key-Prüfung, Muse Voice Transcribe mit Sprechertrennung, Muse-Spark-Modellauswahl und Denkaufwand."
+    localized: false
+---
+
+## Verfügbarkeit
+
+Meta 1.0.1 ist als [Plugin-Release für TypeWhisper unter Windows](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.0.1) verfügbar. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
+
+## Was das Windows-Add-on macht
+
+Version 1.0.1 stellt über einen gemeinsamen Meta-API-Key zwei Funktionen bereit:
+
+- **Transkription:** Muse Voice Transcribe verarbeitet Live-Diktate und hochgeladenes Audio. Bei aktivierter Sprechertrennung kann die Ausgabe Sprecherlabels enthalten.
+- **LLM-Workflows:** Muse Spark verarbeitet Prompts aus TypeWhisper-Workflows. Der integrierte Fallback-Katalog enthält Muse Spark 1.2 und 1.1.
+
+Beide Funktionen verwenden denselben sicher gespeicherten API-Key. Das Add-on lädt kompatible Modelle über Metas `/v1/models`-Endpunkt und behält den gespeicherten Katalog, falls eine spätere Aktualisierung fehlschlägt.
+
+## Einstellungen
+
+| Einstellung | Funktion |
+| --- | --- |
+| **API-Key** | Speichert den Zugang zur Meta Model API im geschützten Secret-Speicher von TypeWhisper. **Testen** prüft den Key und aktualisiert den Modellkatalog. |
+| **Transkriptionsmodell** | Wählt das Muse-Voice-Transcribe-Modell aus. Muse Voice Transcribe 1.0 bleibt als dokumentierter Fallback verfügbar, bevor ein Katalog geladen wurde. |
+| **Aktualisieren** | Lädt kompatible `muse-voice-transcribe-*`- und `muse-spark-*`-Modelle neu von Meta. Bei einem Fehler bleiben gespeicherte oder integrierte Fallbacks verfügbar. |
+| **Sprechertrennung** | Kennzeichnet Sprecher in Live- und hochgeladenem Audio. Die Echtzeit-Transkription nutzt 16-kHz-PCM über Metas WebSocket-API. |
+| **LLM-Modell** | Wählt das Muse-Spark-Modell für TypeWhisper-Workflows. Muse Spark 1.2 ist der Standard-Fallback; Muse Spark 1.1 steht ebenfalls bereit. |
+| **Denkaufwand** | Steuert die interne Verarbeitung von Muse Spark mit **Minimal**, **Niedrig**, **Mittel**, **Hoch** oder **X Hoch**. Der Standard ist **Mittel**. |
+
+Wenn du den API-Key änderst, löscht das Add-on den zuvor geladenen Modellkatalog und gleicht beide Modellauswahlen neu ab. Teste oder aktualisiere die Verbindung, um den Katalog für den neuen Key zu laden.
+
+## Einrichtungs-Tutorial
+
+1. Aktualisiere auf TypeWhisper 1.0.10 oder neuer und erstelle im Entwicklerportal der Meta Model API einen API-Key.
+2. Öffne in TypeWhisper für Windows **Einstellungen > Integrationen**.
+3. Suche **Meta** unter **Entdecken**, installiere das Add-on und stelle sicher, dass es aktiviert ist.
+4. Öffne die Add-on-Einstellungen und füge den API-Key ein. Er wird als geschütztes Secret gespeichert.
+5. Wähle **Testen**. Bei einem gültigen Key aktualisiert das Add-on den Modellkatalog und zeigt an, wie viele Transkriptions- und Sprachmodelle geladen wurden.
+6. Wähle ein **Transkriptionsmodell** und ein **LLM-Modell**.
+7. Aktiviere die **Sprechertrennung** nur, wenn du eine Ausgabe mit Sprecherlabels benötigst.
+8. Lass den **Denkaufwand** zunächst auf **Mittel** oder wähle für Muse-Spark-Workflows eine andere Stufe.
+
+## Muse Voice Transcribe verwenden
+
+1. Öffne das TypeWhisper-Profil und wähle **Meta** als Transkriptions-Engine.
+2. Lege die erwartete Eingabesprache oder mehrere Sprachen fest. Unterstützte Angaben gibt das Add-on als Sprach-Bias weiter.
+3. Ergänze wichtige Namen und Fachbegriffe im TypeWhisper-Wörterbuch. Version 1.0.1 sendet sie bei Datei- und Echtzeit-Transkriptionen als Schlüsselwörter, ohne das Streaming abzuschalten.
+4. Aktiviere die **Sprechertrennung** vor der Aufnahme oder dem Dateiimport, wenn du Sprecherlabels benötigst.
+5. Nimm einen kurzen Test auf und prüfe den endgültigen Text, bevor du das Profil für längere Aufnahmen verwendest.
+
+Im Diarisierungsmodus verbindet TypeWhisper Metas abgeschlossene Abschnitte mit Sprecherlabels, sofern sie vorhanden sind. Beim Beenden einer Aufnahme werden ausstehende Audiodaten übertragen und TypeWhisper wartet auf Metas abschließendes Transkript. Übersetzungen werden nicht unterstützt.
+
+## Muse Spark in einem Workflow verwenden
+
+1. Erstelle oder bearbeite einen TypeWhisper-Workflow mit einem LLM-Verarbeitungsschritt.
+2. Wähle **Meta** als LLM-Anbieter.
+3. Verwende das in den Add-on-Einstellungen gewählte Muse-Spark-Modell.
+4. Beginne mit dem Denkaufwand **Mittel** und teste den Workflow mit repräsentativem diktiertem Text.
+5. Erhöhe den Denkaufwand für komplexere Anweisungen oder senke ihn, wenn eine schnellere, einfachere Verarbeitung genügt.
+
+Das Windows-Add-on unterstützt parallele abgesicherte LLM-Anfragen, wenn TypeWhisper diesen Ausführungsmodus verwendet.
+
+## Fehlerbehebung
+
+- **Die Modelleinstellungen fehlen:** Gib zuerst einen API-Key ein. Der Modellbereich erscheint, nachdem ein Key gespeichert wurde.
+- **Ungültiger API-Key:** Prüfe den Key im Meta-Entwicklerportal, füge ihn erneut ein und wähle **Testen**.
+- **Modelle können nicht aktualisiert werden:** Der gespeicherte oder integrierte Fallback-Katalog bleibt aktiv. Prüfe Verbindung und Meta-API und versuche **Aktualisieren** erneut.
+- **Sprecherlabels fehlen:** Prüfe, ob die **Sprechertrennung** vor der Live-Sitzung oder Datei-Transkription aktiv war und ob Meta Sprecherinformationen geliefert hat.
+- **Ein neues Modell fehlt:** Verwende **Aktualisieren**. Angezeigt werden nur Modell-IDs, die mit `muse-voice-transcribe-` oder `muse-spark-` beginnen.
+
+## Cloud-Verarbeitung und Datenschutz
+
+Audio für Muse Voice Transcribe und Text für Muse Spark werden über Metas Cloud-API verarbeitet. Prüfe vor der Nutzung mit sensiblen Inhalten die aktuellen Bedingungen, Datenschutzinformationen, regionale Verfügbarkeit und Preise von Meta.

@@ -1,6 +1,92 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("add-on platform editions", () => {
+  test("Meta exposes the published Windows and macOS editions", async ({
+    page,
+  }) => {
+    await page.goto("/en/addons/meta/");
+
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Meta" }),
+    ).toBeVisible();
+    await expect(page.getByAltText("Meta")).toHaveAttribute(
+      "src",
+      "/brand-logos/meta/logo.svg",
+    );
+
+    const cards = page.getByTestId("addon-edition-card");
+    await expect(cards).toHaveCount(2);
+    for (const [platform, slug] of [
+      ["mac", "macos"],
+      ["windows", "windows"],
+    ]) {
+      const card = page.locator(
+        `[data-testid="addon-edition-card"][data-platform="${platform}"]`,
+      );
+      await expect(card).toHaveCount(1);
+      await expect(
+        card.getByRole("link"),
+      ).toHaveAttribute("href", `/en/addons/meta/${slug}`);
+    }
+
+    const windowsCard = page.locator(
+      '[data-testid="addon-edition-card"][data-platform="windows"]',
+    );
+    await expect(windowsCard.getByText("v1.0.1", { exact: true })).toBeVisible();
+
+    const macCard = page.locator(
+      '[data-testid="addon-edition-card"][data-platform="mac"]',
+    );
+    await expect(macCard.getByText("v1.0.0", { exact: true })).toBeVisible();
+
+    await expect(
+      page.locator('[data-testid="addon-edition-card"][data-platform="ios"]'),
+    ).toHaveCount(0);
+
+    await page.goto("/en/addons/meta/windows/");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Meta for Windows" }),
+    ).toBeVisible();
+    await expect(
+      page.locator('img[src="/screenshots/windows/plugins/com.typewhisper.meta.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
+    ).toBeVisible();
+    await expect(page.getByText("Muse Spark 1.2 and 1.1 for LLM workflow processing")).toBeVisible();
+    await expect(page.getByText("1.0.1", { exact: true })).toBeVisible();
+    await expect(page.getByText("Optional speaker diarization for both live and uploaded audio")).toBeVisible();
+
+    await page.goto("/de/addons/meta/windows/");
+    await expect(
+      page.locator('img[src="/screenshots/windows/plugins/com.typewhisper.meta.de.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Einrichtungs-Tutorial" }),
+    ).toBeVisible();
+
+    await page.goto("/en/addons/meta/macos/");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Meta for macOS" }),
+    ).toBeVisible();
+    await expect(
+      page.locator('img[src="/screenshots/en/plugins/meta.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
+    ).toBeVisible();
+    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+
+    await page.goto("/de/addons/meta/macos/");
+    await expect(
+      page.locator('img[src="/screenshots/de/plugins/meta.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Einrichtungs-Tutorial" }),
+    ).toBeVisible();
+
+  });
+
   test("cross-platform families group independent macOS and Windows editions", async ({
     page,
   }) => {

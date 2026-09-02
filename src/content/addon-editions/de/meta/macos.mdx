@@ -1,0 +1,96 @@
+---
+familySlug: "meta"
+platform: "mac"
+version: "1.0.0"
+description: "Muse Voice Transcribe für Echtzeit- und Datei-Transkription mit optionaler Sprechertrennung sowie Muse Spark für die Prompt-Verarbeitung."
+id: "com.typewhisper.meta"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+requirements:
+  - "TypeWhisper 1.7.0 oder neuer"
+  - "macOS 14 oder neuer"
+  - "Zugang zur Meta Model API und ein API-Key"
+highlights:
+  - "Echtzeit- und Datei-Transkription mit Muse Voice Transcribe"
+  - "Optionale Sprechertrennung für Live- und hochgeladenes Audio"
+  - "Sprach- und Wörterbuch-Biasing bei Echtzeit- und Datei-Transkription"
+  - "Prompt-Verarbeitung mit Muse Spark für TypeWhisper-Workflows"
+  - "Dynamische Modellerkennung mit lokal zwischengespeichertem Katalog"
+  - "API-Key-Speicherung im macOS-Schlüsselbund"
+configuration:
+  - "Meta-Model-API-Key im macOS-Schlüsselbund speichern und Modellkatalog aktualisieren"
+  - "Muse-Voice-Transcribe-Modell für die Transkription auswählen"
+  - "Sprechertrennung für Ausgaben mit Sprecherlabels aktivieren"
+  - "Muse-Spark-Prompt-Modell für Workflows auswählen"
+  - "Vor der Auswahl eines Contributor-Modells den Trainingshinweis prüfen"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0"
+screenshots:
+  - src: "/screenshots/plugins/meta.png"
+    alt: "Meta-Einstellungen in TypeWhisper für macOS"
+    caption: "API-Key im Schlüsselbund, Muse-Voice-Transcribe-Modell, Sprechertrennung und Muse-Spark-Prompt-Modell."
+    localized: true
+---
+
+## Verfügbarkeit
+
+Meta 1.0.0 ist als [Plugin-Release für TypeWhisper unter macOS](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0) verfügbar. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
+
+## Was das macOS-Add-on macht
+
+Das Meta-Add-on verbindet zwei Cloud-Funktionen:
+
+- **Muse Voice Transcribe** verarbeitet Live-Diktate und hochgeladene Audiodateien. Es kann Zeitstempel und bei aktivierter Sprechertrennung auch Sprecherlabels liefern.
+- **Muse Spark** dient als Prompt-Modell für TypeWhisper-Workflows.
+
+Das Add-on unterstützt Sprachhinweise und Wörterbuchbegriffe bei Live- und Datei-Transkriptionen. Übersetzungen werden nicht unterstützt.
+
+## Einstellungen
+
+| Einstellung | Funktion |
+| --- | --- |
+| **Meta Model API** | API-Key eingeben, ein- oder ausblenden, im macOS-Schlüsselbund speichern und verfügbare Modelle laden. **Entfernen** löscht den gespeicherten Zugang. |
+| **Transkriptionsmodell** | Wählt das Muse-Voice-Transcribe-Modell. Muse Voice Transcribe 1.0 ist der integrierte Fallback. |
+| **Sprechererkennung** | Wechselt bei Meta vom Push-to-talk-Modus in den Diarisierungsmodus. Sprecherlabels gelten für Echtzeit- und hochgeladenes Audio. |
+| **Prompt-Modell** | Wählt das Muse-Spark-Modell für die Prompt-Verarbeitung in Workflows. |
+
+Der integrierte Katalog enthält Muse Spark 1.2, Muse Spark 1.1 und Muse Spark 1.2 Contributor. Bei Contributor-Modellen erscheint ein ausdrücklicher Hinweis, dass Prompts und Antworten zum Training zukünftiger Meta-Modelle verwendet werden können.
+
+## Einrichtungs-Tutorial
+
+1. Erstelle im Entwicklerportal der Meta Model API einen API-Key.
+2. Öffne **TypeWhisper > Einstellungen > Integrationen**.
+3. Suche **Meta** unter **Entdecken**, installiere das Add-on und stelle sicher, dass es aktiviert ist.
+4. Öffne die Add-on-Einstellungen und füge den API-Key ein.
+5. Wähle **Speichern und Modelle laden**. Eine erfolgreiche Anfrage zeigt **Verbunden** und speichert den Key im macOS-Schlüsselbund.
+6. Wähle ein **Transkriptionsmodell** und ein **Prompt-Modell**.
+7. Aktiviere die **Sprechererkennung** nur für Aufnahmen, bei denen du eine Ausgabe mit Sprecherlabels benötigst.
+
+## Muse Voice Transcribe verwenden
+
+1. Öffne oder erstelle ein TypeWhisper-Profil und wähle **Meta** als Transkriptions-Engine.
+2. Lege die erwartete Sprache oder mehrere Sprachen fest. Unterstützte Angaben sendet das Add-on als Sprach-Bias an Meta.
+3. Ergänze Namen und Fachbegriffe im TypeWhisper-Wörterbuch. Unterstützte Begriffe werden bei Live- und Datei-Transkriptionen als Schlüsselwörter weitergegeben.
+4. Aktiviere für Interviews oder Besprechungen vor der Aufnahme oder dem Dateiimport die **Sprechererkennung**.
+5. Führe einen kurzen Test aus. Im Diarisierungsmodus werden abgeschlossene Abschnitte mit Labels wie `Speaker 1:` formatiert, wenn Meta Sprecherinformationen liefert.
+
+Die Echtzeit-Transkription streamt 16-kHz-PCM über Metas WebSocket-API. Wenn die Aufnahme endet, wartet TypeWhisper auf Metas Abschlussereignis, bevor das Transkript fertiggestellt wird.
+
+## Muse Spark in einem Workflow verwenden
+
+1. Erstelle oder bearbeite einen TypeWhisper-Workflow mit Prompt-Verarbeitung.
+2. Wähle **Meta** als Prompt-Anbieter.
+3. Verwende das in den Add-on-Einstellungen gewählte Muse-Spark-Modell.
+4. Teste den Workflow mit repräsentativem diktiertem Text, bevor du ihn automatisch ausführst.
+5. Verwende für sensible Inhalte kein Contributor-Modell, sofern dessen angezeigter Trainingshinweis nicht zu deinem Anwendungsfall passt.
+
+## Fehlerbehebung
+
+- **Verbindung fehlgeschlagen:** Prüfe API-Key und Meta-API und wähle erneut **Speichern und Modelle laden**.
+- **Ein Modell fehlt:** Aktualisiere den Katalog. Erfolgreich geladene Modelle werden zwischengespeichert und bleiben in den Einstellungen auch offline sichtbar.
+- **Sprecherlabels fehlen:** Prüfe, ob die **Sprechererkennung** vor der Live-Sitzung oder Datei-Transkription aktiv war und ob Meta Sprecherinformationen geliefert hat.
+- **Übersetzung schlägt fehl:** Muse Voice Transcribe stellt über dieses Add-on keine Übersetzung bereit.
+
+## Cloud-Verarbeitung und Datenschutz
+
+Audio wird für Muse Voice Transcribe und Workflow-Text für Muse Spark an Meta gesendet. Prompt-Anfragen setzen `store` auf `false`; bei Contributor-Modellen bleibt dennoch Metas Trainingshinweis sichtbar. Prüfe vor der Nutzung mit sensiblen Inhalten die aktuellen Bedingungen, Datenschutzinformationen, regionale Verfügbarkeit und Preise von Meta.

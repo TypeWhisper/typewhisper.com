@@ -1,0 +1,64 @@
+---
+slug: meta
+name: Meta
+author: TypeWhisper
+icon: AudioWaveform
+brandLogo: meta
+description: Muse Voice Transcribe for cloud transcription and Muse Spark for LLM workflows on Windows and macOS.
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+  - windows
+source: bundled
+homepage: https://research.meta.ai/blog/introducing-muse-voice-transcribe
+apiDocsUrl: https://dev.meta.ai/docs/speech-to-text
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
+sourceUrls:
+  mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin"
+  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
+---
+
+## About
+
+The Meta add-on connects TypeWhisper to two Meta model families: Muse Voice Transcribe for cloud speech-to-text and Muse Spark for LLM-based workflow processing. It is available for Windows and macOS.
+
+The Windows page documents version 1.0.1, while the macOS page documents version 1.0.0. Both editions link directly to their source code on `main` and their published plugin releases.
+
+## Muse Voice Transcribe
+
+- Real-time streaming transcription with endpoint detection
+- Speaker diarization for conversations with more than 20 speakers
+- Training coverage across more than 70 languages, with 25 languages extensively verified by Meta at launch
+- Code-switching within and between sentences
+- Language, keyword, and context biasing
+- Long-form audio beyond one hour
+
+Windows 1.0.1 and macOS 1.0.0 expose batch transcription, real-time streaming, language or dictionary-term biasing, and optional speaker diarization. Translation is not supported.
+
+## Muse Spark
+
+On Windows, the same add-on can use Muse Spark as an LLM provider for TypeWhisper workflows. It discovers compatible models from Meta's API and provides Muse Spark 1.2 and 1.1 as fallbacks until the catalog has been loaded.
+
+## When Meta is useful
+
+- Dictation that mixes two or more languages
+- Live transcription where partial results should appear while someone is speaking
+- Interviews, meetings, and other recordings where speaker labels matter
+- Domain-specific speech containing names, product terms, or other important keywords
+- Longer recordings that should stay in one transcription workflow
+
+## Setup
+
+On Windows:
+
+1. Create a project and API key for the Meta Model API.
+2. Install and enable **Meta** under **Settings > Integrations**.
+3. Add and test the API key in the add-on settings.
+4. Select a Muse Voice Transcribe model for transcription and a Muse Spark model for LLM workflows.
+5. Test the transcription engine in a dedicated profile before using it for longer recordings.
+
+## Cloud processing and privacy
+
+Muse Voice Transcribe is a cloud provider. Audio and the configuration needed for transcription are sent to Meta when you select this engine. Review Meta's current Model API terms, privacy information, regional availability, and pricing before using it with sensitive recordings.
