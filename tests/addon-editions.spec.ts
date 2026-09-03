@@ -150,6 +150,17 @@ test.describe("add-on platform editions", () => {
   test("Authenticated Provider CLI 1.1.0 documents OpenCode with localized screenshots", async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    const expectNoHorizontalOverflow = async () => {
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        content: document.documentElement.scrollWidth,
+      }));
+
+      expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
+    };
+
     await page.goto("/en/addons/authenticated-cli/macos/");
     await expect(
       page.locator('img[src="/screenshots/en/plugins/authenticated-cli.png"]'),
@@ -163,6 +174,7 @@ test.describe("add-on platform editions", () => {
       "Safe variants reported for the selected model become its available effort levels on macOS.",
     );
     await expect(page.getByText("1.1.0", { exact: true })).toBeVisible();
+    await expectNoHorizontalOverflow();
 
     await page.goto("/de/addons/authenticated-cli/macos/");
     await expect(
@@ -173,6 +185,7 @@ test.describe("add-on platform editions", () => {
         'source[srcset="/screenshots/de/plugins/authenticated-cli.webp"]',
       ),
     ).toHaveCount(1);
+    await expectNoHorizontalOverflow();
 
     await page.goto("/en/addons/authenticated-cli/windows/");
     await expect(
@@ -180,9 +193,15 @@ test.describe("add-on platform editions", () => {
         'img[src="/screenshots/windows/plugins/com.typewhisper.authenticated-cli.png"]',
       ),
     ).toBeVisible();
+    await expect(
+      page.locator(
+        'source[srcset="/screenshots/windows/plugins/com.typewhisper.authenticated-cli.webp"]',
+      ),
+    ).toHaveCount(1);
     await expect(page.locator("body")).toContainText(
       "The Windows edition does not expose OpenCode model variants or an effort override.",
     );
+    await expectNoHorizontalOverflow();
 
     await page.goto("/de/addons/authenticated-cli/windows/");
     await expect(
@@ -195,6 +214,7 @@ test.describe("add-on platform editions", () => {
         'source[srcset="/screenshots/windows/plugins/com.typewhisper.authenticated-cli.de.webp"]',
       ),
     ).toHaveCount(1);
+    await expectNoHorizontalOverflow();
   });
 
   test("Cohere documents different capabilities on each platform", async ({ page }) => {

@@ -54,7 +54,7 @@ Unterstützt werden nur native `.exe`-Installationen. TypeWhisper lehnt abgemeld
 ## Konfiguration
 
 - **Status aktualisieren** prüft installierte CLIs, Versionen, Anmeldestatus, Signaturen und unterstützte Sicherheitsfunktionen.
-- **OpenCode-Katalog** lädt `opencode/*`-Textmodelle über `opencode.exe models opencode --verbose --pure`. Angeboten werden nur Modelle, deren vollständiges Preisobjekt Werte für Ein- und Ausgabe enthält und bei denen jeder Zahlenwert einschließlich Cache- und Staffelpreisen null ist.
+- **OpenCode-Katalog** lädt `opencode/*`-Textmodelle über `opencode.exe models opencode --verbose --pure`. Da die Integration in Version 1.1.0 kein `--refresh` erzwingt, kann OpenCode diese Modelldaten aus seinem eigenen Cache liefern. Angeboten werden nur Modelle, deren vollständiges Preisobjekt Werte für Ein- und Ausgabe enthält und bei denen jeder Zahlenwert einschließlich Cache- und Staffelpreisen null ist.
 - **Derzeit kostenlose Zen-Modelle** zeigt, wie viele geprüfte kostenlose Modelle wählbar sind. Solche Angebote können sich jederzeit ändern oder enden. Bei einer fehlgeschlagenen Aktualisierung kann die zuletzt erfolgreich geprüfte Liste sichtbar bleiben; das Add-on weicht jedoch niemals auf ein ungeprüftes oder kostenpflichtiges Modell aus.
 - **Installation auswählen** erscheint, wenn mehrere native Installationen gefunden wurden oder eine zuvor gewählte Programmdatei fehlt.
 - **Einrichtungsanleitung** öffnet die offizielle Dokumentation der jeweiligen CLI.

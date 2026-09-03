@@ -54,7 +54,7 @@ Only native `.exe` installations are supported. TypeWhisper rejects signed-out, 
 ## Configuration
 
 - **Refresh status** checks installed CLIs, versions, login state, signatures, and supported safety controls.
-- **OpenCode catalog** loads `opencode/*` text models through `opencode.exe models opencode --verbose --pure`. Only models whose complete pricing object includes input and output prices and whose every numeric value—including cache and tier pricing—is zero are exposed.
+- **OpenCode catalog** loads `opencode/*` text models through `opencode.exe models opencode --verbose --pure`. OpenCode may serve this model metadata from its own cache because the v1.1.0 integration does not force `--refresh`. Only models whose complete pricing object includes input and output prices and whose every numeric value—including cache and tier pricing—is zero are exposed.
 - **Currently free Zen models** shows how many verified free models are selectable. Free offers can change or end at any time. A failed refresh may keep the last successfully verified list visible, but the add-on never falls back to an unverified or paid model.
 - **Select installation** appears when multiple native installations are found or a previously selected executable is missing.
 - **Setup guide** opens the official setup documentation for the respective CLI.
