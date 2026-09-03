@@ -1,8 +1,8 @@
 ---
 familySlug: "authenticated-cli"
 platform: "windows"
-version: "1.0.0"
-description: "Use existing Codex CLI and Claude Code CLI sessions as isolated LLM providers for Windows workflows."
+version: "1.1.0"
+description: "Use existing Codex CLI, Claude Code CLI, and OpenCode Zen sessions as isolated LLM providers for Windows workflows."
 id: "com.typewhisper.authenticated-cli"
 minAppVersion: "1.0.9"
 requirements:
@@ -10,39 +10,55 @@ requirements:
   - "Windows 10 or newer"
   - "A supported native CLI installed and signed in"
 highlights:
-  - "Separate Codex CLI and Claude Code CLI workflow providers"
+  - "Separate Codex CLI, Claude Code CLI, and OpenCode Zen workflow providers"
   - "Automatic discovery of native Windows installations with an executable picker"
   - "Login, version, signature, and required-safety-control checks"
+  - "Only dynamically verified, fully free OpenCode Zen text models, with no paid fallback"
   - "Isolated temporary working directories with strict request limits"
   - "Best-effort Antigravity status preview without enabling unsafe processing"
 configuration:
-  - "Refresh CLI status or choose a specific native executable for each provider"
+  - "Refresh CLI status and the OpenCode Zen catalog or choose a specific native executable for each provider"
+  - "Review current OpenCode Zen pricing and privacy terms before using a free model"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-authenticated-cli-v1.1.0"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.authenticated-cli.png"
+    alt: "Authenticated Provider CLIs settings with OpenCode Zen in TypeWhisper for Windows"
+    caption: "Native CLI status, the current free-model catalog, and OpenCode Zen privacy guidance."
+    localized: false
 ---
+
+## Availability
+
+Authenticated Provider CLIs 1.1.0 is available as a [TypeWhisper for Windows plugin release](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-authenticated-cli-v1.1.0). Its current source code is maintained on the repository's `main` branch.
 
 ## Windows Setup
 
-1. Install Codex CLI or Claude Code CLI and sign in using the CLI itself.
+1. Install Codex CLI, Claude Code CLI, or OpenCode CLI and sign in using the CLI itself. OpenCode must list an existing **OpenCode Zen** login.
 2. Open TypeWhisper Settings > Integrations and configure **Authenticated Provider CLIs**.
 3. Refresh the status and select an installation if Windows finds more than one.
-4. Wait until the provider is marked **Ready**.
-5. Choose **Codex CLI** or **Claude Code CLI** as the LLM provider in a workflow.
+4. Wait until the provider is marked **Ready**. OpenCode also needs at least one model that its current Zen catalog reports as fully free.
+5. Choose **Codex CLI**, **Claude Code CLI**, or **OpenCode Zen** as the LLM provider in a workflow.
 
 Only native `.exe` installations are supported. TypeWhisper rejects signed-out, unsupported, ambiguous, or insufficiently isolated installations instead of running them with reduced safeguards.
 
 ## Providers and availability
 
-| Provider | Executable | When it becomes available |
-| --- | --- | --- |
-| Codex CLI | `codex.exe` | Installed, signed in, and all required isolation controls are supported |
-| Claude Code CLI | `claude.exe` | Installed, signed in, and safe non-interactive mode is supported |
-| Antigravity CLI | `agy.exe` | Status preview only; workflow processing remains disabled |
+| Provider        | Executable     | When it becomes available                                                                                                                                   |
+| --------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex CLI       | `codex.exe`    | Installed, signed in, and all required isolation controls are supported                                                                                     |
+| Claude Code CLI | `claude.exe`   | Installed, signed in, and safe non-interactive mode is supported                                                                                            |
+| OpenCode Zen    | `opencode.exe` | Installed, `opencode auth list` contains OpenCode Zen, all required isolation controls are supported, and at least one current Zen text model is fully free |
+| Antigravity CLI | `agy.exe`      | Status preview only; workflow processing remains disabled                                                                                                   |
 
 ## Configuration
 
 - **Refresh status** checks installed CLIs, versions, login state, signatures, and supported safety controls.
+- **OpenCode catalog** loads `opencode/*` text models through `opencode.exe models opencode --verbose --pure`. Only models whose complete pricing object includes input and output prices and whose every numeric value—including cache and tier pricing—is zero are exposed.
+- **Currently free Zen models** shows how many verified free models are selectable. Free offers can change or end at any time. A failed refresh may keep the last successfully verified list visible, but the add-on never falls back to an unverified or paid model.
 - **Select installation** appears when multiple native installations are found or a previously selected executable is missing.
 - **Setup guide** opens the official setup documentation for the respective CLI.
+- **[Current Zen pricing and privacy terms](https://opencode.ai/docs/zen/)** opens OpenCode's current terms. The Windows edition does not expose OpenCode model variants or an effort override.
 
 ## Isolation and privacy
 
@@ -50,4 +66,6 @@ Only the workflow instruction and transcript or selected input text are passed t
 
 Codex runs ephemerally in a read-only sandbox with approvals, tools, web access, project instructions, memories, and multi-agent features disabled. Claude Code runs in safe mode without tools, MCP access, browser access, slash commands, or session persistence. Each request uses an isolated temporary directory plus time and size limits.
 
-The provider account still processes the prompt through its cloud service and may be subject to its own plan, usage limits, and data-handling terms.
+OpenCode keeps the existing Zen login in its normal data directory, but TypeWhisper does not read or store the credential. Each request gets temporary configuration, cache, state, and database paths. Project and user configuration, user-defined agents, commands, plugins, MCP servers, sessions, sharing, snapshots, and update checks are disabled, while tool permissions are deny-all. OpenCode must return a strict structured text result and cannot reuse an earlier session.
+
+The provider account still processes the prompt through its cloud service and may be subject to its own plan, usage limits, and data-handling terms. Some free OpenCode Zen models may permit prompts and completions to be used for training. Review the selected model's current terms, and do not send personal or confidential text unless those terms allow it.

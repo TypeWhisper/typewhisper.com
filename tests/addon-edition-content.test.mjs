@@ -377,6 +377,80 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
   }
 });
 
+test("Authenticated Provider CLI docs cover the published OpenCode editions", async () => {
+  const filenames = {
+    mac: "macos.mdx",
+    windows: "windows.mdx",
+  };
+
+  for (const locale of LOCALES) {
+    const family = await readFile(
+      path.resolve(`src/content/addons/${locale}/authenticated-cli.mdx`),
+      "utf8",
+    );
+    assert.match(family, /OpenCode Zen/);
+
+    for (const [platform, filename] of Object.entries(filenames)) {
+      const content = await readFile(
+        path.resolve(
+          `src/content/addon-editions/${locale}/authenticated-cli/${filename}`,
+        ),
+        "utf8",
+      );
+      const data = frontmatter(content);
+      const guide = body(content);
+
+      assert.equal(scalar(data, "familySlug"), "authenticated-cli");
+      assert.equal(scalar(data, "platform"), platform);
+      assert.equal(scalar(data, "version"), "1.1.0");
+      assert.equal(scalar(data, "id"), "com.typewhisper.authenticated-cli");
+      assert.match(
+        scalar(data, "releaseUrl"),
+        /plugin-authenticated-cli-v1\.1\.0$/,
+      );
+      assert.match(guide, /OpenCode/);
+      assert.match(
+        guide,
+        locale === "de" ? /vollständig kostenlos/ : /fully free/,
+      );
+
+      if (platform === "mac") {
+        assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+        assert.match(content, /\/screenshots\/plugins\/authenticated-cli\.png/);
+      } else {
+        assert.equal(scalar(data, "minAppVersion"), "1.0.9");
+        assert.match(
+          content,
+          locale === "de"
+            ? /com\.typewhisper\.authenticated-cli\.de\.png/
+            : /com\.typewhisper\.authenticated-cli\.png/,
+        );
+      }
+    }
+  }
+
+  for (const filename of [
+    "com.typewhisper.authenticated-cli.png",
+    "com.typewhisper.authenticated-cli.webp",
+    "com.typewhisper.authenticated-cli.de.png",
+    "com.typewhisper.authenticated-cli.de.webp",
+  ]) {
+    await access(
+      path.resolve(`public/screenshots/windows/plugins/${filename}`),
+    );
+  }
+
+  for (const locale of LOCALES) {
+    for (const extension of ["png", "webp"]) {
+      await access(
+        path.resolve(
+          `public/screenshots/${locale}/plugins/authenticated-cli.${extension}`,
+        ),
+      );
+    }
+  }
+});
+
 test("localized editions keep platform identity, source, and version in sync", async () => {
   const families = await crossPlatformFamilies("de");
 

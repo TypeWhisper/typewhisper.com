@@ -1,44 +1,58 @@
 ---
 familySlug: "authenticated-cli"
 platform: "mac"
-version: "1.0.0"
-description: "Use existing Codex, Claude Code, and Antigravity CLI logins as isolated LLM providers on macOS."
+version: "1.1.0"
+description: "Use existing Codex, Claude Code, OpenCode Zen, and Antigravity CLI logins as isolated LLM providers on macOS."
 id: "com.typewhisper.authenticated-cli"
-minAppVersion: "1.6.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.6.0 or newer"
+  - "TypeWhisper 1.7.0 or newer"
   - "macOS 14.0 or newer"
   - "A supported CLI installed and signed in from Terminal"
 highlights:
-  - "Separate Codex CLI, Claude Code CLI, and Antigravity CLI workflow providers"
+  - "Separate Codex CLI, Claude Code CLI, OpenCode CLI, and Antigravity CLI workflow providers"
   - "Automatic Homebrew and common-path discovery with a manual executable picker"
   - "Login, version, executable-integrity, and safety-control checks"
-  - "Automatically refreshed Codex and Antigravity models with model-aware effort selection"
+  - "Dynamically refreshed Codex, OpenCode, and Antigravity model catalogs with model-aware effort selection"
+  - "Only currently fully free OpenCode Zen text models, with no paid fallback"
   - "Isolated temporary working directories with no access to project rules or prior sessions"
   - "Documentation-based best-effort Antigravity integration"
 configuration:
   - "Refresh CLI status and models, choose an executable, and set model and effort globally or per workflow"
+  - "Review current OpenCode Zen pricing and privacy terms before using a free model"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0"
+screenshots:
+  - src: "/screenshots/plugins/authenticated-cli.png"
+    alt: "Authenticated Provider CLIs settings with OpenCode Zen in TypeWhisper for macOS"
+    caption: "Codex, Claude Code, OpenCode Zen, and Antigravity status with model, effort, isolation, and privacy guidance."
+    localized: true
 ---
+
+## Availability
+
+Authenticated Provider CLIs 1.1.0 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0). Its current source code is maintained on the repository's `main` branch.
 
 ## macOS Setup
 
-1. Install Codex CLI, Claude Code CLI, or Antigravity CLI using the provider's official instructions.
-2. Open Terminal and sign in with the CLI itself. For example, run `codex login` or the corresponding Claude Code login command.
+1. Install Codex CLI, Claude Code CLI, OpenCode CLI, or Antigravity CLI using the provider's official instructions.
+2. Open Terminal and sign in with the CLI itself. For example, run `codex login`; OpenCode must list an existing **OpenCode Zen** login.
 3. Open TypeWhisper Settings > Plugins and configure **Authenticated Provider CLIs**.
 4. Click **Check again**. If more than one installation exists, use **Choose…** to select the intended executable.
-5. Wait until the provider shows **Ready**, then select it globally or for an individual workflow. Depending on the CLI, you can also select a model and effort level.
+5. Wait until the provider shows **Ready**, then select it globally or for an individual workflow. OpenCode also needs at least one model that its current Zen catalog reports as fully free.
+6. Depending on the CLI and selected model, choose a model and effort level globally or for the individual workflow.
 
 The add-on searches common native locations including Homebrew installations. A manually selected path can be returned to automatic detection at any time.
 
 ## Providers and availability
 
-| Provider | Command | When it becomes available |
-| --- | --- | --- |
-| Codex CLI | `codex` | The executable passes integrity checks, the account is signed in, and all required isolation flags are supported |
-| Claude Code CLI | `claude` | The executable passes integrity checks, the account is signed in, and safe non-interactive mode is supported |
-| Antigravity CLI | `agy` | `agy models` confirms the login and the documented headless, sandbox, and structured-output flags are present; the integration is best effort |
+| Provider        | Command    | When it becomes available                                                                                                                                                                                            |
+| --------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex CLI       | `codex`    | The executable passes integrity checks, the account is signed in, and all required isolation flags are supported                                                                                                     |
+| Claude Code CLI | `claude`   | The executable passes integrity checks, the account is signed in, and safe non-interactive mode is supported                                                                                                         |
+| OpenCode CLI    | `opencode` | The executable passes integrity checks, `opencode auth list` contains OpenCode Zen, and the required isolation flags are supported; workflow processing also requires at least one current fully free Zen text model |
+| Antigravity CLI | `agy`      | `agy models` confirms the login and the documented headless, sandbox, and structured-output flags are present; the integration is best effort                                                                        |
 
 TypeWhisper rechecks the detected version, login state, and required controls periodically. It rejects signed-out, incompatible, ambiguous, or insufficiently isolated installations instead of silently reducing safeguards.
 
@@ -46,9 +60,11 @@ TypeWhisper rechecks the detected version, login state, and required controls pe
 
 For Codex, TypeWhisper requests picker-visible models directly through `model/list` from the installed and signed-in CLI's App Server. Each model includes its `supportedReasoningEfforts`, `defaultReasoningEffort`, and whether Codex marks it as the default. This lets both pickers follow account changes instead of baking fixed Codex lists into the add-on.
 
+For OpenCode, TypeWhisper loads the Zen catalog through `opencode models opencode --verbose --pure`. It exposes only `opencode/*` text models whose complete pricing object includes input and output prices and whose every numeric value—including cache and tier pricing—is zero. Free offers are dynamic and can change or end at any time; TypeWhisper never falls back to an unverified or paid model. Safe variants reported for the selected model become its available effort levels on macOS.
+
 Antigravity models are loaded with `agy models`; its documented effort levels are **Low**, **Medium**, and **High**. Claude Code documents **Low**, **Medium**, **High**, **XHigh**, **Max**, and **Ultracode**, but its headless CLI does not expose a comparable machine-readable model catalog.
 
-The catalogs refresh when the add-on starts and whenever you click **Check again**, then remain cached locally. If a refresh temporarily fails, the last successful catalog stays available. **Provider Default** persists no concrete value and follows the CLI or selected model's current default for each request. Model and effort can be selected in the global LLM fallbacks or overridden for an individual workflow.
+The catalogs refresh when the add-on starts and whenever you click **Check again**, then remain cached locally. If a refresh temporarily fails, the last successfully verified catalog stays visible. Before launching OpenCode, TypeWhisper checks that the selected ID is still in that verified free-model catalog. **Provider Default** persists no concrete value and follows the CLI or selected model's current default for each request. Model and effort can be selected in the global LLM fallbacks or overridden for an individual workflow.
 
 ## Isolation and privacy
 
@@ -56,7 +72,9 @@ For every workflow, TypeWhisper passes only two text fields: the workflow instru
 
 Each request runs non-interactively in a new private temporary directory and is subject to a timeout and input/output limits. Codex runs ephemerally in a read-only sandbox with approvals, tools, web access, project instructions, memories, multi-agent features, and session persistence disabled. Claude Code runs without tools, MCP access, browser access, slash commands, or persistent sessions. Antigravity runs as a structured one-shot request with `--sandbox` in the empty temporary workspace.
 
-The chosen provider still receives the prompt text through its cloud service. Review the provider account's plan, limits, and data-handling terms before using it with sensitive text.
+OpenCode keeps the existing Zen login in its normal data directory, but TypeWhisper does not read or store the credential. Each request gets temporary configuration, cache, state, and database paths. Project and user configuration, user-defined agents, commands, plugins, MCP servers, sessions, sharing, snapshots, and update checks are disabled, while tool permissions are deny-all. OpenCode must return a strict structured text result and cannot reuse an earlier session.
+
+The chosen provider still receives the prompt text through its cloud service. Some free OpenCode Zen models may permit prompts and completions to be used for training. Review the selected model's [current Zen pricing and privacy terms](https://opencode.ai/docs/zen/), and do not send personal or confidential text unless those terms allow it.
 
 ## Antigravity: best effort
 
@@ -69,4 +87,5 @@ We did not have access to a signed-in Antigravity account for a live test. The i
 - **Not installed:** Install the native CLI or select its executable manually. Shell aliases cannot be selected; executable shims and symlinks must pass the integrity and permissions checks.
 - **Sign-in required:** Complete the provider login in Terminal, then click **Check again**.
 - **Incompatible:** Update the CLI so all required non-interactive and isolation controls are available.
+- **No free OpenCode model:** Refresh the integration and review the current Zen catalog. The add-on will not substitute a paid model.
 - **Check failed:** Confirm that the executable is local, not writable by other users, and can run from Terminal.
