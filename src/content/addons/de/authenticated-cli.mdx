@@ -3,7 +3,7 @@ slug: authenticated-cli
 name: Authentifizierte Provider-CLIs
 author: TypeWhisper
 icon: Terminal
-description: Nutze bereits angemeldete Provider-CLIs als isolierte LLM-Anbieter unter macOS und Windows.
+description: Nutze angemeldete Codex-, Claude-, OpenCode- und Antigravity-CLIs als isolierte LLM-Anbieter unter macOS und Windows.
 categories:
   - llm
 platforms:
@@ -29,13 +29,16 @@ Nur die Workflow-Anweisung und das Transkript beziehungsweise der ausgewählte E
 
 Der Anbieter hinter der CLI verarbeitet den Text weiterhin über seinen Cloud-Dienst. Die Tarif-, Nutzungslimit- und Datenschutzregeln des jeweiligen Kontos gelten weiterhin.
 
+Die OpenCode-Unterstützung zeigt nur Zen-Modelle an, deren vollständige gemeldete Preisangaben Kosten von null ausweisen. OpenCode kann diese Angaben aus seinem eigenen Cache liefern; zugleich können sich Angebote jederzeit ändern oder enden. Bei einigen kostenlosen Modellen dürfen Prompts und Antworten außerdem für das Training verwendet werden. Prüfe deshalb die [aktuellen Preis- und Datenschutzbedingungen von Zen](https://opencode.ai/docs/zen/) für das gewählte Modell, bevor du persönliche oder vertrauliche Texte sendest.
+
 ## Unterstützte CLIs
 
-| Anbieter | macOS | Windows |
-| --- | --- | --- |
-| Codex CLI | Unterstützt über `codex` | Unterstützt über `codex.exe` |
-| Claude Code CLI | Unterstützt über `claude` | Unterstützt über `claude.exe` |
-| Antigravity CLI | Dokumentationsbasierte Best-Effort-Verarbeitung über `agy` | Nur Statusvorschau über `agy.exe`; keine Verarbeitung |
+| Anbieter        | macOS                                                                                                        | Windows                                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| Codex CLI       | Unterstützt über `codex`                                                                                     | Unterstützt über `codex.exe`                                                                                 |
+| Claude Code CLI | Unterstützt über `claude`                                                                                    | Unterstützt über `claude.exe`                                                                                |
+| OpenCode Zen    | Laut Katalog vollständig kostenlose Modelle über `opencode`, einschließlich modellspezifischer Effort-Stufen | Laut Katalog vollständig kostenlose Modelle über `opencode.exe`; diese Edition bietet keinen Effort-Override |
+| Antigravity CLI | Dokumentationsbasierte Best-Effort-Verarbeitung über `agy`                                                   | Nur Statusvorschau über `agy.exe`; keine Verarbeitung                                                        |
 
 ## Zentrale Funktionen
 
@@ -46,4 +49,5 @@ Der Anbieter hinter der CLI verarbeitet den Text weiterhin über seinen Cloud-Di
 - Manuelle Statusaktualisierung und regelmäßige Prüfungen im Hintergrund
 - Temporäre Arbeitsverzeichnisse pro Anfrage, Zeitlimits und strenge Größenlimits für Ein- und Ausgabe
 - Strukturierte Textergebnisse ohne Zugriff auf TypeWhisper-Audio oder weitere App-Daten
-- Unter macOS automatisch aktualisierte Codex- und Antigravity-Modelle sowie globale und workflow-spezifische Effort-Auswahl
+- Ein von der CLI gemeldeter OpenCode-Zen-Katalog, den TypeWhisper neu lädt und auf Textmodelle mit vollständig als null ausgewiesenen Kosten filtert
+- Unter macOS automatisch neu geladene Codex-, OpenCode- und Antigravity-Modelle sowie globale und workflow-spezifische Effort-Auswahl

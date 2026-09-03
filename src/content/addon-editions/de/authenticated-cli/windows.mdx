@@ -1,8 +1,8 @@
 ---
 familySlug: "authenticated-cli"
 platform: "windows"
-version: "1.0.0"
-description: "Nutze bestehende Sitzungen der Codex CLI und Claude Code CLI als isolierte LLM-Anbieter für Windows-Workflows."
+version: "1.1.0"
+description: "Nutze bestehende Sitzungen der Codex CLI, Claude Code CLI und OpenCode Zen als isolierte LLM-Anbieter für Windows-Workflows."
 id: "com.typewhisper.authenticated-cli"
 minAppVersion: "1.0.9"
 requirements:
@@ -10,39 +10,55 @@ requirements:
   - "Windows 10 oder neuer"
   - "Eine unterstützte, installierte und angemeldete native CLI"
 highlights:
-  - "Separate Workflow-Anbieter für Codex CLI und Claude Code CLI"
+  - "Separate Workflow-Anbieter für Codex CLI, Claude Code CLI und OpenCode Zen"
   - "Automatische Erkennung nativer Windows-Installationen mit Programmauswahl"
   - "Prüfung von Anmeldung, Version, Signatur und erforderlichen Sicherheitsfunktionen"
+  - "Nur dynamisch geprüfte, vollständig kostenlose OpenCode-Zen-Textmodelle ohne kostenpflichtigen Fallback"
   - "Isolierte temporäre Arbeitsverzeichnisse mit strengen Anfragelimits"
   - "Best-effort-Statusvorschau für Antigravity ohne unsichere Verarbeitung"
 configuration:
-  - "CLI-Status aktualisieren oder für jeden Anbieter eine bestimmte native Programmdatei auswählen"
+  - "CLI-Status und OpenCode-Zen-Katalog aktualisieren oder für jeden Anbieter eine bestimmte native Programmdatei auswählen"
+  - "Aktuelle Preise und Datenschutzbedingungen von OpenCode Zen vor der Nutzung eines kostenlosen Modells prüfen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-authenticated-cli-v1.1.0"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.authenticated-cli.de.png"
+    alt: "Einstellungen für authentifizierte Provider-CLIs mit OpenCode Zen in TypeWhisper für Windows"
+    caption: "Status nativer CLIs, aktueller Katalog kostenloser Modelle und Datenschutzhinweis für OpenCode Zen."
+    localized: false
 ---
+
+## Verfügbarkeit
+
+Authentifizierte Provider-CLIs 1.1.0 ist als [Plugin-Release für TypeWhisper unter Windows](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-authenticated-cli-v1.1.0) verfügbar. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
 
 ## Einrichtung unter Windows
 
-1. Installiere Codex CLI oder Claude Code CLI und melde dich über die CLI selbst an.
+1. Installiere Codex CLI, Claude Code CLI oder OpenCode CLI und melde dich über die CLI selbst an. OpenCode muss eine bestehende Anmeldung bei **OpenCode Zen** auflisten.
 2. Öffne TypeWhisper Einstellungen > Integrationen und konfiguriere **Authentifizierte Provider-CLIs**.
 3. Aktualisiere den Status und wähle eine Installation aus, falls Windows mehrere findet.
-4. Warte, bis der Anbieter als **Bereit** angezeigt wird.
-5. Wähle **Codex CLI** oder **Claude Code CLI** als LLM-Anbieter in einem Workflow.
+4. Warte, bis der Anbieter als **Bereit** angezeigt wird. OpenCode benötigt zusätzlich mindestens ein Modell, das der aktuelle Zen-Katalog als vollständig kostenlos ausweist.
+5. Wähle **Codex CLI**, **Claude Code CLI** oder **OpenCode Zen** als LLM-Anbieter in einem Workflow.
 
 Unterstützt werden nur native `.exe`-Installationen. TypeWhisper lehnt abgemeldete, inkompatible, mehrdeutige oder nicht ausreichend isolierte Installationen ab, anstatt sie mit schwächeren Schutzvorkehrungen zu starten.
 
 ## Anbieter und Verfügbarkeit
 
-| Anbieter | Programmdatei | Wann er verfügbar wird |
-| --- | --- | --- |
-| Codex CLI | `codex.exe` | Installiert, angemeldet und alle benötigten Isolationsfunktionen werden unterstützt |
-| Claude Code CLI | `claude.exe` | Installiert, angemeldet und ein sicherer nicht interaktiver Modus wird unterstützt |
-| Antigravity CLI | `agy.exe` | Nur Statusvorschau; die Workflow-Verarbeitung bleibt deaktiviert |
+| Anbieter        | Programmdatei  | Wann er verfügbar wird                                                                                                                                                                |
+| --------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex CLI       | `codex.exe`    | Installiert, angemeldet und alle benötigten Isolationsfunktionen werden unterstützt                                                                                                   |
+| Claude Code CLI | `claude.exe`   | Installiert, angemeldet und ein sicherer nicht interaktiver Modus wird unterstützt                                                                                                    |
+| OpenCode Zen    | `opencode.exe` | Installiert, `opencode auth list` enthält OpenCode Zen, alle benötigten Isolationsfunktionen werden unterstützt und mindestens ein aktuelles Zen-Textmodell ist vollständig kostenlos |
+| Antigravity CLI | `agy.exe`      | Nur Statusvorschau; die Workflow-Verarbeitung bleibt deaktiviert                                                                                                                      |
 
 ## Konfiguration
 
 - **Status aktualisieren** prüft installierte CLIs, Versionen, Anmeldestatus, Signaturen und unterstützte Sicherheitsfunktionen.
+- **OpenCode-Katalog** lädt `opencode/*`-Textmodelle über `opencode.exe models opencode --verbose --pure`. Da die Integration in Version 1.1.0 kein `--refresh` erzwingt, kann OpenCode diese Modelldaten aus seinem eigenen Cache liefern. Angeboten werden nur Modelle, deren vollständiges Preisobjekt Werte für Ein- und Ausgabe enthält und bei denen jeder Zahlenwert einschließlich Cache- und Staffelpreisen null ist.
+- **Derzeit kostenlose Zen-Modelle** zeigt, wie viele geprüfte kostenlose Modelle wählbar sind. Solche Angebote können sich jederzeit ändern oder enden. Bei einer fehlgeschlagenen Aktualisierung kann die zuletzt erfolgreich geprüfte Liste sichtbar bleiben; das Add-on weicht jedoch niemals auf ein ungeprüftes oder kostenpflichtiges Modell aus.
 - **Installation auswählen** erscheint, wenn mehrere native Installationen gefunden wurden oder eine zuvor gewählte Programmdatei fehlt.
 - **Einrichtungsanleitung** öffnet die offizielle Dokumentation der jeweiligen CLI.
+- **[Aktuelle Zen-Preise und Datenschutzbedingungen](https://opencode.ai/docs/zen/)** öffnet die aktuellen Bedingungen von OpenCode. Die Windows-Edition bietet für OpenCode keine Modellvarianten oder Effort-Overrides an.
 
 ## Isolation und Datenschutz
 
@@ -50,4 +66,6 @@ Nur die Workflow-Anweisung und das Transkript beziehungsweise der ausgewählte E
 
 Codex läuft sitzungslos in einer schreibgeschützten Sandbox; Freigaben, Tools, Webzugriff, Projektanweisungen, Memories und Multi-Agent-Funktionen sind deaktiviert. Claude Code läuft im sicheren Modus ohne Tools, MCP-Zugriff, Browserzugriff, Slash-Befehle oder Sitzungsspeicherung. Jede Anfrage nutzt ein isoliertes temporäres Verzeichnis sowie Zeit- und Größenlimits.
 
-Das Anbieterkonto verarbeitet den Prompt weiterhin über seinen Cloud-Dienst. Dabei können eigene Tarif-, Nutzungslimit- und Datenschutzregeln gelten.
+OpenCode verwendet die bestehende Zen-Anmeldung aus seinem normalen Datenverzeichnis weiter, TypeWhisper liest oder speichert die Zugangsdaten jedoch nicht. Jede Anfrage erhält eigene temporäre Pfade für Konfiguration, Cache, Status und Datenbank. Projekt- und Benutzerkonfiguration, benutzerdefinierte Agents, Befehle, Plugins, MCP-Server, Sitzungen, Freigaben, Snapshots und Update-Prüfungen sind deaktiviert; Tool-Berechtigungen werden vollständig verweigert. OpenCode muss ein streng strukturiertes Textergebnis zurückgeben und kann keine frühere Sitzung fortsetzen.
+
+Das Anbieterkonto verarbeitet den Prompt weiterhin über seinen Cloud-Dienst. Dabei können eigene Tarif-, Nutzungslimit- und Datenschutzregeln gelten. Bei einigen kostenlosen OpenCode-Zen-Modellen dürfen Prompts und Antworten für das Training verwendet werden. Prüfe die aktuellen Bedingungen des gewählten Modells und sende keine persönlichen oder vertraulichen Texte, sofern diese Bedingungen es nicht erlauben.

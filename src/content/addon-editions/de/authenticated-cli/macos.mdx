@@ -1,44 +1,58 @@
 ---
 familySlug: "authenticated-cli"
 platform: "mac"
-version: "1.0.0"
-description: "Nutze bestehende Anmeldungen von Codex, Claude Code und Antigravity als isolierte LLM-Anbieter unter macOS."
+version: "1.1.0"
+description: "Nutze bestehende Anmeldungen von Codex, Claude Code, OpenCode Zen und Antigravity als isolierte LLM-Anbieter unter macOS."
 id: "com.typewhisper.authenticated-cli"
-minAppVersion: "1.6.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.6.0 oder neuer"
+  - "TypeWhisper 1.7.0 oder neuer"
   - "macOS 14.0 oder neuer"
   - "Eine unterstützte, im Terminal angemeldete CLI"
 highlights:
-  - "Separate Workflow-Anbieter für Codex CLI, Claude Code CLI und Antigravity CLI"
+  - "Separate Workflow-Anbieter für Codex CLI, Claude Code CLI, OpenCode CLI und Antigravity CLI"
   - "Automatische Erkennung von Homebrew und üblichen Pfaden mit manueller Programmauswahl"
   - "Prüfung von Anmeldung, Version, Programmintegrität und Sicherheitsfunktionen"
-  - "Automatisch aktualisierte Codex- und Antigravity-Modelle mit modellabhängiger Effort-Auswahl"
+  - "Dynamisch aktualisierte Modellkataloge für Codex, OpenCode und Antigravity mit modellabhängiger Effort-Auswahl"
+  - "Nur aktuell vollständig kostenlose OpenCode-Zen-Textmodelle ohne kostenpflichtigen Fallback"
   - "Isolierte temporäre Arbeitsverzeichnisse ohne Zugriff auf Projektregeln oder frühere Sitzungen"
   - "Dokumentationsbasierte Best-Effort-Integration für Antigravity"
 configuration:
   - "CLI-Status und Modelle aktualisieren, ein Programm auswählen und Modell sowie Effort global oder pro Workflow festlegen"
+  - "Aktuelle Preise und Datenschutzbedingungen von OpenCode Zen vor der Nutzung eines kostenlosen Modells prüfen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0"
+screenshots:
+  - src: "/screenshots/plugins/authenticated-cli.png"
+    alt: "Einstellungen für authentifizierte Provider-CLIs mit OpenCode Zen in TypeWhisper für macOS"
+    caption: "Status von Codex, Claude Code, OpenCode Zen und Antigravity mit Hinweisen zu Modellen, Effort, Isolation und Datenschutz."
+    localized: true
 ---
+
+## Verfügbarkeit
+
+Authentifizierte Provider-CLIs 1.1.0 ist als [Plugin-Release für TypeWhisper unter macOS](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0) verfügbar. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
 
 ## Einrichtung unter macOS
 
-1. Installiere Codex CLI, Claude Code CLI oder Antigravity CLI nach der offiziellen Anleitung des Anbieters.
-2. Öffne das Terminal und melde dich über die CLI selbst an. Führe zum Beispiel `codex login` oder den entsprechenden Anmeldebefehl von Claude Code aus.
+1. Installiere Codex CLI, Claude Code CLI, OpenCode CLI oder Antigravity CLI nach der offiziellen Anleitung des Anbieters.
+2. Öffne das Terminal und melde dich über die CLI selbst an. Führe zum Beispiel `codex login` aus; OpenCode muss eine bestehende Anmeldung bei **OpenCode Zen** auflisten.
 3. Öffne TypeWhisper Einstellungen > Plugins und konfiguriere **Authentifizierte Provider-CLIs**.
 4. Klicke auf **Erneut prüfen**. Falls mehrere Installationen vorhanden sind, wählst du mit **Auswählen…** das gewünschte Programm aus.
-5. Warte, bis der Anbieter **Bereit** anzeigt, und wähle ihn anschließend global oder für einen einzelnen Workflow. Je nach CLI kannst du zusätzlich Modell und Effort festlegen.
+5. Warte, bis der Anbieter **Bereit** anzeigt, und wähle ihn anschließend global oder für einen einzelnen Workflow. OpenCode benötigt zusätzlich mindestens ein Modell, das der aktuelle Zen-Katalog als vollständig kostenlos ausweist.
+6. Wähle je nach CLI und Modell ein Modell und eine Effort-Stufe global oder für den einzelnen Workflow.
 
 Das Add-on durchsucht übliche native Installationsorte einschließlich Homebrew. Nach einer manuellen Auswahl kannst du jederzeit zur automatischen Erkennung zurückkehren.
 
 ## Anbieter und Verfügbarkeit
 
-| Anbieter | Befehl | Wann er verfügbar wird |
-| --- | --- | --- |
-| Codex CLI | `codex` | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und alle benötigten Isolationsoptionen werden unterstützt |
-| Claude Code CLI | `claude` | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und ein sicherer nicht interaktiver Modus wird unterstützt |
-| Antigravity CLI | `agy` | `agy models` bestätigt die Anmeldung und die dokumentierten Headless-, Sandbox- und Strukturausgabe-Optionen sind vorhanden; die Integration ist Best Effort |
+| Anbieter        | Befehl     | Wann er verfügbar wird                                                                                                                                                                                                                                            |
+| --------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex CLI       | `codex`    | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und alle benötigten Isolationsoptionen werden unterstützt                                                                                                                                   |
+| Claude Code CLI | `claude`   | Das Programm besteht die Integritätsprüfung, das Konto ist angemeldet und ein sicherer nicht interaktiver Modus wird unterstützt                                                                                                                                  |
+| OpenCode CLI    | `opencode` | Das Programm besteht die Integritätsprüfung, `opencode auth list` enthält OpenCode Zen und die benötigten Isolationsoptionen werden unterstützt; für die Workflow-Verarbeitung muss zusätzlich mindestens ein aktuelles Zen-Textmodell vollständig kostenlos sein |
+| Antigravity CLI | `agy`      | `agy models` bestätigt die Anmeldung und die dokumentierten Headless-, Sandbox- und Strukturausgabe-Optionen sind vorhanden; die Integration ist Best Effort                                                                                                      |
 
 TypeWhisper prüft die erkannte Version, Anmeldung und erforderlichen Funktionen regelmäßig erneut. Abgemeldete, inkompatible, mehrdeutige oder nicht ausreichend isolierte Installationen werden abgelehnt, statt Schutzvorkehrungen stillschweigend zu reduzieren.
 
@@ -46,9 +60,11 @@ TypeWhisper prüft die erkannte Version, Anmeldung und erforderlichen Funktionen
 
 Für Codex fragt TypeWhisper die sichtbaren Modelle direkt über `model/list` beim App Server der installierten und angemeldeten CLI ab. Zusammen mit jedem Modell kommen dessen unterstützte `supportedReasoningEfforts`, der `defaultReasoningEffort` und die Information, welches Modell Codex als Standard markiert. Dadurch folgen Modell- und Effort-Auswahl automatisch Änderungen des angemeldeten Kontos, statt feste Codex-Listen in das Add-on einzubauen.
 
+Für OpenCode lädt TypeWhisper den Zen-Katalog über `opencode models opencode --verbose --pure`. Da die Integration in Version 1.1.0 kein `--refresh` erzwingt, kann OpenCode diese Modelldaten aus seinem eigenen Cache liefern. Angeboten werden nur `opencode/*`-Textmodelle, deren vollständiges Preisobjekt Werte für Ein- und Ausgabe enthält und bei denen jeder Zahlenwert einschließlich Cache- und Staffelpreisen null ist. Kostenlose Angebote sind dynamisch und können sich jederzeit ändern oder enden; TypeWhisper weicht niemals auf ein Modell mit gemeldeten Preisen ungleich null oder unvollständigen Preisangaben aus. Sichere Varianten des gewählten Modells stehen unter macOS als Effort-Stufen bereit.
+
 Antigravity-Modelle werden mit `agy models` geladen. Die dokumentierten Effort-Stufen sind **Low**, **Medium** und **High**. Claude Code dokumentiert **Low**, **Medium**, **High**, **XHigh**, **Max** und **Ultracode**, stellt in der Headless-CLI aber keine vergleichbare maschinenlesbare Modellliste bereit.
 
-Die Listen werden beim Start des Add-ons und mit **Erneut prüfen** aktualisiert und lokal zwischengespeichert. Falls eine Aktualisierung vorübergehend fehlschlägt, bleibt die zuletzt erfolgreiche Liste verfügbar. **Provider-Standard** speichert keinen konkreten Wert, sondern folgt bei jeder Anfrage dem jeweiligen CLI- beziehungsweise Modellstandard. Modell und Effort lassen sich sowohl in den globalen LLM-Fallbacks als auch als Override eines einzelnen Workflows auswählen.
+TypeWhisper lädt die von den CLIs gemeldeten Listen beim Start des Add-ons und mit **Erneut prüfen** neu und speichert das Ergebnis lokal zwischen. Bei OpenCode umgeht dieses Neuladen nicht den eigenen Modelldaten-Cache der CLI. Falls das Neuladen vorübergehend fehlschlägt, bleibt der zuletzt erfolgreich geprüfte Katalog sichtbar. Vor dem Start von OpenCode prüft TypeWhisper, ob die gewählte ID weiterhin in diesem verifizierten Katalog kostenloser Modelle enthalten ist. **Provider-Standard** speichert keinen konkreten Wert, sondern folgt bei jeder Anfrage dem jeweiligen CLI- beziehungsweise Modellstandard. Modell und Effort lassen sich sowohl in den globalen LLM-Fallbacks als auch als Override eines einzelnen Workflows auswählen.
 
 ## Isolation und Datenschutz
 
@@ -56,7 +72,9 @@ TypeWhisper übergibt für jeden Workflow nur zwei Textfelder: die Workflow-Anwe
 
 Jede Anfrage läuft nicht interaktiv in einem neuen privaten temporären Verzeichnis und unterliegt einem Zeitlimit sowie Größenlimits für Ein- und Ausgabe. Codex läuft sitzungslos in einer schreibgeschützten Sandbox; Freigaben, Tools, Webzugriff, Projektanweisungen, Memories, Multi-Agent-Funktionen und Sitzungsspeicherung sind deaktiviert. Claude Code läuft ohne Tools, MCP-Zugriff, Browserzugriff, Slash-Befehle oder dauerhafte Sitzungen. Antigravity wird als strukturierte Einmalanfrage mit `--sandbox` im leeren temporären Arbeitsverzeichnis gestartet.
 
-Der gewählte Anbieter erhält den Prompt-Text weiterhin über seinen Cloud-Dienst. Prüfe Tarif, Nutzungslimits und Datenschutzregeln des Anbieterkontos, bevor du sensible Texte verarbeitest.
+OpenCode verwendet die bestehende Zen-Anmeldung aus seinem normalen Datenverzeichnis weiter, TypeWhisper liest oder speichert die Zugangsdaten jedoch nicht. Jede Anfrage erhält eigene temporäre Pfade für Konfiguration, Cache, Status und Datenbank. Projekt- und Benutzerkonfiguration, benutzerdefinierte Agents, Befehle, Plugins, MCP-Server, Sitzungen, Freigaben, Snapshots und Update-Prüfungen sind deaktiviert; Tool-Berechtigungen werden vollständig verweigert. OpenCode muss ein streng strukturiertes Textergebnis zurückgeben und kann keine frühere Sitzung fortsetzen.
+
+Der gewählte Anbieter erhält den Prompt-Text weiterhin über seinen Cloud-Dienst. Bei einigen kostenlosen OpenCode-Zen-Modellen dürfen Prompts und Antworten für das Training verwendet werden. Prüfe die [aktuellen Preis- und Datenschutzbedingungen von Zen](https://opencode.ai/docs/zen/) für das gewählte Modell und sende keine persönlichen oder vertraulichen Texte, sofern diese Bedingungen es nicht erlauben.
 
 ## Antigravity: Best Effort
 
@@ -69,4 +87,5 @@ Für einen Live-Test stand uns jedoch kein angemeldeter Antigravity-Zugang zur V
 - **Nicht installiert:** Installiere die native CLI oder wähle das Programm manuell aus. Shell-Aliasse lassen sich nicht auswählen; ausführbare Shims und Symlinks müssen die Integritäts- und Berechtigungsprüfung bestehen.
 - **Anmeldung erforderlich:** Schließe die Anmeldung des Anbieters im Terminal ab und klicke anschließend auf **Erneut prüfen**.
 - **Inkompatibel:** Aktualisiere die CLI, damit alle benötigten nicht interaktiven und isolierenden Funktionen verfügbar sind.
+- **Kein kostenloses OpenCode-Modell:** Aktualisiere die Integration und prüfe den aktuellen Zen-Katalog. Das Add-on setzt niemals ersatzweise ein kostenpflichtiges Modell ein.
 - **Prüfung fehlgeschlagen:** Stelle sicher, dass das Programm lokal liegt, nicht von anderen Benutzern verändert werden kann und im Terminal startet.
