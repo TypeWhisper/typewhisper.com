@@ -1,0 +1,122 @@
+---
+slug: microsoft-ai
+name: Microsoft AI
+author: TypeWhisper
+icon: AudioWaveform
+iconUrl: "/brand-logos/microsoft-ai/logo.svg"
+description: Cloud transcription with Microsoft MAI Transcribe through Azure Speech, including language detection, terminology biasing, transcript styles, timestamps, and optional speaker diarization.
+categories:
+  - transcription
+platforms:
+  - mac
+  - windows
+source: bundled
+homepage: https://azure.microsoft.com/en-us/products/ai-services/ai-speech
+apiDocsUrl: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin"
+sourceUrls:
+  mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin"
+  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi"
+---
+
+## About
+
+Microsoft AI connects TypeWhisper to the MAI Transcribe models available through Azure Speech. The add-on sends a completed microphone recording or imported audio to Azure, then returns text with detected language information and segment timing. MAI Transcribe 2 can also attach speaker labels.
+
+Version `1.0.0` is available independently for macOS and Windows. Both editions provide the same core transcription controls, while using each operating system's secure credential storage. Microsoft currently describes MAI Transcribe in Azure Speech as a preview feature, so review the current Azure availability and preview terms before relying on it for production or sensitive workloads.
+
+Sources: [Microsoft MAI Transcribe documentation](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin), [Windows plugin source](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
+
+## What the terms mean
+
+`Microphone or audio file → TypeWhisper → Microsoft AI transcription engine → Azure Speech → Transcript`
+
+| Term | Meaning | What it controls in Microsoft AI |
+| --- | --- | --- |
+| **Add-on / integration** | The complete Microsoft AI package installed in TypeWhisper. | Stores the Azure connection, exposes MAI Transcribe as a transcription engine, and keeps the selected settings. |
+| **Azure Speech resource** | The Microsoft Foundry resource that supplies the endpoint and API key. | Determines authentication, region availability, billing, and access to the model catalog. |
+| **Endpoint or resource name** | The Azure host used for transcription requests. | Paste the HTTPS endpoint shown by Azure, or enter only the resource name and let TypeWhisper build its `cognitiveservices.azure.com` endpoint. |
+| **Transcription model** | The MAI model that converts audio to text. | Use MAI Transcribe 2 for the current feature set or MAI Transcribe 1.5 as a compatibility fallback. |
+| **Language selection** | A strong language hint sent with the recording. | Select one known language, or leave language selection automatic for detection and code-switched audio. |
+| **Dictionary terms** | Names and specialist vocabulary from TypeWhisper's dictionary. | Biases recognition toward important phrases without forcing them into the result. |
+| **Transcript style** | Controls how closely the result follows spoken disfluencies. | **Clean** favors readable text; **Verbatim** preserves filler words, false starts, and self-corrections. |
+| **Speaker diarization** | Separates speech by speaker. | With MAI Transcribe 2, TypeWhisper can add labels such as `Speaker 1:` and preserve segment timing. |
+
+## Models and output
+
+| Model | ID | Languages | TypeWhisper behavior |
+| --- | --- | --- | --- |
+| MAI Transcribe 2 | `MAI-Transcribe-2` | 60 | Default and recommended. Supports Clean or Verbatim output, segment timestamps, and optional speaker diarization. |
+| MAI Transcribe 1.5 | `MAI-Transcribe-1.5` | 43 | Static fallback for existing workloads. The add-on disables speaker diarization for this model. |
+
+TypeWhisper can refresh compatible model IDs from the Microsoft Foundry catalog exposed by the connected resource. Only MAI Transcribe models are kept. If catalog loading fails, the two built-in models remain available and a previously fetched catalog stays cached.
+
+The add-on uploads normalized WAV audio through Azure Speech's transcription endpoint. It does not stream partial text while you are speaking. For MAI Transcribe 2, TypeWhisper requests segment-level timestamps and turns returned speaker metadata into readable labels. Translation is not supported.
+
+## Language and terminology
+
+MAI Transcribe 2 supports 60 language codes in the current plugin catalog; MAI Transcribe 1.5 supports 43. If a TypeWhisper profile supplies exactly one language, the add-on sends it as a strong Azure locale hint. With no language or multiple hints, it leaves the locale unspecified so MAI Transcribe can detect the language. Microsoft documents automatic code switching for commonly blended language pairs.
+
+TypeWhisper also sends selected dictionary terms as Azure phrase-list hints. The add-on accepts up to 500 terms with at most 20,000 characters in total. Use this for people, product names, abbreviations, and technical vocabulary that ordinary language context may not resolve reliably.
+
+Sources: [Microsoft language support](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe#language-support), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin), [Windows plugin source](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
+
+## Azure connection and regions
+
+The plugin requires an Azure Speech endpoint and the matching API key. It accepts Azure HTTPS endpoints without an extra path, query, or fragment. If you enter only a resource name, TypeWhisper expands it to `https://<resource-name>.cognitiveservices.azure.com`.
+
+MAI Transcribe is currently available through Speech resources in these regions:
+
+- East US (`eastus`)
+- North Europe (`northeurope`)
+- Southeast Asia (`southeastasia`)
+- West US (`westus`)
+
+When TypeWhisper can identify an unsupported region from a regional endpoint, the settings or API error names the region and lists the supported alternatives. A general Azure Speech endpoint may still be valid even when the Foundry model catalog cannot be loaded; the built-in MAI model list remains available in that case.
+
+Source: [Azure Speech regions](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/regions?tabs=llmspeech)
+
+## Settings
+
+| Setting | What it controls | Example |
+| --- | --- | --- |
+| **Endpoint or resource name** | Selects the Azure Speech resource. TypeWhisper accepts a supported Azure HTTPS endpoint or a bare resource name. | `https://eastus.api.cognitive.microsoft.com` or `my-speech-resource` |
+| **API Key** | Authenticates requests and is stored through the operating system's secure secret storage. | Copy either active Speech resource key from the Azure portal. |
+| **Save/Update connection** | Stores the normalized endpoint and credential. | Save once, then update after rotating the Azure key. |
+| **Remove** | Clears the stored API key and disables the connection on macOS. On Windows, clear both connection fields and save. | Remove credentials before switching Azure subscriptions or devices. |
+| **Model** | Chooses MAI Transcribe 2 or 1.5, plus compatible models returned by the catalog. | Start with **MAI Transcribe 2**. |
+| **Refresh models** | Loads compatible model IDs from the connected Microsoft Foundry resource. | Refresh after Azure enables a new MAI Transcribe model for the resource. |
+| **Transcript style** | Chooses **Clean** or **Verbatim**. | Use Clean for notes and captions; use Verbatim for review or analysis. |
+| **Speaker diarization** | Adds speaker labels when the selected model supports them. | Enable it for interviews and multi-person meetings with MAI Transcribe 2. |
+
+## Typical ways to use it
+
+- **Readable dictation:** Select **Clean** to remove fillers before TypeWhisper inserts the completed transcript.
+- **Interview transcript:** Enable speaker diarization with MAI Transcribe 2 to separate the returned segments by speaker.
+- **Audit or research material:** Select **Verbatim** when false starts, filler words, and the original delivery matter.
+- **Specialist vocabulary:** Add names, acronyms, and product terms to the TypeWhisper dictionary before recording.
+- **Multilingual audio:** Leave the profile on automatic language detection when a recording switches between languages.
+- **Timed file transcription:** Use MAI Transcribe 2 to retain segment timestamps for later navigation or processing.
+
+## Setup example
+
+1. In the Azure portal, create a Microsoft Foundry resource for Speech in East US, North Europe, Southeast Asia, or West US.
+2. Open the resource and copy its Speech endpoint or resource name plus one API key.
+3. In TypeWhisper, open **Settings > Integrations**, find **Microsoft AI** under **Discover**, install it, and make sure it is enabled.
+4. Open the add-on settings, enter the endpoint and API key, then save the connection.
+5. Keep **MAI Transcribe 2** selected and optionally refresh the Foundry model catalog.
+6. Choose **Clean** or **Verbatim** and enable speaker diarization only when you need speaker labels.
+7. Select **Microsoft AI** as the transcription engine in a TypeWhisper profile and run a short test recording.
+
+## Platform limits
+
+| Platform | Host requirement | Audio limit enforced by the plugin |
+| --- | --- | --- |
+| macOS | TypeWhisper 1.7.0 and macOS 14 or newer | Up to 2 hours and 300 MB of normalized WAV audio |
+| Windows | TypeWhisper 1.0.9 and Windows 10 or newer | Shorter than 2 hours and smaller than 250 MB of normalized WAV audio |
+
+## Cloud processing and privacy
+
+Audio is sent to Microsoft Azure whenever Microsoft AI is selected as the transcription engine. The API key is stored through TypeWhisper's secure platform credential storage; the selected endpoint, model, transcript style, cached catalog, and diarization preference are kept as local plugin settings. This add-on does not provide an LLM workflow or text-to-speech role.
+
+Review Microsoft's current Azure privacy, data-handling, preview, regional-availability, and pricing terms before using the add-on with confidential or regulated recordings.

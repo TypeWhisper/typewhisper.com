@@ -1,6 +1,93 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("add-on platform editions", () => {
+  test("Microsoft AI exposes source-checked macOS and Windows guides", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    const expectNoHorizontalOverflow = async () => {
+      const dimensions = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        content: document.documentElement.scrollWidth,
+      }));
+
+      expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
+    };
+
+    await page.goto("/en/addons/microsoft-ai/");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Microsoft AI" }),
+    ).toBeVisible();
+    await expect(page.getByAltText("Microsoft AI")).toHaveAttribute(
+      "src",
+      "/brand-logos/microsoft-ai/logo.svg",
+    );
+    await expect(page.getByTestId("addon-edition-card")).toHaveCount(2);
+    await expectNoHorizontalOverflow();
+
+    await page.goto("/en/addons/microsoft-ai/macos/");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "Microsoft AI for macOS",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.locator('img[src="/screenshots/en/plugins/microsoft-ai.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.locator(
+        'source[srcset="/screenshots/en/plugins/microsoft-ai.webp"]',
+      ),
+    ).toHaveCount(1);
+    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText(
+      "up to two hours and up to 300 MB",
+    );
+    await expect(page.locator("body")).toContainText(
+      "does not stream partial text",
+    );
+    await expectNoHorizontalOverflow();
+
+    await page.goto("/en/addons/microsoft-ai/windows/");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "Microsoft AI for Windows",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.png"]',
+      ),
+    ).toBeVisible();
+    await expect(page.locator("body")).toContainText(
+      "shorter than two hours and smaller than 250 MB",
+    );
+    await expectNoHorizontalOverflow();
+
+    await page.goto("/de/addons/microsoft-ai/macos/");
+    await expect(
+      page.locator('img[src="/screenshots/de/plugins/microsoft-ai.png"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Einrichtungs-Tutorial" }),
+    ).toBeVisible();
+    await expectNoHorizontalOverflow();
+
+    await page.goto("/de/addons/microsoft-ai/windows/");
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.de.png"]',
+      ),
+    ).toBeVisible();
+    await expect(page.locator("body")).toContainText(
+      "unter zwei Stunden und unter 250 MB",
+    );
+    await expectNoHorizontalOverflow();
+  });
+
   test("Meta exposes the published Windows and macOS editions", async ({
     page,
   }) => {

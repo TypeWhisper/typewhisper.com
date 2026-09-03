@@ -19,6 +19,7 @@
     "com.typewhisper.linear",
     "com.typewhisper.live-transcript",
     "com.typewhisper.meta",
+    "com.typewhisper.microsoft-ai",
     "com.typewhisper.obsidian",
     "com.typewhisper.openai-compatible",
     "com.typewhisper.openai-vector-memory",

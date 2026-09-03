@@ -79,6 +79,10 @@
     "mac": ["transcription", "llm"],
     "windows": ["transcription", "llm"]
   },
+  "microsoft-ai": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
   "obsidian": {
     "mac": ["action"],
     "windows": ["action"]

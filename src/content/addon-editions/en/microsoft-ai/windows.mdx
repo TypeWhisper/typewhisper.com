@@ -1,0 +1,97 @@
+---
+familySlug: "microsoft-ai"
+platform: "windows"
+version: "1.0.0"
+description: "Microsoft MAI Transcribe through Azure Speech, with language detection, dictionary biasing, transcript styles, segment timestamps, and optional speaker diarization."
+id: "com.typewhisper.microsoft-ai"
+minAppVersion: "1.0.9"
+requirements:
+  - "TypeWhisper 1.0.9 or newer"
+  - "Windows 10 or newer"
+  - "An Azure Speech resource in a supported MAI region and its API key"
+highlights:
+  - "MAI Transcribe 2 and MAI Transcribe 1.5 cloud transcription"
+  - "Automatic language detection or one explicit language hint"
+  - "Terminology biasing with up to 500 dictionary terms"
+  - "Clean and Verbatim transcript styles"
+  - "Segment timestamps and optional speaker labels with MAI Transcribe 2"
+  - "Foundry model discovery with a cached local fallback catalog"
+configuration:
+  - "Save an Azure Speech endpoint or resource name and API key in protected secret storage"
+  - "Choose MAI Transcribe 2 or a compatible discovered model"
+  - "Refresh the Microsoft Foundry model catalog when needed"
+  - "Choose Clean or Verbatim transcript style"
+  - "Enable speaker diarization when MAI Transcribe 2 should label speakers"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-microsoft-ai-v1.0.0"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.microsoft-ai.png"
+    alt: "Microsoft AI settings in TypeWhisper for Windows"
+    caption: "Azure Speech endpoint and protected API key, model refresh, transcript style, and speaker diarization."
+    localized: false
+---
+
+## Availability
+
+Microsoft AI 1.0.0 is available as a [TypeWhisper for Windows plugin release](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-microsoft-ai-v1.0.0). It requires TypeWhisper 1.0.9 and Windows 10 or newer. Microsoft currently marks MAI Transcribe in Azure Speech as a preview feature.
+
+## What the Windows add-on does
+
+The add-on provides one cloud transcription engine: **Microsoft AI (MAI Transcribe)**. When a microphone recording ends or an audio file is submitted, TypeWhisper sends normalized WAV audio to the connected Azure Speech resource. Returned phrases become timed TypeWhisper segments, including detected language and speaker labels when Azure supplies them.
+
+This edition does not stream partial text and does not support translation, LLM workflows, or text-to-speech. Its static catalog contains **MAI Transcribe 2** and **MAI Transcribe 1.5**. A successful refresh adds compatible MAI models returned by Microsoft Foundry and keeps them in the plugin settings.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **Endpoint or resource name** | Accepts the Azure Speech HTTPS endpoint without a path, or only the resource name. A bare name becomes `https://<name>.cognitiveservices.azure.com`. |
+| **API Key** | Stores the Speech resource key with TypeWhisper's protected plugin secret storage. It is never included in logs or diagnostics. |
+| **Save connection** | Normalizes and saves the endpoint and key. Clear both fields and save to remove the connection. |
+| **Model** | Selects MAI Transcribe 2 by default, MAI Transcribe 1.5 as a static fallback, or another compatible discovered model. |
+| **Refresh models** | Requests the Foundry model catalog through the saved Azure endpoint. Static and previously cached models remain available if refreshing fails. |
+| **Transcript style** | **Clean** removes fillers for readability. **Verbatim** preserves filler words, false starts, and self-corrections. |
+| **Speaker diarization** | Requests speaker labels for MAI Transcribe 2. The checkbox becomes unavailable for MAI Transcribe 1.5. |
+
+The settings show a warning when a recognizable regional endpoint is outside East US, North Europe, Southeast Asia, or West US.
+
+## Setup tutorial
+
+1. Update TypeWhisper to 1.0.9 or newer.
+2. In the Azure portal, create a Microsoft Foundry resource for Speech in `eastus`, `northeurope`, `southeastasia`, or `westus`.
+3. From the resource, copy the Speech endpoint or resource name and one API key.
+4. Open **Settings > Integrations** in TypeWhisper for Windows.
+5. Find **Microsoft AI** under **Discover**, install it, and make sure it is enabled.
+6. Open its settings, enter the endpoint and API key, then select **Save connection**.
+7. Keep **MAI Transcribe 2** selected, optionally refresh the models, and choose **Clean** or **Verbatim**.
+8. Enable speaker diarization only when you need labels, then select Microsoft AI as a profile's transcription engine and run a short test.
+
+## Use MAI Transcribe
+
+1. Select **Microsoft AI** as the transcription engine in the TypeWhisper profile that should use Azure.
+2. Choose one input language when you know it with certainty. Leave language selection automatic for detection or code-switched audio.
+3. Add product names, people, acronyms, and specialist vocabulary to the TypeWhisper dictionary. The plugin sends at most 500 terms and 20,000 total characters as phrase-list hints.
+4. Use **Clean** for readable notes or captions; use **Verbatim** when the precise spoken form matters.
+5. Enable speaker diarization before recording or importing multi-speaker audio. This setting requires MAI Transcribe 2.
+6. Check the completed result after Azure returns it; no partial transcript appears while the recording is still running.
+
+With MAI Transcribe 2, TypeWhisper requests segment timestamps. When Azure returns speaker information, the output places each timed segment on a line such as `Speaker 1: ...`.
+
+## Audio limits
+
+The Windows plugin accepts normalized WAV audio shorter than two hours and smaller than 250 MB. Input at or above either limit is rejected before upload. Azure requests use a three-minute network timeout; that timeout does not change the recording-length limit.
+
+## Troubleshooting
+
+- **The connection is invalid:** Use an HTTPS Azure Speech endpoint without an extra path, query, user information, or fragment. You can also enter only the resource name.
+- **MAI Transcribe is unavailable in this region:** Create or use a Speech resource in East US, North Europe, Southeast Asia, or West US.
+- **Foundry catalog unavailable:** The connected Speech resource may not expose the model-catalog endpoint. The static MAI Transcribe 2 and 1.5 choices remain available.
+- **No speaker labels appear:** Select MAI Transcribe 2, enable diarization before transcription, and confirm that Azure returned speaker metadata.
+- **Translation fails:** The plugin intentionally rejects translate-to-English requests because MAI Transcribe does not support translation through this integration.
+- **Authentication fails:** Recopy the key belonging to the same Azure Speech resource as the endpoint and save the connection again.
+
+## Cloud processing and privacy
+
+Audio is sent to Microsoft Azure for transcription. The API key is stored through TypeWhisper's protected Windows plugin secret storage and is excluded from plugin logs and diagnostics. Endpoint, selected model, cached model IDs, style, and diarization preference are local settings. Review Microsoft's current Azure privacy, preview, regional-availability, and pricing terms before submitting sensitive audio.
+
+Sources: [Microsoft MAI Transcribe documentation](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe), [Microsoft AI plugin source](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
