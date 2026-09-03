@@ -110,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 35);
+  assert.equal(deFamilies.length, 36);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -176,8 +176,8 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
 
-  assert.equal(windowsAddons.length, 38);
-  assert.equal(windowsScreenshotIds.size, 34);
+  assert.equal(windowsAddons.length, 39);
+  assert.equal(windowsScreenshotIds.size, 35);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
@@ -374,6 +374,110 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
         path.resolve(`public/screenshots/${locale}/plugins/meta.${extension}`),
       );
     }
+  }
+});
+
+test("Microsoft AI docs match both published 1.0.0 editions", async () => {
+  const capabilityMap = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-capabilities.json"),
+      "utf8",
+    ),
+  );
+  const expected = {
+    mac: {
+      filename: "macos.mdx",
+      minAppVersion: "1.7.0",
+      minOsVersion: "14.0",
+      sourceUrl:
+        "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
+    },
+    windows: {
+      filename: "windows.mdx",
+      minAppVersion: "1.0.9",
+      minOsVersion: undefined,
+      sourceUrl:
+        "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi",
+    },
+  };
+
+  for (const locale of LOCALES) {
+    const familyContent = await readFile(
+      path.resolve(`src/content/addons/${locale}/microsoft-ai.mdx`),
+      "utf8",
+    );
+    const family = frontmatter(familyContent);
+
+    assert.equal(scalar(family, "slug"), "microsoft-ai");
+    assert.equal(scalar(family, "name"), "Microsoft AI");
+    assert.deepEqual(list(family, "platforms"), ["mac", "windows"]);
+    assert.deepEqual(list(family, "categories"), ["transcription"]);
+    assert.equal(scalar(family, "version"), undefined);
+    assert.equal(scalar(family, "id"), undefined);
+    assert.equal(
+      scalar(family, "iconUrl"),
+      "/brand-logos/microsoft-ai/logo.svg",
+    );
+    assert.match(familyContent, /MAI Transcribe 2/);
+    assert.match(familyContent, /MAI Transcribe 1\.5/);
+
+    for (const [platform, platformExpected] of Object.entries(expected)) {
+      const content = await readFile(
+        path.resolve(
+          `src/content/addon-editions/${locale}/microsoft-ai/${platformExpected.filename}`,
+        ),
+        "utf8",
+      );
+      const data = frontmatter(content);
+      const guide = body(content);
+
+      assert.equal(scalar(data, "familySlug"), "microsoft-ai");
+      assert.equal(scalar(data, "platform"), platform);
+      assert.equal(scalar(data, "version"), "1.0.0");
+      assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
+      assert.equal(
+        scalar(data, "minAppVersion"),
+        platformExpected.minAppVersion,
+      );
+      assert.equal(
+        scalar(data, "minOsVersion"),
+        platformExpected.minOsVersion,
+      );
+      assert.equal(scalar(data, "sourceUrl"), platformExpected.sourceUrl);
+      assert.match(
+        scalar(data, "releaseUrl"),
+        /plugin-microsoft-ai-v1\.0\.0$/,
+      );
+      assert.deepEqual(capabilityMap["microsoft-ai"][platform], [
+        "transcription",
+      ]);
+      assert.match(guide, /MAI Transcribe 2/);
+      assert.match(
+        guide,
+        locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+      );
+    }
+  }
+
+  await access(path.resolve("public/brand-logos/microsoft-ai/logo.svg"));
+
+  for (const locale of LOCALES) {
+    for (const extension of ["png", "webp"]) {
+      await access(
+        path.resolve(
+          `public/screenshots/${locale}/plugins/microsoft-ai.${extension}`,
+        ),
+      );
+    }
+  }
+
+  for (const filename of [
+    "com.typewhisper.microsoft-ai.png",
+    "com.typewhisper.microsoft-ai.webp",
+    "com.typewhisper.microsoft-ai.de.png",
+    "com.typewhisper.microsoft-ai.de.webp",
+  ]) {
+    await access(path.resolve(`public/screenshots/windows/plugins/${filename}`));
   }
 });
 

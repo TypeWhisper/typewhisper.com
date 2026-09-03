@@ -1,0 +1,97 @@
+---
+familySlug: "microsoft-ai"
+platform: "windows"
+version: "1.0.0"
+description: "Microsoft MAI Transcribe über Azure Speech, mit Spracherkennung, Wörterbuch-Biasing, Transkriptionsstilen, Segment-Zeitstempeln und optionaler Sprechererkennung."
+id: "com.typewhisper.microsoft-ai"
+minAppVersion: "1.0.9"
+requirements:
+  - "TypeWhisper 1.0.9 oder neuer"
+  - "Windows 10 oder neuer"
+  - "Eine Azure-Speech-Ressource in einer unterstützten MAI-Region und ihr API-Key"
+highlights:
+  - "Cloud-Transkription mit MAI Transcribe 2 und MAI Transcribe 1.5"
+  - "Automatische Spracherkennung oder ein eindeutiger Sprachhinweis"
+  - "Fachbegriffs-Biasing mit bis zu 500 Wörterbucheinträgen"
+  - "Bereinigter und wörtlicher Transkriptionsstil"
+  - "Segment-Zeitstempel und optionale Sprecherlabels mit MAI Transcribe 2"
+  - "Foundry-Modellsuche mit lokal zwischengespeichertem Fallback-Katalog"
+configuration:
+  - "Azure-Speech-Endpunkt oder Ressourcenname und API-Key im geschützten Secret-Speicher sichern"
+  - "MAI Transcribe 2 oder ein kompatibles gefundenes Modell auswählen"
+  - "Microsoft-Foundry-Modellkatalog bei Bedarf aktualisieren"
+  - "Bereinigten oder wörtlichen Transkriptionsstil auswählen"
+  - "Sprechererkennung aktivieren, wenn MAI Transcribe 2 Sprecher kennzeichnen soll"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-microsoft-ai-v1.0.0"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.microsoft-ai.de.png"
+    alt: "Microsoft-AI-Einstellungen in TypeWhisper für Windows"
+    caption: "Azure-Speech-Endpunkt und geschützter API-Key, Modellaktualisierung, Transkriptionsstil und Sprechererkennung."
+    localized: false
+---
+
+## Verfügbarkeit
+
+Microsoft AI 1.0.0 ist als [Plugin-Release für TypeWhisper unter Windows](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-microsoft-ai-v1.0.0) verfügbar. Es benötigt TypeWhisper 1.0.9 und Windows 10 oder neuer. Microsoft kennzeichnet MAI Transcribe in Azure Speech derzeit als Vorschau.
+
+## Was das Windows-Add-on macht
+
+Das Add-on stellt eine Cloud-Transkriptions-Engine bereit: **Microsoft AI (MAI Transcribe)**. Wenn eine Mikrofonaufnahme endet oder eine Audiodatei übergeben wird, sendet TypeWhisper normalisiertes WAV-Audio an die verbundene Azure-Speech-Ressource. Zurückgegebene Phrasen werden zu zeitlich markierten TypeWhisper-Segmenten, einschließlich erkannter Sprache und Sprecherlabels, sofern Azure sie liefert.
+
+Diese Edition streamt keinen Teiltext und unterstützt weder Übersetzungen noch LLM-Workflows oder Text-to-Speech. Der statische Katalog enthält **MAI Transcribe 2** und **MAI Transcribe 1.5**. Eine erfolgreiche Aktualisierung ergänzt kompatible MAI-Modelle aus Microsoft Foundry und behält sie in den Plugin-Einstellungen.
+
+## Einstellungen
+
+| Einstellung | Funktion |
+| --- | --- |
+| **Endpunkt oder Ressourcenname** | Akzeptiert den Azure-Speech-HTTPS-Endpunkt ohne Pfad oder nur den Ressourcennamen. Aus einem reinen Namen wird `https://<name>.cognitiveservices.azure.com`. |
+| **API-Key** | Speichert den Speech-Ressourcen-Key im geschützten Plugin-Secret-Speicher von TypeWhisper. Er wird nicht in Logs oder Diagnosedaten aufgenommen. |
+| **Verbindung speichern** | Normalisiert und speichert Endpunkt und Key. Leere beide Felder und speichere erneut, um die Verbindung zu entfernen. |
+| **Modell** | Wählt standardmäßig MAI Transcribe 2, MAI Transcribe 1.5 als statischen Fallback oder ein anderes kompatibles gefundenes Modell. |
+| **Modelle aktualisieren** | Ruft über den gespeicherten Azure-Endpunkt den Foundry-Modellkatalog ab. Statische und zuvor zwischengespeicherte Modelle bleiben bei einem Fehler verfügbar. |
+| **Transkriptionsstil** | **Bereinigt** entfernt Füllwörter für bessere Lesbarkeit. **Wörtlich** erhält Füllwörter, Fehlstarts und Selbstkorrekturen. |
+| **Sprechererkennung** | Fordert mit MAI Transcribe 2 Sprecherlabels an. Für MAI Transcribe 1.5 ist das Kontrollkästchen nicht verfügbar. |
+
+Die Einstellungen warnen, wenn ein erkennbarer regionaler Endpunkt außerhalb von East US, North Europe, Southeast Asia oder West US liegt.
+
+## Einrichtungs-Tutorial
+
+1. Aktualisiere TypeWhisper auf Version 1.0.9 oder neuer.
+2. Erstelle im Azure-Portal eine Microsoft-Foundry-Ressource für Speech in `eastus`, `northeurope`, `southeastasia` oder `westus`.
+3. Kopiere aus der Ressource den Speech-Endpunkt oder Ressourcennamen und einen API-Key.
+4. Öffne in TypeWhisper für Windows **Einstellungen > Integrationen**.
+5. Suche **Microsoft AI** unter **Entdecken**, installiere das Add-on und stelle sicher, dass es aktiviert ist.
+6. Öffne die Einstellungen, gib Endpunkt und API-Key ein und wähle **Verbindung speichern**.
+7. Lass **MAI Transcribe 2** ausgewählt, aktualisiere optional die Modelle und wähle **Bereinigt** oder **Wörtlich**.
+8. Aktiviere die Sprechererkennung nur bei Bedarf, wähle Microsoft AI als Transkriptions-Engine eines Profils und teste eine kurze Aufnahme.
+
+## MAI Transcribe verwenden
+
+1. Wähle **Microsoft AI** als Transkriptions-Engine in dem TypeWhisper-Profil, das Azure verwenden soll.
+2. Lege eine Eingabesprache fest, wenn du sie sicher kennst. Lass die Auswahl für automatische Erkennung oder gemischtsprachiges Audio offen.
+3. Ergänze Produktnamen, Personen, Abkürzungen und Fachvokabular im TypeWhisper-Wörterbuch. Das Plugin sendet höchstens 500 Begriffe mit insgesamt 20.000 Zeichen als Phrasenhinweise.
+4. Nutze **Bereinigt** für lesbare Notizen oder Untertitel und **Wörtlich**, wenn die genaue gesprochene Form wichtig ist.
+5. Aktiviere die Sprechererkennung vor der Aufnahme oder dem Import von Audio mit mehreren Personen. Die Funktion benötigt MAI Transcribe 2.
+6. Prüfe das fertige Ergebnis, nachdem Azure geantwortet hat; während der laufenden Aufnahme erscheint kein Teiltranskript.
+
+Mit MAI Transcribe 2 fordert TypeWhisper Segment-Zeitstempel an. Gibt Azure Sprecherinformationen zurück, stellt TypeWhisper jedes zeitlich markierte Segment in einer Zeile wie `Speaker 1: ...` dar.
+
+## Audiogrenzen
+
+Das Windows-Plugin akzeptiert normalisiertes WAV-Audio unter zwei Stunden und unter 250 MB. Eingaben ab einer dieser Grenzen werden vor dem Upload abgelehnt. Azure-Anfragen nutzen ein Netzwerk-Timeout von drei Minuten; das verändert die maximale Aufnahmelänge nicht.
+
+## Fehlerbehebung
+
+- **Die Verbindung ist ungültig:** Nutze einen Azure-Speech-HTTPS-Endpunkt ohne zusätzlichen Pfad, Query-Parameter, Benutzerinformationen oder Fragment. Alternativ kannst du nur den Ressourcennamen eingeben.
+- **MAI Transcribe ist in dieser Region nicht verfügbar:** Erstelle oder nutze eine Speech-Ressource in East US, North Europe, Southeast Asia oder West US.
+- **Foundry-Katalog nicht verfügbar:** Die verbundene Speech-Ressource stellt möglicherweise keinen Modellkatalog-Endpunkt bereit. Die statischen Optionen MAI Transcribe 2 und 1.5 bleiben verfügbar.
+- **Es erscheinen keine Sprecherlabels:** Wähle MAI Transcribe 2, aktiviere die Sprechererkennung vor der Transkription und prüfe, ob Azure Sprecherinformationen geliefert hat.
+- **Die Übersetzung schlägt fehl:** Das Plugin lehnt Übersetzungsanfragen bewusst ab, weil MAI Transcribe sie über diese Integration nicht unterstützt.
+- **Die Authentifizierung schlägt fehl:** Kopiere erneut den Key, der zu derselben Azure-Speech-Ressource wie der Endpunkt gehört, und speichere die Verbindung erneut.
+
+## Cloud-Verarbeitung und Datenschutz
+
+Audio wird zur Transkription an Microsoft Azure gesendet. Der API-Key liegt im geschützten Windows-Plugin-Secret-Speicher von TypeWhisper und wird aus Plugin-Logs und Diagnosedaten herausgehalten. Endpunkt, gewähltes Modell, zwischengespeicherte Modell-IDs, Stil und Einstellung zur Sprechererkennung bleiben lokale Einstellungen. Prüfe Microsofts aktuelle Azure-Bedingungen zu Datenschutz, Vorschau, regionaler Verfügbarkeit und Preisen, bevor du sensible Audiodaten überträgst.
+
+Quellen: [Microsoft-Dokumentation zu MAI Transcribe](https://learn.microsoft.com/de-de/azure/ai-services/speech-service/mai-transcribe), [Microsoft-AI-Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
