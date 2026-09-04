@@ -1,3 +1,4 @@
+import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { t, type Locale } from "@/i18n/index";
 
@@ -22,7 +23,7 @@ export function HeroDemo({ locale = "en" }: { locale?: Locale }) {
     setExample(value);
     const url = new URL(location.href);
     url.searchParams.set("example", value);
-    history.replaceState(history.state, "", url);
+    replacePageUrl(url);
   }
   return (
     <div className="mx-auto w-full max-w-3xl" data-testid="hero-demo">

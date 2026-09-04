@@ -1,3 +1,4 @@
+import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/i18n/index";
 
@@ -60,7 +61,7 @@ export function DocsSearch({ locale }: { locale: Locale }) {
     platform === "all"
       ? url.searchParams.delete("platform")
       : url.searchParams.set("platform", platform);
-    history.replaceState(history.state, "", url);
+    replacePageUrl(url);
     setResults([]);
     if (!query.trim()) {
       setState("idle");

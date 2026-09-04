@@ -1,3 +1,4 @@
+import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +33,7 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
     url.searchParams.set("platform", platform);
     url.searchParams.set("processing", processing);
     url.searchParams.set("task", task);
-    history.replaceState(history.state, "", url);
+    replacePageUrl(url);
   }, [platform, processing, task, ready]);
   const download = getPlatformDownloadTarget(platform, locale, "landing");
   const docs = `/${locale}/docs/${platform}`;

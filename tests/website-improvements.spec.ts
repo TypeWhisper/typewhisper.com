@@ -167,3 +167,52 @@ test("search failure offers retry and recovers", async ({ page }) => {
   await search.getByRole("button", { name: "Try again" }).click();
   await expect(search.locator("li a").first()).toBeVisible({ timeout: 20000 });
 });
+
+for (const width of [1440, 390]) {
+  test(`rendered language links preserve live choices at ${width}px`, async ({
+    page,
+    context,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/de/?platform=windows&example=note");
+    const demo = page.getByTestId("hero-demo");
+    await expect(
+      demo.locator("xpath=ancestor::astro-island"),
+    ).not.toHaveAttribute("ssr", "");
+    await demo.getByRole("button", { name: "Chat", exact: true }).click();
+    await page.getByTestId("landing-hero-tab-ios").click();
+    if (width === 390)
+      await page.getByRole("button", { name: "Menü", exact: true }).click();
+    const link = page.getByRole("link", {
+      name: width === 390 ? "English" : "EN",
+      exact: true,
+    });
+    await expect(link).toHaveAttribute(
+      "href",
+      "/en/?platform=ios&example=chat",
+    );
+    // Opening the href directly exercises copy/open-in-new-tab without a click handler.
+    const destination = await context.newPage();
+    await destination.goto((await link.getAttribute("href"))!);
+    await expect(
+      destination.getByTestId("landing-hero-tab-ios"),
+    ).toHaveAttribute("aria-pressed", "true");
+    await expect(
+      destination
+        .getByTestId("hero-demo")
+        .getByRole("button", { name: "Chat", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await destination.close();
+
+    await page.goto("/de/setup/?platform=windows&processing=cloud&task=files");
+    const setup = page.getByTestId("setup-assistant");
+    await expect(setup.locator("select").first()).toHaveValue("windows");
+    await setup.locator("select").nth(2).selectOption("workflows");
+    if (width === 390)
+      await page.getByRole("button", { name: "Menü", exact: true }).click();
+    await expect(link).toHaveAttribute(
+      "href",
+      "/en/setup/?platform=windows&processing=cloud&task=workflows",
+    );
+  });
+}

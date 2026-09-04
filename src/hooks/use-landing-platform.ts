@@ -1,8 +1,9 @@
+import { replacePageUrl, subscribeToPageUrl } from "@/hooks/use-page-url";
 import { useSyncExternalStore } from "react";
 import { detectPlatform } from "@/lib/platform-download";
 
 export type LandingPlatform = "mac" | "windows" | "ios";
-const eventName = "typewhisper:landing-platform";
+
 const storageKey = "typewhisper-platform";
 
 export function isLandingPlatform(value: unknown): value is LandingPlatform {
@@ -33,20 +34,14 @@ function subscribe(onChange: () => void) {
     }
     onChange();
   };
-  window.addEventListener(eventName, synchronize);
-  window.addEventListener("popstate", synchronize);
   synchronize();
-  return () => {
-    window.removeEventListener(eventName, synchronize);
-    window.removeEventListener("popstate", synchronize);
-  };
+  return subscribeToPageUrl(synchronize);
 }
 
 export function selectLandingPlatform(platform: LandingPlatform) {
   const url = new URL(window.location.href);
   url.searchParams.set("platform", platform);
-  window.history.replaceState(window.history.state, "", url);
-  window.dispatchEvent(new Event(eventName));
+  replacePageUrl(url);
 }
 
 export function useSyncedLandingPlatform(): LandingPlatform {

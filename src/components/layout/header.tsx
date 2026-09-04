@@ -1,3 +1,4 @@
+import { usePageUrl } from "@/hooks/use-page-url";
 import { Clock3, Download, Menu, Moon, Sun } from "lucide-react";
 import { KofiIcon } from "@/components/ui/kofi-icon";
 import { DiscordIcon } from "@/components/ui/discord-icon";
@@ -45,7 +46,11 @@ export function Header({
   );
   const alternateLabel = locale === "de" ? "EN" : "DE";
   const platform = useSyncedLandingPlatform();
-  const alternatePath = `${alternateBasePath}?platform=${platform}`;
+  const pageUrl = new URL(usePageUrl() || "https://www.typewhisper.com");
+  const alternateParams = new URLSearchParams(pageUrl.search);
+  if (!alternateParams.has("platform"))
+    alternateParams.set("platform", platform);
+  const alternatePath = `${alternateBasePath}?${alternateParams}${pageUrl.hash}`;
   const showGitHubBrandLogo = canRenderBrandLogo("github", "nav");
   const download = getPlatformDownloadTarget(platform, locale, "nav");
   const showDownloadCta = true;
@@ -126,13 +131,6 @@ export function Header({
           {/* Language Switcher */}
           <a
             href={alternatePath}
-            onClick={(event) => {
-              const url = new URL(window.location.href);
-              url.pathname = alternateBasePath;
-              if (!url.searchParams.has("platform"))
-                url.searchParams.set("platform", platform);
-              event.currentTarget.href = url.href;
-            }}
             className={cn(
               "px-2 py-1 text-xs font-semibold rounded-md transition-colors",
               mutedForegroundClass,
@@ -279,13 +277,6 @@ export function Header({
                 ))}
                 <a
                   href={alternatePath}
-                  onClick={(event) => {
-                    const url = new URL(window.location.href);
-                    url.pathname = alternateBasePath;
-                    if (!url.searchParams.has("platform"))
-                      url.searchParams.set("platform", platform);
-                    event.currentTarget.href = url.href;
-                  }}
                   className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
                   {alternateLabel === "DE" ? "Deutsch" : "English"}

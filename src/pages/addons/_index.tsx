@@ -1,3 +1,4 @@
+import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { ArrowRight, Search, X } from "lucide-react";
 import {
@@ -71,7 +72,7 @@ export default function AddonsIndex({
       if (value && value !== "all") url.searchParams.set(param, value);
       else url.searchParams.delete(param);
     }
-    history.replaceState(history.state, "", url);
+    replacePageUrl(url);
     setFilters(next);
   }
   const setCategory = (category: string) => updateFilters({ category });
