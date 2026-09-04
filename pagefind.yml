@@ -1,0 +1,5 @@
+# Search only documentation and add-on guides in their original language.
+glob: "{de,en}/{docs,addons}/**/*.html"
+exclude_selectors:
+  - "[role=search]"
+  - "[data-pagefind-ignore]"

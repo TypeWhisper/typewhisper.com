@@ -13,11 +13,14 @@ export function WallOfLove({ locale = "en" }: WallOfLoveProps) {
   return (
     <section
       data-testid="wall-of-love"
-      className="bg-background py-20 sm:py-28"
+      className="bg-background py-12 sm:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center reveal-hidden">
-          <Waveform bars={32} className="mx-auto mb-6 h-4 max-w-[160px] opacity-60" />
+          <Waveform
+            bars={32}
+            className="mx-auto mb-6 h-4 max-w-[160px] opacity-60"
+          />
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             {t(locale, "wallOfLove.title")}
           </h2>
@@ -30,17 +33,16 @@ export function WallOfLove({ locale = "en" }: WallOfLoveProps) {
           {testimonials.map((item, index) => {
             const body = (
               <>
-                <Quote
-                  className="size-5 text-primary/50"
-                  aria-hidden="true"
-                />
+                <Quote className="size-5 text-primary/50" aria-hidden="true" />
                 <p className="mt-3 text-sm leading-relaxed text-foreground">
                   &ldquo;{testimonialQuote(item, locale)}&rdquo;
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-2">
                   <div>
                     <p className="text-sm font-semibold">{item.author}</p>
-                    <p className="text-xs text-muted-foreground">{item.source}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.source}
+                    </p>
                   </div>
                   {item.href && (
                     <ExternalLink

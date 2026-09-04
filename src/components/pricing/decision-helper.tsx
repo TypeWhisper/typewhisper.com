@@ -1,3 +1,5 @@
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +9,11 @@ import { t, type Locale } from "@/i18n/index";
 type Tone = "free" | "commercial";
 
 export function DecisionHelper({ locale }: { locale: Locale }) {
+  const download = getPlatformDownloadTarget(
+    useSyncedLandingPlatform(),
+    locale,
+    "landing",
+  );
   const scenarios = [
     {
       id: "personal",
@@ -86,7 +93,7 @@ export function DecisionHelper({ locale }: { locale: Locale }) {
                   className={cn(
                     "inline-flex w-fit items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide",
                     s.tone === "free"
-                      ? "border-emerald-500/40 text-emerald-600 dark:text-emerald-400"
+                      ? "border-emerald-500/40 text-emerald-700 dark:text-emerald-400"
                       : "border-primary/40 text-primary",
                   )}
                 >
@@ -103,8 +110,40 @@ export function DecisionHelper({ locale }: { locale: Locale }) {
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant="link-arrow" size="sm" className="self-start">
-                  <a href={`#${s.targetId}`} className="inline-flex items-center gap-1">
+                <Button
+                  asChild
+                  variant="link-arrow"
+                  size="sm"
+                  className="self-start"
+                >
+                  <a
+                    href={
+                      s.id === "personal" && download.available
+                        ? download.href
+                        : `#${s.targetId}`
+                    }
+                    target={
+                      s.id === "personal" &&
+                      download.available &&
+                      download.opensNewTab
+                        ? "_blank"
+                        : undefined
+                    }
+                    rel="noopener noreferrer"
+                    data-download-social-trigger={
+                      s.id === "personal" ? true : undefined
+                    }
+                    data-download-platform={
+                      s.id === "personal" ? download.platform : undefined
+                    }
+                    data-download-target={
+                      s.id === "personal" && download.available
+                        ? download.target
+                        : undefined
+                    }
+                    data-tracking-placement="pricing"
+                    className="inline-flex items-center gap-1"
+                  >
                     {s.action}
                     <ArrowRight className="size-4" />
                   </a>

@@ -17,10 +17,10 @@ export default function PricingIndex({ locale = "en" }: PricingIndexProps) {
   return (
     <>
       <PricingHero locale={locale} />
-      <HonorBanner locale={locale} />
-      <DecisionHelper locale={locale} />
-      <PersonalVsCommercial locale={locale} />
       <CommercialTable locale={locale} />
+      <PersonalVsCommercial locale={locale} />
+      <DecisionHelper locale={locale} />
+      <HonorBanner locale={locale} />
       <SupporterSection locale={locale} />
       <PricingFaq locale={locale} />
 

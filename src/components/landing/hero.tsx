@@ -78,7 +78,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
   return (
     <section
       data-testid="landing-hero"
-      className="hero-surface relative overflow-hidden py-16 sm:py-32 lg:py-40"
+      className="hero-surface relative overflow-hidden py-10 sm:py-16 lg:py-20"
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-4xl text-center">
@@ -100,7 +100,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             {t(locale, `hero.eyebrow.${selectedPlatform}`)}
           </p>
 
-          <h1 className="mt-4 text-5xl font-bold tracking-[-0.055em] text-foreground sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-4xl font-bold tracking-[-0.045em] text-foreground sm:text-5xl lg:text-6xl">
             {t(locale, `hero.title.line1.${selectedPlatform}`)}
             <br />
             {t(locale, `hero.title.line2.${selectedPlatform}`)}
@@ -144,6 +144,14 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             </Button>
           </div>
 
+          <p className="mt-4 text-sm">
+            <a
+              className="text-primary underline"
+              href={`/${locale}/setup/?platform=${selectedPlatform}`}
+            >
+              {t(locale, "setup.title")}
+            </a>
+          </p>
           <p className="mt-4 text-sm text-muted-foreground">
             {t(locale, `hero.platformNotice.${selectedPlatform}`)}
           </p>
@@ -164,11 +172,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-16">
+        <div className="mt-8 sm:mt-10">
           <HeroDemo locale={locale} />
         </div>
 
-        <div className="mt-10 sm:mt-14 reveal-scale-hidden">
+        <div className="mt-6 sm:mt-8 reveal-scale-hidden">
           {selectedPlatform === "ios" ? (
             <div
               data-testid="landing-ios-hero-visual"
@@ -184,7 +192,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             <Screenshot
               src={heroScreenshot}
               alt={heroScreenshotAlt}
-              className="mx-auto max-h-[30vh] w-full max-w-3xl object-contain object-top sm:max-h-none"
+              className="mx-auto max-h-[24vh] w-full max-w-2xl object-contain object-top sm:max-h-[380px]"
             />
           )}
         </div>
@@ -209,7 +217,7 @@ function HeroPlatformSwitcher({
   return (
     <div className="flex flex-col items-center gap-3">
       <div
-        role="tablist"
+        role="group"
         aria-label={t(locale, "hero.platformTabs.label")}
         className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur"
       >
@@ -220,8 +228,7 @@ function HeroPlatformSwitcher({
             <button
               key={platform}
               type="button"
-              role="tab"
-              aria-selected={isSelected}
+              aria-pressed={isSelected}
               data-testid={`landing-hero-tab-${platform}`}
               onClick={() => onSelect(platform)}
               className={cn(

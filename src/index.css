@@ -25,6 +25,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-link: var(--link);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -71,12 +72,13 @@
   --card-foreground: #f5f5f7;
   --popover: #1d1d1f;
   --popover-foreground: #f5f5f7;
-  --primary: #0071e3;
+  --primary: #0068d1;
+  --link: #5cafff;
   --primary-foreground: #ffffff;
   --secondary: #1d1d1f;
   --secondary-foreground: #f5f5f7;
   --muted: #1d1d1f;
-  --muted-foreground: #86868b;
+  --muted-foreground: #98989d;
   --accent: #1d1d1f;
   --accent-foreground: #f5f5f7;
   --destructive: #ff3b30;
@@ -108,7 +110,8 @@
   --card-foreground: #1d1d1f;
   --popover: #ffffff;
   --popover-foreground: #1d1d1f;
-  --primary: #0071e3;
+  --primary: #0068d1;
+  --link: #005fbe;
   --primary-foreground: #ffffff;
   --secondary: #f5f5f7;
   --secondary-foreground: #1d1d1f;
@@ -280,4 +283,17 @@
   .fade-in-soft {
     animation: none;
   }
+}
+
+/* Text accents need different contrast than filled controls. */
+.text-primary { color: var(--link); }
+p a:not([class*="inline-flex"]), li a:not([class*="inline-flex"]) {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+html { scroll-padding-top: 5rem; }
+:root { color-scheme: dark; }
+:root.light { color-scheme: light; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
 }

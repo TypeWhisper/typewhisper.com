@@ -30,13 +30,13 @@ Always read this file before making visual changes. Do not deviate without expli
 - **Body/UI:** System stack (`-apple-system`, SF Pro Text, Segoe UI, …) — zero webfont cost for body copy.
 - **Mono:** SF Mono, Fira Code fallback.
 - **Loading:** Preloaded in `src/layouts/BaseLayout.astro`, `font-display: swap`.
-- **Scale:** Tailwind defaults. Hero H1 `text-5xl sm:text-6xl lg:text-7xl`, section H2 `text-3xl sm:text-4xl lg:text-5xl`.
+- **Scale:** Tailwind defaults. Hero H1 `text-4xl sm:text-5xl lg:text-6xl`, section H2 `text-3xl sm:text-4xl lg:text-5xl`.
 
 ## Color
 
 - **Approach:** Restrained. One accent color, neutrals do the work.
-- **Primary:** `#0071e3` (all themes; rings, links, CTAs).
-- **Neutrals dark:** background `#000000`, card `#1d1d1f`, elevated card `#2d2d2f`, foreground `#f5f5f7`, muted text `#86868b`.
+- **Primary:** `#0068d1` for filled CTAs; text/link accent `#5cafff` in dark mode and `#005fbe` in light mode. Focus rings retain `#0071e3`.
+- **Neutrals dark:** background `#000000`, card `#1d1d1f`, elevated card `#2d2d2f`, foreground `#f5f5f7`, muted text `#98989d`.
 - **Neutrals light:** background `#fbfbfd`, card `#ffffff`, secondary `#f5f5f7`, foreground `#1d1d1f`, muted text `#6e6e73`.
 - **Destructive:** `#ff3b30`.
 - **Borders:** 8% white (dark) / 8% black (light).
@@ -53,7 +53,7 @@ Always read this file before making visual changes. Do not deviate without expli
 ## Spacing & Layout
 
 - **Base unit:** Tailwind defaults (4px grid).
-- **Sections:** `py-20 sm:py-28`; hero `py-16 sm:py-32 lg:py-40`.
+- **Sections:** `py-12 sm:py-16`; landing hero `py-10 sm:py-16 lg:py-20`.
 - **Containers:** `max-w-6xl` for main sections/header/footer; `max-w-3xl` prose/FAQ; `max-w-2xl` centered subtitles.
 - **Density:** Comfortable, generous whitespace.
 
@@ -81,3 +81,4 @@ Always read this file before making visual changes. Do not deviate without expli
 | Date | Decision | Rationale |
 |------|----------|-----------|
 | 2026-06-09 | Initial design system created | Redesign "Apple clarity, own voice": consolidated tokens, General Sans display font, waveform brand motif, removed indigo/violet hero orbs |
+| 2026-09-04 | Compact landing and pricing sections, accessible blue text, selectable demo, collapsible comparisons | Keep downloads and examples within reach and improve contrast in both themes |

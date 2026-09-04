@@ -25,7 +25,7 @@ export function AddonsShowcase({ locale = "en" }: AddonsShowcaseProps) {
   return (
     <section
       data-testid="addons-showcase"
-      className="bg-secondary py-20 sm:py-28"
+      className="bg-secondary py-12 sm:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center reveal-hidden">

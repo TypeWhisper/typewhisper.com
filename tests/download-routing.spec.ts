@@ -399,7 +399,7 @@ test.describe("iOS App Store media", () => {
     );
     const iosTab = page.getByTestId("landing-hero-tab-ios");
     await iosTab.click();
-    await expect(iosTab).toHaveAttribute("aria-selected", "true");
+    await expect(iosTab).toHaveAttribute("aria-pressed", "true");
 
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "href",
@@ -447,7 +447,7 @@ test.describe("iOS App Store media", () => {
     );
     const iosTab = page.getByTestId("landing-hero-tab-ios");
     await iosTab.click();
-    await expect(iosTab).toHaveAttribute("aria-selected", "true");
+    await expect(iosTab).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "href",
       IOS_APP_STORE_URL_DE,

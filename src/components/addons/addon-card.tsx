@@ -116,7 +116,7 @@ export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: Addon
           </Badge>
         ))}
         {plugin.platforms.map((p: PluginPlatform) => (
-          <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary/70">
+          <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary">
             {t(locale, platformKeys[p])}
           </Badge>
         ))}

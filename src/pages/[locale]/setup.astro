@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SetupAssistant } from "@/components/setup/setup-assistant";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+export const getStaticPaths = getLocaleStaticPaths;
+const { locale } = Astro.props as { locale: Locale };
+---
+
+<BaseLayout
+  title={`${t(locale, "setup.title")} - TypeWhisper`}
+  description={t(locale, "setup.subtitle")}
+  canonicalPath={canonicalPath(locale, "/setup")}
+  locale={locale}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold sm:text-4xl">{t(locale, "setup.title")}</h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted-foreground">
+      {t(locale, "setup.subtitle")}
+    </p>
+    <SetupAssistant client:load locale={locale} />
+  </div>
+</BaseLayout>

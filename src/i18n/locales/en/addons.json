@@ -74,5 +74,9 @@
   "addons.editions.guide.example.liveTranscript": "Start a short recording with a streaming engine and verify that the floating transcript appears, stays readable, and hides according to its settings.",
   "addons.editions.guide.example.webhook": "Send a short test dictation to a dedicated test endpoint and inspect the status, payload, and Delivery Log before using the webhook in production.",
   "addons.editions.guide.localProcessing": "This edition processes audio or text locally. Model or runtime downloads may require an internet connection, but processing then runs on your device.",
-  "addons.editions.guide.cloudProcessing": "This edition uses a cloud provider. Depending on the capability, audio, text, or both are sent only after you configure and select that provider."
+  "addons.editions.guide.cloudProcessing": "This edition uses a cloud provider. Depending on the capability, audio, text, or both are sent only after you configure and select that provider.",
+  "addons.resultCount": "{count} add-ons",
+  "addons.clearSearch": "Clear search",
+  "addons.iosEmpty": "No separate iOS add-ons are listed here yet. The iOS guide covers its built-in engines and providers.",
+  "addons.iosGuide": "Read the iOS guide"
 }

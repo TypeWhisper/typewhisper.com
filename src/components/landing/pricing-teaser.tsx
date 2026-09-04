@@ -1,10 +1,6 @@
 import { ArrowRight, HandHeart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  commercialTiers,
-  supporterTiers,
-  currencySymbol,
-} from "@/lib/pricing";
+import { commercialTiers, supporterTiers, currencySymbol } from "@/lib/pricing";
 import { t, localePath, type Locale } from "@/i18n/index";
 
 interface PricingTeaserProps {
@@ -46,7 +42,7 @@ export function PricingTeaser({ locale = "en" }: PricingTeaserProps) {
   return (
     <section
       data-testid="pricing-teaser"
-      className="bg-background py-20 sm:py-28"
+      className="bg-background py-12 sm:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center reveal-hidden">
@@ -90,7 +86,10 @@ export function PricingTeaser({ locale = "en" }: PricingTeaserProps) {
         </div>
 
         <p className="mx-auto mt-8 flex max-w-xl items-center justify-center gap-2 text-center text-sm text-muted-foreground">
-          <HandHeart className="size-4 shrink-0 text-primary" aria-hidden="true" />
+          <HandHeart
+            className="size-4 shrink-0 text-primary"
+            aria-hidden="true"
+          />
           {t(locale, "pricingTeaser.honor")}
         </p>
 

@@ -74,5 +74,9 @@
   "addons.editions.guide.example.liveTranscript": "Starte eine kurze Aufnahme mit einer Streaming-Engine und prüfe, ob das schwebende Transkript erscheint, lesbar bleibt und sich wie konfiguriert ausblendet.",
   "addons.editions.guide.example.webhook": "Sende ein kurzes Testdiktat an einen nur dafür vorgesehenen Endpunkt und kontrolliere Status, Nutzdaten und Delivery Log, bevor du den Webhook produktiv verwendest.",
   "addons.editions.guide.localProcessing": "Diese Edition verarbeitet Audio oder Text lokal. Modell- und Laufzeitdownloads können eine Internetverbindung benötigen, die eigentliche Verarbeitung erfolgt anschließend auf deinem Gerät.",
-  "addons.editions.guide.cloudProcessing": "Diese Edition verwendet einen Cloud-Anbieter. Je nach Funktion werden Audio, Text oder beides erst übertragen, wenn du den Anbieter konfigurierst und auswählst."
+  "addons.editions.guide.cloudProcessing": "Diese Edition verwendet einen Cloud-Anbieter. Je nach Funktion werden Audio, Text oder beides erst übertragen, wenn du den Anbieter konfigurierst und auswählst.",
+  "addons.resultCount": "{count} Add-ons",
+  "addons.clearSearch": "Suchbegriff löschen",
+  "addons.iosEmpty": "Für iOS sind hier derzeit keine separaten Add-ons gelistet. Die iOS-Anleitung beschreibt die integrierten Engines und Anbieter.",
+  "addons.iosGuide": "Zur iOS-Anleitung"
 }

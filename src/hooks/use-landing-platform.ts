@@ -1,96 +1,57 @@
-import { useEffect, useState } from "react";
-import { usePlatform } from "@/hooks/use-platform";
-import type { Platform } from "@/lib/platform-download";
+import { replacePageUrl, subscribeToPageUrl } from "@/hooks/use-page-url";
+import { useSyncExternalStore } from "react";
+import { detectPlatform } from "@/lib/platform-download";
 
 export type LandingPlatform = "mac" | "windows" | "ios";
 
-const landingPlatformEvent = "typewhisper:landing-platform";
+const storageKey = "typewhisper-platform";
 
-function isLandingPlatform(platform: unknown): platform is LandingPlatform {
-  return platform === "mac" || platform === "windows" || platform === "ios";
+export function isLandingPlatform(value: unknown): value is LandingPlatform {
+  return value === "mac" || value === "windows" || value === "ios";
 }
 
-function publishLandingPlatform(platform: LandingPlatform) {
-  if (typeof window === "undefined") return;
-
-  document.documentElement.dataset.landingPlatform = platform;
-  window.dispatchEvent(
-    new CustomEvent<LandingPlatform>(landingPlatformEvent, {
-      detail: platform,
-    }),
-  );
+function getSnapshot(): LandingPlatform {
+  const query = new URLSearchParams(window.location.search).get("platform");
+  if (isLandingPlatform(query)) return query;
+  try {
+    const stored = sessionStorage.getItem(storageKey);
+    if (isLandingPlatform(stored)) return stored;
+  } catch {
+    /* Storage is optional in restricted browsers. */
+  }
+  const detected = detectPlatform();
+  return isLandingPlatform(detected) ? detected : "mac";
 }
 
-function getDocumentLandingPlatform(): LandingPlatform | null {
-  if (typeof document === "undefined") return null;
+function subscribe(onChange: () => void) {
+  const synchronize = () => {
+    const platform = getSnapshot();
+    document.documentElement.dataset.landingPlatform = platform;
+    try {
+      sessionStorage.setItem(storageKey, platform);
+    } catch {
+      /* Optional. */
+    }
+    onChange();
+  };
+  synchronize();
+  return subscribeToPageUrl(synchronize);
+}
 
-  const platform = document.documentElement.dataset.landingPlatform;
-  return isLandingPlatform(platform) ? platform : null;
+export function selectLandingPlatform(platform: LandingPlatform) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("platform", platform);
+  replacePageUrl(url);
+}
+
+export function useSyncedLandingPlatform(): LandingPlatform {
+  return useSyncExternalStore(subscribe, getSnapshot, () => "mac");
 }
 
 export function useLandingPlatformSelection() {
-  const detectedPlatform = usePlatform();
-  const [selectedPlatform, setSelectedPlatform] =
-    useState<LandingPlatform>("mac");
-  const [hasUserSelectedPlatform, setHasUserSelectedPlatform] = useState(false);
-
-  useEffect(() => {
-    if (!hasUserSelectedPlatform && isLandingPlatform(detectedPlatform)) {
-      setSelectedPlatform(detectedPlatform);
-    }
-  }, [detectedPlatform, hasUserSelectedPlatform]);
-
-  useEffect(() => {
-    publishLandingPlatform(selectedPlatform);
-  }, [selectedPlatform]);
-
-  function selectPlatform(platform: LandingPlatform) {
-    setHasUserSelectedPlatform(true);
-    setSelectedPlatform(platform);
-  }
-
-  const detectedHintPlatform: LandingPlatform | null =
-    selectedPlatform === "mac" &&
-    (detectedPlatform === "windows" || detectedPlatform === "ios")
-      ? detectedPlatform
-      : null;
-
   return {
-    detectedHintPlatform,
-    selectedPlatform,
-    selectPlatform,
+    selectedPlatform: useSyncedLandingPlatform(),
+    selectPlatform: selectLandingPlatform,
+    detectedHintPlatform: null,
   };
-}
-
-export function useSyncedLandingPlatform() {
-  const detectedPlatform = usePlatform();
-  const [platform, setPlatform] = useState<LandingPlatform>("mac");
-
-  useEffect(() => {
-    const documentPlatform = getDocumentLandingPlatform();
-    if (documentPlatform) {
-      setPlatform(documentPlatform);
-      return;
-    }
-
-    if (isLandingPlatform(detectedPlatform as Platform)) {
-      setPlatform(detectedPlatform as LandingPlatform);
-    }
-  }, [detectedPlatform]);
-
-  useEffect(() => {
-    const handlePlatformChange = (event: Event) => {
-      const nextPlatform = (event as CustomEvent<LandingPlatform>).detail;
-      if (isLandingPlatform(nextPlatform)) {
-        setPlatform(nextPlatform);
-      }
-    };
-
-    window.addEventListener(landingPlatformEvent, handlePlatformChange);
-    return () => {
-      window.removeEventListener(landingPlatformEvent, handlePlatformChange);
-    };
-  }, []);
-
-  return platform;
 }
