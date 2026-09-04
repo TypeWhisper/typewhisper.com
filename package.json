@@ -4,8 +4,8 @@
   "version": "1.4.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro dev",
-    "build": "node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && node scripts/check-i18n.mjs && astro check && astro build",
+    "dev": "node scripts/prepare-screenshots.mjs && node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && astro dev",
+    "build": "node scripts/prepare-screenshots.mjs && node scripts/fetch-releases.mjs && node scripts/fetch-community-plugins.mjs && node scripts/fetch-social-stats.mjs && node scripts/check-i18n.mjs && astro check && astro build && pagefind --site dist && node scripts/copy-search-index.mjs",
     "preview": "astro preview",
     "test:unit": "node --test tests/*.test.mjs tests/*.test.ts",
     "test:i18n": "node scripts/check-i18n.mjs",
@@ -41,6 +41,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "pagefind": "^1.5.2",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vite": "^8.2.1"

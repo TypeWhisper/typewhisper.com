@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +19,7 @@ function tierDevicesLabel(tier: CommercialTier, locale: Locale): string {
 }
 
 export function CommercialTable({ locale }: { locale: Locale }) {
+  const [period, setPeriod] = useState<"monthly" | "lifetime">("monthly");
   return (
     <section id="commercial-table" className="py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -30,38 +32,34 @@ export function CommercialTable({ locale }: { locale: Locale }) {
           </p>
         </div>
 
-        <div className="mt-10 space-y-8">
-          <div>
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              {t(locale, "pricing.commercial.monthlyHeading")}
-            </h3>
-            <div className="grid gap-4 md:grid-cols-3">
-              {commercialTiers.map((tier) => (
-                <TierCard
-                  key={`m-${tier.id}`}
-                  tier={tier}
-                  period="monthly"
-                  locale={locale}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              {t(locale, "pricing.commercial.lifetimeHeading")}
-            </h3>
-            <div className="grid gap-4 md:grid-cols-3">
-              {commercialTiers.map((tier) => (
-                <TierCard
-                  key={`l-${tier.id}`}
-                  tier={tier}
-                  period="lifetime"
-                  locale={locale}
-                />
-              ))}
-            </div>
-          </div>
+        <div
+          className="mt-6 flex justify-center gap-2"
+          role="group"
+          aria-label={t(locale, "pricing.billingPeriod")}
+        >
+          {(["monthly", "lifetime"] as const).map((value) => (
+            <Button
+              key={value}
+              variant={period === value ? "default" : "outline"}
+              aria-pressed={period === value}
+              onClick={() => setPeriod(value)}
+            >
+              {t(locale, `pricing.commercial.${value}Heading`)}
+            </Button>
+          ))}
+        </div>
+        <div
+          className="mt-6 grid gap-4 md:grid-cols-3"
+          data-testid="commercial-tiers"
+        >
+          {commercialTiers.map((tier) => (
+            <TierCard
+              key={tier.id}
+              tier={tier}
+              period={period}
+              locale={locale}
+            />
+          ))}
         </div>
 
         <div className="mx-auto mt-8 max-w-3xl space-y-2 text-center text-sm text-muted-foreground">

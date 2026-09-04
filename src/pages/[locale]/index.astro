@@ -37,6 +37,7 @@ const structuredData = {
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
 ---
+
 <BaseLayout
   title={t(locale, "landing.title")}
   description={t(locale, "landing.description")}
@@ -47,12 +48,24 @@ const structuredData = {
   <Hero locale={locale} client:load />
   <TrustStrip locale={locale} />
   <VoicePipeline locale={locale} client:visible />
-  <AvailablePlatforms locale={locale} />
   <HowItWorks locale={locale} client:visible />
   <Features locale={locale} client:visible />
   <PremiumFeatures locale={locale} client:visible />
   <AddonsShowcase locale={locale} />
-  <EngineComparison locale={locale} client:load />
+  <div class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+    <details class="border-y border-border py-5">
+      <summary class="cursor-pointer text-lg font-semibold"
+        >{t(locale, "landing.compareEngines")}</summary
+      >
+      <EngineComparison locale={locale} client:visible />
+    </details>
+    <details class="border-b border-border py-5">
+      <summary class="cursor-pointer text-lg font-semibold"
+        >{t(locale, "landing.allEditions")}</summary
+      >
+      <AvailablePlatforms locale={locale} />
+    </details>
+  </div>
   <WallOfLove locale={locale} />
   <PricingTeaser locale={locale} />
   <DownloadCTA locale={locale} client:load />

@@ -62,7 +62,7 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
     <section
       id="premium"
       data-testid="premium-features"
-      className="section-dark-card py-20 sm:py-28"
+      className="section-dark-card py-12 sm:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">

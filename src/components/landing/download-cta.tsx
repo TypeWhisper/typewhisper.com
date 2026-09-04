@@ -1,18 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
-import { usePlatform } from "@/hooks/use-platform";
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 import { t, localePath, type Locale } from "@/i18n/index";
 
 export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
-  const platform = usePlatform();
+  const platform = useSyncedLandingPlatform();
   const download = getPlatformDownloadTarget(platform, locale, "landing");
 
   return (
-    <section className="bg-secondary py-32 sm:py-40">
+    <section className="bg-secondary py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="reveal-fade-hidden text-5xl font-bold tracking-tighter text-foreground lg:text-6xl">
+          <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tighter text-foreground sm:text-4xl">
             {t(locale, "downloadCta.title")}
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
@@ -36,12 +36,19 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
                 </a>
               </Button>
             ) : (
-              <Button size="pill" disabled data-testid="landing-footer-download">
+              <Button
+                size="pill"
+                disabled
+                data-testid="landing-footer-download"
+              >
                 {download.label}
               </Button>
             )}
             <Button variant="link-arrow" asChild>
-              <a href={localePath(locale, "/release-status")} className="inline-flex items-center gap-1 text-primary">
+              <a
+                href={localePath(locale, "/release-status")}
+                className="inline-flex items-center gap-1 text-primary"
+              >
                 {t(locale, "downloadCta.releaseStatus")}
                 <ArrowRight className="size-4" />
               </a>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { DocsSearch } from "@/components/docs/docs-search";
+import { t, type Locale } from "@/i18n/index";
+import { getLocaleStaticPaths, canonicalPath } from "@/lib/locale-routes";
+export const getStaticPaths = getLocaleStaticPaths;
+const { locale } = Astro.props as { locale: Locale };
+---
+
+<BaseLayout
+  title={`${t(locale, "docs.search.title")} - TypeWhisper`}
+  description={t(locale, "docs.search.hint")}
+  canonicalPath={canonicalPath(locale, "/docs/search")}
+  locale={locale}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <a href={`/${locale}/docs`} class="text-sm text-primary underline"
+      >{t(locale, "docs.title")}</a
+    >
+    <h1 class="mt-5 text-3xl font-bold">{t(locale, "docs.search.title")}</h1>
+    <DocsSearch client:load locale={locale} />
+  </div>
+</BaseLayout>

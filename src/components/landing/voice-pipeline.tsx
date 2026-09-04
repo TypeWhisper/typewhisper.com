@@ -24,7 +24,7 @@ export function VoicePipeline({ locale = "en" }: { locale?: Locale }) {
 
   return (
     <section
-      className="overflow-hidden border-y border-border bg-background py-20 sm:py-28"
+      className="overflow-hidden border-y border-border bg-background py-12 sm:py-16"
       data-testid="voice-pipeline"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">

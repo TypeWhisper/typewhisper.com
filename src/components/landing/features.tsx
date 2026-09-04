@@ -95,7 +95,7 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
   ];
 
   return (
-    <section id="features" className="bg-background py-20 sm:py-28">
+    <section id="features" className="bg-background py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t(locale, `${keyPrefix}.title`)}

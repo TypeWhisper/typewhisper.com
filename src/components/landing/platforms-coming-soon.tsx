@@ -109,9 +109,11 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
             return (
               <article
                 key={item.platform}
-                className="grid gap-8 border-b border-border py-10 last:border-b-0 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14"
+                className="grid min-w-0 gap-8 border-b border-border py-10 last:border-b-0 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14"
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
+                <div
+                  className={index % 2 === 1 ? "min-w-0 lg:order-2" : "min-w-0"}
+                >
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="flex size-10 items-center justify-center rounded-xl border border-border bg-card">
                       <Logo className="size-5" aria-hidden="true" />
@@ -139,9 +141,13 @@ export function AvailablePlatforms({ locale = "en" }: { locale?: Locale }) {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-7 flex flex-wrap items-center gap-4">
+                  <div className="mt-7 min-w-0 flex flex-wrap items-center gap-4">
                     {item.download.available ? (
-                      <Button size="pill" asChild>
+                      <Button
+                        size="pill"
+                        className="max-w-full whitespace-normal h-auto min-h-12 text-center"
+                        asChild
+                      >
                         <a
                           href={item.download.href}
                           target={

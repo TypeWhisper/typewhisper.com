@@ -34,7 +34,7 @@ export function HowItWorks({ locale = "en" }: { locale?: Locale }) {
 
   return (
     <section
-      className={`bg-secondary ${showIosPreview ? "py-16 sm:py-20" : "py-20 sm:py-28"}`}
+      className={`bg-secondary ${showIosPreview ? "py-16 sm:py-20" : "py-12 sm:py-16"}`}
       data-testid="how-it-works"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">

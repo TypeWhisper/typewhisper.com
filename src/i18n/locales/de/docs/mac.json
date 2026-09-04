@@ -539,5 +539,6 @@
   "docs.mac.index.rules.title": "Legacy-Regeln",
   "docs.mac.index.rules.description": "Alte Regeln und Prompt-Aktionen bleiben im Legacy-Bereich verfügbar, während du migrierst.",
   "docs.mac.index.profiles.title": "Profile",
-  "docs.mac.index.profiles.description": "Profile für App-, Website- und Fallback-Einstellungen bei Sprache, Engine und Aufgabe."
+  "docs.mac.index.profiles.description": "Profile für App-, Website- und Fallback-Einstellungen bei Sprache, Engine und Aufgabe.",
+  "docs.mac.installation.upgradeDetails": "Von einer früheren Version aktualisieren"
 }

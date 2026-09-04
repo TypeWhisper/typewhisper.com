@@ -9,9 +9,9 @@
   "hero.title.line2.mac": "Keep writing everywhere.",
   "hero.title.line2.windows": "Keep writing everywhere.",
   "hero.title.line2.ios": "Keep moving.",
-  "hero.subtitle.mac": "Dictate system-wide, transcribe files, and turn spoken notes into finished text or follow-up actions with workflows, locally on your Mac or through providers you choose.",
-  "hero.subtitle.windows": "Dictate system-wide, transcribe files, and control the result with app and website rules, workflows, dictionary, snippets, API, and CLI.",
-  "hero.subtitle.ios": "Private speech-to-text for iPhone and iPad with on-device engines, a voice keyboard, live text, Capture Inbox, profiles, files, Shortcuts, and Apple Watch.",
+  "hero.subtitle.mac": "Dictate into your apps and turn spoken thoughts into finished text. On your Mac or with providers you choose.",
+  "hero.subtitle.windows": "Dictate into your apps, transcribe files, and format your text automatically. On your PC or with providers you choose.",
+  "hero.subtitle.ios": "Capture your thoughts, dictate with the keyboard, and record on the go with Apple Watch. With local engines on your device.",
   "hero.readDocs.mac": "Read the macOS docs",
   "hero.readDocs.windows": "Read the Windows docs",
   "hero.readDocs.ios": "Read the iOS docs",
@@ -278,5 +278,14 @@
   "pricingTeaser.supporter.priceSuffix": "one-time",
   "pricingTeaser.supporter.description": "Love the app? A one-time contribution supports open development.",
   "pricingTeaser.honor": "Commercial licensing stays simple: monthly or lifetime, for individuals and teams.",
-  "pricingTeaser.cta": "See Premium pricing"
+  "pricingTeaser.cta": "See Premium pricing",
+  "heroDemo.exampleLabel": "Example: dictation and finished text",
+  "heroDemo.choose": "Choose an example",
+  "heroDemo.choice.email": "Email",
+  "heroDemo.choice.chat": "Chat",
+  "heroDemo.choice.note": "Note",
+  "heroDemo.raw.note": "um note for the meeting we still need feedback on the draft and I’ll send the final version on Friday",
+  "heroDemo.polished.note": "Meeting note\n• Gather feedback on the draft\n• Send the final version on Friday",
+  "landing.compareEngines": "Compare local engines",
+  "landing.allEditions": "View all three editions"
 }

@@ -3,20 +3,25 @@ import { expect, test } from "@playwright/test";
 test.describe("hero dictation demo", () => {
   test.use({ locale: "en-US" });
 
-  test("demo renders and animates through to the inserted state", async ({
+  test("example selection shows the corresponding before and after text", async ({
     page,
   }) => {
     await page.goto("/en/");
-
     const demo = page.getByTestId("hero-demo");
     await expect(demo).toBeVisible();
-
-    // The animation keeps the target field untouched until insertion.
-    const status = page.getByTestId("hero-demo-status");
-    await expect(status).toHaveText(/Listening/);
-    await expect(demo).not.toContainText("new design is done");
-    await expect(status).toHaveText(/Inserted/, { timeout: 20000 });
     await expect(demo).toContainText("Hi Sarah, the new design is done.");
+    await expect(
+      demo.locator("xpath=ancestor::astro-island"),
+    ).not.toHaveAttribute("ssr", "");
+    await demo.getByRole("button", { name: "Note", exact: true }).click();
+    await expect(page.getByTestId("hero-demo-result")).toContainText(
+      "Meeting note",
+    );
+    await expect(page).toHaveURL(/example=note/);
+    await page.reload();
+    await expect(page.getByTestId("hero-demo-result")).toContainText(
+      "Meeting note",
+    );
   });
 
   test("reduced motion shows the static before/after state", async ({
@@ -53,7 +58,10 @@ test.describe("new landing sections", () => {
     );
     await expect(page.getByTestId("pricing-teaser")).toBeVisible();
     await expect(
-      page.getByTestId("pricing-teaser").locator('a[href="/en/pricing"]').first(),
+      page
+        .getByTestId("pricing-teaser")
+        .locator('a[href="/en/pricing"]')
+        .first(),
     ).toBeVisible();
   });
 
@@ -113,9 +121,7 @@ test.describe("localized landing video", () => {
 
     await page.getByTestId("landing-hero-tab-windows").click();
 
-    await expect(section).toContainText(
-      "TypeWhisper unter Windows einrichten",
-    );
+    await expect(section).toContainText("TypeWhisper unter Windows einrichten");
     await expect(video).toHaveAttribute(
       "poster",
       "/windows-first-setup-de.webp",
@@ -137,9 +143,13 @@ test.describe("localized landing video", () => {
       }
 
       return new Promise<number>((resolve, reject) => {
-        media.addEventListener("loadedmetadata", () => resolve(media.duration), {
-          once: true,
-        });
+        media.addEventListener(
+          "loadedmetadata",
+          () => resolve(media.duration),
+          {
+            once: true,
+          },
+        );
         media.addEventListener(
           "error",
           () => reject(new Error(media.error?.message || "Media load failed")),
@@ -169,7 +179,7 @@ test.describe("localized landing video", () => {
     await video.scrollIntoViewIfNeeded();
 
     await expect(page.getByTestId("landing-hero-tab-windows")).toHaveAttribute(
-      "aria-selected",
+      "aria-pressed",
       "true",
     );
     await expect(video.locator("source")).toHaveAttribute(
@@ -226,6 +236,9 @@ test.describe("localized landing video", () => {
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/de/");
+    await page
+      .getByText("Alle drei Editionen ansehen", { exact: true })
+      .click();
     await page.getByTestId("landing-platform-grid").scrollIntoViewIfNeeded();
 
     const dimensions = await page.evaluate(() => ({

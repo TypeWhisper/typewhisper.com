@@ -1,9 +1,16 @@
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { t, type Locale } from "@/i18n/index";
 
 export function PersonalVsCommercial({ locale }: { locale: Locale }) {
+  const download = getPlatformDownloadTarget(
+    useSyncedLandingPlatform(),
+    locale,
+    "landing",
+  );
   const personalFeatures = [
     t(locale, "pricing.personal.feature.allFeatures"),
     t(locale, "pricing.personal.feature.allPlatforms"),
@@ -35,7 +42,7 @@ export function PersonalVsCommercial({ locale }: { locale: Locale }) {
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           <Card id="personal-plan" className="bg-card">
             <CardHeader>
-              <span className="inline-flex w-fit items-center gap-1 rounded-full border border-emerald-500/40 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+              <span className="inline-flex w-fit items-center gap-1 rounded-full border border-emerald-500/40 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
                 {t(locale, "pricing.personal.badge")}
               </span>
               <CardTitle className="text-2xl">
@@ -58,7 +65,23 @@ export function PersonalVsCommercial({ locale }: { locale: Locale }) {
                 ))}
               </ul>
               <Button asChild variant="outline">
-                <a href="#supporter">{t(locale, "pricing.personal.cta")}</a>
+                <a
+                  href={download.available ? download.href : `/${locale}/`}
+                  target={
+                    download.available && download.opensNewTab
+                      ? "_blank"
+                      : undefined
+                  }
+                  rel="noopener noreferrer"
+                  data-download-social-trigger
+                  data-download-platform={download.platform}
+                  data-download-target={
+                    download.available ? download.target : undefined
+                  }
+                  data-tracking-placement="pricing"
+                >
+                  {t(locale, "pricing.decision.action.personal")}
+                </a>
               </Button>
             </CardContent>
           </Card>
@@ -88,7 +111,9 @@ export function PersonalVsCommercial({ locale }: { locale: Locale }) {
                 ))}
               </ul>
               <Button asChild>
-                <a href="#commercial-table">{t(locale, "pricing.commercial.cta")}</a>
+                <a href="#commercial-table">
+                  {t(locale, "pricing.commercial.cta")}
+                </a>
               </Button>
             </CardContent>
           </Card>

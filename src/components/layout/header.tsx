@@ -7,40 +7,52 @@ import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
-import { usePlatform } from "@/hooks/use-platform";
+import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 import { cn } from "@/lib/utils";
-import {
-  discordUrl,
-  getPlatformDownloadTarget,
-} from "@/lib/platform-download";
+import { discordUrl, getPlatformDownloadTarget } from "@/lib/platform-download";
 import { useState } from "react";
 import { t, localePath, getAlternatePath, type Locale } from "@/i18n/index";
 
 function getNavLinks(locale: Locale) {
   return [
-    { href: localePath(locale, "/use-cases"), label: t(locale, "nav.useCases") },
+    {
+      href: localePath(locale, "/use-cases"),
+      label: t(locale, "nav.useCases"),
+    },
     { href: localePath(locale, "/addons"), label: t(locale, "nav.addons") },
     { href: localePath(locale, "/pricing"), label: t(locale, "nav.pricing") },
     { href: localePath(locale, "/docs"), label: t(locale, "nav.docs") },
-    { href: localePath(locale, "/changelog"), label: t(locale, "nav.changelog") },
+    {
+      href: localePath(locale, "/changelog"),
+      label: t(locale, "nav.changelog"),
+    },
   ];
 }
 
-export function Header({ currentPath = "/", locale = "en" as Locale }: { currentPath?: string; locale?: Locale }) {
+export function Header({
+  currentPath = "/",
+  locale = "en" as Locale,
+}: {
+  currentPath?: string;
+  locale?: Locale;
+}) {
   const { toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = getNavLinks(locale);
-  const alternatePath = getAlternatePath(currentPath, locale === "de" ? "en" : "de");
+  const alternateBasePath = getAlternatePath(
+    currentPath,
+    locale === "de" ? "en" : "de",
+  );
   const alternateLabel = locale === "de" ? "EN" : "DE";
-  const platform = usePlatform();
+  const platform = useSyncedLandingPlatform();
+  const alternatePath = `${alternateBasePath}?platform=${platform}`;
   const showGitHubBrandLogo = canRenderBrandLogo("github", "nav");
   const download = getPlatformDownloadTarget(platform, locale, "nav");
   const showDownloadCta = true;
   const headerChrome =
     "bg-background/80 backdrop-blur-xl border-b border-border";
   const foregroundClass = "text-foreground";
-  const mutedForegroundClass =
-    "text-muted-foreground hover:text-foreground";
+  const mutedForegroundClass = "text-muted-foreground hover:text-foreground";
   const iconButtonClass =
     "text-muted-foreground hover:text-foreground hover:bg-accent";
 
@@ -55,7 +67,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 xl:flex">
           {navLinks.map((link) => {
             const isActive =
               currentPath === link.href || currentPath.startsWith(link.href);
@@ -66,7 +78,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 href={link.href}
                 className={cn(
                   "px-3 py-2 text-xs font-medium rounded-md transition-colors",
-                  isActive ? foregroundClass : mutedForegroundClass
+                  isActive ? foregroundClass : mutedForegroundClass,
                 )}
               >
                 {link.label}
@@ -77,45 +89,53 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
 
         <div className="flex items-center gap-1">
           {/* Desktop Download CTA */}
-          {showDownloadCta && (download.available ? (
-            <Button
-              size="sm"
-              className="hidden md:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
-              asChild
-              data-testid="header-download"
-            >
-              <a
-                href={download.href}
-                target={download.opensNewTab ? "_blank" : undefined}
-                rel={download.opensNewTab ? "noopener noreferrer" : undefined}
-                data-download-social-trigger
-                data-download-platform={download.platform}
-                data-download-target={download.target}
-                data-download-version={download.version}
-                data-tracking-placement="header"
+          {showDownloadCta &&
+            (download.available ? (
+              <Button
+                size="sm"
+                className="hidden xl:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
+                asChild
+                data-testid="header-download"
               >
-                <Download className="size-4" />
+                <a
+                  href={download.href}
+                  target={download.opensNewTab ? "_blank" : undefined}
+                  rel={download.opensNewTab ? "noopener noreferrer" : undefined}
+                  data-download-social-trigger
+                  data-download-platform={download.platform}
+                  data-download-target={download.target}
+                  data-download-version={download.version}
+                  data-tracking-placement="header"
+                >
+                  <Download className="size-4" />
+                  {download.label}
+                </a>
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                className="hidden xl:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
+                disabled
+                data-testid="header-download"
+              >
+                <Clock3 className="size-4" />
                 {download.label}
-              </a>
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              className="hidden md:inline-flex mr-1 min-w-[170px] justify-center rounded-full"
-              disabled
-              data-testid="header-download"
-            >
-              <Clock3 className="size-4" />
-              {download.label}
-            </Button>
-          ))}
+              </Button>
+            ))}
 
           {/* Language Switcher */}
           <a
             href={alternatePath}
+            onClick={(event) => {
+              const url = new URL(window.location.href);
+              url.pathname = alternateBasePath;
+              if (!url.searchParams.has("platform"))
+                url.searchParams.set("platform", platform);
+              event.currentTarget.href = url.href;
+            }}
             className={cn(
               "px-2 py-1 text-xs font-semibold rounded-md transition-colors",
-              mutedForegroundClass
+              mutedForegroundClass,
             )}
           >
             {alternateLabel}
@@ -124,7 +144,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
           <Button
             variant="ghost"
             size="icon-sm"
-            className={cn(iconButtonClass, "hidden md:inline-flex")}
+            className={cn(iconButtonClass, "hidden xl:inline-flex")}
             onClick={toggleTheme}
             aria-label={t(locale, "nav.toggleTheme")}
             data-testid="theme-toggle"
@@ -133,17 +153,27 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             <Moon className="size-4 dark:hidden" />
           </Button>
 
-          <Button variant="ghost" size="icon-sm" asChild>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="hidden xl:inline-flex"
+            asChild
+          >
             <a
               href={localePath(locale, "/sponsors")}
               aria-label={t(locale, "nav.sponsor")}
               className={mutedForegroundClass}
             >
-              <KofiIcon className="size-4" />
+              <KofiIcon className="size-4" aria-hidden="true" />
             </a>
           </Button>
 
-          <Button variant="ghost" size="icon-sm" asChild>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="hidden xl:inline-flex"
+            asChild
+          >
             <a
               href={discordUrl}
               target="_blank"
@@ -151,11 +181,16 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               aria-label="Discord"
               className={mutedForegroundClass}
             >
-              <DiscordIcon className="size-4" />
+              <DiscordIcon className="size-4" aria-hidden="true" />
             </a>
           </Button>
 
-          <Button variant="ghost" size="icon-sm" asChild>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="hidden xl:inline-flex"
+            asChild
+          >
             <a
               href="https://github.com/TypeWhisper"
               target="_blank"
@@ -164,7 +199,12 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               className={mutedForegroundClass}
             >
               {showGitHubBrandLogo ? (
-                <BrandLogo brand="github" context="nav" className="size-4" alt="GitHub" />
+                <BrandLogo
+                  brand="github"
+                  context="nav"
+                  className="size-4"
+                  alt="GitHub"
+                />
               ) : (
                 <GitHubIcon className="size-4" />
               )}
@@ -177,7 +217,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className={cn("md:hidden", iconButtonClass)}
+                className={cn("xl:hidden", iconButtonClass)}
                 aria-label={t(locale, "nav.menu")}
               >
                 <Menu className="size-4" />
@@ -185,37 +225,42 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
             </SheetTrigger>
             <SheetContent side="right" className="pt-12">
               <nav className="flex flex-col gap-1 px-4">
-                {showDownloadCta && (download.available ? (
-                  <Button
-                    asChild
-                    className="mb-3 w-full rounded-full"
-                    data-testid="header-download-mobile"
-                  >
-                    <a
-                      href={download.href}
-                      target={download.opensNewTab ? "_blank" : undefined}
-                      rel={download.opensNewTab ? "noopener noreferrer" : undefined}
-                      data-download-social-trigger
-                      data-download-platform={download.platform}
-                      data-download-target={download.target}
-                      data-download-version={download.version}
-                      data-tracking-placement="header"
-                      onClick={() => setMobileOpen(false)}
+                {showDownloadCta &&
+                  (download.available ? (
+                    <Button
+                      asChild
+                      className="mb-3 w-full rounded-full"
+                      data-testid="header-download-mobile"
                     >
-                      <Download className="size-4" />
+                      <a
+                        href={download.href}
+                        target={download.opensNewTab ? "_blank" : undefined}
+                        rel={
+                          download.opensNewTab
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        data-download-social-trigger
+                        data-download-platform={download.platform}
+                        data-download-target={download.target}
+                        data-download-version={download.version}
+                        data-tracking-placement="header"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <Download className="size-4" />
+                        {download.label}
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      className="mb-3 w-full rounded-full"
+                      disabled
+                      data-testid="header-download-mobile"
+                    >
+                      <Clock3 className="size-4" />
                       {download.label}
-                    </a>
-                  </Button>
-                ) : (
-                  <Button
-                    className="mb-3 w-full rounded-full"
-                    disabled
-                    data-testid="header-download-mobile"
-                  >
-                    <Clock3 className="size-4" />
-                    {download.label}
-                  </Button>
-                ))}
+                    </Button>
+                  ))}
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
@@ -226,7 +271,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                       currentPath === link.href ||
                         currentPath.startsWith(link.href)
                         ? "text-foreground bg-accent"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     {link.label}
@@ -234,6 +279,13 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                 ))}
                 <a
                   href={alternatePath}
+                  onClick={(event) => {
+                    const url = new URL(window.location.href);
+                    url.pathname = alternateBasePath;
+                    if (!url.searchParams.has("platform"))
+                      url.searchParams.set("platform", platform);
+                    event.currentTarget.href = url.href;
+                  }}
                   className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
                   {alternateLabel === "DE" ? "Deutsch" : "English"}
@@ -256,7 +308,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <KofiIcon className="size-4" />
+                  <KofiIcon className="size-4" aria-hidden="true" />
                   {t(locale, "nav.sponsor")}
                 </a>
                 <a
@@ -265,7 +317,7 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  <DiscordIcon className="size-4" />
+                  <DiscordIcon className="size-4" aria-hidden="true" />
                   Discord
                 </a>
                 <a
@@ -275,7 +327,12 @@ export function Header({ currentPath = "/", locale = "en" as Locale }: { current
                   className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
                 >
                   {showGitHubBrandLogo ? (
-                    <BrandLogo brand="github" context="nav" className="size-4" alt="GitHub" />
+                    <BrandLogo
+                      brand="github"
+                      context="nav"
+                      className="size-4"
+                      alt="GitHub"
+                    />
                   ) : (
                     <GitHubIcon className="size-4" />
                   )}

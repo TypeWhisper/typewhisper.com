@@ -1,5 +1,6 @@
 ---
 import "@/index.css";
+import { getClientMessages } from "@/i18n/client-messages";
 import { Header } from "@/components/layout/header";
 import DownloadSocialBanner from "@/components/layout/download-social-banner.astro";
 import Footer from "@/components/layout/footer.astro";
@@ -12,6 +13,7 @@ interface Props {
   canonicalPath: string;
   locale?: Locale;
   ogImage?: string;
+  searchPlatforms?: string[];
   structuredData?: Record<string, unknown>;
 }
 
@@ -22,6 +24,7 @@ const {
   locale = "en",
   ogImage = "https://www.typewhisper.com/og-image.png",
   structuredData,
+  searchPlatforms = [],
 } = Astro.props;
 
 const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
@@ -90,6 +93,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
         });
       </script>
     )}
+    <script is:inline id="page-translations" type="application/json" set:html={JSON.stringify(getClientMessages(locale, Astro.url.pathname)).replace(/</g, "\\u003c")} />
     <!-- Theme init (prevent flash) -->
     <script is:inline>
       (function(){
@@ -101,9 +105,11 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
     </script>
   </head>
   <body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-background focus:p-3">{locale === "de" ? "Zum Inhalt" : "Skip to content"}</a>
     <div class="flex min-h-screen flex-col">
       <Header client:load currentPath={Astro.url.pathname} locale={locale} />
-      <main class="flex-1">
+      <main id="main-content" class="min-w-0 flex-1" data-pagefind-body>
+        {searchPlatforms.map(platform => <span hidden data-pagefind-filter={`platform:${platform}`} />)}
         <slot />
       </main>
       <Footer locale={locale} />

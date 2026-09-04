@@ -1,15 +1,28 @@
-import en from "./locales/en/index";
-import de from "./locales/de/index";
-
 export type Locale = "en" | "de";
 export const defaultLocale: Locale = "en";
 export const locales: Locale[] = ["en", "de"];
 
-const translations: Record<Locale, Record<string, string>> = { en, de };
+const translations: Record<Locale, Record<string, string>> | null = import.meta
+  .env.SSR
+  ? {
+      en: (await import("./locales/en/index")).default,
+      de: (await import("./locales/de/index")).default,
+    }
+  : null;
+let clientMessages: Record<string, string> | undefined;
+function getClientMessages(): Record<string, string> {
+  if (!clientMessages) {
+    const element = document.getElementById("page-translations");
+    clientMessages = JSON.parse(element?.textContent || "{}");
+  }
+  return clientMessages!;
+}
 
 /** Look up a translation key for the given locale. Falls back to English, then returns the key itself. */
 export function t(locale: Locale, key: string): string {
-  return translations[locale]?.[key] ?? translations.en[key] ?? key;
+  if (import.meta.env.SSR)
+    return translations?.[locale]?.[key] ?? translations?.en[key] ?? key;
+  return getClientMessages()[key] ?? key;
 }
 
 /** Get locale from a URL path segment, e.g. "/de/docs" -> "de". */
@@ -28,7 +41,10 @@ export function localePath(locale: Locale, path: string): string {
 }
 
 /** Get the alternate-language path for the language switcher. */
-export function getAlternatePath(currentPath: string, targetLocale: Locale): string {
+export function getAlternatePath(
+  currentPath: string,
+  targetLocale: Locale,
+): string {
   const currentLocale = getLocaleFromPath(currentPath);
   // Strip current locale prefix
   let basePath = currentPath;

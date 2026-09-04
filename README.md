@@ -24,9 +24,11 @@ Translations live in `src/i18n/locales/en/` and `src/i18n/locales/de/`. Locale-s
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
+
+The documentation search uses a generated Pagefind index. Run `npm run build` once before testing search in development, and rebuild after changing indexed content. The build copies the index to the ignored `public/pagefind/` directory for the dev server. Responsive screenshots are generated automatically by both `dev` and `build`.
 
 ## Build
 
@@ -43,6 +45,8 @@ All routes exist under both `/en/` and `/de/`.
 |-------|-------------|
 | `/{locale}/` | Landing page with features, engine comparison, download CTAs |
 | `/{locale}/docs` | Documentation hub |
+| `/{locale}/docs/search` | Documentation and add-on search with platform filters |
+| `/{locale}/setup` | Setup guides selected by platform, processing, and task |
 | `/{locale}/docs/mac/installation` | System requirements and installation guide |
 | `/{locale}/docs/mac/features` | Feature documentation |
 | `/{locale}/docs/mac/api` | HTTP API reference |

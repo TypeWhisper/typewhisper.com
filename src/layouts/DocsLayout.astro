@@ -1,4 +1,5 @@
 ---
+import SearchForm from "@/components/docs/search-form.astro";
 import BaseLayout from "./BaseLayout.astro";
 import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
 import type { Locale } from "@/i18n/index";
@@ -27,102 +28,202 @@ const {
 } = Astro.props;
 
 const macSidebarLinks = [
-  { href: localePath(locale, "/docs/mac"), label: t(locale, "docs.sidebar.overview") },
-  { href: localePath(locale, "/docs/mac/installation"), label: t(locale, "docs.sidebar.installation") },
-  { href: localePath(locale, "/docs/mac/features"), label: t(locale, "docs.sidebar.features") },
-  { href: localePath(locale, "/docs/mac/file-transcription"), label: t(locale, "docs.sidebar.fileTranscription") },
-  { href: localePath(locale, "/docs/mac/workflows"), label: t(locale, "docs.sidebar.workflows") },
-  { href: localePath(locale, "/docs/mac/api"), label: t(locale, "docs.sidebar.httpApi") },
-  { href: localePath(locale, "/docs/mac/cli"), label: t(locale, "docs.sidebar.cliTool") },
-  { href: localePath(locale, "/docs/mac/troubleshooting"), label: t(locale, "docs.sidebar.troubleshooting") },
+  {
+    href: localePath(locale, "/docs/mac"),
+    label: t(locale, "docs.sidebar.overview"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/installation"),
+    label: t(locale, "docs.sidebar.installation"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/features"),
+    label: t(locale, "docs.sidebar.features"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/file-transcription"),
+    label: t(locale, "docs.sidebar.fileTranscription"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/workflows"),
+    label: t(locale, "docs.sidebar.workflows"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/api"),
+    label: t(locale, "docs.sidebar.httpApi"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/cli"),
+    label: t(locale, "docs.sidebar.cliTool"),
+  },
+  {
+    href: localePath(locale, "/docs/mac/troubleshooting"),
+    label: t(locale, "docs.sidebar.troubleshooting"),
+  },
 ];
 
 const windowsSidebarLinks = [
-  { href: localePath(locale, "/docs/windows"), label: t(locale, "docs.sidebar.overview") },
-  { href: localePath(locale, "/docs/windows/installation"), label: t(locale, "docs.sidebar.installation") },
-  { href: localePath(locale, "/docs/windows/features"), label: t(locale, "docs.sidebar.features") },
-  { href: localePath(locale, "/docs/windows/file-transcription"), label: t(locale, "docs.sidebar.fileTranscription") },
-  { href: localePath(locale, "/docs/windows/workflows"), label: t(locale, "docs.sidebar.workflows") },
-  { href: localePath(locale, "/docs/windows/api"), label: t(locale, "docs.sidebar.httpApi") },
-  { href: localePath(locale, "/docs/windows/cli"), label: t(locale, "docs.sidebar.cliTool") },
-  { href: localePath(locale, "/docs/windows/troubleshooting"), label: t(locale, "docs.sidebar.troubleshooting") },
+  {
+    href: localePath(locale, "/docs/windows"),
+    label: t(locale, "docs.sidebar.overview"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/installation"),
+    label: t(locale, "docs.sidebar.installation"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/features"),
+    label: t(locale, "docs.sidebar.features"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/file-transcription"),
+    label: t(locale, "docs.sidebar.fileTranscription"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/workflows"),
+    label: t(locale, "docs.sidebar.workflows"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/api"),
+    label: t(locale, "docs.sidebar.httpApi"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/cli"),
+    label: t(locale, "docs.sidebar.cliTool"),
+  },
+  {
+    href: localePath(locale, "/docs/windows/troubleshooting"),
+    label: t(locale, "docs.sidebar.troubleshooting"),
+  },
 ];
 
 const iosSidebarLinks = [
-  { href: localePath(locale, "/docs/ios"), label: t(locale, "docs.sidebar.overview") },
-  { href: localePath(locale, "/docs/ios/installation"), label: t(locale, "docs.sidebar.installation") },
-  { href: localePath(locale, "/docs/ios/dictation-and-keyboard"), label: t(locale, "docs.sidebar.dictationKeyboard") },
-  { href: localePath(locale, "/docs/ios/profiles-and-processing"), label: t(locale, "docs.sidebar.profilesProcessing") },
-  { href: localePath(locale, "/docs/ios/files-history-and-inbox"), label: t(locale, "docs.sidebar.filesHistoryInbox") },
-  { href: localePath(locale, "/docs/ios/dictionary-and-snippets"), label: t(locale, "docs.sidebar.dictionarySnippets") },
-  { href: localePath(locale, "/docs/ios/watch-and-shortcuts"), label: t(locale, "docs.sidebar.watchShortcuts") },
-  { href: localePath(locale, "/docs/ios/privacy-and-premium"), label: t(locale, "docs.sidebar.privacyPremium") },
-  { href: localePath(locale, "/docs/ios/troubleshooting"), label: t(locale, "docs.sidebar.troubleshooting") },
+  {
+    href: localePath(locale, "/docs/ios"),
+    label: t(locale, "docs.sidebar.overview"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/installation"),
+    label: t(locale, "docs.sidebar.installation"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/dictation-and-keyboard"),
+    label: t(locale, "docs.sidebar.dictationKeyboard"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/profiles-and-processing"),
+    label: t(locale, "docs.sidebar.profilesProcessing"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/files-history-and-inbox"),
+    label: t(locale, "docs.sidebar.filesHistoryInbox"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/dictionary-and-snippets"),
+    label: t(locale, "docs.sidebar.dictionarySnippets"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/watch-and-shortcuts"),
+    label: t(locale, "docs.sidebar.watchShortcuts"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/privacy-and-premium"),
+    label: t(locale, "docs.sidebar.privacyPremium"),
+  },
+  {
+    href: localePath(locale, "/docs/ios/troubleshooting"),
+    label: t(locale, "docs.sidebar.troubleshooting"),
+  },
 ];
 
-const sidebarLinks = platform === "mac" ? macSidebarLinks
-  : platform === "windows" ? windowsSidebarLinks
-  : platform === "ios" ? iosSidebarLinks
-  : null;
+const sidebarLinks =
+  platform === "mac"
+    ? macSidebarLinks
+    : platform === "windows"
+      ? windowsSidebarLinks
+      : platform === "ios"
+        ? iosSidebarLinks
+        : null;
 
 const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
 const currentPath = normalizePath(Astro.url.pathname);
 ---
 
-<BaseLayout title={title} description={description} canonicalPath={canonicalPath} locale={locale}>
-  {sidebarLinks ? (
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
-      <div class="flex flex-col gap-8 lg:flex-row lg:gap-12">
-        <aside class="lg:w-56 shrink-0">
-          <nav class="flex flex-col gap-1 lg:sticky lg:top-24">
-            <a
-              href={localePath(locale, "/docs")}
-              class="mb-2 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-              {t(locale, "docs.allPlatforms")}
-            </a>
-            <div class="flex flex-row gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-x-visible lg:pb-0">
-              {sidebarLinks.map((link) => (
-                <a
-                  href={link.href}
-                  class:list={[
-                    "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                    currentPath === normalizePath(link.href)
-                      ? "border-primary text-foreground"
-                      : "border-transparent text-muted-foreground",
-                  ]}
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  locale={locale}
+  searchPlatforms={platform ? [platform] : []}
+>
+  {
+    sidebarLinks ? (
+      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+        <div class="flex flex-col gap-8 lg:flex-row lg:gap-12">
+          <aside class="lg:w-56 shrink-0">
+            <SearchForm locale={locale} platform={platform} />
+            <nav class="flex flex-col gap-1 lg:sticky lg:top-24">
+              <a
+                href={localePath(locale, "/docs")}
+                class="mb-2 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </nav>
-        </aside>
-        <main class="min-w-0 flex-1">
-          {releaseStage && releaseTitle && releaseDescription && (
-            <ReleaseStageNotice
-              stage={releaseStage}
-              title={releaseTitle}
-              description={releaseDescription}
-              locale={locale}
-            />
-          )}
-          <slot />
-        </main>
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+                {t(locale, "docs.allPlatforms")}
+              </a>
+              <div class="flex flex-row gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-x-visible lg:pb-0">
+                {sidebarLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class:list={[
+                      "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
+                      currentPath === normalizePath(link.href)
+                        ? "border-primary text-foreground"
+                        : "border-transparent text-muted-foreground",
+                    ]}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+          </aside>
+          <article class="min-w-0 flex-1">
+            {releaseStage && releaseTitle && releaseDescription && (
+              <ReleaseStageNotice
+                stage={releaseStage}
+                title={releaseTitle}
+                description={releaseDescription}
+                locale={locale}
+              />
+            )}
+            <slot />
+          </article>
+        </div>
       </div>
-    </div>
-  ) : (
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
-      {releaseStage && releaseTitle && releaseDescription && (
-        <ReleaseStageNotice
-          stage={releaseStage}
-          title={releaseTitle}
-          description={releaseDescription}
-          locale={locale}
-        />
-      )}
-      <slot />
-    </div>
-  )}
+    ) : (
+      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+        {releaseStage && releaseTitle && releaseDescription && (
+          <ReleaseStageNotice
+            stage={releaseStage}
+            title={releaseTitle}
+            description={releaseDescription}
+            locale={locale}
+          />
+        )}
+        <slot />
+      </div>
+    )
+  }
 </BaseLayout>

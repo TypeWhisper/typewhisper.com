@@ -1,8 +1,14 @@
 ---
+import SearchForm from "@/components/docs/search-form.astro";
 import DocsLayout from "@/layouts/DocsLayout.astro";
 import { t, type Locale } from "@/i18n/index";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { IOSLogo, MacOSLogo } from "@/components/ui/platform-logos";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import { Monitor } from "lucide-react";
@@ -16,10 +22,12 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const metaDescription = locale === "de"
-  ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS 1.6, Windows 1.0.9 und iOS 1.0."
-  : "TypeWhisper documentation for the stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.";
+const metaDescription =
+  locale === "de"
+    ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS 1.6, Windows 1.0.9 und iOS 1.0."
+    : "TypeWhisper documentation for the stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.";
 ---
+
 <DocsLayout
   title={`${t(locale, "docs.title")} - TypeWhisper`}
   description={metaDescription}
@@ -27,22 +35,32 @@ const metaDescription = locale === "de"
   locale={locale}
 >
   <div>
-    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "docs.title")}</h1>
+    <h1 class="font-display text-3xl font-bold tracking-tight">
+      {t(locale, "docs.title")}
+    </h1>
     <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
       {t(locale, "docs.subtitle")}
     </p>
+    <SearchForm locale={locale} />
+    <a href={`/${locale}/setup/`} class="text-primary underline"
+      >{t(locale, "setup.title")}</a
+    >
     <div class="mt-8 grid gap-4 sm:grid-cols-3">
       <a href={canonicalPath(locale, "/docs/mac")}>
         <Card className="h-full transition-all hover:shadow-md">
           <CardHeader>
             <div class="mb-1 text-muted-foreground">
-              <MacOSLogo className="h-5 w-5" />
+              <MacOSLogo className="h-5 w-5" aria-hidden="true" />
             </div>
             <CardTitle className="flex items-center gap-2 text-base">
               {t(locale, "docs.mac.title")}
-              <Badge variant="secondary" className="text-[10px]">{t(locale, "docs.mac.badge")}</Badge>
+              <Badge variant="secondary" className="text-[10px]"
+                >{t(locale, "docs.mac.badge")}</Badge
+              >
             </CardTitle>
-            <CardDescription>{t(locale, "docs.mac.description")}</CardDescription>
+            <CardDescription
+              >{t(locale, "docs.mac.description")}</CardDescription
+            >
           </CardHeader>
         </Card>
       </a>
@@ -54,9 +72,13 @@ const metaDescription = locale === "de"
             </div>
             <CardTitle className="flex items-center gap-2 text-base">
               {t(locale, "docs.win.title")}
-              <Badge variant="outline" className="text-[10px]">{t(locale, "docs.win.badge")}</Badge>
+              <Badge variant="outline" className="text-[10px]"
+                >{t(locale, "docs.win.badge")}</Badge
+              >
             </CardTitle>
-            <CardDescription>{t(locale, "docs.win.description")}</CardDescription>
+            <CardDescription
+              >{t(locale, "docs.win.description")}</CardDescription
+            >
           </CardHeader>
         </Card>
       </a>
@@ -64,13 +86,17 @@ const metaDescription = locale === "de"
         <Card className="h-full transition-all hover:shadow-md">
           <CardHeader>
             <div class="mb-1 text-muted-foreground">
-              <IOSLogo className="h-5 w-5" />
+              <IOSLogo className="h-5 w-5" aria-hidden="true" />
             </div>
             <CardTitle className="flex items-center gap-2 text-base">
               {t(locale, "docs.ios.title")}
-              <Badge variant="outline" className="text-[10px]">{t(locale, "docs.ios.badge")}</Badge>
+              <Badge variant="outline" className="text-[10px]"
+                >{t(locale, "docs.ios.badge")}</Badge
+              >
             </CardTitle>
-            <CardDescription>{t(locale, "docs.ios.description")}</CardDescription>
+            <CardDescription
+              >{t(locale, "docs.ios.description")}</CardDescription
+            >
           </CardHeader>
         </Card>
       </a>

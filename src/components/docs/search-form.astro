@@ -1,0 +1,30 @@
+---
+import { t, type Locale } from "@/i18n/index";
+const { locale, platform } = Astro.props as {
+  locale: Locale;
+  platform?: string;
+};
+---
+
+<form
+  action={`/${locale}/docs/search/`}
+  class="my-4 flex min-w-0 gap-2"
+  role="search"
+>
+  <label class="sr-only" for={`docs-query-${platform ?? "all"}`}
+    >{t(locale, "docs.search.label")}</label
+  >
+  <input
+    id={`docs-query-${platform ?? "all"}`}
+    name="q"
+    type="search"
+    required
+    placeholder={t(locale, "docs.search.label")}
+    class="min-w-0 flex-1 rounded-lg border bg-card px-3 py-2 text-sm"
+  />
+  {platform && <input type="hidden" name="platform" value={platform} />}
+  <button
+    class="rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
+    >{t(locale, "docs.search.submit")}</button
+  >
+</form>

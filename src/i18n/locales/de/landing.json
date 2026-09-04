@@ -9,9 +9,9 @@
   "hero.title.line2.mac": "Schreib überall weiter.",
   "hero.title.line2.windows": "Schreib überall weiter.",
   "hero.title.line2.ios": "Mach unterwegs weiter.",
-  "hero.subtitle.mac": "Diktiere systemweit, transkribiere Dateien und verwandle gesprochene Notizen mit Workflows in fertige Texte oder Folgeaktionen, lokal auf deinem Mac oder mit Anbietern deiner Wahl.",
-  "hero.subtitle.windows": "Diktiere systemweit, transkribiere Dateien und steuere die Ausgabe mit App- und Website-Regeln, Workflows, Wörterbuch, Snippets, API und CLI.",
-  "hero.subtitle.ios": "Private Sprache-zu-Text für iPhone und iPad mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Profilen, Dateien, Kurzbefehlen und Apple Watch.",
+  "hero.subtitle.mac": "Diktiere in deine Apps und mache aus gesprochenen Gedanken fertige Texte. Lokal auf deinem Mac oder mit Anbietern deiner Wahl.",
+  "hero.subtitle.windows": "Diktiere in deine Apps, transkribiere Dateien und formatiere deine Texte automatisch. Lokal auf deinem PC oder mit Anbietern deiner Wahl.",
+  "hero.subtitle.ios": "Halte Gedanken fest, diktiere mit der Tastatur und nimm unterwegs mit der Apple Watch auf. Mit lokalen Engines auf deinem Gerät.",
   "hero.readDocs.mac": "macOS-Dokumentation lesen",
   "hero.readDocs.windows": "Windows-Doku lesen",
   "hero.readDocs.ios": "iOS-Dokumentation lesen",
@@ -278,5 +278,14 @@
   "pricingTeaser.supporter.priceSuffix": "einmalig",
   "pricingTeaser.supporter.description": "Du liebst die App? Ein einmaliger Beitrag unterstützt die offene Entwicklung.",
   "pricingTeaser.honor": "Kommerzielle Lizenzen bleiben einfach: monatlich oder Lifetime, für Einzelpersonen und Teams.",
-  "pricingTeaser.cta": "Premium-Preise ansehen"
+  "pricingTeaser.cta": "Premium-Preise ansehen",
+  "heroDemo.exampleLabel": "Beispiel: Diktat und fertiger Text",
+  "heroDemo.choose": "Beispiel wählen",
+  "heroDemo.choice.email": "E-Mail",
+  "heroDemo.choice.chat": "Chat",
+  "heroDemo.choice.note": "Notiz",
+  "heroDemo.raw.note": "ähm notiz fürs meeting wir brauchen noch feedback zum entwurf und ich schicke die finale version am freitag",
+  "heroDemo.polished.note": "Meeting-Notiz\n• Feedback zum Entwurf einholen\n• Finale Version am Freitag verschicken",
+  "landing.compareEngines": "Lokale Engines vergleichen",
+  "landing.allEditions": "Alle drei Editionen ansehen"
 }
