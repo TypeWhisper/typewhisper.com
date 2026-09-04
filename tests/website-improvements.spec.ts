@@ -216,3 +216,13 @@ for (const width of [1440, 390]) {
     );
   });
 }
+
+test("search excerpts decode HTML entities as plain text", async ({ page }) => {
+  await page.goto("/de/docs/search/?q=Mikrofon&platform=mac");
+  const results = page.getByTestId("docs-search").locator("li");
+  await expect(results.first()).toBeVisible({ timeout: 20000 });
+  await expect(results.first()).toContainText(
+    "Datenschutz & Sicherheit > Mikrofon",
+  );
+  await expect(results.first()).not.toContainText("&gt;");
+});

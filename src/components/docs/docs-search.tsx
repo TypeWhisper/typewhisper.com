@@ -24,6 +24,13 @@ function loadEngine(): Promise<Pagefind> {
     }));
 }
 
+/** Convert Pagefind's highlighted HTML excerpt into safe React text. */
+function plainExcerpt(excerpt: string): string {
+  const decoder = document.createElement("textarea");
+  decoder.innerHTML = excerpt.replace(/<[^>]*>/g, "");
+  return decoder.value;
+}
+
 export function DocsSearch({ locale }: { locale: Locale }) {
   const [query, setQuery] = useState("");
   const [platform, setPlatform] = useState("all");
@@ -78,7 +85,12 @@ export function DocsSearch({ locale }: { locale: Locale }) {
           response.results.slice(0, limit).map((result) => result.data()),
         );
         if (generation.current !== id) return;
-        setResults(items);
+        setResults(
+          items.map((item) => ({
+            ...item,
+            excerpt: plainExcerpt(item.excerpt),
+          })),
+        );
         setTotal(response.results.length);
         setState("done");
       } catch {
@@ -161,7 +173,7 @@ export function DocsSearch({ locale }: { locale: Locale }) {
               {result.meta.title ?? result.url}
             </a>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {result.excerpt.replace(/<[^>]*>/g, "")}
+              {result.excerpt}
             </p>
           </li>
         ))}
