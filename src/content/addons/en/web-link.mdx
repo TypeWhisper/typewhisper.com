@@ -1,0 +1,35 @@
+---
+slug: "web-link"
+name: "Web Link Transcription"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "Globe"
+description: "Import audio from supported web links into the TypeWhisper file transcription queue."
+categories:
+  - utility
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.web-link"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WebLinkPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-web-link-v1.0.0"
+screenshots: false
+---
+
+## Requirements
+
+This release requires **TypeWhisper 1.7.0 or newer** on macOS 14 or later. The stable macOS 1.6 edition does not meet that requirement.
+
+The add-on uses **yt-dlp** and **ffmpeg**. It checks common installation locations and offers to install missing tools through an existing Homebrew installation. You can also install the tools yourself and check again.
+
+## Setup and use
+
+1. Install and enable **Web Link Transcription** in **Settings > Integrations** on a compatible host.
+2. Open its settings and check that yt-dlp and ffmpeg are ready.
+3. Open **Web Link** from TypeWhisper's media import entry points and paste an HTTP or HTTPS media URL.
+4. Start the import. The add-on downloads one supported media item and hands its audio to the file transcription queue.
+5. Review the result in TypeWhisper after the selected engine finishes processing it.
+
+Supported sites depend on yt-dlp. Playlist downloads are disabled. The website receives the media download request; subsequent audio processing follows the local or cloud engine selected in TypeWhisper. The add-on itself is not a speech recognition engine.

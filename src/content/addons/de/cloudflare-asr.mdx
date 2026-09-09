@@ -4,7 +4,7 @@ name: Cloudflare ASR
 author: TypeWhisper
 icon: Cloud
 brandLogo: cloudflare
-description: Cloudflare-Transkription über einen geschützten Tunnel auf macOS oder direkt über Workers AI unter Windows.
+description: "Transkription über einen Cloudflare Tunnel auf macOS oder Cloudflare Workers AI auf Windows."
 categories:
   - transcription
 platforms:
@@ -17,29 +17,27 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.CloudflareAsr"
 ---
 
-## Über
+## Unterschiede zwischen den Plattformen
 
-Cloudflare ASR ermöglicht es dir, Transkriptionsanfragen über einen Cloudflare Tunnel an ein beliebiges OpenAI-kompatibles Sprache-zu-Text-Backend weiterzuleiten. Das ist nützlich, wenn du einen Transkriptionsdienst selbst hosten möchtest, der hinter Cloudflares Netzwerk liegt, und dich über Service-Tokens statt API-Schlüssel authentifizieren willst.
+Auf macOS verbindet sich Cloudflare ASR über einen Cloudflare Tunnel mit deinem OpenAI-kompatiblen Transkriptions-Backend. Auf Windows ruft es Cloudflare Workers AI direkt mit deiner Account-ID und deinem API-Token auf.
 
-## Features
+## Einrichtung auf macOS: Cloudflare Tunnel
 
-- OpenAI-kompatibler API-Endpunkt für Transkription
-- Cloudflare Tunnel-Unterstützung für sicheren Zugriff auf selbst gehostete Backends
-- Service-Token-Authentifizierung (CF-Access-Client-Id / CF-Access-Client-Secret)
-- Konfigurierbare Modellauswahl
+1. Stelle ein OpenAI-kompatibles Transkriptions-Backend hinter einem Cloudflare Tunnel bereit.
+2. Falls Cloudflare Access den Dienst schützt, erstelle dafür einen Service-Token.
+3. Öffne **Einstellungen > Integrationen**, suche **Cloudflare ASR** und öffne die Konfiguration.
+4. Trage die Basis-URL des Backends ein. TypeWhisper hängt `/v1/models` für den Modellkatalog und `/v1/audio/transcriptions` für die Transkription an. Trage deshalb nicht den vollständigen Transkriptions-Endpunkt ein.
+5. Trage bei einem durch Access geschützten Dienst **CF-Access-Client-Id** und **CF-Access-Client-Secret** ein.
+6. Aktualisiere den Modellkatalog des Backends und wähle ein Modell. Falls die Abfrage nicht verfügbar ist, kannst du den Modellnamen manuell eingeben.
+7. Wähle Cloudflare ASR als Transkriptions-Engine in den Einstellungen oder in einem Profil.
 
-## Konfiguration
+Audio wird über Cloudflare an dein Backend gesendet. Modell und Verarbeitung hängen von diesem Backend ab.
 
-- **Endpunkt-URL** - Die URL deines OpenAI-kompatiblen Transkriptions-Endpunkts hinter dem Cloudflare Tunnel.
-- **CF-Access-Client-Id** - Deine Cloudflare Access Service-Token Client-ID.
-- **CF-Access-Client-Secret** - Dein Cloudflare Access Service-Token Client-Secret.
-- **Modell** - Das Transkriptionsmodell, das auf dem Backend verwendet werden soll.
+## Einrichtung auf Windows: Workers AI
 
-## Einrichtung
+1. Ermittle deine Cloudflare **Account ID** und erstelle einen **API Token**, der Workers AI für dieses Konto verwenden darf.
+2. Öffne **Einstellungen > Integrationen**, suche **Cloudflare ASR** und öffne die Konfiguration.
+3. Trage **Account ID** und **API Token** ein und speichere die Konfiguration.
+4. Wähle Cloudflare ASR als Transkriptions-Engine und verwende **Whisper (Cloudflare)**.
 
-1. Stelle einen OpenAI-kompatiblen Transkriptionsserver (z.B. faster-whisper-server) hinter einem Cloudflare Tunnel bereit
-2. Erstelle einen Cloudflare Access Service-Token zur Authentifizierung
-3. Öffne TypeWhisper Einstellungen > Plugins
-4. Finde das Cloudflare ASR-Plugin und klicke auf Konfigurieren
-5. Gib deine Endpunkt-URL und Service-Token-Zugangsdaten ein
-6. Wähle Cloudflare ASR als Transkriptions-Engine in den Einstellungen oder in einem Profil
+Das Windows-Plugin setzt den Endpunkt `https://api.cloudflare.com/client/v4/accounts/{account-id}/ai/run/@cf/openai/whisper` selbst zusammen und authentifiziert sich mit dem API-Token. Es nutzt das feste Workers-AI-Whisper-Modell. Ein eigener Endpunkt, Tunnel oder Access-Service-Token ist nicht nötig. Audio wird an Cloudflare Workers AI gesendet.
