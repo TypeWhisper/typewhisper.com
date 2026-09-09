@@ -274,3 +274,15 @@ test("landing islands hydrate before scroll reveal classes change", async ({
 
   expect(browserErrors).toEqual([]);
 });
+
+test("new feature cards reveal after switching platforms", async ({ page }) => {
+  await page.goto("/en/?platform=mac");
+  const features = page.locator("#features");
+  await features.scrollIntoViewIfNeeded();
+  await expect(features.locator("xpath=ancestor::astro-island")).not.toHaveAttribute("ssr", "");
+  await page.getByTestId("landing-hero-tab-ios").click();
+  const card = page.getByTestId("ios-feature-gallery").locator(":scope > div").first();
+  await card.scrollIntoViewIfNeeded();
+  await expect(card).toHaveClass(/\breveal-scale-visible\b/);
+  await expect(card).not.toHaveClass(/\breveal-scale-hidden\b/);
+});
