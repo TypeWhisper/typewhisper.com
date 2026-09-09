@@ -37,3 +37,14 @@ test("published add-ons that require a newer host explain compatibility", async 
   await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status");
   await expect(page.locator('img[src*="/plugins/web-link"]')).toHaveCount(0);
 });
+
+test("utility categories remain consistent across platform filters", async ({ page }) => {
+  for (const platform of ["all", "mac", "windows"]) {
+    await page.goto(`/en/addons/?platform=${platform}&category=utility`);
+    for (const slug of ["live-transcript", "webhook"]) {
+      const card = page.locator(`[data-testid="addon-card"][data-slug="${slug}"]`);
+      await expect(card).toBeVisible();
+      await expect(card.getByText("Utility", { exact: true })).toBeVisible();
+    }
+  }
+});
