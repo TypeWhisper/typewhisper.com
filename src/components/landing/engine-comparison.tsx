@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { EngineComparisonTable } from "@/components/landing/engine-comparison-table";
 import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 import { t, type Locale } from "@/i18n/index";
@@ -16,10 +17,11 @@ function getSubtitle(locale: Locale, platform: string): string {
 }
 
 export function EngineComparison({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
 
   return (
-    <section className="bg-secondary py-20 sm:py-28">
+    <section ref={revealRoot} className="bg-secondary py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
@@ -5,11 +6,12 @@ import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
 import { t, localePath, type Locale } from "@/i18n/index";
 
 export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
   const download = getPlatformDownloadTarget(platform, locale, "landing");
 
   return (
-    <section className="bg-secondary py-16 sm:py-20">
+    <section ref={revealRoot} className="bg-secondary py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="reveal-fade-hidden text-3xl font-bold tracking-tighter text-foreground sm:text-4xl">

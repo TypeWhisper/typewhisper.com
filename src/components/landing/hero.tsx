@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { type ReactElement, type SVGProps } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -53,6 +54,7 @@ const logoByPlatform: Record<
 };
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const { detectedHintPlatform, selectedPlatform, selectPlatform } =
     useLandingPlatformSelection();
 
@@ -77,6 +79,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
 
   return (
     <section
+      ref={revealRoot}
       data-testid="landing-hero"
       className="hero-surface relative overflow-hidden py-10 sm:py-16 lg:py-20"
     >
