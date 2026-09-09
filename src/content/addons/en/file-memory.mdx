@@ -18,23 +18,17 @@ sourceUrls:
 
 ## About
 
-File Memory provides a fully local and offline memory system for TypeWhisper. Transcriptions and context are stored as JSON files on disk, and retrieval uses simple text-based search. No cloud services or API keys are required - everything stays on your Mac.
-
-## Features
-
-- Fully offline - no network access needed
-- JSON file storage in a local directory
-- Text-based search for memory retrieval
-- No API keys or cloud accounts required
-- Works without any external dependencies
-
-## Configuration
-
-- **Storage directory** - The folder where memory files are saved. Defaults to a directory inside TypeWhisper's application support folder.
+File Memory stores extracted memory entries in `memories.json` inside the plugin data directory. Storage and text search run locally and need no API key. It is a storage provider, not a complete offline transcription or memory-extraction pipeline.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the File Memory plugin and click Configure
-3. Optionally change the storage directory
-4. The plugin will automatically store and retrieve memories as you use TypeWhisper
+1. Enable **File Memory** in **Settings > Integrations**.
+2. Enable TypeWhisper's memory feature and select the LLM provider and model that extract facts from transcriptions.
+3. In the File Memory settings, search, edit or delete stored entries. The storage directory is managed by TypeWhisper; this view has no folder picker.
+4. Test a transcription containing a lasting fact and check the stored entry after extraction completes.
+
+## Data processing
+
+The extraction LLM receives the transcription text. A cloud LLM therefore sends text to its provider even though File Memory stores the resulting facts locally. Retrieved memories can also become part of later workflow prompts. Use local providers for those steps when the full workflow must remain on the device.
+
+On macOS, extracted entries are sent to every enabled, ready memory storage provider. Review other enabled memory add-ons as well.

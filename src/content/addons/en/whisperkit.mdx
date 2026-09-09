@@ -2,7 +2,7 @@
 slug: whisperkit
 name: WhisperKit
 author: TypeWhisper
-version: 1.0.0
+version: "1.2.0"
 icon: Cpu
 description: Local on-device transcription using WhisperKit with CoreML, optimized for Apple Silicon.
 categories:
@@ -12,11 +12,15 @@ platforms:
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WhisperKitPlugin
 featured: true
+id: "com.typewhisper.whisperkit"
+minAppVersion: "1.6.0"
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.0"
 ---
 
 ## About
 
-WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML framework. All processing happens entirely on-device with no cloud connection required. WhisperKit supports 99+ languages, English translation, and automatically selects the best model based on your available RAM.
+WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML framework. All processing happens entirely on-device with no cloud connection required. WhisperKit supports 99+ languages, English translation, and marks recommended models based on your available RAM.
 
 ## Features
 
@@ -24,7 +28,7 @@ WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML
 - 99+ languages supported
 - Translation to English
 - Voice Activity Detection (VAD)
-- Automatic model selection based on available RAM
+- RAM-based model recommendations with manual selection
 - No API key or cloud account needed
 
 ## Transcription Models
@@ -37,6 +41,7 @@ WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML
 | Whisper Medium | `openai_whisper-medium` |
 | Whisper Large V3 | `openai_whisper-large-v3` |
 | Whisper Large V3 Turbo | `openai_whisper-large-v3_turbo` |
+| Distil Large V3 Turbo | `distil-whisper_distil-large-v3_turbo` |
 | Distil Large V3 | `distil-whisper_distil-large-v3` |
 
 ## Configuration
@@ -45,9 +50,9 @@ No API key required. WhisperKit runs entirely on-device.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
+1. Open TypeWhisper Settings > Integrations
 2. Find the WhisperKit plugin and enable it
-3. Models are downloaded automatically on first use
+3. Choose a model in the plugin settings, then download and load it
 4. Select WhisperKit as your transcription engine in Settings or in a profile
 
 ## Manual copy workaround

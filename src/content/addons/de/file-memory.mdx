@@ -18,23 +18,17 @@ sourceUrls:
 
 ## Über
 
-File Memory bietet ein vollständig lokales und offline Gedächtnissystem für TypeWhisper. Transkriptionen und Kontext werden als JSON-Dateien auf der Festplatte gespeichert, und der Abruf erfolgt über eine einfache textbasierte Suche. Keine Cloud-Dienste oder API-Schlüssel nötig - alles bleibt auf deinem Mac.
-
-## Features
-
-- Vollständig offline - kein Netzwerkzugriff nötig
-- JSON-Dateispeicher in einem lokalen Verzeichnis
-- Textbasierte Suche für den Gedächtnisabruf
-- Keine API-Schlüssel oder Cloud-Konten erforderlich
-- Funktioniert ohne externe Abhängigkeiten
-
-## Konfiguration
-
-- **Speicherverzeichnis** - Der Ordner, in dem die Gedächtnisdateien gespeichert werden. Standardmäßig ein Verzeichnis innerhalb von TypeWhispers Application-Support-Ordner.
+File Memory speichert extrahierte Gedächtniseinträge in `memories.json` im Datenverzeichnis des Plugins. Speicherung und Textsuche laufen lokal und benötigen keinen API-Schlüssel. Das Add-on ist ein Speicheranbieter; Transkription und Gedächtnis-Extraktion sind getrennte Schritte.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
-2. Finde das File Memory Plugin und klicke auf Konfigurieren
-3. Ändere optional das Speicherverzeichnis
-4. Das Plugin speichert und ruft automatisch Erinnerungen ab, während du TypeWhisper verwendest
+1. Aktiviere **File Memory** unter **Einstellungen > Integrationen**.
+2. Aktiviere TypeWhispers Gedächtnisfunktion und wähle den LLM-Anbieter und das Modell zum Extrahieren von Fakten aus Transkriptionen.
+3. Suche, bearbeite oder lösche gespeicherte Einträge in den File-Memory-Einstellungen. TypeWhisper verwaltet das Speicherverzeichnis; diese Ansicht hat keine Ordnerauswahl.
+4. Teste ein Diktat mit einer dauerhaften Information und prüfe den gespeicherten Eintrag nach der Extraktion.
+
+## Datenverarbeitung
+
+Das Extraktions-LLM erhält den Transkriptionstext. Ein Cloud-LLM sendet diesen Text daher an seinen Anbieter, auch wenn File Memory die entstandenen Fakten lokal speichert. Abgerufene Erinnerungen können außerdem in spätere Workflow-Prompts einfließen. Wähle für diese Schritte lokale Anbieter, wenn der gesamte Ablauf auf dem Gerät bleiben soll.
+
+Unter macOS werden extrahierte Einträge an jeden aktivierten und bereiten Gedächtnisspeicher gesendet. Prüfe deshalb auch andere aktive Memory-Add-ons.

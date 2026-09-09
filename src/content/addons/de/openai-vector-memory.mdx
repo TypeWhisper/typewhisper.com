@@ -3,7 +3,7 @@ slug: openai-vector-memory
 name: OpenAI Vector Memory
 author: TypeWhisper
 icon: Search
-description: Cloud-basierter semantischer Speicher mit der OpenAI Vector Store API.
+description: "Semantische Erinnerungen: OpenAI Vector Stores auf macOS, lokale Speicherung mit OpenAI-Embeddings auf Windows."
 categories:
   - memory
 platforms:
@@ -16,27 +16,16 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAiVectorMemory"
 ---
 
-## Über
+## Über diese Edition
 
-OpenAI Vector Memory bietet semantische Speicherung und Abfrage von Erinnerungen für TypeWhisper über die OpenAI Vector Store API. Im Gegensatz zum dateibasierten Memory-Plugin nutzt dieses Plugin Vektor-Embeddings für semantische Suche - es findet relevante Erinnerungen anhand der Bedeutung, nicht nur durch Schlüsselwort-Abgleich.
-
-## Features
-
-- Semantische Suche mit Vektor-Embeddings
-- Cloud-basierter Speicher via OpenAI Vector Store API
-- Findet kontextuell relevante Erinnerungen auch ohne exakte Schlüsselwort-Treffer
-- Automatische Embedding-Generierung für gespeicherte Inhalte
-
-## Konfiguration
-
-- **API-Schlüssel** - Dein OpenAI API-Schlüssel mit Zugriff auf die Vector Store API.
-- **Vector Store ID** - Die ID des zu verwendenden Vector Stores. Du kannst einen im OpenAI-Dashboard erstellen.
+Die macOS-Edition speichert und durchsucht Erinnerungen über **OpenAI Vector Stores**. Sie legt den Vector Store automatisch an, nachdem du den API-Key hinterlegt hast; du musst keine Vector Store ID manuell eingeben.
 
 ## Einrichtung
 
-1. Erstelle einen OpenAI API-Schlüssel auf platform.openai.com
-2. Erstelle einen Vector Store im OpenAI-Dashboard oder über die API
-3. Öffne TypeWhisper Einstellungen > Plugins
-4. Finde das OpenAI Vector Memory-Plugin und klicke auf Konfigurieren
-5. Gib deinen API-Schlüssel und die Vector Store ID ein
-6. Das Plugin speichert und ruft automatisch Erinnerungen ab, während du TypeWhisper nutzt
+1. Öffne **Einstellungen > Integrationen > OpenAI Vector Memory**.
+2. Hinterlege deinen OpenAI-API-Key.
+3. Warte auf den Verbindungsstatus und die automatisch angelegte Store-ID.
+4. Aktiviere diesen Anbieter für Workflow-Erinnerungen.
+5. Prüfe gespeicherte Erinnerungen in der Konfiguration. Du kannst sie suchen, bearbeiten und löschen.
+
+Erinnerungstexte und Suchanfragen werden an OpenAI gesendet. Die Windows-Edition nutzt stattdessen lokale JSON-Speicherung und die OpenAI-Embeddings-API; ihre Einrichtung wird in der Windows-Anleitung beschrieben.

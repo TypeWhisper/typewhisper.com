@@ -135,7 +135,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
         assert.match(
           scalar(data, "sourceUrl"),
           new RegExp(
-            `^https://github\\.com/TypeWhisper/typewhisper-${platform === "mac" ? "mac" : "win"}/tree/main/`,
+            `^https://github\\.com/TypeWhisper/typewhisper-${platform === "mac" ? "mac" : "win"}/tree/(?:main|plugin-[a-z0-9-]+-v[0-9.]+)/`,
           ),
         );
         const releaseUrl = scalar(data, "releaseUrl");
@@ -582,6 +582,9 @@ test("localized editions keep platform identity, source, and version in sync", a
         "sourceUrl",
         "releaseUrl",
         "releaseVersion",
+        "minAppVersion",
+        "minOsVersion",
+        "processing",
       ]) {
         assert.equal(
           scalar(de, key),

@@ -1,0 +1,33 @@
+---
+slug: "mempalace"
+name: "MemPalace"
+author: "MemPalace"
+version: "0.3.5"
+icon: "HardDrive"
+description: "Store and search workflow memories in MemPalace Cloud or a self-hosted instance."
+categories:
+  - memory
+platforms:
+  - mac
+source: "community"
+id: "com.mempalace.memory"
+minAppVersion: "1.4.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MemPalacePlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-mempalace-v0.3.5"
+screenshots: false
+---
+
+## Requirements
+
+The published macOS package requires TypeWhisper 1.4.0 or newer, macOS 14 or newer, and Apple Silicon. A configured MemPalace service and its access credential are required.
+
+## Setup
+
+1. Install **MemPalace** from **Settings > Integrations > Discover** and enable it.
+2. Choose **MemPalace Cloud** or **Self-Hosted** in the configuration.
+3. For a self-hosted service, enter its base URL. Save the service API key in the plugin's secure credential field.
+4. Choose the **Wing** and **Room** used to organize TypeWhisper memories.
+5. Enable memory in TypeWhisper and configure its extraction LLM. Review stored entries in MemPalace. macOS writes extracted entries to every enabled, ready memory provider.
+
+Memories and search requests are sent to the configured service. Self-hosting describes who operates the server; it does not guarantee that processing occurs on the same Mac. For an entirely local workflow, both the memory storage and the LLM used to extract facts must run locally.

@@ -2,7 +2,7 @@
 slug: parakeet
 name: Parakeet
 author: TypeWhisper
-version: 1.0.0
+version: "1.3.1"
 icon: AudioLines
 description: Ultraschnelle lokale Transkription mit NVIDIAs Parakeet TDT-Modell, optimiert für Apple Silicon.
 categories:
@@ -12,6 +12,10 @@ platforms:
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ParakeetPlugin
 featured: true
+id: "com.typewhisper.parakeet"
+minAppVersion: "1.5.0"
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-parakeet-v1.3.1"
 ---
 
 ## Über
@@ -32,6 +36,7 @@ Parakeet nutzt NVIDIAs Parakeet TDT-Modell für extrem schnelle Spracherkennung 
 | Modell | ID | Größe |
 | --- | --- | --- |
 | Parakeet TDT v3 0.6B | `parakeet-tdt-0.6b-v3` | ~600 MB |
+| Parakeet TDT v2 0.6B (Englisch) | `parakeet-tdt-0.6b-v2` | ~600 MB |
 
 ## Konfiguration
 
@@ -41,9 +46,9 @@ Wenn Vocabulary Boosting aktiviert ist, verwendet Parakeet deine eigenen TypeWhi
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
+1. Öffne TypeWhisper Einstellungen > Integrationen
 2. Finde das Parakeet-Plugin und aktiviere es
-3. Das Modell wird beim ersten Gebrauch heruntergeladen
+3. Wähle v3 für mehrsprachige Diktate oder v2 für Englisch und lade und aktiviere es in den Plugin-Einstellungen
 4. Wähle Parakeet als Transkriptions-Engine in den Einstellungen oder in einem Profil
 
 ## Workaround: Modelle manuell kopieren
