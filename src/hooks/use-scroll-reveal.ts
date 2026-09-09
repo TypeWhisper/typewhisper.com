@@ -34,7 +34,7 @@ export function useScrollReveal() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  });
 
   return root;
 }
