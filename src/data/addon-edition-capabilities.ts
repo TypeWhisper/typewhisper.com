@@ -25,7 +25,11 @@ export function getAddonCategoriesForPlatform(
   plugin: Plugin,
   platform: PluginPlatform | "all",
 ): PluginCategory[] {
-  if (platform === "all") return plugin.categories;
+  if (platform === "all") {
+    return [...new Set(plugin.platforms.flatMap((edition) =>
+      editionCapabilities[plugin.slug]?.[edition] ?? plugin.categories,
+    ))];
+  }
   if (!plugin.platforms.includes(platform)) return [];
   return editionCapabilities[plugin.slug]?.[platform] ?? plugin.categories;
 }

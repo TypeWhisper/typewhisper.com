@@ -29,3 +29,14 @@ test("combined filters use the selected platform's capabilities", async ({ page 
   await expect(card("openai")).toBeVisible();
   await expect(card("soniox")).toHaveCount(0);
 });
+
+test("utility categories remain consistent across platform filters", async ({ page }) => {
+  for (const platform of ["all", "mac", "windows"]) {
+    await page.goto(`/en/addons/?platform=${platform}&category=utility`);
+    for (const slug of ["live-transcript", "webhook"]) {
+      const card = page.locator(`[data-testid="addon-card"][data-slug="${slug}"]`);
+      await expect(card).toBeVisible();
+      await expect(card.getByText("Utility", { exact: true })).toBeVisible();
+    }
+  }
+});
