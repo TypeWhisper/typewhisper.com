@@ -17,33 +17,25 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AssemblyAi"
 ---
 
-## Über
+## Über diese Edition
 
-AssemblyAI bietet hochpräzise cloudbasierte Spracherkennung mit Echtzeit-WebSocket-Streaming (v3-Protokoll) und automatischem REST-Fallback. Das Plugin unterstützt zwei Modellstufen: Universal-3 Pro für höchste Genauigkeit in 6 großen Sprachen und Universal-2 für breitere Abdeckung über 37 Sprachen.
+Die macOS-Edition bietet **Universal-3.5 Pro** und **Universal-2**. Sie verwendet Live-WebSocket-Transkription und fällt bei Verbindungsproblemen auf die REST-Verarbeitung zurück. Mit aktivierter Sprechererkennung nutzt sie den strukturierten REST-Pfad; die Live-Vorschau steht dann nicht zur Verfügung.
 
-## Features
-
-- Echtzeit-WebSocket-Streaming mit Zwischen- und Endergebnissen
-- Automatischer REST-Fallback wenn Streaming nicht verfügbar ist
-- Spracherkennung
-- Intelligente Formatierung
-- API-Schlüssel-Validierung in den Einstellungen
-
-## Transkriptionsmodelle
+## Modelle
 
 | Modell | ID | Sprachen |
 | --- | --- | --- |
-| Universal-3 Pro | `universal-3-pro` | 6 (de, en, es, fr, it, pt) |
+| Universal-3.5 Pro | `universal-3-5-pro` | 18 |
 | Universal-2 | `universal-2` | 37 |
 
-## Konfiguration
-
-- **API-Schlüssel** - Erstelle einen API-Schlüssel auf assemblyai.com. Erfordert ein Konto.
+Gespeicherte macOS-Auswahlen von `universal-3-pro` werden auf Universal-3.5 Pro umgestellt. Modellwahl und Sprache bestimmen den Streaming-Endpunkt. Wörterbuchbegriffe werden als modellspezifische Erkennungshinweise übergeben.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
-2. Finde das AssemblyAI-Plugin und klicke auf Konfigurieren
-3. Gib deinen AssemblyAI API-Schlüssel ein (wird automatisch validiert)
-4. Wähle dein bevorzugtes Modell
-5. Wähle AssemblyAI als Transkriptions-Engine in den Einstellungen oder in einem Profil
+1. Öffne **Einstellungen > Integrationen > AssemblyAI**.
+2. Hinterlege und validiere deinen AssemblyAI-API-Key.
+3. Wähle ein Modell und eine unterstützte Sprache oder die automatische Erkennung.
+4. Aktiviere Sprechererkennung nur, wenn du sie benötigst.
+5. Wähle AssemblyAI als Transkriptionsanbieter im Workflow.
+
+Audio wird zur Verarbeitung an AssemblyAI gesendet. Die Windows-Edition hat einen eigenen Modellkatalog; nutze dafür die Windows-Anleitung.

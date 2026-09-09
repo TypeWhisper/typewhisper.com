@@ -2,7 +2,7 @@
 slug: cartesia
 name: Cartesia
 author: TypeWhisper
-version: 1.0.0
+version: "1.0.4"
 icon: AudioWaveform
 description: Cloud speech-to-text and text-to-speech via Cartesia APIs. Requires a Cartesia API key.
 categories:
@@ -17,7 +17,10 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperP
 sourceUrls:
   mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CartesiaPlugin
 principalClass: CartesiaPlugin
-id: com.typewhisper.cartesia
+id: "com.typewhisper.cartesia"
+minAppVersion: "1.5.0"
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cartesia-v1.0.4"
 ---
 
 ## About
@@ -44,7 +47,7 @@ Sources: [Cartesia API conventions](https://docs.cartesia.ai/use-the-api/api-con
 | Requirement | Details | Why it matters |
 | --- | --- | --- |
 | **Platform** | macOS `14.0` or newer. | The current TypeWhisper integration is a macOS plugin. |
-| **TypeWhisper host** | `1.4.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
+| **TypeWhisper host** | `1.5.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
 | **SDK compatibility** | `v1`. | The release is published through the compatible plugin registry path. |
 | **Credential** | A Cartesia API key from your Cartesia account. | The plugin sends it as `Authorization: Bearer <api_key>` on Cartesia API requests. |
 | **OAuth scopes** | None. | This plugin uses a user-supplied API key, not Cartesia OAuth. |
@@ -59,7 +62,7 @@ Sources: [Cartesia API conventions](https://docs.cartesia.ai/use-the-api/api-con
 2. Open the Cartesia API keys page at `play.cartesia.ai/keys`.
 3. Create a standard API key for TypeWhisper.
 4. Copy the key and keep it private. Rotate it in Cartesia if it is lost or exposed.
-5. In TypeWhisper, open Settings > Plugins > Cartesia and paste the API key.
+5. In TypeWhisper, open Settings > Integrations > Cartesia and paste the API key.
 6. Wait for the plugin to validate the key before selecting Cartesia for dictation or text-to-speech.
 
 Cartesia also has admin API keys for management endpoints. TypeWhisper does not need an admin API key for transcription or text-to-speech.
@@ -130,7 +133,7 @@ Sources: [Cartesia Text-to-Speech Bytes](https://docs.cartesia.ai/api-reference/
 ## Setup
 
 1. Create a Cartesia account and generate a standard API key.
-2. Open TypeWhisper Settings > Plugins.
+2. Open TypeWhisper Settings > Integrations.
 3. Find Cartesia and click Configure.
 4. Paste the API key and wait for validation.
 5. Choose the **Spoken Language** that matches your source audio.
@@ -142,4 +145,4 @@ Sources: [Cartesia Text-to-Speech Bytes](https://docs.cartesia.ai/api-reference/
 
 - The plugin is cloud-only and sends audio or text to Cartesia; use a local engine when content must stay on device.
 - Cartesia rate limits, billing, and available voices are controlled by your Cartesia account.
-- The public `1.0.0` release requires TypeWhisper host version `1.4.0` or newer, SDK compatibility `v1`, and macOS `14.0` or newer.
+- The public `1.0.4` release requires TypeWhisper host version `1.5.0` or newer, SDK compatibility `v1`, and macOS `14.0` or newer.
