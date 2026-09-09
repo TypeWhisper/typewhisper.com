@@ -124,7 +124,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
       <Footer locale={locale} />
     </div>
     <DownloadSocialBanner locale={locale} />
-    <!-- Scroll reveal (vanilla JS, replaces React useScrollReveal hook) -->
+    <!-- Scroll reveal for static content; React islands observe after their effects commit -->
     <script is:inline>
       (function(){
         var revealClasses = [
@@ -156,17 +156,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
           if (!el.closest('astro-island')) observer.observe(el);
         });
 
-        document.querySelectorAll('astro-island').forEach(function(island) {
-          if (island.hasAttribute('ssr')) {
-            island.addEventListener('astro:hydrate', function() {
-              setTimeout(function() {
-                observeRevealElements(island);
-              }, 100);
-            }, { once: true });
-          } else {
-            observeRevealElements(island);
-          }
-        });
+
       })();
     </script>
     <script>
