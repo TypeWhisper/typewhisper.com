@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Screenshot } from "@/components/ui/screenshot";
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { useSyncedLandingPlatform } from "@/hooks/use-landing-platform";
@@ -9,6 +10,7 @@ const watchScreenshots = [
 ] as const;
 
 export function HowItWorks({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
   const showWindowsSetup = locale === "de" && platform === "windows";
   const showIosPreview = platform === "ios";
@@ -34,6 +36,7 @@ export function HowItWorks({ locale = "en" }: { locale?: Locale }) {
 
   return (
     <section
+      ref={revealRoot}
       className={`bg-secondary ${showIosPreview ? "py-16 sm:py-20" : "py-12 sm:py-16"}`}
       data-testid="how-it-works"
     >
