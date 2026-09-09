@@ -97,7 +97,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Run a short test",
             description:
-              "Record one sentence, stop, and confirm that the live preview and final result appear in History.",
+              "Record one sentence, stop, and check the final result in History. Live preview depends on the selected engine.",
           },
         ],
         image: {
@@ -137,7 +137,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Start recording",
             description:
-              "Tap the microphone. The waveform and live text show that TypeWhisper is receiving and processing speech.",
+              "Tap the microphone. The waveform shows audio capture; supported engines also show live text.",
           },
           {
             title: "Pause or stop",
@@ -221,9 +221,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Choose a speech engine",
         bullets: [
-          "Apple Speech needs little setup and can provide live results through the system speech framework.",
+          "Apple Speech can provide live results through the system speech framework when on-device recognition is available for your language and device.",
           "WhisperKit offers downloaded Whisper models for multilingual on-device transcription.",
-          "Parakeet provides a fast local model path for supported languages.",
+          "Parakeet provides local recognition for supported languages. It returns the transcript after processing rather than a streaming preview.",
           "Optional cloud engines are used only after you configure and select a provider.",
         ],
         callout: {
@@ -650,7 +650,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Kurzen Test durchführen",
             description:
-              "Nimm einen Satz auf, stoppe und prüfe, ob Live-Text und finales Ergebnis im Verlauf erscheinen.",
+              "Nimm einen Satz auf, stoppe und prüfe das finale Ergebnis im Verlauf. Live-Text erscheint nur bei einer Engine mit Streaming-Unterstützung.",
           },
         ],
         image: {
@@ -690,7 +690,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Aufnahme starten",
             description:
-              "Tippe auf das Mikrofon. Wellenform und Live-Text zeigen, dass TypeWhisper Sprache empfängt und verarbeitet.",
+              "Tippe auf das Mikrofon. Die Wellenform zeigt den Audioeingang. Eine Live-Vorschau ist nur bei Engines mit Streaming-Unterstützung verfügbar.",
           },
           {
             title: "Pausieren oder stoppen",
@@ -774,9 +774,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Sprach-Engine wählen",
         bullets: [
-          "Apple Speech benötigt wenig Einrichtung und kann Live-Ergebnisse über Apples Sprachframework liefern.",
+          "Apple Speech benötigt wenig Einrichtung und kann Live-Ergebnisse über Apples Sprachframework liefern. Die lokale Verfügbarkeit hängt von Sprache und Gerät ab.",
           "WhisperKit bietet heruntergeladene Whisper-Modelle für mehrsprachige lokale Transkription.",
-          "Parakeet stellt einen schnellen lokalen Modellpfad für unterstützte Sprachen bereit.",
+          "Parakeet erkennt unterstützte Sprachen lokal. Das Transkript erscheint nach der Verarbeitung; eine Streaming-Vorschau unterstützt diese iOS-Engine nicht.",
           "Optionale Cloud-Engines werden erst verwendet, wenn du einen Anbieter einrichtest und auswählst.",
         ],
         callout: {

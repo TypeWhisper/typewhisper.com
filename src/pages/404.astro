@@ -7,7 +7,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 <BaseLayout
   title={`${t(locale, "notFound.title")} - TypeWhisper`}
   description={t(locale, "notFound.description")}
-  canonicalPath="/404"
+  canonicalPath="/404.html"
+  noIndex
+  navigationPath="/"
   locale={locale}
 >
   <div class="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-4 text-center">

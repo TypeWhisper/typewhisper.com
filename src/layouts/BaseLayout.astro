@@ -15,6 +15,8 @@ interface Props {
   ogImage?: string;
   searchPlatforms?: string[];
   structuredData?: Record<string, unknown>;
+  noIndex?: boolean;
+  navigationPath?: string;
 }
 
 const {
@@ -25,6 +27,8 @@ const {
   ogImage = "https://www.typewhisper.com/og-image.png",
   structuredData,
   searchPlatforms = [],
+  noIndex = false,
+  navigationPath = Astro.url.pathname,
 } = Astro.props;
 
 const canonicalUrl = `https://www.typewhisper.com${canonicalPath}`;
@@ -50,11 +54,16 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
     <meta name="theme-color" content="#fbfbfd" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalUrl} />
     <!-- Hreflang -->
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="de" href={deUrl} />
-    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    {!noIndex && (
+      <>
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="de" href={deUrl} />
+        <link rel="alternate" hreflang="x-default" href={enUrl} />
+      </>
+    )}
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
@@ -107,7 +116,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
   <body>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-background focus:p-3">{locale === "de" ? "Zum Inhalt" : "Skip to content"}</a>
     <div class="flex min-h-screen flex-col">
-      <Header client:load currentPath={Astro.url.pathname} locale={locale} />
+      <Header client:load currentPath={navigationPath} locale={locale} />
       <main id="main-content" class="min-w-0 flex-1" data-pagefind-body>
         {searchPlatforms.map(platform => <span hidden data-pagefind-filter={`platform:${platform}`} />)}
         <slot />
@@ -115,7 +124,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
       <Footer locale={locale} />
     </div>
     <DownloadSocialBanner locale={locale} />
-    <!-- Scroll reveal (vanilla JS, replaces React useScrollReveal hook) -->
+    <!-- Scroll reveal for static content; React islands observe after their effects commit -->
     <script is:inline>
       (function(){
         var revealClasses = [
@@ -147,17 +156,7 @@ const enUrl = `https://www.typewhisper.com${localePath("en", basePath)}`;
           if (!el.closest('astro-island')) observer.observe(el);
         });
 
-        document.querySelectorAll('astro-island').forEach(function(island) {
-          if (island.hasAttribute('ssr')) {
-            island.addEventListener('astro:hydrate', function() {
-              setTimeout(function() {
-                observeRevealElements(island);
-              }, 100);
-            }, { once: true });
-          } else {
-            observeRevealElements(island);
-          }
-        });
+
       })();
     </script>
     <script>

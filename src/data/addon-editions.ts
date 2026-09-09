@@ -15,6 +15,7 @@ export interface AddonEdition {
   platform: PluginPlatform;
   version: string;
   description: string;
+  processing: "local" | "cloud" | "custom" | "hybrid";
   id?: string;
   minAppVersion?: string;
   minOsVersion?: string;

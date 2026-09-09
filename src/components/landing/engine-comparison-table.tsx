@@ -42,26 +42,18 @@ function getMacRows(locale: Locale): ComparisonRow[] {
   return [
     {
       label: t(locale, "engineComparison.row.languages"),
-      values: ["99+", comparisonValue(locale, "european25"), "~40"],
+      values: ["99+", comparisonValue(locale, "european25"), comparisonValue(locale, "systemLanguages")],
     },
-    { label: t(locale, "engineComparison.row.streaming"), values: [true, false, true] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [true, true, true] },
     {
       label: t(locale, "engineComparison.row.translation"),
-      values: Array(3).fill(comparisonValue(locale, "languages20")),
-    },
-    {
-      label: t(locale, "engineComparison.row.speed"),
-      values: [
-        comparisonValue(locale, "fast"),
-        comparisonValue(locale, "upToFiveTimesFaster"),
-        comparisonValue(locale, "fast"),
-      ],
+      values: Array(3).fill(comparisonValue(locale, "appleTranslate")),
     },
     {
       label: t(locale, "engineComparison.row.modelSizes"),
       values: [
         comparisonValue(locale, "tinyToLargeV3"),
-        comparisonValue(locale, "params1_1b"),
+        comparisonValue(locale, "params0_6b"),
         comparisonValue(locale, "systemManaged"),
       ],
     },
@@ -79,14 +71,6 @@ function getMacRows(locale: Locale): ComparisonRow[] {
         comparisonValue(locale, "multilingualTranslation"),
         comparisonValue(locale, "europeanLanguages"),
         comparisonValue(locale, "quickSetup"),
-      ],
-    },
-    {
-      label: t(locale, "engineComparison.row.accuracy"),
-      values: [
-        comparisonValue(locale, "excellent"),
-        comparisonValue(locale, "excellent"),
-        comparisonValue(locale, "good"),
       ],
     },
   ];
@@ -109,15 +93,11 @@ function getWindowsEngines(locale: Locale): Engine[] {
 
 function getWindowsRows(locale: Locale): ComparisonRow[] {
   return [
-    { label: t(locale, "engineComparison.row.languages"), values: ["25+", "4 (EN/DE/FR/ES)"] },
+    { label: t(locale, "engineComparison.row.languages"), values: [comparisonValue(locale, "european25"), "4 (EN/DE/FR/ES)"] },
     { label: t(locale, "engineComparison.row.streaming"), values: [false, false] },
     {
       label: t(locale, "engineComparison.row.translation"),
       values: [comparisonValue(locale, "viaMarianCloud"), comparisonValue(locale, "builtIn")],
-    },
-    {
-      label: t(locale, "engineComparison.row.speed"),
-      values: [comparisonValue(locale, "veryFast"), comparisonValue(locale, "fast")],
     },
     {
       label: t(locale, "engineComparison.row.modelSizes"),
@@ -125,7 +105,7 @@ function getWindowsRows(locale: Locale): ComparisonRow[] {
     },
     {
       label: t(locale, "engineComparison.row.modelDownload"),
-      values: Array(2).fill(comparisonValue(locale, "automatic")),
+      values: Array(2).fill(comparisonValue(locale, "manualInApp")),
     },
     {
       label: t(locale, "engineComparison.row.bestFor"),
@@ -133,10 +113,6 @@ function getWindowsRows(locale: Locale): ComparisonRow[] {
         comparisonValue(locale, "europeanLanguages"),
         comparisonValue(locale, "quickMultilingual"),
       ],
-    },
-    {
-      label: t(locale, "engineComparison.row.accuracy"),
-      values: [comparisonValue(locale, "excellent"), comparisonValue(locale, "good")],
     },
   ];
 }
@@ -163,23 +139,15 @@ function getIosEngines(locale: Locale): Engine[] {
 
 function getIosRows(locale: Locale): ComparisonRow[] {
   return [
-    { label: t(locale, "engineComparison.row.languages"), values: ["99+", "~40", "25+"] },
-    { label: t(locale, "engineComparison.row.streaming"), values: [true, true, true] },
+    { label: t(locale, "engineComparison.row.languages"), values: ["99+", comparisonValue(locale, "systemLanguages"), comparisonValue(locale, "european25")] },
+    { label: t(locale, "engineComparison.row.streaming"), values: [true, true, false] },
     { label: t(locale, "engineComparison.row.translation"), values: ["Apple Translate", "Apple Translate", "Apple Translate"] },
-    {
-      label: t(locale, "engineComparison.row.speed"),
-      values: [
-        comparisonValue(locale, "fast"),
-        comparisonValue(locale, "fast"),
-        comparisonValue(locale, "veryFast"),
-      ],
-    },
     {
       label: t(locale, "engineComparison.row.modelSizes"),
       values: [
         comparisonValue(locale, "tinyToLargeV3"),
         comparisonValue(locale, "systemManaged"),
-        comparisonValue(locale, "params1_1b"),
+        comparisonValue(locale, "params0_6b"),
       ],
     },
     {
@@ -196,14 +164,6 @@ function getIosRows(locale: Locale): ComparisonRow[] {
         comparisonValue(locale, "multilingual"),
         comparisonValue(locale, "quickSetup"),
         comparisonValue(locale, "europeanLanguages"),
-      ],
-    },
-    {
-      label: t(locale, "engineComparison.row.accuracy"),
-      values: [
-        comparisonValue(locale, "excellent"),
-        comparisonValue(locale, "good"),
-        comparisonValue(locale, "excellent"),
       ],
     },
   ];
@@ -312,14 +272,14 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
               {rows.map((row, i) => (
                 <div
                   key={row.label}
-                  className={`flex items-center justify-between py-3 px-3 ${
+                  className={`flex items-center justify-between gap-3 py-3 px-3 ${
                     i < rows.length - 1 ? "border-b border-border" : ""
                   }`}
                 >
                   <span className="text-sm text-muted-foreground">
                     {row.label}
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="text-right text-sm font-medium">
                     <CellValue value={row.values[engines.indexOf(engine)]} locale={locale} />
                   </span>
                 </div>
@@ -336,6 +296,14 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
             {t(locale, "engineComparison.cloudHintLink")}
           </a>
           .
+        </p>
+      )}
+      {platform === "ios" && (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          {t(locale, "engineComparison.ios.hint")}{" "}
+          <a href={localePath(locale, "/docs/ios/profiles-and-processing")} className="underline underline-offset-4 hover:text-foreground">
+            {t(locale, "engineComparison.ios.hintLink")}
+          </a>
         </p>
       )}
     </>

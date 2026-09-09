@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import type { Locale } from "@/i18n/index";
 
 type Platform = "all" | "mac" | "windows";
 
@@ -11,9 +12,10 @@ const platforms: { value: Platform; label: string }[] = [
 interface PlatformFilterProps {
   selected: Platform;
   onChange: (platform: Platform) => void;
+  locale?: Locale;
 }
 
-export function PlatformFilter({ selected, onChange }: PlatformFilterProps) {
+export function PlatformFilter({ selected, onChange, locale = "en" }: PlatformFilterProps) {
   return (
     <div className="flex flex-wrap gap-2">
       {platforms.map((p) => (
@@ -24,7 +26,7 @@ export function PlatformFilter({ selected, onChange }: PlatformFilterProps) {
           className="rounded-full"
           onClick={() => onChange(p.value)}
         >
-          {p.label}
+          {p.value === "all" && locale === "de" ? "Alle Plattformen" : p.label}
         </Button>
       ))}
     </div>

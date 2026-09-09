@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const revealClasses = [
   { hidden: "reveal-hidden", visible: "reveal-visible" },
@@ -7,6 +7,8 @@ const revealClasses = [
 ];
 
 export function useScrollReveal() {
+  const root = useRef<HTMLElement>(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -26,10 +28,13 @@ export function useScrollReveal() {
     );
 
     const selector = revealClasses.map((c) => `.${c.hidden}`).join(", ");
-    document.querySelectorAll(selector).forEach((el) => {
+    if (root.current?.matches(selector)) observer.observe(root.current);
+    root.current?.querySelectorAll(selector).forEach((el) => {
       observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, []);
+  });
+
+  return root;
 }

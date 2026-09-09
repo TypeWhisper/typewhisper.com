@@ -62,7 +62,7 @@
   "addons.editions.guide.activate.tts": "Select {name} as the text-to-speech provider for spoken feedback or readback.",
   "addons.editions.guide.activate.action": "Create or open a workflow and choose {name} as its action target.",
   "addons.editions.guide.activate.postProcessing": "Enable the add-on and test its configuration before using it in the post-processing pipeline for dictations.",
-  "addons.editions.guide.activate.memory": "Enable the memory provider you intend to use. TypeWhisper uses the active memory add-on to store and retrieve relevant facts.",
+  "addons.editions.guide.activate.memory": "Enable memory in TypeWhisper and configure an LLM for extracting facts. Enable only the storage add-ons you intend to use; macOS stores extracted memories in all ready memory providers. A cloud LLM receives the text used for extraction even when storage is local.",
   "addons.editions.guide.activate.utility": "Enable the integration and run a short test to verify its output, window, or event handling.",
   "addons.editions.guide.example.transcription": "Create a test profile, select {name} as the engine, and dictate a few sentences. Check the language, model, and result before making this edition your default.",
   "addons.editions.guide.example.llm": "Create a meeting-notes workflow, select {name} as its LLM provider, and turn a short dictation into a summary, decisions, and action items.",
@@ -73,10 +73,17 @@
   "addons.editions.guide.example.utility": "Start a short recording or matching workflow and immediately inspect the visible output or triggered event.",
   "addons.editions.guide.example.liveTranscript": "Start a short recording with a streaming engine and verify that the floating transcript appears, stays readable, and hides according to its settings.",
   "addons.editions.guide.example.webhook": "Send a short test dictation to a dedicated test endpoint and inspect the status, payload, and Delivery Log before using the webhook in production.",
-  "addons.editions.guide.localProcessing": "This edition processes audio or text locally. Model or runtime downloads may require an internet connection, but processing then runs on your device.",
+  "addons.editions.guide.localProcessing": "This add-on performs its own storage or processing locally. Model and runtime downloads may need an internet connection. Other steps, such as transcription, memory extraction or workflow prompts, use their separately configured providers.",
   "addons.editions.guide.cloudProcessing": "This edition uses a cloud provider. Depending on the capability, audio, text, or both are sent only after you configure and select that provider.",
   "addons.resultCount": "{count} add-ons",
   "addons.clearSearch": "Clear search",
   "addons.iosEmpty": "No separate iOS add-ons are listed here yet. The iOS guide covers its built-in engines and providers.",
-  "addons.iosGuide": "Read the iOS guide"
+  "addons.iosGuide": "Read the iOS guide",
+  "addons.editions.guide.customProcessing": "Whether content stays local depends on the configured server, script, or destination. Remote services receive the data passed to them.",
+  "addons.editions.guide.hybridProcessing": "Memories and vectors are stored locally. Memory text and search queries are sent to OpenAI to generate embeddings.",
+  "addons.editions.newerHost.title": "Newer app version required",
+  "addons.editions.newerHost.description": "This plugin version requires TypeWhisper {minimum}. The current stable edition for this platform is {stable} and does not yet meet that requirement.",
+  "addons.editions.newerHost.link": "Check release status",
+  "addons.editions.guide.activate.windowsMemory": "The Windows add-on implements memory storage, but the reviewed Windows host does not connect automatic extraction and retrieval to the dictation flow. Enabling the memory switch alone does not establish that workflow.",
+  "addons.editions.guide.example.windowsMemory": "Storage and search require a host integration that calls the memory add-on. Automatic recall from later dictations is not available in the reviewed Windows implementation."
 }

@@ -70,7 +70,7 @@
   "releaseStage.alpha": "Alpha",
   "releaseStage.pending": "App-Store-Release in Vorbereitung",
   "benchmark.title": "Benchmark - TypeWhisper",
-  "benchmark.description": "Vergleich von Transkriptionsgenauigkeit, Geschwindigkeit und Kosten verschiedener Sprache-zu-Text-Modelle.",
+  "benchmark.description": "Hinweise zur Datenbasis für einen nachvollziehbaren TypeWhisper-Modellvergleich.",
   "changelog.title": "Changelog - TypeWhisper",
   "changelog.description": "Release Notes und Updates für TypeWhisper.",
   "releaseStatus.title": "Release-Status",

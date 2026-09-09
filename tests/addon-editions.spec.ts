@@ -112,7 +112,7 @@ test.describe("add-on platform editions", () => {
       );
       await expect(card).toHaveCount(1);
       await expect(
-        card.getByRole("link"),
+        card.getByRole("link", { name: "View this edition" }),
       ).toHaveAttribute("href", `/en/addons/meta/${slug}`);
     }
 
@@ -195,10 +195,10 @@ test.describe("add-on platform editions", () => {
       const cards = page.getByTestId("addon-edition-card");
       await expect(cards).toHaveCount(2);
       await expect(
-        cards.filter({ hasText: "macOS" }).getByRole("link"),
+        cards.filter({ hasText: "macOS" }).getByRole("link", { name: "Diese Edition ansehen" }),
       ).toHaveAttribute("href", `/de/addons/${slug}/macos`);
       await expect(
-        cards.filter({ hasText: "Windows" }).getByRole("link"),
+        cards.filter({ hasText: "Windows" }).getByRole("link", { name: "Diese Edition ansehen" }),
       ).toHaveAttribute("href", `/de/addons/${slug}/windows`);
     }
   });

@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - "seofood/website-audit-*"
   workflow_dispatch:
 
 permissions:

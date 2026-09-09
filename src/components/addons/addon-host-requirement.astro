@@ -1,0 +1,30 @@
+---
+import downloads from "@/data/downloads.json";
+import type { PluginPlatform } from "@/data/addons";
+import { requiresNewerHost } from "@/lib/addon-compatibility";
+import { localePath, t, type Locale } from "@/i18n/index";
+
+interface Props {
+  platform: PluginPlatform;
+  minAppVersion?: string;
+  locale: Locale;
+}
+
+const { platform, minAppVersion, locale } = Astro.props;
+const stable = platform === "ios" ? undefined : downloads[platform].version;
+const needsNewerHost = requiresNewerHost(minAppVersion, stable);
+---
+
+{needsNewerHost && (
+  <aside class="mt-5 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm leading-6" data-testid="addon-host-requirement">
+    <p class="font-semibold">{t(locale, "addons.editions.newerHost.title")}</p>
+    <p class="mt-1 text-muted-foreground">
+      {t(locale, "addons.editions.newerHost.description")
+        .replace("{minimum}", minAppVersion ?? "")
+        .replace("{stable}", stable ?? "")}
+    </p>
+    <a class="mt-2 inline-flex min-h-11 items-center text-primary underline underline-offset-4" href={localePath(locale, "/release-status")}>
+      {t(locale, "addons.editions.newerHost.link")}
+    </a>
+  </aside>
+)}

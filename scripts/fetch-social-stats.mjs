@@ -3,7 +3,6 @@ import { writeFileSync, existsSync, readFileSync } from "node:fs";
 const GITHUB_ORG_REPOS = [
   "TypeWhisper/typewhisper-mac",
   "TypeWhisper/typewhisper-win",
-  "TypeWhisper/typewhisper-ios",
 ];
 
 const DISCORD_GUILD_ID = process.env.DISCORD_GUILD_ID || "";

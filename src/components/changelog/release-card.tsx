@@ -4,12 +4,7 @@ import type { Release } from "@/data/releases";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkGithub from "remark-github";
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+import type { Locale } from "@/i18n/index";
 
 const fullChangelogRe = /^\*\*Full Changelog\*\*:\s*(https?:\/\/\S+)/;
 
@@ -33,8 +28,11 @@ function parseBody(body: string | null): {
   return { content, fullChangelogUrl };
 }
 
-export function ReleaseCard({ release }: { release: Release }) {
+export function ReleaseCard({ release, locale = "en" }: { release: Release; locale?: Locale }) {
   const { content, fullChangelogUrl } = parseBody(release.body);
+  const dateFormatter = new Intl.DateTimeFormat(locale, {
+    year: "numeric", month: "long", day: "numeric",
+  });
 
   const repoName =
     release.platform === "mac"
@@ -62,7 +60,7 @@ export function ReleaseCard({ release }: { release: Release }) {
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="View on GitHub"
+          aria-label={locale === "de" ? "Auf GitHub ansehen" : "View on GitHub"}
         >
           <ExternalLink className="size-4" />
         </a>
@@ -75,6 +73,13 @@ export function ReleaseCard({ release }: { release: Release }) {
       {content ? (
         <div className="prose prose-neutral dark:prose-invert prose-sm mt-3 max-w-none">
           <Markdown
+            components={{
+              h1: ({ children }) => <h4>{children}</h4>,
+              h2: ({ children }) => <h4>{children}</h4>,
+              h3: ({ children }) => <h5>{children}</h5>,
+              h4: ({ children }) => <h6>{children}</h6>,
+              h5: ({ children }) => <h6>{children}</h6>,
+            }}
             remarkPlugins={[
               remarkGfm,
               [remarkGithub, { repository: repoName }],
@@ -85,7 +90,7 @@ export function ReleaseCard({ release }: { release: Release }) {
         </div>
       ) : (
         <p className="mt-3 text-sm text-muted-foreground italic">
-          No detailed release notes.
+          {locale === "de" ? "Keine ausführlichen Release Notes." : "No detailed release notes."}
         </p>
       )}
 
@@ -97,7 +102,7 @@ export function ReleaseCard({ release }: { release: Release }) {
             rel="noopener noreferrer"
             className="hover:text-foreground transition-colors"
           >
-            Full Changelog &rarr;
+            {locale === "de" ? "Vollständiger Changelog" : "Full Changelog"} &rarr;
           </a>
         </p>
       )}

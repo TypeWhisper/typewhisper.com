@@ -54,7 +54,7 @@ test.describe("new landing sections", () => {
 
     await expect(page.getByTestId("wall-of-love")).toBeVisible();
     await expect(page.getByTestId("premium-features")).toContainText(
-      "iCloud sync",
+      "Cloud Folder Sync",
     );
     await expect(page.getByTestId("pricing-teaser")).toBeVisible();
     await expect(
@@ -78,7 +78,7 @@ test.describe("new landing sections", () => {
       "Ein offenes Ökosystem",
     );
     await expect(page.getByTestId("premium-features")).toContainText(
-      "iCloud-Sync",
+      "Cloud-Ordner-Sync",
     );
     await expect(page.getByTestId("pricing-teaser")).toContainText(
       "Kostenloser Core",
@@ -273,4 +273,16 @@ test("landing islands hydrate before scroll reveal classes change", async ({
   await expect(premiumEyebrow).not.toHaveClass(/\breveal-fade-hidden\b/);
 
   expect(browserErrors).toEqual([]);
+});
+
+test("new feature cards reveal after switching platforms", async ({ page }) => {
+  await page.goto("/en/?platform=mac");
+  const features = page.locator("#features");
+  await features.scrollIntoViewIfNeeded();
+  await expect(features.locator("xpath=ancestor::astro-island")).not.toHaveAttribute("ssr", "");
+  await page.getByTestId("landing-hero-tab-ios").click();
+  const card = page.getByTestId("ios-feature-gallery").locator(":scope > div").first();
+  await card.scrollIntoViewIfNeeded();
+  await expect(card).toHaveClass(/\breveal-scale-visible\b/);
+  await expect(card).not.toHaveClass(/\breveal-scale-hidden\b/);
 });

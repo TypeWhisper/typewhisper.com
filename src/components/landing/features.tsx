@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { t, screenshotPath, type Locale } from "@/i18n/index";
 import { Screenshot } from "@/components/ui/screenshot";
 import {
@@ -79,6 +80,7 @@ function getFeatures(locale: Locale, platform: LandingPlatform): Feature[] {
 }
 
 export function Features({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
   const features = getFeatures(locale, platform);
   const isIos = platform === "ios";
@@ -95,7 +97,7 @@ export function Features({ locale = "en" }: { locale?: Locale }) {
   ];
 
   return (
-    <section id="features" className="bg-background py-12 sm:py-16">
+    <section ref={revealRoot} id="features" className="bg-background py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {t(locale, `${keyPrefix}.title`)}
