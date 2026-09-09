@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Screenshot } from "@/components/ui/screenshot";
@@ -30,6 +31,7 @@ function PremiumFeatureBlock({ feature }: { feature: PremiumFeature }) {
 }
 
 export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
+  const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
   const isIos = platform === "ios";
   const keyPrefix = isIos ? "premiumFeatures.ios" : "premiumFeatures";
@@ -60,6 +62,7 @@ export function PremiumFeatures({ locale = "en" }: { locale?: Locale }) {
 
   return (
     <section
+      ref={revealRoot}
       id="premium"
       data-testid="premium-features"
       className="section-dark-card py-12 sm:py-16"
