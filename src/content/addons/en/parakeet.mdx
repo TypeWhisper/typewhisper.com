@@ -2,7 +2,7 @@
 slug: parakeet
 name: Parakeet
 author: TypeWhisper
-version: 1.0.0
+version: "1.3.1"
 icon: AudioLines
 description: Ultra-fast local transcription using NVIDIA's Parakeet TDT model, optimized for Apple Silicon.
 categories:
@@ -12,6 +12,10 @@ platforms:
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ParakeetPlugin
 featured: true
+id: "com.typewhisper.parakeet"
+minAppVersion: "1.5.0"
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-parakeet-v1.3.1"
 ---
 
 ## About
@@ -22,7 +26,7 @@ Parakeet uses NVIDIA's Parakeet TDT model for extremely fast on-device speech re
 
 - NVIDIA Parakeet TDT - extremely fast on Apple Silicon
 - 25 European languages supported
-- Word-level timestamps
+- Live streaming preview and word-level timestamps
 - No API key or cloud account needed
 - Compact model size (~600 MB)
 - Optional local vocabulary boosting from your TypeWhisper dictionary
@@ -32,6 +36,7 @@ Parakeet uses NVIDIA's Parakeet TDT model for extremely fast on-device speech re
 | Model | ID | Size |
 | --- | --- | --- |
 | Parakeet TDT v3 0.6B | `parakeet-tdt-0.6b-v3` | ~600 MB |
+| Parakeet TDT v2 0.6B (English) | `parakeet-tdt-0.6b-v2` | ~600 MB |
 
 ## Configuration
 
@@ -41,9 +46,9 @@ If vocabulary boosting is enabled, Parakeet uses your custom TypeWhisper diction
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
+1. Open TypeWhisper Settings > Integrations
 2. Find the Parakeet plugin and enable it
-3. The model will be downloaded on first use
+3. Choose v3 for multilingual dictation or v2 for English, then download and load it in the plugin settings
 4. Select Parakeet as your transcription engine in Settings or in a profile
 
 ## Manual copy workaround

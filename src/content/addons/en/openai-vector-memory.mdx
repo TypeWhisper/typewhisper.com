@@ -3,7 +3,7 @@ slug: openai-vector-memory
 name: OpenAI Vector Memory
 author: TypeWhisper
 icon: Search
-description: Cloud-based semantic memory storage using the OpenAI Vector Store API.
+description: "Semantic memories: OpenAI Vector Stores on macOS, local storage with OpenAI embeddings on Windows."
 categories:
   - memory
 platforms:
@@ -16,27 +16,16 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAiVectorMemory"
 ---
 
-## About
+## About this edition
 
-OpenAI Vector Memory provides semantic memory storage and retrieval for TypeWhisper using the OpenAI Vector Store API. Unlike the file-based memory plugin, this plugin uses vector embeddings for semantic search - meaning it can find relevant memories based on meaning, not just keyword matching.
-
-## Features
-
-- Semantic search using vector embeddings
-- Cloud-based storage via OpenAI Vector Store API
-- Finds contextually relevant memories even without exact keyword matches
-- Automatic embedding generation for stored content
-
-## Configuration
-
-- **API Key** - Your OpenAI API key with access to the Vector Store API.
-- **Vector Store ID** - The ID of the vector store to use. You can create one in the OpenAI dashboard.
+The macOS edition stores and searches memories through **OpenAI Vector Stores**. It creates the vector store automatically after you save an API key; you do not enter a Vector Store ID manually.
 
 ## Setup
 
-1. Create an OpenAI API key at platform.openai.com
-2. Create a vector store in the OpenAI dashboard or via the API
-3. Open TypeWhisper Settings > Plugins
-4. Find the OpenAI Vector Memory plugin and click Configure
-5. Enter your API key and vector store ID
-6. The plugin will automatically store and retrieve memories as you use TypeWhisper
+1. Open **Settings > Integrations > OpenAI Vector Memory**.
+2. Save your OpenAI API key.
+3. Wait for the connection status and automatically created store ID.
+4. Enable this provider for workflow memories.
+5. Review stored memories in the configuration. You can search, edit, and delete them.
+
+Memory text and search queries are sent to OpenAI. The Windows edition instead uses local JSON storage and the OpenAI embeddings API; its setup is documented in the Windows guide.

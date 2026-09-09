@@ -2,7 +2,7 @@
 slug: apple-speech
 name: Apple Speech
 author: TypeWhisper
-version: 1.0.0
+version: "1.0.15"
 icon: Mic
 description: Native Transkription auf dem Gerät mit Apples Speech-Framework und Echtzeit-Streaming-Ergebnissen.
 categories:
@@ -12,6 +12,10 @@ platforms:
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SpeechAnalyzerPlugin
 featured: false
+id: "com.typewhisper.speechanalyzer"
+minAppVersion: "0.12.0"
+minOsVersion: "26.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-speechanalyzer-v1.0.15"
 ---
 
 ## Über
@@ -37,7 +41,7 @@ Kein API-Schlüssel erforderlich. Apple Speech läuft vollständig auf dem Gerä
 ## Einrichtung
 
 1. Stelle sicher, dass du macOS 26.0 oder neuer verwendest
-2. Öffne TypeWhisper Einstellungen > Plugins
+2. Öffne TypeWhisper Einstellungen > Integrationen
 3. Finde das Apple Speech-Plugin und aktiviere es
 4. Sprachmodelle werden bei Bedarf automatisch heruntergeladen
 5. Wähle Apple Speech als Transkriptions-Engine in den Einstellungen oder in einem Profil

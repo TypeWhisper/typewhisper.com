@@ -2,19 +2,20 @@
 familySlug: "granite"
 platform: "windows"
 version: "1.0.4"
-description: "IBM Granite Speech locally through ONNX Runtime for offline transcription."
+description: "IBM Granite Speech running locally on the CPU through a managed Python/PyTorch runtime."
 id: "com.typewhisper.granite-speech"
 minAppVersion: "0.8.4"
 requirements:
   - "TypeWhisper 0.8.4 or newer"
   - "Windows 10 or newer"
 highlights:
-  - "Local speech-to-text processing"
-  - "Processing without uploading audio or text"
-  - "Local inference through ONNX Runtime"
-  - "A tested, fixed model selection"
+  - "Local transcription and translation"
+  - "Managed Python runtime with PyTorch and Transformers"
+  - "Granite 4.0 1B Speech for six languages"
+  - "About 5 GB for Python and model; download before first use"
 configuration:
-  - "No separate add-on configuration; ready after activation"
+  - "No separate add-on configuration; download and load the model in transcription settings"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GraniteSpeech"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-granite-speech-v1.0.4
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-granite-speech-v1.0.4"
+processing: "local"
 ---

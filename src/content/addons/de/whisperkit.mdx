@@ -2,7 +2,7 @@
 slug: whisperkit
 name: WhisperKit
 author: TypeWhisper
-version: 1.0.0
+version: "1.2.0"
 icon: Cpu
 description: Lokale Transkription auf dem Gerät mit WhisperKit und CoreML, optimiert für Apple Silicon.
 categories:
@@ -12,11 +12,15 @@ platforms:
 source: bundled
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WhisperKitPlugin
 featured: true
+id: "com.typewhisper.whisperkit"
+minAppVersion: "1.6.0"
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.0"
 ---
 
 ## Über
 
-WhisperKit führt OpenAIs Whisper-Modelle lokal auf deinem Mac mit Apples CoreML-Framework aus. Die gesamte Verarbeitung erfolgt vollständig auf dem Gerät - ohne Cloud-Verbindung. WhisperKit unterstützt über 99 Sprachen, Übersetzung ins Englische und wählt automatisch das beste Modell basierend auf deinem verfügbaren RAM.
+WhisperKit führt OpenAIs Whisper-Modelle lokal auf deinem Mac mit Apples CoreML-Framework aus. Die erste Einrichtung benötigt Internetzugriff für den Modell-Download. Danach läuft die Transkription vollständig auf dem Gerät ohne Cloud-Verbindung. WhisperKit unterstützt über 99 Sprachen, Übersetzung ins Englische und markiert empfohlene Modelle anhand deines verfügbaren RAMs.
 
 ## Features
 
@@ -24,7 +28,7 @@ WhisperKit führt OpenAIs Whisper-Modelle lokal auf deinem Mac mit Apples CoreML
 - Über 99 Sprachen unterstützt
 - Übersetzung ins Englische
 - Sprachaktivitätserkennung (VAD)
-- Automatische Modellauswahl basierend auf verfügbarem RAM
+- Modell-Empfehlungen anhand des RAMs mit manueller Auswahl
 - Kein API-Schlüssel oder Cloud-Konto nötig
 
 ## Transkriptionsmodelle
@@ -37,6 +41,7 @@ WhisperKit führt OpenAIs Whisper-Modelle lokal auf deinem Mac mit Apples CoreML
 | Whisper Medium | `openai_whisper-medium` |
 | Whisper Large V3 | `openai_whisper-large-v3` |
 | Whisper Large V3 Turbo | `openai_whisper-large-v3_turbo` |
+| Distil Large V3 Turbo | `distil-whisper_distil-large-v3_turbo` |
 | Distil Large V3 | `distil-whisper_distil-large-v3` |
 
 ## Konfiguration
@@ -45,9 +50,9 @@ Kein API-Schlüssel erforderlich. WhisperKit läuft vollständig auf dem Gerät.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Plugins
+1. Öffne TypeWhisper Einstellungen > Integrationen
 2. Finde das WhisperKit-Plugin und aktiviere es
-3. Modelle werden beim ersten Gebrauch automatisch heruntergeladen
+3. Wähle ein Modell in den Plugin-Einstellungen, lade es herunter und aktiviere es
 4. Wähle WhisperKit als Transkriptions-Engine in den Einstellungen oder in einem Profil
 
 ## Workaround: Modelle manuell kopieren

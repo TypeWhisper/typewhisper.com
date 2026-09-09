@@ -2,18 +2,19 @@
 familySlug: "openai-vector-memory"
 platform: "windows"
 version: "1.0.0"
-description: "Vector-based memory storage with OpenAI embeddings."
+description: "Local JSON memories with semantic search using OpenAI embeddings."
 id: "com.typewhisper.openai-vector-memory"
 requirements:
   - "TypeWhisper for Windows"
   - "Windows 10 or newer"
 highlights:
-  - "Memory storage for workflows"
-  - "Semantic search through embeddings"
-  - "Processing through the respective cloud provider"
-  - "OpenAI Vector Store as the storage target"
+  - "Store memories and vectors locally in vector-memories.json"
+  - "Semantic search with text-embedding-3-small"
+  - "Send memory text and search queries to OpenAI for embeddings"
+  - "No OpenAI Vector Store or Vector Store ID required"
 configuration:
-  - "Provide an OpenAI API key and Vector Store ID"
+  - "Provide an OpenAI API key for the embeddings API"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAiVectorMemory"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-vector-memory-v1.0.0
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-vector-memory-v1.0.0"
+processing: "hybrid"
 ---
