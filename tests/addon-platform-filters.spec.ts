@@ -29,3 +29,11 @@ test("combined filters use the selected platform's capabilities", async ({ page 
   await expect(card("openai")).toBeVisible();
   await expect(card("soniox")).toHaveCount(0);
 });
+
+test("published add-ons that require a newer host explain compatibility", async ({ page }) => {
+  await page.goto("/en/addons/web-link/");
+  const requirement = page.getByTestId("addon-host-requirement");
+  await expect(requirement).toContainText("TypeWhisper 1.7.0");
+  await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status");
+  await expect(page.locator('img[src*="/plugins/web-link"]')).toHaveCount(0);
+});

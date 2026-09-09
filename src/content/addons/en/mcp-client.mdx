@@ -2,29 +2,31 @@
 slug: mcp-client
 name: MCP Client
 author: TypeWhisper
-version: 0.1.0
+version: "0.2.1"
 icon: Plug
-description: Connect TypeWhisper workflows to local MCP tools over stdio and turn dictated or selected text into fixed actions.
+description: Connect TypeWhisper workflows to MCP tools over stdio or Streamable HTTP and turn dictated or selected text into fixed actions.
 categories:
   - action
 platforms:
   - mac
 source: official
-id: com.typewhisper.mcp-client
-minAppVersion: 1.6.0
+id: "com.typewhisper.mcp-client"
+minAppVersion: "1.6.0"
 principalClass: MCPClientPlugin
 apiDocsUrl: https://modelcontextprotocol.io/docs/getting-started/intro
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin
 featured: false
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-mcp-client-v0.2.1"
 ---
 
 ## About
 
-MCP Client turns tools from local [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro) servers into TypeWhisper workflow actions. Add a reusable stdio server, discover its tools, and create one or more named actions that bind workflow text and context to a fixed tool.
+MCP Client turns tools from [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro) servers into TypeWhisper workflow actions. Add a reusable stdio or Streamable HTTP server, discover its tools, and create one or more named actions that bind workflow text and context to a fixed tool.
 
 When a workflow using that **Action Target** completes, TypeWhisper calls the selected tool automatically instead of inserting the processed text. The tool is chosen while you configure the action; dictated or selected text cannot choose a different tool at runtime.
 
-Version `0.1.0` requires TypeWhisper `1.6.0` or newer on macOS.
+Version `0.2.1` requires TypeWhisper `1.6.0` or newer on macOS.
 
 Sources: [MCP Client source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin), [implementation pull request](https://github.com/TypeWhisper/typewhisper-mac/pull/1087)
 
@@ -163,10 +165,16 @@ Select **Raw JSON Arguments > Current batch item** when each array item already 
 - Tool calls are not automatically retried after they may have been transmitted, which avoids silently duplicating external writes.
 - If a tool disappears or its input schema changes, TypeWhisper blocks the action until you refresh its configuration.
 
+## Set up Streamable HTTP
+
+Choose **Streamable HTTP** when adding a server and enter its MCP endpoint URL. Remote endpoints require HTTPS; plain HTTP is allowed only for loopback addresses such as `localhost`. Select **Bearer token** if needed and save the token in macOS Keychain. Then select **Connect & Load Tools** and bind discovered tools to fixed workflow actions as in the stdio example.
+
+HTTP calls send the mapped arguments to the selected server over the network. A local stdio process can also contact remote services itself.
+
 ## Current Limits
 
-- Local stdio MCP servers only; Streamable HTTP and legacy HTTP/SSE transports are not supported.
-- No OAuth, bearer-token, or browser-based authentication flow.
+- Local stdio servers and Streamable HTTP are supported; legacy HTTP/SSE transports are not.
+- Streamable HTTP supports a manually configured bearer token. OAuth and browser-based sign-in flows are not supported.
 - Tools only; MCP resources, prompts, sampling, elicitation, roots, and server-provided UI are not supported.
 - One server and one fixed tool per saved action. Create more actions when you need other tools.
 - MCP configurations are not imported from Codex, Claude Desktop, or other clients.

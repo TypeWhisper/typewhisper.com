@@ -595,3 +595,26 @@ test("localized editions keep platform identity, source, and version in sync", a
     }
   }
 });
+
+test("catalog filters reflect the union of actual edition capabilities", async () => {
+  const capabilities = JSON.parse(await readFile("src/data/addon-edition-capabilities.json", "utf8"));
+  for (const locale of LOCALES) {
+    for (const [slug, platforms] of Object.entries(capabilities)) {
+      const family = frontmatter(await readFile(`src/content/addons/${locale}/${slug}.mdx`, "utf8"));
+      assert.deepEqual(
+        list(family, "categories").sort(),
+        [...new Set(Object.values(platforms).flat())].sort(),
+        `${locale}/${slug}: catalog categories must match the editions`,
+      );
+      assert.deepEqual(list(family, "platforms").sort(), Object.keys(platforms).sort());
+      for (const platform of Object.keys(platforms)) {
+        const filename = platform === "mac" ? "macos" : platform;
+        const edition = frontmatter(await readFile(`src/content/addon-editions/${locale}/${slug}/${filename}.mdx`, "utf8"));
+        assert.ok(
+          ["local", "cloud", "custom", "hybrid"].includes(scalar(edition, "processing")),
+          `${locale}/${slug}/${filename}: declare data processing explicitly`,
+        );
+      }
+    }
+  }
+});

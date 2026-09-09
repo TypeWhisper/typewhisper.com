@@ -2,29 +2,31 @@
 slug: mcp-client
 name: MCP Client
 author: TypeWhisper
-version: 0.1.0
+version: "0.2.1"
 icon: Plug
-description: Verbinde TypeWhisper-Workflows über stdio mit lokalen MCP-Tools und mache aus diktiertem oder ausgewähltem Text feste Aktionen.
+description: Verbinde TypeWhisper-Workflows über stdio oder Streamable HTTP mit MCP-Tools und mache aus diktiertem oder ausgewähltem Text feste Aktionen.
 categories:
   - action
 platforms:
   - mac
 source: official
-id: com.typewhisper.mcp-client
-minAppVersion: 1.6.0
+id: "com.typewhisper.mcp-client"
+minAppVersion: "1.6.0"
 principalClass: MCPClientPlugin
 apiDocsUrl: https://modelcontextprotocol.io/docs/getting-started/intro
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin
 featured: false
+minOsVersion: "14.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-mcp-client-v0.2.1"
 ---
 
 ## Über
 
-MCP Client macht Tools lokaler [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro)-Server als TypeWhisper-Workflow-Aktionen verfügbar. Du legst einen wiederverwendbaren stdio-Server an, lässt seine Tools erkennen und erstellst daraus eine oder mehrere benannte Aktionen. Dabei ordnest du Workflow-Text und Kontext fest den Argumenten eines Tools zu.
+MCP Client macht Tools von [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro)-Servern als TypeWhisper-Workflow-Aktionen verfügbar. Du legst einen wiederverwendbaren stdio- oder Streamable-HTTP-Server an, lässt seine Tools erkennen und erstellst daraus eine oder mehrere benannte Aktionen. Dabei ordnest du Workflow-Text und Kontext fest den Argumenten eines Tools zu.
 
 Sobald ein Workflow mit diesem **Action-Ziel** abgeschlossen ist, ruft TypeWhisper das ausgewählte Tool automatisch auf, statt den verarbeiteten Text einzufügen. Das Tool wird bei der Einrichtung festgelegt. Diktierter oder ausgewählter Text kann zur Laufzeit kein anderes Tool auswählen.
 
-Version `0.1.0` benötigt TypeWhisper `1.6.0` oder neuer auf macOS.
+Version `0.2.1` benötigt TypeWhisper `1.6.0` oder neuer auf macOS.
 
 Quellen: [MCP-Client-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MCPClientPlugin), [Implementierungs-Pull-Request](https://github.com/TypeWhisper/typewhisper-mac/pull/1087)
 
@@ -164,10 +166,16 @@ Wähle **Unverarbeitete JSON-Argumente > Aktuelles Stapelelement**, wenn jedes E
 - Tool-Aufrufe werden nicht automatisch wiederholt, nachdem sie möglicherweise übertragen wurden. So entstehen nicht unbemerkt doppelte externe Schreibvorgänge.
 - Wenn ein Tool verschwindet oder sich sein Eingabeschema ändert, blockiert TypeWhisper die Aktion, bis du ihre Konfiguration aktualisierst.
 
+## Streamable HTTP einrichten
+
+Wähle beim Anlegen eines Servers **Streamable HTTP** und gib die MCP-Endpunkt-URL ein. Entfernte Endpunkte benötigen HTTPS; unverschlüsseltes HTTP ist nur für Loopback-Adressen wie `localhost` erlaubt. Wähle bei Bedarf **Bearer token** und speichere den Token in der macOS-Keychain. Klicke anschließend auf **Connect & Load Tools** und binde die gefundenen Tools wie im stdio-Beispiel an feste Workflow-Aktionen.
+
+Bei HTTP-Aufrufen erhält der gewählte Server die zugeordneten Argumente über das Netzwerk. Ein lokaler stdio-Prozess kann seinerseits entfernte Dienste kontaktieren.
+
 ## Aktuelle Einschränkungen
 
-- Nur lokale MCP-Server über stdio; Streamable HTTP und ältere HTTP/SSE-Transporte werden nicht unterstützt.
-- Kein OAuth-, Bearer-Token- oder Browser-Anmeldeablauf.
+- Lokale stdio-Server und Streamable HTTP werden unterstützt; ältere HTTP/SSE-Transporte nicht.
+- Streamable HTTP unterstützt einen manuell hinterlegten Bearer-Token. OAuth- und Browser-Anmeldeabläufe werden nicht unterstützt.
 - Nur Tools; MCP-Ressourcen, Prompts, Sampling, Elicitation, Roots und vom Server bereitgestellte Oberflächen werden nicht unterstützt.
 - Pro gespeicherter Aktion ein Server und ein festes Tool. Erstelle weitere Aktionen für andere Tools.
 - MCP-Konfigurationen werden nicht aus Codex, Claude Desktop oder anderen Clients importiert.
