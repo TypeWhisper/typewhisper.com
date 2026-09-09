@@ -26,7 +26,9 @@ On macOS, Cohere uses the **Cohere Transcribe** cloud API. On Windows, the same 
 
 ## Model and language
 
-The transcription model is `cohere-transcribe-03-2026`. Supported languages are Arabic, Bengali, Chinese, English, French, German, Hindi, Japanese, Korean, Portuguese, Russian, Spanish, Swahili, and Turkish.
+The transcription model is `cohere-transcribe-03-2026`. [Cohere documents](https://docs.cohere.com/docs/transcribe) support for Arabic, Chinese, Dutch, English, French, German, Greek, Italian, Japanese, Korean, Polish, Portuguese, Spanish, and Vietnamese.
+
+The current macOS plugin advertises a different language list: it includes Bengali, Hindi, Russian, Swahili, and Turkish, and omits Dutch, Greek, Italian, Polish, and Vietnamese. Choose a language supported by both the model and the plugin; a language appearing in the app does not establish model support.
 
 Select the spoken language explicitly. Without a language selection, the macOS edition sends English; it does not perform automatic language detection. Dictionary terms are not passed as inference hints. Local dictionary corrections can still run after transcription.
 
