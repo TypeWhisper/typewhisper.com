@@ -17,33 +17,25 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AssemblyAi"
 ---
 
-## About
+## About this edition
 
-AssemblyAI provides high-accuracy cloud-based speech recognition with real-time WebSocket streaming (v3 protocol) and an automatic REST fallback. The plugin supports two model tiers: Universal-3 Pro for top accuracy in 6 major languages, and Universal-2 for broader coverage across 37 languages.
+The macOS edition provides **Universal-3.5 Pro** and **Universal-2**. It uses live WebSocket transcription and falls back to REST processing when the connection fails. Enabling speaker diarization selects the structured REST path and disables live preview.
 
-## Features
-
-- Real-time WebSocket streaming with interim and final results
-- Automatic REST fallback if streaming is unavailable
-- Language detection
-- Smart formatting
-- API key validation in settings
-
-## Transcription Models
+## Models
 
 | Model | ID | Languages |
 | --- | --- | --- |
-| Universal-3 Pro | `universal-3-pro` | 6 (de, en, es, fr, it, pt) |
+| Universal-3.5 Pro | `universal-3-5-pro` | 18 |
 | Universal-2 | `universal-2` | 37 |
 
-## Configuration
-
-- **API Key** - Create an API key at assemblyai.com. Requires an account.
+Saved macOS selections of `universal-3-pro` migrate to Universal-3.5 Pro. The model and language determine the streaming endpoint. Dictionary terms are sent as model-specific recognition hints.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
-2. Find the AssemblyAI plugin and click Configure
-3. Enter your AssemblyAI API key (validated automatically)
-4. Select your preferred model
-5. Select AssemblyAI as your transcription engine in Settings or in a profile
+1. Open **Settings > Integrations > AssemblyAI**.
+2. Save and validate your AssemblyAI API key.
+3. Choose a model and a supported language, or automatic detection.
+4. Enable speaker diarization only when you need it.
+5. Select AssemblyAI as the workflow's transcription provider.
+
+Audio is sent to AssemblyAI for processing. The Windows edition has its own model catalog; use the Windows guide for that edition.

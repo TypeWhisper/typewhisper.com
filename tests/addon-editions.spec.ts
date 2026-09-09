@@ -309,7 +309,7 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Cohere für macOS" }),
     ).toBeVisible();
-    await expect(page.getByText("Cloudbasierte Sprach-zu-Text-Verarbeitung")).toBeVisible();
+    await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toBeVisible();
     await expect(page.getByText("1.0.4", { exact: true })).toBeVisible();
     await expect(
       page.locator('img[src="/screenshots/de/plugins/cohere.png"]'),
@@ -320,12 +320,12 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: "Einrichtung" }),
     ).toBeVisible();
-    await expect(page.getByText("Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund")).toBeVisible();
+    await expect(page.getByText("API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen", { exact: true })).toBeVisible();
 
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
     await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/?$/);
     await expect(page.getByText("LLM-Anbieter für Workflow-Prompts")).toBeVisible();
-    await expect(page.getByText("Cloudbasierte Sprach-zu-Text-Verarbeitung")).toHaveCount(0);
+    await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toHaveCount(0);
     await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
     await expect(
       page.locator(

@@ -4,7 +4,7 @@ name: Cohere
 author: TypeWhisper
 icon: AudioWaveform
 brandLogo: cohere
-description: Cohere für Cloud-Transkription auf macOS und LLM-basierte Prompt-Verarbeitung unter Windows.
+description: "Cohere Transcribe für Spracherkennung auf macOS und Cohere Command für LLM-Workflows auf Windows."
 categories:
   - transcription
   - llm
@@ -20,33 +20,21 @@ sourceUrls:
 principalClass: CoherePlugin
 ---
 
-## Über
+## Über diese Edition
 
-Cohere ergänzt TypeWhisper um eine Cloud-Transkriptions-Engine auf Basis der Cohere Transcribe API. Das in PR #185 eingeführte Plugin bietet erstklassige Spracherkennung in 14 Sprachen über eine REST-basierte Architektur. Audio wird an Coheres API-Endpunkt gesendet und der transkribierte Text direkt zurückgegeben.
+Auf macOS verwendet Cohere die Cloud-API **Cohere Transcribe**. Auf Windows stellt das gleichnamige Add-on **Cohere Command** für Text-Workflows bereit. Die folgenden Schritte gelten für macOS.
 
-## Features
+## Modell und Sprache
 
-- Cloud-Transkription über die Cohere Transcribe API
-- 14 unterstützte Sprachen: Arabisch, Bengalisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Russisch, Spanisch, Suaheli und Türkisch
-- Automatische Spracherkennung
-- Eingebaute API-Key-Validierung in den Einstellungen
-- Sichere Speicherung des API-Schlüssels im macOS-Schlüsselbund
+Das Transkriptionsmodell heißt `cohere-transcribe-03-2026`. Unterstützt werden Arabisch, Bengalisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Russisch, Spanisch, Suaheli und Türkisch.
 
-## Transkriptionsmodelle
-
-| Modell | ID |
-| --- | --- |
-| Cohere Transcribe | `cohere-transcribe-03-2026` |
-
-## Konfiguration
-
-- **API-Schlüssel** - Erstelle einen API-Schlüssel auf cohere.com und füge ihn in die Plugin-Einstellungen ein.
+Wähle die gesprochene Sprache ausdrücklich. Ohne Sprachwahl sendet die macOS-Edition Englisch; sie führt keine automatische Spracherkennung durch. Wörterbuchbegriffe werden nicht als Inferenz-Hinweise übergeben. Lokale Wörterbuchkorrekturen können nach der Transkription weiter angewendet werden.
 
 ## Einrichtung
 
-1. Erstelle ein kostenloses Konto auf cohere.com
-2. Generiere einen API-Schlüssel in deinem Dashboard
-3. Öffne TypeWhisper Einstellungen > Plugins
-4. Finde das Cohere-Plugin und klicke auf Konfigurieren
-5. Gib deinen Cohere-API-Schlüssel ein und speichere ihn
-6. Wähle Cohere als Transkriptions-Engine in den Einstellungen oder in einem Profil
+1. Öffne **Einstellungen > Integrationen > Cohere**.
+2. Speichere und validiere deinen Cohere-API-Key. Er wird im macOS-Schlüsselbund gespeichert.
+3. Wähle Cohere als Transkriptionsanbieter und stelle die gesprochene Sprache ein.
+4. Prüfe eine kurze Aufnahme mit dieser Sprache.
+
+Audio wird an Cohere gesendet. Für lokale Erkennung gibt es das separate Add-on **Cohere Transcribe (Local)**.
