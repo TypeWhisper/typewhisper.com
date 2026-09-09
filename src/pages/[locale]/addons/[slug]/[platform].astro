@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AddonEditionGuide from "@/components/addons/addon-edition-guide.astro";
+import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
 import AddonEditionSwitcher from "@/components/addons/addon-edition-switcher.astro";
 import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
@@ -199,6 +200,8 @@ const screenshots = editionScreenshots.map((screenshot) => {
             currentPlatform={platform}
           />
         </div>
+
+        <AddonHostRequirement platform={platform} minAppVersion={edition.minAppVersion} locale={locale} />
 
         <dl class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div class="rounded-xl border bg-card px-4 py-3">
@@ -402,6 +405,10 @@ const screenshots = editionScreenshots.map((screenshot) => {
 </BaseLayout>
 
 <style>
+  :global(.addon-prose :not(pre) > code) {
+    overflow-wrap: anywhere;
+  }
+
   :global(.addon-prose table) {
     display: block;
     max-width: 100%;

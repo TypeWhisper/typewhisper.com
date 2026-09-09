@@ -1,6 +1,7 @@
 ---
 import { ArrowRight, Check, Laptop, Monitor } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
 import {
   editionPlatformSlugs,
   type AddonEdition,
@@ -49,6 +50,7 @@ const platformLabel = t(locale, platformKeys[edition.platform]);
 
   <div class="flex flex-1 flex-col p-5 sm:p-6">
     <p class="text-sm leading-6 text-muted-foreground">{edition.description}</p>
+    <AddonHostRequirement platform={edition.platform} minAppVersion={edition.minAppVersion} locale={locale} />
 
     {edition.highlights && edition.highlights.length > 0 && (
       <ul class="mt-5 space-y-2.5" aria-label={t(locale, "addons.editions.highlights")}>

@@ -62,7 +62,7 @@
   "addons.editions.guide.activate.tts": "Wähle {name} als Text-to-Speech-Anbieter für gesprochenes Feedback oder das Vorlesen von Text.",
   "addons.editions.guide.activate.action": "Erstelle oder öffne einen Workflow und wähle {name} als Action-Ziel.",
   "addons.editions.guide.activate.postProcessing": "Aktiviere das Add-on und teste seine Konfiguration, bevor du es in der Nachbearbeitung deiner Diktate verwendest.",
-  "addons.editions.guide.activate.memory": "Aktiviere den gewünschten Gedächtnis-Anbieter. TypeWhisper verwendet das aktive Gedächtnis-Add-on zum Speichern und Abrufen relevanter Fakten.",
+  "addons.editions.guide.activate.memory": "Aktiviere das Gedächtnis in TypeWhisper und konfiguriere ein LLM zum Extrahieren von Fakten. Aktiviere nur die gewünschten Speicher-Add-ons; macOS speichert extrahierte Erinnerungen in allen bereiten Gedächtnis-Anbietern. Ein Cloud-LLM erhält den Text für die Extraktion auch bei lokalem Speicher.",
   "addons.editions.guide.activate.utility": "Aktiviere die Integration und löse einen kurzen Testlauf aus, um Ausgabe, Fenster oder Ereignisverarbeitung zu prüfen.",
   "addons.editions.guide.example.transcription": "Lege ein Testprofil an, wähle {name} als Engine und diktiere einige Sätze. Prüfe Sprache, Modell und Ergebnis, bevor du die Edition als Standard verwendest.",
   "addons.editions.guide.example.llm": "Erstelle einen Workflow für Besprechungsnotizen, wähle {name} als LLM-Anbieter und lasse ein kurzes Diktat in Zusammenfassung, Entscheidungen und Aufgaben gliedern.",
@@ -73,10 +73,17 @@
   "addons.editions.guide.example.utility": "Starte eine kurze Aufnahme oder einen passenden Workflow und kontrolliere direkt die sichtbare Ausgabe beziehungsweise das ausgelöste Ereignis.",
   "addons.editions.guide.example.liveTranscript": "Starte eine kurze Aufnahme mit einer Streaming-Engine und prüfe, ob das schwebende Transkript erscheint, lesbar bleibt und sich wie konfiguriert ausblendet.",
   "addons.editions.guide.example.webhook": "Sende ein kurzes Testdiktat an einen nur dafür vorgesehenen Endpunkt und kontrolliere Status, Nutzdaten und Delivery Log, bevor du den Webhook produktiv verwendest.",
-  "addons.editions.guide.localProcessing": "Diese Edition verarbeitet Audio oder Text lokal. Modell- und Laufzeitdownloads können eine Internetverbindung benötigen, die eigentliche Verarbeitung erfolgt anschließend auf deinem Gerät.",
+  "addons.editions.guide.localProcessing": "Dieses Add-on speichert oder verarbeitet seine Inhalte lokal. Modell- und Laufzeitdownloads können eine Internetverbindung benötigen. Andere Schritte wie Transkription, Gedächtnis-Extraktion oder Workflow-Prompts verwenden ihre separat konfigurierten Anbieter.",
   "addons.editions.guide.cloudProcessing": "Diese Edition verwendet einen Cloud-Anbieter. Je nach Funktion werden Audio, Text oder beides erst übertragen, wenn du den Anbieter konfigurierst und auswählst.",
   "addons.resultCount": "{count} Add-ons",
   "addons.clearSearch": "Suchbegriff löschen",
   "addons.iosEmpty": "Für iOS sind hier derzeit keine separaten Add-ons gelistet. Die iOS-Anleitung beschreibt die integrierten Engines und Anbieter.",
-  "addons.iosGuide": "Zur iOS-Anleitung"
+  "addons.iosGuide": "Zur iOS-Anleitung",
+  "addons.editions.guide.customProcessing": "Ob Inhalte lokal bleiben, hängt vom eingerichteten Server, Skript oder Ziel ab. Entfernte Dienste erhalten die an sie übergebenen Daten.",
+  "addons.editions.guide.hybridProcessing": "Erinnerungen und Vektoren werden lokal gespeichert. Für Embeddings werden Erinnerungstexte und Suchanfragen an OpenAI gesendet.",
+  "addons.editions.newerHost.title": "Neuere App-Version erforderlich",
+  "addons.editions.newerHost.description": "Diese Plugin-Version benötigt TypeWhisper {minimum}. Die aktuelle stabile Ausgabe für diese Plattform ist {stable} und erfüllt diese Anforderung noch nicht.",
+  "addons.editions.newerHost.link": "Release-Status prüfen",
+  "addons.editions.guide.activate.windowsMemory": "Das Windows-Add-on implementiert Gedächtnisspeicher. Im geprüften Windows-Host sind automatische Extraktion und Abruf jedoch nicht mit dem Diktierablauf verbunden. Der Gedächtnis-Schalter allein stellt diesen Ablauf nicht her.",
+  "addons.editions.guide.example.windowsMemory": "Speichern und Suchen benötigen eine Host-Integration, die das Gedächtnis-Add-on aufruft. Automatisches Erinnern bei späteren Diktaten ist in der geprüften Windows-Implementierung nicht verfügbar."
 }

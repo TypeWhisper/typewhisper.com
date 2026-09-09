@@ -54,7 +54,7 @@ test.describe("new landing sections", () => {
 
     await expect(page.getByTestId("wall-of-love")).toBeVisible();
     await expect(page.getByTestId("premium-features")).toContainText(
-      "iCloud sync",
+      "Cloud Folder Sync",
     );
     await expect(page.getByTestId("pricing-teaser")).toBeVisible();
     await expect(
@@ -78,7 +78,7 @@ test.describe("new landing sections", () => {
       "Ein offenes Ökosystem",
     );
     await expect(page.getByTestId("premium-features")).toContainText(
-      "iCloud-Sync",
+      "Cloud-Ordner-Sync",
     );
     await expect(page.getByTestId("pricing-teaser")).toContainText(
       "Kostenloser Core",

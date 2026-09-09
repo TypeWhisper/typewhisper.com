@@ -37,6 +37,9 @@ export interface Plugin {
   license?: string;
   homepage?: string;
   minAppVersion?: string;
+  minOsVersion?: string;
+  releaseUrl?: string;
+  screenshots?: boolean;
   readmeUrl?: string;
   downloads?: Record<string, PluginDownload>;
   publishedAt?: string;

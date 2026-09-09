@@ -46,7 +46,7 @@ export function IndustryMockup({
             </aside>
           )}
 
-          <main className={compact ? "col-span-2 px-4 pb-4 pt-8" : "px-5 pb-5 pt-10"}>
+          <div className={compact ? "col-span-2 px-4 pb-4 pt-8" : "px-5 pb-5 pt-10"}>
             <div className="flex items-center gap-2">
               <span
                 className="flex size-8 items-center justify-center rounded-lg text-white"
@@ -84,7 +84,7 @@ export function IndustryMockup({
                 </span>
               ))}
             </div>
-          </main>
+          </div>
         </div>
       </MacWindow>
 

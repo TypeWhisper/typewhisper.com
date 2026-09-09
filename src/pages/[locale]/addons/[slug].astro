@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import CommunityContent from "@/components/addons/community-content";
 import AddonEditionCard from "@/components/addons/addon-edition-card.astro";
+import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
 import {
   getAddonEditions,
   getDefaultAddonDetailScreenshot,
@@ -87,7 +88,7 @@ const isCommunity = isCommunityPlugin(plugin);
 const showBrandLogo = plugin.brandLogo
   ? canRenderBrandLogo(plugin.brandLogo, "addon")
   : false;
-const defaultScreenshot = getDefaultAddonDetailScreenshot(plugin);
+const defaultScreenshot = plugin.screenshots === false ? undefined : getDefaultAddonDetailScreenshot(plugin);
 const defaultScreenshotSrc = defaultScreenshot
   ? defaultScreenshot.localized === false
     ? defaultScreenshot.src
@@ -272,7 +273,12 @@ const sourceLinks = plugin.sourceUrls
               </div>
             </div>
 
+            {plugin.platforms.length === 1 && (
+              <AddonHostRequirement platform={plugin.platforms[0]} minAppVersion={plugin.minAppVersion} locale={locale} />
+            )}
+
             {(plugin.apiDocsUrl ||
+              plugin.releaseUrl ||
               sourceLinks.length > 0 ||
               plugin.homepage) && (
               <div class="mt-6 flex flex-wrap gap-4">
@@ -296,6 +302,11 @@ const sourceLinks = plugin.sourceUrls
                   >
                     <ExternalLink className="size-3.5" />{" "}
                     {t(locale, "addons.apiDocs")}
+                  </a>
+                )}
+                {plugin.releaseUrl && (
+                  <a href={plugin.releaseUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-1.5 text-sm text-primary hover:underline">
+                    <ExternalLink className="size-3.5" /> {t(locale, "addons.editions.release")} {plugin.version}
                   </a>
                 )}
                 {sourceLinks.map((sourceLink) => (
@@ -342,6 +353,10 @@ const sourceLinks = plugin.sourceUrls
 </BaseLayout>
 
 <style>
+  :global(.addon-prose :not(pre) > code) {
+    overflow-wrap: anywhere;
+  }
+
   :global(.addon-prose table) {
     display: block;
     max-width: 100%;

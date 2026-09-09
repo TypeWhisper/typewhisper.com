@@ -61,27 +61,26 @@ const setupSteps = [
     : []),
   ...configuration,
   ...capabilities.map((capability) =>
-    format(activationKeyByCapability[capability]),
+    format(capability === "memory" && edition.platform === "windows"
+      ? "addons.editions.guide.activate.windowsMemory"
+      : activationKeyByCapability[capability]),
   ),
 ];
 const examples = capabilities.map((capability) => ({
   capability,
   text: format(
-    exampleOverrides[edition.familySlug]
+    (capability === "memory" && edition.platform === "windows"
+      ? "addons.editions.guide.example.windowsMemory"
+      : exampleOverrides[edition.familySlug])
       ?? exampleKeyByCapability[capability],
   ),
 }));
-const searchableCopy = [
-  edition.description,
-  ...(edition.highlights ?? []),
-  ...configuration,
-].join(" ").toLocaleLowerCase(locale);
-const isLocal = /\blocal\b|offline|on-device|without uploading|\blokal\b|ohne .*hochzuladen|auf deinem gerät/.test(
-  searchableCopy,
-);
-const isCloud = /cloud|api key|api-key|api token|api-token|service account|service-account/.test(
-  searchableCopy,
-);
+const processingKeys = {
+  local: "addons.editions.guide.localProcessing",
+  cloud: "addons.editions.guide.cloudProcessing",
+  custom: "addons.editions.guide.customProcessing",
+  hybrid: "addons.editions.guide.hybridProcessing",
+} as const;
 ---
 
 <section
@@ -160,14 +159,9 @@ const isCloud = /cloud|api key|api-key|api token|api-token|service account|servi
     </aside>
   </div>
 
-  {(isLocal || isCloud) && (
+  {edition.processing && (
     <p class="mt-9 max-w-3xl rounded-xl border bg-card px-4 py-3 text-sm leading-6 text-muted-foreground">
-      {t(
-        locale,
-        isLocal
-          ? "addons.editions.guide.localProcessing"
-          : "addons.editions.guide.cloudProcessing",
-      )}
+      {t(locale, processingKeys[edition.processing])}
     </p>
   )}
 </section>
