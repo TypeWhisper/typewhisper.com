@@ -1,8 +1,8 @@
 ---
 familySlug: "gemini"
 platform: "mac"
-version: "1.0.21"
-description: "Google Gemini für Cloud-Transkription und LLM-Workflows."
+version: "1.1.0"
+description: "Google Gemini für Cloud-Transkription und Gemini-/Gemma-Textverarbeitung mit getrennten Modellkatalogen."
 id: "com.typewhisper.gemini"
 minAppVersion: "1.5.0"
 minOsVersion: "14.0"
@@ -10,14 +10,29 @@ requirements:
   - "TypeWhisper 1.5.0 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
-  - "Cloudbasierte Sprach-zu-Text-Verarbeitung"
-  - "LLM-Anbieter für Workflow-Prompts"
-  - "Auswahl beziehungsweise Aktualisierung verfügbarer Modelle"
-  - "Steuerung von Provider-Standard oder eigener Temperatur"
+  - "Cloud-Transkription mit Smart- und wortgetreuem Modus"
+  - "Gemini- und Gemma-Modelle für Workflow-Prompts"
+  - "Aktualisierbare Kataloge für Transkriptions- und Textmodelle"
+  - "Live-Vorschau mit unterstützten Transkriptionsmodellen"
 configuration:
-  - "API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen"
-  - "Transkriptions- und LLM-Modell getrennt auswählen"
-  - "Provider-Standard oder eigene Temperatur einstellen"
+  - "API-Key in der macOS-Keychain speichern und validieren"
+  - "Modelle aktualisieren und Transkriptionsmodell im Anbieter oder Workflow wählen"
+  - "Smart für bereinigtes Diktat oder Verbatim für wortgetreue Ausgabe wählen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GeminiPlugin"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gemini-v1.0.21
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gemini-v1.1.0"
+processing: "cloud"
 ---
+
+## Einrichtung
+
+1. Öffne **Einstellungen > Integrationen** und aktiviere **Gemini**.
+2. Speichere deinen Google-AI-Studio-API-Key und aktualisiere den Modellkatalog.
+3. Wähle Gemini als Transkriptionsanbieter und ein verfügbares Transkriptionsmodell.
+4. Wähle **Smart** für bereinigtes Diktat oder **Verbatim** für eine möglichst wortgetreue Ausgabe. Live-Vorschauen benötigen ein Modell mit Live-Unterstützung.
+5. Für Textverarbeitung wählst du Gemini separat als LLM-Anbieter im Workflow und ein Gemini- oder Gemma-Textmodell.
+
+## Modelle und Datenschutz
+
+Transkriptions- und Textmodelle werden getrennt gefiltert. Welche Modelle nutzbar sind, hängt von Googles Katalog und deinem API-Zugang ab. Der Transkriptionsanbieter unterstützt keine Übersetzungsanforderung; Übersetzungen können als separater Text-Workflow erfolgen.
+
+Audio und Text werden für die jeweils gewählte Funktion an Google gesendet. Abrechnung und Nutzungslimits richten sich nach deinem Google-Konto.

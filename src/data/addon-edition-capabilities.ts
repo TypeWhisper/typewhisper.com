@@ -1,5 +1,6 @@
 import capabilityData from "@/data/addon-edition-capabilities.json";
 import type {
+  Plugin,
   PluginCategory,
   PluginPlatform,
 } from "@/data/addons";
@@ -17,4 +18,14 @@ export function getAddonEditionCapabilities(
   platform: PluginPlatform,
 ): PluginCategory[] {
   return editionCapabilities[familySlug]?.[platform] ?? [];
+}
+
+/** Uses the selected edition's capabilities, including single-platform add-ons. */
+export function getAddonCategoriesForPlatform(
+  plugin: Plugin,
+  platform: PluginPlatform | "all",
+): PluginCategory[] {
+  if (platform === "all") return plugin.categories;
+  if (!plugin.platforms.includes(platform)) return [];
+  return editionCapabilities[plugin.slug]?.[platform] ?? plugin.categories;
 }

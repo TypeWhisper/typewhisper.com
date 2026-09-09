@@ -1,22 +1,37 @@
 ---
 familySlug: "gemini"
 platform: "windows"
-version: "1.2.1"
-description: "Google Gemini und Gemma als LLM-Anbieter mit dynamischem Chat-Modellkatalog für Prompt-Workflows."
+version: "1.3.0"
+description: "Google Gemini für Cloud-Transkription und Gemini-/Gemma-Textverarbeitung mit getrennten Modellkatalogen."
 id: "com.typewhisper.gemini"
 minAppVersion: "1.0.9"
 requirements:
   - "TypeWhisper 1.0.9 oder neuer"
   - "Windows 10 oder neuer"
 highlights:
-  - "Gemini- und Gemma-LLM-Modelle für Workflow-Prompts"
-  - "Aktualisierbarer, auf kompatible Chat-Modelle gefilterter Modellkatalog"
-  - "Integrierte Gemini-Aliase, solange kein Katalog abgerufen wurde"
-  - "Unterstützung von Übersetzungsanfragen"
-  - "Unterstützung paralleler abgesicherter LLM-Anfragen"
+  - "Cloud-Transkription mit Smart- und wortgetreuem Modus"
+  - "Gemini- und Gemma-Modelle für Workflow-Prompts"
+  - "Aktualisierbare Kataloge für Transkriptions- und Textmodelle"
+  - "Live-Vorschau mit unterstützten Transkriptionsmodellen"
 configuration:
-  - "API-Key verschlüsselt in TypeWhisper für Windows speichern und prüfen"
-  - "Verfügbare Gemini- und Gemma-Modelle aktualisieren und anschließend je Workflow ein Modell wählen"
+  - "API-Key in den verschlüsselten Windows-Einstellungen speichern und validieren"
+  - "Modelle aktualisieren und Transkriptionsmodell im Anbieter oder Workflow wählen"
+  - "Smart für bereinigtes Diktat oder Verbatim für wortgetreue Ausgabe wählen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gemini"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.2.1
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.3.0"
+processing: "cloud"
 ---
+
+## Einrichtung
+
+1. Öffne **Einstellungen > Integrationen** und aktiviere **Gemini**.
+2. Speichere deinen Google-AI-Studio-API-Key und aktualisiere den Modellkatalog.
+3. Wähle Gemini als Transkriptionsanbieter und ein verfügbares Transkriptionsmodell.
+4. Wähle **Smart** für bereinigtes Diktat oder **Verbatim** für eine möglichst wortgetreue Ausgabe. Live-Vorschauen benötigen ein Modell mit Live-Unterstützung.
+5. Für Textverarbeitung wählst du Gemini separat als LLM-Anbieter im Workflow und ein Gemini- oder Gemma-Textmodell.
+
+## Modelle und Datenschutz
+
+Transkriptions- und Textmodelle werden getrennt gefiltert. Welche Modelle nutzbar sind, hängt von Googles Katalog und deinem API-Zugang ab. Der Transkriptionsanbieter unterstützt keine Übersetzungsanforderung; Übersetzungen können als separater Text-Workflow erfolgen.
+
+Audio und Text werden für die jeweils gewählte Funktion an Google gesendet. Abrechnung und Nutzungslimits richten sich nach deinem Google-Konto.

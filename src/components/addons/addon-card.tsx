@@ -34,6 +34,7 @@ import {
   sourceKeys,
 } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
+import { getAddonCategoriesForPlatform } from "@/data/addon-edition-capabilities";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Zap,
@@ -64,9 +65,10 @@ interface AddonCardProps {
   plugin: Plugin;
   basePath?: string;
   locale?: Locale;
+  platform?: PluginPlatform | "all";
 }
 
-export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: AddonCardProps) {
+export function AddonCard({ plugin, basePath = "/addons", locale = "en", platform = "all" }: AddonCardProps) {
   const Icon = iconMap[plugin.icon];
   const showBrandLogo = plugin.brandLogo
     ? canRenderBrandLogo(plugin.brandLogo, "addon")
@@ -110,12 +112,12 @@ export function AddonCard({ plugin, basePath = "/addons", locale = "en" }: Addon
       </div>
       <p className="mt-3 text-sm text-muted-foreground">{plugin.description}</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {plugin.categories.map((cat: PluginCategory) => (
+        {getAddonCategoriesForPlatform(plugin, platform).map((cat: PluginCategory) => (
           <Badge key={cat} variant="outline" className="text-[10px]">
             {t(locale, categoryKeys[cat])}
           </Badge>
         ))}
-        {plugin.platforms.map((p: PluginPlatform) => (
+        {(platform === "all" ? plugin.platforms : [platform]).map((p: PluginPlatform) => (
           <Badge key={p} variant="outline" className="text-[10px] border-primary/30 text-primary">
             {t(locale, platformKeys[p])}
           </Badge>

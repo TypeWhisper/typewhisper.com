@@ -1,22 +1,37 @@
 ---
 familySlug: "gemini"
 platform: "windows"
-version: "1.2.1"
-description: "Google Gemini and Gemma as LLM providers with a dynamic chat-model catalog for prompt workflows."
+version: "1.3.0"
+description: "Google Gemini cloud transcription and Gemini/Gemma text processing with separate model catalogs."
 id: "com.typewhisper.gemini"
 minAppVersion: "1.0.9"
 requirements:
   - "TypeWhisper 1.0.9 or newer"
   - "Windows 10 or newer"
 highlights:
-  - "Gemini and Gemma LLM models for workflow prompts"
-  - "Refreshable model catalog filtered to compatible chat models"
-  - "Built-in Gemini aliases when no catalog has been fetched"
-  - "Support for translation requests"
-  - "Support for parallel hedged LLM requests"
+  - "Cloud transcription with Smart and Verbatim modes"
+  - "Gemini and Gemma models for workflow prompts"
+  - "Refreshable transcription and language-model catalogs"
+  - "Live preview with supported transcription models"
 configuration:
-  - "Store and validate the API key in encrypted TypeWhisper for Windows settings"
-  - "Refresh the available Gemini and Gemma models, then choose a model for each workflow"
+  - "Store and validate the API key in encrypted Windows settings"
+  - "Refresh models and select the transcription model in provider or workflow settings"
+  - "Choose Smart for cleaned dictation or Verbatim for literal output"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gemini"
-releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.2.1
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.3.0"
+processing: "cloud"
 ---
+
+## Setup
+
+1. Open **Settings > Integrations** and enable **Gemini**.
+2. Save your Google AI Studio API key and refresh the model catalog.
+3. Select Gemini as the transcription provider and choose an available transcription model.
+4. Choose **Smart** for cleaned dictation or **Verbatim** for a more literal result. Live previews require a model with live support.
+5. For text processing, select Gemini separately as the workflow's LLM provider and choose a Gemini or Gemma text model.
+
+## Models and privacy
+
+Transcription and language models are filtered separately. Available models depend on Google's catalog and your API access. The transcription provider does not support translation requests; translation can run as a separate text workflow.
+
+Audio and text are sent to Google for the capability you select. Billing and usage limits depend on your Google account.

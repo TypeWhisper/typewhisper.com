@@ -17,13 +17,13 @@ sourceUrls:
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Cerebras"
 ---
 
-## About
+## About this edition
 
-Cerebras delivers ultra-fast LLM inference using their custom Wafer-Scale Engine (WSE) hardware. The platform achieves speeds of around 3,000 tokens per second for large models like GPT-OSS 120B, making it one of the fastest cloud inference providers available. The plugin uses an OpenAI-compatible API and dynamically fetches available models.
+Cerebras provides cloud LLMs for TypeWhisper workflows. The macOS edition uses an OpenAI-compatible API and can refresh the model catalog. Model access, speed, and usage limits depend on the selected model and your account.
 
 ## Features
 
-- Ultra-fast inference (~3,000 tokens/sec for GPT-OSS 120B)
+- Cloud LLMs for text workflows
 - Dynamic model list with refresh from the Cerebras API
 - OpenAI-compatible API
 - API keys stored securely in the macOS Keychain
@@ -45,7 +45,7 @@ Use the Refresh button to load the latest models from the Cerebras API.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
+1. Open TypeWhisper Settings > Integrations
 2. Find the Cerebras plugin and click Configure
 3. Enter your Cerebras API key
 4. Select an LLM model and choose Cerebras as your LLM provider
