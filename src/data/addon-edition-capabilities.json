@@ -49,7 +49,7 @@
   },
   "gemini": {
     "mac": ["transcription", "llm"],
-    "windows": ["llm"]
+    "windows": ["transcription", "llm"]
   },
   "gladia": {
     "mac": ["transcription"],

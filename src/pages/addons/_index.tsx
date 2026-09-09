@@ -16,6 +16,7 @@ import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
 import { SourceFilter } from "@/components/addons/source-filter";
 import { AddonCard } from "@/components/addons/addon-card";
+import { getAddonCategoriesForPlatform } from "@/data/addon-edition-capabilities";
 import { Button } from "@/components/ui/button";
 
 interface AddonsIndexProps {
@@ -92,7 +93,9 @@ export default function AddonsIndex({
 
   const filtered = items.filter((p) => {
     const matchesCategory =
-      category === "all" || p.categories.includes(category as PluginCategory);
+      category === "all" ||
+      getAddonCategoriesForPlatform(p, platform as PluginPlatform | "all")
+        .includes(category as PluginCategory);
     const matchesPlatform =
       platform === "all" || p.platforms.includes(platform as PluginPlatform);
     const matchesSource = source === "all" || p.source === source;
@@ -206,6 +209,7 @@ export default function AddonsIndex({
             <AddonCard
               key={plugin.slug}
               plugin={plugin}
+              platform={platform as PluginPlatform | "all"}
               basePath={basePath}
               locale={locale}
             />

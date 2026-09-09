@@ -20,16 +20,16 @@ sourceUrls:
 featured: true
 ---
 
-## About
+## About this edition
 
-Groq provides extremely fast inference for both speech-to-text and LLM tasks. Their custom Language Processing Unit (LPU) hardware delivers industry-leading speed for Whisper transcription and Llama-based text processing. Use Groq for the fastest cloud transcription available, or as an LLM provider for custom prompts and post-processing.
+Groq provides cloud transcription with Whisper models and LLM text processing through one API key. Select Groq for speech, workflow prompts, or both. Available models and usage limits depend on your Groq account.
 
 ## Features
 
-- Fastest cloud transcription available
+- Cloud transcription with Whisper models
 - Multiple Whisper model variants
-- LLM processing with Llama and GPT-OSS models
-- Free tier with generous rate limits
+- LLM processing with GPT-OSS models
+- Account-specific usage limits
 - OpenAI-compatible API
 
 ## Transcription Models
@@ -43,9 +43,10 @@ Groq provides extremely fast inference for both speech-to-text and LLM tasks. Th
 
 | Model | ID |
 | --- | --- |
-| Llama 3.3 70B | `llama-3.3-70b-versatile` |
-| Llama 3.1 8B | `llama-3.1-8b-instant` |
-| GPT-OSS 120B | `gpt-oss-120b` |
+| GPT-OSS 20B | `openai/gpt-oss-20b` |
+| GPT-OSS 120B | `openai/gpt-oss-120b` |
+
+Refresh the model catalog in TypeWhisper to see the models available to your account. Check [Groq’s deprecation notices](https://console.groq.com/docs/deprecations) when an older saved model stops working.
 
 ## Configuration
 
@@ -53,7 +54,7 @@ Groq provides extremely fast inference for both speech-to-text and LLM tasks. Th
 
 ## Setup
 
-1. Open TypeWhisper Settings > Plugins
+1. Open TypeWhisper Settings > Integrations
 2. Find the Groq plugin and click Configure
 3. Enter your Groq API key
 4. Select Groq as your transcription engine or LLM provider
