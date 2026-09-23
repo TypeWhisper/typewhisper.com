@@ -32,12 +32,6 @@ export const featureScreenshotsByPlatform: Record<
   },
 };
 
-export const heroScreenshotByPlatform: Record<LandingPlatform, string> = {
-  mac: "/screenshots/mac/home.png",
-  windows: "/screenshots/windows/dashboard.png",
-  ios: "/screenshots/ios/01-recording.png",
-};
-
 export const premiumScreenshotByPlatform: Record<LandingPlatform, string> = {
   mac: "/screenshots/mac/premium.png",
   windows: "/screenshots/windows/premium-active.png",

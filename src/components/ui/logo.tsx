@@ -6,15 +6,31 @@ interface LogoProps {
   textClassName?: string;
 }
 
+// [x, y, height] of each waveform bar; `--i` staggers the hover wave.
+const bars = [
+  [2, 14, 12],
+  [11, 8, 24],
+  [20, 4, 32],
+  [29, 10, 20],
+  [38, 14, 12],
+] as const;
+
 export function Logo({ className, showText = true, textClassName }: LogoProps) {
   return (
-    <div className={cn("flex items-center gap-3", className)}>
-      <svg viewBox="0 0 46 40" className="h-8 w-auto" fill="currentColor">
-        <rect x="2" y="14" width="6" height="12" rx="3" className="text-primary" />
-        <rect x="11" y="8" width="6" height="24" rx="3" className="text-primary" />
-        <rect x="20" y="4" width="6" height="32" rx="3" className="text-primary" />
-        <rect x="29" y="10" width="6" height="20" rx="3" className="text-primary" />
-        <rect x="38" y="14" width="6" height="12" rx="3" className="text-primary" />
+    <div className={cn("logo-wave flex items-center gap-3", className)}>
+      <svg viewBox="0 0 46 40" className="h-8 w-auto" fill="currentColor" aria-hidden="true">
+        {bars.map(([x, y, height], i) => (
+          <rect
+            key={x}
+            x={x}
+            y={y}
+            width="6"
+            height={height}
+            rx="3"
+            className="logo-bar text-primary"
+            style={{ ["--i" as string]: i }}
+          />
+        ))}
       </svg>
       {showText && (
         <span className={cn("text-xl font-semibold tracking-tight font-display", textClassName)}>

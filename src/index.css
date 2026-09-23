@@ -250,10 +250,25 @@
   animation: fade-in-soft var(--motion-medium) var(--motion-ease);
 }
 
-/* Waveform brand motif */
-@keyframes waveform-pulse {
-  0%, 100% { transform: scaleY(0.35); }
+/* Waveform brand motif. Motion follows the apps: the macOS recording
+   indicator moves bars along a sine phase, its processing state bounces one
+   bar after another, and the Windows logo alternates bars on hover. */
+@keyframes waveform-speak {
+  0%, 100% { transform: scaleY(0.3); }
+  20% { transform: scaleY(0.85); }
+  40% { transform: scaleY(0.45); }
+  60% { transform: scaleY(1); }
+  80% { transform: scaleY(0.55); }
+}
+
+@keyframes waveform-calm {
+  0%, 100% { transform: scaleY(0.6); }
   50% { transform: scaleY(1); }
+}
+
+@keyframes waveform-bounce {
+  0%, 8% { transform: scaleY(1); }
+  24%, 100% { transform: scaleY(0.18); }
 }
 
 .waveform-bar {
@@ -261,8 +276,53 @@
 }
 
 .waveform-animated .waveform-bar {
-  animation: waveform-pulse 1.6s ease-in-out infinite;
+  animation: waveform-speak var(--bar-duration, 1.4s) ease-in-out infinite;
   animation-delay: var(--bar-delay, 0ms);
+}
+
+.waveform-calm .waveform-bar {
+  animation: waveform-calm var(--bar-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--bar-delay, 0ms);
+}
+
+.waveform-processing .waveform-bar {
+  transform: scaleY(0.18);
+  animation: waveform-bounce var(--bounce-cycle, 1.2s) linear infinite;
+  animation-delay: var(--bounce-delay, 0ms);
+}
+
+@keyframes logo-wave-even {
+  0%, 100% { transform: scaleY(1); }
+  25% { transform: scaleY(0.48); }
+  65% { transform: scaleY(1.2); }
+}
+
+@keyframes logo-wave-odd {
+  0%, 100% { transform: scaleY(1); }
+  25% { transform: scaleY(1.15); }
+  65% { transform: scaleY(0.52); }
+}
+
+.logo-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.logo-wave:hover .logo-bar:nth-child(odd) {
+  animation: logo-wave-even calc(1050ms + var(--i) * 70ms) ease-in-out infinite;
+}
+
+.logo-wave:hover .logo-bar:nth-child(even) {
+  animation: logo-wave-odd calc(1050ms + var(--i) * 70ms) ease-in-out infinite;
+}
+
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+
+.typing-caret {
+  animation: caret-blink 1s steps(1) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -277,8 +337,15 @@
   .reveal-scale-visible {
     transition: none;
   }
-  .waveform-animated .waveform-bar {
+  .waveform-animated .waveform-bar,
+  .waveform-calm .waveform-bar,
+  .waveform-processing .waveform-bar,
+  .logo-wave:hover .logo-bar:nth-child(n),
+  .typing-caret {
     animation: none;
+  }
+  .waveform-processing .waveform-bar {
+    transform: none;
   }
   .fade-in-soft {
     animation: none;

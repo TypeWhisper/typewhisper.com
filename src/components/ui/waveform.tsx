@@ -1,15 +1,34 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 
+export type WaveformMotion = "static" | "speaking" | "calm" | "processing";
+
 interface WaveformProps {
   /** Number of bars to render. */
   bars?: number;
-  /** Animate bars (CSS-driven, disabled automatically via prefers-reduced-motion). */
+  /** Shorthand for `motion="speaking"`, kept for existing call sites. */
   animated?: boolean;
+  /**
+   * CSS-driven motion, disabled automatically via prefers-reduced-motion.
+   * `speaking` mimics live input, `calm` is a slow ambient breath, and
+   * `processing` bounces one bar after another like the macOS indicator.
+   */
+  motion?: WaveformMotion;
   /** Deterministic seed so SSR and client render the same bar heights. */
   seed?: number;
   className?: string;
 }
+
+const motionClass: Record<WaveformMotion, string | null> = {
+  static: null,
+  speaking: "waveform-animated",
+  calm: "waveform-calm",
+  processing: "waveform-processing",
+};
+
+// One bar-by-bar sweep of the processing bounce, as in the app's indicator.
+// Short enough that every bar bounces within the hero demo's processing phase.
+const BOUNCE_CYCLE_MS = 720;
 
 // Deterministic pseudo-random generator: SSR markup must match client hydration.
 function mulberry32(seed: number) {
@@ -25,12 +44,13 @@ function mulberry32(seed: number) {
 
 /**
  * Audio waveform brand motif. Renders a row of rounded bars whose heights
- * follow a speech-like envelope. Use `animated` for live surfaces (hero),
- * omit it for static accents (dividers, footer).
+ * follow a speech-like envelope. Use a `motion` for live surfaces (hero),
+ * keep it static for quiet accents.
  */
 export function Waveform({
   bars = 48,
   animated = false,
+  motion = animated ? "speaking" : "static",
   seed = 7,
   className,
 }: WaveformProps) {
@@ -44,14 +64,33 @@ export function Waveform({
     });
   }, [bars, seed]);
 
+  const timings = useMemo(() => {
+    const random = mulberry32(seed + 1);
+    const baseDuration = motion === "calm" ? 2600 : 1200;
+    return Array.from({ length: bars }, (_, i) => {
+      // A sine phase across the bars makes the motion travel like a wave;
+      // negative delays start every bar mid-cycle instead of in sync.
+      const phase = (Math.sin((i / 6) * Math.PI) + 1) / 2;
+      const duration = baseDuration + random() * baseDuration * 0.5;
+      return { duration, delay: -Math.round(phase * duration) };
+    });
+  }, [bars, seed, motion]);
+
+  const animationClass = motionClass[motion];
+
   return (
     <div
       aria-hidden="true"
       className={cn(
         "flex items-center justify-center gap-[3px]",
-        animated && "waveform-animated",
+        animationClass,
         className,
       )}
+      style={
+        motion === "processing"
+          ? { ["--bounce-cycle" as string]: `${BOUNCE_CYCLE_MS}ms` }
+          : undefined
+      }
     >
       {heights.map((height, i) => (
         <span
@@ -59,8 +98,16 @@ export function Waveform({
           className="waveform-bar w-[3px] rounded-full bg-[var(--waveform-color)]"
           style={{
             height: `${Math.round(height * 100)}%`,
-            ...(animated
-              ? { ["--bar-delay" as string]: `${(i % 12) * 90}ms` }
+            ...(motion === "speaking" || motion === "calm"
+              ? {
+                  ["--bar-duration" as string]: `${Math.round(timings[i].duration)}ms`,
+                  ["--bar-delay" as string]: `${timings[i].delay}ms`,
+                }
+              : null),
+            ...(motion === "processing"
+              ? {
+                  ["--bounce-delay" as string]: `${Math.round((i * BOUNCE_CYCLE_MS) / bars)}ms`,
+                }
               : null),
           }}
         />

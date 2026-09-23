@@ -19,6 +19,7 @@ export function WallOfLove({ locale = "en" }: WallOfLoveProps) {
         <div className="mx-auto max-w-2xl text-center reveal-hidden">
           <Waveform
             bars={32}
+            motion="calm"
             className="mx-auto mb-6 h-4 max-w-[160px] opacity-60"
           />
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">

@@ -8,18 +8,26 @@ interface AddonsShowcaseProps {
   locale?: Locale;
 }
 
-const SHOWCASE_COUNT = 6;
+// Local engines for both desktops, cloud AI, and integrations.
+const SHOWCASE_SLUGS = [
+  "whisperkit",
+  "whisper-cpp",
+  "openai",
+  "claude",
+  "obsidian",
+  "mcp-client",
+];
 
-function pickShowcasePlugins(locale: Locale): Plugin[] {
-  const all = getPlugins(locale);
-  const featured = all.filter((p) => p.featured);
-  const rest = all.filter((p) => !p.featured);
-  return [...featured, ...rest].slice(0, SHOWCASE_COUNT);
+function pickShowcasePlugins(all: Plugin[]): Plugin[] {
+  return SHOWCASE_SLUGS.map((slug) => all.find((p) => p.slug === slug)).filter(
+    (plugin) => plugin !== undefined,
+  );
 }
 
 /** Landing section highlighting the add-on marketplace and plugin SDK. */
 export function AddonsShowcase({ locale = "en" }: AddonsShowcaseProps) {
-  const showcase = pickShowcasePlugins(locale);
+  const all = getPlugins(locale);
+  const showcase = pickShowcasePlugins(all);
   if (showcase.length === 0) return null;
 
   return (
@@ -36,7 +44,10 @@ export function AddonsShowcase({ locale = "en" }: AddonsShowcaseProps) {
             {t(locale, "addonsShowcase.title")}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            {t(locale, "addonsShowcase.subtitle")}
+            {t(locale, "addonsShowcase.subtitle").replace(
+              "{count}",
+              String(all.length),
+            )}
           </p>
         </div>
 
