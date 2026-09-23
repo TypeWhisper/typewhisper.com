@@ -78,7 +78,7 @@ export default function DocsMacInstallation({
         </h2>
         <div className="mt-3">
           <CodeBlock
-            code="brew install --cask typewhisper"
+            code="brew install --cask typewhisper/tap/typewhisper"
             lang="bash"
             locale={locale}
             onCopy={trackHomebrewCopy}
