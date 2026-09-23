@@ -1,48 +1,25 @@
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { type ReactElement, type SVGProps } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Screenshot } from "@/components/ui/screenshot";
-import { Badge } from "@/components/ui/badge";
 import {
   MacOSLogo,
   WindowsLogo,
   IOSLogo,
 } from "@/components/ui/platform-logos";
 import { HeroDemo } from "@/components/landing/hero-demo";
-import { getPlatformDownloadTarget, iosVersion } from "@/lib/platform-download";
+import { Waveform } from "@/components/ui/waveform";
+import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import {
   useLandingPlatformSelection,
   type LandingPlatform,
 } from "@/hooks/use-landing-platform";
-import { heroScreenshotByPlatform } from "@/lib/landing-screenshots";
+import { platformVersions } from "@/lib/platform-versions";
 import { cn } from "@/lib/utils";
-import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
-import downloads from "@/data/downloads.json";
+import { t, type Locale } from "@/i18n/index";
 
 type HeroPlatform = LandingPlatform;
 
 const heroPlatforms: HeroPlatform[] = ["mac", "windows", "ios"];
-
-const docsPathByPlatform: Record<HeroPlatform, string> = {
-  mac: "/docs/mac",
-  windows: "/docs/windows",
-  ios: "/docs/ios",
-};
-
-// Reduce a release version like "v1.4.0" or "1.4" to a "Major.Minor" label
-// for the hero headline. Returns null when the input cannot be parsed.
-function shortVersion(version: string | null | undefined): string | null {
-  if (!version) return null;
-  const match = version.replace(/^v/i, "").match(/^(\d+)\.(\d+)/);
-  return match ? `${match[1]}.${match[2]}` : null;
-}
-
-const versionByPlatform: Record<HeroPlatform, string | null> = {
-  mac: shortVersion(downloads.mac.version),
-  windows: shortVersion(downloads.windows.version),
-  ios: shortVersion(iosVersion),
-};
 
 const logoByPlatform: Record<
   HeroPlatform,
@@ -53,67 +30,46 @@ const logoByPlatform: Record<
   ios: IOSLogo,
 };
 
+const heroPoints = ["free", "local", "account"] as const;
+
 export function Hero({ locale = "en" }: { locale?: Locale }) {
-  const revealRoot = useScrollReveal();
-  const { detectedHintPlatform, selectedPlatform, selectPlatform } =
-    useLandingPlatformSelection();
-
-  function handleSelectPlatform(platform: HeroPlatform) {
-    selectPlatform(platform);
-  }
-
+  const { selectedPlatform, selectPlatform } = useLandingPlatformSelection();
   const download = getPlatformDownloadTarget(
     selectedPlatform,
     locale,
     "landing",
   );
 
-  const heroScreenshot = screenshotPath(
-    locale,
-    heroScreenshotByPlatform[selectedPlatform],
-  );
-  const heroScreenshotAlt = t(
-    locale,
-    selectedPlatform === "ios" ? "hero.imgAlt.ios" : "hero.imgAlt",
-  );
-
   return (
     <section
-      ref={revealRoot}
       data-testid="landing-hero"
-      className="hero-surface relative overflow-hidden py-10 sm:py-16 lg:py-20"
+      className="hero-surface relative overflow-hidden pb-24 pt-12 sm:pb-28 sm:pt-16 lg:pt-20"
     >
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-4xl text-center">
+      <Waveform
+        bars={180}
+        seed={3}
+        motion="calm"
+        className="pointer-events-none absolute inset-x-0 bottom-2 h-16 justify-between opacity-40 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
+      />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+        <div className="min-w-0 text-center lg:text-left">
           <HeroPlatformSwitcher
             locale={locale}
             selected={selectedPlatform}
-            onSelect={handleSelectPlatform}
-            detectedHint={detectedHintPlatform}
+            onSelect={selectPlatform}
           />
 
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.24em] text-primary sm:text-sm">
-            {t(locale, "hero.title.brand")}
-            {versionByPlatform[selectedPlatform]
-              ? ` ${versionByPlatform[selectedPlatform]}`
-              : ""}
-            <span className="mx-2 text-muted-foreground/60" aria-hidden="true">
-              ·
-            </span>
-            {t(locale, `hero.eyebrow.${selectedPlatform}`)}
-          </p>
-
-          <h1 className="mt-4 text-4xl font-bold tracking-[-0.045em] text-foreground sm:text-5xl lg:text-6xl">
+          <h1 className="mt-7 text-4xl font-bold tracking-[-0.045em] text-foreground sm:text-5xl lg:text-6xl">
             {t(locale, `hero.title.line1.${selectedPlatform}`)}
             <br />
             {t(locale, `hero.title.line2.${selectedPlatform}`)}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl lg:mx-0">
             {t(locale, `hero.subtitle.${selectedPlatform}`)}
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-5 lg:justify-start">
             {download.available ? (
               <Button size="pill" asChild>
                 <a
@@ -138,30 +94,31 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
 
             <Button variant="link-arrow" asChild>
               <a
-                href={localePath(locale, docsPathByPlatform[selectedPlatform])}
+                href={`/${locale}/setup/?platform=${selectedPlatform}`}
                 className="inline-flex items-center gap-1 text-primary"
               >
-                {t(locale, `hero.readDocs.${selectedPlatform}`)}
-                <ArrowRight className="size-4" />
+                {t(locale, "hero.setup")}
+                <ArrowRight className="size-4" aria-hidden="true" />
               </a>
             </Button>
           </div>
 
-          <p className="mt-4 text-sm">
-            <a
-              className="text-primary underline"
-              href={`/${locale}/setup/?platform=${selectedPlatform}`}
-            >
-              {t(locale, "setup.title")}
-            </a>
-          </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            {t(locale, `hero.platformNotice.${selectedPlatform}`)}
+            {t(locale, `hero.platformNotice.${selectedPlatform}`).replace(
+              "{version}",
+              platformVersions[selectedPlatform] ?? "",
+            )}
           </p>
 
-          <div className="mt-5 flex justify-center">
-            <span
-              className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
+          <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground lg:justify-start">
+            {heroPoints.map((point) => (
+              <li key={point} className="inline-flex items-center gap-1.5">
+                <Check className="size-4 text-primary" aria-hidden="true" />
+                {t(locale, `hero.point.${point}`)}
+              </li>
+            ))}
+            <li
+              className="inline-flex items-center gap-1.5"
               title={t(locale, "madeInGermany.craft")}
             >
               <img
@@ -171,34 +128,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 className="h-3 w-auto rounded-[2px]"
               />
               {t(locale, "madeInGermany.label")}
-            </span>
-          </div>
+            </li>
+          </ul>
         </div>
 
-        <div className="mt-8 sm:mt-10">
-          <HeroDemo locale={locale} />
-        </div>
-
-        <div className="mt-6 sm:mt-8 reveal-scale-hidden">
-          {selectedPlatform === "ios" ? (
-            <div
-              data-testid="landing-ios-hero-visual"
-              className="mx-auto w-fit max-w-full overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-2xl shadow-black/15"
-            >
-              <Screenshot
-                src={heroScreenshot}
-                alt={heroScreenshotAlt}
-                className="mx-auto max-h-96 w-auto max-w-full rounded-xl object-contain sm:max-h-[34rem]"
-              />
-            </div>
-          ) : (
-            <Screenshot
-              src={heroScreenshot}
-              alt={heroScreenshotAlt}
-              className="mx-auto max-h-[24vh] w-full max-w-2xl object-contain object-top sm:max-h-[380px]"
-            />
-          )}
-        </div>
+        <HeroDemo locale={locale} />
       </div>
     </section>
   );
@@ -208,66 +142,41 @@ interface HeroPlatformSwitcherProps {
   locale: Locale;
   selected: HeroPlatform;
   onSelect: (platform: HeroPlatform) => void;
-  detectedHint: HeroPlatform | null;
 }
 
 function HeroPlatformSwitcher({
   locale,
   selected,
   onSelect,
-  detectedHint,
 }: HeroPlatformSwitcherProps) {
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div
-        role="group"
-        aria-label={t(locale, "hero.platformTabs.label")}
-        className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur"
-      >
-        {heroPlatforms.map((platform) => {
-          const Logo = logoByPlatform[platform];
-          const isSelected = selected === platform;
-          return (
-            <button
-              key={platform}
-              type="button"
-              aria-pressed={isSelected}
-              data-testid={`landing-hero-tab-${platform}`}
-              onClick={() => onSelect(platform)}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-4 sm:py-2",
-                isSelected
-                  ? "bg-foreground text-background shadow"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              <Logo className="size-4" aria-hidden="true" />
-              <span>{t(locale, `hero.platformTabs.${platform}`)}</span>
-              <Badge
-                variant={isSelected ? "secondary" : "outline"}
-                className={cn(
-                  "hidden text-[10px] uppercase tracking-wider sm:inline-flex",
-                  isSelected ? "" : "border-border/70",
-                )}
-              >
-                {t(locale, `hero.platformTabs.stage.${platform}`)}
-              </Badge>
-            </button>
-          );
-        })}
-      </div>
-
-      {detectedHint && (
-        <button
-          type="button"
-          onClick={() => onSelect(detectedHint)}
-          data-testid="landing-hero-detected-hint"
-          className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          {t(locale, `hero.detectedHint.${detectedHint}`)}
-          <ArrowRight className="size-3" aria-hidden="true" />
-        </button>
-      )}
+    <div
+      role="group"
+      aria-label={t(locale, "hero.platformTabs.label")}
+      className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur"
+    >
+      {heroPlatforms.map((platform) => {
+        const Logo = logoByPlatform[platform];
+        const isSelected = selected === platform;
+        return (
+          <button
+            key={platform}
+            type="button"
+            aria-pressed={isSelected}
+            data-testid={`landing-hero-tab-${platform}`}
+            onClick={() => onSelect(platform)}
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-4",
+              isSelected
+                ? "bg-foreground text-background shadow"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            <Logo className="size-4" aria-hidden="true" />
+            <span>{t(locale, `hero.platformTabs.${platform}`)}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

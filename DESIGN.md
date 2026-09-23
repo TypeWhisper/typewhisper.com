@@ -8,7 +8,7 @@ Always read this file before making visual changes. Do not deviate without expli
 - **What this is:** Marketing site for TypeWhisper, a privacy-first dictation app with stable macOS, Windows, and iOS editions.
 - **Who it's for:** Developers, writers, professionals; secondary: business/legal buyers.
 - **Positioning:** Free, local-first, open ecosystem (add-on marketplace + SDK), made in Germany.
-- **Project type:** Marketing site + docs, statically built with Astro 6 + Tailwind 4 + React islands, EN/DE.
+- **Project type:** Marketing site + docs, statically built with Astro 7 + Tailwind 4 + React 19 islands, EN/DE.
 
 ## Aesthetic Direction
 
@@ -20,7 +20,8 @@ Always read this file before making visual changes. Do not deviate without expli
 ## Brand Motif: Waveform
 
 - Component: `src/components/ui/waveform.tsx` (`<Waveform />`).
-- Static variant for accents (section dividers, footer); `animated` variant for live surfaces (hero recording state).
+- `motion` prop: `static` for quiet accents, `speaking` for live surfaces (hero demo, section eyebrows, final CTA), `calm` for ambient bands (hero, footer, testimonials), `processing` for the bar-by-bar bounce. `animated` is shorthand for `speaking`.
+- Motion mirrors the apps: the macOS recording indicator moves bars along a sine phase, its processing state bounces one bar after another (60 ms step), and the Windows setup logo alternates bars on hover — reused for the header/footer logo.
 - Color comes from the `--waveform-color` token; never hardcode it.
 - Animation respects `prefers-reduced-motion` (handled in `src/index.css`).
 
@@ -64,7 +65,7 @@ Always read this file before making visual changes. Do not deviate without expli
 
 ## Motion
 
-- **Approach:** Intentional. Scroll-reveal on sections + micro-interactions; nothing decorative-for-its-own-sake.
+- **Approach:** Lively but purposeful. Scroll-reveal on sections, the animated hero dictation demo (listening → processing → typing → inserted), waveform motion, and hover micro-interactions. Motion always relates to voice or feedback.
 - **Tokens:** `--motion-micro` 100ms, `--motion-short` 200ms, `--motion-medium` 350ms, `--motion-ease` (ease-out cubic-bezier).
 - **Easing:** enter ease-out, exit ease-in.
 - **Reduced motion:** Every animation must have a `prefers-reduced-motion` fallback (static end state).
@@ -82,3 +83,4 @@ Always read this file before making visual changes. Do not deviate without expli
 |------|----------|-----------|
 | 2026-06-09 | Initial design system created | Redesign "Apple clarity, own voice": consolidated tokens, General Sans display font, waveform brand motif, removed indigo/violet hero orbs |
 | 2026-09-04 | Compact landing and pricing sections, accessible blue text, selectable demo, collapsible comparisons | Keep downloads and examples within reach and improve contrast in both themes |
+| 2026-09-24 | Two-column hero with animated dictation demo, evergreen landing copy without hardcoded versions, value pillars, use-case teaser, FAQ, edition cards in the final CTA, app-derived waveform motion | Show the product above the fold, stop copy going stale with each release, and make the page feel alive without generic decoration |

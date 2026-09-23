@@ -20,7 +20,6 @@ export function getClientMessages(
     for (const key of [
       "hero",
       "heroDemo",
-      "voicePipeline",
       "features",
       "premiumFeatures",
       "howItWorks",

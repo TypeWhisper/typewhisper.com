@@ -65,6 +65,31 @@ test.describe("new landing sections", () => {
     ).toBeVisible();
   });
 
+  test("landing page explains, links use cases, answers questions, and lists every edition", async ({
+    page,
+  }) => {
+    await page.goto("/en/");
+
+    await expect(page.getByTestId("why-typewhisper")).toContainText(
+      "Private by default.",
+    );
+    await expect(
+      page.getByTestId("use-cases-teaser").locator('a[href="/en/use-cases/emails"]'),
+    ).toBeVisible();
+
+    const faq = page.getByTestId("landing-faq");
+    await faq.getByText("Does my voice leave my device?").click();
+    await expect(faq).toContainText("Not with local engines");
+    const jsonLd = await page
+      .locator('script[type="application/ld+json"]')
+      .allTextContents();
+    expect(jsonLd.join("")).toContain('"FAQPage"');
+
+    await expect(
+      page.getByTestId("landing-platform-grid").locator("a"),
+    ).toHaveCount(3);
+  });
+
   test("German landing page localizes the new sections", async ({ page }) => {
     await page.addInitScript(() => {
       Object.defineProperty(navigator, "language", { get: () => "de-DE" });
@@ -236,9 +261,6 @@ test.describe("localized landing video", () => {
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/de/");
-    await page
-      .getByText("Alle drei Editionen ansehen", { exact: true })
-      .click();
     await page.getByTestId("landing-platform-grid").scrollIntoViewIfNeeded();
 
     const dimensions = await page.evaluate(() => ({

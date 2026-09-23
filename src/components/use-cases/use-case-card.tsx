@@ -19,7 +19,10 @@ import {
   hasUseCaseMockup,
 } from "@/components/use-cases/use-case-mockup";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+export const useCaseIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   Mail,
   MessageCircle,
   Code,
@@ -43,7 +46,7 @@ export function UseCaseCard({
   locale = "en",
   compact = false,
 }: UseCaseCardProps) {
-  const Icon = iconMap[useCase.icon];
+  const Icon = useCaseIcons[useCase.icon];
   const color = useCase.color;
   const featurePills = useCase.features.slice(0, 2).map((f) => f.title);
   const useMockup = hasUseCaseMockup(useCase.slug);

@@ -2,15 +2,16 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Hero } from "@/components/landing/hero";
 import { TrustStrip } from "@/components/landing/trust-strip";
-import { VoicePipeline } from "@/components/landing/voice-pipeline";
+import { WhyTypeWhisper } from "@/components/landing/why-typewhisper";
 import { Features } from "@/components/landing/features";
 import { PremiumFeatures } from "@/components/landing/premium-features";
 import { HowItWorks } from "@/components/landing/how-it-works";
+import { UseCasesTeaser } from "@/components/landing/use-cases-teaser";
 import { AddonsShowcase } from "@/components/landing/addons-showcase";
 import { EngineComparison } from "@/components/landing/engine-comparison";
 import { WallOfLove } from "@/components/landing/wall-of-love";
-import { AvailablePlatforms } from "@/components/landing/platforms-coming-soon";
 import { PricingTeaser } from "@/components/landing/pricing-teaser";
+import { LandingFaq, getLandingFaq } from "@/components/landing/landing-faq";
 import { DownloadCTA } from "@/components/landing/download-cta";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
@@ -27,14 +28,27 @@ const { locale } = Astro.props;
 const path = canonicalPath(locale, "/");
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "TypeWhisper",
-  applicationCategory: "UtilitiesApplication",
-  operatingSystem: "macOS, Windows, iOS",
-  description: t(locale, "structuredData.description"),
-  inLanguage: locale,
-  url: `https://www.typewhisper.com${path}`,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "TypeWhisper",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "macOS, Windows, iOS",
+      description: t(locale, "structuredData.description"),
+      inLanguage: locale,
+      url: `https://www.typewhisper.com${path}`,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+    },
+    {
+      "@type": "FAQPage",
+      inLanguage: locale,
+      mainEntity: getLandingFaq(locale).map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    },
+  ],
 };
 ---
 
@@ -47,26 +61,23 @@ const structuredData = {
 >
   <Hero locale={locale} client:load />
   <TrustStrip locale={locale} />
-  <VoicePipeline locale={locale} client:visible />
+  <WhyTypeWhisper locale={locale} />
   <HowItWorks locale={locale} client:visible />
   <Features locale={locale} client:visible />
-  <PremiumFeatures locale={locale} client:visible />
-  <AddonsShowcase locale={locale} />
-  <div class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-    <details class="border-y border-border py-5">
-      <summary class="cursor-pointer text-lg font-semibold"
+  <div class="bg-background pb-12 sm:pb-16">
+    <details class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <summary
+        class="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 [&::-webkit-details-marker]:hidden"
         >{t(locale, "landing.compareEngines")}</summary
       >
       <EngineComparison locale={locale} client:visible />
     </details>
-    <details class="border-b border-border py-5">
-      <summary class="cursor-pointer text-lg font-semibold"
-        >{t(locale, "landing.allEditions")}</summary
-      >
-      <AvailablePlatforms locale={locale} />
-    </details>
   </div>
+  <UseCasesTeaser locale={locale} />
+  <AddonsShowcase locale={locale} />
   <WallOfLove locale={locale} />
+  <PremiumFeatures locale={locale} client:visible />
   <PricingTeaser locale={locale} />
+  <LandingFaq locale={locale} />
   <DownloadCTA locale={locale} client:load />
 </BaseLayout>
