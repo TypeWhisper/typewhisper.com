@@ -340,7 +340,7 @@
   .waveform-animated .waveform-bar,
   .waveform-calm .waveform-bar,
   .waveform-processing .waveform-bar,
-  .logo-wave:hover .logo-bar,
+  .logo-wave:hover .logo-bar:nth-child(n),
   .typing-caret {
     animation: none;
   }

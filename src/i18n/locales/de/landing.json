@@ -252,5 +252,8 @@
   "faq.builtIn.link": "Speech-Engines im Benchmark vergleichen",
   "heroDemo.status.listening": "Hört zu",
   "heroDemo.status.processing": "Verarbeitet",
-  "heroDemo.status.typing": "Tippt"
+  "heroDemo.status.typing": "Tippt",
+  "hero.platformRequirement.mac": "Für macOS 14 oder neuer.",
+  "hero.platformRequirement.windows": "Für Windows 10 und 11.",
+  "hero.platformRequirement.ios": "Für iPhone und iPad, mit Apple-Watch-App."
 }

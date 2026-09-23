@@ -252,5 +252,8 @@
   "faq.builtIn.link": "Compare speech engines in the benchmark",
   "heroDemo.status.listening": "Listening",
   "heroDemo.status.processing": "Processing",
-  "heroDemo.status.typing": "Typing"
+  "heroDemo.status.typing": "Typing",
+  "hero.platformRequirement.mac": "For macOS 14 or later.",
+  "hero.platformRequirement.windows": "For Windows 10 and 11.",
+  "hero.platformRequirement.ios": "For iPhone and iPad, with an Apple Watch app."
 }

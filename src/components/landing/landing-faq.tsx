@@ -9,6 +9,12 @@ interface FaqItem {
   link?: { href: string; label: string };
 }
 
+const versionPlaceholders = {
+  "{macVersion}": platformVersions.mac,
+  "{windowsVersion}": platformVersions.windows,
+  "{iosVersion}": platformVersions.ios,
+};
+
 const faqIds = ["free", "privacy", "platforms", "languages", "work", "builtIn"];
 
 const faqLinks: Record<string, string> = {
@@ -20,10 +26,13 @@ const faqLinks: Record<string, string> = {
 /** Localized landing FAQ, shared by the section and its FAQPage JSON-LD. */
 export function getLandingFaq(locale: Locale): FaqItem[] {
   return faqIds.map((id) => {
-    const answer = t(locale, `faq.${id}.answer`)
-      .replace("{macVersion}", platformVersions.mac ?? "")
-      .replace("{windowsVersion}", platformVersions.windows ?? "")
-      .replace("{iosVersion}", platformVersions.ios ?? "");
+    let answer = t(locale, `faq.${id}.answer`);
+    for (const [placeholder, version] of Object.entries(versionPlaceholders)) {
+      // Without release data, drop the whole "(version …)" aside.
+      answer = version
+        ? answer.replace(placeholder, version)
+        : answer.replace(new RegExp(` \\([^()]*${placeholder}\\)`), "");
+    }
     const href = faqLinks[id];
     return {
       id,

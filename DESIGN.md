@@ -21,7 +21,7 @@ Always read this file before making visual changes. Do not deviate without expli
 
 - Component: `src/components/ui/waveform.tsx` (`<Waveform />`).
 - `motion` prop: `static` for quiet accents, `speaking` for live surfaces (hero demo, section eyebrows, final CTA), `calm` for ambient bands (hero, footer, testimonials), `processing` for the bar-by-bar bounce. `animated` is shorthand for `speaking`.
-- Motion mirrors the apps: the macOS recording indicator moves bars along a sine phase, its processing state bounces one bar after another (60 ms step), and the Windows setup logo alternates bars on hover — reused for the header/footer logo.
+- Motion mirrors the apps: the macOS recording indicator moves bars along a sine phase, its processing state bounces one bar after another (one 720 ms sweep), and the Windows setup logo alternates bars on hover — reused for the header/footer logo.
 - Color comes from the `--waveform-color` token; never hardcode it.
 - Animation respects `prefers-reduced-motion` (handled in `src/index.css`).
 

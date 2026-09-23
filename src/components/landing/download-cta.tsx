@@ -102,7 +102,6 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
                 href={target.href}
                 target={target.opensNewTab ? "_blank" : undefined}
                 rel={target.opensNewTab ? "noopener noreferrer" : undefined}
-                aria-label={target.label}
                 data-download-social-trigger
                 data-download-platform={target.platform}
                 data-download-target={target.target}
@@ -117,13 +116,14 @@ export function DownloadCTA({ locale = "en" }: { locale?: Locale }) {
                   <Logo className="size-5" aria-hidden="true" />
                 </span>
                 <span className="min-w-0 flex-1">
+                  <span className="sr-only">{target.label}: </span>
                   <span className="block font-semibold text-card-foreground">
                     {t(locale, `hero.platformTabs.${edition}`)}{" "}
                     <span className="font-normal text-muted-foreground">
                       {platformVersions[edition]}
                     </span>
                   </span>
-                  <span className="block truncate text-xs text-muted-foreground">
+                  <span className="block text-xs text-muted-foreground">
                     {t(locale, `downloadCta.requirement.${edition}`)}
                   </span>
                 </span>

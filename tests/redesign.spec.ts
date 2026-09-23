@@ -79,7 +79,7 @@ test.describe("new landing sections", () => {
 
     const faq = page.getByTestId("landing-faq");
     await faq.getByText("Does my voice leave my device?").click();
-    await expect(faq).toContainText("Not with local engines");
+    await expect(faq.getByText("Not with local engines")).toBeVisible();
     const jsonLd = await page
       .locator('script[type="application/ld+json"]')
       .allTextContents();

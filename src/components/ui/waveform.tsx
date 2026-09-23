@@ -26,8 +26,9 @@ const motionClass: Record<WaveformMotion, string | null> = {
   processing: "waveform-processing",
 };
 
-// Step between neighboring bars in the processing bounce, as in the app.
-const BOUNCE_STEP_MS = 60;
+// One bar-by-bar sweep of the processing bounce, as in the app's indicator.
+// Short enough that every bar bounces within the hero demo's processing phase.
+const BOUNCE_CYCLE_MS = 720;
 
 // Deterministic pseudo-random generator: SSR markup must match client hydration.
 function mulberry32(seed: number) {
@@ -87,7 +88,7 @@ export function Waveform({
       )}
       style={
         motion === "processing"
-          ? { ["--bounce-cycle" as string]: `${bars * BOUNCE_STEP_MS}ms` }
+          ? { ["--bounce-cycle" as string]: `${BOUNCE_CYCLE_MS}ms` }
           : undefined
       }
     >
@@ -104,7 +105,9 @@ export function Waveform({
                 }
               : null),
             ...(motion === "processing"
-              ? { ["--bounce-delay" as string]: `${i * BOUNCE_STEP_MS}ms` }
+              ? {
+                  ["--bounce-delay" as string]: `${Math.round((i * BOUNCE_CYCLE_MS) / bars)}ms`,
+                }
               : null),
           }}
         />

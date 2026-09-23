@@ -104,10 +104,12 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           </div>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            {t(locale, `hero.platformNotice.${selectedPlatform}`).replace(
-              "{version}",
-              platformVersions[selectedPlatform] ?? "",
-            )}
+            {platformVersions[selectedPlatform]
+              ? t(locale, `hero.platformNotice.${selectedPlatform}`).replace(
+                  "{version}",
+                  platformVersions[selectedPlatform],
+                )
+              : t(locale, `hero.platformRequirement.${selectedPlatform}`)}
           </p>
 
           <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground lg:justify-start">
