@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
+import { classifyRelease } from "../src/data/release-kind";
+import { readCurrentVersions } from "./helpers/current-versions";
 
 const IOS_APP_STORE_URL_EN =
   "https://apps.apple.com/us/app/typewhisper-app/id6759319267";
@@ -13,6 +15,8 @@ type GeneratedDownloads = {
 
 type GeneratedRelease = {
   tag_name: string;
+  name: string;
+  platform: "mac" | "windows";
 };
 
 function readGeneratedDownloads(): GeneratedDownloads {
@@ -338,6 +342,7 @@ test.describe("release status download routing", () => {
 test("public iOS pages expose the stable App Store release without beta links", async ({
   page,
 }) => {
+  const ios = readCurrentVersions().ios;
   for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
     await page.goto(path);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
@@ -359,7 +364,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     page.getByRole("link", { name: "Download on the App Store" }),
   ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
   await expect(
-    page.getByText("Version 1.0 stable", { exact: true }),
+    page.getByText(`Version ${ios.series} stable`, { exact: true }),
   ).toBeVisible();
 
   await page.goto("/en/support");
@@ -379,7 +384,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   );
   await expect(supportAppStoreLink).toHaveAttribute(
     "data-download-version",
-    "1.0",
+    ios.version,
   );
   await expect(supportAppStoreLink).toHaveAttribute(
     "data-tracking-placement",
@@ -411,7 +416,7 @@ test.describe("iOS App Store media", () => {
     );
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "data-download-version",
-      "1.0",
+      readCurrentVersions().ios.version,
     );
     await expect(
       page.locator('source[src="/ios-app-preview-de.mp4"]'),
@@ -486,7 +491,7 @@ test.describe("iOS App Store media", () => {
       );
       await expect(appStoreLinks.first()).toHaveAttribute(
         "data-download-version",
-        "1.0",
+        readCurrentVersions().ios.version,
       );
       await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
         0,
@@ -535,11 +540,92 @@ test("macOS installation docs use the generated stable download", async ({
 
 test("changelog reflects the generated release feed", async ({ page }) => {
   const releases = readGeneratedReleases();
+  const stable = releases.filter(
+    (release) => classifyRelease(release) === "stable",
+  );
+  const preReleases = releases.filter(
+    (release) => classifyRelease(release) !== "stable",
+  );
   await page.goto("/en/changelog");
 
-  if (releases.length === 0) {
+  if (stable.length === 0) {
     await expect(page.getByText("No releases found.")).toBeVisible();
   } else {
-    await expect(page.getByText(releases[0].tag_name).first()).toBeVisible();
+    await expect(page.getByText(stable[0].tag_name).first()).toBeVisible();
   }
+
+  // Stable versions are part of the page; pre-releases load on demand.
+  const entries = page.getByTestId("changelog-entry");
+  await expect(entries).toHaveCount(stable.length);
+
+  if (preReleases.length > 0) {
+    await page.getByTestId("changelog-pre-toggle").click();
+    await expect(entries).toHaveCount(releases.length);
+    await expect(page.getByText(releases[0].tag_name).first()).toBeVisible();
+    await expect(page).toHaveURL(/[?&]pre=1/);
+
+    await page.reload();
+    await expect(page.getByTestId("changelog-pre-toggle")).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
+    await expect(entries).toHaveCount(releases.length);
+  }
+});
+
+test("changelog shows release notes as inert markup with safe links", async ({
+  page,
+}) => {
+  const releases = readGeneratedReleases();
+  await page.goto("/en/changelog/?pre=1");
+  await expect(page.getByTestId("changelog-entry")).toHaveCount(
+    releases.length,
+  );
+
+  // Notes come from GitHub: nothing active, every link leaves safely.
+  const report = await page.evaluate(() => {
+    const notes = [...document.querySelectorAll(".utility-notes")];
+    const links = notes.flatMap((note) => [...note.querySelectorAll("a")]);
+    return {
+      active: notes.flatMap((note) => [
+        ...note.querySelectorAll(
+          "script, style, iframe, object, embed, form, input, img, video, [style], [onclick], [onerror], [onload]",
+        ),
+      ]).length,
+      unsafeLinks: links.filter(
+        (link) =>
+          !/^https?:\/\//.test(link.getAttribute("href") ?? "") ||
+          link.getAttribute("rel") !== "noopener noreferrer",
+      ).length,
+    };
+  });
+  expect(report).toEqual({ active: 0, unsafeLinks: 0 });
+});
+
+test("changelog filters by platform and keeps the choice in the address", async ({
+  page,
+}) => {
+  const releases = readGeneratedReleases().filter(
+    (release) => classifyRelease(release) === "stable",
+  );
+  const windows = releases.filter((release) => release.platform === "windows");
+  await page.goto("/de/changelog");
+
+  await page.getByTestId("changelog-platform-windows").click();
+  await expect(page).toHaveURL(/[?&]os=windows/);
+  await expect(
+    page.locator('[data-testid="changelog-entry"]:visible'),
+  ).toHaveCount(windows.length);
+  await expect(page.getByTestId("changelog-status")).toContainText(
+    String(windows.length),
+  );
+
+  await page.reload();
+  await expect(page.getByTestId("changelog-platform-windows")).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await expect(
+    page.locator('[data-testid="changelog-entry"]:visible'),
+  ).toHaveCount(windows.length);
 });

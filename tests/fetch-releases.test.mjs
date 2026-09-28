@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   fetchReleaseData,
+  findPlatformsWithoutVersion,
   preservePreviousReleaseData,
 } from "../scripts/fetch-releases-lib.mjs";
 
@@ -259,4 +260,23 @@ test("preservePreviousReleaseData does not hide a successful fetch with no match
   assert.equal(downloads.mac.version, null);
   assert.equal(releases.length, 1);
   assert.equal(releases[0].tag_name, "v1.3.0-rc5");
+});
+
+test("findPlatformsWithoutVersion names every platform without a stable version", () => {
+  assert.deepEqual(
+    findPlatformsWithoutVersion({
+      mac: { url: "https://example.com/mac.dmg", version: "v1.6.1" },
+      windows: { url: "https://example.com/win.exe", version: "v1.0.9" },
+    }),
+    [],
+  );
+  assert.deepEqual(
+    findPlatformsWithoutVersion({
+      mac: { url: "https://example.com/mac.dmg", version: "v1.6.1" },
+      windows: { url: "https://example.com/releases", version: null },
+    }),
+    ["windows"],
+  );
+  assert.deepEqual(findPlatformsWithoutVersion({}), ["mac", "windows"]);
+  assert.deepEqual(findPlatformsWithoutVersion(undefined), ["mac", "windows"]);
 });

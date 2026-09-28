@@ -216,3 +216,16 @@ export function preservePreviousReleaseData(
 
   return { releases, downloads };
 }
+
+/**
+ * Platforms whose current stable version is unknown. Site copy resolves its
+ * version placeholders from these, so a release build must not go on without.
+ */
+export function findPlatformsWithoutVersion(
+  downloads,
+  { repos = DEFAULT_REPOS } = {},
+) {
+  return repos
+    .map((repo) => repo.platform)
+    .filter((platform) => !downloads?.[platform]?.version);
+}
