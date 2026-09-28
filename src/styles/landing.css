@@ -1,0 +1,1062 @@
+/*
+ * TypeWhisper landing page, "Voice becomes type".
+ * Only what belongs to the homepage: hero and canvases, trust line, spoken
+ * versus written, feature tour, engines, premium, final call to action.
+ * Everything shared lives in `site.css`. Every selector is scoped under
+ * `.landing` and stays outside of a layer, so it wins over the primitives.
+ * Colors come from the global tokens in `src/index.css`.
+ */
+
+.landing {
+  /* The glow of the hero. */
+  --landing-glow: rgba(10, 132, 255, 0.2);
+  --landing-glow-soft: rgba(10, 132, 255, 0.06);
+}
+
+:root.light .landing {
+  --landing-glow: rgba(0, 113, 227, 0.13);
+  --landing-glow-soft: rgba(0, 113, 227, 0.04);
+}
+
+/* ---------- Hero ---------- */
+.landing .landing-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 8vw, 5.5rem) clamp(3.5rem, 8vw, 5.5rem);
+}
+
+@media (min-width: 1024px) {
+  .landing .landing-hero {
+    min-height: min(calc(100svh - 3rem), 60rem);
+    padding-block: 3.5rem 4.5rem;
+  }
+}
+
+/* The one glow of the page: the room lights up while the voice is heard. */
+.landing .landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    46% 34% at 50% 34%,
+    var(--landing-glow) 0%,
+    var(--landing-glow-soft) 45%,
+    transparent 72%
+  );
+  opacity: 0.55;
+  transition: opacity 1200ms ease;
+  pointer-events: none;
+}
+
+.landing .landing-hero[data-phase="listening"]::before {
+  opacity: 1;
+}
+
+.landing .landing-hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.landing .landing-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  max-width: 80rem;
+  flex-direction: column;
+  align-items: center;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.landing .landing-hero__title {
+  margin: clamp(2.25rem, 5vw, 3.5rem) 0 0;
+  max-width: 100%;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 11.4vw, 3.25rem);
+  font-weight: 600;
+  font-variant-ligatures: none;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-wrap: balance;
+  /* Hidden until the waveform has typed it; shows on its own without script. */
+  opacity: 0;
+  animation: landing-title-failsafe 600ms ease-out 3500ms forwards;
+}
+
+@media (min-width: 640px) {
+  .landing .landing-hero__title {
+    font-size: clamp(3.25rem, min(7.2vw, 12.4vh), 6.5rem);
+  }
+}
+
+/* Short desktop windows: keep the whole hero above the fold. */
+@media (min-width: 1024px) and (max-height: 840px) {
+  .landing .landing-hero {
+    padding-block: 2rem 4.25rem;
+  }
+
+  .landing .landing-hero__title {
+    margin-top: 2rem;
+  }
+
+  .landing .landing-hero__line {
+    height: 4.25rem;
+  }
+
+  .landing .landing-hero__actions {
+    margin-top: 1.75rem;
+  }
+
+  .landing .landing-hero__points {
+    margin-top: 1.25rem;
+  }
+}
+
+.landing .landing-hero[data-wave] .landing-hero__title {
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes landing-title-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+.landing .landing-hero__baseline {
+  display: inline-block;
+  width: 0;
+  height: 0;
+}
+
+.landing .landing-hero__line {
+  width: 100%;
+  height: clamp(4.25rem, 7vw, 5.5rem);
+}
+
+.landing .landing-hero__subtitle {
+  margin: 0;
+  max-width: 41rem;
+  color: var(--muted-foreground);
+  font-size: clamp(1.0625rem, 1.55vw, 1.3125rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.landing .landing-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.75rem;
+  margin-top: 2.25rem;
+}
+
+.landing .landing-hero__notice {
+  margin: 1rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.landing .landing-hero__points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.landing .landing-hero__points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 639px) {
+  .landing .landing-hero {
+    padding-block: 2.5rem 3rem;
+  }
+
+  .landing .landing-hero__actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .landing .landing-hero__actions .site-button {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .landing .landing-hero__points {
+    gap: 0.5rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing .landing-hero__title {
+    opacity: 1;
+    animation: none;
+  }
+
+  .landing .landing-hero::before {
+    transition: none;
+  }
+}
+
+/* ---------- Trust line ---------- */
+.landing .landing-trust {
+  border-block: 1px solid var(--hairline);
+}
+
+.landing .landing-trust__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem 3rem;
+  margin-block: 0;
+  padding-block: 0.875rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.landing .landing-trust__item {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.landing .landing-trust__item strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.landing a.landing-trust__item:hover {
+  color: var(--foreground);
+}
+
+.landing .landing-trust__faz {
+  width: auto;
+  height: 1.125rem;
+  margin-left: 0.25rem;
+  filter: var(--wordmark-filter);
+  opacity: 0.92;
+}
+
+.landing .landing-trust__link {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.landing .landing-trust__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* ---------- Spoken, written ---------- */
+.landing .landing-spoken {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(1.75rem, 3.5vw, 3.5rem);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Every example shares the same five rows (context, label, speech, label,
+ * text), so the labels line up across the three columns.
+ */
+.landing .landing-spoken__item {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  border-top: 1px solid var(--hairline);
+  padding-top: 1.5rem;
+}
+
+.landing .landing-spoken__context {
+  margin: 0 0 1.5rem;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.landing .landing-spoken__pair {
+  display: contents;
+}
+
+.landing .landing-spoken__label {
+  margin: 0 0 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.landing .landing-spoken__label--typed {
+  margin-top: 1.5rem;
+  color: var(--accent-text);
+}
+
+.landing .landing-spoken__raw {
+  margin: 0;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.landing .landing-spoken__raw del {
+  color: inherit;
+  text-decoration-line: line-through;
+  text-decoration-color: var(--accent-text);
+  text-decoration-thickness: 1.5px;
+}
+
+.landing .landing-spoken__typed {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
+  font-variant-ligatures: none;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.28;
+  text-wrap: pretty;
+}
+
+.landing .landing-spoken__typed + .landing-spoken__typed {
+  margin-top: 0.15em;
+}
+
+.landing .landing-spoken__typed--item {
+  padding-left: 0.72em;
+  text-indent: -0.72em;
+}
+
+/* ---------- Apple Watch preview beside the video ---------- */
+.landing .landing-watch {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.landing .landing-watch__text p {
+  margin: 1rem 0 0;
+  color: var(--muted-foreground);
+}
+
+.landing .landing-watch__shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.landing .landing-watch__shot {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+/* ---------- Feature tour ---------- */
+.landing .landing-feature__title {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+/* Frame in the shape of the visible screenshot; the image fills it. */
+.landing .landing-shot {
+  position: relative;
+  aspect-ratio: var(--landing-shot-ratio);
+}
+
+.landing .landing-shot picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.landing .landing-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.landing [data-platform="mac"] {
+  --landing-shot-ratio: 1.298;
+}
+
+.landing [data-platform="windows"] {
+  --landing-shot-ratio: 1.55;
+}
+
+.landing [data-platform="ios"] {
+  --landing-shot-ratio: 0.4603;
+}
+
+/*
+ * macOS captures carry a transparent margin for their window shadow. It hangs
+ * outside the frame, so the window itself lines up with the grid.
+ */
+.landing [data-platform="mac"] .landing-shot picture {
+  inset: -4.29% -4.87% -8.35%;
+}
+
+.landing [data-platform="mac"] .landing-shot img {
+  border-radius: 0;
+}
+
+.landing [data-platform="windows"] .landing-shot img,
+.landing [data-platform="windows"] .landing-premium__shot img {
+  border: 1px solid var(--hairline);
+}
+
+.landing [data-platform="ios"] .landing-shot img {
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+}
+
+.landing .landing-tour {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.landing .landing-tour__stage {
+  display: none;
+}
+
+.landing .landing-tour__steps {
+  display: grid;
+  gap: clamp(4rem, 9vw, 6rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.landing .landing-tour__step {
+  display: grid;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.landing .landing-tour__count {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0 0 1rem;
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.landing .landing-tour__text {
+  max-width: 40rem;
+}
+
+.landing .landing-tour__inline {
+  min-width: 0;
+  margin: 0;
+}
+
+.landing .landing-tour__inline .site-caption {
+  margin-top: 1rem;
+}
+
+.landing
+  .landing-tour[data-platform="mac"]
+  .landing-tour__inline
+  .site-caption {
+  margin-top: 1.5rem;
+}
+
+.landing .landing-tour[data-platform="ios"] .landing-tour__inline {
+  width: 100%;
+  max-width: 17.5rem;
+  margin-inline: auto;
+}
+
+/* Large screens with reduced motion: static pairs, text beside figure. */
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .landing .landing-tour__steps {
+    gap: clamp(5rem, 9vw, 7.5rem);
+  }
+
+  .landing .landing-tour__step {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 10fr);
+    align-items: center;
+    column-gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .landing .landing-tour[data-platform="ios"] .landing-tour__step {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 17.5rem);
+    justify-content: center;
+  }
+}
+
+/* Large screens: the screenshot stays pinned while the texts scroll past. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .landing .landing-section--tour {
+    padding-bottom: calc(var(--section-space) * 0.4);
+  }
+
+  .landing .landing-tour {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 10fr);
+    align-items: start;
+    column-gap: clamp(2.5rem, 4vw, 3.5rem);
+    margin-top: 0;
+  }
+
+  .landing .landing-tour__steps {
+    gap: 0;
+  }
+
+  .landing .landing-tour__step {
+    align-content: center;
+    min-height: 68vh;
+  }
+
+  /*
+   * The first and the last text sit level with the middle of the screenshot
+   * while it rests at the start and at the end of the tour. The margins keep
+   * their distance to the neighbours the same as between all other texts.
+   */
+  .landing .landing-tour__step:first-child,
+  .landing .landing-tour__step:last-child {
+    min-height: calc(100vh - var(--header-height));
+  }
+
+  .landing .landing-tour__step:first-child {
+    margin-bottom: calc(34vh - (100vh - var(--header-height)) / 2);
+  }
+
+  .landing .landing-tour__step:last-child {
+    margin-top: calc(34vh - (100vh - var(--header-height)) / 2);
+  }
+
+  .landing .landing-tour__inline {
+    display: none;
+  }
+
+  .landing .landing-tour__count,
+  .landing .landing-tour__count .site-mark,
+  .landing .landing-feature__title {
+    transition: color 350ms var(--motion-ease-out);
+  }
+
+  /* Waiting steps step back in color only, so they stay readable. */
+  .landing .landing-tour__step:not(.is-active) .landing-tour__count,
+  .landing .landing-tour__step:not(.is-active) .landing-tour__count .site-mark,
+  .landing .landing-tour__step:not(.is-active) .landing-feature__title {
+    color: var(--muted-foreground);
+  }
+
+  .landing .landing-tour__stage {
+    position: sticky;
+    top: var(--header-height);
+    display: flex;
+    height: calc(100vh - var(--header-height));
+    flex-direction: column;
+    justify-content: center;
+    /* The screenshot may grow past the text column towards the viewport edge. */
+    margin-right: calc(
+      -1 * clamp(0px, (100vw - 72rem) / 2 - var(--gutter), 10rem)
+    );
+  }
+
+  /* As wide as the column, as tall as the viewport leaves room for. */
+  .landing .landing-tour__figure {
+    width: 100%;
+    max-width: calc(
+      (100vh - var(--header-height) - 9.5rem) * var(--landing-shot-ratio)
+    );
+    margin: 0 auto;
+  }
+
+  .landing .landing-tour[data-platform="ios"] .landing-tour__figure {
+    max-width: calc(
+      (100vh - var(--header-height) - 12rem) * var(--landing-shot-ratio)
+    );
+  }
+
+  .landing .landing-tour__layers {
+    position: relative;
+    aspect-ratio: var(--landing-shot-ratio);
+    pointer-events: none;
+  }
+
+  .landing .landing-tour__layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(0.985);
+    transition:
+      opacity 450ms var(--motion-ease-out),
+      transform 450ms var(--motion-ease-out);
+  }
+
+  .landing .landing-tour__layer.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .landing .landing-tour__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .landing .landing-tour[data-platform="mac"] .landing-tour__meta {
+    margin-top: 1.25rem;
+  }
+
+  .landing .landing-tour[data-platform="ios"] .landing-tour__meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  /* Progress as a waveform: five bars, the active one tall and bright. */
+  .landing .landing-tour__bars {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+
+  .landing .landing-tour__bar {
+    position: relative;
+    width: 1.5rem;
+    height: 2.75rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .landing .landing-tour__bar::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 8px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--muted-foreground) 70%, transparent);
+    content: "";
+    translate: -50% -50%;
+    transition:
+      height 350ms var(--motion-ease-out),
+      background-color 350ms var(--motion-ease-out);
+  }
+
+  .landing .landing-tour__bar:hover::after {
+    background: var(--foreground);
+  }
+
+  .landing .landing-tour__bar.is-near::after {
+    height: 15px;
+  }
+
+  .landing .landing-tour__bar.is-active::after {
+    height: 28px;
+    background: var(--wave);
+  }
+}
+
+/* ---------- Engines ---------- */
+.landing .landing-engines {
+  margin-top: calc(var(--section-space) * -0.4);
+  text-align: center;
+}
+
+.landing .landing-engines summary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.625rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  padding: 0 1.25rem;
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  list-style: none;
+  transition: border-color 200ms var(--motion-ease-out);
+}
+
+.landing .landing-engines summary::-webkit-details-marker {
+  display: none;
+}
+
+.landing .landing-engines summary:hover {
+  border-color: var(--accent-text);
+}
+
+.landing .landing-engines summary svg {
+  color: var(--accent-text);
+  transition: transform 250ms var(--motion-ease-out);
+}
+
+.landing .landing-engines details[open] summary svg {
+  transform: rotate(45deg);
+}
+
+.landing .landing-engines__body {
+  margin-top: 3rem;
+  border-top: 1px solid var(--hairline);
+  padding-top: 3rem;
+  text-align: left;
+}
+
+.landing .landing-engines__body .site-subtitle,
+.landing .landing-engines__lede {
+  text-align: center;
+}
+
+/* Blue stays the only hue, also inside the shared comparison table. */
+.landing .landing-engines__body svg[class*="text-green"] {
+  color: var(--accent-text);
+}
+
+.landing .landing-engines__body a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.landing .landing-engines__lede {
+  margin: 0.875rem auto 2.5rem;
+  max-width: 40rem;
+  color: var(--muted-foreground);
+}
+
+/* ---------- Premium ---------- */
+.landing .landing-premium__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+/* Windows and iOS: one capture on a stage in the page ground. */
+.landing .landing-premium__shot {
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--background);
+}
+
+.landing .landing-premium__shot picture {
+  display: block;
+}
+
+.landing .landing-premium__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.landing .landing-premium[data-platform="ios"] .landing-premium__grid {
+  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  justify-content: center;
+}
+
+.landing .landing-premium__blocks {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.landing .landing-premium__block + .landing-premium__block {
+  border-top: 1px solid var(--hairline);
+  padding-top: 2.5rem;
+}
+
+/*
+ * macOS: every feature beside its own detail window. Stacked on small
+ * screens, side by side with alternating sides from 1024px.
+ */
+.landing .landing-premium__rows {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.landing .landing-premium__row {
+  display: grid;
+  gap: 2.5rem;
+  /* As wide as the larger window at its natural size. */
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.landing .landing-premium__row + .landing-premium__row {
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(3.5rem, 7vw, 5.5rem);
+}
+
+.landing .landing-premium__figure {
+  width: 100%;
+  max-width: 640px;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Window of 1280 x 1344 px inside a capture of 1504 x 1568 px. */
+.landing .landing-premium__figure--sync {
+  --shot-width: 640px;
+  --shot-share: 100%;
+  --shot-ratio: 1280 / 1344;
+  --shot-bleed: calc(-76 / 1344 * 100%) calc(-112 / 1280 * 100%)
+    calc(-148 / 1344 * 100%);
+}
+
+/* Window of 1160 x 1184 px inside a capture of 1384 x 1408 px. */
+.landing .landing-premium__figure--dictionary {
+  --shot-width: 580px;
+  --shot-share: calc(1160 / 1280 * 100%);
+  --shot-ratio: 1160 / 1184;
+  --shot-bleed: calc(-76 / 1184 * 100%) calc(-112 / 1160 * 100%)
+    calc(-148 / 1184 * 100%);
+}
+
+/*
+ * Frame in the shape of the visible window. The transparent shadow margin
+ * hangs outside, so the window itself lines up with the text. Retina
+ * captures: a window never grows past half of its pixel size, and both
+ * windows keep the same scale at every width.
+ */
+.landing .landing-premium__frame {
+  position: relative;
+  width: min(var(--shot-width), var(--shot-share));
+  aspect-ratio: var(--shot-ratio);
+}
+
+.landing .landing-premium__frame picture {
+  position: absolute;
+  inset: var(--shot-bleed);
+  display: block;
+}
+
+.landing .landing-premium__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * Below the visible part of the window shadow, which scales with the window.
+ * Muted text on the shadow would miss AA in the light theme.
+ */
+.landing .landing-premium__figure .site-caption {
+  position: relative;
+  margin-top: 8.5%;
+}
+
+@media (min-width: 1024px) {
+  /* Two rows, so the text sits level with the window, not with its caption. */
+  .landing .landing-premium__row {
+    grid-template-columns: minmax(22rem, 1fr) minmax(0, 640px);
+    grid-template-rows: auto auto;
+    gap: 0 clamp(2.5rem, 5vw, 4rem);
+    max-width: none;
+  }
+
+  .landing .landing-premium__text {
+    grid-area: 1 / 1;
+    align-self: center;
+  }
+
+  .landing .landing-premium__figure {
+    display: grid;
+    grid-area: 1 / 2 / span 2;
+    grid-template-rows: subgrid;
+  }
+
+  .landing .landing-premium__row:nth-child(even) {
+    grid-template-columns: minmax(0, 640px) minmax(22rem, 1fr);
+  }
+
+  .landing .landing-premium__row:nth-child(even) .landing-premium__text {
+    grid-column: 2;
+  }
+
+  .landing .landing-premium__row:nth-child(even) .landing-premium__figure {
+    grid-column: 1;
+  }
+}
+
+/* ---------- Final call to action ---------- */
+.landing .landing-final {
+  position: relative;
+  padding-bottom: clamp(5rem, 10vw, 8rem);
+  text-align: center;
+}
+
+.landing .landing-final__wave {
+  display: block;
+  width: 100%;
+  height: clamp(9rem, 22vw, 16rem);
+}
+
+.landing .landing-final__inner {
+  margin-top: clamp(1rem, 3vw, 2.5rem);
+}
+
+.landing .landing-final__title {
+  font-size: clamp(2.5rem, 6.4vw, 5rem);
+}
+
+.landing .landing-final__note {
+  max-width: 42rem;
+  margin: 2rem auto 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  text-wrap: pretty;
+}
+
+.landing .landing-final__note a {
+  color: var(--accent-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.landing .landing-final__note a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* ---------- Narrow screens ---------- */
+@media (min-width: 640px) and (max-width: 859px) {
+  /* Nine add-ons fill three columns; two columns show an even eight. */
+  .landing .landing-addons > li:nth-child(n + 9) {
+    display: none;
+  }
+}
+
+@media (max-width: 859px) {
+  .landing .landing-spoken {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+
+  .landing .landing-spoken__item {
+    display: block;
+    padding-bottom: 2rem;
+  }
+
+  .landing .landing-spoken__context {
+    margin-bottom: 1rem;
+  }
+
+  .landing .landing-spoken__typed {
+    font-size: 1.375rem;
+  }
+}
+
+@media (max-width: 899px) {
+  .landing .landing-watch,
+  .landing .landing-premium__grid,
+  .landing .landing-premium[data-platform="ios"] .landing-premium__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing .landing-premium[data-platform="ios"] .landing-premium__shot {
+    max-width: 17rem;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .landing .landing-trust__row {
+    flex-direction: column;
+    gap: 0;
+    padding-block: 0.5rem;
+  }
+
+  /*
+   * Screenshots stay readable on a phone: shown larger and panned sideways.
+   * The strip starts at its right end, where the content of the window is.
+   */
+  .landing .landing-tour:not([data-platform="ios"]) .landing-tour__pan,
+  .landing .landing-premium:not([data-platform="ios"]) .landing-premium__shot {
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter) * -1);
+    border-radius: 0;
+    direction: rtl;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2.75rem);
+    mask-image: linear-gradient(to right, transparent, #000 2.75rem);
+  }
+
+  .landing .landing-tour__pan::-webkit-scrollbar,
+  .landing .landing-premium__shot::-webkit-scrollbar {
+    display: none;
+  }
+
+  .landing .landing-tour:not([data-platform="ios"]) .landing-shot {
+    width: 150vw;
+    margin-inline: var(--gutter);
+    direction: ltr;
+  }
+
+  /* Room for the window shadow inside the strip, taken back outside of it. */
+  .landing .landing-tour[data-platform="mac"] .landing-tour__pan {
+    margin-block: -5vw -9.7vw;
+    padding-block: 5vw 9.7vw;
+  }
+
+  .landing
+    .landing-premium:not([data-platform="ios"])
+    .landing-premium__shot
+    picture {
+    width: 150vw;
+    margin: 0 var(--gutter);
+    direction: ltr;
+  }
+
+  .landing .landing-premium:not([data-platform="ios"]) .landing-premium__shot {
+    background: transparent;
+  }
+}
