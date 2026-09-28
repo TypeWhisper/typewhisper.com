@@ -183,6 +183,85 @@
       "logo": "/brand-logos/meta/logo.svg",
       "brandUrl": "https://about.meta.com/brand/resources/",
       "sourceUrl": "https://about.meta.com/es/"
+    },
+    "vercel": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/vercel/logo-light.svg",
+        "dark": "/brand-logos/vercel/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/vercel/wordmark-light.svg",
+        "dark": "/brand-logos/vercel/wordmark-dark.svg"
+      },
+      "brandUrl": "https://vercel.com/geist/brands",
+      "sourceUrl": "https://vercel.com/"
+    },
+    "cerebras": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/cerebras/logo-light.svg",
+        "dark": "/brand-logos/cerebras/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/cerebras/wordmark-light.svg",
+        "dark": "/brand-logos/cerebras/wordmark-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://www.cerebras.ai/"
+    },
+    "nvidia": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/nvidia/logo-light.svg",
+        "dark": "/brand-logos/nvidia/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/nvidia/wordmark-light.svg",
+        "dark": "/brand-logos/nvidia/wordmark-dark.svg"
+      },
+      "brandUrl": "https://www.nvidia.com/en-us/about-nvidia/legal-info/logo-brand-usage",
+      "sourceUrl": "https://www.nvidia.com"
+    },
+    "ibm": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": false,
+      "logo": "/brand-logos/ibm/logo.svg",
+      "brandUrl": null,
+      "sourceUrl": "https://www.ibm.com"
+    },
+    "apple": {
+      "hasLogo": true,
+      "hasWordmark": false,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/apple/logo-light.svg",
+        "dark": "/brand-logos/apple/logo-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://www.apple.com"
+    },
+    "model-context-protocol": {
+      "hasLogo": true,
+      "hasWordmark": true,
+      "hasThemeVariants": true,
+      "logo": {
+        "light": "/brand-logos/model-context-protocol/logo-light.svg",
+        "dark": "/brand-logos/model-context-protocol/logo-dark.svg"
+      },
+      "wordmark": {
+        "light": "/brand-logos/model-context-protocol/wordmark-light.svg",
+        "dark": "/brand-logos/model-context-protocol/wordmark-dark.svg"
+      },
+      "brandUrl": null,
+      "sourceUrl": "https://modelcontextprotocol.io/"
     }
   }
 }

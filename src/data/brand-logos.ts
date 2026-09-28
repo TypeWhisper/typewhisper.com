@@ -20,7 +20,13 @@ export type BrandLogoId =
   | "vscode"
   | "notion"
   | "gmail"
-  | "meta";
+  | "meta"
+  | "vercel"
+  | "cerebras"
+  | "nvidia"
+  | "ibm"
+  | "apple"
+  | "model-context-protocol";
 
 export interface BrandLogoDefinition {
   id: BrandLogoId;
@@ -28,6 +34,8 @@ export interface BrandLogoDefinition {
   expectedTitle: string;
   contexts: BrandLogoContext[];
   preferWordmark?: boolean;
+  /** The mark reaches the corners of its box; a tile must not round them off. */
+  unclipped?: boolean;
   fallback: BrandLogoFallback;
   fallbackComponent?: string;
   homepage?: string;
@@ -195,6 +203,57 @@ export const brandLogos = [
     fallback: "lucide",
     homepage: "https://ai.meta.com/",
     brandGuidelinesUrl: "https://www.meta.com/brand/resources/meta/company-brand/",
+  },
+  {
+    id: "vercel",
+    svglSearch: "vercel",
+    expectedTitle: "Vercel",
+    contexts: ["addon"],
+    unclipped: true,
+    fallback: "lucide",
+    homepage: "https://vercel.com/",
+    brandGuidelinesUrl: "https://vercel.com/geist/brands",
+  },
+  {
+    id: "cerebras",
+    svglSearch: "cerebras",
+    expectedTitle: "Cerebras",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://www.cerebras.ai/",
+  },
+  {
+    id: "nvidia",
+    svglSearch: "nvidia",
+    expectedTitle: "NVIDIA",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://www.nvidia.com/",
+    brandGuidelinesUrl: "https://www.nvidia.com/en-us/about-nvidia/legal-info/logo-brand-usage",
+  },
+  {
+    id: "ibm",
+    svglSearch: "ibm",
+    expectedTitle: "IBM",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://www.ibm.com/",
+  },
+  {
+    id: "apple",
+    svglSearch: "apple",
+    expectedTitle: "Apple",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://www.apple.com/",
+  },
+  {
+    id: "model-context-protocol",
+    svglSearch: "model context protocol",
+    expectedTitle: "Model Context Protocol",
+    contexts: ["addon"],
+    fallback: "lucide",
+    homepage: "https://modelcontextprotocol.io/",
   },
 ] as const satisfies readonly BrandLogoDefinition[];
 
