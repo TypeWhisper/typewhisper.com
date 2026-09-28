@@ -1,0 +1,54 @@
+---
+import { Plus } from "lucide-react";
+import { WaveRule } from "@/components/site";
+import { t, type Locale } from "@/i18n/index";
+import { salesEmail } from "@/lib/pricing";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const items = [
+  "gpl",
+  "freelancer",
+  "workPay",
+  "upgrade",
+  "supporterVsCommercial",
+  "lifetimeUpdates",
+  "cancel",
+  "refund",
+  "discounts",
+  "activate",
+];
+---
+
+<section class="site-section site-section--rule">
+  <div class="site-wrap">
+    <WaveRule label={t(locale, "pricing.faq.label")} seed={31} />
+    <div class="site-split site-split--aside">
+      <div class="site-split__head reveal-hidden">
+        <h2 class="site-title site-title--start">{t(locale, "pricing.faq.title")}</h2>
+        <p class="site-lede site-lede--start">{t(locale, "pricing.faq.subtitle")}</p>
+        <p class="site-text">
+          {t(locale, "pricing.faq.contactBefore")}{" "}
+          <a href={`mailto:${salesEmail}`}>{salesEmail}</a>
+        </p>
+      </div>
+
+      <div>
+        {items.map((id) => (
+          <details class="site-disclosure">
+            <summary>
+              {t(locale, `pricing.faq.${id}.q`)}
+              <Plus className="size-5" aria-hidden="true" />
+            </summary>
+            <div class="site-disclosure__body">
+              <p>{t(locale, `pricing.faq.${id}.a`)}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

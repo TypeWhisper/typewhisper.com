@@ -1,8 +1,18 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import PricingIndex from "@/pages/pricing/_index";
-import { t, type Locale } from "@/i18n/index";
+import "@/styles/commercial.css";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { PageHead, SectionHead, WaveRule } from "@/components/site";
+import { FreeDownload } from "@/components/pricing/free-download";
+import { Plans } from "@/components/pricing/plans";
+import Comparison from "@/components/pricing/comparison.astro";
+import DecisionHelper from "@/components/pricing/decision-helper.astro";
+import Supporter from "@/components/pricing/supporter.astro";
+import Faq from "@/components/pricing/faq.astro";
+import { fill } from "@/components/pricing/format";
+import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { entryCommercialPrice, polarCustomerPortalUrl } from "@/lib/pricing";
 
 interface Props {
   locale: Locale;
@@ -17,9 +27,76 @@ const { locale } = Astro.props;
 
 <BaseLayout
   title={t(locale, "pricing.meta.title")}
-  description={t(locale, "pricing.meta.description")}
+  description={fill(t(locale, "pricing.meta.description"), { price: entryCommercialPrice })}
   canonicalPath={canonicalPath(locale, "/pricing")}
   locale={locale}
 >
-  <PricingIndex client:load locale={locale} />
+  <div class="site-page commercial">
+    <PageHead
+      label={t(locale, "pricing.hero.label")}
+      title={t(locale, "pricing.hero.title")}
+      lede={t(locale, "pricing.hero.subtitle")}
+    >
+      <FreeDownload client:load locale={locale} testId="pricing-free-download" />
+      <a href="#commercial-table" class="site-link">
+        {t(locale, "pricing.commercial.cta")}
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </a>
+    </PageHead>
+
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "pricing.honor.label")} seed={13} />
+        <div class="site-split">
+          <h2 class="site-title site-title--start reveal-hidden">{t(locale, "pricing.honor.title")}</h2>
+          <p class="commercial-statement reveal-hidden">{t(locale, "pricing.honor.description")}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="commercial-table" class="site-section site-section--rule commercial-anchor">
+      <div class="site-wrap">
+        <SectionHead
+          label={t(locale, "pricing.commercial.badge")}
+          title={t(locale, "pricing.commercial.tableTitle")}
+          lede={t(locale, "pricing.commercial.tableSubtitle")}
+          seed={17}
+        />
+        <Plans client:load locale={locale} />
+
+        <div class="commercial-notes">
+          <p>
+            {t(locale, "pricing.commercial.activationBefore")}{" "}
+            <span class="commercial-path">{t(locale, "pricing.commercial.activationPath")}</span>
+          </p>
+          <a
+            href={polarCustomerPortalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="site-link"
+          >
+            {t(locale, "pricing.commercial.manageSubscription")}
+            <ArrowUpRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <Comparison locale={locale} />
+    <DecisionHelper locale={locale} />
+    <Supporter locale={locale} />
+    <Faq locale={locale} />
+
+    <section class="site-section site-section--rule commercial-closing">
+      <div class="site-wrap">
+        <div class="site-note">
+          <p>{t(locale, "pricing.footerNote")}</p>
+          <a href={localePath(locale, "/business")} class="site-link">
+            {t(locale, "pricing.footerNote.link")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

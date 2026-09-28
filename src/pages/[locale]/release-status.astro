@@ -1,6 +1,8 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
+import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
+import { BarMark, PageHead } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import {
@@ -20,8 +22,92 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const windowsStoreUrl = getWindowsStoreUrl(locale);
-const iosAppStoreUrl = getIosAppStoreUrl(locale);
+
+interface StatusLink {
+  label: string;
+  href: string;
+  kind: "download" | "store" | "docs";
+  attributes?: Record<string, string>;
+}
+
+/** One block per edition: stage, what it means, what it contains, where to get it. */
+const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
+  {
+    id: "mac",
+    links: [
+      {
+        label: t(locale, "releaseStatus.mac.download"),
+        href: macDmgUrl,
+        kind: "download",
+        attributes: {
+          "data-download-social-trigger": "",
+          "data-download-platform": "mac",
+          "data-download-target": "mac_dmg",
+          "data-tracking-placement": "release_status",
+        },
+      },
+      {
+        label: t(locale, "releaseStatus.mac.docs"),
+        href: localePath(locale, "/docs/mac"),
+        kind: "docs",
+      },
+    ],
+  },
+  {
+    id: "win",
+    links: [
+      {
+        label: t(locale, "releaseStatus.win.download"),
+        href: getWindowsStoreUrl(locale),
+        kind: "store",
+        attributes: {
+          "data-download-social-trigger": "",
+          "data-download-platform": "windows",
+          "data-download-target": "windows_store",
+          "data-tracking-placement": "release_status",
+        },
+      },
+      {
+        label: t(locale, "releaseStatus.win.githubInstaller"),
+        href: windowsSetupUrl,
+        kind: "download",
+        attributes: {
+          "data-download-social-trigger": "",
+          "data-download-platform": "windows",
+          "data-download-target": "windows_github_installer",
+          "data-tracking-placement": "release_status",
+        },
+      },
+      {
+        label: t(locale, "releaseStatus.win.docs"),
+        href: localePath(locale, "/docs/windows"),
+        kind: "docs",
+      },
+    ],
+  },
+  {
+    id: "ios",
+    links: [
+      {
+        label: t(locale, "releaseStatus.ios.download"),
+        href: getIosAppStoreUrl(locale),
+        kind: "store",
+        attributes: {
+          "data-download-social-trigger": "",
+          "data-download-platform": "ios",
+          "data-download-target": "ios_app_store",
+          "data-download-version": iosVersion,
+          "data-tracking-placement": "release_status",
+        },
+      },
+      {
+        label: t(locale, "releaseStatus.ios.docs"),
+        href: localePath(locale, "/docs/ios"),
+        kind: "docs",
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -30,66 +116,52 @@ const iosAppStoreUrl = getIosAppStoreUrl(locale);
   canonicalPath={canonicalPath(locale, "/release-status")}
   locale={locale}
 >
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "releaseStatus.title")}</h1>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      {t(locale, "releaseStatus.subtitle")}
-    </p>
+  <div class="site-page">
+    <PageHead
+      label={t(locale, "releaseStatus.label")}
+      title={t(locale, "releaseStatus.title")}
+      lede={t(locale, "releaseStatus.subtitle")}
+    />
 
-    <div class="mt-10 space-y-6">
-      <ReleaseStageNotice
-        stage="stable"
-        title={t(locale, "releaseStatus.mac.intro")}
-        description={t(locale, "releaseStatus.mac.detail")}
-      />
-
-      <ReleaseStageNotice
-        stage="stable"
-        title={t(locale, "releaseStatus.win.intro")}
-        description={t(locale, "releaseStatus.win.detail")}
-      />
-
-      <ReleaseStageNotice
-        stage="stable"
-        title={t(locale, "releaseStatus.ios.intro")}
-        description={t(locale, "releaseStatus.ios.detail")}
-      />
-    </div>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-3">
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">{t(locale, "releaseStatus.mac.title")}</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          {t(locale, "releaseStatus.mac.description")}
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={macDmgUrl} data-download-social-trigger data-download-platform="mac" data-download-target="mac_dmg" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.mac.download")}</a>
-          <a href={localePath(locale, "/docs/mac")} class="text-primary hover:underline">{t(locale, "releaseStatus.mac.docs")}</a>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">{t(locale, "releaseStatus.win.title")}</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          {t(locale, "releaseStatus.win.description")}
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={windowsStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="windows" data-download-target="windows_store" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.win.download")}</a>
-          <a href={windowsSetupUrl} data-download-social-trigger data-download-platform="windows" data-download-target="windows_github_installer" data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.win.githubInstaller")}</a>
-          <a href={localePath(locale, "/docs/windows")} class="text-primary hover:underline">{t(locale, "releaseStatus.win.docs")}</a>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border bg-card p-6">
-        <h2 class="text-lg font-semibold">{t(locale, "releaseStatus.ios.title")}</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          {t(locale, "releaseStatus.ios.description")}
-        </p>
-        <div class="mt-4 flex flex-col gap-2 text-sm">
-          <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="ios" data-download-target="ios_app_store" data-download-version={iosVersion} data-tracking-placement="release_status" class="text-primary hover:underline">{t(locale, "releaseStatus.ios.download")}</a>
-          <a href={localePath(locale, "/docs/ios")} class="text-primary hover:underline">{t(locale, "releaseStatus.ios.docs")}</a>
-        </div>
-      </section>
-    </div>
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap">
+        <ul class="utility-status" aria-label={t(locale, "releaseStatus.listLabel")}>
+          {editions.map((edition) => (
+            <li class="utility-status__item" data-testid={`release-status-${edition.id}`}>
+              <div class="utility-status__head">
+                <p class="site-label">
+                  <BarMark />
+                  {t(locale, "releaseStage.stable")}
+                </p>
+                <h2 class="site-subtitle">{t(locale, `releaseStatus.${edition.id}.title`)}</h2>
+              </div>
+              <div class="utility-status__body">
+                <p class="utility-status__intro">{t(locale, `releaseStatus.${edition.id}.intro`)}</p>
+                <p class="site-text">{t(locale, `releaseStatus.${edition.id}.detail`)}</p>
+                <p class="site-text">{t(locale, `releaseStatus.${edition.id}.description`)}</p>
+              </div>
+              <ul class="utility-links utility-status__links">
+                {edition.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="site-link"
+                      target={link.kind === "store" ? "_blank" : undefined}
+                      rel={link.kind === "store" ? "noopener noreferrer" : undefined}
+                      {...link.attributes}
+                    >
+                      {link.kind === "download" && <Download className="size-4" aria-hidden="true" />}
+                      {link.label}
+                      {link.kind === "store" && <ArrowUpRight className="size-4" aria-hidden="true" />}
+                      {link.kind === "docs" && <ArrowRight className="size-4" aria-hidden="true" />}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   </div>
 </BaseLayout>

@@ -1,0 +1,1053 @@
+/*
+ * Add-on pages, prefix `addon-`: index, detail, platform edition, and the
+ * plugin guide. Built on the `site-` primitives; outside of a layer, so these
+ * rules win over the primitives and utilities they adjust.
+ */
+
+/* ---------- Index: search and filters ---------- */
+
+.addon-page .site-page-head {
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.addon-filters {
+  border-block: 1px solid var(--hairline);
+}
+
+.addon-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.addon-search__icon {
+  position: absolute;
+  left: 0.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.addon-search__input {
+  width: 100%;
+  height: 3.5rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0 3rem 0 2.125rem;
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  outline-offset: -2px;
+}
+
+.addon-search__input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+
+.addon-search__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.addon-search__clear {
+  position: absolute;
+  right: 0;
+  display: flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.addon-search__clear:hover {
+  color: var(--foreground);
+}
+
+.addon-filters__rows {
+  display: grid;
+  gap: 0.125rem;
+  padding-block: 0.75rem;
+}
+
+.addon-filters__row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.addon-filters__label {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  /* As high as a chip, so the label sits on the first line of chips. */
+  line-height: 2.25rem;
+  text-transform: uppercase;
+}
+
+.addon-filters__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem;
+}
+
+/* Quiet chip: text until it is hovered or pressed. */
+.addon-chip {
+  min-height: 2.25rem;
+  border-color: transparent;
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.addon-chip:hover {
+  border-color: var(--hairline-strong);
+}
+
+.addon-chip[aria-pressed="true"] {
+  border-color: var(--foreground);
+}
+
+/* "All" is the resting state; only a chosen filter gets the full weight. */
+.addon-chip[aria-pressed="true"][data-filter-value="all"] {
+  border-color: var(--hairline-strong);
+  background: var(--fill);
+  color: var(--foreground);
+}
+
+/* ---------- Index: groups and entries ---------- */
+
+.addon-group {
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.addon-group__head {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.addon-group__head .site-rule {
+  min-width: 2rem;
+  flex: 1 1 0;
+}
+
+.addon-group__count {
+  margin: 0;
+  flex: none;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.addon-group__reset {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex: none;
+  align-items: center;
+  color: var(--accent-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.addon-group__reset:hover {
+  color: var(--accent-text-hover);
+}
+
+.addon-index {
+  margin-top: 1rem;
+}
+
+.addon-index--featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.addon-entry__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.625rem;
+}
+
+.addon-entry .site-index__name {
+  margin: 0;
+}
+
+.addon-entry__author {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.addon-entry .site-index__text {
+  margin: 0;
+}
+
+/* Two meta lines: what the add-on does, then where it runs and where it comes from. */
+.addon-entry__meta {
+  display: grid;
+  gap: 0.125rem;
+  margin-top: 0.375rem;
+}
+
+.addon-entry__line {
+  margin: 0;
+  gap: 0 1rem;
+}
+
+.addon-entry__line--roles {
+  color: var(--foreground);
+}
+
+/*
+ * Separators sit in front of every item; the clipped left edge hides the one
+ * that opens a line, also after a wrap.
+ */
+.addon-entry__group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-left: -1.5em;
+  clip-path: inset(0 0 0 1.5em);
+}
+
+.addon-entry__group > span {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.addon-entry__group > span::before {
+  position: absolute;
+  left: 0.45em;
+  content: "·";
+}
+
+.addon-entry__source {
+  color: var(--text-faint);
+}
+
+/* Recommended add-ons: two columns, larger names, full texts. */
+.addon-index--featured .site-index__link {
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-block: 1.75rem 2rem;
+}
+
+.addon-index--featured .site-index__mark {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+}
+
+.addon-index--featured .site-index__logo {
+  width: 1.625rem;
+  height: 1.625rem;
+}
+
+.addon-index--featured .site-index__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.addon-index--featured .site-index__name {
+  font-size: clamp(1.375rem, 2vw, 1.625rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.addon-empty {
+  gap: 1rem;
+}
+
+/* Entries carry two meta lines; three columns need the full width. */
+@media (max-width: 1023px) {
+  .addon-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 859px) {
+  .addon-group__head .site-rule {
+    display: none;
+  }
+
+  .addon-group__head {
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+  }
+
+  .addon-group__count {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .addon-index--featured {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .addon-index--featured .site-index__link {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .addon-index--featured .site-index__mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 10px;
+  }
+
+  .addon-filters__rows {
+    gap: 0.5rem;
+    padding-block: 1rem;
+  }
+
+  .addon-filters__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .addon-filters__label {
+    line-height: 1.5rem;
+  }
+
+  .addon-index {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* One line per filter; the chips scroll sideways up to the screen edge. */
+  .addon-filters__chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0.25rem var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .addon-filters__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .addon-chip {
+    min-height: 2.5rem;
+    flex: none;
+    border-color: var(--hairline);
+  }
+}
+
+/* ---------- Head of a detail page ---------- */
+
+.addon-head.site-page-head {
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.addon-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 0 clamp(1.75rem, 4vw, 3rem);
+  padding: 0;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  list-style: none;
+}
+
+.addon-crumbs li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.addon-crumbs li + li::before {
+  margin-inline: 0.625rem;
+  color: var(--hairline-strong);
+  content: "/";
+}
+
+.addon-crumbs a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.addon-crumbs a:hover {
+  color: var(--accent-text);
+}
+
+.addon-crumbs [aria-current] {
+  color: var(--foreground);
+}
+
+.addon-head__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem 3rem;
+}
+
+.addon-head__main {
+  min-width: 0;
+  flex: 1 1 32rem;
+}
+
+.addon-head__aside {
+  flex: none;
+  max-width: 100%;
+}
+
+.addon-head__kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.addon-head .addon-head__kicker .site-label {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.addon-head__mark {
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  border-radius: 12px;
+}
+
+.addon-head__mark .site-index__logo {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+}
+
+/* A mark that reaches the corners of its box keeps them. */
+.site-index__mark .site-index__logo.addon-logo--unclipped {
+  border-radius: 0;
+}
+
+.addon-head__mark .site-index__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.addon-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem 0;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  list-style: none;
+}
+
+.addon-head__meta {
+  margin-left: -1.75rem;
+  clip-path: inset(0 0 0 1.75rem);
+}
+
+.addon-head__meta li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.addon-head__meta li::before {
+  position: absolute;
+  left: 0.625rem;
+  color: var(--hairline-strong);
+  content: "/";
+}
+
+.addon-head__meta a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.addon-head__meta a:hover {
+  color: var(--accent-text-hover);
+}
+
+.addon-head .addon-head__actions {
+  gap: 0 1.75rem;
+  margin-top: 1rem;
+}
+
+/* ---------- Edition switch ---------- */
+
+.addon-switch {
+  max-width: 100%;
+}
+
+.addon-switch .site-switch__item {
+  white-space: nowrap;
+}
+
+.addon-switch__version {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+/* ---------- Facts of an edition ---------- */
+
+.addon-facts-band {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.addon-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 2fr);
+  margin-block: 0;
+}
+
+.addon-facts > div {
+  min-width: 0;
+  padding: 1.25rem clamp(1rem, 2.5vw, 2rem) 1.375rem;
+}
+
+.addon-facts > div:first-child {
+  padding-left: 0;
+}
+
+.addon-facts > div:last-child {
+  padding-right: 0;
+}
+
+.addon-facts > div + div {
+  border-left: 1px solid var(--hairline);
+}
+
+.addon-facts dt {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.addon-facts dd {
+  margin: 0.375rem 0 0;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.addon-facts__mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Body of a detail page ---------- */
+
+.addon-section.site-section {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.addon-section__lede {
+  max-width: 44rem;
+}
+
+.addon-doc__main {
+  min-width: 0;
+  max-width: var(--wrap-prose);
+}
+
+.addon-doc__main > * + * {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.addon-doc__main > .addon-requirement:first-child {
+  margin-top: 0;
+}
+
+/* The figure resets its margin; below the notice it keeps the distance of the column. */
+.addon-doc__main > .addon-requirement + .addon-shot {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.addon-doc--toc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  align-items: start;
+  gap: 0 clamp(2.5rem, 6vw, 5rem);
+}
+
+.addon-doc--toc .addon-doc__main {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.addon-doc__aside {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+  grid-column: 2;
+  grid-row: 1;
+  max-height: calc(100vh - var(--header-height) - 4rem);
+  overflow-y: auto;
+}
+
+/* ---------- On this page ---------- */
+
+.addon-toc summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+}
+
+.addon-toc summary::-webkit-details-marker {
+  display: none;
+}
+
+.addon-toc summary svg {
+  display: none;
+  color: var(--accent-text);
+  transition: transform 250ms var(--motion-ease-out);
+}
+
+.addon-toc[open] summary svg {
+  transform: rotate(45deg);
+}
+
+.addon-toc ol {
+  margin: 1rem 0 0;
+  border-left: 1px solid var(--hairline);
+  padding: 0;
+  list-style: none;
+}
+
+.addon-toc a {
+  display: block;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  padding: 0.375rem 0 0.375rem 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    color 200ms var(--motion-ease-out),
+    border-color 200ms var(--motion-ease-out);
+}
+
+.addon-toc li[data-depth="3"] a {
+  padding-left: 1.75rem;
+  font-size: 0.8125rem;
+}
+
+.addon-toc a:hover {
+  color: var(--foreground);
+}
+
+.addon-toc a[aria-current] {
+  border-left-color: var(--accent-text);
+  color: var(--foreground);
+}
+
+@media (min-width: 1024px) {
+  /* Beside the text the list is always open. */
+  .addon-toc summary {
+    pointer-events: none;
+  }
+}
+
+/* ---------- Screenshot on its stage ---------- */
+
+.addon-shot {
+  margin: 0;
+}
+
+.addon-shot__stage {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.addon-shot picture {
+  display: block;
+  width: 100%;
+  max-width: var(--addon-shot-width, 42rem);
+}
+
+.addon-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+
+/* Captures without a shadow margin bring no room of their own. */
+.addon-shot--framed .addon-shot__stage {
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.addon-shot--framed img {
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+
+.addon-shot .site-caption {
+  margin-top: 1rem;
+}
+
+/* ---------- Prose of an add-on ---------- */
+
+/* The page already keeps jump targets clear of the site header. */
+.addon-prose :is(h2, h3, h4) {
+  scroll-margin-top: 0;
+}
+
+.addon-prose > :is(section, div):first-child > :first-child {
+  margin-top: 0;
+}
+
+/* The hairline of the page head already opens the text. */
+.addon-doc__main > .addon-prose:first-child > h2:first-child,
+.addon-doc__main > .addon-prose:first-child > :is(section, div):first-child > h2:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.addon-prose :not(pre) > code {
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Figures inside of the text stand on the same stage as the first one. */
+.addon-prose figure:not(.addon-shot) picture {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.addon-prose .addon-shot + .addon-shot {
+  margin-top: 2rem;
+}
+
+.addon-prose h2 + .addon-shot {
+  margin-top: 1.5rem;
+}
+
+/* Screenshots inside of the text bring their own window shadow. */
+.addon-prose picture img {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.addon-prose .addon-shot--framed img {
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+
+.addon-prose a.site-link {
+  text-decoration: none;
+}
+
+.addon-prose .site-callout p {
+  margin: 0;
+}
+
+.addon-prose .site-callout p + p {
+  margin-top: 0.5rem;
+}
+
+/* Code fences: one ground and one ink in both themes. */
+.addon-prose pre.astro-code {
+  background: var(--surface) !important;
+  color: var(--foreground) !important;
+}
+
+.addon-prose pre.astro-code span {
+  color: inherit !important;
+}
+
+/* The code block component brings its own frame. */
+.addon-prose .not-prose {
+  margin-top: 1.25rem;
+}
+
+.addon-prose .not-prose pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ---------- Generated guide of an edition ---------- */
+
+.addon-guide__roles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  margin-top: 1.5rem;
+}
+
+.addon-prose .addon-guide__roles p {
+  margin: 0;
+}
+
+.addon-guide__term {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.addon-guide__examples > div {
+  border-top: 1px solid var(--hairline);
+  padding-block: 1.125rem;
+}
+
+.addon-guide__examples > div:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.addon-prose .addon-guide__examples dt {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.addon-guide__examples dd {
+  margin: 0.375rem 0 0;
+}
+
+/* ---------- Editions of a family ---------- */
+
+.addon-editions.site-tiers {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.addon-edition {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  transition: background-color 250ms var(--motion-ease-out);
+}
+
+.addon-edition:first-child {
+  padding-left: 0;
+}
+
+.addon-edition:last-child {
+  padding-right: 0;
+}
+
+.addon-edition__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.addon-edition__icon {
+  width: 1.375rem;
+  height: 1.375rem;
+  flex: none;
+  color: var(--accent-text);
+}
+
+.addon-edition__version {
+  margin-left: auto;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+}
+
+/* Both previews share one stage size, so the two columns stay level. */
+.addon-edition__preview {
+  display: flex;
+  aspect-ratio: 16 / 10;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 1.5rem 0 0.5rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--stage);
+}
+
+.addon-edition__preview picture {
+  display: contents;
+}
+
+.addon-edition__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.addon-edition .site-list {
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+.addon-edition__link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* The whole column opens the edition. */
+.addon-edition__link::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.addon-edition .addon-requirement {
+  position: relative;
+  z-index: 1;
+}
+
+.addon-edition:hover .addon-edition__link {
+  color: var(--accent-text-hover);
+}
+
+.addon-edition:hover .addon-edition__link svg {
+  transform: translateX(3px);
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 1023px) {
+  .addon-doc--toc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .addon-doc--toc .addon-doc__main,
+  .addon-doc__aside {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .addon-doc__aside {
+    position: static;
+    max-height: none;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    border-block: 1px solid var(--hairline);
+  }
+
+  .addon-toc summary {
+    min-height: 3.5rem;
+    cursor: pointer;
+  }
+
+  .addon-toc summary svg {
+    display: block;
+  }
+
+  .addon-toc ol {
+    margin: 0 0 1.25rem;
+  }
+
+  .addon-toc a {
+    padding-block: 0.625rem;
+  }
+}
+
+@media (max-width: 899px) {
+  .addon-edition,
+  .addon-edition:first-child,
+  .addon-edition:last-child {
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .addon-facts {
+    grid-template-columns: minmax(6.5rem, auto) minmax(0, 1fr);
+  }
+
+  .addon-facts > div:nth-child(2) {
+    padding-right: 0;
+  }
+
+  .addon-facts > div:nth-child(3) {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--hairline);
+    border-left: 0;
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .addon-head .addon-head__actions {
+    flex-direction: row;
+    gap: 0 1.5rem;
+  }
+
+  /* The shadow margin of a window capture hangs outside of the stage. */
+  .addon-shot--window picture {
+    width: 112%;
+    max-width: none;
+    flex: none;
+    margin: -3% -6% -6%;
+  }
+
+  .addon-switch {
+    display: flex;
+  }
+
+  .addon-switch .site-switch__item {
+    flex: 1 1 0;
+    justify-content: center;
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 419px) {
+  .addon-switch .site-switch__item {
+    gap: 0.375rem;
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .addon-switch__version {
+    font-size: 0.6875rem;
+  }
+}

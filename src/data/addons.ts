@@ -14,7 +14,11 @@ export type PluginCategory =
 
 export type PluginPlatform = "mac" | "windows" | "ios";
 
-export type PluginSource = "bundled" | "official" | "community";
+/**
+ * How an add-on reaches the app: `built-in` is part of the app itself,
+ * `official` and `community` are installed from the marketplace.
+ */
+export type PluginSource = "built-in" | "official" | "community";
 
 export interface PluginDownload {
   url: string;
@@ -40,10 +44,17 @@ export interface Plugin {
   minOsVersion?: string;
   releaseUrl?: string;
   screenshots?: boolean;
+  /** Specific alternative text of the settings screenshot, instead of the template. */
+  screenshotAlt?: string;
+  /** Specific caption of the settings screenshot; follows the alternative text when left out. */
+  screenshotCaption?: string;
   readmeUrl?: string;
   downloads?: Record<string, PluginDownload>;
   publishedAt?: string;
+  /** Logo file of the add-on; with `iconUrlDark` it is the one for the light theme. */
   iconUrl?: string;
+  /** Variant of `iconUrl` for the dark theme, when the source provides one. */
+  iconUrlDark?: string;
   brandLogo?: BrandLogoId;
   apiDocsUrl?: string;
   sourceUrl?: string;
@@ -78,10 +89,16 @@ export const categoryKeys: Record<PluginCategory, string> = {
 };
 
 export const sourceKeys: Record<PluginSource, string> = {
-  bundled: "addons.bundled",
+  "built-in": "addons.builtIn",
   official: "addons.official",
   community: "addons.community",
 };
+
+/** Sources the index offers as a filter. `built-in` is a label only. */
+export const sourceFilters = ["official", "community"] as const satisfies readonly PluginSource[];
+
+/** Earlier values of the source filter; links that carry them show all sources. */
+export const retiredSourceFilters: readonly string[] = ["built-in", "bundled"];
 
 export const platformLabels: Record<PluginPlatform, string> = {
   mac: "macOS",
@@ -112,16 +129,15 @@ export function getPluginModules(locale: Locale = "en"): PluginModule[] {
   return Object.values(getModules(locale));
 }
 
-export function getBundledPlugins(locale: Locale = "en"): Plugin[] {
-  return getPluginModules(locale).map((mod) => mod.frontmatter);
-}
-
 const communityPlugins: Plugin[] = (communityData as unknown as { plugins: Plugin[] }).plugins.map(
   (p) => ({ ...p, source: "community" as const }),
 );
 
 export function getPlugins(locale: Locale = "en"): Plugin[] {
-  return [...getBundledPlugins(locale), ...communityPlugins];
+  return [
+    ...getPluginModules(locale).map((mod) => mod.frontmatter),
+    ...communityPlugins,
+  ];
 }
 
 export function getPluginModule(slug: string, locale: Locale = "en"): PluginModule | undefined {

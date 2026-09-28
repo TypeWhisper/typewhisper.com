@@ -1,49 +1,40 @@
-import type { CSSProperties } from "react";
-import { Check } from "lucide-react";
+import { BarMark, WaveRule } from "@/components/site";
 import { t, type Locale } from "@/i18n/index";
+import { inline } from "./inline";
 
 interface UseCaseBenefitsProps {
   benefits: string[];
   locale?: Locale;
-  /** Use-case brand color used for the check-icon tile. */
-  color?: string;
 }
 
+/** The benefits as rows of type on a quiet band. */
 export function UseCaseBenefits({
   benefits,
   locale = "en",
-  color,
 }: UseCaseBenefitsProps) {
-  const tint = color ?? "var(--primary)";
-
   return (
-    <section className="section-light py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          {t(locale, "useCases.benefitsTitle")}
-        </h2>
+    <section
+      className="site-section site-section--band"
+      data-testid="use-case-benefits"
+    >
+      <div className="site-wrap">
+        <WaveRule label={t(locale, "useCases.benefitsLabel")} seed={31} />
+        <div className="site-split">
+          <div className="site-split__head reveal-hidden">
+            <h2 className="site-title site-title--start">
+              {t(locale, "useCases.benefitsTitle")}
+            </h2>
+          </div>
 
-        <ul className="reveal-hidden mx-auto mt-12 grid max-w-4xl gap-x-8 gap-y-4 sm:grid-cols-2">
-          {benefits.map((benefit, i) => (
-            <li key={i} className="flex items-start gap-3">
-              <span
-                className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full"
-                style={
-                  {
-                    backgroundColor: color ? `${color}1F` : undefined,
-                    color: tint,
-                    boxShadow: color
-                      ? `inset 0 0 0 1px ${color}33`
-                      : undefined,
-                  } satisfies CSSProperties
-                }
-              >
-                <Check className="size-3.5" strokeWidth={3} />
-              </span>
-              <span className="text-base sm:text-lg">{benefit}</span>
-            </li>
-          ))}
-        </ul>
+          <ul className="usecase-benefits reveal-hidden">
+            {benefits.map((benefit) => (
+              <li key={benefit} className="usecase-benefits__item">
+                <BarMark />
+                <span>{inline(benefit)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

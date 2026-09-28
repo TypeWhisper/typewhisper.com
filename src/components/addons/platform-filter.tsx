@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { type PluginPlatform, platformKeys } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
+import { FilterRow } from "./filter-row";
 
 const platforms: (PluginPlatform | "all")[] = [
   "all",
@@ -17,18 +17,17 @@ interface PlatformFilterProps {
 
 export function PlatformFilter({ selected, onChange, locale = "en" }: PlatformFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {platforms.map((p) => (
-        <Button
-          key={p}
-          variant={selected === p ? "default" : "outline"}
-          size="sm"
-          className="rounded-full"
-          onClick={() => onChange(p)}
-        >
-          {p === "all" ? t(locale, "addons.allPlatforms") : t(locale, platformKeys[p])}
-        </Button>
-      ))}
-    </div>
+    <FilterRow
+      label={t(locale, "addons.filter.platform")}
+      selected={selected}
+      onChange={onChange}
+      options={platforms.map((platform) => ({
+        value: platform,
+        label:
+          platform === "all"
+            ? t(locale, "addons.allPlatforms")
+            : t(locale, platformKeys[platform]),
+      }))}
+    />
   );
 }

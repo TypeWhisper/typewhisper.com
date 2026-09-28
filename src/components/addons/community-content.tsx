@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Download, Scale } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import { CodeBlock } from "@/components/ui/code-block";
 import type { Plugin } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -12,7 +12,23 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export default function CommunityContent({ plugin }: { plugin: Plugin }) {
+/** Sets code into the placeholders of a translated sentence. */
+function withCode(text: string, values: Record<string, string>) {
+  return text.split(/(\{\w+\})/).map((part, index) => {
+    const key = part.match(/^\{(\w+)\}$/)?.[1];
+    return key && values[key] ? <code key={index}>{values[key]}</code> : part;
+  });
+}
+
+interface CommunityContentProps {
+  plugin: Plugin;
+  locale?: Locale;
+}
+
+export default function CommunityContent({
+  plugin,
+  locale = "en",
+}: CommunityContentProps) {
   const [readme, setReadme] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,52 +52,52 @@ export default function CommunityContent({ plugin }: { plugin: Plugin }) {
   return (
     <>
       {macDownload && (
-        <div className="mt-8 rounded-2xl border bg-card p-6">
-          <h2 className="text-lg font-semibold">Download</h2>
-          <div className="mt-4 flex flex-wrap items-center gap-4">
-            <Button asChild>
-              <a href={macDownload.url}>
-                <Download className="size-4" />
-                Download v{plugin.version}
-              </a>
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              {formatSize(macDownload.size)}
-            </span>
-            {plugin.license && (
-              <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-                <Scale className="size-3.5" />
-                {plugin.license}
-              </span>
-            )}
+        <section className="site-prose addon-prose addon-download">
+          <h2>{t(locale, "addons.community.download")}</h2>
+          <div className="site-actions site-actions--start">
+            <a
+              href={macDownload.url}
+              className="site-button site-button--small"
+            >
+              <Download className="size-4" aria-hidden="true" />
+              {t(locale, "addons.community.downloadVersion").replace(
+                "{version}",
+                plugin.version ?? "",
+              )}
+            </a>
+            <p className="site-meta">
+              <span>{formatSize(macDownload.size)}</span>
+              {plugin.license && <span>{plugin.license}</span>}
+            </p>
           </div>
           {plugin.minAppVersion && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              Requires TypeWhisper {plugin.minAppVersion} or later.
+            <p>
+              {t(locale, "addons.community.requires").replace(
+                "{version}",
+                plugin.minAppVersion,
+              )}
             </p>
           )}
-          <div className="mt-4 rounded-xl bg-muted/50 p-4">
-            <h3 className="text-sm font-semibold">Installation</h3>
-            <ol className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li>1. Download and unzip the file.</li>
-              <li>
-                2. Move the <code className="rounded bg-muted px-1 py-0.5 text-xs">.bundle</code> file to{" "}
-                <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                  ~/Library/Application Support/TypeWhisper/Plugins/
-                </code>
-              </li>
-              <li>3. Restart TypeWhisper.</li>
-            </ol>
-          </div>
-        </div>
+          <h3>{t(locale, "addons.community.installation")}</h3>
+          <ol>
+            <li>{t(locale, "addons.community.step1")}</li>
+            <li>
+              {withCode(t(locale, "addons.community.step2"), {
+                bundle: ".bundle",
+                path: "~/Library/Application Support/TypeWhisper/Plugins/",
+              })}
+            </li>
+            <li>{t(locale, "addons.community.step3")}</li>
+          </ol>
+        </section>
       )}
 
       {loading ? (
-        <div className="mt-10 text-center text-muted-foreground">
-          Loading documentation...
-        </div>
+        <p className="site-text" role="status">
+          {t(locale, "addons.community.loading")}
+        </p>
       ) : readme ? (
-        <div className="prose prose-neutral dark:prose-invert mt-10 max-w-none">
+        <div className="site-prose addon-prose">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -92,7 +108,9 @@ export default function CommunityContent({ plugin }: { plugin: Plugin }) {
                 const match = /language-(\w+)/.exec(className || "");
                 const code = String(children).replace(/\n$/, "");
                 if (match) {
-                  return <CodeBlock code={code} lang={match[1]} />;
+                  return (
+                    <CodeBlock code={code} lang={match[1]} locale={locale} />
+                  );
                 }
                 return (
                   <code className={className} {...props}>
@@ -105,11 +123,7 @@ export default function CommunityContent({ plugin }: { plugin: Plugin }) {
             {readme}
           </ReactMarkdown>
         </div>
-      ) : (
-        <div className="mt-10">
-          <p className="text-muted-foreground">{plugin.description}</p>
-        </div>
-      )}
+      ) : null}
     </>
   );
 }

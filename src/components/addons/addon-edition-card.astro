@@ -1,77 +1,98 @@
 ---
-import { ArrowRight, Check, Laptop, Monitor } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
+import { BarMark } from "@/components/site";
+import { MacOSLogo, WindowsLogo, IOSLogo } from "@/components/ui/platform-logos";
 import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
+import { shotSize } from "@/components/addons/shot-size";
+import { addonShotText } from "@/components/addons/shot-text";
 import {
   editionPlatformSlugs,
+  getDefaultAddonEditionScreenshot,
   type AddonEdition,
+  type AddonEditionScreenshot,
 } from "@/data/addon-editions";
 import { platformKeys, type PluginPlatform } from "@/data/addons";
-import { t, type Locale } from "@/i18n/index";
+import { screenshotPath, t, webpPath, type Locale } from "@/i18n/index";
 
 interface Props {
   edition: AddonEdition;
+  /** Name of the add-on family, for the text of the preview. */
+  name: string;
   familyPath: string;
   locale: Locale;
 }
 
-const { edition, familyPath, locale } = Astro.props;
-const platformIcons: Partial<Record<PluginPlatform, typeof Laptop>> = {
-  mac: Laptop,
-  windows: Monitor,
+const { edition, name, familyPath, locale } = Astro.props;
+const platformIcons: Record<PluginPlatform, typeof MacOSLogo> = {
+  mac: MacOSLogo,
+  windows: WindowsLogo,
+  ios: IOSLogo,
 };
-const Icon = platformIcons[edition.platform] ?? Laptop;
+const Icon = platformIcons[edition.platform];
 const platformLabel = t(locale, platformKeys[edition.platform]);
+
+// One real capture per edition, left out when the edition has none.
+const screenshot: AddonEditionScreenshot | undefined =
+  edition.screenshots?.[0] ?? getDefaultAddonEditionScreenshot(edition);
+const previewSrc = screenshot
+  ? screenshot.localized === false
+    ? screenshot.src
+    : screenshotPath(locale, screenshot.src)
+  : undefined;
+const previewSize = previewSrc ? await shotSize(previewSrc) : undefined;
+const previewAlt = addonShotText(locale, {
+  name,
+  platform: edition.platform,
+  alt: screenshot?.alt,
+}).alt;
 ---
 
-<article
-  class="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/35"
+<li
+  class="addon-edition"
   data-testid="addon-edition-card"
   data-platform={edition.platform}
 >
-  <div class="border-b bg-muted/35 p-5 sm:p-6">
-    <div class="flex items-start justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <span class="flex size-11 items-center justify-center rounded-xl border bg-background text-primary shadow-sm">
-          <Icon className="size-5" aria-hidden="true" />
-        </span>
-        <div>
-          <p class="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-            {t(locale, "addons.editions.platformEdition")}
-          </p>
-          <h3 class="mt-0.5 font-display text-xl font-semibold">{platformLabel}</h3>
-        </div>
-      </div>
-      <Badge variant="outline" className="shrink-0 bg-background/70">
-        v{edition.version}
-      </Badge>
-    </div>
+  <div class="addon-edition__head">
+    <Icon className="addon-edition__icon" aria-hidden="true" />
+    <h3 class="site-heading">{platformLabel}</h3>
+    <span class="addon-edition__version">v{edition.version}</span>
   </div>
 
-  <div class="flex flex-1 flex-col p-5 sm:p-6">
-    <p class="text-sm leading-6 text-muted-foreground">{edition.description}</p>
-    <AddonHostRequirement platform={edition.platform} minAppVersion={edition.minAppVersion} locale={locale} />
+  {previewSrc && previewSize && (
+    <figure class="addon-edition__preview">
+      <picture>
+        <source srcset={webpPath(previewSrc)} type="image/webp" />
+        <img
+          src={previewSrc}
+          alt={previewAlt}
+          width={previewSize.width}
+          height={previewSize.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </figure>
+  )}
 
-    {edition.highlights && edition.highlights.length > 0 && (
-      <ul class="mt-5 space-y-2.5" aria-label={t(locale, "addons.editions.highlights")}>
-        {edition.highlights.slice(0, 4).map((highlight) => (
-          <li class="flex gap-2.5 text-sm leading-5">
-            <span class="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Check className="size-3" aria-hidden="true" />
-            </span>
-            <span>{highlight}</span>
-          </li>
-        ))}
-      </ul>
-    )}
+  <p class="site-text">{edition.description}</p>
+  <AddonHostRequirement platform={edition.platform} minAppVersion={edition.minAppVersion} locale={locale} />
 
-    <div class="mt-auto pt-6">
-      <a
-        href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
-        class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-      >
-        {t(locale, "addons.editions.openEdition")} <ArrowRight className="size-4" aria-hidden="true" />
-      </a>
-    </div>
-  </div>
-</article>
+  {edition.highlights && edition.highlights.length > 0 && (
+    <ul class="site-list" aria-label={t(locale, "addons.editions.highlights")}>
+      {edition.highlights.slice(0, 4).map((highlight) => (
+        <li>
+          <BarMark />
+          <span>{highlight}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <a
+    href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
+    class="site-link addon-edition__link"
+  >
+    <span>{t(locale, "addons.editions.openEdition")}<span class="sr-only">: {platformLabel}</span></span>
+    <ArrowRight className="size-4" aria-hidden="true" />
+  </a>
+</li>

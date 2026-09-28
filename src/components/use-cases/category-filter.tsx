@@ -1,24 +1,13 @@
-import { LayoutGrid, AppWindow, Workflow } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { type UseCaseCategory, categoryKeys } from "@/data/use-cases";
+import { type UseCaseCategory, categoryKeys } from "./taxonomy";
 import { t, type Locale } from "@/i18n/index";
 
 const categories: (UseCaseCategory | "all")[] = ["all", "app", "workflow"];
-
-const iconByCategory: Record<
-  UseCaseCategory | "all",
-  React.ComponentType<{ className?: string }>
-> = {
-  all: LayoutGrid,
-  app: AppWindow,
-  workflow: Workflow,
-};
 
 interface CategoryFilterProps {
   selected: UseCaseCategory | "all";
   onChange: (category: UseCaseCategory | "all") => void;
   locale?: Locale;
-  /** Total count per category (and "all"). Renders next to each pill. */
+  /** Total count per category (and "all"). Renders next to each label. */
   counts?: Partial<Record<UseCaseCategory | "all", number>>;
 }
 
@@ -29,37 +18,30 @@ export function CategoryFilter({
   counts,
 }: CategoryFilterProps) {
   return (
-    <div className="flex flex-wrap justify-center gap-2">
-      {categories.map((cat) => {
-        const Icon = iconByCategory[cat];
-        const isSelected = selected === cat;
-        const count = counts?.[cat];
-        const label =
-          cat === "all" ? t(locale, "useCases.all") : t(locale, categoryKeys[cat]);
-
+    <div
+      role="group"
+      aria-label={t(locale, "useCases.filterLabel")}
+      className="site-chips"
+      data-testid="use-case-filter"
+    >
+      {categories.map((category) => {
+        const count = counts?.[category];
         return (
-          <Button
-            key={cat}
-            variant={isSelected ? "default" : "outline"}
-            size="sm"
-            className="rounded-full gap-2"
-            onClick={() => onChange(cat)}
-            aria-pressed={isSelected}
+          <button
+            key={category}
+            type="button"
+            className="site-chip usecase-chip"
+            onClick={() => onChange(category)}
+            aria-pressed={selected === category}
+            data-category={category}
           >
-            <Icon className="size-3.5" aria-hidden="true" />
-            <span>{label}</span>
+            {category === "all"
+              ? t(locale, "useCases.all")
+              : t(locale, categoryKeys[category])}
             {typeof count === "number" && (
-              <span
-                className={
-                  isSelected
-                    ? "text-[10px] font-semibold tabular-nums opacity-70"
-                    : "text-[10px] font-semibold tabular-nums text-muted-foreground"
-                }
-              >
-                {count}
-              </span>
+              <span className="usecase-chip__count">{count}</span>
             )}
-          </Button>
+          </button>
         );
       })}
     </div>

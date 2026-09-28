@@ -1,0 +1,108 @@
+---
+import { ArrowRight } from "lucide-react";
+import { BarMark, SectionHead } from "@/components/site";
+import { FreeDownload } from "@/components/pricing/free-download";
+import { Price } from "@/components/pricing/price";
+import { commercialTier, fill } from "@/components/pricing/format";
+import { t, type Locale } from "@/i18n/index";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const individual = commercialTier("individual");
+const team = commercialTier("team");
+
+const freeFeatures = [
+  "allFeatures",
+  "allPlatforms",
+  "local",
+  "community",
+  "source",
+].map((key) => t(locale, `pricing.personal.feature.${key}`));
+
+const commercialFeatures = [
+  "sameFeatures",
+  "proprietary",
+  "devices",
+  "priority",
+  "payWhatYouWant",
+].map((key) =>
+  fill(t(locale, `pricing.commercial.feature.${key}`), {
+    individual: individual.devices,
+    team: team.devices,
+  }),
+);
+---
+
+<section class="site-section site-section--rule">
+  <div class="site-wrap">
+    <SectionHead
+      label={t(locale, "pricing.compare.label")}
+      title={t(locale, "pricing.compare.title")}
+      lede={t(locale, "pricing.compare.subtitle")}
+      seed={19}
+    />
+
+    <div class="commercial-compare reveal-hidden">
+      <div id="personal-plan" class="commercial-compare__plan commercial-anchor">
+        <div class="commercial-compare__head">
+          <p class="site-label">
+            <BarMark />
+            {t(locale, "pricing.personal.badge")}
+          </p>
+          <h3 class="site-subtitle">{t(locale, "pricing.personal.title")}</h3>
+          <Price locale={locale} amount={0} />
+          <p class="site-text">{t(locale, "pricing.personal.priceNote")}</p>
+        </div>
+        <ul class="commercial-compare__rows">
+          {freeFeatures.map((feature) => (
+            <li>
+              <BarMark />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="commercial-compare__action">
+          <FreeDownload
+            client:visible
+            locale={locale}
+            className="site-button site-button--quiet site-button--small"
+          />
+        </div>
+      </div>
+
+      <div id="commercial-plans" class="commercial-compare__plan commercial-anchor">
+        <div class="commercial-compare__head">
+          <p class="site-label site-label--muted">
+            <BarMark />
+            {t(locale, "pricing.commercial.badge")}
+          </p>
+          <h3 class="site-subtitle">{t(locale, "pricing.commercial.title")}</h3>
+          <Price
+            locale={locale}
+            amount={individual.price.monthly}
+            suffix={t(locale, "pricing.tiers.perMonth")}
+            from
+          />
+          <p class="site-text">{t(locale, "pricing.commercial.priceNote")}</p>
+        </div>
+        <ul class="commercial-compare__rows">
+          {commercialFeatures.map((feature) => (
+            <li>
+              <BarMark />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="commercial-compare__action">
+          <a href="#commercial-table" class="site-link">
+            {t(locale, "pricing.commercial.cta")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,9 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/commercial.css";
+import { ArrowRight } from "lucide-react";
+import { BarMark, PageHead, SectionHead, WaveRule } from "@/components/site";
+import { Price } from "@/components/pricing/price";
+import { commercialTier, fill } from "@/components/pricing/format";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { Button } from "@/components/ui/button";
-import { commercialTiers, currencySymbol, salesEmail } from "@/lib/pricing";
+import { salesEmail } from "@/lib/pricing";
 import { macDmgUrl } from "@/lib/platform-download";
 
 interface Props {
@@ -16,17 +20,22 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 
-const teamTier = commercialTiers.find((t) => t.id === "team");
-const enterpriseTier = commercialTiers.find((t) => t.id === "enterprise");
+const teamTier = commercialTier("team");
+const enterpriseTier = commercialTier("enterprise");
 
 const features = [
-  { key: "deviceManagement", icon: "devices" },
-  { key: "adminProfiles", icon: "profiles" },
-  { key: "customEngines", icon: "engines" },
-  { key: "compliance", icon: "compliance" },
-  { key: "prioritySupport", icon: "support" },
-  { key: "auditable", icon: "auditable" },
-];
+  "deviceManagement",
+  "adminProfiles",
+  "customEngines",
+  "compliance",
+  "prioritySupport",
+  "auditable",
+].map((key) => ({
+  title: t(locale, `business.feature.${key}.title`),
+  description: fill(t(locale, `business.feature.${key}.description`), {
+    count: teamTier.devices,
+  }),
+}));
 
 const trust = ["local", "gpl", "noTelemetry"];
 ---
@@ -37,183 +46,156 @@ const trust = ["local", "gpl", "noTelemetry"];
   canonicalPath={canonicalPath(locale, "/business")}
   locale={locale}
 >
-  <section class="relative overflow-hidden py-16 sm:py-24">
-    <div class="pointer-events-none absolute inset-0">
-      <div class="absolute -left-32 top-0 h-[400px] w-[400px] rounded-full bg-indigo-400/10 blur-[120px] dark:bg-indigo-500/15"></div>
-      <div class="absolute -right-32 top-32 h-[400px] w-[400px] rounded-full bg-sky-400/10 blur-[120px] dark:bg-sky-500/15"></div>
-    </div>
+  <div class="site-page commercial">
+    <PageHead
+      label={t(locale, "business.hero.badge")}
+      title={t(locale, "business.hero.title")}
+      lede={t(locale, "business.hero.subtitle")}
+    >
+      <a href={`mailto:${salesEmail}`} class="site-button">{t(locale, "business.hero.ctaSales")}</a>
+      <a href={localePath(locale, "/pricing")} class="site-link">
+        {t(locale, "business.hero.ctaPricing")}
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </a>
+    </PageHead>
 
-    <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
-      <span class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm">
-        {t(locale, "business.hero.badge")}
-      </span>
-      <h1 class="mt-6 font-display text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl">
-        {t(locale, "business.hero.title")}
-      </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
-        {t(locale, "business.hero.subtitle")}
-      </p>
-
-      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button size="pill" asChild>
-          <a href={`mailto:${salesEmail}`}>{t(locale, "business.hero.ctaSales")}</a>
-        </Button>
-        <Button variant="outline" size="pill" asChild>
-          <a href={localePath(locale, "/pricing")}>{t(locale, "business.hero.ctaPricing")}</a>
-        </Button>
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap">
+        <SectionHead
+          label={t(locale, "business.features.label")}
+          title={t(locale, "business.features.title")}
+          lede={t(locale, "business.features.subtitle")}
+          seed={7}
+        />
+        <ul class="site-grid reveal-hidden">
+          {features.map((feature) => (
+            <li class="site-grid__item">
+              <h3 class="site-heading">{feature.title}</h3>
+              <p class="site-text">{feature.description}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="py-12 sm:py-16">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          {t(locale, "business.features.title")}
-        </h2>
-        <p class="mt-3 text-muted-foreground">
-          {t(locale, "business.features.subtitle")}
-        </p>
-      </div>
-
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map(({ key }) => (
-          <div class="rounded-2xl border bg-card p-6">
-            <h3 class="text-base font-semibold">{t(locale, `business.feature.${key}.title`)}</h3>
-            <p class="mt-2 text-sm text-muted-foreground">{t(locale, `business.feature.${key}.description`)}</p>
+    <section class="site-section site-section--band">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "business.trust.label")} seed={11} />
+        <div class="site-split">
+          <div class="site-split__head reveal-hidden">
+            <h2 class="site-title site-title--start">{t(locale, "business.trust.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "business.trust.subtitle")}</p>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="py-12 sm:py-16">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6">
-      <div class="rounded-3xl border bg-card p-8 sm:p-12">
-        <div class="grid gap-8 md:grid-cols-2 md:items-center">
           <div>
-            <h2 class="font-display text-3xl font-bold tracking-tight">
-              {t(locale, "business.trust.title")}
-            </h2>
-            <p class="mt-3 text-muted-foreground">
-              {t(locale, "business.trust.subtitle")}
-            </p>
+            <ul class="site-points">
+              {trust.map((key) => (
+                <li class="site-points__item">
+                  <BarMark className="site-points__mark" />
+                  <div>
+                    <h3 class="site-points__title">{t(locale, `business.trust.${key}.title`)}</h3>
+                    <p class="site-points__text">{t(locale, `business.trust.${key}.description`)}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div class="site-callout commercial-review">
+              <p>{t(locale, "business.trust.review.description")}</p>
+              <a href={localePath(locale, "/business/legal-security-review")} class="site-link">
+                {t(locale, "business.trust.review.cta")}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </a>
+            </div>
           </div>
-          <ul class="space-y-3 text-sm">
-            {trust.map((key) => (
-              <li class="flex gap-3">
-                <span class="mt-1 size-2 shrink-0 rounded-full bg-emerald-500"></span>
-                <div>
-                  <p class="font-medium text-foreground">{t(locale, `business.trust.${key}.title`)}</p>
-                  <p class="text-muted-foreground">{t(locale, `business.trust.${key}.description`)}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="mt-8 border-t border-border pt-6">
-          <p class="text-sm text-muted-foreground">
-            {t(locale, "business.trust.review.description")}
-          </p>
-          <Button variant="outline" size="pill" asChild className="mt-4">
-            <a href={localePath(locale, "/business/legal-security-review")}>
-              {t(locale, "business.trust.review.cta")}
-            </a>
-          </Button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="py-12 sm:py-16">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          {t(locale, "business.pricing.title")}
-        </h2>
-        <p class="mt-3 text-muted-foreground">
-          {t(locale, "business.pricing.subtitle")}
-        </p>
-      </div>
-
-      <div class="mt-8 grid gap-4 sm:grid-cols-2">
-        {teamTier && (
-          <div class="rounded-2xl border bg-card p-6">
-            <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              {t(locale, "pricing.tiers.team.name")}
-            </p>
-            <p class="mt-2 text-3xl font-bold">
-              {teamTier.price.monthly} {currencySymbol}
-              <span class="ml-1 text-base font-normal text-muted-foreground">
-                {t(locale, "pricing.tiers.perMonth")}
-              </span>
-            </p>
-            <p class="mt-1 text-sm text-muted-foreground">
-              {t(locale, "business.pricing.teamDevices")}
-            </p>
-            <Button asChild className="mt-4 w-full" variant="outline">
+    <section class="site-section">
+      <div class="site-wrap">
+        <SectionHead
+          label={t(locale, "business.pricing.label")}
+          title={t(locale, "business.pricing.title")}
+          lede={t(locale, "business.pricing.subtitle")}
+          seed={13}
+        />
+        <ul class="site-tiers site-tiers--2 reveal-hidden">
+          <li>
+            <div class="site-tiers__link commercial-tier">
+              <h3 class="site-tiers__name">{t(locale, "pricing.tiers.team.name")}</h3>
+              <Price
+                locale={locale}
+                from
+                amount={teamTier.price.monthly}
+                suffix={t(locale, "pricing.tiers.perMonth")}
+              />
+              <p class="site-tiers__text">
+                {fill(t(locale, "business.pricing.teamDevices"), { count: teamTier.devices })}
+              </p>
               <a
                 href={teamTier.checkout.monthly}
                 target="_blank"
                 rel="noopener noreferrer"
+                class="site-button site-button--small commercial-tier__action"
                 data-checkout-tier="team"
                 data-checkout-billing-period="monthly"
                 data-tracking-placement="business"
               >
                 {t(locale, "business.pricing.startTeam")}
               </a>
-            </Button>
-          </div>
-        )}
-        {enterpriseTier && (
-          <div class="rounded-2xl border border-primary/40 bg-card p-6">
-            <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              {t(locale, "pricing.tiers.enterprise.name")}
-            </p>
-            <p class="mt-2 text-3xl font-bold">
-              {enterpriseTier.price.monthly} {currencySymbol}
-              <span class="ml-1 text-base font-normal text-muted-foreground">
-                {t(locale, "pricing.tiers.perMonth")}
-              </span>
-            </p>
-            <p class="mt-1 text-sm text-muted-foreground">
-              {t(locale, "business.pricing.enterpriseDevices")}
-            </p>
-            <Button asChild className="mt-4 w-full">
-              <a href={`mailto:${salesEmail}`}>
+            </div>
+          </li>
+          <li>
+            <div class="site-tiers__link commercial-tier">
+              <h3 class="site-tiers__name">{t(locale, "pricing.tiers.enterprise.name")}</h3>
+              <Price
+                locale={locale}
+                from
+                amount={enterpriseTier.price.monthly}
+                suffix={t(locale, "pricing.tiers.perMonth")}
+              />
+              <p class="site-tiers__text">{t(locale, "business.pricing.enterpriseDevices")}</p>
+              <a
+                href={`mailto:${salesEmail}`}
+                class="site-button site-button--small commercial-tier__action"
+              >
                 {t(locale, "business.pricing.contactSales")}
               </a>
-            </Button>
-          </div>
-        )}
+            </div>
+          </li>
+        </ul>
+        <p class="site-more">
+          <a href={localePath(locale, "/pricing")} class="site-link">
+            {t(locale, "business.pricing.seeAll")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </p>
       </div>
+    </section>
 
-      <p class="mt-6 text-center text-sm text-muted-foreground">
-        <a href={localePath(locale, "/pricing")} class="text-primary underline-offset-4 hover:underline">
-          {t(locale, "business.pricing.seeAll")}
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <section class="py-16 sm:py-24">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-        {t(locale, "business.finalCta.title")}
-      </h2>
-      <p class="mt-3 text-muted-foreground">
-        {t(locale, "business.finalCta.subtitle")}
-      </p>
-      <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button size="pill" asChild>
-          <a href={macDmgUrl} data-download-social-trigger data-download-platform="mac" data-download-target="mac_dmg" data-tracking-placement="business">
+    <section class="site-section site-section--rule">
+      <div class="site-wrap">
+        <SectionHead
+          label={t(locale, "business.finalCta.label")}
+          title={t(locale, "business.finalCta.title")}
+          lede={t(locale, "business.finalCta.subtitle")}
+          seed={17}
+        />
+        <div class="site-actions">
+          <a
+            href={macDmgUrl}
+            class="site-button"
+            data-download-social-trigger
+            data-download-platform="mac"
+            data-download-target="mac_dmg"
+            data-tracking-placement="business"
+          >
             {t(locale, "business.finalCta.download")}
           </a>
-        </Button>
-        <Button variant="outline" size="pill" asChild>
-          <a href={`mailto:${salesEmail}`}>{t(locale, "business.finalCta.contact")}</a>
-        </Button>
+          <a href={`mailto:${salesEmail}`} class="site-button site-button--quiet">
+            {t(locale, "business.finalCta.contact")}
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>

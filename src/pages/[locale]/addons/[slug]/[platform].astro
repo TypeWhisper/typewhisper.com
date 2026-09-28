@@ -1,16 +1,20 @@
 ---
+import "@/styles/addons.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AddonEditionGuide from "@/components/addons/addon-edition-guide.astro";
+import AddonHead from "@/components/addons/addon-head.astro";
 import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
 import AddonEditionSwitcher from "@/components/addons/addon-edition-switcher.astro";
-import { Badge } from "@/components/ui/badge";
-import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
+import AddonShot from "@/components/addons/addon-shot.astro";
+import AddonToc from "@/components/addons/addon-toc.astro";
+import { addonShotText } from "@/components/addons/shot-text";
 import {
   addonEditionHasGuide,
   editionPlatformSlugs,
   getDefaultAddonEditionScreenshot,
   getAddonEditionModules,
   getAddonEditions,
+  type AddonEditionScreenshot,
 } from "@/data/addon-editions";
 import {
   getPlugin,
@@ -24,18 +28,10 @@ import {
   locales,
   screenshotPath,
   t,
-  webpPath,
   type Locale,
 } from "@/i18n/index";
 import { canonicalPath } from "@/lib/locale-routes";
-import {
-  ArrowLeft,
-  Check,
-  ExternalLink,
-  Gem,
-  Plug,
-  SlidersHorizontal,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -90,33 +86,93 @@ const platformLabel = t(locale, platformKeys[platform]);
 const familyPath = canonicalPath(locale, `/addons/${plugin.slug}`);
 const editionPath = `${familyPath}/${editionPlatformSlugs[platform]}`;
 const pageTitle = `${plugin.name} ${t(locale, "addons.editions.for")} ${platformLabel}`;
-const showBrandLogo = plugin.brandLogo
-  ? canRenderBrandLogo(plugin.brandLogo, "addon")
-  : false;
 const configuredScreenshots = edition.screenshots ?? [];
 const defaultScreenshot = getDefaultAddonEditionScreenshot(edition);
-const editionScreenshots =
+const editionScreenshots: AddonEditionScreenshot[] =
   configuredScreenshots.length > 0
     ? configuredScreenshots
     : defaultScreenshot
-      ? [
-          {
-            ...defaultScreenshot,
-            alt: `${plugin.name} ${platformLabel} ${t(locale, "addons.settingsAlt")}`,
-          },
-        ]
+      ? [defaultScreenshot]
       : [];
-const screenshots = editionScreenshots.map((screenshot) => {
-  const localizedSrc =
+const screenshots = editionScreenshots.map((screenshot) => ({
+  ...addonShotText(locale, {
+    name: plugin.name,
+    platform,
+    alt: screenshot.alt,
+    caption: screenshot.caption,
+  }),
+  src:
     screenshot.localized === false
       ? screenshot.src
-      : screenshotPath(locale, screenshot.src);
-  return {
-    ...screenshot,
-    src: localizedSrc,
-    webpSrc: webpPath(localizedSrc),
-  };
-});
+      : screenshotPath(locale, screenshot.src),
+}));
+const links = [
+  ...(plugin.apiDocsUrl
+    ? [{ label: t(locale, "addons.apiDocs"), url: plugin.apiDocsUrl }]
+    : []),
+  ...(edition.sourceUrl
+    ? [
+        {
+          label: `${platformLabel} ${t(locale, "addons.sourceCode")}`,
+          url: edition.sourceUrl,
+        },
+      ]
+    : []),
+  ...(edition.releaseUrl
+    ? [
+        {
+          label: `${t(locale, "addons.editions.release")} ${edition.releaseVersion ?? edition.version}`,
+          url: edition.releaseUrl,
+        },
+      ]
+    : []),
+];
+const hasHighlights = (edition.highlights?.length ?? 0) > 0;
+const hasConfiguration = (edition.configuration?.length ?? 0) > 0;
+
+type Heading = { depth: number; slug: string; text: string };
+const guideModule = (editionHasGuide ? editionModule : familyModule) as
+  | { getHeadings?: () => Heading[] }
+  | undefined;
+const guideHeadings = GuideContent
+  ? (guideModule?.getHeadings?.() ?? []).filter((heading) => heading.depth === 2)
+  : [
+      {
+        depth: 2,
+        slug: "edition-guide-heading",
+        text: t(locale, "addons.editions.guide.heading"),
+      },
+    ];
+const headings: Heading[] = [
+  ...(screenshots.length > 0
+    ? [
+        {
+          depth: 2,
+          slug: "edition-screenshots",
+          text: t(locale, "addons.editions.screenshots"),
+        },
+      ]
+    : []),
+  ...(hasHighlights
+    ? [
+        {
+          depth: 2,
+          slug: "edition-features",
+          text: t(locale, "addons.editions.features"),
+        },
+      ]
+    : []),
+  ...(hasConfiguration
+    ? [
+        {
+          depth: 2,
+          slug: "edition-settings",
+          text: t(locale, "addons.editions.settings"),
+        },
+      ]
+    : []),
+  ...guideHeadings,
+];
 ---
 
 <BaseLayout
@@ -127,291 +183,150 @@ const screenshots = editionScreenshots.map((screenshot) => {
   locale={locale}
 >
   <div
-    class="py-12 sm:py-16 lg:py-20"
+    class="site-page addon-page"
     data-testid="addon-edition-detail"
     data-platform={platform}
   >
-    <div class="mx-auto max-w-5xl px-4 sm:px-6">
-      <a
-        href={familyPath}
-        class="mb-6 inline-flex min-h-11 items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-      >
-        <ArrowLeft className="size-4" aria-hidden="true" />
-        {t(locale, "addons.editions.backToFamily")}
-      </a>
+    <AddonHead
+      locale={locale}
+      crumbs={[
+        { label: t(locale, "addons.heading"), href: canonicalPath(locale, "/addons") },
+        { label: plugin.name, href: familyPath },
+        { label: platformLabel },
+      ]}
+      label={t(locale, "addons.editions.platformEdition")}
+      title={pageTitle}
+      lede={edition.description}
+      plugin={plugin}
+    >
+      <Fragment slot="meta">
+        <li>{t(locale, "addons.by")} {plugin.author}</li>
+        <li>{t(locale, sourceKeys[plugin.source])}</li>
+      </Fragment>
+      {links.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="site-link"
+        >
+          {link.label}
+          <ArrowUpRight className="size-4" aria-hidden="true" />
+        </a>
+      ))}
+      <AddonEditionSwitcher
+        slot="aside"
+        editions={editions}
+        familyPath={familyPath}
+        locale={locale}
+        currentPlatform={platform}
+      />
+    </AddonHead>
 
-      <header class="border-b pb-8 sm:pb-10">
-        <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
-          <div>
-            <p
-              class="text-xs font-semibold uppercase tracking-[0.18em] text-primary"
-            >
-              {t(locale, "addons.editions.platformEdition")}
-            </p>
-            <div class="mt-4 flex items-start gap-4">
-              <div
-                class="flex size-14 shrink-0 items-center justify-center rounded-2xl border bg-card shadow-sm"
-              >
-                {
-                  showBrandLogo && plugin.brandLogo ? (
-                    <BrandLogo
-                      brand={plugin.brandLogo}
-                      context="addon"
-                      className="size-8 rounded-lg"
-                      alt={plugin.name}
-                    />
-                  ) : plugin.iconUrl ? (
-                    <img
-                      src={plugin.iconUrl}
-                      alt={plugin.name}
-                      class="size-8 rounded-lg"
-                    />
-                  ) : plugin.icon === "Gem" ? (
-                    <Gem className="size-7 text-muted-foreground" />
-                  ) : (
-                    <Plug className="size-7 text-muted-foreground" />
-                  )
-                }
-              </div>
-              <div class="min-w-0">
-                <div class="flex flex-wrap items-center gap-2.5">
-                  <h1
-                    class="font-display text-3xl font-bold tracking-tight sm:text-4xl"
-                  >
-                    {pageTitle}
-                  </h1>
-                  <Badge variant="secondary" className="text-[10px]">
-                    {t(locale, sourceKeys[plugin.source])}
-                  </Badge>
-                </div>
-                <p
-                  class="mt-3 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
-                >
-                  {edition.description}
-                </p>
-              </div>
+    <div class="addon-facts-band">
+      <dl class="site-wrap addon-facts">
+        <div>
+          <dt>{t(locale, "addons.editions.version")}</dt>
+          <dd class="addon-facts__mono">{edition.version}</dd>
+        </div>
+        {
+          edition.id && (
+            <div>
+              <dt>{t(locale, "addons.editions.pluginId")}</dt>
+              <dd class="addon-facts__mono">
+                {edition.id.split(".").map((part, index) => (
+                  <Fragment>{index > 0 && <Fragment>.<wbr /></Fragment>}{part}</Fragment>
+                ))}
+              </dd>
             </div>
-          </div>
+          )
+        }
+        {
+          edition.requirements && edition.requirements.length > 0 && (
+            <div>
+              <dt>{t(locale, "addons.editions.requirements")}</dt>
+              <dd>{edition.requirements.join(" · ")}</dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
 
-          <AddonEditionSwitcher
-            editions={editions}
-            familyPath={familyPath}
-            locale={locale}
-            currentPlatform={platform}
-          />
-        </div>
+    <section class="site-section addon-section">
+      <div class="site-wrap addon-doc addon-doc--toc">
+        <aside class="addon-doc__aside">
+          <AddonToc headings={headings} locale={locale} />
+        </aside>
 
-        <AddonHostRequirement platform={platform} minAppVersion={edition.minAppVersion} locale={locale} />
+        <div class="addon-doc__main">
+          <AddonHostRequirement platform={platform} minAppVersion={edition.minAppVersion} locale={locale} />
 
-        <dl class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <div class="rounded-xl border bg-card px-4 py-3">
-            <dt
-              class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground"
-            >
-              {t(locale, "addons.editions.version")}
-            </dt>
-            <dd class="mt-1 font-mono text-sm font-semibold">
-              {edition.version}
-            </dd>
-          </div>
-          {
-            edition.id && (
-              <div class="min-w-0 rounded-xl border bg-card px-4 py-3">
-                <dt class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                  {t(locale, "addons.editions.pluginId")}
-                </dt>
-                <dd
-                  class="mt-1 truncate font-mono text-sm font-semibold"
-                  title={edition.id}
-                >
-                  {edition.id}
-                </dd>
-              </div>
-            )
-          }
-          {
-            edition.requirements && edition.requirements.length > 0 && (
-              <div class="rounded-xl border bg-card px-4 py-3 sm:col-span-2 lg:col-span-1">
-                <dt class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                  {t(locale, "addons.editions.requirements")}
-                </dt>
-                <dd class="mt-1 text-sm font-semibold">
-                  {edition.requirements.join(" · ")}
-                </dd>
-              </div>
-            )
-          }
-        </dl>
-
-        <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-          {
-            plugin.apiDocsUrl && (
-              <a
-                href={plugin.apiDocsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex min-h-11 items-center gap-1.5 rounded-lg text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-              >
-                <ExternalLink className="size-3.5" aria-hidden="true" />{" "}
-                {t(locale, "addons.apiDocs")}
-              </a>
-            )
-          }
-          {
-            edition.sourceUrl && (
-              <a
-                href={edition.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex min-h-11 items-center gap-1.5 rounded-lg text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-              >
-                <ExternalLink className="size-3.5" aria-hidden="true" />{" "}
-                {platformLabel} {t(locale, "addons.sourceCode")}
-              </a>
-            )
-          }
-          {
-            edition.releaseUrl && (
-              <a
-                href={edition.releaseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex min-h-11 items-center gap-1.5 rounded-lg text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-              >
-                <ExternalLink className="size-3.5" aria-hidden="true" />{" "}
-                {t(locale, "addons.editions.release")}{" "}
-                {edition.releaseVersion ?? edition.version}
-              </a>
-            )
-          }
-        </div>
-      </header>
-
-      {
-        screenshots.length > 0 && (
-          <section class="mt-10" aria-labelledby="edition-screenshots">
-            <h2
-              id="edition-screenshots"
-              class="font-display text-xl font-bold sm:text-2xl"
-            >
-              {t(locale, "addons.editions.screenshots")}
-            </h2>
-            <div class="mt-5 grid gap-6">
-              {screenshots.map((screenshot) => (
-                <figure class="overflow-hidden rounded-2xl border bg-card shadow-lg">
-                  <picture>
-                    <source srcset={screenshot.webpSrc} type="image/webp" />
-                    <img
+          <div class="site-prose addon-prose">
+            {
+              screenshots.length > 0 && (
+                <section aria-labelledby="edition-screenshots">
+                  <h2 id="edition-screenshots">
+                    {t(locale, "addons.editions.screenshots")}
+                  </h2>
+                  {screenshots.map((screenshot) => (
+                    <AddonShot
                       src={screenshot.src}
                       alt={screenshot.alt}
-                      class="h-auto w-full"
+                      caption={screenshot.caption}
+                      captionRepeatsAlt={screenshot.captionRepeatsAlt}
                       loading="eager"
                     />
-                  </picture>
-                  {screenshot.caption && (
-                    <figcaption class="border-t px-4 py-3 text-sm leading-6 text-muted-foreground sm:px-5">
-                      {screenshot.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              ))}
-            </div>
-          </section>
-        )
-      }
+                  ))}
+                </section>
+              )
+            }
 
-      {
-        ((edition.highlights?.length ?? 0) > 0 ||
-          (edition.configuration?.length ?? 0) > 0) && (
-          <div class="mt-10 grid gap-6 border-t pt-8 sm:mt-12 sm:pt-10 lg:grid-cols-2">
-            {edition.highlights && edition.highlights.length > 0 && (
-              <section
-                class="rounded-2xl border bg-card p-5 sm:p-6"
-                aria-labelledby="edition-features"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Check className="size-5" aria-hidden="true" />
-                  </span>
-                  <h2
-                    id="edition-features"
-                    class="font-display text-xl font-bold"
-                  >
+            {
+              hasHighlights && (
+                <section aria-labelledby="edition-features">
+                  <h2 id="edition-features">
                     {t(locale, "addons.editions.features")}
                   </h2>
-                </div>
-                <ul class="mt-5 space-y-3">
-                  {edition.highlights.map((highlight) => (
-                    <li class="flex gap-3 text-sm leading-6 text-muted-foreground">
-                      <Check
-                        className="mt-1 size-4 shrink-0 text-primary"
-                        aria-hidden="true"
-                      />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+                  <ul>
+                    {edition.highlights?.map((highlight) => (
+                      <li>{highlight}</li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            }
 
-            {edition.configuration && edition.configuration.length > 0 && (
-              <section
-                class="rounded-2xl border bg-card p-5 sm:p-6"
-                aria-labelledby="edition-settings"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <SlidersHorizontal className="size-5" aria-hidden="true" />
-                  </span>
-                  <h2
-                    id="edition-settings"
-                    class="font-display text-xl font-bold"
-                  >
+            {
+              hasConfiguration && (
+                <section aria-labelledby="edition-settings">
+                  <h2 id="edition-settings">
                     {t(locale, "addons.editions.settings")}
                   </h2>
-                </div>
-                <ul class="mt-5 space-y-3">
-                  {edition.configuration.map((setting) => (
-                    <li class="flex gap-3 text-sm leading-6 text-muted-foreground">
-                      <span
-                        class="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary"
-                        aria-hidden="true"
-                      />
-                      <span>{setting}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </div>
-        )
-      }
+                  <ul>
+                    {edition.configuration?.map((setting) => (
+                      <li>{setting}</li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            }
 
-      {
-        GuideContent ? (
-          <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none border-t pt-8 sm:mt-12 sm:pt-10">
-            <GuideContent />
+            {
+              GuideContent ? (
+                <div class="addon-prose__guide">
+                  <GuideContent />
+                </div>
+              ) : (
+                <AddonEditionGuide
+                  edition={edition}
+                  plugin={plugin}
+                  locale={locale}
+                />
+              )
+            }
           </div>
-        ) : (
-          <AddonEditionGuide
-            edition={edition}
-            plugin={plugin}
-            locale={locale}
-          />
-        )
-      }
-    </div>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>
-
-<style>
-  :global(.addon-prose :not(pre) > code) {
-    overflow-wrap: anywhere;
-  }
-
-  :global(.addon-prose table) {
-    display: block;
-    max-width: 100%;
-    overflow-x: auto;
-  }
-</style>

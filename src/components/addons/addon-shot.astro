@@ -1,0 +1,45 @@
+---
+import { webpPath } from "@/i18n/index";
+import { shotSize } from "@/components/addons/shot-size";
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  /** The caption repeats the alternative text and is hidden from screen readers. */
+  captionRepeatsAlt?: boolean;
+  loading?: "eager" | "lazy";
+}
+
+const { src, alt, caption, captionRepeatsAlt = false, loading = "lazy" } = Astro.props;
+const size = await shotSize(src);
+// macOS captures are retina and carry their window shadow; Windows captures are 1x.
+const isWindowCapture = !src.includes("/screenshots/windows/");
+const displayWidth = size
+  ? Math.round(isWindowCapture ? size.width / 2 : size.width)
+  : undefined;
+---
+
+<figure
+  class:list={["addon-shot", isWindowCapture ? "addon-shot--window" : "addon-shot--framed"]}
+  style={displayWidth ? `--addon-shot-width: ${displayWidth}px` : undefined}
+>
+  <div class="addon-shot__stage">
+    <picture>
+      <source srcset={webpPath(src)} type="image/webp" />
+      <img
+        src={src}
+        alt={alt}
+        width={size?.width}
+        height={size?.height}
+        loading={loading}
+        decoding="async"
+      />
+    </picture>
+  </div>
+  {caption && (
+    <figcaption class="site-caption" aria-hidden={captionRepeatsAlt ? "true" : undefined}>
+      {caption}
+    </figcaption>
+  )}
+</figure>

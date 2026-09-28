@@ -1,40 +1,50 @@
+import { ArrowRight } from "lucide-react";
+import { WaveRule } from "@/components/site";
 import type { UseCase } from "@/data/use-cases";
 import { t, type Locale } from "@/i18n/index";
-import { UseCaseCard } from "@/components/use-cases/use-case-card";
+import { UseCaseList } from "./use-case-list";
 
 interface UseCaseRelatedProps {
-  currentSlug: string;
+  current: UseCase;
   allUseCases: UseCase[];
   basePath?: string;
   locale?: Locale;
 }
 
+/** The other use cases of the same group, and the way to all of them. */
 export function UseCaseRelated({
-  currentSlug,
+  current,
   allUseCases,
   basePath = "/use-cases",
   locale = "en",
 }: UseCaseRelatedProps) {
-  const others = allUseCases.filter((uc) => uc.slug !== currentSlug);
+  const others = allUseCases.filter(
+    (useCase) =>
+      useCase.slug !== current.slug && useCase.group === current.group,
+  );
   if (others.length === 0) return null;
 
   return (
-    <section className="section-light-gray py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          {t(locale, "useCases.relatedTitle")}
-        </h2>
+    <section className="site-section" data-testid="use-case-related">
+      <div className="site-wrap">
+        <WaveRule label={t(locale, "useCases.relatedLabel")} seed={41} />
+        <div className="site-split">
+          <div className="site-split__head reveal-hidden">
+            <h2 className="site-title site-title--start">
+              {t(locale, "useCases.relatedTitle")}
+            </h2>
+            <a href={basePath} className="site-link usecase-related__all">
+              {t(locale, "useCases.allUseCases")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </a>
+          </div>
 
-        <div className="reveal-hidden mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {others.map((uc) => (
-            <UseCaseCard
-              key={uc.slug}
-              useCase={uc}
-              basePath={basePath}
-              locale={locale}
-              compact
-            />
-          ))}
+          <UseCaseList
+            entries={others}
+            basePath={basePath}
+            locale={locale}
+            className="reveal-hidden"
+          />
         </div>
       </div>
     </section>

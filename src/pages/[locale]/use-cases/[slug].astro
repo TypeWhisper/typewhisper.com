@@ -1,13 +1,18 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/use-cases.css";
+import { WaveRule } from "@/components/site";
 import { getUseCaseModules, getUseCases } from "@/data/use-cases";
-import { UseCaseHero } from "@/components/use-cases/use-case-hero";
+import { UseCaseHead } from "@/components/use-cases/use-case-head";
+import { UseCaseSpoken } from "@/components/use-cases/use-case-spoken";
+import { UseCaseShot } from "@/components/use-cases/use-case-shot";
 import { UseCaseFeatures } from "@/components/use-cases/use-case-features";
 import { UseCaseHowItWorks } from "@/components/use-cases/use-case-how-it-works";
 import { UseCaseBenefits } from "@/components/use-cases/use-case-benefits";
+import { UseCaseToc } from "@/components/use-cases/use-case-toc";
 import { UseCaseRelated } from "@/components/use-cases/use-case-related";
 import { UseCaseCTA } from "@/components/use-cases/use-case-cta";
-import { locales } from "@/i18n/index";
+import { locales, t } from "@/i18n/index";
 import { canonicalPath } from "@/lib/locale-routes";
 
 export function getStaticPaths() {
@@ -22,6 +27,7 @@ export function getStaticPaths() {
 const { locale, mod } = Astro.props;
 const useCase = mod.frontmatter;
 const Content = mod.default;
+const headings = mod.getHeadings?.() ?? [];
 const allUseCases = getUseCases(locale);
 const basePath = canonicalPath(locale, "/use-cases");
 ---
@@ -31,22 +37,38 @@ const basePath = canonicalPath(locale, "/use-cases");
   canonicalPath={canonicalPath(locale, `/use-cases/${useCase.slug}`)}
   locale={locale}
 >
-  <UseCaseHero useCase={useCase} backHref={basePath} locale={locale} />
-  <UseCaseFeatures features={useCase.features} locale={locale} color={useCase.color} />
-  <UseCaseHowItWorks steps={useCase.howItWorks} locale={locale} color={useCase.color} />
-  <UseCaseBenefits benefits={useCase.benefits} locale={locale} color={useCase.color} />
-  {Content && (
-    <section class="section-light py-16 sm:py-20">
-      <div class="prose prose-neutral mx-auto max-w-4xl px-4 sm:px-6 prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground prose-a:text-primary">
-        <Content />
-      </div>
-    </section>
-  )}
-  <UseCaseRelated
-    currentSlug={useCase.slug}
-    allUseCases={allUseCases}
-    basePath={basePath}
-    locale={locale}
-  />
-  <UseCaseCTA locale={locale} color={useCase.color} />
+  <div class="site-page usecase-page">
+    <UseCaseHead useCase={useCase} backHref={basePath} locale={locale} />
+    {useCase.example && <UseCaseSpoken example={useCase.example} locale={locale} />}
+    <UseCaseFeatures features={useCase.features} locale={locale} />
+    {useCase.heroScreenshot && useCase.heroCaption && (
+      <UseCaseShot
+        src={useCase.heroScreenshot}
+        caption={useCase.heroCaption}
+        locale={locale}
+      />
+    )}
+    <UseCaseHowItWorks steps={useCase.howItWorks} locale={locale} />
+    <UseCaseBenefits benefits={useCase.benefits} locale={locale} />
+    {headings.length > 0 && (
+      <section class="site-section" data-testid="use-case-details">
+        <div class="site-wrap">
+          <WaveRule label={t(locale, "useCases.detailsLabel")} seed={37} />
+          <div class="site-split site-split--aside">
+            <UseCaseToc headings={headings} locale={locale} />
+            <div class="site-prose usecase-prose">
+              <Content />
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+    <UseCaseRelated
+      current={useCase}
+      allUseCases={allUseCases}
+      basePath={basePath}
+      locale={locale}
+    />
+    <UseCaseCTA locale={locale} />
+  </div>
 </BaseLayout>

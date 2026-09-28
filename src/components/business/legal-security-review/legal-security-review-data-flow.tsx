@@ -1,72 +1,36 @@
-import type { CSSProperties } from "react";
-import {
-  Cloud,
-  Cpu,
-  Database,
-  Plug,
-  Scale,
-  type LucideIcon,
-} from "lucide-react";
+import { BarMark, WaveRule } from "@/components/site";
 import type { LegalSecurityReviewContent } from "@/data/legal-security-review";
-
-const iconMap: Record<string, LucideIcon> = {
-  Cpu,
-  Cloud,
-  Database,
-  Plug,
-  Scale,
-};
 
 interface LegalSecurityReviewDataFlowProps {
   dataFlow: LegalSecurityReviewContent["dataFlow"];
-  color: string;
+  label: string;
 }
 
+/** The building blocks along one line, from processing to approval. */
 export function LegalSecurityReviewDataFlow({
   dataFlow,
-  color,
+  label,
 }: LegalSecurityReviewDataFlowProps) {
   return (
-    <section className="section-light-gray py-12 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          {dataFlow.title}
-        </h2>
-
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {dataFlow.items.map((item) => {
-            const Icon = iconMap[item.icon] ?? Cpu;
-
-            return (
-              <div
-                key={item.area}
-                className="reveal-hidden rounded-2xl border bg-card p-6"
-                style={
-                  {
-                    boxShadow: `inset 0 0 0 1px ${color}14`,
-                  } satisfies CSSProperties
-                }
-              >
-                <div
-                  className="flex size-10 items-center justify-center rounded-xl"
-                  style={{
-                    backgroundColor: `${color}1A`,
-                    color,
-                    boxShadow: `inset 0 0 0 1px ${color}33`,
-                  }}
-                >
-                  <Icon className="size-5" />
-                </div>
-                <h3 className="mt-4 font-semibold text-foreground">
-                  {item.area}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {item.detail}
-                </p>
-              </div>
-            );
-          })}
+    <section className="site-section site-section--band">
+      <div className="site-wrap site-wrap--narrow">
+        <WaveRule label={label} seed={9} align="start" />
+        <div className="commercial-doc__head">
+          <h2 className="site-title site-title--start">{dataFlow.title}</h2>
         </div>
+        <ol className="commercial-flow">
+          {dataFlow.items.map((item) => (
+            <li key={item.area} className="commercial-flow__item">
+              <span className="commercial-flow__node" aria-hidden="true">
+                <BarMark />
+              </span>
+              <div>
+                <h3 className="site-heading">{item.area}</h3>
+                <p className="site-text">{item.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

@@ -1,6 +1,10 @@
 ---
+import "@/styles/addons.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import AddonsDevelop from "@/pages/addons/_develop.tsx";
+import AddonHead from "@/components/addons/addon-head.astro";
+import AddonToc from "@/components/addons/addon-toc.astro";
+import * as guideEn from "@/components/addons/develop/en.mdx";
+import * as guideDe from "@/components/addons/develop/de.mdx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -13,6 +17,18 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
+const guide = locale === "de" ? guideDe : guideEn;
+const Guide = guide.Content;
+
+// Sections, plus the types of the API reference.
+let section = "";
+const headings = guide.getHeadings().filter((heading) => {
+  if (heading.depth === 2) {
+    section = heading.slug;
+    return true;
+  }
+  return heading.depth === 3 && section.startsWith("sdk-api");
+});
 ---
 <BaseLayout
   title={t(locale, "addons.develop.title")}
@@ -20,5 +36,29 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/addons/develop")}
   locale={locale}
 >
-  <AddonsDevelop client:load locale={locale} backHref={canonicalPath(locale, "/addons")} />
+  <div class="site-page addon-page">
+    <AddonHead
+      locale={locale}
+      crumbs={[
+        { label: t(locale, "addons.heading"), href: canonicalPath(locale, "/addons") },
+        { label: t(locale, "addons.develop.heading") },
+      ]}
+      label={t(locale, "addons.develop.label")}
+      title={t(locale, "addons.develop.heading")}
+      lede={t(locale, "addons.develop.lede")}
+    />
+
+    <section class="site-section addon-section">
+      <div class="site-wrap addon-doc addon-doc--toc">
+        <aside class="addon-doc__aside">
+          <AddonToc headings={headings} locale={locale} />
+        </aside>
+        <div class="addon-doc__main">
+          <div class="site-prose addon-prose">
+            <Guide />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
