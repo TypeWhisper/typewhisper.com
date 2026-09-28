@@ -153,6 +153,18 @@ export default function DocsMacFeatures({
       </DocsSection>
 
       <DocsSection
+        id="statistics"
+        title={t(locale, "docs.mac.features.statistics.title")}
+      >
+        <p>{t(locale, "docs.mac.features.statistics.desc1")}</p>
+        <p>{t(locale, "docs.mac.features.statistics.desc2")}</p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/statistics.png")}
+          alt={t(locale, "docs.mac.features.statistics.imgAlt")}
+        />
+      </DocsSection>
+
+      <DocsSection
         id="integrations"
         title={t(locale, "docs.mac.features.plugins.title")}
       >
