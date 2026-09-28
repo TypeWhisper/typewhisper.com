@@ -19,7 +19,7 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Microsoft AI" }),
     ).toBeVisible();
-    await expect(page.getByAltText("Microsoft AI")).toHaveAttribute(
+    await expect(page.getByAltText("Microsoft AI", { exact: true })).toHaveAttribute(
       "src",
       "/brand-logos/microsoft-ai/logo.svg",
     );
@@ -96,7 +96,7 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Meta" }),
     ).toBeVisible();
-    await expect(page.getByAltText("Meta")).toHaveAttribute(
+    await expect(page.getByAltText("Meta", { exact: true })).toHaveAttribute(
       "src",
       "/brand-logos/meta/logo.svg",
     );
@@ -361,7 +361,15 @@ test.describe("add-on platform editions", () => {
         { exact: true },
       ),
     ).toBeVisible();
-    await expect(page.getByAltText("Obsidian-Einstellungen der macOS-Edition")).toBeVisible();
+    await expect(
+      page.getByAltText("Einstellungen von Obsidian in TypeWhisper für macOS", {
+        exact: true,
+      }),
+    ).toBeVisible();
+    // The specific caption says more than the alternative text and stays readable.
+    await expect(
+      page.locator("figcaption", { hasText: "Die macOS-Edition erkennt vorhandene Vaults" }),
+    ).not.toHaveAttribute("aria-hidden", "true");
 
     const switcher = page.getByTestId("addon-edition-switcher");
     await expect(switcher.locator('a[data-platform="mac"]')).toHaveAttribute(
@@ -374,7 +382,9 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Obsidian für Windows" }),
     ).toBeVisible();
-    await expect(page.getByText("Einstellungen der Windows-Edition")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Einstellungen der Windows-Edition" }),
+    ).toBeVisible();
     await expect(page.getByText("Auto-Export für jede Transkription")).toHaveCount(0);
     await expect(
       page.getByRole("link", { name: "Windows Quellcode" }),
@@ -407,6 +417,8 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Obsidian for Windows" }),
     ).toBeVisible();
-    await expect(page.getByText("Settings in the Windows edition")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Settings in the Windows edition" }),
+    ).toBeVisible();
   });
 });

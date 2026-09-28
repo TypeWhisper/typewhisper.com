@@ -1,0 +1,66 @@
+---
+slug: "vercel-ai-gateway"
+name: "Vercel AI Gateway"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "Cloud"
+brandLogo: "vercel"
+description: "Cloud transcription and LLM workflows through Vercel AI Gateway with one API key, model catalogs, pricing, and credit balance."
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.vercel-ai-gateway"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+homepage: "https://vercel.com/ai-gateway"
+apiDocsUrl: "https://vercel.com/docs/ai-gateway"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/VercelAIGatewayPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.0"
+principalClass: "VercelAIGatewayPlugin"
+---
+
+## About
+
+Vercel AI Gateway connects TypeWhisper to cloud transcription models and LLMs through one API key. The add-on has separate model catalogs for speech and for text workflows, and it shows model prices and your credit balance.
+
+This is a cloud provider. Audio and workflow text leave your Mac when you use it.
+
+## Requirements
+
+This release requires **TypeWhisper 1.7.0 or newer** on macOS 14 or later.
+
+You need your own **Vercel AI Gateway API key**. Speech-to-text on Vercel AI Gateway is in beta, so transcription models may not be enabled for your team yet.
+
+## Setup
+
+1. Install and enable **Vercel AI Gateway** in **Settings > Integrations > Discover**.
+2. Open the add-on settings. **Get API Key** opens the API key page of your Vercel team.
+3. Paste the key and select **Save**. The add-on stores the key in the macOS Keychain, validates it, and loads the model catalog and your credit balance.
+4. Choose a **Transcription Model** and an **LLM Model**.
+5. Select Vercel AI Gateway as your transcription engine or LLM provider.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **API Key** | Enter the key, reveal or hide it, and save it. The add-on reports whether the key is valid and shows your credit balance in US dollars. **Remove** deletes the stored key. |
+| **Transcription Model** | Search the list and select the model for speech-to-text. **Refresh** loads the current catalog. |
+| **LLM Model** | Search the list and select the model for workflow prompts. Each entry shows its price per one million input and output tokens, **Free**, or **Pricing unavailable**. |
+| **Temperature** | **Provider Default** sends no temperature. **Custom** sets a value from 0 to 2. |
+
+Until a catalog has been loaded, the add-on offers a short default list and says so below the model selection. It knows no prices for these entries and shows **Pricing unavailable**, as in the screenshot.
+
+## Transcription
+
+The add-on sends recorded audio to the gateway in one request. It does not stream partial text while you speak. Realtime models that accept audio only over a live connection are left out of the list.
+
+A language setting is passed on as a hint for OpenAI transcription models only. Translation is not supported, and TypeWhisper dictionary terms are not sent.
+
+## Cloud processing and privacy
+
+Audio is sent to Vercel AI Gateway for transcription, and workflow text is sent to it for LLM processing. The gateway passes the request on to the provider of the selected model. Available models, prices, and the balance come from Vercel AI Gateway.
+
+Use a local engine when content must stay on your Mac. Review the terms and privacy information of Vercel and of the model provider before you use sensitive content.
