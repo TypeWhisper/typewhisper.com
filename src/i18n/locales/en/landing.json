@@ -245,7 +245,7 @@
   "features.label": "Features",
   "features.tour.step": "{current} of {total}",
   "features.tour.goToStep": "Show screenshot {number}",
-  "features.mac.private.caption": "Statistics: key figures, activity per day, top apps, and models used, stored on your Mac",
+  "features.mac.private.caption": "Integrations: one local engine out of the box, no cloud provider active",
   "features.mac.dictation.caption": "Dictation settings: spoken language, engine, microphone, and sound",
   "features.mac.prompts.caption": "Settings, Workflows: three active workflows with their triggers",
   "features.mac.profiles.caption": "Settings, Integrations, Discover: add-ons to install, each marked Local or Cloud",

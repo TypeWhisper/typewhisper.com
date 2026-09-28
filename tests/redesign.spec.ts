@@ -544,7 +544,7 @@ test.describe("feature tour", () => {
     await figures.first().scrollIntoViewIfNeeded();
     await expect(figures.first().locator("img")).toBeVisible();
     await expect(figures.first().locator("figcaption")).toHaveText(
-      "Statistics: key figures, activity per day, top apps, and models used, stored on your Mac",
+      "Integrations: one local engine out of the box, no cloud provider active",
     );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
