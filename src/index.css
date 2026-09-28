@@ -44,21 +44,33 @@
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-stage: var(--stage);
+  --color-fill: var(--fill);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-faint: var(--text-faint);
+  --color-link-hover: var(--accent-text-hover);
+  --color-primary-hover: var(--primary-hover);
+  --color-wave: var(--wave);
+  /* Framed media (video, cards, code). */
+  --radius-frame: 0.875rem;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-display: "General Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 /*
  * Theme tokens.
  *
- * One definition per theme: the global dark default shares its tokens with
- * `.section-dark`, the global light theme shares its tokens with
- * `.section-light`. Surface variants (`.section-light-gray`,
- * `.section-dark-card`) only override the deltas. Section classes paint
- * their own background via the shared surface rule below, independent of
- * the global theme.
+ * One palette for the whole site: black or paper-white ground, blue as the
+ * only hue, hairlines instead of boxes. The global dark default shares its
+ * values with `.section-dark`, the global light theme with `.section-light`.
+ * Surface variants (`.section-light-gray`, `.section-dark-card`) only
+ * override the deltas. Section classes paint their own background via the
+ * shared surface rule below, independent of the global theme.
  */
 
 /* Dark theme (default) */
@@ -66,38 +78,42 @@
 .section-dark,
 .section-dark-card {
   --radius: 0.75rem;
+  /* Ground and surfaces */
   --background: #000000;
+  --surface: #0e0f12;
+  --surface-raised: #16181d;
+  /* Backdrop behind screenshots that bring their own margin. */
+  --stage: #000000;
+  /* Quiet fill for chips, inline code, and hover states. */
+  --fill: #16181d;
+  /* Translucent control surface above a canvas or an image. */
+  --glass: rgba(0, 0, 0, 0.55);
+  /* Text */
   --foreground: #f5f5f7;
-  --card: #1d1d1f;
-  --card-foreground: #f5f5f7;
-  --popover: #1d1d1f;
-  --popover-foreground: #f5f5f7;
-  --primary: #0068d1;
-  --link: #5cafff;
-  --primary-foreground: #ffffff;
-  --secondary: #1d1d1f;
-  --secondary-foreground: #f5f5f7;
-  --muted: #1d1d1f;
   --muted-foreground: #98989d;
-  --accent: #1d1d1f;
-  --accent-foreground: #f5f5f7;
-  --destructive: #ff3b30;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #0071e3;
-  --sidebar: #1d1d1f;
-  --sidebar-foreground: #f5f5f7;
-  --sidebar-primary: #0071e3;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #2d2d2f;
-  --sidebar-accent-foreground: #f5f5f7;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
+  /* Quieter than secondary text, still readable. */
+  --text-faint: #8a8a90;
+  --accent-text: #5cafff;
+  --accent-text-hover: #8cc6ff;
+  /* Lines */
+  --hairline: rgba(255, 255, 255, 0.1);
+  --hairline-strong: rgba(255, 255, 255, 0.16);
+  /* Blue */
+  --primary: #0068d1;
+  --primary-hover: #0071e3;
+  --primary-foreground: #ffffff;
+  /* Waveform bars and the color a bar reaches once it has become type. */
+  --wave: #5cafff;
+  --wave-ink: #f5f5f7;
+  --selection: rgba(10, 132, 255, 0.45);
+  /* Wordmarks that are black artwork. */
+  --wordmark-filter: invert(1);
+  --destructive: #d70015;
   --chart-hover-overlay: rgba(255, 255, 255, 0.07);
-  /* Hero / branded surfaces: blue-centric, subtle */
+  /* Legacy hero surface, replaced by `.site-page-head`. */
   --hero-gradient-from: #001428;
   --hero-gradient-via: #000a17;
   --hero-glow: rgba(0, 113, 227, 0.22);
-  --waveform-color: rgba(0, 113, 227, 0.55);
 }
 
 /* Light theme */
@@ -105,51 +121,99 @@
 .section-light,
 .section-light-gray {
   --background: #fbfbfd;
+  --surface: #f5f5f7;
+  --surface-raised: #ffffff;
+  --stage: #ffffff;
+  --fill: #f5f5f7;
+  --glass: rgba(255, 255, 255, 0.7);
   --foreground: #1d1d1f;
-  --card: #ffffff;
-  --card-foreground: #1d1d1f;
-  --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
-  --primary: #0068d1;
-  --link: #005fbe;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f7;
-  --secondary-foreground: #1d1d1f;
-  --muted: #f5f5f7;
   --muted-foreground: #6e6e73;
-  --accent: #f5f5f7;
-  --accent-foreground: #1d1d1f;
-  --destructive: #ff3b30;
-  --border: rgba(0, 0, 0, 0.08);
-  --input: rgba(0, 0, 0, 0.08);
-  --ring: #0071e3;
-  --sidebar: #f5f5f7;
-  --sidebar-foreground: #1d1d1f;
-  --sidebar-primary: #0071e3;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8e8ed;
-  --sidebar-accent-foreground: #1d1d1f;
-  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --text-faint: #6e6e73;
+  --accent-text: #005fbe;
+  --accent-text-hover: #004a94;
+  --hairline: rgba(0, 0, 0, 0.1);
+  --hairline-strong: rgba(0, 0, 0, 0.16);
+  --primary: #0068d1;
+  --primary-hover: #0071e3;
+  --primary-foreground: #ffffff;
+  --wave: #0071e3;
+  --wave-ink: #1d1d1f;
+  --selection: rgba(0, 113, 227, 0.22);
+  --wordmark-filter: none;
+  --destructive: #d70015;
   --chart-hover-overlay: rgba(0, 0, 0, 0.05);
   --hero-gradient-from: #e6f0fb;
   --hero-gradient-via: #f2f7fd;
   --hero-glow: rgba(0, 113, 227, 0.12);
-  --waveform-color: rgba(0, 113, 227, 0.45);
 }
 
 /* Surface deltas on top of the shared theme definitions */
 .section-light-gray {
   --background: #f5f5f7;
-  --card: #ffffff;
-  --secondary: #e8e8ed;
-  --secondary-foreground: #1d1d1f;
-  --muted: #e8e8ed;
-  --accent: #e8e8ed;
+  --surface: #ffffff;
+  --fill: #ffffff;
 }
 
 .section-dark-card {
-  --background: #1d1d1f;
-  --card: #2d2d2f;
+  --background: #0e0f12;
+  --surface: #16181d;
+}
+
+/*
+ * Names the Tailwind utilities rely on, mapped onto the palette. Declared on
+ * every themed element, so they resolve against the values of that element.
+ */
+:root,
+.section-dark,
+.section-dark-card,
+.section-light,
+.section-light-gray {
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--foreground);
+  --link: var(--accent-text);
+  --secondary: var(--fill);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--fill);
+  --accent: var(--fill);
+  --accent-foreground: var(--foreground);
+  --border: var(--hairline);
+  --input: var(--hairline-strong);
+  --ring: var(--accent-text);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--fill);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--hairline);
+  --waveform-color: color-mix(in srgb, var(--wave) 60%, transparent);
+}
+
+/* Type, layout, and motion */
+:root {
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter: 1.25rem;
+  --wrap: 72rem;
+  --wrap-narrow: 56rem;
+  --wrap-prose: 46rem;
+  --section-space: clamp(4.5rem, 9vw, 7.5rem);
+  /* Height of the sticky site header. */
+  --header-height: 3rem;
+  --motion-micro: 100ms;
+  --motion-short: 200ms;
+  --motion-medium: 350ms;
+  /* Reveals on scroll. */
+  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* Hover and state changes. */
+  --motion-ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 2rem;
+  }
 }
 
 /* Section classes paint their own surface, independent of the global theme */
@@ -187,18 +251,33 @@
   h2 {
     font-family: var(--font-display);
   }
+  /* Keeps the letter spacing of General Sans even where glyph advances get hinted. */
+  h1,
+  h2,
+  h3,
+  blockquote,
+  .font-display {
+    font-variant-ligatures: none;
+    text-rendering: geometricPrecision;
+  }
   button,
   [role="button"] {
     cursor: pointer;
   }
-}
-
-/* Motion tokens */
-:root {
-  --motion-micro: 100ms;
-  --motion-short: 200ms;
-  --motion-medium: 350ms;
-  --motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--selection);
+    color: var(--foreground);
+  }
+  /* Links in running text are underlined; components and utilities override this. */
+  p a:not([class*="inline-flex"]),
+  li a:not([class*="inline-flex"]) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }
 
 /* Scroll Reveal Animations */
@@ -354,10 +433,6 @@
 
 /* Text accents need different contrast than filled controls. */
 .text-primary { color: var(--link); }
-p a:not([class*="inline-flex"]), li a:not([class*="inline-flex"]) {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
 html { scroll-padding-top: 5rem; }
 :root { color-scheme: dark; }
 :root.light { color-scheme: light; }

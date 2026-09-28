@@ -35,15 +35,15 @@ export function CodeBlock({
   }
 
   return (
-    <div className="not-prose relative group overflow-hidden rounded-xl bg-muted">
+    <div className="not-prose relative group overflow-hidden rounded-[0.875rem] border border-hairline bg-card">
       <button
         onClick={copyCode}
-        className="absolute right-2 top-2 z-10 rounded-md p-2 text-muted-foreground transition-opacity hover:text-foreground group-hover:opacity-100"
+        className="absolute right-1.5 top-1 z-10 rounded-full p-2 text-muted-foreground transition-colors hover:text-foreground"
         aria-label={t(locale, "docs.copyCommand")}
       >
         {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
       </button>
-      <div className="border-b border-border/50 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+      <div className="border-b border-hairline px-4 py-2.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
         {lang}
       </div>
       <p className="sr-only" role="status">
@@ -56,7 +56,7 @@ export function CodeBlock({
       <pre
         tabIndex={0}
         aria-label={lang}
-        className="overflow-x-auto p-4 text-xs leading-relaxed text-foreground"
+        className="overflow-x-auto p-4 font-mono text-[0.8125rem] leading-relaxed text-foreground"
       >
         <code>{code}</code>
       </pre>

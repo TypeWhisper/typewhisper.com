@@ -55,7 +55,7 @@ export function Header({
   const download = getPlatformDownloadTarget(platform, locale, "nav");
   const showDownloadCta = true;
   const headerChrome =
-    "bg-background/80 backdrop-blur-xl border-b border-border";
+    "bg-background/80 backdrop-blur-xl border-b border-hairline";
   const foregroundClass = "text-foreground";
   const mutedForegroundClass = "text-muted-foreground hover:text-foreground";
   const iconButtonClass =
@@ -82,7 +82,7 @@ export function Header({
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-2 text-xs font-medium rounded-md transition-colors",
+                  "px-3 py-2 text-xs font-medium rounded-full transition-colors",
                   isActive ? foregroundClass : mutedForegroundClass,
                 )}
               >
@@ -132,7 +132,7 @@ export function Header({
           <a
             href={alternatePath}
             className={cn(
-              "px-2 py-1 text-xs font-semibold rounded-md transition-colors",
+              "px-2 py-1 text-xs font-semibold rounded-full transition-colors",
               mutedForegroundClass,
             )}
           >
@@ -265,7 +265,7 @@ export function Header({
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "px-3 py-2.5 text-sm font-medium rounded-md transition-colors hover:bg-accent",
+                      "px-3 py-2.5 text-sm font-medium rounded-[0.625rem] transition-colors hover:bg-accent",
                       currentPath === link.href ||
                         currentPath.startsWith(link.href)
                         ? "text-foreground bg-accent"
@@ -277,13 +277,13 @@ export function Header({
                 ))}
                 <a
                   href={alternatePath}
-                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-[0.625rem] transition-colors hover:bg-accent hover:text-foreground"
                 >
                   {alternateLabel === "DE" ? "Deutsch" : "English"}
                 </a>
                 <Button
                   variant="ghost"
-                  className="justify-start px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+                  className="justify-start rounded-[0.625rem] px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
                   onClick={() => {
                     toggleTheme();
                     setMobileOpen(false);
@@ -297,7 +297,7 @@ export function Header({
                 <a
                   href={localePath(locale, "/sponsors")}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-[0.625rem] transition-colors hover:bg-accent hover:text-foreground"
                 >
                   <KofiIcon className="size-4" aria-hidden="true" />
                   {t(locale, "nav.sponsor")}
@@ -306,7 +306,7 @@ export function Header({
                   href={discordUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-[0.625rem] transition-colors hover:bg-accent hover:text-foreground"
                 >
                   <DiscordIcon className="size-4" aria-hidden="true" />
                   Discord
@@ -315,7 +315,7 @@ export function Header({
                   href="https://github.com/TypeWhisper"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-md transition-colors hover:bg-accent hover:text-foreground"
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-[0.625rem] transition-colors hover:bg-accent hover:text-foreground"
                 >
                   {showGitHubBrandLogo ? (
                     <BrandLogo
