@@ -544,7 +544,7 @@ test.describe("feature tour", () => {
     await figures.first().scrollIntoViewIfNeeded();
     await expect(figures.first().locator("img")).toBeVisible();
     await expect(figures.first().locator("figcaption")).toHaveText(
-      "Integrations: one local engine out of the box, no cloud provider active",
+      "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
     );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
