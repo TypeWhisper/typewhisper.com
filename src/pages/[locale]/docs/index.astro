@@ -1,17 +1,16 @@
 ---
-import SearchForm from "@/components/docs/search-form.astro";
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import { t, type Locale } from "@/i18n/index";
-import { Badge } from "@/components/ui/badge";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { IOSLogo, MacOSLogo } from "@/components/ui/platform-logos";
+  docsPlatformPath,
+  docsPlatforms,
+  getDocsNav,
+  type DocsPlatform,
+} from "@/components/docs/navigation";
+import { resolveVersions } from "@/data/versions";
+import { t, type Locale } from "@/i18n/index";
+import { IOSLogo, MacOSLogo, WindowsLogo } from "@/components/ui/platform-logos";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { Monitor } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -22,10 +21,17 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const metaDescription =
+const metaDescription = resolveVersions(
   locale === "de"
-    ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS 1.6, Windows 1.0.9 und iOS 1.0."
-    : "TypeWhisper documentation for the stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.";
+    ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS {macSeries}, Windows {windowsVersion} und iOS {iosVersion}."
+    : "TypeWhisper documentation for the stable macOS {macSeries}, Windows {windowsVersion}, and iOS {iosVersion} releases.",
+);
+
+const copy: Record<DocsPlatform, { key: string; Logo: typeof MacOSLogo }> = {
+  mac: { key: "docs.mac", Logo: MacOSLogo },
+  windows: { key: "docs.win", Logo: WindowsLogo },
+  ios: { key: "docs.ios", Logo: IOSLogo },
+};
 ---
 
 <DocsLayout
@@ -33,73 +39,46 @@ const metaDescription =
   description={metaDescription}
   canonicalPath={canonicalPath(locale, "/docs")}
   locale={locale}
+  heading={t(locale, "docs.title")}
+  label="TypeWhisper"
+  lede={t(locale, "docs.subtitle")}
+  prose={false}
 >
-  <div>
-    <h1 class="font-display text-3xl font-bold tracking-tight">
-      {t(locale, "docs.title")}
-    </h1>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      {t(locale, "docs.subtitle")}
-    </p>
-    <SearchForm locale={locale} />
-    <a href={`/${locale}/setup/`} class="text-primary underline"
-      >{t(locale, "setup.title")}</a
-    >
-    <div class="mt-8 grid gap-4 sm:grid-cols-3">
-      <a href={canonicalPath(locale, "/docs/mac")}>
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <MacOSLogo className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              {t(locale, "docs.mac.title")}
-              <Badge variant="secondary" className="text-[10px]"
-                >{t(locale, "docs.mac.badge")}</Badge
-              >
-            </CardTitle>
-            <CardDescription
-              >{t(locale, "docs.mac.description")}</CardDescription
-            >
-          </CardHeader>
-        </Card>
-      </a>
-      <a href={canonicalPath(locale, "/docs/windows")}>
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <Monitor className="size-5" />
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              {t(locale, "docs.win.title")}
-              <Badge variant="outline" className="text-[10px]"
-                >{t(locale, "docs.win.badge")}</Badge
-              >
-            </CardTitle>
-            <CardDescription
-              >{t(locale, "docs.win.description")}</CardDescription
-            >
-          </CardHeader>
-        </Card>
-      </a>
-      <a href={canonicalPath(locale, "/docs/ios")}>
-        <Card className="h-full transition-all hover:shadow-md">
-          <CardHeader>
-            <div class="mb-1 text-muted-foreground">
-              <IOSLogo className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <CardTitle className="flex items-center gap-2 text-base">
-              {t(locale, "docs.ios.title")}
-              <Badge variant="outline" className="text-[10px]"
-                >{t(locale, "docs.ios.badge")}</Badge
-              >
-            </CardTitle>
-            <CardDescription
-              >{t(locale, "docs.ios.description")}</CardDescription
-            >
-          </CardHeader>
-        </Card>
-      </a>
-    </div>
-  </div>
+  <Fragment slot="actions">
+    <a href={`/${locale}/setup/`} class="site-link">
+      {t(locale, "setup.title")}
+      <ArrowRight className="size-4" aria-hidden="true" />
+    </a>
+  </Fragment>
+
+  <ul class="docs-index docs-index--platforms">
+    {docsPlatforms.map((platform) => {
+      const { key, Logo } = copy[platform];
+      const title = t(locale, `${key}.title`);
+      return (
+        <li class="docs-platform">
+          <a href={docsPlatformPath(locale, platform)} class="docs-platform__link">
+            <span class="docs-platform__mark">
+              <Logo aria-hidden="true" />
+            </span>
+            <span class="docs-platform__name">
+              {title}
+              <span class="docs-platform__badge">{t(locale, `${key}.badge`)}</span>
+            </span>
+            <span class="docs-platform__text">{t(locale, `${key}.description`)}</span>
+          </a>
+          <ul
+            class="docs-platform__pages"
+            aria-label={t(locale, "docs.index.allPages").replace("{platform}", title)}
+          >
+            {getDocsNav(locale, platform).slice(1).map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      );
+    })}
+  </ul>
 </DocsLayout>

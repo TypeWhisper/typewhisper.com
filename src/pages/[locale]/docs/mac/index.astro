@@ -1,10 +1,8 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { Download, Globe, MessageCircle, Settings, Sparkles, Terminal } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -16,13 +14,23 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const links = [
-  { slug: "installation", Icon: Download },
-  { slug: "features", Icon: Sparkles },
-  { slug: "workflows", Icon: MessageCircle },
-  { slug: "api", Icon: Globe },
-  { slug: "cli", Icon: Terminal },
-  { slug: "troubleshooting", Icon: Settings },
-];
+  "installation",
+  "features",
+  "workflows",
+  "api",
+  "cli",
+  "troubleshooting",
+].map((slug) => ({
+  slug,
+  title: t(locale, `docs.mac.index.${slug}.title`),
+  description: t(locale, `docs.mac.index.${slug}.description`),
+}));
+// File transcription has its own page; its index entry uses the copy of that page.
+links.splice(2, 0, {
+  slug: "file-transcription",
+  title: t(locale, "docs.mac.fileTranscription.title"),
+  description: t(locale, "docs.mac.fileTranscription.subtitle"),
+});
 ---
 <DocsLayout
   title={t(locale, "docs.mac.index.meta.title")}
@@ -30,29 +38,25 @@ const links = [
   canonicalPath={canonicalPath(locale, "/docs/mac")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.index.title")}
+  label={t(locale, "docs.title")}
+  lede={t(locale, "docs.mac.index.description")}
+  wide
+  prose={false}
 >
-  <div>
-    <div class="flex flex-wrap items-center gap-3">
-      <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "docs.mac.index.title")}</h1>
-      <Badge variant="secondary">{t(locale, "docs.mac.index.badge")}</Badge>
-    </div>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      {t(locale, "docs.mac.index.description")}
-    </p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2">
-      {links.map(({ slug, Icon }) => (
-        <a href={canonicalPath(locale, `/docs/mac/${slug}`)}>
-          <Card className="h-full transition-all hover:shadow-md">
-            <CardHeader>
-              <div class="mb-1 text-muted-foreground">
-                <Icon className="size-5" />
-              </div>
-              <CardTitle className="text-base">{t(locale, `docs.mac.index.${slug}.title`)}</CardTitle>
-              <CardDescription>{t(locale, `docs.mac.index.${slug}.description`)}</CardDescription>
-            </CardHeader>
-          </Card>
+  <Fragment slot="meta">
+    <span class="docs-head__accent">{t(locale, "docs.mac.index.badge")}</span>
+  </Fragment>
+
+  <ul class="docs-index">
+    {links.map(({ slug, title, description }) => (
+      <li>
+        <a href={canonicalPath(locale, `/docs/mac/${slug}`)} class="docs-index__link">
+          <span class="docs-index__name">{title}</span>
+          <span class="docs-index__text">{description}</span>
+          <ArrowRight aria-hidden="true" />
         </a>
-      ))}
-    </div>
-  </div>
+      </li>
+    ))}
+  </ul>
 </DocsLayout>

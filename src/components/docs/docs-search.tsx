@@ -1,4 +1,5 @@
 import { replacePageUrl } from "@/hooks/use-page-url";
+import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { t, type Locale } from "@/i18n/index";
 
@@ -102,11 +103,18 @@ export function DocsSearch({ locale }: { locale: Locale }) {
       generation.current++;
     };
   }, [query, platform, ready, limit, retry]);
+  const platforms = [
+    ["all", t(locale, "docs.allPlatforms")],
+    ["mac", "macOS"],
+    ["windows", "Windows"],
+    ["ios", "iOS"],
+  ];
   return (
-    <div className="mt-6" data-testid="docs-search">
-      <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
-        <label className="grid gap-2 text-sm font-medium">
-          {t(locale, "docs.search.label")}
+    <div className="docs-find" data-testid="docs-search">
+      <label className="docs-find__field">
+        <span className="sr-only">{t(locale, "docs.search.label")}</span>
+        <span className="docs-search">
+          <Search aria-hidden="true" />
           <input
             type="search"
             value={query}
@@ -115,27 +123,45 @@ export function DocsSearch({ locale }: { locale: Locale }) {
               setLimit(10);
             }}
             placeholder={t(locale, "docs.search.placeholder")}
-            className="min-w-0 rounded-xl border bg-card px-4 py-3"
+            className="docs-search__input"
+            autoComplete="off"
+            aria-keyshortcuts="/"
+            data-docs-search-input
           />
-        </label>
-        <label className="grid gap-2 text-sm font-medium">
-          {t(locale, "setup.platform")}
-          <select
-            value={platform}
-            onChange={(e) => {
-              setPlatform(e.target.value);
-              setLimit(10);
-            }}
-            className="rounded-xl border bg-card px-4 py-3"
+          <kbd
+            className="docs-search__key"
+            title={t(locale, "docs.searchShortcut")}
           >
-            <option value="all">{t(locale, "docs.allPlatforms")}</option>
-            <option value="mac">macOS</option>
-            <option value="windows">Windows</option>
-            <option value="ios">iOS</option>
-          </select>
-        </label>
+            /
+          </kbd>
+        </span>
+      </label>
+      <div
+        className="docs-find__filter"
+        role="group"
+        aria-labelledby="docs-find-platform"
+      >
+        <span id="docs-find-platform" className="docs-find__filter-label">
+          {t(locale, "setup.platform")}
+        </span>
+        <div className="site-chips">
+          {platforms.map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              className="site-chip"
+              aria-pressed={platform === value}
+              onClick={() => {
+                setPlatform(value);
+                setLimit(10);
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
-      <p className="mt-5 text-sm text-muted-foreground" role="status">
+      <p className="docs-find__status" role="status">
         {state === "idle"
           ? t(locale, "docs.search.hint")
           : state === "loading"
@@ -149,38 +175,29 @@ export function DocsSearch({ locale }: { locale: Locale }) {
       </p>
       {state === "error" && (
         <button
-          className="mt-3 rounded-lg border px-4 py-2"
+          type="button"
+          className="site-button site-button--quiet site-button--small docs-find__more"
           onClick={() => setRetry((value) => value + 1)}
         >
           {t(locale, "docs.search.retry")}
         </button>
       )}
       {state === "done" && total === 0 && (
-        <p className="mt-3 text-muted-foreground">
-          {t(locale, "docs.search.empty")}
-        </p>
+        <p className="docs-find__empty">{t(locale, "docs.search.empty")}</p>
       )}
-      <ul
-        className="mt-4 divide-y divide-border"
-        aria-busy={state === "loading"}
-      >
+      <ul className="docs-find__results" aria-busy={state === "loading"}>
         {results.map((result) => (
-          <li key={result.url} className="py-5">
-            <a
-              href={result.url}
-              className="text-lg font-semibold text-primary underline underline-offset-4"
-            >
-              {result.meta.title ?? result.url}
-            </a>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {result.excerpt}
-            </p>
+          <li key={result.url}>
+            <a href={result.url}>{result.meta.title ?? result.url}</a>
+            <p className="docs-find__path">{result.url}</p>
+            <p className="docs-find__excerpt">{result.excerpt}</p>
           </li>
         ))}
       </ul>
       {state === "done" && results.length < total && (
         <button
-          className="mt-5 rounded-lg border px-4 py-2"
+          type="button"
+          className="site-button site-button--quiet site-button--small docs-find__more"
           onClick={() => setLimit((value) => value + 10)}
         >
           {t(locale, "docs.search.more")}

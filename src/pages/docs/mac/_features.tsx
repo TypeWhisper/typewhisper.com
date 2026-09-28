@@ -1,230 +1,174 @@
-import { Screenshot } from "@/components/ui/screenshot";
+import {
+  DocsFigure,
+  DocsSection,
+  DocsSubheading,
+  DocsTerms,
+} from "@/components/docs/prose";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
-export default function DocsMacFeatures({ locale = "en" }: { locale?: Locale }) {
+export default function DocsMacFeatures({
+  locale = "en",
+}: {
+  locale?: Locale;
+}) {
+  const boosting: Array<[name: string, key: string]> = [
+    ["Auto", "docs.mac.features.dictionary.boostingAuto"],
+    ["Strong (0.50)", "docs.mac.features.dictionary.boostingStrong"],
+    ["Balanced (0.65)", "docs.mac.features.dictionary.boostingBalanced"],
+    ["Precise (0.80)", "docs.mac.features.dictionary.boostingPrecise"],
+    ["Advanced (0.40–0.95)", "docs.mac.features.dictionary.boostingAdvanced"],
+  ];
+
   return (
-      <div>
-        <h1 className="font-display text-3xl font-bold tracking-tight">
-          {t(locale, "docs.mac.features.title")}
-        </h1>
-        <p className="mt-3 text-muted-foreground">
-          {t(locale, "docs.mac.features.subtitle")}
+    <>
+      <DocsSection
+        id="dictation"
+        title={t(locale, "docs.mac.features.dictation.title")}
+      >
+        <p>{t(locale, "docs.mac.features.dictation.desc")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="streaming"
+        title={t(locale, "docs.mac.features.streaming.title")}
+      >
+        <p>{t(locale, "docs.mac.features.streaming.desc")}</p>
+      </DocsSection>
+
+      <DocsSection id="workflows" title={t(locale, "docs.mac.features.ai.title")}>
+        <p>{t(locale, "docs.mac.features.ai.desc1")}</p>
+        <p>{t(locale, "docs.mac.features.ai.desc2")}</p>
+        <p>
+          <a href={localePath(locale, "/docs/mac/workflows")}>
+            {t(locale, "docs.mac.features.ai.learn")}
+          </a>
         </p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
+          alt={t(locale, "docs.mac.features.ai.imgAlt")}
+          loading="eager"
+        />
+      </DocsSection>
 
-        <div className="mt-8 space-y-6">
-          {/* 1. System-Wide Dictation */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.dictation.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictation.desc")}
-            </p>
-          </div>
+      <DocsSection
+        id="dictionary"
+        title={t(locale, "docs.mac.features.dictionary.title")}
+      >
+        <p>{t(locale, "docs.mac.features.dictionary.desc")}</p>
+        <p>{t(locale, "docs.mac.features.dictionary.desc2")}</p>
+        <p>{t(locale, "docs.mac.features.dictionary.desc3")}</p>
 
-          {/* 2. Streaming Preview */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.streaming.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.streaming.desc")}
-            </p>
-          </div>
+        <DocsSubheading id="vocabulary-boosting">
+          {t(locale, "docs.mac.features.dictionary.boostingTitle")}
+        </DocsSubheading>
+        <p>{t(locale, "docs.mac.features.dictionary.boostingDesc")}</p>
+        <DocsTerms
+          items={boosting.map(([name, key]) => ({
+            title: <code>{name}</code>,
+            description: t(locale, key),
+          }))}
+        />
+        <p>{t(locale, "docs.mac.features.dictionary.boostingExample")}</p>
+        <p>{t(locale, "docs.mac.features.dictionary.boostingNote")}</p>
 
-          {/* 3. AI Text Processing */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.ai.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.ai.desc1")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.ai.desc2")}
-            </p>
-            <p className="mt-3 text-sm text-muted-foreground">
-              <a href={localePath(locale, "/docs/mac/workflows")} className="text-primary hover:underline">
-                {t(locale, "docs.mac.features.ai.learn")}
-              </a>
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
-              alt={t(locale, "docs.mac.features.ai.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+        <DocsSubheading id="automatic-correction-learning">
+          {t(locale, "docs.mac.features.dictionary.autoLearnTitle")}
+        </DocsSubheading>
+        <p>{t(locale, "docs.mac.features.dictionary.autoLearnDesc")}</p>
+        <p>{t(locale, "docs.mac.features.dictionary.autoLearnFeedback")}</p>
 
-          {/* 4. Dictionary */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.dictionary.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.desc")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.desc2")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.desc3")}
-            </p>
-            <div className="mt-4 rounded-xl border border-border/70 bg-background p-4">
-              <h3 className="text-sm font-semibold">
-                {t(locale, "docs.mac.features.dictionary.boostingTitle")}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.features.dictionary.boostingDesc")}
-              </p>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Auto</code>{" "}
-                  {t(locale, "docs.mac.features.dictionary.boostingAuto")}
-                </li>
-                <li>
-                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Strong (0.50)</code>{" "}
-                  {t(locale, "docs.mac.features.dictionary.boostingStrong")}
-                </li>
-                <li>
-                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Balanced (0.65)</code>{" "}
-                  {t(locale, "docs.mac.features.dictionary.boostingBalanced")}
-                </li>
-                <li>
-                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Precise (0.80)</code>{" "}
-                  {t(locale, "docs.mac.features.dictionary.boostingPrecise")}
-                </li>
-                <li>
-                  <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">Advanced (0.40–0.95)</code>{" "}
-                  {t(locale, "docs.mac.features.dictionary.boostingAdvanced")}
-                </li>
-              </ul>
-              <p className="mt-3 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.features.dictionary.boostingExample")}
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.features.dictionary.boostingNote")}
-              </p>
-            </div>
-            <h3 className="mt-4 text-sm font-semibold">
-              {t(locale, "docs.mac.features.dictionary.autoLearnTitle")}
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.autoLearnDesc")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.autoLearnFeedback")}
-            </p>
-            <h3 className="mt-4 text-sm font-semibold">
-              {t(locale, "docs.mac.features.dictionary.autoLearnTestTitle")}
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.dictionary.autoLearnTest")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/dictionary.png")}
-              alt={t(locale, "docs.mac.features.dictionary.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+        <DocsSubheading id="test-correction-learning">
+          {t(locale, "docs.mac.features.dictionary.autoLearnTestTitle")}
+        </DocsSubheading>
+        <p>{t(locale, "docs.mac.features.dictionary.autoLearnTest")}</p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/dictionary.png")}
+          alt={t(locale, "docs.mac.features.dictionary.imgAlt")}
+        />
+      </DocsSection>
 
-          {/* 5. Snippets */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.snippets.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.snippets.descBefore")}{" "}
-              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                {"{{DATE}}"}
-              </code>
-              ,{" "}
-              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                {"{{TIME}}"}
-              </code>
-              , {t(locale, "docs.mac.features.snippets.descAnd")}{" "}
-              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                {"{{CLIPBOARD}}"}
-              </code>{" "}
-              {t(locale, "docs.mac.features.snippets.descAfter")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/snippets.png")}
-              alt={t(locale, "docs.mac.features.snippets.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+      <DocsSection
+        id="snippets"
+        title={t(locale, "docs.mac.features.snippets.title")}
+      >
+        <p>
+          {t(locale, "docs.mac.features.snippets.descBefore")}{" "}
+          <code>{"{{DATE}}"}</code>, <code>{"{{TIME}}"}</code>,{" "}
+          {t(locale, "docs.mac.features.snippets.descAnd")}{" "}
+          <code>{"{{CLIPBOARD}}"}</code>{" "}
+          {t(locale, "docs.mac.features.snippets.descAfter")}
+        </p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/snippets.png")}
+          alt={t(locale, "docs.mac.features.snippets.imgAlt")}
+        />
+      </DocsSection>
 
-          {/* 6. File Transcription */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.fileTranscription.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.fileTranscription.desc")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/watch-folder.png")}
-              alt={t(locale, "docs.mac.fileTranscription.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+      <DocsSection
+        id="file-transcription"
+        title={t(locale, "docs.mac.features.fileTranscription.title")}
+      >
+        <p>{t(locale, "docs.mac.features.fileTranscription.desc")}</p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/file-transcription.png")}
+          alt={t(locale, "docs.mac.fileTranscription.imgAlt")}
+        />
+      </DocsSection>
 
-          {/* 7. Whisper Mode */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.whisperMode.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.whisperMode.desc")}
-            </p>
-          </div>
+      <DocsSection
+        id="whisper-mode"
+        title={t(locale, "docs.mac.features.whisperMode.title")}
+      >
+        <p>{t(locale, "docs.mac.features.whisperMode.desc")}</p>
+      </DocsSection>
 
-          {/* 8. Translation */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.translation.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.translation.desc")}
-            </p>
-          </div>
+      <DocsSection
+        id="translation"
+        title={t(locale, "docs.mac.features.translation.title")}
+      >
+        <p>{t(locale, "docs.mac.features.translation.desc")}</p>
+      </DocsSection>
 
-          {/* 9. Transcription History */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.history.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.history.desc1")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.history.desc2")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/history.png")}
-              alt={t(locale, "docs.mac.features.history.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+      <DocsSection
+        id="history"
+        title={t(locale, "docs.mac.features.history.title")}
+      >
+        <p>{t(locale, "docs.mac.features.history.desc1")}</p>
+        <p>{t(locale, "docs.mac.features.history.desc2")}</p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/history.png")}
+          alt={t(locale, "docs.mac.features.history.imgAlt")}
+        />
+      </DocsSection>
 
-          {/* 10. Home Dashboard */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.home.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.home.desc")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/home-dashboard.png")}
-              alt={t(locale, "docs.mac.features.home.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
+      <DocsSection
+        id="home-dashboard"
+        title={t(locale, "docs.mac.features.home.title")}
+      >
+        <p>{t(locale, "docs.mac.features.home.desc")}</p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/home-dashboard.png")}
+          alt={t(locale, "docs.mac.features.home.imgAlt")}
+        />
+      </DocsSection>
 
-          {/* 11. Plugin System */}
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.features.plugins.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.plugins.desc")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.features.plugins.seeBefore")}{" "}
-              <a
-                href={localePath(locale, "/addons")}
-                className="text-primary hover:underline"
-              >
-                {t(locale, "docs.mac.features.plugins.addonsLink")}
-              </a>{" "}
-              {t(locale, "docs.mac.features.plugins.seeAfter")}
-            </p>
-            <Screenshot
-              src={screenshotPath(locale, "/screenshots/mac/plugins.png")}
-              alt={t(locale, "docs.mac.features.plugins.imgAlt")}
-              className="mt-4 rounded-xl"
-            />
-          </div>
-        </div>
-      </div>
+      <DocsSection
+        id="integrations"
+        title={t(locale, "docs.mac.features.plugins.title")}
+      >
+        <p>{t(locale, "docs.mac.features.plugins.desc")}</p>
+        <p>
+          {t(locale, "docs.mac.features.plugins.seeBefore")}{" "}
+          <a href={localePath(locale, "/addons")}>
+            {t(locale, "docs.mac.features.plugins.addonsLink")}
+          </a>{" "}
+          {t(locale, "docs.mac.features.plugins.seeAfter")}
+        </p>
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/plugins.png")}
+          alt={t(locale, "docs.mac.features.plugins.imgAlt")}
+        />
+      </DocsSection>
+    </>
   );
 }

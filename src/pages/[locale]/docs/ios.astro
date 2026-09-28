@@ -1,8 +1,10 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsIOS from "@/pages/docs/_ios.tsx";
+import DocsIOS, { iosOverviewHead } from "@/pages/docs/_ios.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
+import { Download } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -16,6 +18,7 @@ const { locale } = Astro.props;
 const description = locale === "de"
   ? "Ausführliche TypeWhisper-Anleitung für iPhone, iPad und Apple Watch: Einrichtung, Diktier-Tastatur, Profile, Capture Inbox, Dateien, Kurzbefehle, Datenschutz, Premium und Fehlerbehebung."
   : "Complete TypeWhisper guidance for iPhone, iPad, and Apple Watch: setup, voice keyboard, profiles, Capture Inbox, files, Shortcuts, privacy, Premium, and troubleshooting.";
+const head = iosOverviewHead(locale);
 ---
 <DocsLayout
   title="iOS - TypeWhisper"
@@ -26,6 +29,28 @@ const description = locale === "de"
   releaseStage="stable"
   releaseTitle={t(locale, "docs.ios.release.title")}
   releaseDescription={t(locale, "docs.ios.release.description")}
+  heading={head.heading}
+  label={t(locale, "docs.title")}
+  lede={head.lede}
 >
+  <Fragment slot="meta">
+    <span class="docs-head__accent">{head.badge}</span>
+  </Fragment>
+  <Fragment slot="actions">
+    <a
+      href={getIosAppStoreUrl(locale)}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="site-button site-button--small"
+      data-download-social-trigger
+      data-download-platform="ios"
+      data-download-target="ios_app_store"
+      data-download-version={iosVersion}
+      data-tracking-placement="docs"
+    >
+      <Download className="size-4" aria-hidden="true" />
+      {head.download}
+    </a>
+  </Fragment>
   <DocsIOS locale={locale} />
 </DocsLayout>

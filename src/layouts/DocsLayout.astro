@@ -1,19 +1,42 @@
 ---
-import SearchForm from "@/components/docs/search-form.astro";
+import "@/styles/docs.css";
 import BaseLayout from "./BaseLayout.astro";
 import ReleaseStageNotice from "@/components/docs/release-stage-notice.astro";
+import SearchForm from "@/components/docs/search-form.astro";
+import {
+  docsPlatformPath,
+  docsPlatformTitle,
+  docsPlatforms,
+  getDocsNav,
+  normalizeDocsPath,
+  type DocsPlatform,
+} from "@/components/docs/navigation";
+import { BarMark } from "@/components/site";
 import type { Locale } from "@/i18n/index";
 import { t, localePath } from "@/i18n/index";
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
   locale?: Locale;
-  platform?: "mac" | "windows" | "ios" | null;
+  platform?: DocsPlatform | null;
   releaseStage?: "stable" | "beta" | "alpha" | "pending" | null;
   releaseTitle?: string;
   releaseDescription?: string;
+  /** The `<h1>` of the page. */
+  heading: string;
+  /** Label above the headline; defaults to the platform. */
+  label?: string;
+  /** Lede below the headline; the slot `lede` takes markup instead. */
+  lede?: string;
+  /** Overview pages use the column of the table of contents as well. */
+  wide?: boolean;
+  /** Running text; overview pages and the search bring their own lists. */
+  prose?: boolean;
+  /** The search page brings its own field. */
+  search?: boolean;
 }
 
 const {
@@ -25,128 +48,66 @@ const {
   releaseStage = null,
   releaseTitle,
   releaseDescription,
+  heading,
+  label,
+  lede,
+  wide = false,
+  prose = true,
+  search = true,
 } = Astro.props;
 
-const macSidebarLinks = [
-  {
-    href: localePath(locale, "/docs/mac"),
-    label: t(locale, "docs.sidebar.overview"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/installation"),
-    label: t(locale, "docs.sidebar.installation"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/features"),
-    label: t(locale, "docs.sidebar.features"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/file-transcription"),
-    label: t(locale, "docs.sidebar.fileTranscription"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/workflows"),
-    label: t(locale, "docs.sidebar.workflows"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/api"),
-    label: t(locale, "docs.sidebar.httpApi"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/cli"),
-    label: t(locale, "docs.sidebar.cliTool"),
-  },
-  {
-    href: localePath(locale, "/docs/mac/troubleshooting"),
-    label: t(locale, "docs.sidebar.troubleshooting"),
-  },
-];
+const currentPath = normalizeDocsPath(Astro.url.pathname);
+const homePath = localePath(locale, "/docs");
+const nav = platform ? getDocsNav(locale, platform) : null;
+const currentIndex = nav
+  ? nav.findIndex((link) => normalizeDocsPath(link.href) === currentPath)
+  : -1;
+const current = nav && currentIndex >= 0 ? nav[currentIndex] : null;
+const platformTitle = platform ? docsPlatformTitle(locale, platform) : null;
 
-const windowsSidebarLinks = [
-  {
-    href: localePath(locale, "/docs/windows"),
-    label: t(locale, "docs.sidebar.overview"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/installation"),
-    label: t(locale, "docs.sidebar.installation"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/features"),
-    label: t(locale, "docs.sidebar.features"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/file-transcription"),
-    label: t(locale, "docs.sidebar.fileTranscription"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/workflows"),
-    label: t(locale, "docs.sidebar.workflows"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/api"),
-    label: t(locale, "docs.sidebar.httpApi"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/cli"),
-    label: t(locale, "docs.sidebar.cliTool"),
-  },
-  {
-    href: localePath(locale, "/docs/windows/troubleshooting"),
-    label: t(locale, "docs.sidebar.troubleshooting"),
-  },
-];
+// Previous and next follow the order of the navigation.
+const previous =
+  nav && currentIndex > 0
+    ? nav[currentIndex - 1]
+    : nav && currentIndex === 0
+      ? { href: homePath, label: t(locale, "docs.title") }
+      : null;
+const next =
+  nav && currentIndex >= 0 && currentIndex < nav.length - 1
+    ? nav[currentIndex + 1]
+    : null;
 
-const iosSidebarLinks = [
-  {
-    href: localePath(locale, "/docs/ios"),
-    label: t(locale, "docs.sidebar.overview"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/installation"),
-    label: t(locale, "docs.sidebar.installation"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/dictation-and-keyboard"),
-    label: t(locale, "docs.sidebar.dictationKeyboard"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/profiles-and-processing"),
-    label: t(locale, "docs.sidebar.profilesProcessing"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/files-history-and-inbox"),
-    label: t(locale, "docs.sidebar.filesHistoryInbox"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/dictionary-and-snippets"),
-    label: t(locale, "docs.sidebar.dictionarySnippets"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/watch-and-shortcuts"),
-    label: t(locale, "docs.sidebar.watchShortcuts"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/privacy-and-premium"),
-    label: t(locale, "docs.sidebar.privacyPremium"),
-  },
-  {
-    href: localePath(locale, "/docs/ios/troubleshooting"),
-    label: t(locale, "docs.sidebar.troubleshooting"),
-  },
-];
+const entities: Record<string, string> = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&#x27;": "'",
+  "&nbsp;": " ",
+};
 
-const sidebarLinks =
-  platform === "mac"
-    ? macSidebarLinks
-    : platform === "windows"
-      ? windowsSidebarLinks
-      : platform === "ios"
-        ? iosSidebarLinks
-        : null;
+/** Headings that carry `data-docs-toc` become the table of contents. */
+function readHeadings(html: string) {
+  const headings: Array<{ level: number; target: string; text: string }> = [];
+  for (const match of html.matchAll(/<h([23])\b([^>]*)>([\s\S]*?)<\/h\1>/g)) {
+    const target = /data-docs-toc="([^"]+)"/.exec(match[2])?.[1];
+    if (!target) continue;
+    const text = match[3]
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/<span[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/span>/g, "")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&(amp|lt|gt|quot|nbsp|#39|#x27);/g, (entity) => entities[entity])
+      .trim();
+    headings.push({ level: Number(match[1]), target, text });
+  }
+  return headings;
+}
 
-const normalizePath = (path: string) => path.replace(/\/$/, "") || "/";
-const currentPath = normalizePath(Astro.url.pathname);
+const body = await Astro.slots.render("default");
+const headings = readHeadings(body);
+const showToc = headings.length >= 3;
+const hasLede = Boolean(lede) || Astro.slots.has("lede");
 ---
 
 <BaseLayout
@@ -156,74 +117,305 @@ const currentPath = normalizePath(Astro.url.pathname);
   locale={locale}
   searchPlatforms={platform ? [platform] : []}
 >
-  {
-    sidebarLinks ? (
-      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
-        <div class="flex flex-col gap-8 lg:flex-row lg:gap-12">
-          <aside class="lg:w-56 shrink-0">
-            <SearchForm locale={locale} platform={platform} />
-            <nav class="flex flex-col gap-1 lg:sticky lg:top-24">
-              <a
-                href={localePath(locale, "/docs")}
-                class="mb-2 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+  <div class="site-page docs" data-docs>
+    <div class="docs-bar" data-pagefind-ignore>
+      <div class="site-wrap docs-bar__inner">
+        <a
+          href={homePath}
+          class="docs-bar__home"
+          aria-current={currentPath === normalizeDocsPath(homePath) ? "page" : undefined}
+        >
+          <span class="docs-bar__home-long">{t(locale, "docs.title")}</span>
+          <span class="docs-bar__home-short">{t(locale, "nav.docs")}</span>
+        </a>
+        {search && <SearchForm locale={locale} platform={platform ?? undefined} />}
+      </div>
+    </div>
+
+    <div class:list={["site-wrap docs-frame", nav ? "docs-frame--nav" : "docs-frame--plain"]}>
+      {
+        nav && platform && (
+          <details class="docs-nav" data-docs-nav data-pagefind-ignore>
+            <summary class="docs-nav__summary">
+              <span class="sr-only">{t(locale, "docs.nav.open")}: </span>
+              <span class="docs-nav__platform">{platformTitle}</span>
+              <span class="docs-nav__current">{current?.label ?? heading}</span>
+              <ChevronDown aria-hidden="true" />
+            </summary>
+            <nav class="docs-nav__panel" aria-label={t(locale, "docs.title")}>
+              <div
+                class="site-switch docs-platforms"
+                role="group"
+                aria-label={t(locale, "docs.nav.platforms")}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-                {t(locale, "docs.allPlatforms")}
-              </a>
-              <div class="flex flex-row gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-x-visible lg:pb-0">
-                {sidebarLinks.map((link) => (
+                {docsPlatforms.map((entry) => (
                   <a
-                    href={link.href}
-                    class:list={[
-                      "whitespace-nowrap rounded-none border-l-2 px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                      currentPath === normalizePath(link.href)
-                        ? "border-primary text-foreground"
-                        : "border-transparent text-muted-foreground",
-                    ]}
+                    href={docsPlatformPath(locale, entry)}
+                    class="site-switch__item"
+                    aria-current={entry === platform ? "true" : undefined}
                   >
-                    {link.label}
+                    {docsPlatformTitle(locale, entry)}
                   </a>
                 ))}
               </div>
+              <ul class="docs-nav__list">
+                {nav.map((link, index) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="docs-nav__link"
+                      aria-current={index === currentIndex ? "page" : undefined}
+                    >
+                      <BarMark />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <a href={homePath} class="docs-nav__all">
+                <ArrowLeft className="size-3.5" aria-hidden="true" />
+                {t(locale, "docs.allPlatforms")}
+              </a>
             </nav>
-          </aside>
-          <article class="min-w-0 flex-1">
-            {releaseStage && releaseTitle && releaseDescription && (
-              <ReleaseStageNotice
-                stage={releaseStage}
-                title={releaseTitle}
-                description={releaseDescription}
-                locale={locale}
-              />
-            )}
-            <slot />
-          </article>
+          </details>
+        )
+      }
+
+      <article class:list={["docs-article", wide && "docs-article--wide"]}>
+        <div class="docs-head site-page-head site-page-head--compact" data-testid="page-head">
+          <p class:list={["site-label site-label--muted", !label && "docs-head__label--platform"]}>
+            {label ?? platformTitle ?? t(locale, "nav.docs")}
+          </p>
+          <h1 class="site-page-head__title">{heading}</h1>
+          {hasLede && (
+            <p class="site-page-head__lede">
+              <slot name="lede">{lede}</slot>
+            </p>
+          )}
+          {Astro.slots.has("meta") && (
+            <p class="docs-head__meta">
+              <slot name="meta" />
+            </p>
+          )}
+          {Astro.slots.has("actions") && (
+            <div class="site-actions site-actions--start">
+              <slot name="actions" />
+            </div>
+          )}
         </div>
-      </div>
-    ) : (
-      <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
-        {releaseStage && releaseTitle && releaseDescription && (
-          <ReleaseStageNotice
-            stage={releaseStage}
-            title={releaseTitle}
-            description={releaseDescription}
-            locale={locale}
-          />
-        )}
-        <slot />
-      </div>
-    )
-  }
+
+        {
+          showToc && (
+            <details class="docs-toc" data-docs-toc-root data-pagefind-ignore>
+              <summary class="docs-toc__summary">
+                {t(locale, "docs.toc.title")}
+                <ChevronDown aria-hidden="true" />
+              </summary>
+              <nav aria-label={t(locale, "docs.toc.title")}>
+                <p class="docs-toc__title" aria-hidden="true">{t(locale, "docs.toc.title")}</p>
+                <ol class="docs-toc__list">
+                  {headings.map((entry) => (
+                    <li>
+                      <a
+                        href={`#${entry.target}`}
+                        class:list={["docs-toc__link", entry.level === 3 && "docs-toc__link--sub"]}
+                      >
+                        {entry.text}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </details>
+          )
+        }
+
+        {
+          releaseStage && releaseTitle && releaseDescription && (
+            <ReleaseStageNotice
+              stage={releaseStage}
+              title={releaseTitle}
+              description={releaseDescription}
+              locale={locale}
+            />
+          )
+        }
+
+        <div class:list={["docs-article__body", prose && "site-prose docs-prose"]}>
+          <Fragment set:html={body} />
+        </div>
+
+        {
+          (previous || next) && (
+            <nav class="docs-pager" aria-label={t(locale, "docs.pager.label")} data-pagefind-ignore>
+              {previous && (
+                <a href={previous.href} class="docs-pager__link docs-pager__link--previous" rel="prev">
+                  <span class="docs-pager__label">
+                    <ArrowLeft aria-hidden="true" />
+                    {t(locale, "docs.pager.previous")}
+                  </span>
+                  <span class="docs-pager__title">{previous.label}</span>
+                </a>
+              )}
+              {next && (
+                <a href={next.href} class="docs-pager__link docs-pager__link--next" rel="next">
+                  <span class="docs-pager__label">
+                    {t(locale, "docs.pager.next")}
+                    <ArrowRight aria-hidden="true" />
+                  </span>
+                  <span class="docs-pager__title">{next.label}</span>
+                </a>
+              )}
+            </nav>
+          )
+        }
+      </article>
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-docs]");
+
+  if (root) {
+    root.classList.add("docs--enhanced");
+
+    // Navigation and table of contents are disclosures on narrow screens and stay open on wide ones.
+    const disclosures: Array<[string, string]> = [
+      ["[data-docs-nav]", "(min-width: 1024px)"],
+      ["[data-docs-toc-root]", "(min-width: 1160px)"],
+    ];
+    for (const [selector, query] of disclosures) {
+      const element = root.querySelector<HTMLDetailsElement>(selector);
+      if (!element) continue;
+      const wide = window.matchMedia(query);
+      const sync = () => {
+        element.open = wide.matches;
+      };
+      sync();
+      wide.addEventListener("change", sync);
+      element.addEventListener("click", (event) => {
+        const link = (event.target as Element).closest("a");
+        if (link && !wide.matches) element.open = false;
+      });
+      element.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || wide.matches || !element.open) return;
+        element.open = false;
+        element.querySelector("summary")?.focus();
+      });
+    }
+
+    // "/" focuses the search, Escape leaves it.
+    const field = () =>
+      Array.from(
+        document.querySelectorAll<HTMLInputElement>("[data-docs-search-input]"),
+      ).find((input) => input.offsetParent !== null);
+    document.addEventListener("keydown", (event) => {
+      if (event.defaultPrevented) return;
+      const target = event.target as HTMLElement | null;
+      if (event.key === "Escape") {
+        if (target?.matches("[data-docs-search-input]")) target.blur();
+        return;
+      }
+      if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey)
+        return;
+      if (
+        target?.closest("input, textarea, select, [contenteditable], [role='dialog']")
+      )
+        return;
+      const input = field();
+      if (!input) return;
+      event.preventDefault();
+      input.focus();
+      input.select();
+    });
+
+    // Copy buttons of the code blocks.
+    root.addEventListener("click", async (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>(
+        "[data-docs-copy]",
+      );
+      const block = button?.closest<HTMLElement>("[data-docs-code]");
+      if (!button || !block) return;
+      const status = block.querySelector("[data-docs-copy-status]");
+      try {
+        await navigator.clipboard.writeText(
+          block.querySelector("pre code")?.textContent ?? "",
+        );
+        block.dataset.copied = "";
+        if (status) status.textContent = button.dataset.copiedText ?? "";
+        if (button.dataset.trackTarget)
+          window.plausible?.("Download", {
+            props: {
+              platform: button.dataset.trackPlatform ?? "",
+              target: button.dataset.trackTarget,
+              placement: "docs",
+              locale: button.dataset.trackLocale ?? "",
+            },
+          });
+        window.setTimeout(() => {
+          delete block.dataset.copied;
+          if (status) status.textContent = "";
+        }, 2000);
+      } catch {
+        delete block.dataset.copied;
+        if (status) status.textContent = button.dataset.failedText ?? "";
+      }
+    });
+
+    // The table of contents marks the section in view.
+    const links = new Map<string, HTMLAnchorElement>();
+    for (const link of root.querySelectorAll<HTMLAnchorElement>(
+      ".docs-toc__link",
+    ))
+      links.set(decodeURIComponent(link.hash.slice(1)), link);
+    const headings = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-docs-toc]"),
+    ).filter((heading) => links.has(heading.dataset.docsToc ?? ""));
+
+    if (headings.length && "IntersectionObserver" in window) {
+      const mark = (heading: HTMLElement | undefined) => {
+        for (const link of links.values()) link.removeAttribute("aria-current");
+        if (heading)
+          links
+            .get(heading.dataset.docsToc ?? "")
+            ?.setAttribute("aria-current", "location");
+      };
+      // Height of the sticky bars, read from the custom property of the layout.
+      const probe = document.createElement("div");
+      probe.style.cssText =
+        "position:absolute;visibility:hidden;height:var(--docs-offset)";
+      root.append(probe);
+      const offset = probe.offsetHeight || 104;
+      probe.remove();
+      let locked = 0;
+      // The section in view is the last heading above the reading line.
+      const update = () => {
+        if (performance.now() < locked) return;
+        const line = offset + 80;
+        let active: HTMLElement | undefined;
+        for (const heading of headings) {
+          if (heading.getBoundingClientRect().top <= line) active = heading;
+          else break;
+        }
+        mark(active ?? headings[0]);
+      };
+      const observer = new IntersectionObserver(update, {
+        rootMargin: `-${Math.round(offset)}px 0px -55% 0px`,
+        threshold: [0, 1],
+      });
+      for (const heading of headings) observer.observe(heading);
+      update();
+      // A jump from the list names its target, even where the page cannot scroll that far.
+      window.addEventListener("hashchange", () => {
+        const target = headings.find(
+          (heading) =>
+            heading.dataset.docsToc === decodeURIComponent(location.hash.slice(1)),
+        );
+        if (!target) return;
+        locked = performance.now() + 700;
+        mark(target);
+      });
+    }
+  }
+</script>

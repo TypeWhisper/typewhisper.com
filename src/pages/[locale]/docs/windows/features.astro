@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsFeatures from "@/pages/docs/windows/_features.tsx";
+import DocsWindowsFeatures, { windowsFeaturesHead } from "@/pages/docs/windows/_features.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -22,6 +22,7 @@ const copy = locale === "de"
       title: "Features - Windows - TypeWhisper",
       description: "Current TypeWhisper Windows features: dictation modes, file transcription, translation, and more.",
     };
+const head = windowsFeaturesHead(locale);
 ---
 <DocsLayout
   title={copy.title}
@@ -29,9 +30,8 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/features")}
   locale={locale}
   platform="windows"
-  releaseStage="stable"
-  releaseTitle={t(locale, "docs.win.release.title")}
-  releaseDescription={t(locale, "docs.win.release.featuresDescription")}
+  heading={head.heading}
+  lede={head.lede}
 >
   <DocsWindowsFeatures locale={locale} />
 </DocsLayout>

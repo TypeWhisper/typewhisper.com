@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsTroubleshooting from "@/pages/docs/windows/_troubleshooting.tsx";
+import DocsWindowsTroubleshooting, { windowsTroubleshootingHead } from "@/pages/docs/windows/_troubleshooting.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -22,6 +22,7 @@ const copy = locale === "de"
       title: "Troubleshooting - Windows - TypeWhisper",
       description: "Resolve common TypeWhisper installation, microphone, insertion, model, and API problems on Windows.",
     };
+const head = windowsTroubleshootingHead(locale);
 ---
 <DocsLayout
   title={copy.title}
@@ -29,9 +30,8 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/troubleshooting")}
   locale={locale}
   platform="windows"
-  releaseStage="stable"
-  releaseTitle={t(locale, "docs.win.release.title")}
-  releaseDescription={t(locale, "docs.win.release.troubleshootingDescription")}
+  heading={head.heading}
+  lede={head.lede}
 >
   <DocsWindowsTroubleshooting locale={locale} />
 </DocsLayout>

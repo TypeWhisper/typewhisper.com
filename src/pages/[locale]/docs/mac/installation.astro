@@ -20,6 +20,8 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/docs/mac/installation")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.installation.title")}
+  lede={t(locale, "docs.mac.installation.subtitle")}
 >
-  <DocsMacInstallation locale={locale} client:load />
+  <DocsMacInstallation locale={locale} />
 </DocsLayout>

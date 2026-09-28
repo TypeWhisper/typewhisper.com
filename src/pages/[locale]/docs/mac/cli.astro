@@ -20,6 +20,8 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/docs/mac/cli")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.cli.title")}
+  lede={t(locale, "docs.mac.cli.description")}
 >
   <DocsMacCLI locale={locale} />
 </DocsLayout>

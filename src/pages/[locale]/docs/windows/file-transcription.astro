@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsFileTranscription from "@/pages/docs/windows/_file-transcription.tsx";
+import DocsWindowsFileTranscription, { windowsFileTranscriptionHead } from "@/pages/docs/windows/_file-transcription.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -22,6 +22,7 @@ const copy = locale === "de"
       title: "File Transcription - Windows - TypeWhisper",
       description: "Transcribe audio and video files with a queue, export, and watch folder in TypeWhisper for Windows.",
     };
+const head = windowsFileTranscriptionHead(locale);
 ---
 <DocsLayout
   title={copy.title}
@@ -29,9 +30,8 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/file-transcription")}
   locale={locale}
   platform="windows"
-  releaseStage="stable"
-  releaseTitle={t(locale, "docs.win.release.title")}
-  releaseDescription={t(locale, "docs.win.release.fileTranscriptionDescription")}
+  heading={head.heading}
+  lede={head.lede}
 >
   <DocsWindowsFileTranscription locale={locale} />
 </DocsLayout>

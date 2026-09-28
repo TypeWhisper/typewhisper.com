@@ -9,40 +9,12 @@ interface Props {
 }
 
 const { stage, title, description, locale = "en" } = Astro.props;
-
-const toneMap = {
-  stable: {
-    container: "border-emerald-500/20 bg-emerald-500/5",
-    label: "text-emerald-700 dark:text-emerald-300",
-    labelKey: "releaseStage.stable",
-  },
-  beta: {
-    container: "border-amber-500/20 bg-amber-500/5",
-    label: "text-amber-700 dark:text-amber-300",
-    labelKey: "releaseStage.beta",
-  },
-  alpha: {
-    container: "border-rose-500/20 bg-rose-500/5",
-    label: "text-rose-700 dark:text-rose-300",
-    labelKey: "releaseStage.alpha",
-  },
-  pending: {
-    container: "border-amber-500/20 bg-amber-500/5",
-    label: "text-amber-700 dark:text-amber-300",
-    labelKey: "releaseStage.pending",
-  },
-} as const;
-
-const tone = toneMap[stage];
-const label = t(locale, tone.labelKey);
 ---
 
-<div class:list={["mb-6 rounded-2xl border p-4 sm:p-5", tone.container]}>
-  <p class:list={["text-xs font-semibold uppercase tracking-[0.2em]", tone.label]}>
-    {label}
-  </p>
-  <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-    <strong class="text-foreground">{title}</strong>
+<div class="docs-callout docs-callout--release" role="note">
+  <p class="docs-callout__label">{t(locale, `releaseStage.${stage}`)}</p>
+  <p>
+    <strong class="docs-callout__title">{title}</strong>
     {" "}
     {description}
   </p>

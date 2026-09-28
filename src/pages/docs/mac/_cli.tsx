@@ -1,333 +1,147 @@
+import {
+  DocsCallout,
+  DocsCode,
+  DocsSection,
+  DocsSubheading,
+  DocsTable,
+} from "@/components/docs/prose";
 import { t, type Locale } from "@/i18n/index";
+
+const commands: Array<[name: string, key: string, code: string]> = [
+  ["status", "docs.mac.cli.commands.status", "typewhisper status"],
+  ["models", "docs.mac.cli.commands.models", "typewhisper models"],
+  [
+    "transcribe",
+    "docs.mac.cli.commands.transcribe",
+    "typewhisper transcribe recording.wav",
+  ],
+  [
+    "export",
+    "docs.mac.cli.commands.export",
+    "typewhisper export typewhisper-settings.json",
+  ],
+  [
+    "import",
+    "docs.mac.cli.commands.import",
+    "typewhisper import typewhisper-settings.json",
+  ],
+];
+
+const options: Array<[flag: string, key: string]> = [
+  ["--port", "docs.mac.cli.options.port"],
+  ["--api-token", "docs.mac.cli.options.apiToken"],
+  ["--dev", "docs.mac.cli.options.dev"],
+  ["--json", "docs.mac.cli.options.json"],
+  ["--help / -h / --version", "docs.mac.cli.options.helpVersion"],
+  ["--language", "docs.mac.cli.options.language"],
+  ["--language-hint", "docs.mac.cli.options.languageHint"],
+  ["--task", "docs.mac.cli.options.task"],
+  ["--translate-to", "docs.mac.cli.options.translateTo"],
+  ["--engine", "docs.mac.cli.options.engine"],
+  ["--model", "docs.mac.cli.options.model"],
+  ["--await-download", "docs.mac.cli.options.awaitDownload"],
+  ["--no-corrections", "docs.mac.cli.options.noCorrections"],
+];
+
+const examples: Array<[key: string, code: string]> = [
+  ["docs.mac.cli.examples.transcribeFile", "typewhisper transcribe meeting.m4a"],
+  [
+    "docs.mac.cli.examples.pipeStdin",
+    "ffmpeg -i video.mp4 -f wav - | typewhisper transcribe -",
+  ],
+  [
+    "docs.mac.cli.examples.jsonJq",
+    "typewhisper transcribe --json recording.wav | jq .text",
+  ],
+  [
+    "docs.mac.cli.examples.translateGerman",
+    "typewhisper transcribe --translate-to de recording.wav",
+  ],
+  ["docs.mac.cli.examples.customPort", "typewhisper --port 9000 status"],
+  [
+    "docs.mac.cli.examples.backupDotfiles",
+    "mkdir -p ~/.config/typewhisper\ntypewhisper export ~/.config/typewhisper/settings.json",
+  ],
+  [
+    "docs.mac.cli.examples.importJson",
+    "typewhisper import settings.json --json",
+  ],
+];
 
 export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
   return (
-      <div>
-        <h1 className="font-display text-3xl font-bold tracking-tight">
-          {t(locale, "docs.mac.cli.title")}
-        </h1>
-        <p className="mt-3 text-muted-foreground">
-          {t(locale, "docs.mac.cli.description")}
+    <>
+      <DocsSection
+        id="installation"
+        title={t(locale, "docs.mac.cli.installation.title")}
+      >
+        <p>
+          {t(locale, "docs.mac.cli.installation.desc1")}{" "}
+          <code>typewhisper</code>{" "}
+          {t(locale, "docs.mac.cli.installation.desc2")}{" "}
+          <code>/usr/local/bin/typewhisper</code>
+          {t(locale, "docs.mac.cli.installation.desc3")}
         </p>
+        <DocsCallout label={t(locale, "docs.callout.important")}>
+          <p>{t(locale, "docs.mac.cli.installation.warning")}</p>
+        </DocsCallout>
+      </DocsSection>
 
-        <div className="mt-8 space-y-6">
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.installation.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.cli.installation.desc1")}{" "}
-              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                typewhisper
-              </code>{" "}
-              {t(locale, "docs.mac.cli.installation.desc2")}{" "}
-              <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                /usr/local/bin/typewhisper
-              </code>
-              {t(locale, "docs.mac.cli.installation.desc3")}
-            </p>
-            <div className="mt-4 rounded-md border border-amber-500/20 bg-amber-500/5 p-3">
-              <p className="text-sm text-muted-foreground">
-                {t(locale, "docs.mac.cli.installation.warning")}
-              </p>
-            </div>
+      <DocsSection id="commands" title={t(locale, "docs.mac.cli.commands.title")}>
+        {commands.map(([name, key, code]) => (
+          <div key={name}>
+            <DocsSubheading id={`command-${name}`}>
+              <code>{name}</code>
+            </DocsSubheading>
+            <p>{t(locale, key)}</p>
+            <DocsCode code={code} lang="shell" locale={locale} />
           </div>
+        ))}
+      </DocsSection>
 
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.commands.title")}</h2>
-            <div className="mt-3 space-y-4">
-              <div>
-                <h3 className="text-sm font-semibold">status</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.commands.status")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper status</p>
-                </div>
-              </div>
+      <DocsSection id="file-size" title={t(locale, "docs.mac.cli.fileSize.title")}>
+        <p>{t(locale, "docs.mac.cli.fileSize.localFiles")}</p>
+        <p>{t(locale, "docs.mac.cli.fileSize.stdin")}</p>
+      </DocsSection>
 
-              <div>
-                <h3 className="text-sm font-semibold">models</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.commands.models")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper models</p>
-                </div>
-              </div>
+      <DocsSection
+        id="settings-backup"
+        title={t(locale, "docs.mac.cli.settings.title")}
+      >
+        <p>{t(locale, "docs.mac.cli.settings.description")}</p>
+        <DocsCode
+          locale={locale}
+          lang="shell"
+          code={`mkdir -p ~/.config/typewhisper
+typewhisper export ~/.config/typewhisper/settings.json
+typewhisper import ~/.config/typewhisper/settings.json
+typewhisper import ~/.config/typewhisper/settings.json --json`}
+        />
+        <p>{t(locale, "docs.mac.cli.settings.behavior")}</p>
+        <DocsCallout label={t(locale, "docs.callout.important")}>
+          <p>{t(locale, "docs.mac.cli.settings.warning")}</p>
+        </DocsCallout>
+      </DocsSection>
 
-              <div>
-                <h3 className="text-sm font-semibold">transcribe</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.commands.transcribe")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper transcribe recording.wav</p>
-                </div>
-              </div>
+      <DocsSection id="options" title={t(locale, "docs.mac.cli.options.title")}>
+        <DocsTable
+          label={t(locale, "docs.mac.cli.options.title")}
+          head={["Flag", t(locale, "docs.mac.cli.options.descHeader")]}
+          rows={options.map(([flag, key]) => [
+            <code>{flag}</code>,
+            t(locale, key),
+          ])}
+        />
+      </DocsSection>
 
-              <div>
-                <h3 className="text-sm font-semibold">export</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.commands.export")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper export typewhisper-settings.json</p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-semibold">import</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.commands.import")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper import typewhisper-settings.json</p>
-                </div>
-              </div>
-            </div>
+      <DocsSection id="examples" title={t(locale, "docs.mac.cli.examples.title")}>
+        {examples.map(([key, code]) => (
+          <div key={key}>
+            <p>{t(locale, key)}</p>
+            <DocsCode code={code} lang="shell" locale={locale} />
           </div>
-
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.fileSize.title")}</h2>
-            <div className="mt-3 space-y-3 text-sm text-muted-foreground">
-              <p>{t(locale, "docs.mac.cli.fileSize.localFiles")}</p>
-              <p>{t(locale, "docs.mac.cli.fileSize.stdin")}</p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.settings.title")}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.cli.settings.description")}
-            </p>
-            <div className="mt-3 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-              <p>mkdir -p ~/.config/typewhisper</p>
-              <p>typewhisper export ~/.config/typewhisper/settings.json</p>
-              <p>typewhisper import ~/.config/typewhisper/settings.json</p>
-              <p>typewhisper import ~/.config/typewhisper/settings.json --json</p>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              {t(locale, "docs.mac.cli.settings.behavior")}
-            </p>
-            <div className="mt-4 rounded-md border border-amber-500/20 bg-amber-500/5 p-3">
-              <p className="text-sm text-muted-foreground">
-                {t(locale, "docs.mac.cli.settings.warning")}
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.options.title")}</h2>
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="py-2 pr-4 text-left font-semibold">Flag</th>
-                    <th className="py-2 text-left font-semibold">
-                      {t(locale, "docs.mac.cli.options.descHeader")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-muted-foreground">
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --port
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.port")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --api-token
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.apiToken")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --dev
-                      </code>
-                    </td>
-                    <td className="py-2">{t(locale, "docs.mac.cli.options.dev")}</td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --json
-                      </code>
-                    </td>
-                    <td className="py-2">{t(locale, "docs.mac.cli.options.json")}</td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --help / -h / --version
-                      </code>
-                    </td>
-                    <td className="py-2">{t(locale, "docs.mac.cli.options.helpVersion")}</td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --language
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.language")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --language-hint
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.languageHint")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --task
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.task")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --translate-to
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.translateTo")}
-                    </td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --engine
-                      </code>
-                    </td>
-                    <td className="py-2">{t(locale, "docs.mac.cli.options.engine")}</td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --model
-                      </code>
-                    </td>
-                    <td className="py-2">{t(locale, "docs.mac.cli.options.model")}</td>
-                  </tr>
-                  <tr className="border-b border-border/50">
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --await-download
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.awaitDownload")}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pr-4">
-                      <code className="text-xs bg-background px-1.5 py-0.5 rounded font-mono">
-                        --no-corrections
-                      </code>
-                    </td>
-                    <td className="py-2">
-                      {t(locale, "docs.mac.cli.options.noCorrections")}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-card p-6">
-            <h2 className="text-lg font-semibold">{t(locale, "docs.mac.cli.examples.title")}</h2>
-            <div className="mt-3 space-y-4">
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.transcribeFile")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper transcribe meeting.m4a</p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.pipeStdin")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>
-                    ffmpeg -i video.mp4 -f wav - | typewhisper transcribe -
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.jsonJq")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>
-                    typewhisper transcribe --json recording.wav | jq .text
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.translateGerman")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>
-                    typewhisper transcribe --translate-to de recording.wav
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.customPort")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper --port 9000 status</p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.backupDotfiles")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>mkdir -p ~/.config/typewhisper</p>
-                  <p>typewhisper export ~/.config/typewhisper/settings.json</p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  {t(locale, "docs.mac.cli.examples.importJson")}
-                </p>
-                <div className="mt-2 rounded-md bg-background p-4 font-mono text-sm overflow-x-auto">
-                  <p>typewhisper import settings.json --json</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        ))}
+      </DocsSection>
+    </>
   );
 }

@@ -1,17 +1,15 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Screenshot } from "@/components/ui/screenshot";
+import { DocsFigure } from "@/components/docs/prose";
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { Download, FileAudio, Globe, Sparkles, Terminal, Workflow, Wrench } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   locale: Locale;
 }
 
-type WindowsCard = [slug: string, title: string, description: string, Icon: typeof Download];
+type WindowsEntry = [slug: string, title: string, description: string];
 
 export function getStaticPaths() {
   return getLocaleStaticPaths();
@@ -25,13 +23,13 @@ const copy = locale === "de"
       heading: "Windows-Dokumentation",
       intro: "Die Windows-App ist stabil für den täglichen Einsatz mit systemweitem Diktat, Datei-Transkription, Workflows, Verlauf, Wörterbuch, Snippets und Integrationen.",
       cards: [
-        ["installation", "Installation", "Store, Installer, vierstufiges Onboarding, Updates und Deinstallation.", Download],
-        ["features", "Funktionen", "Diktat, Tastenkürzel, Modelle, Wörterbuch, Recorder und Integrationen.", Sparkles],
-        ["file-transcription", "Datei-Transkription", "Queue, Formate, Export und Watch Folder.", FileAudio],
-        ["workflows", "Workflows", "Vorlagen, Trigger, Nachbearbeitung und Ausgabe.", Workflow],
-        ["api", "HTTP API", "Lokale API für Transkription, Diktat, Recorder und Wörterbuch.", Globe],
-        ["cli", "CLI Tool", "TypeWhisper aus PowerShell und Skripten verwenden.", Terminal],
-        ["troubleshooting", "Fehlerbehebung", "Installation, Mikrofon, Einfügen, Modelle und API diagnostizieren.", Wrench],
+        ["installation", "Installation", "Store, Installer, vierstufiges Onboarding, Updates und Deinstallation."],
+        ["features", "Funktionen", "Diktat, Tastenkürzel, Modelle, Wörterbuch, Recorder und Integrationen."],
+        ["file-transcription", "Datei-Transkription", "Queue, Formate, Export und Watch Folder."],
+        ["workflows", "Workflows", "Vorlagen, Trigger, Nachbearbeitung und Ausgabe."],
+        ["api", "HTTP API", "Lokale API für Transkription, Diktat, Recorder und Wörterbuch."],
+        ["cli", "CLI Tool", "TypeWhisper aus PowerShell und Skripten verwenden."],
+        ["troubleshooting", "Fehlerbehebung", "Installation, Mikrofon, Einfügen, Modelle und API diagnostizieren."],
       ],
     }
   : {
@@ -40,13 +38,13 @@ const copy = locale === "de"
       heading: "Windows Documentation",
       intro: "The Windows app is stable for daily use with system-wide dictation, file transcription, workflows, history, dictionary, snippets, and integrations.",
       cards: [
-        ["installation", "Installation", "Store, installers, four-step onboarding, updates, and uninstall.", Download],
-        ["features", "Features", "Dictation, hotkeys, models, dictionary, recorder, and integrations.", Sparkles],
-        ["file-transcription", "File Transcription", "Queue, formats, export, and watch folder.", FileAudio],
-        ["workflows", "Workflows", "Templates, triggers, post-processing, and output.", Workflow],
-        ["api", "HTTP API", "Local API for transcription, dictation, recorder, and dictionary.", Globe],
-        ["cli", "CLI Tool", "Use TypeWhisper from PowerShell and scripts.", Terminal],
-        ["troubleshooting", "Troubleshooting", "Diagnose installation, microphone, insertion, models, and API.", Wrench],
+        ["installation", "Installation", "Store, installers, four-step onboarding, updates, and uninstall."],
+        ["features", "Features", "Dictation, hotkeys, models, dictionary, recorder, and integrations."],
+        ["file-transcription", "File Transcription", "Queue, formats, export, and watch folder."],
+        ["workflows", "Workflows", "Templates, triggers, post-processing, and output."],
+        ["api", "HTTP API", "Local API for transcription, dictation, recorder, and dictionary."],
+        ["cli", "CLI Tool", "Use TypeWhisper from PowerShell and scripts."],
+        ["troubleshooting", "Troubleshooting", "Diagnose installation, microphone, insertion, models, and API."],
       ],
     };
 ---
@@ -59,35 +57,32 @@ const copy = locale === "de"
   releaseStage="stable"
   releaseTitle={t(locale, "docs.win.release.title")}
   releaseDescription={t(locale, "docs.win.release.indexDescription")}
+  heading={copy.heading}
+  label={t(locale, "docs.title")}
+  lede={copy.intro}
+  wide
+  prose={false}
 >
-  <div>
-    <div class="flex flex-wrap items-center gap-3">
-      <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-      <Badge variant="secondary">{t(locale, "docs.win.badge")}</Badge>
-    </div>
-    <p class="mt-3 max-w-3xl text-lg text-muted-foreground">
-      {copy.intro}
-    </p>
-    <Screenshot
-      src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
-      alt={locale === "de" ? "TypeWhisper-Dashboard unter Windows" : "TypeWhisper dashboard on Windows"}
-      className="mt-8 aspect-[31/20] w-full rounded-xl border border-border object-cover"
-      loading="eager"
-    />
-    <div class="mt-8 grid gap-4 sm:grid-cols-2">
-      {(copy.cards as WindowsCard[]).map(([slug, title, description, Icon]) => (
-        <a href={canonicalPath(locale, `/docs/windows/${slug}`)}>
-          <Card className="h-full transition-all hover:shadow-md">
-            <CardHeader>
-              <div class="mb-1 text-muted-foreground">
-                <Icon className="size-5" />
-              </div>
-              <CardTitle className="text-base">{title}</CardTitle>
-              <CardDescription>{description}</CardDescription>
-            </CardHeader>
-          </Card>
+  <Fragment slot="meta">
+    <span class="docs-head__accent">{t(locale, "docs.win.badge")}</span>
+  </Fragment>
+
+  <DocsFigure
+    kind="framed"
+    src={screenshotPath(locale, "/screenshots/windows/dashboard.png")}
+    alt={locale === "de" ? "TypeWhisper-Dashboard unter Windows" : "TypeWhisper dashboard on Windows"}
+    loading="eager"
+  />
+
+  <ul class="docs-index">
+    {(copy.cards as WindowsEntry[]).map(([slug, title, description]) => (
+      <li>
+        <a href={canonicalPath(locale, `/docs/windows/${slug}`)} class="docs-index__link">
+          <span class="docs-index__name">{title}</span>
+          <span class="docs-index__text">{description}</span>
+          <ArrowRight aria-hidden="true" />
         </a>
-      ))}
-    </div>
-  </div>
+      </li>
+    ))}
+  </ul>
 </DocsLayout>
