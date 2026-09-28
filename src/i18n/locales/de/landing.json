@@ -245,7 +245,7 @@
   "features.label": "Funktionen",
   "features.tour.step": "{current} von {total}",
   "features.tour.goToStep": "Screenshot {number} zeigen",
-  "features.mac.private.caption": "Start: Dashboard mit Aktivitätszahlen und den letzten Transkriptionen",
+  "features.mac.private.caption": "Statistiken: Kennzahlen, Aktivität pro Tag, Top-Apps und verwendete Modelle, gespeichert auf deinem Mac",
   "features.mac.dictation.caption": "Einstellungen für das Diktat: gesprochene Sprache, Engine, Mikrofon und Sound",
   "features.mac.prompts.caption": "Einstellungen, Workflows: drei aktive Workflows mit ihren Auslösern",
   "features.mac.profiles.caption": "Einstellungen, Integrationen, Entdecken: Add-ons zum Installieren, jeweils als lokal oder Cloud markiert",

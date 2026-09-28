@@ -4,7 +4,7 @@ export type FeatureScreenshotKey =
   "private" | "dictation" | "prompts" | "profiles" | "transcription";
 
 const macFeatureScreenshots: Record<FeatureScreenshotKey, string> = {
-  private: "/screenshots/mac/home.png",
+  private: "/screenshots/mac/statistics.png",
   dictation: "/screenshots/mac/recording.png",
   prompts: "/screenshots/mac/workflows.png",
   profiles: "/screenshots/mac/integrations-available.png",

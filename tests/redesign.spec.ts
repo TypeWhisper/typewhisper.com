@@ -501,7 +501,9 @@ test.describe("feature tour", () => {
           expect(
             Math.abs(rendered!.width / rendered!.height / proportion - 1),
           ).toBeLessThan(0.005);
-          expect(rendered!.y).toBeGreaterThanOrEqual(header!.y + header!.height);
+          expect(rendered!.y).toBeGreaterThanOrEqual(
+            header!.y + header!.height,
+          );
         }
       });
     }
@@ -542,7 +544,7 @@ test.describe("feature tour", () => {
     await figures.first().scrollIntoViewIfNeeded();
     await expect(figures.first().locator("img")).toBeVisible();
     await expect(figures.first().locator("figcaption")).toHaveText(
-      "Home: dashboard with activity numbers and recent transcriptions",
+      "Statistics: key figures, activity per day, top apps, and models used, stored on your Mac",
     );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
