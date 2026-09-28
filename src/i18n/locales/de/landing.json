@@ -248,7 +248,7 @@
   "features.mac.private.caption": "Einstellungen, Integrationen, Entdecken: gefiltert auf Add-ons, die lokal auf deinem Mac laufen",
   "features.mac.dictation.caption": "Einstellungen für das Diktat: gesprochene Sprache, Engine, Mikrofon und Sound",
   "features.mac.prompts.caption": "Einstellungen, Workflows: drei aktive Workflows mit ihren Auslösern",
-  "features.mac.profiles.caption": "Einstellungen, Integrationen, Entdecken: Add-ons zum Installieren, jeweils als lokal oder Cloud markiert",
+  "features.mac.profiles.caption": "Einstellungen, Erweitert: Einstellungen sichern und wiederherstellen, Diagnose und Aufnahme-Optionen",
   "features.mac.transcription.caption": "Einstellungen, Datei-Transkription: Ablagefläche für Dateien und überwachter Ordner",
   "features.windows.private.caption": "Dashboard: Statistik und Aktivität der letzten Woche",
   "features.windows.dictation.caption": "Diktat: Engine, Mikrofon und gesprochene Sprache",

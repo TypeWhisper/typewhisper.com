@@ -7,7 +7,7 @@ const macFeatureScreenshots: Record<FeatureScreenshotKey, string> = {
   private: "/screenshots/mac/integrations-local.png",
   dictation: "/screenshots/mac/recording.png",
   prompts: "/screenshots/mac/workflows.png",
-  profiles: "/screenshots/mac/integrations-available.png",
+  profiles: "/screenshots/mac/advanced.png",
   transcription: "/screenshots/mac/file-transcription.png",
 };
 
