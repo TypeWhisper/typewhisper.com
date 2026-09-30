@@ -44,7 +44,7 @@ export default function DocsIOSGuide({
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-muted-foreground">
           <span>iOS / iPadOS 18+</span>
           <span>watchOS 11+</span>
-          <span>{isDe ? "Version 1.0 stabil" : "Version 1.0 stable"}</span>
+          <span>{isDe ? "Version 1.1 stabil" : "Version 1.1 stable"}</span>
           <a
             href={iosAppStoreUrl}
             target="_blank"
