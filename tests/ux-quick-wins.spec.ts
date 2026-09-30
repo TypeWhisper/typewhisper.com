@@ -313,6 +313,54 @@ test.describe("addons search", () => {
     }
   });
 
+  test("Local LLM (MLX) lives at its own slug and the old Gemma 4 URLs redirect", async ({
+    page,
+  }) => {
+    const newPath = /\/(en|de)\/addons\/local-llm-mlx\/?$/;
+
+    for (const locale of ["en", "de"] as const) {
+      await page.goto(`/${locale}/addons`);
+      await waitForAddonsHydration(page);
+
+      const search = page.getByTestId("addons-search");
+      await search.fill("MLX");
+
+      const localLlmCard = page.locator(
+        '[data-testid="addon-card"][data-slug="local-llm-mlx"]',
+      );
+      await expect(localLlmCard).toBeVisible();
+      await expect(localLlmCard).toContainText("Local LLM (MLX)");
+      await expect(localLlmCard).toHaveAttribute(
+        "href",
+        `/${locale}/addons/local-llm-mlx`,
+      );
+
+      await page.goto(`/${locale}/addons/local-llm-mlx`);
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
+      ).toBeVisible();
+      await expect(
+        page.locator(
+          `img[src="/screenshots/${locale}/plugins/local-llm-mlx.png"]`,
+        ),
+      ).toBeVisible();
+
+      await page.goto(`/${locale}/addons/gemma4/`, { waitUntil: "commit" });
+      await expect(page).toHaveURL(
+        new RegExp(`/${locale}/addons/local-llm-mlx/?$`),
+      );
+      await expect(
+        page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
+      ).toBeVisible();
+    }
+
+    await page.goto("/addons/gemma4/", { waitUntil: "commit" });
+    await expect(page).toHaveURL(newPath);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
+    ).toBeVisible();
+  });
+
   test("search input filters the addon cards", async ({ page }) => {
     await page.goto("/en/addons");
     await expect(page.getByTestId("featured-addons")).toBeVisible();
