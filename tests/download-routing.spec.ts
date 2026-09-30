@@ -13,6 +13,7 @@ type GeneratedDownloads = {
 
 type GeneratedRelease = {
   tag_name: string;
+  name?: string;
 };
 
 function readGeneratedDownloads(): GeneratedDownloads {
@@ -540,6 +541,8 @@ test("changelog reflects the generated release feed", async ({ page }) => {
   if (releases.length === 0) {
     await expect(page.getByText("No releases found.")).toBeVisible();
   } else {
-    await expect(page.getByText(releases[0].tag_name).first()).toBeVisible();
+    // Release cards show the release name, which differs from the tag for RCs.
+    const title = releases[0].name?.trim() || releases[0].tag_name;
+    await expect(page.getByText(title, { exact: true }).first()).toBeVisible();
   }
 });
