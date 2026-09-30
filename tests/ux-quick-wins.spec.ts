@@ -313,7 +313,7 @@ test.describe("addons search", () => {
     }
   });
 
-  test("Local LLM (MLX) lives at its own slug and the old Gemma 4 URLs redirect", async ({
+  test("Local LLM (MLX) lives at its own slug and the old Gemma 4 and plain local-llm URLs redirect", async ({
     page,
   }) => {
     const newPath = /\/(en|de)\/addons\/local-llm-mlx\/?$/;
@@ -345,20 +345,27 @@ test.describe("addons search", () => {
         ),
       ).toBeVisible();
 
-      await page.goto(`/${locale}/addons/gemma4/`, { waitUntil: "commit" });
-      await expect(page).toHaveURL(
-        new RegExp(`/${locale}/addons/local-llm-mlx/?$`),
-      );
+      // The macOS app links to /addons/local-llm/ once the plug-in is renamed.
+      for (const oldSlug of ["gemma4", "local-llm"]) {
+        await page.goto(`/${locale}/addons/${oldSlug}/`, {
+          waitUntil: "commit",
+        });
+        await expect(page).toHaveURL(
+          new RegExp(`/${locale}/addons/local-llm-mlx/?$`),
+        );
+        await expect(
+          page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
+        ).toBeVisible();
+      }
+    }
+
+    for (const oldSlug of ["gemma4", "local-llm"]) {
+      await page.goto(`/addons/${oldSlug}/`, { waitUntil: "commit" });
+      await expect(page).toHaveURL(newPath);
       await expect(
         page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
       ).toBeVisible();
     }
-
-    await page.goto("/addons/gemma4/", { waitUntil: "commit" });
-    await expect(page).toHaveURL(newPath);
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
-    ).toBeVisible();
   });
 
   test("search input filters the addon cards", async ({ page }) => {
