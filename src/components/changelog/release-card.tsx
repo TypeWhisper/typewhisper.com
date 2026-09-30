@@ -52,7 +52,7 @@ export function ReleaseCard({ release, locale = "en" }: { release: Release; loca
             {release.platform === "mac" ? "macOS" : "Windows"}
           </Badge>
           <h3 className="font-display text-base font-semibold">
-            {release.name}
+            {release.name?.trim() || release.tag_name}
           </h3>
         </div>
         <a
