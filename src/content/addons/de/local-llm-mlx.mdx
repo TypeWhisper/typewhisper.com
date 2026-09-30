@@ -1,5 +1,6 @@
 ---
 slug: local-llm-mlx
+id: com.typewhisper.local-llm-mlx
 name: Local LLM (MLX)
 author: TypeWhisper
 icon: Cpu
@@ -9,12 +10,12 @@ categories:
 platforms:
   - mac
 source: bundled
-sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Gemma4Plugin
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/LocalLLMPlugin
 ---
 
 ## Über
 
-Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen, Zusammenfassungen, Übersetzungen und eigene Prompt-Workflows funktionieren ohne Cloud-Upload. Das Plugin hieß bisher Gemma 4. Empfohlen bleiben die dichten Modelle `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`. Neu sind zwei kleinere, experimentelle Modelle für Macs mit wenig Arbeitsspeicher: `Qwen3.5 2B` und `LFM2.5 2.6B`.
+Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen, Zusammenfassungen, Übersetzungen und eigene Prompt-Workflows funktionieren ohne Cloud-Upload. Es ersetzt das bisherige Gemma-4-Plugin. Empfohlen bleiben die dichten Modelle `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`. Neu sind zwei kleinere, experimentelle Modelle für Macs mit wenig Arbeitsspeicher: `Qwen3.5 2B` und `LFM2.5 2.6B`.
 
 ## Features
 
@@ -60,6 +61,6 @@ Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen,
 
 ## Hinweise
 
-- Workflows und Prompts, die dieses Plugin schon nutzen, funktionieren nach der Umbenennung weiter.
+- Wenn du noch das bisherige Gemma-4-Plugin installiert hast, installiere Local LLM (MLX), lade dein Modell erneut herunter und entferne danach das Gemma-4-Plugin. Workflows und Prompts, die Gemma 4 genutzt haben, wechseln zu Local LLM (MLX), sobald das alte Plugin entfernt ist.
 - Größere Gemma-4-Varianten sind weiterhin experimentell und können je nach Hardware oder aktuellem App-Build fehlschlagen.
 - Ein HuggingFace-Token ist optional, kann Downloads aber durch höhere Rate-Limits stabiler machen.
