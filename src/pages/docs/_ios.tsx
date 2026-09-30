@@ -83,7 +83,7 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
             iOS
           </h1>
           <Badge variant="outline">
-            {isDe ? "Version 1.0 stabil" : "Version 1.0 stable"}
+            {isDe ? "Version 1.1 stabil" : "Version 1.1 stable"}
           </Badge>
         </div>
         <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
@@ -293,8 +293,8 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           </h2>
           <p className="mt-3 text-sm leading-7 text-muted-foreground">
             {isDe
-              ? "Version 1.0 ist als stabiles Release für iPhone und iPad im App Store verfügbar. Die Apple-Watch-App ist enthalten."
-              : "Version 1.0 is available as a stable release for iPhone and iPad on the App Store. The Apple Watch app is included."}
+              ? "Version 1.1 ist als stabiles Release für iPhone und iPad im App Store verfügbar. Die Apple-Watch-App ist enthalten."
+              : "Version 1.1 is available as a stable release for iPhone and iPad on the App Store. The Apple Watch app is included."}
           </p>
           <a
             href={iosAppStoreUrl}

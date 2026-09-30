@@ -55,7 +55,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     description:
       "Requirements, permissions, local model setup, keyboard activation, and the first test recording for TypeWhisper on iPhone and iPad.",
     intro:
-      "TypeWhisper 1.0 is available from the App Store for iPhone and iPad. This guide takes you from installation through permissions, local models, keyboard setup, and your first recording.",
+      "TypeWhisper 1.1 is available from the App Store for iPhone and iPad. This guide takes you from installation through permissions, local models, keyboard setup, and your first recording.",
     sections: [
       {
         title: "Before you install",
@@ -608,7 +608,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     description:
       "Voraussetzungen, Berechtigungen, lokale Modelle, Tastatur-Aktivierung und die erste Testaufnahme mit TypeWhisper auf iPhone und iPad.",
     intro:
-      "TypeWhisper 1.0 ist für iPhone und iPad im App Store verfügbar. Diese Anleitung führt dich von der Installation über Berechtigungen und lokale Modelle bis zur Tastatur-Einrichtung und ersten Aufnahme.",
+      "TypeWhisper 1.1 ist für iPhone und iPad im App Store verfügbar. Diese Anleitung führt dich von der Installation über Berechtigungen und lokale Modelle bis zur Tastatur-Einrichtung und ersten Aufnahme.",
     sections: [
       {
         title: "Vor der Installation",

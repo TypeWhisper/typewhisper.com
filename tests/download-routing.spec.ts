@@ -360,7 +360,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     page.getByRole("link", { name: "Download on the App Store" }),
   ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
   await expect(
-    page.getByText("Version 1.0 stable", { exact: true }),
+    page.getByText("Version 1.1 stable", { exact: true }),
   ).toBeVisible();
 
   await page.goto("/en/support");
@@ -380,7 +380,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   );
   await expect(supportAppStoreLink).toHaveAttribute(
     "data-download-version",
-    "1.0",
+    "1.1",
   );
   await expect(supportAppStoreLink).toHaveAttribute(
     "data-tracking-placement",
@@ -412,7 +412,7 @@ test.describe("iOS App Store media", () => {
     );
     await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
       "data-download-version",
-      "1.0",
+      "1.1",
     );
     await expect(
       page.locator('source[src="/ios-app-preview-de.mp4"]'),
@@ -487,7 +487,7 @@ test.describe("iOS App Store media", () => {
       );
       await expect(appStoreLinks.first()).toHaveAttribute(
         "data-download-version",
-        "1.0",
+        "1.1",
       );
       await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
         0,

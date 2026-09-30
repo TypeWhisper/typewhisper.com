@@ -82,7 +82,7 @@ test.describe("docs platform logos", () => {
       await expect(
         page
           .locator(`a[href="/${locale}/docs/ios"]`)
-          .getByText(locale === "de" ? "1.0 Stabil" : "1.0 Stable", {
+          .getByText(locale === "de" ? "1.1 Stabil" : "1.1 Stable", {
             exact: true,
           }),
       ).toBeVisible();

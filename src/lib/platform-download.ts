@@ -6,7 +6,7 @@ export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
-export const iosVersion = "1.0";
+export const iosVersion = "1.1";
 const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 const windowsStoreCampaignId = "DevShareMCLPCS";
