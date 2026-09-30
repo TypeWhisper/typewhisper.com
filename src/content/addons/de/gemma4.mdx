@@ -1,34 +1,30 @@
 ---
 slug: gemma4
-name: Gemma 4
+name: Local LLM (MLX)
 author: TypeWhisper
-version: "1.1.6"
-icon: Gem
-description: Lokales LLM mit Google Gemma 4 auf Apple Silicon via MLX. Kein API-Key erforderlich.
+icon: Brain
+description: Lokales LLM auf Apple Silicon via MLX mit Gemma-4-, Qwen3.5- und LFM2.5-Modellen. Kein API-Key erforderlich.
 categories:
   - llm
 platforms:
   - mac
 source: official
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Gemma4Plugin
-id: "com.typewhisper.gemma4"
-minAppVersion: "1.6.0"
-minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gemma4-v1.1.6"
 ---
 
 ## Über
 
-Gemma 4 bringt Googles Open-Weight-Modellfamilie Gemma als vollständig lokalen Anbieter für Prompt-Verarbeitung nach TypeWhisper auf Apple Silicon. Alles läuft direkt auf deinem Mac via MLX, sodass du Umschreibungen, Zusammenfassungen und eigene Prompt-Workflows ohne Cloud-Upload nutzen kannst. Im aktuell verifizierten Release-Pfad empfiehlt TypeWhisper ausdrücklich die dichten Varianten `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`. Größere Varianten bleiben in der UI sichtbar, sind derzeit aber experimentell und können je nach Hardware oder Runtime-Unterstützung fehlschlagen.
+Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen, Zusammenfassungen, Übersetzungen und eigene Prompt-Workflows funktionieren ohne Cloud-Upload. Das Plugin hieß bisher Gemma 4. Empfohlen bleiben die dichten Modelle `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`. Neu sind zwei kleinere, experimentelle Modelle für Macs mit wenig Arbeitsspeicher: `Qwen3.5 2B` und `LFM2.5 2.6B`.
 
 ## Features
 
 - Vollständig lokale Prompt-Verarbeitung auf dem Gerät via MLX
+- Gemma-4-, Qwen3.5- und LFM2.5-Modelle in einem Plugin
 - Regler für die Generation Temperature zwischen präziser und kreativer Ausgabe
 - Optionaler HuggingFace-Token für höhere Download-Rate-Limits
 - Validierung des HuggingFace-Tokens vor dem Speichern
 - Download-, Lade-, Abbrechen- und Entladen-Zustände für lokale Modelle
-- Sichtbare experimentelle Modellvarianten mit klaren Warnhinweisen
+- Sichtbare experimentelle Modelle mit klaren Warnhinweisen
 - Kein API-Key für den lokalen Basis-Workflow erforderlich
 
 ## Verfügbare Modelle
@@ -39,23 +35,31 @@ Gemma 4 bringt Googles Open-Weight-Modellfamilie Gemma als vollständig lokalen 
 | Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ | Empfohlen |
 | Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Experimentell |
 | Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ | Experimentell |
+| Qwen3.5 2B (4-bit) | ~1.8 GB | 8 GB+ | Experimentell |
+| LFM2.5 2.6B (4-bit) | ~1.6 GB | 8 GB+ | Experimentell |
+
+## Welches Modell?
+
+- **Gemma 4 E2B oder E4B** liefert die zuverlässigsten Ergebnisse beim Bereinigen, Übersetzen und Umstrukturieren.
+- **Qwen3.5 2B** braucht etwa halb so viel Arbeitsspeicher wie Gemma 4 E2B und bereinigt Diktate gut, übersetzt und strukturiert Text aber weniger zuverlässig.
+- **LFM2.5 2.6B** denkt vor der Antwort nach, daher dauert jedes Ergebnis einige Sekunden. Es steht unter der LFM Open License, die kommerzielle Nutzung nur unter 10 Mio. USD Jahresumsatz kostenlos erlaubt.
 
 ## Konfiguration
 
 - **Generation Temperature** - Steuert, ob die Ausgabe eher präzise oder kreativer ausfällt.
 - **HuggingFace Token** - Optional. Erhöht Download-Rate-Limits und wird vor dem Speichern validiert. Du kannst ihn unter `huggingface.co/settings/tokens` erstellen.
-- **Modell** - Wähle, welche Gemma-4-Variante heruntergeladen und geladen werden soll. Die 4-bit-Modelle `E2B` und `E4B` sind aktuell der empfohlene Pfad.
+- **Modell** - Wähle, welches Modell heruntergeladen und geladen werden soll. Die 4-bit-Modelle Gemma 4 `E2B` und `E4B` sind der empfohlene Pfad.
 
 ## Einrichtung
 
 1. Öffne `TypeWhisper > Einstellungen > Integrationen`.
-2. Finde das Plugin `Gemma 4` und öffne seine Konfiguration.
+2. Finde das Plugin `Local LLM (MLX)` und öffne seine Konfiguration.
 3. Füge optional einen HuggingFace-Token ein und speichere ihn nach erfolgreicher Validierung.
-4. Wähle eines der empfohlenen 4-bit-Modelle und klicke auf `Laden & Aktivieren`.
-5. Sobald das Modell geladen ist, wähle `Gemma 4 (MLX)` als LLM-Anbieter in deinem Prompt-Workflow.
+4. Wähle ein Modell und klicke auf `Laden & Aktivieren`. Experimentelle Modelle startest du mit `Trotzdem versuchen`.
+5. Sobald das Modell geladen ist, wähle `Local LLM (MLX)` als LLM-Anbieter in deinem Prompt-Workflow.
 
 ## Hinweise
 
-- Aktuell empfohlen sind `Gemma 4 E2B (4-bit)` und `Gemma 4 E4B (4-bit)`.
-- Größere Varianten sind weiterhin experimentell und können je nach Hardware oder aktuellem App-Build fehlschlagen.
+- Workflows und Prompts, die dieses Plugin schon nutzen, funktionieren nach der Umbenennung weiter.
+- Größere Gemma-4-Varianten sind weiterhin experimentell und können je nach Hardware oder aktuellem App-Build fehlschlagen.
 - Ein HuggingFace-Token ist optional, kann Downloads aber durch höhere Rate-Limits stabiler machen.

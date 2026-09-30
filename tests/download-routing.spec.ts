@@ -15,7 +15,7 @@ type GeneratedDownloads = {
 
 type GeneratedRelease = {
   tag_name: string;
-  name: string;
+  name?: string | null;
   platform: "mac" | "windows";
 };
 

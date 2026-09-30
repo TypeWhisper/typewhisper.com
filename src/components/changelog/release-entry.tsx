@@ -1,8 +1,5 @@
 import { ReleaseNotes } from "@/components/changelog/release-notes";
-import {
-  splitReleaseBody,
-  type ClassifiedRelease,
-} from "@/data/releases";
+import { splitReleaseBody, type ClassifiedRelease } from "@/data/releases";
 import { t, type Locale } from "@/i18n/index";
 
 const repositories = {
@@ -62,7 +59,9 @@ export function ReleaseEntry({
 }: ReleaseEntryProps) {
   const { content, fullChangelogUrl } = splitReleaseBody(release);
   const kind = releaseKindLabel(release, locale);
-  const showTag = !release.name.includes(release.tag_name);
+  // A release without a name falls back to its tag.
+  const title = release.name?.trim() || release.tag_name;
+  const showTag = !title.includes(release.tag_name);
 
   return (
     <details
@@ -78,7 +77,7 @@ export function ReleaseEntry({
       <summary className="utility-entry__summary">
         <h3 className="utility-entry__head">
           <span className="utility-entry__title">
-            <span className="utility-entry__name">{release.name}</span>
+            <span className="utility-entry__name">{title}</span>
             <span className="utility-entry__meta">
               <span>{platformNames[release.platform]}</span>
               {kind && <span className="utility-entry__kind">{kind}</span>}

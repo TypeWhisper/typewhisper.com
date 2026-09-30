@@ -18,7 +18,7 @@ function versionKey(value: string): string {
 export function splitReleaseBody(release: {
   body: string | null;
   tag_name: string;
-  name: string;
+  name: string | null;
 }): {
   content: string | null;
   fullChangelogUrl: string | null;
@@ -37,7 +37,10 @@ export function splitReleaseBody(release: {
   const heading = leadingHeading.exec(content);
   if (heading) {
     const key = versionKey(heading[1]);
-    if (key === versionKey(release.tag_name) || key === versionKey(release.name))
+    if (
+      key === versionKey(release.tag_name) ||
+      (release.name != null && key === versionKey(release.name))
+    )
       content = content.slice(heading[0].length).trim();
   }
 
