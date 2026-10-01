@@ -1,0 +1,51 @@
+---
+slug: "confucius4-r2t2"
+name: "Confucius4-R2T2"
+author: "scriptease"
+version: "0.2.0"
+icon: "AudioWaveform"
+description: "Local streaming transcription with NetEase Youdao's Confucius4-R2T2 model, run through an audio.cpp server on your Mac."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "community"
+id: "com.scriptease.r2t2"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/R2T2Plugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-r2t2-v0.2.0"
+---
+
+## About
+
+Confucius4-R2T2 is a community plugin by scriptease. It streams microphone audio to an [audio.cpp](https://github.com/0xShug0/audio.cpp) `audiocpp_server` that runs the [Confucius4-R2T2](https://github.com/netease-youdao/Confucius4-R2T2) model on Metal. The transcript is append-only: text that has appeared is not rewritten later. The model is optimized for Chinese and English.
+
+The plugin supports live dictation and file transcription. Translation is not supported.
+
+## Requirements
+
+The published macOS package requires TypeWhisper 1.7.0 or newer, macOS 14 or newer, and Apple Silicon. No API key is needed.
+
+The model weights are licensed by NetEase Youdao under the Confucius4-R2T2 Model Use License. The license files are downloaded with each model.
+
+## Models
+
+| Model | Download | Notes |
+| --- | --- | --- |
+| **Q4_K_M** | 1.19 GB | Smallest and fastest. Community quantization by Nairod785. |
+| **Q8_0** | 2.48 GB | Recommended. Near full quality. |
+| **F16** | 4.09 GB | Full precision, largest. |
+
+## Setup
+
+1. Install **Confucius4-R2T2** from **Settings > Integrations > Discover** and enable it.
+2. Keep **Built-in** selected and click **Download** next to a model. The plugin downloads audio.cpp v0.9.0 and the model from Hugging Face, then checks size and SHA-256 of both.
+3. Select **Confucius4-R2T2** as the transcription engine in Settings or in a profile.
+4. Start dictating. The server starts with the first dictation, listens only on `127.0.0.1`, and stops with TypeWhisper.
+
+## Own server
+
+Choose **Own server** to use an `audiocpp_server` you run yourself, version 0.9.0 or newer. Enter the **Server URL** and the **Model ID** from your server config, then click **Test Connection**. The model entry must use streaming mode.
+
+Audio is sent only to the server configured here. For a server on another machine, use `https://`: plain `http://` sends the audio unencrypted over the network.
