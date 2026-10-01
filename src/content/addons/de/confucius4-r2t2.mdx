@@ -1,0 +1,51 @@
+---
+slug: "confucius4-r2t2"
+name: "Confucius4-R2T2"
+author: "scriptease"
+version: "0.2.0"
+icon: "AudioWaveform"
+description: "Lokale Streaming-Transkription mit dem Modell Confucius4-R2T2 von NetEase Youdao, ausgeführt über einen audio.cpp-Server auf deinem Mac."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "community"
+id: "com.scriptease.r2t2"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/R2T2Plugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-r2t2-v0.2.0"
+---
+
+## Überblick
+
+Confucius4-R2T2 ist ein Community-Plugin von scriptease. Es streamt das Mikrofon-Audio an einen `audiocpp_server` von [audio.cpp](https://github.com/0xShug0/audio.cpp), der das Modell [Confucius4-R2T2](https://github.com/netease-youdao/Confucius4-R2T2) mit Metal ausführt. Die Ausgabe ist append-only: Bereits angezeigter Text wird später nicht mehr umgeschrieben. Das Modell ist für Chinesisch und Englisch optimiert.
+
+Das Plugin unterstützt Live-Diktat und Datei-Transkription. Übersetzung wird nicht unterstützt.
+
+## Voraussetzungen
+
+Das veröffentlichte macOS-Paket benötigt TypeWhisper 1.7.0 oder neuer, macOS 14 oder neuer und Apple Silicon. Ein API-Key ist nicht nötig.
+
+Die Modellgewichte stehen unter der [Confucius4-R2T2 Model Use License](https://github.com/netease-youdao/Confucius4-R2T2/blob/master/MODEL_LICENSE) von NetEase Youdao. Mit dem Download eines Modells akzeptierst du sie, lies sie also vorher. Die Lizenzdateien werden mit jedem Modell heruntergeladen.
+
+## Modelle
+
+| Modell | Download | Hinweise |
+| --- | --- | --- |
+| **Q4_K_M** | 1,19 GB | Am kleinsten und schnellsten. Community-Quantisierung von Nairod785. |
+| **Q8_0** | 2,48 GB | Empfohlen. Fast volle Qualität. |
+| **F16** | 4,09 GB | Volle Präzision, am größten. |
+
+## Einrichtung
+
+1. Installiere **Confucius4-R2T2** unter **Einstellungen > Integrationen > Entdecken** und aktiviere es.
+2. Lass **Integriert** ausgewählt und klicke neben einem Modell auf **Laden**. Das Plugin lädt audio.cpp v0.9.0 und das Modell von Hugging Face und prüft bei beiden Größe und SHA-256.
+3. Wähle **Confucius4-R2T2** in den Einstellungen oder in einem Profil als Transkriptions-Engine.
+4. Starte ein Diktat. Der Server startet mit dem ersten Diktat, lauscht nur auf `127.0.0.1` und wird mit TypeWhisper beendet.
+
+## Eigener Server
+
+Wähle **Eigener Server**, um einen selbst betriebenen `audiocpp_server` ab Version 0.9.0 zu nutzen. Trage die **Server-URL** und die **Modell-ID** aus deiner Server-Konfiguration ein und klicke auf **Verbindung testen**. Der Modelleintrag muss den Streaming-Modus verwenden.
+
+Audio wird nur an den hier eingestellten Server gesendet. Nutze für einen Server auf einem anderen Rechner `https://`: Über einfaches `http://` geht das Audio unverschlüsselt durchs Netz.
