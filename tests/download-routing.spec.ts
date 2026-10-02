@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { classifyRelease } from "../src/data/release-kind";
 import { readCurrentVersions } from "./helpers/current-versions";
@@ -628,4 +628,81 @@ test("changelog filters by platform and keeps the choice in the address", async 
   await expect(
     page.locator('[data-testid="changelog-entry"]:visible'),
   ).toHaveCount(windows.length);
+});
+
+test.describe("changelog deep links", () => {
+  const entryId = (release: GeneratedRelease) =>
+    `${release.platform}-${release.tag_name}`;
+  const entry = (page: Page, release: GeneratedRelease) =>
+    page.locator(`[id="${entryId(release)}"]`);
+
+  test("a new hash on an open page opens its entry", async ({ page }) => {
+    const stable = readGeneratedReleases().filter(
+      (release) => classifyRelease(release) === "stable",
+    );
+    // Only the newest entries are written out; the oldest one starts closed.
+    const closed = stable.at(-1)!;
+    const other = stable.find(
+      (release) => release.platform !== closed.platform,
+    );
+    await page.goto("/en/changelog/");
+    await expect(entry(page, closed)).not.toHaveAttribute("open", "");
+
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(closed));
+    await expect(entry(page, closed)).toHaveAttribute("open", "");
+    await expect(entry(page, closed)).toBeInViewport();
+
+    // The link wins over a filter that hides its entry.
+    test.skip(!other, "The feed has releases of one platform only.");
+    await page.getByTestId(`changelog-platform-${other!.platform}`).click();
+    await expect(entry(page, closed)).toBeHidden();
+    await page.evaluate(() => {
+      window.location.hash = "";
+    });
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(closed));
+    await expect(entry(page, closed)).toBeVisible();
+    await expect(page.getByTestId("changelog-platform-all")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  test("a link to a pre-release loads the pre-releases and opens it", async ({
+    page,
+  }) => {
+    const preRelease = readGeneratedReleases().find(
+      (release) => classifyRelease(release) !== "stable",
+    );
+    test.skip(!preRelease, "The feed has no pre-release.");
+    await page.goto(`/en/changelog/#${entryId(preRelease!)}`);
+
+    await expect(entry(page, preRelease!)).toBeVisible();
+    await expect(entry(page, preRelease!)).toHaveAttribute("open", "");
+    await expect(page.getByTestId("changelog-pre-toggle")).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
+    await expect(page).toHaveURL(/[?&]pre=1/);
+  });
+
+  test("a malformed hash is ignored", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/en/changelog/#%");
+    await expect(page.getByTestId("changelog-status")).not.toBeEmpty();
+
+    // The page still follows the next hash.
+    const stable = readGeneratedReleases().filter(
+      (release) => classifyRelease(release) === "stable",
+    );
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(stable.at(-1)!));
+    await expect(entry(page, stable.at(-1)!)).toHaveAttribute("open", "");
+    expect(errors).toEqual([]);
+  });
 });

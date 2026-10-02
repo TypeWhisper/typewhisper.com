@@ -193,11 +193,46 @@ export function startChangelog() {
     replacePageUrl(url);
   }
 
-  /** A link to `#mac-v1.6.1` opens that entry. */
+  /** The id that the hash names; a malformed escape (`#%`) names nothing. */
+  function hashId(): string {
+    try {
+      return decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      return "";
+    }
+  }
+
+  /**
+   * A link to `#mac-v1.6.1` opens that entry. A pre-release is not part of
+   * the page, so a link to one loads the pre-releases first; and the link
+   * wins over a filter that hides its entry.
+   */
   function openTarget() {
-    const id = decodeURIComponent(window.location.hash.slice(1));
-    const target = id ? document.getElementById(id) : null;
-    if (!(target instanceof HTMLDetailsElement) || target.hidden) return;
+    const id = hashId();
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (!target) {
+      const names = options.some((option) =>
+        id.startsWith(`${option.dataset.platformOption}-`),
+      );
+      if (!names || load !== "idle") return;
+      state = { ...state, pre: true };
+      writeUrl();
+      render(false);
+      void loadPreReleases();
+      return;
+    }
+    if (!(target instanceof HTMLDetailsElement) || !target.matches("[data-entry]"))
+      return;
+    if (target.hidden) {
+      state = {
+        platform:
+          target.dataset.platform === state.platform ? state.platform : "all",
+        pre: state.pre || target.dataset.kind !== "stable",
+      };
+      writeUrl();
+      render(false);
+    }
     target.open = true;
     target.scrollIntoView({ block: "start" });
   }
@@ -233,6 +268,9 @@ export function startChangelog() {
     render(rewrite);
     if (state.pre) void loadPreReleases();
   });
+
+  // A page that is already open follows a new hash too.
+  window.addEventListener("hashchange", openTarget);
 
   render(state.platform !== "all");
   if (state.pre) void loadPreReleases();
