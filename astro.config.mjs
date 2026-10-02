@@ -5,6 +5,7 @@ import { unified } from "@astrojs/markdown-remark";
 import remarkGfm from "remark-gfm";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import { createSitemapFilter } from "./scripts/sitemap-filter.mjs";
 
 export default defineConfig({
   site: "https://www.typewhisper.com",
@@ -26,6 +27,7 @@ export default defineConfig({
     react(),
     mdx(),
     sitemap({
+      filter: createSitemapFilter(new URL("./dist/", import.meta.url)),
       i18n: {
         defaultLocale: "en",
         locales: { en: "en-US", de: "de-DE" },
