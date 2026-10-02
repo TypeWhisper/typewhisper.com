@@ -1,4 +1,4 @@
-import { type PluginCategory, categoryKeys } from "@/data/addons";
+import { type PluginCategory, categoryKeys } from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 import { FilterRow } from "./filter-row";
 

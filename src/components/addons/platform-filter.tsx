@@ -1,4 +1,4 @@
-import { type PluginPlatform, platformKeys } from "@/data/addons";
+import { type PluginPlatform, platformKeys } from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 import { FilterRow } from "./filter-row";
 

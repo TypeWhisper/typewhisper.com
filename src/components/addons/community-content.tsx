@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Download } from "lucide-react";
 import { CodeBlock } from "@/components/ui/code-block";
-import type { Plugin } from "@/data/addons";
+import type { Plugin } from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 
 function formatSize(bytes: number): string {

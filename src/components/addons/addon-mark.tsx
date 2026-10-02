@@ -1,6 +1,6 @@
 import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import { BarMark } from "@/components/site/bar-mark";
-import type { Plugin } from "@/data/addons";
+import type { Plugin } from "@/data/addon-taxonomy";
 import { brandLogoById } from "@/data/brand-logos";
 import { addonIcons } from "./addon-icons";
 

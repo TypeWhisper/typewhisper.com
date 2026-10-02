@@ -2,7 +2,6 @@ import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { ArrowRight, Search, X } from "lucide-react";
 import {
-  getPlugins,
   categoryKeys,
   platformKeys,
   retiredSourceFilters,
@@ -11,7 +10,7 @@ import {
   type PluginCategory,
   type PluginPlatform,
   type PluginSource,
-} from "@/data/addons";
+} from "@/data/addon-taxonomy";
 import { localePath, t, type Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
@@ -22,7 +21,7 @@ import { WaveRule } from "@/components/site/wave-rule";
 
 interface AddonsIndexProps {
   locale?: Locale;
-  allPlugins?: Plugin[];
+  allPlugins: Plugin[];
   basePath?: string;
 }
 
@@ -91,7 +90,7 @@ export default function AddonsIndex({
   const setSource = (source: string) => updateFilters({ source });
   const setQuery = (query: string) => updateFilters({ query });
 
-  const items = allPlugins ?? getPlugins(locale);
+  const items = allPlugins;
 
   const hasFilters =
     category !== "all" ||

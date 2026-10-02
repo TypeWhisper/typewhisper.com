@@ -5,7 +5,7 @@ import {
   categoryKeys,
   platformKeys,
   sourceKeys,
-} from "@/data/addons";
+} from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 import { getAddonCategoriesForPlatform } from "@/data/addon-edition-capabilities";
 import { AddonMark } from "./addon-mark";
