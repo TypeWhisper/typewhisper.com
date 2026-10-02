@@ -265,14 +265,17 @@
   opacity: 0.92;
 }
 
+/* A link inside a sentence: underlined, with a target of at least 24px. */
 .landing .landing-trust__link {
+  padding-block: 0.25rem;
   color: var(--accent-text);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: color 200ms var(--motion-ease-out);
 }
 
 .landing .landing-trust__link:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+  color: var(--accent-text-hover);
 }
 
 /* ---------- Spoken, written ---------- */
@@ -759,9 +762,9 @@
   color: var(--accent-text);
 }
 
+/* The links sit inside sentences and keep their underline. */
 .landing .landing-engines__body a {
   color: var(--accent-text);
-  text-decoration: none;
 }
 
 .landing .landing-engines__lede {
@@ -956,13 +959,14 @@
 
 .landing .landing-final__note a {
   color: var(--accent-text);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
   white-space: nowrap;
+  transition: color 200ms var(--motion-ease-out);
 }
 
 .landing .landing-final__note a:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+  color: var(--accent-text-hover);
 }
 
 /* ---------- Narrow screens ---------- */
