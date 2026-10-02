@@ -76,6 +76,26 @@ test.describe("hero waveform headline", () => {
     await expect(headline).toHaveCSS("opacity", "1");
   });
 
+  test("a page loaded too narrow for the canvas gets it once there is room", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 180, height: 700 });
+    await page.goto("/en/?platform=mac");
+    const hero = page.getByTestId("landing-hero");
+    await expect(hero).toHaveAttribute("data-wave", "off");
+    await expect(hero.getByRole("heading", { level: 1 })).toHaveCSS(
+      "opacity",
+      "1",
+    );
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(hero).toHaveAttribute("data-wave", "on");
+    await expect(hero.getByRole("heading", { level: 1 })).toHaveCSS(
+      "opacity",
+      "1",
+    );
+  });
+
   test("switching the platform plays the sequence again", async ({ page }) => {
     await page.goto("/en/?platform=mac");
     const hero = page.getByTestId("landing-hero");

@@ -358,7 +358,10 @@ export class HeroWave {
     if (this.destroyed) return;
     try {
       if (!this.rebuild()) {
+        // No room for the waveform yet; a later resize may bring it back.
         this.fail();
+        this.started = true;
+        this.observe();
         return;
       }
       // A late start finds the headline already shown by the CSS failsafe.
