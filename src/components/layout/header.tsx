@@ -222,6 +222,7 @@ export function Header({
                 size="icon-sm"
                 className={cn("xl:hidden", iconButtonClass)}
                 aria-label={t(locale, "nav.menu")}
+                data-mobile-menu-trigger
               >
                 <Menu className="size-4" />
               </Button>

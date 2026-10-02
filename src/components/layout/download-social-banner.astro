@@ -135,7 +135,13 @@ const socialLinks = [
       const page = document.documentElement;
       page.style.overflow = "";
       page.style.paddingRight = "";
-      if (trigger && trigger.isConnected) trigger.focus();
+      // A download link inside the mobile menu is gone once the menu has
+      // closed; the focus then goes to the button that opens the menu.
+      const target =
+        trigger && trigger.isConnected
+          ? trigger
+          : document.querySelector("[data-mobile-menu-trigger]");
+      target?.focus();
       trigger = null;
     });
     root.addEventListener("click", (event) => {

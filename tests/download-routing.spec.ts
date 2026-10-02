@@ -197,6 +197,31 @@ test("download clicks show the social follow banner", async ({ page }) => {
   await expect(page.getByTestId("landing-hero-download")).toBeFocused();
 });
 
+test("closing the banner after a download from the mobile menu focuses the menu button", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en/?platform=mac");
+  const menu = page.getByRole("button", { name: "Menu", exact: true });
+  await expect(
+    menu.locator("xpath=ancestor::astro-island"),
+  ).not.toHaveAttribute("ssr", "");
+  await menu.click();
+  const download = page.getByTestId("header-download-mobile");
+  await download.evaluate((link) =>
+    link.addEventListener("click", (event) => event.preventDefault()),
+  );
+  await download.click();
+
+  const banner = page.getByTestId("download-social-banner");
+  await expect(banner).toBeVisible();
+  // The menu, and with it the link that was clicked, is gone by now.
+  await expect(download).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect(banner).toBeHidden();
+  await expect(menu).toBeFocused();
+});
+
 test("attributes download and checkout events without blocking navigation", async ({
   page,
 }) => {
