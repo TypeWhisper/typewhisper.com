@@ -179,11 +179,14 @@ test.describe("landing canvases follow the theme", () => {
         distance(await waveColor(page, "landing-hero"), [92, 175, 255]),
       )
       .toBeLessThan(10);
+    // The closing section hydrates when it comes near the viewport.
+    await page.getByTestId("final-cta").scrollIntoViewIfNeeded();
     await expect
       .poll(async () =>
         distance(await waveColor(page, "final-cta"), [92, 175, 255]),
       )
       .toBeLessThan(10);
+    await page.evaluate(() => window.scrollTo(0, 0));
 
     await hero.evaluate((element) => {
       const phases: string[] = [];

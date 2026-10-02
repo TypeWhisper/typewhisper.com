@@ -353,8 +353,13 @@ test("every logo of the add-on index loads in both themes", async ({ page }) => 
       for (const tile of tiles) {
         const images = [...tile.querySelectorAll("img")];
         const shown = images.filter((image) => getComputedStyle(image).display !== "none");
-        // Lazy decoding must not hide a file the server does not deliver.
-        await Promise.all(shown.map((image) => image.decode().catch(() => undefined)));
+        // Lazy loading and decoding must not hide a file the server does not deliver.
+        await Promise.all(
+          shown.map((image) => {
+            image.loading = "eager";
+            return image.decode().catch(() => undefined);
+          }),
+        );
         result.push({
           slug: tile.closest<HTMLElement>("[data-slug]")?.dataset.slug,
           images: images.length,

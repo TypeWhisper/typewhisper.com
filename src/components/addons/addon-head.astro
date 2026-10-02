@@ -53,7 +53,7 @@ const actions = Astro.slots.has("default")
           <div class="addon-head__kicker">
             {plugin && (
               <span class="site-index__mark addon-head__mark">
-                <AddonMark plugin={plugin} alt={plugin.name} />
+                <AddonMark plugin={plugin} alt={plugin.name} loading="eager" />
               </span>
             )}
             {label && (

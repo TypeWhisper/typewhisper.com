@@ -36,6 +36,8 @@ for (const locale of ["en", "de"]) {
     await page.goto(`/${locale}/?platform=windows`);
     await hydrated(page);
     await page.getByTestId("landing-hero-tab-ios").click();
+    // The closing section hydrates when it comes near the viewport.
+    await page.getByTestId("landing-footer-download").scrollIntoViewIfNeeded();
     for (const id of [
       "header-download",
       "landing-hero-download",

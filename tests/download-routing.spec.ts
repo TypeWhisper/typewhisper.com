@@ -80,6 +80,8 @@ for (const scenario of landingScenarios) {
       const footerCta = page.getByTestId("landing-footer-download");
 
       await expect(heroCta).toBeVisible();
+      // The closing section hydrates when it comes near the viewport.
+      await footerCta.scrollIntoViewIfNeeded();
       await expect(footerCta).toBeVisible();
       await expect(heroCta).toHaveText(scenario.expectedLabel);
       await expect(footerCta).toHaveText(scenario.expectedLabel);

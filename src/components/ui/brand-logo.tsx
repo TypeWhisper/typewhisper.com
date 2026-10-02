@@ -34,6 +34,8 @@ interface BrandLogoProps {
   variant?: "logo" | "wordmark";
   className?: string;
   alt?: string;
+  /** Lazy by default; the header, which is above the fold, loads its logos at once. */
+  loading?: "lazy" | "eager";
 }
 
 const generated = brandLogoData as unknown as GeneratedBrandLogoData;
@@ -48,7 +50,12 @@ function isThemeAsset(asset: BrandLogoAsset | undefined): asset is ThemeAsset {
   return typeof asset === "object" && asset !== null && "light" in asset && "dark" in asset;
 }
 
-function renderAsset(asset: BrandLogoAsset, alt: string, className?: string) {
+function renderAsset(
+  asset: BrandLogoAsset,
+  alt: string,
+  loading: "lazy" | "eager",
+  className?: string,
+) {
   if (isThemeAsset(asset)) {
     return (
       <>
@@ -57,18 +64,30 @@ function renderAsset(asset: BrandLogoAsset, alt: string, className?: string) {
           alt={alt}
           className={cn("block dark:hidden", className)}
           data-theme="light"
+          loading={loading}
+          decoding="async"
         />
         <img
           src={asset.dark}
           alt={alt}
           className={cn("hidden dark:block", className)}
           data-theme="dark"
+          loading={loading}
+          decoding="async"
         />
       </>
     );
   }
 
-  return <img src={asset} alt={alt} className={className} />;
+  return (
+    <img
+      src={asset}
+      alt={alt}
+      className={className}
+      loading={loading}
+      decoding="async"
+    />
+  );
 }
 
 export function canRenderBrandLogo(
@@ -95,6 +114,7 @@ export function BrandLogo({
   variant,
   className,
   alt,
+  loading = context === "nav" ? "eager" : "lazy",
 }: BrandLogoProps) {
   const definition = brandLogoById[brand];
   if (!definition || !definition.contexts.includes(context)) {
@@ -107,7 +127,12 @@ export function BrandLogo({
   const asset = desiredVariant === "wordmark" ? entry?.wordmark : entry?.logo;
 
   if (asset && canRenderBrandLogo(brand, context, variant)) {
-    return renderAsset(asset, alt ?? definition.expectedTitle, className);
+    return renderAsset(
+      asset,
+      alt ?? definition.expectedTitle,
+      loading,
+      className,
+    );
   }
 
   if (definition.fallback === "custom" && definition.fallbackComponent) {
