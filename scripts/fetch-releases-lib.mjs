@@ -1,4 +1,5 @@
 export const STABLE_TAG_RE = /^v\d+\.\d+\.\d+$/;
+const ASSET_RELEASE_TAG_RE = /^(plugin|model)-/;
 export const PAGE_SIZE = 100;
 
 export const MAC_RELEASES_URL =
@@ -89,8 +90,10 @@ export async function fetchAllReleases(
 }
 
 export function buildRepoReleaseData(rawReleases, repo, logger = console) {
+  // Plug-in bundles (macOS) and model files (Windows) are published as
+  // releases of the app repositories, but they are no app releases.
   const appReleases = rawReleases.filter(
-    (release) => !release.tag_name.startsWith("plugin-"),
+    (release) => !ASSET_RELEASE_TAG_RE.test(release.tag_name),
   );
 
   const releases = appReleases.map((release) => ({
