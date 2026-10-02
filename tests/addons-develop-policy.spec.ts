@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const policyScenarios = [
   {
     locale: "en",
-    path: "/en/addons/develop",
+    path: "/en/addons/develop/",
     heading: "Provider access policy",
     acceptedExample: /user-provided API keys/,
     rejectedExample: /impersonate a provider's first-party client/,
@@ -12,7 +12,7 @@ const policyScenarios = [
   },
   {
     locale: "de",
-    path: "/de/addons/develop",
+    path: "/de/addons/develop/",
     heading: "Provider-Zugriffsrichtlinie",
     acceptedExample: /nutzerbereitgestellte API-Schlüssel/,
     rejectedExample: /First-Party-Client eines Anbieters imitieren/,

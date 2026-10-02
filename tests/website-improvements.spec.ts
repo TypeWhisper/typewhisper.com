@@ -107,7 +107,7 @@ for (const locale of ["en", "de"]) {
     );
     const setup = page.getByTestId("setup-assistant");
     await expect(
-      setup.locator(`a[href="/${locale}/docs/ios/files-history-and-inbox"]`),
+      setup.locator(`a[href="/${locale}/docs/ios/files-history-and-inbox/"]`),
     ).toBeVisible();
     await setup.locator("select").first().selectOption("windows");
     await setup.locator("select").nth(1).selectOption("cloud");
@@ -117,7 +117,7 @@ for (const locale of ["en", "de"]) {
       ),
     ).toBeVisible();
     await expect(
-      setup.locator(`a[href="/${locale}/docs/windows/file-transcription"]`),
+      setup.locator(`a[href="/${locale}/docs/windows/file-transcription/"]`),
     ).toBeVisible();
     await page.reload();
     await expect(setup.locator("select").first()).toHaveValue("windows");
@@ -135,7 +135,7 @@ for (const locale of ["en", "de"]) {
     for (const result of await results.all())
       await expect(result).toHaveAttribute(
         "href",
-        new RegExp(`/${locale}/docs/ios`),
+        new RegExp(`/${locale}/docs/ios/`),
       );
     await search.locator("input").fill("zzzauditnoresult");
     await expect(results).toHaveCount(0);

@@ -10,12 +10,12 @@ test.describe("detailed iOS documentation", () => {
   test("overview links every guide and uses current Studio media", async ({
     page,
   }) => {
-    await page.goto("/en/docs/ios");
+    await page.goto("/en/docs/ios/");
 
     for (const [slug, englishTitle] of guidePages) {
       await expect(
         page
-          .locator(`a[href="/en/docs/ios/${slug}"]`)
+          .locator(`a[href="/en/docs/ios/${slug}/"]`)
           .filter({ hasText: englishTitle })
           .first(),
       ).toBeVisible();
@@ -46,7 +46,7 @@ test.describe("detailed iOS documentation", () => {
       page,
     }) => {
       for (const [slug, englishTitle, germanTitle] of guidePages) {
-        await page.goto(`/${locale}/docs/ios/${slug}`);
+        await page.goto(`/${locale}/docs/ios/${slug}/`);
         await expect(
           page.getByRole("heading", {
             level: 1,
@@ -54,13 +54,13 @@ test.describe("detailed iOS documentation", () => {
           }),
         ).toBeVisible();
         await expect(
-          page.locator(`nav a[href="/${locale}/docs/ios/${slug}"]`),
+          page.locator(`nav a[href="/${locale}/docs/ios/${slug}/"]`),
         ).toHaveAttribute("aria-current", "page");
         // The release notice belongs to the overview only.
         await expect(page.locator(".docs-callout--release")).toHaveCount(0);
       }
 
-      await page.goto(`/${locale}/docs/ios`);
+      await page.goto(`/${locale}/docs/ios/`);
       await expect(
         page
           .locator(".docs-callout--release")
@@ -72,7 +72,7 @@ test.describe("detailed iOS documentation", () => {
   test("keyboard guide explains Full Access and the iOS return flow", async ({
     page,
   }) => {
-    await page.goto("/en/docs/ios/dictation-and-keyboard");
+    await page.goto("/en/docs/ios/dictation-and-keyboard/");
 
     await expect(
       page.getByText(
@@ -93,7 +93,7 @@ test.describe("detailed iOS documentation", () => {
   test("installation and troubleshooting describe the public App Store path", async ({
     page,
   }) => {
-    await page.goto("/en/docs/ios/installation");
+    await page.goto("/en/docs/ios/installation/");
     await expect(page.getByText(/available from the App Store/)).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Open the App Store" }),
@@ -102,7 +102,7 @@ test.describe("detailed iOS documentation", () => {
       "https://apps.apple.com/us/app/typewhisper-app/id6759319267",
     );
 
-    await page.goto("/en/docs/ios/troubleshooting");
+    await page.goto("/en/docs/ios/troubleshooting/");
     await expect(
       page.getByRole("heading", {
         name: "The App Store download does not work",
@@ -116,7 +116,7 @@ test.describe("detailed iOS documentation", () => {
   test("Inbox, Shortcuts, privacy, and Premium behavior are documented", async ({
     page,
   }) => {
-    await page.goto("/en/docs/ios/files-history-and-inbox");
+    await page.goto("/en/docs/ios/files-history-and-inbox/");
     await expect(
       page.getByText(
         /Quick Dictations, Apple Watch recordings, calendar drafts/,
@@ -126,7 +126,7 @@ test.describe("detailed iOS documentation", () => {
       page.locator('img[src="/screenshots/en/ios/ipad/03-inbox.png"]'),
     ).toBeVisible();
 
-    await page.goto("/en/docs/ios/watch-and-shortcuts");
+    await page.goto("/en/docs/ios/watch-and-shortcuts/");
     await expect(
       page.getByText(/Get Last Transcription returns/),
     ).toBeVisible();
@@ -134,7 +134,7 @@ test.describe("detailed iOS documentation", () => {
       page.getByText(/assign that Shortcut to the Action Button/),
     ).toBeVisible();
 
-    await page.goto("/en/docs/ios/privacy-and-premium");
+    await page.goto("/en/docs/ios/privacy-and-premium/");
     await expect(
       page.getByText(/Normal keyboard typing works without Full Access/),
     ).toBeVisible();
@@ -152,7 +152,7 @@ test.describe("detailed iOS documentation", () => {
     test(`${locale} overview lists what is new in 1.1 and links the guides`, async ({
       page,
     }) => {
-      await page.goto(`/${locale}/docs/ios`);
+      await page.goto(`/${locale}/docs/ios/`);
 
       await expect(
         page.getByRole("heading", {
@@ -180,7 +180,7 @@ test.describe("detailed iOS documentation", () => {
         ],
       ]) {
         const link = page.locator(
-          `#release-status a[href="/${locale}/docs/ios/${slug}#section-4"]`,
+          `#release-status a[href="/${locale}/docs/ios/${slug}/#section-4"]`,
         );
         await expect(link).toBeVisible();
         await link.click();
@@ -198,7 +198,7 @@ test.describe("detailed iOS documentation", () => {
   test("snippet placeholders expose localized list semantics", async ({
     page,
   }) => {
-    await page.goto("/en/docs/ios/dictionary-and-snippets");
+    await page.goto("/en/docs/ios/dictionary-and-snippets/");
 
     const placeholders = page.getByRole("list", {
       name: "Snippet placeholders",
@@ -209,7 +209,7 @@ test.describe("detailed iOS documentation", () => {
 
   test("iOS docs do not overflow a phone viewport", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/de/docs/ios/dictation-and-keyboard");
+    await page.goto("/de/docs/ios/dictation-and-keyboard/");
 
     const dimensions = await page.evaluate(() => ({
       viewport: document.documentElement.clientWidth,

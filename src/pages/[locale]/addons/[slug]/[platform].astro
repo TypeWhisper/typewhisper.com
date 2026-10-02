@@ -84,7 +84,7 @@ const GuideContent = editionHasGuide
   : familyModule?.default;
 const platformLabel = t(locale, platformKeys[platform]);
 const familyPath = canonicalPath(locale, `/addons/${plugin.slug}`);
-const editionPath = `${familyPath}/${editionPlatformSlugs[platform]}`;
+const editionPath = `${familyPath}${editionPlatformSlugs[platform]}/`;
 const pageTitle = `${plugin.name} ${t(locale, "addons.editions.for")} ${platformLabel}`;
 const configuredScreenshots = edition.screenshots ?? [];
 const defaultScreenshot = getDefaultAddonEditionScreenshot(edition);

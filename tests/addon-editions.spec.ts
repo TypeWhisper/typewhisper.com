@@ -113,7 +113,7 @@ test.describe("add-on platform editions", () => {
       await expect(card).toHaveCount(1);
       await expect(
         card.getByRole("link", { name: "View this edition" }),
-      ).toHaveAttribute("href", `/en/addons/meta/${slug}`);
+      ).toHaveAttribute("href", `/en/addons/meta/${slug}/`);
     }
 
     const windowsCard = page.locator(
@@ -196,10 +196,10 @@ test.describe("add-on platform editions", () => {
       await expect(cards).toHaveCount(2);
       await expect(
         cards.filter({ hasText: "macOS" }).getByRole("link", { name: "Diese Edition ansehen" }),
-      ).toHaveAttribute("href", `/de/addons/${slug}/macos`);
+      ).toHaveAttribute("href", `/de/addons/${slug}/macos/`);
       await expect(
         cards.filter({ hasText: "Windows" }).getByRole("link", { name: "Diese Edition ansehen" }),
-      ).toHaveAttribute("href", `/de/addons/${slug}/windows`);
+      ).toHaveAttribute("href", `/de/addons/${slug}/windows/`);
     }
   });
 
@@ -323,7 +323,7 @@ test.describe("add-on platform editions", () => {
     await expect(page.getByText("API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen", { exact: true })).toBeVisible();
 
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
-    await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/?$/);
+    await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/$/);
     await expect(page.getByText("LLM-Anbieter für Workflow-Prompts")).toBeVisible();
     await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toHaveCount(0);
     await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
@@ -378,7 +378,7 @@ test.describe("add-on platform editions", () => {
     );
 
     await switcher.locator('a[data-platform="windows"]').click();
-    await expect(page).toHaveURL(/\/de\/addons\/obsidian\/windows\/?$/);
+    await expect(page).toHaveURL(/\/de\/addons\/obsidian\/windows\/$/);
     await expect(
       page.getByRole("heading", { level: 1, name: "Obsidian für Windows" }),
     ).toBeVisible();

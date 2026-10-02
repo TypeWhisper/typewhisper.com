@@ -25,7 +25,7 @@ const groupSeeds: Record<UseCaseGroup, number> = { everyday: 7, industry: 19 };
 export default function UseCasesIndex({
   locale = "en",
   entries,
-  basePath = "/use-cases",
+  basePath = "/use-cases/",
 }: UseCasesIndexProps) {
   const [category, setCategory] = useState<UseCaseCategory | "all">("all");
   const revealRoot = useScrollReveal();

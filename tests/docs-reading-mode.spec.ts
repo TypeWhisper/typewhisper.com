@@ -33,7 +33,7 @@ test.describe("documentation reading mode", () => {
     await page.goto("/en/docs/");
     for (const platform of ["mac", "windows", "ios"])
       await expect(
-        page.locator(`.docs-platform__link[href="/en/docs/${platform}"]`),
+        page.locator(`.docs-platform__link[href="/en/docs/${platform}/"]`),
       ).toBeVisible();
   });
 
@@ -44,18 +44,18 @@ test.describe("documentation reading mode", () => {
     });
     await expect(pager.locator('a[rel="prev"]')).toHaveAttribute(
       "href",
-      "/en/docs/windows/installation",
+      "/en/docs/windows/installation/",
     );
     await expect(pager.locator('a[rel="next"]')).toHaveAttribute(
       "href",
-      "/en/docs/windows/file-transcription",
+      "/en/docs/windows/file-transcription/",
     );
 
     await page.goto("/en/docs/ios/troubleshooting/");
     await expect(page.locator('.docs-pager a[rel="next"]')).toHaveCount(0);
     await expect(page.locator('.docs-pager a[rel="prev"]')).toHaveAttribute(
       "href",
-      "/en/docs/ios/privacy-and-premium",
+      "/en/docs/ios/privacy-and-premium/",
     );
   });
 

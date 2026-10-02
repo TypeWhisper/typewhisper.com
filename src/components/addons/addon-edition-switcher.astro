@@ -33,7 +33,7 @@ const platformIcons: Record<PluginPlatform, typeof MacOSLogo> = {
 
     return (
       <a
-        href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
+        href={`${familyPath}${editionPlatformSlugs[edition.platform]}/`}
         aria-current={isCurrent ? "page" : undefined}
         data-platform={edition.platform}
         class="site-switch__item"

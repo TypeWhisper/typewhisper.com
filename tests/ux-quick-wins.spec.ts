@@ -40,7 +40,7 @@ test.describe("header download CTA", () => {
   });
 
   test("download CTA is visible on non-landing pages", async ({ page }) => {
-    await page.goto("/en/docs");
+    await page.goto("/en/docs/");
     await waitForHeaderHydration(page);
     await expect(page.getByTestId("header-download")).toBeVisible();
   });
@@ -57,7 +57,7 @@ test.describe("docs platform logos", () => {
   test("docs landing uses dedicated platform logos for macOS and iOS", async ({
     page,
   }) => {
-    await page.goto("/en/docs");
+    await page.goto("/en/docs/");
     await expect(page.locator('[data-platform-logo="macos"]').first()).toBeVisible();
     await expect(page.locator('[data-platform-logo="ios"]').first()).toBeVisible();
   });
@@ -70,27 +70,27 @@ test.describe("docs platform logos", () => {
       const stable = locale === "de" ? "Stabil" : "Stable";
       const windowsBadge = `${windows.series} ${stable}`;
 
-      await page.goto(`/${locale}/docs`);
+      await page.goto(`/${locale}/docs/`);
       await expect(page.locator("main")).toContainText(
         `Windows ${windows.version}`,
       );
       await expect(
-        page.locator(`a[href="/${locale}/docs/mac"]`).getByText(mac.series, {
+        page.locator(`a[href="/${locale}/docs/mac/"]`).getByText(mac.series, {
           exact: true,
         }),
       ).toBeVisible();
       await expect(
         page
-          .locator(`a[href="/${locale}/docs/windows"]`)
+          .locator(`a[href="/${locale}/docs/windows/"]`)
           .getByText(windowsBadge, { exact: true }),
       ).toBeVisible();
       await expect(
         page
-          .locator(`a[href="/${locale}/docs/ios"]`)
+          .locator(`a[href="/${locale}/docs/ios/"]`)
           .getByText(`${ios.series} ${stable}`, { exact: true }),
       ).toBeVisible();
 
-      await page.goto(`/${locale}/docs/windows`);
+      await page.goto(`/${locale}/docs/windows/`);
       await expect(
         page.getByText(windowsBadge, { exact: true }).last(),
       ).toBeVisible();
@@ -102,7 +102,7 @@ test.describe("brand logos", () => {
   test("addons overview uses a local brand logo asset for Linear", async ({
     page,
   }) => {
-    await page.goto("/en/addons");
+    await page.goto("/en/addons/");
     await expect(page.getByTestId("featured-addons")).toBeVisible();
 
     const linearCard = page.locator('[data-testid="addon-card"][data-slug="linear"]').first();
@@ -115,7 +115,7 @@ test.describe("brand logos", () => {
   test("addon detail uses a local brand logo asset for Linear", async ({
     page,
   }) => {
-    await page.goto("/en/addons/linear");
+    await page.goto("/en/addons/linear/");
     await expect(
       page.locator('img[src^="/brand-logos/linear/logo"]'),
     ).toBeVisible();
@@ -204,7 +204,7 @@ test.describe("addons search", () => {
     ] as const;
 
     for (const locale of locales) {
-      await page.goto(`/${locale.code}/addons`);
+      await page.goto(`/${locale.code}/addons/`);
       await waitForAddonsHydration(page);
 
       const search = page.getByTestId("addons-search");
@@ -216,7 +216,7 @@ test.describe("addons search", () => {
       await expect(fillerWordsCard).toBeVisible();
       await expect(fillerWordsCard).toContainText("Filler Words");
 
-      await page.goto(`/${locale.code}/addons/filler-words`);
+      await page.goto(`/${locale.code}/addons/filler-words/`);
       await expect(
         page.getByRole("heading", { level: 1, name: "Filler Words" }),
       ).toBeVisible();
@@ -243,7 +243,7 @@ test.describe("addons search", () => {
           .getByAltText(locale.windowsScreenshotAlt, { exact: true }),
       ).toBeVisible();
 
-      await page.goto(`/${locale.code}/addons/filler-words/macos`);
+      await page.goto(`/${locale.code}/addons/filler-words/macos/`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.macHeading }),
       ).toBeVisible();
@@ -254,7 +254,7 @@ test.describe("addons search", () => {
         page.locator("figcaption", { hasText: `${locale.macScreenshotAlt}.` }),
       ).toHaveAttribute("aria-hidden", "true");
 
-      await page.goto(`/${locale.code}/addons/filler-words/windows`);
+      await page.goto(`/${locale.code}/addons/filler-words/windows/`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.windowsHeading }),
       ).toBeVisible();
@@ -290,7 +290,7 @@ test.describe("addons search", () => {
     ] as const;
 
     for (const locale of locales) {
-      await page.goto(`/${locale.code}/addons`);
+      await page.goto(`/${locale.code}/addons/`);
       await waitForAddonsHydration(page);
 
       const search = page.getByTestId("addons-search");
@@ -305,7 +305,7 @@ test.describe("addons search", () => {
         smallestPulseCard.locator('img[src^="/brand-logos/smallest/logo"]'),
       ).toBeVisible();
 
-      await page.goto(`/${locale.code}/addons/smallest-pulse`);
+      await page.goto(`/${locale.code}/addons/smallest-pulse/`);
       await expect(
         page.getByRole("heading", { level: 1, name: "Smallest Pulse" }),
       ).toBeVisible();
@@ -315,7 +315,7 @@ test.describe("addons search", () => {
       const editionCards = page.getByTestId("addon-edition-card");
       await expect(editionCards).toHaveCount(2);
 
-      await page.goto(`/${locale.code}/addons/smallest-pulse/macos`);
+      await page.goto(`/${locale.code}/addons/smallest-pulse/macos/`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.macHeading }),
       ).toBeVisible();
@@ -323,7 +323,7 @@ test.describe("addons search", () => {
       await expect(page.getByText(locale.languageModeText).first()).toBeVisible();
       await expect(page.getByText("com.typewhisper.smallest-pulse").first()).toBeVisible();
 
-      await page.goto(`/${locale.code}/addons/smallest-pulse/windows`);
+      await page.goto(`/${locale.code}/addons/smallest-pulse/windows/`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.windowsHeading }),
       ).toBeVisible();
@@ -335,10 +335,10 @@ test.describe("addons search", () => {
   test("Local LLM (MLX) lives at its own slug and the old Gemma 4 and plain local-llm URLs redirect", async ({
     page,
   }) => {
-    const newPath = /\/(en|de)\/addons\/local-llm-mlx\/?$/;
+    const newPath = /\/(en|de)\/addons\/local-llm-mlx\/$/;
 
     for (const locale of ["en", "de"] as const) {
-      await page.goto(`/${locale}/addons`);
+      await page.goto(`/${locale}/addons/`);
       await waitForAddonsHydration(page);
 
       const search = page.getByTestId("addons-search");
@@ -351,10 +351,10 @@ test.describe("addons search", () => {
       await expect(localLlmCard).toContainText("Local LLM (MLX)");
       await expect(localLlmCard).toHaveAttribute(
         "href",
-        `/${locale}/addons/local-llm-mlx`,
+        `/${locale}/addons/local-llm-mlx/`,
       );
 
-      await page.goto(`/${locale}/addons/local-llm-mlx`);
+      await page.goto(`/${locale}/addons/local-llm-mlx/`);
       await expect(
         page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
       ).toBeVisible();
@@ -370,7 +370,7 @@ test.describe("addons search", () => {
           waitUntil: "commit",
         });
         await expect(page).toHaveURL(
-          new RegExp(`/${locale}/addons/local-llm-mlx/?$`),
+          new RegExp(`/${locale}/addons/local-llm-mlx/$`),
         );
         await expect(
           page.getByRole("heading", { level: 1, name: "Local LLM (MLX)" }),
@@ -388,7 +388,7 @@ test.describe("addons search", () => {
   });
 
   test("search input filters the addon cards", async ({ page }) => {
-    await page.goto("/en/addons");
+    await page.goto("/en/addons/");
     await expect(page.getByTestId("featured-addons")).toBeVisible();
 
     // Wait for the addons React island to finish hydrating before typing.
@@ -433,7 +433,7 @@ test.describe("pricing & business pages", () => {
   test("/en/pricing loads and shows the hero, decision helper, and FAQ", async ({
     page,
   }) => {
-    await page.goto("/en/pricing");
+    await page.goto("/en/pricing/");
 
     await expect(
       page.getByRole("heading", {
@@ -456,15 +456,15 @@ test.describe("pricing & business pages", () => {
   });
 
   test("/en/business loads and links to /en/pricing", async ({ page }) => {
-    await page.goto("/en/business");
+    await page.goto("/en/business/");
     await expect(
       page.getByRole("heading", { level: 1, name: /typewhisper for teams/i }),
     ).toBeVisible();
-    await expect(page.locator('a[href="/en/pricing"]').first()).toBeVisible();
+    await expect(page.locator('a[href="/en/pricing/"]').first()).toBeVisible();
   });
 
   test("/en/sponsors loads and shows the sponsorship hero", async ({ page }) => {
-    await page.goto("/en/sponsors");
+    await page.goto("/en/sponsors/");
     await expect(
       page.getByRole("heading", {
         level: 1,
@@ -484,11 +484,11 @@ test.describe("pricing & business pages", () => {
       page.getByRole("link", {
         name: /open source & accessibility initiative/i,
       }),
-    ).toHaveAttribute("href", "/en/open-source-accessibility");
+    ).toHaveAttribute("href", "/en/open-source-accessibility/");
   });
 
   test("/de/sponsors loads the German sponsorship page", async ({ page }) => {
-    await page.goto("/de/sponsors");
+    await page.goto("/de/sponsors/");
     await expect(
       page.getByRole("heading", {
         level: 1,
@@ -499,13 +499,13 @@ test.describe("pricing & business pages", () => {
       page.getByRole("link", {
         name: /open source & accessibility initiative/i,
       }),
-    ).toHaveAttribute("href", "/de/open-source-accessibility");
+    ).toHaveAttribute("href", "/de/open-source-accessibility/");
   });
 
   test("/en/open-source-accessibility loads the initiative page", async ({
     page,
   }) => {
-    await page.goto("/en/open-source-accessibility");
+    await page.goto("/en/open-source-accessibility/");
     await expect(
       page.getByRole("heading", {
         level: 1,
@@ -538,7 +538,7 @@ test.describe("pricing & business pages", () => {
   test("/de/open-source-accessibility loads the German initiative page", async ({
     page,
   }) => {
-    await page.goto("/de/open-source-accessibility");
+    await page.goto("/de/open-source-accessibility/");
     await expect(
       page.getByRole("heading", {
         level: 1,
@@ -568,15 +568,15 @@ test.describe("pricing & business pages", () => {
   test("footer exposes pricing, business, and sponsors links on non-landing pages", async ({
     page,
   }) => {
-    await page.goto("/en/docs");
+    await page.goto("/en/docs/");
     await expect(
-      page.locator('footer a[href="/en/pricing"]').first(),
+      page.locator('footer a[href="/en/pricing/"]').first(),
     ).toBeVisible();
     await expect(
-      page.locator('footer a[href="/en/business"]').first(),
+      page.locator('footer a[href="/en/business/"]').first(),
     ).toBeVisible();
     await expect(
-      page.locator('footer a[href="/en/sponsors"]').first(),
+      page.locator('footer a[href="/en/sponsors/"]').first(),
     ).toBeVisible();
     await expect(
       page.locator('footer a[href*="github.com/sponsors/"]'),
@@ -597,7 +597,7 @@ test.describe("pricing & business pages", () => {
 
     await expect(page.getByLabel(/sponsor/i).first()).toHaveAttribute(
       "href",
-      "/en/sponsors",
+      "/en/sponsors/",
     );
   });
 });

@@ -5,7 +5,7 @@ test.describe("macOS workflows documentation", () => {
   test("/en/docs/mac/workflows renders the english workflows page", async ({
     page,
   }) => {
-    await page.goto("/en/docs/mac/workflows");
+    await page.goto("/en/docs/mac/workflows/");
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Workflows" }),
@@ -22,7 +22,7 @@ test.describe("macOS workflows documentation", () => {
   test("/de/docs/mac/workflows renders the german workflows page", async ({
     page,
   }) => {
-    await page.goto("/de/docs/mac/workflows");
+    await page.goto("/de/docs/mac/workflows/");
 
     await expect(
       page.getByRole("heading", { level: 1, name: "Workflows" }),
@@ -42,32 +42,32 @@ test.describe("macOS workflows documentation", () => {
   test("legacy macOS profile and rules docs redirect to workflows", async ({
     page,
   }) => {
-    await page.goto("/en/docs/mac/rules");
-    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/?$/);
+    await page.goto("/en/docs/mac/rules/");
+    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/$/);
 
-    await page.goto("/en/docs/mac/profiles");
-    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/?$/);
+    await page.goto("/en/docs/mac/profiles/");
+    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/$/);
 
-    await page.goto("/de/docs/mac/rules");
-    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/?$/);
+    await page.goto("/de/docs/mac/rules/");
+    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/$/);
 
-    await page.goto("/de/docs/mac/profiles");
-    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/?$/);
+    await page.goto("/de/docs/mac/profiles/");
+    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/$/);
   });
 
   test("macOS prompt docs redirect to workflows", async ({ page }) => {
-    await page.goto("/en/docs/mac/prompts");
-    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/?$/);
+    await page.goto("/en/docs/mac/prompts/");
+    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/$/);
 
-    await page.goto("/de/docs/mac/prompts");
-    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/?$/);
+    await page.goto("/de/docs/mac/prompts/");
+    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/$/);
   });
 
   for (const locale of ["en", "de"] as const) {
     test(`${locale} workflows page carries the palette quick start and the FAQ`, async ({
       page,
     }) => {
-      await page.goto(`/${locale}/docs/mac/workflows`);
+      await page.goto(`/${locale}/docs/mac/workflows/`);
 
       await expect(
         page.locator("#quick-start").getByRole("heading", {
@@ -93,17 +93,17 @@ test.describe("macOS workflows documentation", () => {
   }
 
   test("macOS docs index links to troubleshooting", async ({ page }) => {
-    await page.goto("/en/docs/mac");
+    await page.goto("/en/docs/mac/");
     await expect(
       page
-        .locator('a[href="/en/docs/mac/troubleshooting"]')
+        .locator('a[href="/en/docs/mac/troubleshooting/"]')
         .filter({ hasText: "Fix common issues" }),
     ).toBeVisible();
 
-    await page.goto("/de/docs/mac");
+    await page.goto("/de/docs/mac/");
     await expect(
       page
-        .locator('a[href="/de/docs/mac/troubleshooting"]')
+        .locator('a[href="/de/docs/mac/troubleshooting/"]')
         .filter({ hasText: "Löse typische Probleme" }),
     ).toBeVisible();
   });
@@ -111,7 +111,7 @@ test.describe("macOS workflows documentation", () => {
   test("macOS troubleshooting explains the Live Transcript plugin panel", async ({
     page,
   }) => {
-    await page.goto("/en/docs/mac/troubleshooting");
+    await page.goto("/en/docs/mac/troubleshooting/");
     await expect(
       page.getByRole("heading", {
         level: 2,
@@ -126,7 +126,7 @@ test.describe("macOS workflows documentation", () => {
     ).toBeVisible();
     await expect(page.getByText("assign a Toggle Shortcut")).toBeVisible();
 
-    await page.goto("/de/docs/mac/troubleshooting");
+    await page.goto("/de/docs/mac/troubleshooting/");
     await expect(
       page.getByRole("heading", {
         level: 2,
@@ -149,7 +149,7 @@ test.describe("macOS workflows documentation", () => {
       // The release line comes from the feed, the highlights are written by hand.
       const { series } = readCurrentVersions().mac;
 
-      await page.goto(`/${locale}/docs/mac`);
+      await page.goto(`/${locale}/docs/mac/`);
       await expect(
         page.getByText(
           locale === "de" ? `${series} Stabil` : `${series} Stable`,
@@ -157,7 +157,7 @@ test.describe("macOS workflows documentation", () => {
         ),
       ).toBeVisible();
 
-      await page.goto(`/${locale}/docs/mac/installation`);
+      await page.goto(`/${locale}/docs/mac/installation/`);
       await page
         .locator("summary")
         .filter({

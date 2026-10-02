@@ -205,7 +205,7 @@ test("attributes download and checkout events without blocking navigation", asyn
     },
   ]);
 
-  await page.goto("/en/pricing");
+  await page.goto("/en/pricing/");
   const checkout = page.locator(
     "[data-checkout-tier='individual'][data-checkout-billing-period='monthly']",
   );
@@ -248,7 +248,7 @@ test("attributes download and checkout events without blocking navigation", asyn
 test("uses website checkout defaults when no campaign is present", async ({
   page,
 }) => {
-  await page.goto("/en/pricing");
+  await page.goto("/en/pricing/");
   const checkout = page.locator("[data-checkout-tier='bronze']");
   await checkout.evaluate((element) => {
     element.addEventListener("click", (event) => event.preventDefault(), {
@@ -272,7 +272,7 @@ test.describe("release status download routing", () => {
     page,
   }) => {
     const downloads = readGeneratedDownloads();
-    await page.goto("/en/release-status");
+    await page.goto("/en/release-status/");
 
     await expect(
       page.getByRole("link", { name: "Download latest release" }),
@@ -307,7 +307,7 @@ test.describe("release status download routing", () => {
     page,
   }) => {
     const downloads = readGeneratedDownloads();
-    await page.goto("/de/release-status");
+    await page.goto("/de/release-status/");
 
     await expect(
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
@@ -343,7 +343,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   page,
 }) => {
   const ios = readCurrentVersions().ios;
-  for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
+  for (const path of ["/en/", "/en/docs/", "/en/docs/ios/", "/en/support/"]) {
     await page.goto(path);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
@@ -359,7 +359,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     "footer",
   );
 
-  await page.goto("/en/docs/ios");
+  await page.goto("/en/docs/ios/");
   await expect(
     page.getByRole("link", { name: "Download on the App Store" }),
   ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
@@ -367,7 +367,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     page.getByText(`Version ${ios.series} stable`, { exact: true }),
   ).toBeVisible();
 
-  await page.goto("/en/support");
+  await page.goto("/en/support/");
   await expect(
     page.getByRole("link", { name: "Email iOS support" }),
   ).toHaveAttribute("href", "mailto:hello@typewhisper.com");
@@ -476,7 +476,7 @@ test.describe("iOS App Store media", () => {
       page,
       request,
     }) => {
-      await page.goto(`/${locale}/docs/ios`);
+      await page.goto(`/${locale}/docs/ios/`);
 
       await expect(
         page.getByRole("heading", { level: 1, name: "iOS" }),
@@ -527,7 +527,7 @@ test("macOS installation docs use the generated stable download", async ({
   const downloads = readGeneratedDownloads();
 
   for (const locale of ["en", "de"] as const) {
-    await page.goto(`/${locale}/docs/mac/installation`);
+    await page.goto(`/${locale}/docs/mac/installation/`);
 
     const download = page.locator(
       '[data-download-platform="mac"][data-tracking-placement="docs"]',
@@ -546,7 +546,7 @@ test("changelog reflects the generated release feed", async ({ page }) => {
   const preReleases = releases.filter(
     (release) => classifyRelease(release) !== "stable",
   );
-  await page.goto("/en/changelog");
+  await page.goto("/en/changelog/");
 
   if (stable.length === 0) {
     await expect(page.getByText("No releases found.")).toBeVisible();
@@ -609,7 +609,7 @@ test("changelog filters by platform and keeps the choice in the address", async 
     (release) => classifyRelease(release) === "stable",
   );
   const windows = releases.filter((release) => release.platform === "windows");
-  await page.goto("/de/changelog");
+  await page.goto("/de/changelog/");
 
   await page.getByTestId("changelog-platform-windows").click();
   await expect(page).toHaveURL(/[?&]os=windows/);

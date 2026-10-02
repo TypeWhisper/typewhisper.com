@@ -71,7 +71,7 @@ async function expectDarkLanding(
   await expectHeaderBackground(page, "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(0, 0, 0)");
 
-  await expect(page).toHaveURL(new RegExp(`/${locale}/?$`));
+  await expect(page).toHaveURL(new RegExp(`/${locale}/$`));
 }
 
 async function switchThemeOnLanding(page: Page) {
@@ -96,9 +96,9 @@ for (const scenario of localeScenarios) {
 
       await expectDarkLanding(page, scenario.code);
 
-      await page.locator(`a[href="/${scenario.code}/docs"]`).first().click();
+      await page.locator(`a[href="/${scenario.code}/docs/"]`).first().click();
 
-      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/?$`));
+      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/$`));
       await expect(page.locator("html")).toHaveClass(/dark/);
       await expect(page.getByTestId("theme-toggle")).toBeVisible();
       await expect(page.locator("body")).toHaveCSS("background-color", "rgb(0, 0, 0)");
@@ -122,9 +122,9 @@ for (const scenario of localeScenarios) {
       await expectDarkLanding(page, scenario.code);
       await switchThemeOnLanding(page);
 
-      await page.locator(`a[href="/${scenario.code}/docs"]`).first().click();
+      await page.locator(`a[href="/${scenario.code}/docs/"]`).first().click();
 
-      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/?$`));
+      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/$`));
       await expect(page.locator("html")).toHaveClass(/light/);
       await expect(page.locator("body")).toHaveCSS("background-color", "rgb(251, 251, 253)");
     });

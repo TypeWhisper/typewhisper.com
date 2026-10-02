@@ -15,7 +15,7 @@ interface UseCaseRelatedProps {
 export function UseCaseRelated({
   current,
   allUseCases,
-  basePath = "/use-cases",
+  basePath = "/use-cases/",
   locale = "en",
 }: UseCaseRelatedProps) {
   const others = allUseCases.filter(

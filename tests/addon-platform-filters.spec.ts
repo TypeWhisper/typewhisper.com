@@ -39,7 +39,7 @@ test("published add-ons that require a newer host explain compatibility", async 
   // Web Link needs 1.7.0. The notice shows only while the stable release is older.
   if (requiresNewerHost("1.7.0", readFeedVersion("mac"))) {
     await expect(requirement).toContainText("TypeWhisper 1.7.0");
-    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status");
+    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
@@ -91,7 +91,7 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://www.typewhisper.com/en/addons/vercel-ai-gateway",
+    "https://www.typewhisper.com/en/addons/vercel-ai-gateway/",
   );
   await expect(
     page.getByRole("heading", { level: 1, name: "Vercel AI Gateway" }),
@@ -102,7 +102,7 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
   const requirement = page.getByTestId("addon-host-requirement");
   if (needsNewerHost) {
     await expect(requirement).toContainText("TypeWhisper 1.7.0");
-    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status");
+    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
@@ -146,7 +146,7 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
     page.getByRole("heading", { level: 1, name: "Vercel AI Gateway" }),
   ).toBeVisible();
   if (needsNewerHost) {
-    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/de/release-status");
+    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/de/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
@@ -173,7 +173,7 @@ test("Vercel AI Gateway follows the category, platform, source, and search filte
     await page.goto(`/en/addons/?platform=mac&category=${category}&source=official`);
     await expect(page.getByTestId("featured-addons")).toHaveCount(0);
     await expect(card).toBeVisible();
-    await expect(card).toHaveAttribute("href", "/en/addons/vercel-ai-gateway");
+    await expect(card).toHaveAttribute("href", "/en/addons/vercel-ai-gateway/");
     await expect(card.getByText("macOS", { exact: true })).toBeVisible();
     await expect(card.getByText("Marketplace", { exact: true })).toBeVisible();
   }
@@ -197,7 +197,7 @@ test("Vercel AI Gateway follows the category, platform, source, and search filte
   await expect(page.getByTestId("addons-search")).toHaveValue("vercel");
   const cards = page.getByTestId("addon-card");
   await expect(cards).toHaveCount(1);
-  await expect(cards.first()).toHaveAttribute("href", "/de/addons/vercel-ai-gateway");
+  await expect(cards.first()).toHaveAttribute("href", "/de/addons/vercel-ai-gateway/");
 });
 
 test("Canary ASR has a source-checked macOS page in both locales", async ({ page }) => {
@@ -221,7 +221,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://www.typewhisper.com/en/addons/canary-asr",
+    "https://www.typewhisper.com/en/addons/canary-asr/",
   );
   await expect(
     page.getByRole("heading", { level: 1, name: "Canary ASR" }),
@@ -233,7 +233,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
   const requirement = page.getByTestId("addon-host-requirement");
   if (needsNewerHost) {
     await expect(requirement).toContainText("TypeWhisper 1.7.0");
-    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status");
+    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
@@ -281,7 +281,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
     page.getByRole("heading", { level: 1, name: "Canary ASR" }),
   ).toBeVisible();
   if (needsNewerHost) {
-    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/de/release-status");
+    await expect(requirement.getByRole("link")).toHaveAttribute("href", "/de/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
@@ -313,7 +313,7 @@ test("Canary ASR follows the category, platform, source, and search filters", as
   await page.goto("/en/addons/?platform=mac&category=transcription&source=official");
   await expect(page.getByTestId("featured-addons")).toHaveCount(0);
   await expect(card).toBeVisible();
-  await expect(card).toHaveAttribute("href", "/en/addons/canary-asr");
+  await expect(card).toHaveAttribute("href", "/en/addons/canary-asr/");
   await expect(card.getByText("macOS", { exact: true })).toBeVisible();
   await expect(card.getByText("Marketplace", { exact: true })).toBeVisible();
 
@@ -335,7 +335,7 @@ test("Canary ASR follows the category, platform, source, and search filters", as
   await expect(page.getByTestId("addons-search")).toHaveValue("sophea");
   const cards = page.getByTestId("addon-card");
   await expect(cards).toHaveCount(1);
-  await expect(cards.first()).toHaveAttribute("href", "/de/addons/canary-asr");
+  await expect(cards.first()).toHaveAttribute("href", "/de/addons/canary-asr/");
 });
 
 test("every logo of the add-on index loads in both themes", async ({ page }) => {
@@ -491,7 +491,7 @@ test("links with a retired source show all sources and lose the parameter", asyn
     await expect(
       list.locator('[data-testid="addon-card"][data-slug="apple-speech"]'),
     ).toBeVisible();
-    await expect(page).toHaveURL(/\/en\/addons\/?$/);
+    await expect(page).toHaveURL(/\/en\/addons\/$/);
 
     // The other filters of the link stay.
     await page.goto(`/de/addons/?platform=mac&source=${value}&q=speech`);
@@ -504,7 +504,7 @@ test("links with a retired source show all sources and lose the parameter", asyn
     await expect(
       list.locator('[data-testid="addon-card"][data-slug="apple-speech"]'),
     ).toBeVisible();
-    await expect(page).toHaveURL(/\/de\/addons\/?\?platform=mac&q=speech$/);
+    await expect(page).toHaveURL(/\/de\/addons\/\?platform=mac&q=speech$/);
   }
 });
 
