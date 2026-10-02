@@ -82,20 +82,23 @@ interface Sequence {
 /*
  * Timing in seconds. The first run has three beats: listening (LISTEN),
  * becoming type (SWEEP to TRAVEL), and text (HOLD, RESOLVE). With two
- * headline lines the crisp headline stands after about 2.7 seconds.
+ * headline lines the crisp headline stands after about 0.9 seconds, and
+ * about one second after a platform switch. The headline is the largest
+ * element of the page, so the whole run stays this short.
  */
-const LISTEN = 0.8;
-const LISTEN_AGAIN = 0.5;
-const SWEEP = 0.62;
-const TRAVEL = 0.6;
-const LINE_LAG = 0.1;
-const JITTER = 0.06;
-const HOLD = 0.1;
-const RESOLVE = 0.42;
-const DISSOLVE = 0.24;
-const REWIND_SWEEP = 0.3;
-const REWIND_TRAVEL = 0.5;
-const INTRO_GROW = 0.5;
+const LISTEN = 0.26;
+const LISTEN_AGAIN = 0.16;
+const SWEEP = 0.2;
+const TRAVEL = 0.2;
+const LINE_LAG = 0.03;
+const JITTER = 0.02;
+const HOLD = 0.03;
+const RESOLVE = 0.14;
+const DISSOLVE = 0.08;
+const REWIND_SWEEP = 0.1;
+const REWIND_TRAVEL = 0.16;
+const REWIND_JITTER = 0.016;
+const INTRO_GROW = 0.16;
 /** Resolution of the offscreen glyph mask relative to CSS pixels. */
 const MASK_SCALE = 2;
 
@@ -223,7 +226,7 @@ function buildLayout(elements: HeroWaveElements): Layout | null {
       centerY: 0,
       height: 0,
       glyph: false,
-      delay: delayAt(column.x) + 0.04,
+      delay: delayAt(column.x) + 0.012,
       rewindDelay: rewindAt(column.x),
     });
   });
@@ -277,7 +280,7 @@ function buildLayout(elements: HeroWaveElements): Layout | null {
             height: bottom - top,
             glyph: true,
             delay: delayAt(x) + line * LINE_LAG + random() * JITTER,
-            rewindDelay: rewindAt(x) + random() * 0.05,
+            rewindDelay: rewindAt(x) + random() * REWIND_JITTER,
           });
         }
         runStart = -1;
@@ -299,7 +302,7 @@ function buildLayout(elements: HeroWaveElements): Layout | null {
     waveMax: Math.min(250, Math.max(110, titleRect.height * 0.98)),
     calmMax: Math.min(26, Math.max(15, fontSize * 0.26)),
     morphDuration: SWEEP + (lines - 1) * LINE_LAG + JITTER + TRAVEL,
-    rewindDuration: REWIND_SWEEP + 0.05 + REWIND_TRAVEL,
+    rewindDuration: REWIND_SWEEP + REWIND_JITTER + REWIND_TRAVEL,
   };
 }
 
@@ -355,15 +358,22 @@ export class HeroWave {
     if (this.destroyed) return;
     try {
       if (!this.rebuild()) {
+        // No room for the waveform yet; a later resize may bring it back.
         this.fail();
+        this.started = true;
+        this.observe();
         return;
       }
+      // A late start finds the headline already shown by the CSS failsafe.
+      // It stays; hiding it again to type it would only delay the reader.
+      const shown = getComputedStyle(this.elements.title).opacity !== "0";
       this.started = true;
       this.elements.host.dataset.wave = "on";
       this.observe();
-      if (this.reducedMotion.matches) {
+      if (this.reducedMotion.matches || shown) {
         this.finish();
         this.draw();
+        this.schedule();
         return;
       }
       this.play({ rewind: false, dissolve: false, intro: true });
@@ -419,7 +429,18 @@ export class HeroWave {
     delete this.elements.host.dataset.wave;
   }
 
+  /**
+   * Switches the canvas off and leaves the real headline. Nothing of the old
+   * run survives, so no later frame can hide the headline again; a rebuild
+   * that succeeds after a resize switches the canvas back on.
+   */
   private fail() {
+    cancelAnimationFrame(this.frameId);
+    this.sequence = null;
+    if (this.layout && this.context) {
+      this.context.clearRect(0, 0, this.layout.width, this.layout.height);
+    }
+    this.layout = null;
     this.elements.host.dataset.wave = "off";
     this.elements.title.style.opacity = "";
     this.setPhase("done");
@@ -438,8 +459,15 @@ export class HeroWave {
         this.sequence.relayout = true;
         return;
       }
-      if (!this.rebuild()) this.fail();
-      else this.draw();
+      if (!this.rebuild()) {
+        this.fail();
+        return;
+      }
+      if (this.elements.host.dataset.wave === "off") {
+        this.elements.host.dataset.wave = "on";
+        this.schedule();
+      }
+      this.draw();
     });
     this.resizeObserver.observe(this.elements.host);
     this.resizeObserver.observe(this.elements.title);
@@ -559,7 +587,7 @@ export class HeroWave {
 
   private schedule() {
     cancelAnimationFrame(this.frameId);
-    if (this.destroyed || !this.started) return;
+    if (this.destroyed || !this.started || !this.layout) return;
     if (!this.visible || document.hidden || this.reducedMotion.matches) {
       this.lastFrame = 0;
       return;
@@ -590,7 +618,8 @@ export class HeroWave {
       const follow = 1 - Math.exp(-dt * 7);
       this.midY += (current.midY - this.midY) * follow;
       this.lineY += (current.lineY - this.lineY) * follow;
-      const resting = !sequence || sequence.elapsed > sequence.morphStart + 0.6;
+      const resting =
+        !sequence || sequence.elapsed > sequence.morphStart + TRAVEL;
       updateBoost(
         current.columns,
         this.pointer,

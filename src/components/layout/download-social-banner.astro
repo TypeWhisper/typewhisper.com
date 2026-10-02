@@ -22,19 +22,14 @@ const socialLinks = [
 ];
 ---
 
-<div
-  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+<dialog
+  aria-labelledby="download-social-title"
+  class="m-auto w-[calc(100%-2rem)] max-w-md overscroll-contain rounded-[0.875rem] border border-hairline-strong bg-popover p-0 text-popover-foreground shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
   data-download-social-banner-root
   data-testid="download-social-banner"
 >
-  <aside
-    role="dialog"
-    aria-modal="true"
-    aria-live="polite"
-    aria-labelledby="download-social-title"
-    class="w-full max-w-md rounded-[0.875rem] border border-hairline-strong bg-popover p-5 text-popover-foreground shadow-2xl sm:p-6"
-    data-download-social-dialog
-  >
+  {/* The padding sits on the inner element, so a click on the dialog itself is a click on the backdrop. */}
+  <div class="p-5 sm:p-6" data-download-social-dialog>
     <div class="flex items-start justify-between gap-3">
       <div class="min-w-0">
         <p class="font-mono text-xs font-medium uppercase tracking-[0.16em] text-link">
@@ -93,32 +88,36 @@ const socialLinks = [
         </a>
       ))}
     </div>
-  </aside>
-</div>
+  </div>
+</dialog>
 
 <script is:inline>
   (() => {
     const root = document.querySelector("[data-download-social-banner-root]");
-    if (!root) return;
+    if (!root || typeof root.showModal !== "function") return;
 
     let hideTimer;
+    let trigger = null;
 
     function hideBanner() {
-      root.classList.add("hidden");
-      root.classList.remove("flex");
-      if (hideTimer) {
-        window.clearTimeout(hideTimer);
-        hideTimer = undefined;
-      }
+      if (root.open) root.close();
     }
 
     function showBanner(event) {
       if (!(event.target instanceof Element)) return;
-      if (!event.target.closest("[data-download-social-trigger]")) return;
+      const source = event.target.closest("[data-download-social-trigger]");
+      if (!source) return;
 
-      root.classList.remove("hidden");
-      root.classList.add("flex");
-      root.querySelector("[data-download-social-close]")?.focus();
+      trigger = source;
+      // A modal dialog makes the page behind it inert; the download itself
+      // has already started with the click.
+      if (!root.open) {
+        const page = document.documentElement;
+        const scrollbar = window.innerWidth - page.clientWidth;
+        root.showModal();
+        page.style.overflow = "hidden";
+        if (scrollbar > 0) page.style.paddingRight = `${scrollbar}px`;
+      }
 
       if (hideTimer) {
         window.clearTimeout(hideTimer);
@@ -127,13 +126,26 @@ const socialLinks = [
     }
 
     document.addEventListener("click", showBanner);
+    // Escape closes a modal dialog on its own; every way out ends here.
+    root.addEventListener("close", () => {
+      if (hideTimer) {
+        window.clearTimeout(hideTimer);
+        hideTimer = undefined;
+      }
+      const page = document.documentElement;
+      page.style.overflow = "";
+      page.style.paddingRight = "";
+      // A download link inside the mobile menu is gone once the menu has
+      // closed; the focus then goes to the button that opens the menu.
+      const target =
+        trigger && trigger.isConnected
+          ? trigger
+          : document.querySelector("[data-mobile-menu-trigger]");
+      target?.focus();
+      trigger = null;
+    });
     root.addEventListener("click", (event) => {
       if (event.target === root) {
-        hideBanner();
-      }
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !root.classList.contains("hidden")) {
         hideBanner();
       }
     });

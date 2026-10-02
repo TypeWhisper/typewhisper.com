@@ -49,7 +49,7 @@
     transparent 72%
   );
   opacity: 0.55;
-  transition: opacity 1200ms ease;
+  transition: opacity 400ms ease;
   pointer-events: none;
 }
 
@@ -92,7 +92,7 @@
   text-wrap: balance;
   /* Hidden until the waveform has typed it; shows on its own without script. */
   opacity: 0;
-  animation: landing-title-failsafe 600ms ease-out 3500ms forwards;
+  animation: landing-title-failsafe 400ms ease-out 1500ms forwards;
 }
 
 @media (min-width: 640px) {
@@ -265,14 +265,17 @@
   opacity: 0.92;
 }
 
+/* A link inside a sentence: underlined, with a target of at least 24px. */
 .landing .landing-trust__link {
+  padding-block: 0.25rem;
   color: var(--accent-text);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: color 200ms var(--motion-ease-out);
 }
 
 .landing .landing-trust__link:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+  color: var(--accent-text-hover);
 }
 
 /* ---------- Spoken, written ---------- */
@@ -759,9 +762,9 @@
   color: var(--accent-text);
 }
 
+/* The links sit inside sentences and keep their underline. */
 .landing .landing-engines__body a {
   color: var(--accent-text);
-  text-decoration: none;
 }
 
 .landing .landing-engines__lede {
@@ -956,13 +959,14 @@
 
 .landing .landing-final__note a {
   color: var(--accent-text);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
   white-space: nowrap;
+  transition: color 200ms var(--motion-ease-out);
 }
 
 .landing .landing-final__note a:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
+  color: var(--accent-text-hover);
 }
 
 /* ---------- Narrow screens ---------- */
@@ -1033,6 +1037,27 @@
   .landing .landing-tour__pan::-webkit-scrollbar,
   .landing .landing-premium__shot::-webkit-scrollbar {
     display: none;
+  }
+
+  /*
+   * The mask would cut off a ring outside of the strip. In the tour the strip
+   * reaches below the caption, so the ring follows the edge of the screenshot.
+   */
+  .landing .landing-premium__shot:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .landing .landing-tour__pan:focus-visible {
+    outline: none;
+  }
+
+  .landing .landing-tour__pan:focus-visible .landing-shot::after {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--ring);
+    border-radius: 12px;
+    content: "";
+    pointer-events: none;
   }
 
   .landing .landing-tour:not([data-platform="ios"]) .landing-shot {

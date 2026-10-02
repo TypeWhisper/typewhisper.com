@@ -173,10 +173,20 @@ const community = [
 </footer>
 
 <script>
-  // The closing waveform answers the pointer: bars near it rise, like a
-  // voice coming closer to the microphone.
   const wave = document.querySelector<HTMLElement>("[data-footer-wave]");
   const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  // 280 breathing bars keep the main thread busy, so they only move while
+  // the footer is on screen. Without this script they breathe all the time.
+  if (wave && "IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      const visible = entries[entries.length - 1].isIntersecting;
+      wave.classList.toggle("is-paused", !visible);
+    }).observe(wave);
+  }
+
+  // The closing waveform answers the pointer: bars near it rise, like a
+  // voice coming closer to the microphone.
   if (wave && !still.matches && window.matchMedia("(hover: hover)").matches) {
     const bars = Array.from(wave.children) as HTMLElement[];
     const reach = 140;

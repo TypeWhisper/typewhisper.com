@@ -5,7 +5,12 @@ import type { Locale } from "./index";
 
 /** The header island and the download target it resolves, on every page. */
 const everywhere = ["nav", "platforms"];
-const codeBlock = ["docs.copyCommand", "docs.copyFailed", "docs.copied"];
+const codeBlock = [
+  "docs.copyCommand",
+  "docs.copyFailed",
+  "docs.copied",
+  "docs.codeLabel",
+];
 
 /**
  * Key prefixes that the hydrated islands of a route read, including the

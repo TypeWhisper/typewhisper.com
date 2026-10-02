@@ -21,6 +21,81 @@ test.describe("hero waveform headline", () => {
     await expect(headline).toHaveCSS("opacity", "1");
   });
 
+  test("the headline is readable shortly after the first paint", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      const poll = () => {
+        const title = document.querySelector(".landing-hero__title");
+        if (title && getComputedStyle(title).opacity === "1") {
+          Object.assign(window, { __titleReadable: performance.now() });
+          return;
+        }
+        requestAnimationFrame(poll);
+      };
+      requestAnimationFrame(poll);
+    });
+    await page.goto("/en/?platform=mac");
+    const readable = await page.waitForFunction(
+      () =>
+        (window as typeof window & { __titleReadable?: number })
+          .__titleReadable,
+    );
+    const firstPaint = await page.evaluate(
+      () =>
+        performance.getEntriesByName("first-contentful-paint")[0]?.startTime ??
+        0,
+    );
+    // About one second on an idle machine; the bound leaves room for load.
+    expect((await readable.jsonValue())! - firstPaint).toBeLessThan(2500);
+  });
+
+  test("a canvas that cannot be laid out leaves the headline and recovers", async ({
+    page,
+  }) => {
+    await page.goto("/en/?platform=mac");
+    const hero = page.getByTestId("landing-hero");
+    const headline = hero.getByRole("heading", { level: 1 });
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 4000 });
+
+    // Too narrow for the waveform: the engine switches itself off.
+    await page.setViewportSize({ width: 180, height: 700 });
+    await expect(hero).toHaveAttribute("data-wave", "off");
+    await page.getByTestId("landing-hero-tab-ios").click();
+    await expect(headline).toHaveAccessibleName("Speak. Capture. Keep moving.");
+    await expect(headline).toHaveCSS("opacity", "1");
+    await expect(hero).toHaveAttribute("data-phase", "done");
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(hero).toHaveAttribute("data-wave", "on");
+    await page.getByTestId("landing-hero-tab-mac").click();
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 5000 });
+    await expect(headline).toHaveAccessibleName(
+      "Speak once. Keep writing everywhere.",
+    );
+    await expect(headline).toHaveCSS("opacity", "1");
+  });
+
+  test("a page loaded too narrow for the canvas gets it once there is room", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 180, height: 700 });
+    await page.goto("/en/?platform=mac");
+    const hero = page.getByTestId("landing-hero");
+    await expect(hero).toHaveAttribute("data-wave", "off");
+    await expect(hero.getByRole("heading", { level: 1 })).toHaveCSS(
+      "opacity",
+      "1",
+    );
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(hero).toHaveAttribute("data-wave", "on");
+    await expect(hero.getByRole("heading", { level: 1 })).toHaveCSS(
+      "opacity",
+      "1",
+    );
+  });
+
   test("switching the platform plays the sequence again", async ({ page }) => {
     await page.goto("/en/?platform=mac");
     const hero = page.getByTestId("landing-hero");
@@ -546,6 +621,13 @@ test.describe("feature tour", () => {
     await expect(figures.first().locator("figcaption")).toHaveText(
       "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
     );
+    // The strip that scrolls sideways is a named stop for the keyboard.
+    const pan = figures.first().locator(".landing-tour__pan");
+    await expect(pan).toHaveAttribute("tabindex", "0");
+    await expect(pan).toHaveRole("group");
+    await expect(pan).toHaveAccessibleName(
+      "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
+    );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
     expect(frame).not.toBeNull();
@@ -553,6 +635,28 @@ test.describe("feature tour", () => {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(390);
+  });
+
+  test("a phone with a dense screen loads the 1440px variant, not the full capture", async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      deviceScaleFactor: 3,
+    });
+    const page = await context.newPage();
+    await page.goto("/en/?platform=mac");
+    const image = page
+      .getByTestId("feature-tour")
+      .locator("figure img")
+      .first();
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate((element: HTMLImageElement) => element.currentSrc),
+      )
+      .toMatch(/\/_images\/[0-9a-f]+-1440\.webp$/);
+    await context.close();
   });
 
   test("reduced motion shows static pairs instead of the pinned stage", async ({
@@ -566,6 +670,10 @@ test.describe("feature tour", () => {
 
     await expect(page.getByTestId("feature-tour-stage")).toBeHidden();
     await expect(tour.locator("figure").first()).toBeVisible();
+    // Nothing scrolls sideways here, so the figure is no stop for the keyboard.
+    await expect(
+      tour.locator(".landing-tour__pan").first(),
+    ).not.toHaveAttribute("tabindex");
   });
 });
 

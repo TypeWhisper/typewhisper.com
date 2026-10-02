@@ -12,6 +12,7 @@ import {
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { SectionHead } from "@/components/site/section-head";
 import { BarMark } from "@/components/site/bar-mark";
+import { watchPanRegion } from "@/lib/pan-region";
 
 const featureKeys: FeatureScreenshotKey[] = [
   "private",
@@ -24,10 +25,13 @@ const featureKeys: FeatureScreenshotKey[] = [
 /*
  * Rendered width of the screenshot per platform: pinned beside the text on
  * large screens, full width on tablets, panned at 150vw on phones. The macOS
- * captures are wider than their frame because of the shadow margin.
+ * captures are wider than their frame because of the shadow margin. Phones
+ * with three device pixels per CSS pixel count the macOS strip as one viewport
+ * width: they load the 1440px variant, still more than two pixels per CSS
+ * pixel, instead of the full capture.
  */
 const screenshotSizes: Record<LandingPlatform, string> = {
-  mac: "(min-width: 1024px) min(66vw, 940px), (min-width: 640px) calc(110vw - 70px), 165vw",
+  mac: "(min-width: 1024px) min(66vw, 940px), (min-width: 640px) calc(110vw - 70px), (min-resolution: 2.5dppx) 100vw, 165vw",
   windows:
     "(min-width: 1024px) min(60vw, 850px), (min-width: 640px) calc(100vw - 64px), 150vw",
   ios: "(min-width: 1024px) 390px, 280px",
@@ -171,7 +175,12 @@ export function FeatureTour({ locale = "en" }: { locale?: Locale }) {
                 </div>
 
                 <figure className="landing-tour__inline">
-                  <div className="landing-tour__pan">
+                  <div
+                    ref={watchPanRegion}
+                    className="landing-tour__pan"
+                    role="group"
+                    aria-label={step.caption}
+                  >
                     <div className="landing-shot">
                       <Screenshot
                         src={step.screenshot}

@@ -40,11 +40,10 @@ export function Header({
   const { toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = getNavLinks(locale);
-  const alternateBasePath = getAlternatePath(
-    currentPath,
-    locale === "de" ? "en" : "de",
-  );
-  const alternateLabel = locale === "de" ? "EN" : "DE";
+  const alternateLocale = locale === "de" ? "en" : "de";
+  const alternateBasePath = getAlternatePath(currentPath, alternateLocale);
+  const alternateLabel = alternateLocale.toUpperCase();
+  const alternateName = alternateLocale === "de" ? "Deutsch" : "English";
   const platform = useSyncedLandingPlatform();
   const pageUrl = new URL(usePageUrl() || "https://www.typewhisper.com");
   const alternateParams = new URLSearchParams(pageUrl.search);
@@ -72,7 +71,10 @@ export function Header({
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 xl:flex">
+        <nav
+          aria-label={t(locale, "nav.mainLabel")}
+          className="hidden items-center gap-1 xl:flex"
+        >
           {navLinks.map((link) => {
             const isActive =
               currentPath === link.href || currentPath.startsWith(link.href);
@@ -131,6 +133,9 @@ export function Header({
           {/* Language Switcher */}
           <a
             href={alternatePath}
+            hrefLang={alternateLocale}
+            lang={alternateLocale}
+            aria-label={alternateName}
             className={cn(
               "px-2 py-1 text-xs font-semibold rounded-full transition-colors",
               mutedForegroundClass,
@@ -217,12 +222,21 @@ export function Header({
                 size="icon-sm"
                 className={cn("xl:hidden", iconButtonClass)}
                 aria-label={t(locale, "nav.menu")}
+                data-mobile-menu-trigger
               >
                 <Menu className="size-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="pt-12">
-              <nav className="flex flex-col gap-1 px-4">
+            <SheetContent
+              side="right"
+              className="pt-12"
+              title={t(locale, "nav.mobileTitle")}
+              closeLabel={t(locale, "nav.closeMenu")}
+            >
+              <nav
+                aria-label={t(locale, "nav.mainLabel")}
+                className="flex flex-col gap-1 px-4 pb-4"
+              >
                 {showDownloadCta &&
                   (download.available ? (
                     <Button
@@ -277,9 +291,11 @@ export function Header({
                 ))}
                 <a
                   href={alternatePath}
+                  hrefLang={alternateLocale}
+                  lang={alternateLocale}
                   className="px-3 py-2.5 text-sm font-medium text-muted-foreground rounded-[0.625rem] transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  {alternateLabel === "DE" ? "Deutsch" : "English"}
+                  {alternateName}
                 </a>
                 <Button
                   variant="ghost"
@@ -322,7 +338,7 @@ export function Header({
                       brand="github"
                       context="nav"
                       className="size-4"
-                      alt="GitHub"
+                      alt=""
                     />
                   ) : (
                     <GitHubIcon className="size-4" />
