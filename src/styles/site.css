@@ -1728,6 +1728,11 @@
     animation: site-footer-breathe var(--d) ease-in-out var(--o) infinite;
   }
 
+  /* Set by the footer script while the waveform is outside the viewport. */
+  .site-footer__wave.is-paused .site-footer__bar::before {
+    animation-play-state: paused;
+  }
+
   .site-footer__bar[style*="--lift"]::before {
     opacity: 1;
   }

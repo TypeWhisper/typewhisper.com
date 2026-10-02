@@ -240,3 +240,19 @@ test("search excerpts decode HTML entities as plain text", async ({ page }) => {
   );
   await expect(results.first()).not.toContainText("&gt;");
 });
+
+test("footer waveform only moves while it is on screen", async ({ page }) => {
+  await page.goto("/en/docs/mac/installation/");
+  const wave = page.locator("[data-footer-wave]");
+  const playState = () =>
+    wave
+      .locator(".site-footer__bar")
+      .first()
+      .evaluate((bar) => getComputedStyle(bar, "::before").animationPlayState);
+
+  await expect(wave).toHaveClass(/\bis-paused\b/);
+  expect(await playState()).toBe("paused");
+  await wave.scrollIntoViewIfNeeded();
+  await expect(wave).not.toHaveClass(/\bis-paused\b/);
+  expect(await playState()).toBe("running");
+});
