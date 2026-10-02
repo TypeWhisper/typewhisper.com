@@ -62,14 +62,16 @@ export function getIosAppStoreUrl(locale: Locale): string {
   return `https://apps.apple.com/${storefront}/${iosAppStoreProductPath}`;
 }
 
-export function detectPlatformFromUserAgent(userAgent: string): Platform {
+export function detectPlatformFromUserAgent(
+  userAgent: string,
+  maxTouchPoints = 0,
+): Platform {
   const normalized = userAgent.toLowerCase();
 
   if (normalized.includes("windows")) {
     return "windows";
   }
 
-  // Check iOS before Mac, since iPad UA can contain "Macintosh".
   if (
     normalized.includes("iphone") ||
     normalized.includes("ipad") ||
@@ -79,7 +81,8 @@ export function detectPlatformFromUserAgent(userAgent: string): Platform {
   }
 
   if (normalized.includes("macintosh") || normalized.includes("mac os x")) {
-    return "mac";
+    // iPadOS Safari introduces itself as a Mac; no Mac has a touch screen.
+    return maxTouchPoints > 1 ? "ios" : "mac";
   }
 
   return "other";
@@ -90,7 +93,10 @@ export function detectPlatform(): Platform {
     return "other";
   }
 
-  return detectPlatformFromUserAgent(navigator.userAgent);
+  return detectPlatformFromUserAgent(
+    navigator.userAgent,
+    navigator.maxTouchPoints,
+  );
 }
 
 export function getPlatformDownloadTarget(

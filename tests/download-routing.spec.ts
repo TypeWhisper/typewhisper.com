@@ -34,6 +34,7 @@ function readGeneratedReleases(): GeneratedRelease[] {
 type LandingScenario = {
   name: string;
   userAgent: string;
+  maxTouchPoints?: number;
   expectedLabel: string;
   expectedHref?: RegExp | string;
   opensNewTab?: boolean;
@@ -65,6 +66,16 @@ const landingScenarios: LandingScenario[] = [
     expectedHref: IOS_APP_STORE_URL_EN,
     opensNewTab: true,
   },
+  {
+    // iPadOS Safari sends a Mac user agent; the touch screen gives it away.
+    name: "iPadOS",
+    userAgent:
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15",
+    maxTouchPoints: 5,
+    expectedLabel: "Download on the App Store",
+    expectedHref: IOS_APP_STORE_URL_EN,
+    opensNewTab: true,
+  },
 ];
 
 for (const scenario of landingScenarios) {
@@ -74,6 +85,13 @@ for (const scenario of landingScenarios) {
     test("hero and footer CTA resolve for the detected platform", async ({
       page,
     }) => {
+      if (scenario.maxTouchPoints !== undefined) {
+        await page.addInitScript((points) => {
+          Object.defineProperty(Navigator.prototype, "maxTouchPoints", {
+            get: () => points,
+          });
+        }, scenario.maxTouchPoints);
+      }
       await page.goto("/en/");
 
       const heroCta = page.getByTestId("landing-hero-download");
