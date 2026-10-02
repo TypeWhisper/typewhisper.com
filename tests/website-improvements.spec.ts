@@ -29,6 +29,32 @@ for (const width of [320, 390, 768, 1024]) {
   });
 }
 
+test("mobile menu is named, focuses its close button, and scrolls in landscape", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.goto("/de/");
+  await hydrated(page);
+  await page.getByRole("button", { name: "Menü", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Navigation" });
+  await expect(dialog).toBeVisible();
+  const close = dialog.getByRole("button", { name: "Navigation schließen" });
+  await expect(close).toBeFocused();
+  const box = await close.boundingBox();
+  expect(box!.width).toBeGreaterThanOrEqual(40);
+  expect(box!.height).toBeGreaterThanOrEqual(40);
+
+  // The last entries sit below the fold of a phone held sideways.
+  const github = dialog.getByRole("link", { name: "GitHub", exact: true });
+  await expect(github).not.toBeInViewport();
+  await github.scrollIntoViewIfNeeded();
+  await expect(github).toBeInViewport({ ratio: 1 });
+  await page.keyboard.press("Shift+Tab");
+  await expect(github).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(close).toBeFocused();
+});
+
 for (const locale of ["en", "de"]) {
   test(`${locale}: platform choice survives navigation and changes all download links`, async ({
     page,
@@ -179,10 +205,7 @@ for (const width of [1440, 390]) {
     await page.getByTestId("landing-hero-tab-ios").click();
     if (width === 390)
       await page.getByRole("button", { name: "Menü", exact: true }).click();
-    const link = page.getByRole("link", {
-      name: width === 390 ? "English" : "EN",
-      exact: true,
-    });
+    const link = page.getByRole("link", { name: "English", exact: true });
     await expect(link).toHaveAttribute("href", "/en/?platform=ios");
     // Opening the href directly exercises copy/open-in-new-tab without a click handler.
     const destination = await context.newPage();

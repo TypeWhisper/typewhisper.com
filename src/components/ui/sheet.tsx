@@ -25,18 +25,22 @@ SheetOverlay.displayName = "SheetOverlay";
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   side?: "left" | "right";
+  /** Accessible name of the dialog; rendered visually hidden. */
+  title: string;
+  /** Label of the close button. */
+  closeLabel: string;
 }
 
 const SheetContent = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   SheetContentProps
->(({ className, side = "left", children, ...props }, ref) => (
+>(({ className, side = "left", title, closeLabel, children, ...props }, ref) => (
   <DialogPrimitive.Portal>
     <SheetOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-y-0 z-50 flex h-full w-72 flex-col border-border bg-background shadow-xl transition-transform duration-300 ease-in-out",
+        "fixed inset-y-0 z-50 flex h-full w-72 flex-col overflow-y-auto overscroll-contain border-border bg-background shadow-xl transition-transform duration-300 ease-in-out",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         side === "left" &&
           "left-0 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
@@ -44,13 +48,18 @@ const SheetContent = React.forwardRef<
           "right-0 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
         className
       )}
+      aria-describedby={undefined}
       {...props}
     >
-      {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
+      <DialogPrimitive.Title className="sr-only">{title}</DialogPrimitive.Title>
+      {/* First in the markup, so it takes the focus when the sheet opens. */}
+      <DialogPrimitive.Close
+        aria-label={closeLabel}
+        className="absolute right-1 top-1 inline-flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+      >
+        <X className="size-4" aria-hidden="true" />
       </DialogPrimitive.Close>
+      {children}
     </DialogPrimitive.Content>
   </DialogPrimitive.Portal>
 ));
