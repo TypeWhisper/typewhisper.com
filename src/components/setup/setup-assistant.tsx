@@ -8,7 +8,7 @@ import {
   useSyncedLandingPlatform,
 } from "@/hooks/use-landing-platform";
 import { getPlatformDownloadTarget } from "@/lib/platform-download";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 
 type Task = "dictation" | "files" | "workflows";
 
@@ -84,15 +84,16 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
     replacePageUrl(url);
   }, [platform, processing, task, ready]);
   const download = getPlatformDownloadTarget(platform, locale, "landing");
-  const docs = `/${locale}/docs/${platform}`;
+  const docs = (page: string) =>
+    localePath(locale, `/docs/${platform}/${page}`);
   const guide =
     platform === "ios"
-      ? `${docs}/${task === "files" ? "files-history-and-inbox" : task === "workflows" ? "profiles-and-processing" : "dictation-and-keyboard"}`
-      : `${docs}/${task === "files" ? "file-transcription" : task === "workflows" ? "workflows" : "features"}`;
+      ? docs(task === "files" ? "files-history-and-inbox" : task === "workflows" ? "profiles-and-processing" : "dictation-and-keyboard")
+      : docs(task === "files" ? "file-transcription" : task === "workflows" ? "workflows" : "features");
   const engines =
     processing === "cloud" && platform !== "ios"
       ? `/${locale}/addons/?platform=${platform}&category=transcription`
-      : `${docs}/${platform === "ios" ? "profiles-and-processing" : "features"}`;
+      : docs(platform === "ios" ? "profiles-and-processing" : "features");
   return (
     <div className="utility-setup" data-testid="setup-assistant">
       <div
@@ -161,7 +162,7 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
         </div>
         <ol className="site-steps">
           <Step
-            href={`${docs}/installation`}
+            href={docs("installation")}
             title={t(locale, "setup.install")}
             hint={t(locale, "setup.installHint")}
           />

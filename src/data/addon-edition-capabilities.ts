@@ -3,7 +3,7 @@ import type {
   Plugin,
   PluginCategory,
   PluginPlatform,
-} from "@/data/addons";
+} from "@/data/addon-taxonomy";
 
 type EditionCapabilityMap = Record<
   string,

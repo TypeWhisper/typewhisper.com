@@ -89,7 +89,7 @@ const previewAlt = addonShotText(locale, {
   )}
 
   <a
-    href={`${familyPath}/${editionPlatformSlugs[edition.platform]}`}
+    href={`${familyPath}${editionPlatformSlugs[edition.platform]}/`}
     class="site-link addon-edition__link"
   >
     <span>{t(locale, "addons.editions.openEdition")}<span class="sr-only">: {platformLabel}</span></span>

@@ -28,7 +28,7 @@ test.describe("Windows documentation", () => {
       page,
     }) => {
       for (const [slug, englishHeading, germanHeading] of routes) {
-        await page.goto(`/${locale}/docs/windows${slug}`);
+        await page.goto(`/${locale}/docs/windows${slug}/`);
         await expect(
           page.getByRole("heading", {
             level: 1,
@@ -41,10 +41,10 @@ test.describe("Windows documentation", () => {
     test(`${locale} index and sidebar link to the task-oriented pages`, async ({
       page,
     }) => {
-      await page.goto(`/${locale}/docs/windows`);
+      await page.goto(`/${locale}/docs/windows/`);
 
       for (const slug of sidebarSlugs) {
-        const href = `/${locale}/docs/windows${slug}`;
+        const href = `/${locale}/docs/windows${slug}/`;
         await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible();
       }
 
@@ -60,20 +60,20 @@ test.describe("Windows documentation", () => {
   test("legacy profile routes redirect to localized workflows", async ({
     page,
   }) => {
-    await page.goto("/en/docs/windows/profiles");
-    await expect(page).toHaveURL(/\/en\/docs\/windows\/workflows\/?$/);
+    await page.goto("/en/docs/windows/profiles/");
+    await expect(page).toHaveURL(/\/en\/docs\/windows\/workflows\/$/);
 
-    await page.goto("/de/docs/windows/profiles");
-    await expect(page).toHaveURL(/\/de\/docs\/windows\/workflows\/?$/);
+    await page.goto("/de/docs/windows/profiles/");
+    await expect(page).toHaveURL(/\/de\/docs\/windows\/workflows\/$/);
 
-    await page.goto("/docs/windows/profiles");
-    await expect(page).toHaveURL(/\/(en|de)\/docs\/windows\/workflows\/?$/);
+    await page.goto("/docs/windows/profiles/");
+    await expect(page).toHaveURL(/\/(en|de)\/docs\/windows\/workflows\/$/);
   });
 
   test("installation documents the current onboarding and data model", async ({
     page,
   }) => {
-    await page.goto("/en/docs/windows/installation");
+    await page.goto("/en/docs/windows/installation/");
 
     await expect(
       page.getByRole("heading", { level: 2, name: "2. Four-step onboarding" }),
@@ -129,7 +129,7 @@ test.describe("Windows documentation", () => {
   test("API and CLI use port 8978 and public discovery paths", async ({
     page,
   }) => {
-    await page.goto("/en/docs/windows/api");
+    await page.goto("/en/docs/windows/api/");
     await expect(
       page.getByText("port 8978", { exact: false }).first(),
     ).toBeVisible();
@@ -148,7 +148,7 @@ test.describe("Windows documentation", () => {
       page.getByText("/v1/automation/", { exact: false }),
     ).toHaveCount(0);
 
-    await page.goto("/en/docs/windows/cli");
+    await page.goto("/en/docs/windows/cli/");
     await expect(
       page.getByText("fallback 8978", { exact: false }).first(),
     ).toBeVisible();
@@ -175,7 +175,7 @@ test.describe("Windows documentation", () => {
   }) => {
     for (const locale of ["en", "de"]) {
       for (const [slug] of routes) {
-        await page.goto(`/${locale}/docs/windows${slug}`);
+        await page.goto(`/${locale}/docs/windows${slug}/`);
         const text = (
           await page.locator("main").last().innerText()
         ).toLowerCase();
@@ -257,7 +257,7 @@ test.describe("Windows documentation", () => {
 
     for (const locale of ["en", "de"] as const) {
       for (const [name, route, englishAlt, germanAlt] of screenshots) {
-        await page.goto(`/${locale}${route}`);
+        await page.goto(`/${locale}${route}/`);
         const src = `/screenshots/${locale}/windows/${name}.png`;
         const image = page.locator(`img[src="${src}"]`);
         await expect(image).toHaveAttribute(
@@ -305,9 +305,9 @@ test.describe("Windows documentation", () => {
     await page.setViewportSize({ width: 390, height: 844 });
 
     for (const route of [
-      "/en/docs/windows",
-      "/en/docs/windows/api",
-      "/de/docs/windows/workflows",
+      "/en/docs/windows/",
+      "/en/docs/windows/api/",
+      "/de/docs/windows/workflows/",
     ]) {
       await page.goto(route);
       const sizes = await page.evaluate(() => ({

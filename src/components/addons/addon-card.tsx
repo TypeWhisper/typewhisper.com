@@ -5,7 +5,7 @@ import {
   categoryKeys,
   platformKeys,
   sourceKeys,
-} from "@/data/addons";
+} from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 import { getAddonCategoriesForPlatform } from "@/data/addon-edition-capabilities";
 import { AddonMark } from "./addon-mark";
@@ -22,7 +22,7 @@ interface AddonCardProps {
 /** One entry of the add-on index: tile, name, author, description, meta line. */
 export function AddonCard({
   plugin,
-  basePath = "/addons",
+  basePath = "/addons/",
   locale = "en",
   platform = "all",
   showRecommended = false,
@@ -32,7 +32,7 @@ export function AddonCard({
 
   return (
     <a
-      href={`${basePath}/${plugin.slug}`}
+      href={`${basePath}${plugin.slug}/`}
       className="site-index__link addon-entry"
       data-testid="addon-card"
       data-slug={plugin.slug}

@@ -27,7 +27,7 @@ test("the use-case index groups its entries and filters by category", async ({
   await expect(entries).toHaveCount(1);
   await expect(entries.getByRole("link")).toHaveAttribute(
     "href",
-    "/en/use-cases/chat",
+    "/en/use-cases/chat/",
   );
   await expect(page.getByTestId("use-case-group-industry")).toHaveCount(0);
   await expect(page).toHaveURL(/\?category=app$/);
@@ -52,7 +52,7 @@ test("a use-case page shows real product media and no imitated app windows", asy
   await expect(page.locator("h1")).toHaveText("E-Mails diktieren");
   await expect(
     page.getByTestId("page-head").getByRole("link", { name: "Anwendungen" }),
-  ).toHaveAttribute("href", "/de/use-cases");
+  ).toHaveAttribute("href", "/de/use-cases/");
 
   const download = page
     .getByTestId("page-head")

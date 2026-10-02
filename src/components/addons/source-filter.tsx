@@ -2,7 +2,7 @@ import {
   sourceFilters,
   sourceKeys as pluginSourceKeys,
   type PluginSource,
-} from "@/data/addons";
+} from "@/data/addon-taxonomy";
 import { t, type Locale } from "@/i18n/index";
 import { FilterRow } from "./filter-row";
 

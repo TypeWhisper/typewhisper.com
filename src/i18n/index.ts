@@ -1,3 +1,6 @@
+import { localePath, withTrailingSlash } from "./paths";
+
+export { localePath, withTrailingSlash };
 export type Locale = "en" | "de";
 export const defaultLocale: Locale = "en";
 export const locales: Locale[] = ["en", "de"];
@@ -42,12 +45,6 @@ export function getLocaleFromPath(path: string): Locale {
     return segment as Locale;
   }
   return defaultLocale;
-}
-
-/** Build a locale-prefixed path, e.g. localePath("de", "/docs") -> "/de/docs". */
-export function localePath(locale: Locale, path: string): string {
-  const clean = path.startsWith("/") ? path : `/${path}`;
-  return `/${locale}${clean}`;
 }
 
 /** Get the alternate-language path for the language switcher. */

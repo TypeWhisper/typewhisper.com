@@ -2,8 +2,6 @@ import { ArrowRight } from "lucide-react";
 import { PageHead } from "@/components/site";
 import { localePath, t, type Locale } from "@/i18n/index";
 
-export type SortKey = "wer" | "cer" | "speed" | "cost";
-
 /** Reading page: says why no ranking is published. Shows no numbers. */
 export default function BenchmarkIndex({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";

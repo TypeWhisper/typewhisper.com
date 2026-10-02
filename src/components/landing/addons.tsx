@@ -97,7 +97,7 @@ export function Addons({ locale = "en" }: { locale?: Locale }) {
           {showcase.map((plugin) => (
             <li key={plugin.slug}>
               <a
-                href={`${localePath(locale, "/addons")}/${plugin.slug}`}
+                href={localePath(locale, `/addons/${plugin.slug}`)}
                 className="site-index__link"
                 data-testid="addon-card"
                 data-slug={plugin.slug}

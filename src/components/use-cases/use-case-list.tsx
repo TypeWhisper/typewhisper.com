@@ -19,7 +19,7 @@ interface UseCaseListProps {
 /** Use cases as a hairline index: name, description, category, arrow. */
 export function UseCaseList({
   entries,
-  basePath = "/use-cases",
+  basePath = "/use-cases/",
   locale = "en",
   className = "",
 }: UseCaseListProps) {
@@ -27,7 +27,7 @@ export function UseCaseList({
     <ul className={`site-index site-index--open usecase-list ${className}`}>
       {entries.map((entry) => (
         <li key={entry.slug} data-testid="use-case-entry">
-          <a href={`${basePath}/${entry.slug}`} className="site-index__link">
+          <a href={`${basePath}${entry.slug}/`} className="site-index__link">
             <span className="site-index__name">
               {entry.name}
               <span className="usecase-list__side">

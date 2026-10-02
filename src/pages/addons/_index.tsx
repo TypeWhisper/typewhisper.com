@@ -2,7 +2,6 @@ import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { ArrowRight, Search, X } from "lucide-react";
 import {
-  getPlugins,
   categoryKeys,
   platformKeys,
   retiredSourceFilters,
@@ -11,8 +10,8 @@ import {
   type PluginCategory,
   type PluginPlatform,
   type PluginSource,
-} from "@/data/addons";
-import { t, type Locale } from "@/i18n/index";
+} from "@/data/addon-taxonomy";
+import { localePath, t, type Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/addons/category-filter";
 import { PlatformFilter } from "@/components/addons/platform-filter";
 import { SourceFilter } from "@/components/addons/source-filter";
@@ -22,7 +21,7 @@ import { WaveRule } from "@/components/site/wave-rule";
 
 interface AddonsIndexProps {
   locale?: Locale;
-  allPlugins?: Plugin[];
+  allPlugins: Plugin[];
   basePath?: string;
 }
 
@@ -36,7 +35,7 @@ const FEATURED_FALLBACK_SLUGS = new Set([
 export default function AddonsIndex({
   locale = "en",
   allPlugins,
-  basePath = "/addons",
+  basePath = "/addons/",
 }: AddonsIndexProps) {
   const defaults = {
     category: "all",
@@ -91,7 +90,7 @@ export default function AddonsIndex({
   const setSource = (source: string) => updateFilters({ source });
   const setQuery = (query: string) => updateFilters({ query });
 
-  const items = allPlugins ?? getPlugins(locale);
+  const items = allPlugins;
 
   const hasFilters =
     category !== "all" ||
@@ -248,7 +247,7 @@ export default function AddonsIndex({
                 )}
               </p>
               {platform === "ios" && (
-                <a className="site-link" href={`/${locale}/docs/ios`}>
+                <a className="site-link" href={localePath(locale, "/docs/ios")}>
                   {t(locale, "addons.iosGuide")}
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </a>

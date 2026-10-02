@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { classifyRelease } from "../src/data/release-kind";
 import { readCurrentVersions } from "./helpers/current-versions";
@@ -98,6 +98,8 @@ for (const scenario of landingScenarios) {
       const footerCta = page.getByTestId("landing-footer-download");
 
       await expect(heroCta).toBeVisible();
+      // The closing section hydrates when it comes near the viewport.
+      await footerCta.scrollIntoViewIfNeeded();
       await expect(footerCta).toBeVisible();
       await expect(heroCta).toHaveText(scenario.expectedLabel);
       await expect(footerCta).toHaveText(scenario.expectedLabel);
@@ -268,7 +270,7 @@ test("attributes download and checkout events without blocking navigation", asyn
     },
   ]);
 
-  await page.goto("/en/pricing");
+  await page.goto("/en/pricing/");
   const checkout = page.locator(
     "[data-checkout-tier='individual'][data-checkout-billing-period='monthly']",
   );
@@ -311,7 +313,7 @@ test("attributes download and checkout events without blocking navigation", asyn
 test("uses website checkout defaults when no campaign is present", async ({
   page,
 }) => {
-  await page.goto("/en/pricing");
+  await page.goto("/en/pricing/");
   const checkout = page.locator("[data-checkout-tier='bronze']");
   await checkout.evaluate((element) => {
     element.addEventListener("click", (event) => event.preventDefault(), {
@@ -335,7 +337,7 @@ test.describe("release status download routing", () => {
     page,
   }) => {
     const downloads = readGeneratedDownloads();
-    await page.goto("/en/release-status");
+    await page.goto("/en/release-status/");
 
     await expect(
       page.getByRole("link", { name: "Download latest release" }),
@@ -370,7 +372,7 @@ test.describe("release status download routing", () => {
     page,
   }) => {
     const downloads = readGeneratedDownloads();
-    await page.goto("/de/release-status");
+    await page.goto("/de/release-status/");
 
     await expect(
       page.getByRole("link", { name: "Neuestes Release herunterladen" }),
@@ -406,7 +408,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
   page,
 }) => {
   const ios = readCurrentVersions().ios;
-  for (const path of ["/en/", "/en/docs", "/en/docs/ios", "/en/support"]) {
+  for (const path of ["/en/", "/en/docs/", "/en/docs/ios/", "/en/support/"]) {
     await page.goto(path);
     await expect(page.locator('a[href*="testflight.apple.com"]')).toHaveCount(
       0,
@@ -422,7 +424,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     "footer",
   );
 
-  await page.goto("/en/docs/ios");
+  await page.goto("/en/docs/ios/");
   await expect(
     page.getByRole("link", { name: "Download on the App Store" }),
   ).toHaveAttribute("href", IOS_APP_STORE_URL_EN);
@@ -430,7 +432,7 @@ test("public iOS pages expose the stable App Store release without beta links", 
     page.getByText(`Version ${ios.series} stable`, { exact: true }),
   ).toBeVisible();
 
-  await page.goto("/en/support");
+  await page.goto("/en/support/");
   await expect(
     page.getByRole("link", { name: "Email iOS support" }),
   ).toHaveAttribute("href", "mailto:hello@typewhisper.com");
@@ -539,7 +541,7 @@ test.describe("iOS App Store media", () => {
       page,
       request,
     }) => {
-      await page.goto(`/${locale}/docs/ios`);
+      await page.goto(`/${locale}/docs/ios/`);
 
       await expect(
         page.getByRole("heading", { level: 1, name: "iOS" }),
@@ -590,7 +592,7 @@ test("macOS installation docs use the generated stable download", async ({
   const downloads = readGeneratedDownloads();
 
   for (const locale of ["en", "de"] as const) {
-    await page.goto(`/${locale}/docs/mac/installation`);
+    await page.goto(`/${locale}/docs/mac/installation/`);
 
     const download = page.locator(
       '[data-download-platform="mac"][data-tracking-placement="docs"]',
@@ -609,7 +611,7 @@ test("changelog reflects the generated release feed", async ({ page }) => {
   const preReleases = releases.filter(
     (release) => classifyRelease(release) !== "stable",
   );
-  await page.goto("/en/changelog");
+  await page.goto("/en/changelog/");
 
   if (stable.length === 0) {
     await expect(page.getByText("No releases found.")).toBeVisible();
@@ -672,7 +674,7 @@ test("changelog filters by platform and keeps the choice in the address", async 
     (release) => classifyRelease(release) === "stable",
   );
   const windows = releases.filter((release) => release.platform === "windows");
-  await page.goto("/de/changelog");
+  await page.goto("/de/changelog/");
 
   await page.getByTestId("changelog-platform-windows").click();
   await expect(page).toHaveURL(/[?&]os=windows/);
@@ -691,4 +693,81 @@ test("changelog filters by platform and keeps the choice in the address", async 
   await expect(
     page.locator('[data-testid="changelog-entry"]:visible'),
   ).toHaveCount(windows.length);
+});
+
+test.describe("changelog deep links", () => {
+  const entryId = (release: GeneratedRelease) =>
+    `${release.platform}-${release.tag_name}`;
+  const entry = (page: Page, release: GeneratedRelease) =>
+    page.locator(`[id="${entryId(release)}"]`);
+
+  test("a new hash on an open page opens its entry", async ({ page }) => {
+    const stable = readGeneratedReleases().filter(
+      (release) => classifyRelease(release) === "stable",
+    );
+    // Only the newest entries are written out; the oldest one starts closed.
+    const closed = stable.at(-1)!;
+    const other = stable.find(
+      (release) => release.platform !== closed.platform,
+    );
+    await page.goto("/en/changelog/");
+    await expect(entry(page, closed)).not.toHaveAttribute("open", "");
+
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(closed));
+    await expect(entry(page, closed)).toHaveAttribute("open", "");
+    await expect(entry(page, closed)).toBeInViewport();
+
+    // The link wins over a filter that hides its entry.
+    test.skip(!other, "The feed has releases of one platform only.");
+    await page.getByTestId(`changelog-platform-${other!.platform}`).click();
+    await expect(entry(page, closed)).toBeHidden();
+    await page.evaluate(() => {
+      window.location.hash = "";
+    });
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(closed));
+    await expect(entry(page, closed)).toBeVisible();
+    await expect(page.getByTestId("changelog-platform-all")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  test("a link to a pre-release loads the pre-releases and opens it", async ({
+    page,
+  }) => {
+    const preRelease = readGeneratedReleases().find(
+      (release) => classifyRelease(release) !== "stable",
+    );
+    test.skip(!preRelease, "The feed has no pre-release.");
+    await page.goto(`/en/changelog/#${entryId(preRelease!)}`);
+
+    await expect(entry(page, preRelease!)).toBeVisible();
+    await expect(entry(page, preRelease!)).toHaveAttribute("open", "");
+    await expect(page.getByTestId("changelog-pre-toggle")).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
+    await expect(page).toHaveURL(/[?&]pre=1/);
+  });
+
+  test("a malformed hash is ignored", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/en/changelog/#%");
+    await expect(page.getByTestId("changelog-status")).not.toBeEmpty();
+
+    // The page still follows the next hash.
+    const stable = readGeneratedReleases().filter(
+      (release) => classifyRelease(release) === "stable",
+    );
+    await page.evaluate((id) => {
+      window.location.hash = id;
+    }, entryId(stable.at(-1)!));
+    await expect(entry(page, stable.at(-1)!)).toHaveAttribute("open", "");
+    expect(errors).toEqual([]);
+  });
 });

@@ -71,7 +71,7 @@ async function expectDarkLanding(
   await expectHeaderBackground(page, "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(0, 0, 0)");
 
-  await expect(page).toHaveURL(new RegExp(`/${locale}/?$`));
+  await expect(page).toHaveURL(new RegExp(`/${locale}/$`));
 }
 
 async function switchThemeOnLanding(page: Page) {
@@ -96,9 +96,9 @@ for (const scenario of localeScenarios) {
 
       await expectDarkLanding(page, scenario.code);
 
-      await page.locator(`a[href="/${scenario.code}/docs"]`).first().click();
+      await page.locator(`a[href="/${scenario.code}/docs/"]`).first().click();
 
-      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/?$`));
+      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/$`));
       await expect(page.locator("html")).toHaveClass(/dark/);
       await expect(page.getByTestId("theme-toggle")).toBeVisible();
       await expect(page.locator("body")).toHaveCSS("background-color", "rgb(0, 0, 0)");
@@ -122,9 +122,9 @@ for (const scenario of localeScenarios) {
       await expectDarkLanding(page, scenario.code);
       await switchThemeOnLanding(page);
 
-      await page.locator(`a[href="/${scenario.code}/docs"]`).first().click();
+      await page.locator(`a[href="/${scenario.code}/docs/"]`).first().click();
 
-      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/?$`));
+      await expect(page).toHaveURL(new RegExp(`/${scenario.code}/docs/$`));
       await expect(page.locator("html")).toHaveClass(/light/);
       await expect(page.locator("body")).toHaveCSS("background-color", "rgb(251, 251, 253)");
     });
@@ -179,11 +179,14 @@ test.describe("landing canvases follow the theme", () => {
         distance(await waveColor(page, "landing-hero"), [92, 175, 255]),
       )
       .toBeLessThan(10);
+    // The closing section hydrates when it comes near the viewport.
+    await page.getByTestId("final-cta").scrollIntoViewIfNeeded();
     await expect
       .poll(async () =>
         distance(await waveColor(page, "final-cta"), [92, 175, 255]),
       )
       .toBeLessThan(10);
+    await page.evaluate(() => window.scrollTo(0, 0));
 
     await hero.evaluate((element) => {
       const phases: string[] = [];

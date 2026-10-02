@@ -235,7 +235,7 @@ test.describe("new landing sections", () => {
     await expect(
       page
         .getByTestId("pricing-teaser")
-        .locator('a[href="/en/pricing"]')
+        .locator('a[href="/en/pricing/"]')
         .first(),
     ).toBeVisible();
   });
@@ -251,7 +251,7 @@ test.describe("new landing sections", () => {
     await expect(
       page
         .getByTestId("use-cases-teaser")
-        .locator('a[href="/en/use-cases/emails"]'),
+        .locator('a[href="/en/use-cases/emails/"]'),
     ).toBeVisible();
 
     const faq = page.getByTestId("landing-faq");

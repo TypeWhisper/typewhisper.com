@@ -1,5 +1,5 @@
 ---
-import { t } from "@/i18n/index";
+import { localePath, t, withTrailingSlash } from "@/i18n/index";
 
 interface Props {
   path: string;
@@ -7,8 +7,9 @@ interface Props {
 }
 
 const { path, socialCard = false } = Astro.props;
-const targetPath = path.startsWith("/") ? path : `/${path}`;
-const fallbackPath = targetPath === "/" ? "/en/" : `/en${targetPath}`;
+// The slash form is the page itself, so the redirect is a single hop.
+const targetPath = withTrailingSlash(path.startsWith("/") ? path : `/${path}`);
+const fallbackPath = localePath("en", targetPath);
 const canonicalUrl = `https://www.typewhisper.com${fallbackPath}`;
 const title = t("en", "landing.title");
 const description = t("en", "landing.description");

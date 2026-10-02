@@ -16,7 +16,7 @@ interface UseCaseHeadProps {
  */
 export function UseCaseHead({
   useCase,
-  backHref = "/use-cases",
+  backHref = "/use-cases/",
   locale = "en",
 }: UseCaseHeadProps) {
   return (

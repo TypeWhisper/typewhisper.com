@@ -62,6 +62,8 @@ for (const locale of ["en", "de"]) {
     await page.goto(`/${locale}/?platform=windows`);
     await hydrated(page);
     await page.getByTestId("landing-hero-tab-ios").click();
+    // The closing section hydrates when it comes near the viewport.
+    await page.getByTestId("landing-footer-download").scrollIntoViewIfNeeded();
     for (const id of [
       "header-download",
       "landing-hero-download",
@@ -133,7 +135,7 @@ for (const locale of ["en", "de"]) {
     );
     const setup = page.getByTestId("setup-assistant");
     await expect(
-      setup.locator(`a[href="/${locale}/docs/ios/files-history-and-inbox"]`),
+      setup.locator(`a[href="/${locale}/docs/ios/files-history-and-inbox/"]`),
     ).toBeVisible();
     await setup.locator("select").first().selectOption("windows");
     await setup.locator("select").nth(1).selectOption("cloud");
@@ -143,7 +145,7 @@ for (const locale of ["en", "de"]) {
       ),
     ).toBeVisible();
     await expect(
-      setup.locator(`a[href="/${locale}/docs/windows/file-transcription"]`),
+      setup.locator(`a[href="/${locale}/docs/windows/file-transcription/"]`),
     ).toBeVisible();
     await page.reload();
     await expect(setup.locator("select").first()).toHaveValue("windows");
@@ -161,7 +163,7 @@ for (const locale of ["en", "de"]) {
     for (const result of await results.all())
       await expect(result).toHaveAttribute(
         "href",
-        new RegExp(`/${locale}/docs/ios`),
+        new RegExp(`/${locale}/docs/ios/`),
       );
     await search.locator("input").fill("zzzauditnoresult");
     await expect(results).toHaveCount(0);
@@ -282,10 +284,10 @@ test("the single 404 page turns German as a whole below /de/", async ({
   await expect(page.locator("footer")).toHaveCount(1);
   await expect(
     page.locator("header").getByRole("link", { name: "Preise" }),
-  ).toHaveAttribute("href", "/de/pricing");
+  ).toHaveAttribute("href", "/de/pricing/");
   await expect(
     page.locator("footer").getByRole("link", { name: "Datenschutz" }),
-  ).toHaveAttribute("href", "/de/privacy");
+  ).toHaveAttribute("href", "/de/privacy/");
   // Only the language switch still leads to the English site.
   await expect(page.locator('a[href^="/en"]')).toHaveCount(1);
   await expect(

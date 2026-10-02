@@ -9,6 +9,8 @@ import { createSitemapFilter } from "./scripts/sitemap-filter.mjs";
 
 export default defineConfig({
   site: "https://www.typewhisper.com",
+  // Pages live at the slash form; the dev server then rejects the slashless one.
+  trailingSlash: "always",
   devToolbar: {
     enabled: false,
   },
