@@ -72,3 +72,11 @@ const basePath = canonicalPath(locale, "/use-cases");
     <UseCaseCTA locale={locale} />
   </div>
 </BaseLayout>
+
+<script>
+  import { watchPanRegion } from "@/lib/pan-region";
+
+  document
+    .querySelectorAll<HTMLElement>(".usecase-shot__pan")
+    .forEach(watchPanRegion);
+</script>

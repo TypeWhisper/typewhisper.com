@@ -12,6 +12,7 @@ import {
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 import { SectionHead } from "@/components/site/section-head";
 import { BarMark } from "@/components/site/bar-mark";
+import { watchPanRegion } from "@/lib/pan-region";
 
 const featureKeys: FeatureScreenshotKey[] = [
   "private",
@@ -174,7 +175,12 @@ export function FeatureTour({ locale = "en" }: { locale?: Locale }) {
                 </div>
 
                 <figure className="landing-tour__inline">
-                  <div className="landing-tour__pan">
+                  <div
+                    ref={watchPanRegion}
+                    className="landing-tour__pan"
+                    role="group"
+                    aria-label={step.caption}
+                  >
                     <div className="landing-shot">
                       <Screenshot
                         src={step.screenshot}

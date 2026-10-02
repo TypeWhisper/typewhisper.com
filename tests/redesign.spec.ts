@@ -601,6 +601,13 @@ test.describe("feature tour", () => {
     await expect(figures.first().locator("figcaption")).toHaveText(
       "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
     );
+    // The strip that scrolls sideways is a named stop for the keyboard.
+    const pan = figures.first().locator(".landing-tour__pan");
+    await expect(pan).toHaveAttribute("tabindex", "0");
+    await expect(pan).toHaveRole("group");
+    await expect(pan).toHaveAccessibleName(
+      "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
+    );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
     expect(frame).not.toBeNull();
@@ -643,6 +650,10 @@ test.describe("feature tour", () => {
 
     await expect(page.getByTestId("feature-tour-stage")).toBeHidden();
     await expect(tour.locator("figure").first()).toBeVisible();
+    // Nothing scrolls sideways here, so the figure is no stop for the keyboard.
+    await expect(
+      tour.locator(".landing-tour__pan").first(),
+    ).not.toHaveAttribute("tabindex");
   });
 });
 

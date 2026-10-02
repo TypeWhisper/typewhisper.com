@@ -20,7 +20,8 @@ export function UseCaseShot({ src, caption, locale = "en" }: UseCaseShotProps) {
       <div className="site-wrap">
         <WaveRule label={t(locale, "useCases.shotLabel")} seed={17} />
         <figure className="site-shot site-shot--window usecase-shot reveal-scale-hidden">
-          <div className="usecase-shot__pan">
+          {/* The script of the use case page puts it into the tab order while it scrolls. */}
+          <div className="usecase-shot__pan" role="group" aria-label={caption}>
             <Screenshot
               src={screenshotPath(locale, src)}
               alt={caption}

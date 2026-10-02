@@ -1039,6 +1039,27 @@
     display: none;
   }
 
+  /*
+   * The mask would cut off a ring outside of the strip. In the tour the strip
+   * reaches below the caption, so the ring follows the edge of the screenshot.
+   */
+  .landing .landing-premium__shot:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .landing .landing-tour__pan:focus-visible {
+    outline: none;
+  }
+
+  .landing .landing-tour__pan:focus-visible .landing-shot::after {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--ring);
+    border-radius: 12px;
+    content: "";
+    pointer-events: none;
+  }
+
   .landing .landing-tour:not([data-platform="ios"]) .landing-shot {
     width: 150vw;
     margin-inline: var(--gutter);

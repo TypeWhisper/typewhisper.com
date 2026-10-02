@@ -363,6 +363,11 @@
     display: none;
   }
 
+  /* The mask would cut off a ring outside of the strip. */
+  .usecase-shot__pan:focus-visible {
+    outline-offset: -2px;
+  }
+
   .usecase-shot__pan picture {
     width: 150vw;
     direction: ltr;
