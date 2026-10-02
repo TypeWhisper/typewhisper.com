@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   isExternalWebLink,
+  noteHeadingLevels,
   splitReleaseBody,
 } from "../src/data/release-notes.ts";
 
@@ -76,4 +77,23 @@ test("only absolute web addresses stay links", () => {
   assert.equal(isExternalWebLink("mailto:hello@typewhisper.com"), false);
   assert.equal(isExternalWebLink(""), false);
   assert.equal(isExternalWebLink(undefined), false);
+});
+
+test("note headings start at h4 and never skip a level", () => {
+  const levels = (depths: number[]) =>
+    noteHeadingLevels(depths).map((heading) => heading.level);
+  assert.deepEqual(levels([2, 2, 2]), [4, 4, 4]);
+  // Notes written with `###` only used to start at h5.
+  assert.deepEqual(levels([3, 3]), [4, 4]);
+  assert.deepEqual(levels([2, 3, 3, 2, 3]), [4, 5, 5, 4, 5]);
+  assert.deepEqual(levels([1, 2, 3, 4, 2]), [4, 5, 6, 6, 5]);
+  assert.deepEqual(levels([2, 4, 3, 2]), [4, 5, 5, 4]);
+  assert.deepEqual(levels([]), []);
+});
+
+test("note headings keep the look of the level they were written in", () => {
+  assert.deepEqual(
+    noteHeadingLevels([1, 2, 3, 4, 5, 6]).map((heading) => heading.look),
+    [4, 4, 5, 6, 6, 6],
+  );
 });
