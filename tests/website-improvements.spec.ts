@@ -292,3 +292,26 @@ test("the single 404 page turns German as a whole below /de/", async ({
     page.locator("header").getByRole("link", { name: "English" }),
   ).toHaveAttribute("href", /^\/en\//);
 });
+
+test("platform switch stays inside the gutters at 320px and wraps with large text", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto("/de/");
+  const platforms = page.getByRole("group", { name: "Plattform wählen" });
+  const box = await platforms.boundingBox();
+  expect(box!.x).toBeGreaterThanOrEqual(20);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(300);
+  expect(box!.height).toBeLessThanOrEqual(52);
+
+  // Text at twice its size: the choices wrap instead of leaving the screen.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addStyleTag({ content: "html { font-size: 200%; }" });
+  for (const id of ["mac", "windows", "ios"]) {
+    const choice = await page
+      .getByTestId(`landing-hero-tab-${id}`)
+      .boundingBox();
+    expect(choice!.x).toBeGreaterThanOrEqual(0);
+    expect(choice!.x + choice!.width).toBeLessThanOrEqual(390);
+  }
+});

@@ -224,7 +224,7 @@ import { ArrowRight } from "lucide-react";
 | `site-link` | Blue text link, 44px target; an arrow icon inside moves on hover |
 | `site-actions` | Row of actions, centered, stacks on phones. `--start` aligns left |
 | `site-more` | Centered single link below a list |
-| `site-switch`, `site-switch__item` | One choice out of a few (platform). State via `aria-pressed`, `aria-selected`, or `aria-current` |
+| `site-switch`, `site-switch__item` | One choice out of a few (platform). State via `aria-pressed`, `aria-selected`, or `aria-current`. Stays inside the gutters: tighter items below 360px, and it wraps when the text is enlarged |
 | `site-chips`, `site-chip` | Wrapping filters. Same state attributes |
 
 The `Button` component (`src/components/ui/button.tsx`) is for compact UI (header, forms, filters inside islands). Page-level calls to action use `site-button`.

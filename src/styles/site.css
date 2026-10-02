@@ -1178,12 +1178,19 @@
 
   /* ---------- Switch and chips ---------- */
 
-  /* One choice out of a few, such as the platform. */
+  /*
+   * One choice out of a few, such as the platform. A pill while it fits on
+   * one line; with large text it wraps inside the gutters and keeps its
+   * corners, which are as round as one line is high.
+   */
   .site-switch {
     display: inline-flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 0.125rem;
     border: 1px solid var(--hairline);
-    border-radius: 999px;
+    border-radius: 1.625rem;
     background: var(--glass);
     padding: 0.25rem;
   }
@@ -1216,6 +1223,14 @@
   .site-switch__item[aria-current] {
     background: var(--foreground);
     color: var(--background);
+  }
+
+  /* Three platforms still fit on one line of the narrowest phones. */
+  @media (max-width: 359px) {
+    .site-switch__item {
+      gap: 0.375rem;
+      padding-inline: 0.625rem;
+    }
   }
 
   /* Filters that wrap onto several lines. */
