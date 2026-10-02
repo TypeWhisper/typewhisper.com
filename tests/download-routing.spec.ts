@@ -175,6 +175,26 @@ test("download clicks show the social follow banner", async ({ page }) => {
     banner.locator("[data-social-icon='discord'] svg"),
   ).toBeVisible();
   await expect(banner.locator("[data-social-icon='github'] svg")).toBeVisible();
+
+  // A modal dialog: focus stays inside, Escape closes it, and the focus
+  // returns to the download control.
+  expect(await banner.evaluate((dialog) => dialog.matches(":modal"))).toBe(
+    true,
+  );
+  await expect(
+    banner.getByRole("button", { name: "Close social banner" }),
+  ).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  expect(
+    await banner.evaluate(
+      (dialog) =>
+        dialog.contains(document.activeElement) ||
+        document.activeElement === document.body,
+    ),
+  ).toBe(true);
+  await page.keyboard.press("Escape");
+  await expect(banner).toBeHidden();
+  await expect(page.getByTestId("landing-hero-download")).toBeFocused();
 });
 
 test("attributes download and checkout events without blocking navigation", async ({
