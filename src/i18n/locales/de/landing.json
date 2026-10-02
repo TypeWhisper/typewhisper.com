@@ -108,6 +108,7 @@
   "engineComparison.subtitle.other": "Zwei lokale Modelle im Vergleich. Wie weitere lokale und Cloud-Engines, etwa whisper.cpp und Qwen3, installierst du sie als Add-ons.",
   "engineComparison.subtitle.ios": "Drei lokale Engines für iPhone und iPad. Optionale Cloud-Anbieter bleiben eine bewusste Auswahl.",
   "engineComparison.featureHeader": "Feature",
+  "engineComparison.tableLabel": "Engines im Vergleich",
   "engineComparison.cloudHint": "Weitere lokale und Cloud-Engines sind als",
   "engineComparison.cloudHintLink": "Add-ons",
   "engineComparison.mac.engine1.name": "WhisperKit",

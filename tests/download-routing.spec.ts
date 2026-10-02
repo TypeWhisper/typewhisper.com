@@ -34,6 +34,7 @@ function readGeneratedReleases(): GeneratedRelease[] {
 type LandingScenario = {
   name: string;
   userAgent: string;
+  maxTouchPoints?: number;
   expectedLabel: string;
   expectedHref?: RegExp | string;
   opensNewTab?: boolean;
@@ -65,6 +66,16 @@ const landingScenarios: LandingScenario[] = [
     expectedHref: IOS_APP_STORE_URL_EN,
     opensNewTab: true,
   },
+  {
+    // iPadOS Safari sends a Mac user agent; the touch screen gives it away.
+    name: "iPadOS",
+    userAgent:
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15",
+    maxTouchPoints: 5,
+    expectedLabel: "Download on the App Store",
+    expectedHref: IOS_APP_STORE_URL_EN,
+    opensNewTab: true,
+  },
 ];
 
 for (const scenario of landingScenarios) {
@@ -74,6 +85,13 @@ for (const scenario of landingScenarios) {
     test("hero and footer CTA resolve for the detected platform", async ({
       page,
     }) => {
+      if (scenario.maxTouchPoints !== undefined) {
+        await page.addInitScript((points) => {
+          Object.defineProperty(Navigator.prototype, "maxTouchPoints", {
+            get: () => points,
+          });
+        }, scenario.maxTouchPoints);
+      }
       await page.goto("/en/");
 
       const heroCta = page.getByTestId("landing-hero-download");
@@ -157,6 +175,51 @@ test("download clicks show the social follow banner", async ({ page }) => {
     banner.locator("[data-social-icon='discord'] svg"),
   ).toBeVisible();
   await expect(banner.locator("[data-social-icon='github'] svg")).toBeVisible();
+
+  // A modal dialog: focus stays inside, Escape closes it, and the focus
+  // returns to the download control.
+  expect(await banner.evaluate((dialog) => dialog.matches(":modal"))).toBe(
+    true,
+  );
+  await expect(
+    banner.getByRole("button", { name: "Close social banner" }),
+  ).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  expect(
+    await banner.evaluate(
+      (dialog) =>
+        dialog.contains(document.activeElement) ||
+        document.activeElement === document.body,
+    ),
+  ).toBe(true);
+  await page.keyboard.press("Escape");
+  await expect(banner).toBeHidden();
+  await expect(page.getByTestId("landing-hero-download")).toBeFocused();
+});
+
+test("closing the banner after a download from the mobile menu focuses the menu button", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en/?platform=mac");
+  const menu = page.getByRole("button", { name: "Menu", exact: true });
+  await expect(
+    menu.locator("xpath=ancestor::astro-island"),
+  ).not.toHaveAttribute("ssr", "");
+  await menu.click();
+  const download = page.getByTestId("header-download-mobile");
+  await download.evaluate((link) =>
+    link.addEventListener("click", (event) => event.preventDefault()),
+  );
+  await download.click();
+
+  const banner = page.getByTestId("download-social-banner");
+  await expect(banner).toBeVisible();
+  // The menu, and with it the link that was clicked, is gone by now.
+  await expect(download).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect(banner).toBeHidden();
+  await expect(menu).toBeFocused();
 });
 
 test("attributes download and checkout events without blocking navigation", async ({

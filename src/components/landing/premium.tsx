@@ -10,6 +10,7 @@ import {
 import { localePath, screenshotPath, t, type Locale } from "@/i18n/index";
 import { SectionHead } from "@/components/site/section-head";
 import { BarMark } from "@/components/site/bar-mark";
+import { watchPanRegion } from "@/lib/pan-region";
 
 const blocks: PremiumFeatureKey[] = ["sync", "dictionary"];
 const items = ["item1", "item2", "item3"] as const;
@@ -118,7 +119,10 @@ export function Premium({ locale = "en" }: { locale?: Locale }) {
         ) : (
           <div key="single" className="landing-premium__grid">
             <div
+              ref={watchPanRegion}
               className="landing-premium__shot reveal-hidden"
+              role="group"
+              aria-label={t(locale, `${prefix}.screenshotAlt`)}
               data-testid={
                 platform === "ios" ? "ios-premium-visual" : undefined
               }

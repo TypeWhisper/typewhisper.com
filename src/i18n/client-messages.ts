@@ -45,7 +45,8 @@ export function getClientMessages(
         ([key]) =>
           prefixes.has(key.split(".")[0]) ||
           key.startsWith("docs.copy") ||
-          key === "docs.copied",
+          key === "docs.copied" ||
+          key === "docs.codeLabel",
       )
       .map(([key, text]) => [key, resolveVersions(text)]),
   );

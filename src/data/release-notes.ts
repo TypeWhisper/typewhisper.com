@@ -55,3 +55,24 @@ export function splitReleaseBody(release: {
 export function isExternalWebLink(href: string | undefined): href is string {
   return typeof href === "string" && /^https?:\/\/[^\s/]/i.test(href);
 }
+
+/**
+ * Places the headings of release notes below the `h3` of their entry. `depths`
+ * are the Markdown levels in document order. `level` is the element: the
+ * notes start at `h4` and never skip a level, whatever was written on GitHub.
+ * `look` is the style, which follows the level that was written: `#` and `##`
+ * as 4, `###` as 5, deeper ones as 6.
+ */
+export function noteHeadingLevels(
+  depths: number[],
+): { level: number; look: number }[] {
+  const open: number[] = [];
+  return depths.map((depth) => {
+    while (open.length > 0 && open[open.length - 1] >= depth) open.pop();
+    open.push(depth);
+    return {
+      level: Math.min(6, 3 + open.length),
+      look: depth <= 2 ? 4 : depth === 3 ? 5 : 6,
+    };
+  });
+}

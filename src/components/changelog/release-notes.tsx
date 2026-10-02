@@ -1,13 +1,40 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkGithub from "remark-github";
-import { isExternalWebLink } from "@/data/release-notes";
+import { isExternalWebLink, noteHeadingLevels } from "@/data/release-notes";
 
 interface ReleaseNotesProps {
   /** Markdown of a GitHub release. Untrusted: raw HTML is shown as text. */
   content: string;
   /** `owner/name`, resolves `#123` and `@user` references. */
   repository: string;
+}
+
+interface MarkdownNode {
+  type: string;
+  depth?: number;
+  children?: MarkdownNode[];
+  data?: { hName?: string; hProperties?: Record<string, unknown> };
+}
+
+/** Remark plugin: gives every heading its element and its look. */
+function remarkNoteHeadings() {
+  return (tree: MarkdownNode) => {
+    const headings: MarkdownNode[] = [];
+    const collect = (node: MarkdownNode) => {
+      if (node.type === "heading") headings.push(node);
+      node.children?.forEach(collect);
+    };
+    collect(tree);
+    const levels = noteHeadingLevels(headings.map((node) => node.depth ?? 6));
+    headings.forEach((node, index) => {
+      node.data = {
+        ...node.data,
+        hName: `h${levels[index].level}`,
+        hProperties: { "data-look": levels[index].look },
+      };
+    });
+  };
 }
 
 /**
@@ -19,11 +46,6 @@ export function ReleaseNotes({ content, repository }: ReleaseNotesProps) {
     <div className="site-prose utility-notes">
       <Markdown
         components={{
-          h1: ({ children }) => <h4>{children}</h4>,
-          h2: ({ children }) => <h4>{children}</h4>,
-          h3: ({ children }) => <h5>{children}</h5>,
-          h4: ({ children }) => <h6>{children}</h6>,
-          h5: ({ children }) => <h6>{children}</h6>,
           // Unsafe and repository-relative addresses stay plain text.
           a: ({ href, title, children }) =>
             isExternalWebLink(href) ? (
@@ -41,7 +63,11 @@ export function ReleaseNotes({ content, repository }: ReleaseNotesProps) {
           // Pictures would load from a third party; the notes link to GitHub instead.
           img: ({ alt }) => <>{alt}</>,
         }}
-        remarkPlugins={[remarkGfm, [remarkGithub, { repository }]]}
+        remarkPlugins={[
+          remarkGfm,
+          [remarkGithub, { repository }],
+          remarkNoteHeadings,
+        ]}
       >
         {content}
       </Markdown>

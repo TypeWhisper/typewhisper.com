@@ -33,7 +33,8 @@ export function Trust({ locale = "en" }: { locale?: Locale }) {
             >
               <GitHubIcon className="size-4" aria-hidden="true" />
               <strong>{formatCount(githubStars)}</strong>
-              {t(locale, "socialProof.stars")}
+              {/* The space separates count and label in the accessible name. */}
+              {` ${t(locale, "socialProof.stars")}`}
             </a>
           </li>
         )}

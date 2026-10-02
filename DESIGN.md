@@ -224,7 +224,7 @@ import { ArrowRight } from "lucide-react";
 | `site-link` | Blue text link, 44px target; an arrow icon inside moves on hover |
 | `site-actions` | Row of actions, centered, stacks on phones. `--start` aligns left |
 | `site-more` | Centered single link below a list |
-| `site-switch`, `site-switch__item` | One choice out of a few (platform). State via `aria-pressed`, `aria-selected`, or `aria-current` |
+| `site-switch`, `site-switch__item` | One choice out of a few (platform). State via `aria-pressed`, `aria-selected`, or `aria-current`. Stays inside the gutters: tighter items below 360px, and it wraps when the text is enlarged |
 | `site-chips`, `site-chip` | Wrapping filters. Same state attributes |
 
 The `Button` component (`src/components/ui/button.tsx`) is for compact UI (header, forms, filters inside islands). Page-level calls to action use `site-button`.
@@ -309,7 +309,7 @@ Two traps in `.astro` files:
 - **Approach:** Calm. Motion relates to voice or feedback, never decoration.
 - **Reveals:** `reveal-hidden`, `reveal-fade-hidden`, `reveal-scale-hidden` fade content in once on scroll (`stagger-delay-100` … `600` for sequences). Static markup is observed by the script in `BaseLayout.astro`; inside an island call `useScrollReveal()` and put its ref on the root. Use them sparingly on subpages: heads and lists, not every paragraph.
 - **Hover:** color, border color, and a 2–3px shift of an arrow, 200–250ms with `--motion-ease-out`. Buttons scale to 0.98 while pressed.
-- **Homepage hero:** One orchestrated sequence in three beats: a live waveform listens, its bars assemble the headline, and the bar-built headline resolves into the real `<h1>` while the remaining bars settle into a resting line. The crisp headline stands about 2.7 seconds after the start. The sequence plays once on load and again whenever the visitor switches the platform. The headline is real markup at all times: it shows without the canvas, without fonts, without script (`<noscript>` rule and CSS failsafe), and immediately with reduced motion. The canvas pauses offscreen and in hidden tabs.
+- **Homepage hero:** One orchestrated sequence in three beats: a live waveform listens, its bars assemble the headline, and the bar-built headline resolves into the real `<h1>` while the remaining bars settle into a resting line. The crisp headline stands about 0.9 seconds after the start, because it is the largest element of the page. The sequence plays once on load and again whenever the visitor switches the platform. The headline is real markup at all times: it shows without the canvas, without fonts, without script (`<noscript>` rule and CSS failsafe after 1.5 seconds; a sequence that would start later than that is skipped), and immediately with reduced motion. The canvas pauses offscreen and in hidden tabs.
 - **Homepage feature tour:** From 1024px a real screenshot stays pinned below the site header while the five feature texts scroll past. Native scrolling only, no scroll-jacking. Smaller screens and reduced motion get stacked pairs of text and figure.
 - **Subpages:** no canvas, no pinned scroll sequences, no autoplaying loops.
 - **Reduced motion:** Every animation has a `prefers-reduced-motion` fallback with the static end state.

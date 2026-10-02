@@ -204,15 +204,21 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
     <>
       {/* Desktop table */}
       <div className="hidden md:block overflow-x-auto reveal-hidden">
-        <table className="w-full text-sm">
+        <table
+          className="w-full text-sm"
+          aria-label={t(locale, "engineComparison.tableLabel")}
+        >
           <thead>
             <tr className="border-b border-border">
-              <th className="py-4 pr-4 text-left font-medium text-muted-foreground w-[180px]">
+              <th
+                scope="col"
+                className="py-4 pr-4 text-left font-medium text-muted-foreground w-[180px]"
+              >
                 {t(locale, "engineComparison.featureHeader")}
               </th>
               {engines.map((engine) => (
-                <th key={engine.name} className="py-4 px-4 text-left">
-                  <div className="flex items-center gap-2">
+                <th key={engine.name} scope="col" className="py-4 px-4 text-left">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="text-lg font-bold text-foreground">
                       {engine.name}
                     </span>
@@ -228,9 +234,12 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
                 key={row.label}
                 className="border-b border-border"
               >
-                <td className="py-4 pr-4 font-medium text-muted-foreground">
+                <th
+                  scope="row"
+                  className="py-4 pr-4 text-left font-medium text-muted-foreground"
+                >
                   {row.label}
-                </td>
+                </th>
                 {row.values.map((value, j) => (
                   <td key={engines[j].name} className="py-4 px-4">
                     <CellValue value={value} locale={locale} />
