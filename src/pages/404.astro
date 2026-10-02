@@ -1,6 +1,9 @@
 ---
 import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Header } from "@/components/layout/header";
+import Footer from "@/components/layout/footer.astro";
+import { getClientMessages } from "@/i18n/client-messages";
 import { ArrowRight } from "lucide-react";
 import { BarMark } from "@/components/site";
 import { t, getLocaleFromPath, localePath, type Locale } from "@/i18n/index";
@@ -10,6 +13,8 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 function content(target: Locale) {
   return {
     locale: target,
+    title: `${t(target, "notFound.title")} - TypeWhisper`,
+    skip: target === "de" ? "Zum Inhalt" : "Skip to content",
     label: t(target, "notFound.label"),
     heading: t(target, "notFound.heading"),
     description: t(target, "notFound.description"),
@@ -25,9 +30,12 @@ function content(target: Locale) {
 const copy = content(locale);
 // The static 404.html exists once; the script below takes the language from the address.
 const alternate = content(locale === "de" ? "en" : "de");
+const alternateMessages = JSON.stringify(
+  getClientMessages(alternate.locale, "/404"),
+).replace(/</g, "\\u003c");
 ---
 <BaseLayout
-  title={`${t(locale, "notFound.title")} - TypeWhisper`}
+  title={copy.title}
   description={t(locale, "notFound.description")}
   canonicalPath="/404.html"
   noIndex
@@ -59,19 +67,52 @@ const alternate = content(locale === "de" ? "en" : "de");
       </div>
     </div>
   </div>
+
+  {/* Header, footer, and island messages in the other language, for the script below. */}
+  <div hidden data-not-found-alternate>
+    <Header client:load currentPath="/" locale={alternate.locale} />
+    <Footer locale={alternate.locale} />
+    <script is:inline type="application/json" data-not-found-messages set:html={alternateMessages} />
+  </div>
 </BaseLayout>
 
 <script is:inline define:vars={{ alternate }}>
   (function () {
     var root = document.querySelector("[data-not-found]");
+    var spare = document.querySelector("[data-not-found-alternate]");
     var wanted = window.location.pathname.split("/")[1];
-    if (!root || wanted !== alternate.locale) return;
-    root.lang = alternate.locale;
+    if (!root || !spare) return;
+    if (wanted !== alternate.locale) {
+      spare.remove();
+      return;
+    }
+    document.documentElement.lang = alternate.locale;
+    document.title = alternate.title;
     root.querySelectorAll("[data-text]").forEach(function (node) {
       node.textContent = alternate[node.getAttribute("data-text")];
     });
     root.querySelectorAll("[data-link]").forEach(function (node) {
       node.setAttribute("href", alternate[node.getAttribute("data-link") + "Href"]);
     });
+    var skip = document.querySelector('a[href="#main-content"]');
+    if (skip) skip.textContent = alternate.skip;
+
+    // This runs while the page is parsed, before the header island hydrates:
+    // the island that stays finds its own markup and its own messages.
+    var messages = document.getElementById("page-translations");
+    if (messages) {
+      messages.textContent = spare.querySelector("[data-not-found-messages]").textContent;
+    }
+    ["astro-island", "footer"].forEach(function (name) {
+      var other = spare.querySelector(name);
+      var rendered = Array.prototype.find.call(
+        document.querySelectorAll(name),
+        function (node) {
+          return !spare.contains(node);
+        },
+      );
+      if (rendered && other) rendered.replaceWith(other);
+    });
+    spare.remove();
   })();
 </script>

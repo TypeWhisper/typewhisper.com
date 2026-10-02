@@ -256,3 +256,39 @@ test("footer waveform only moves while it is on screen", async ({ page }) => {
   await expect(wave).not.toHaveClass(/\bis-paused\b/);
   expect(await playState()).toBe("running");
 });
+
+test("the single 404 page turns German as a whole below /de/", async ({
+  page,
+}) => {
+  // The static host serves one 404.html, rendered in English, for every
+  // missing address. The dev server renders it per request, so the English
+  // markup is handed out for the German address here.
+  await page.route("**/de/gibt-es-nicht/", async (route) => {
+    const english = await page.request.get("/en/missing/");
+    await route.fulfill({
+      status: 404,
+      contentType: "text/html",
+      body: await english.text(),
+    });
+  });
+  await page.goto("/de/gibt-es-nicht/");
+  await hydrated(page);
+
+  await expect(page.locator("html")).toHaveAttribute("lang", "de");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Seite nicht gefunden",
+  );
+  await expect(page.locator("header")).toHaveCount(1);
+  await expect(page.locator("footer")).toHaveCount(1);
+  await expect(
+    page.locator("header").getByRole("link", { name: "Preise" }),
+  ).toHaveAttribute("href", "/de/pricing");
+  await expect(
+    page.locator("footer").getByRole("link", { name: "Datenschutz" }),
+  ).toHaveAttribute("href", "/de/privacy");
+  // Only the language switch still leads to the English site.
+  await expect(page.locator('a[href^="/en"]')).toHaveCount(1);
+  await expect(
+    page.locator("header").getByRole("link", { name: "English" }),
+  ).toHaveAttribute("href", /^\/en\//);
+});
