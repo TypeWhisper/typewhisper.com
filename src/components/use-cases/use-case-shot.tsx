@@ -25,7 +25,9 @@ export function UseCaseShot({ src, caption, locale = "en" }: UseCaseShotProps) {
               src={screenshotPath(locale, src)}
               alt={caption}
               loading="lazy"
-              sizes="(max-width: 639px) 150vw, (max-width: 1023px) calc(100vw - 64px), 960px"
+              // Panned at 150vw on phones; as in the feature tour, phones
+              // with three device pixels per CSS pixel load the 1440px variant.
+              sizes="(max-width: 639px) and (min-resolution: 2.5dppx) 100vw, (max-width: 639px) 150vw, (max-width: 1023px) calc(100vw - 64px), 960px"
             />
           </div>
           <figcaption className="site-caption" aria-hidden="true">

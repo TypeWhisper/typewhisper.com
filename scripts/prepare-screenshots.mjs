@@ -54,8 +54,9 @@ for (const locale of ["en", "de"]) {
       .digest("hex")
       .slice(0, 16);
     const variants = [];
-    for (const size of [480, 960]) {
-      if (size >= width) continue;
+    for (const size of [480, 960, 1440]) {
+      // A variant close to the original saves nothing.
+      if (size > width * 0.9) continue;
       const filename = `${hash}-${size}.webp`;
       await sharp(bytes)
         .resize({ width: size })

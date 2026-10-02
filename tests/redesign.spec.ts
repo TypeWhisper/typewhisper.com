@@ -555,6 +555,28 @@ test.describe("feature tour", () => {
     ).toBeLessThanOrEqual(390);
   });
 
+  test("a phone with a dense screen loads the 1440px variant, not the full capture", async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      deviceScaleFactor: 3,
+    });
+    const page = await context.newPage();
+    await page.goto("/en/?platform=mac");
+    const image = page
+      .getByTestId("feature-tour")
+      .locator("figure img")
+      .first();
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate((element: HTMLImageElement) => element.currentSrc),
+      )
+      .toMatch(/\/_images\/[0-9a-f]+-1440\.webp$/);
+    await context.close();
+  });
+
   test("reduced motion shows static pairs instead of the pinned stage", async ({
     page,
   }) => {
