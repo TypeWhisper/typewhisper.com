@@ -55,7 +55,8 @@ export function CodeBlock({
       </p>
       <pre
         tabIndex={0}
-        aria-label={lang}
+        role="group"
+        aria-label={t(locale, "docs.codeLabel").replace("{lang}", lang)}
         className="overflow-x-auto p-4 font-mono text-[0.8125rem] leading-relaxed text-foreground"
       >
         <code>{code}</code>

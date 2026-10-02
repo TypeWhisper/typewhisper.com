@@ -112,6 +112,7 @@
   "docs.copyCommand": "Befehl kopieren",
   "docs.copied": "Kopiert",
   "docs.copyFailed": "Kopieren nicht möglich. Markiere den Text und kopiere ihn manuell.",
+  "docs.codeLabel": "Codebeispiel, {lang}",
   "setup.title": "TypeWhisper einrichten",
   "setup.subtitle": "Wähle dein Gerät, die Verarbeitung und deine Aufgabe. Hier findest du die Anleitungen dafür.",
   "setup.platform": "Plattform",

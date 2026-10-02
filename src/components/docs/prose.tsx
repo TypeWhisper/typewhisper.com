@@ -108,7 +108,11 @@ export function DocsCode({
         <Check className="docs-code__done" aria-hidden="true" />
       </button>
       <p className="sr-only" role="status" data-docs-copy-status />
-      <pre tabIndex={0} aria-label={lang}>
+      <pre
+        tabIndex={0}
+        role="group"
+        aria-label={t(locale, "docs.codeLabel").replace("{lang}", lang)}
+      >
         <code>{code}</code>
       </pre>
     </div>

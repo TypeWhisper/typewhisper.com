@@ -112,6 +112,7 @@
   "docs.copyCommand": "Copy command",
   "docs.copied": "Copied",
   "docs.copyFailed": "Could not copy. Select the text and copy it manually.",
+  "docs.codeLabel": "Code example, {lang}",
   "setup.title": "Set up TypeWhisper",
   "setup.subtitle": "Choose your device, processing method, and task to find the setup instructions.",
   "setup.platform": "Platform",
