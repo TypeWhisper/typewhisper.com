@@ -1,6 +1,8 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { type Locale } from "@/i18n/index";
+import { PageHead } from "@/components/site";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -47,16 +49,25 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/terms")}
   locale={locale}
 >
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-    <p class="mt-2 text-sm text-muted-foreground">{copy.updated}</p>
-    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-      {copy.sections.map(([title, body]) => (
-        <section>
-          <h2 class="text-lg font-semibold text-foreground">{title}</h2>
-          <p class="mt-2" set:html={body} />
-        </section>
-      ))}
-    </div>
+  <div class="site-page">
+    <PageHead
+      compact
+      wrap="prose"
+      label={t(locale, "legal.label")}
+      title={copy.heading}
+      meta={copy.updated}
+    />
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap site-wrap--prose">
+        <div class="site-prose">
+          {copy.sections.map(([title, body]) => (
+            <>
+              <h2>{title}</h2>
+              <p set:html={body} />
+            </>
+          ))}
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>

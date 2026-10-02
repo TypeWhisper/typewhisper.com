@@ -1,5 +1,6 @@
 import en from "./locales/en/index";
 import de from "./locales/de/index";
+import { resolveVersions } from "../data/versions";
 import type { Locale } from "./index";
 
 /** Only serialize messages needed by this page's interactive islands. */
@@ -19,7 +20,6 @@ export function getClientMessages(
   if (route === "/")
     for (const key of [
       "hero",
-      "heroDemo",
       "features",
       "premiumFeatures",
       "howItWorks",
@@ -38,12 +38,15 @@ export function getClientMessages(
   if (route.startsWith("/benchmark")) prefixes.add("benchmark");
   if (route.startsWith("/changelog")) prefixes.add("changelog");
   const messages = locale === "de" ? { ...en, ...de } : en;
+  // Version placeholders are resolved here, so the client needs no version data.
   return Object.fromEntries(
-    Object.entries(messages).filter(
-      ([key]) =>
-        prefixes.has(key.split(".")[0]) ||
-        key.startsWith("docs.copy") ||
-        key === "docs.copied",
-    ),
+    Object.entries(messages)
+      .filter(
+        ([key]) =>
+          prefixes.has(key.split(".")[0]) ||
+          key.startsWith("docs.copy") ||
+          key === "docs.copied",
+      )
+      .map(([key, text]) => [key, resolveVersions(text)]),
   );
 }

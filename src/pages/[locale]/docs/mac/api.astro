@@ -20,6 +20,10 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/docs/mac/api")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.api.title")}
 >
+  <Fragment slot="lede">
+    {t(locale, "docs.mac.api.intro1")}{" "}<code>/v1/*</code>{" "}{t(locale, "docs.mac.api.intro2")}
+  </Fragment>
   <DocsMacAPI locale={locale} />
 </DocsLayout>

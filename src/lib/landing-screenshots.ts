@@ -4,10 +4,10 @@ export type FeatureScreenshotKey =
   "private" | "dictation" | "prompts" | "profiles" | "transcription";
 
 const macFeatureScreenshots: Record<FeatureScreenshotKey, string> = {
-  private: "/screenshots/mac/home.png",
+  private: "/screenshots/mac/integrations-local.png",
   dictation: "/screenshots/mac/recording.png",
   prompts: "/screenshots/mac/workflows.png",
-  profiles: "/screenshots/mac/plugins.png",
+  profiles: "/screenshots/mac/advanced.png",
   transcription: "/screenshots/mac/file-transcription.png",
 };
 
@@ -32,8 +32,19 @@ export const featureScreenshotsByPlatform: Record<
   },
 };
 
-export const premiumScreenshotByPlatform: Record<LandingPlatform, string> = {
-  mac: "/screenshots/mac/premium.png",
+/** Windows and iOS show one capture beside both Premium features. */
+export const premiumScreenshotByPlatform: Record<
+  Exclude<LandingPlatform, "mac">,
+  string
+> = {
   windows: "/screenshots/windows/premium-active.png",
   ios: "/screenshots/ios/06-dictionary.png",
+};
+
+export type PremiumFeatureKey = "sync" | "dictionary";
+
+/** macOS shows the detail window of each Premium feature beside its text. */
+export const macPremiumScreenshots: Record<PremiumFeatureKey, string> = {
+  sync: "/screenshots/mac/premium-sync.png",
+  dictionary: "/screenshots/mac/premium-learning.png",
 };

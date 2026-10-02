@@ -1,0 +1,94 @@
+---
+import { t, type Locale } from "@/i18n/index";
+import { Plus } from "lucide-react";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+  locale: Locale;
+}
+
+const { headings, locale } = Astro.props;
+---
+
+{headings.length > 1 && (
+  <details class="addon-toc" open data-addon-toc>
+    <summary>
+      <span class="site-label site-label--muted">{t(locale, "addons.onThisPage")}</span>
+      <Plus className="size-4" aria-hidden="true" />
+    </summary>
+    <nav aria-label={t(locale, "addons.onThisPage")}>
+      <ol>
+        {headings.map((heading) => (
+          <li data-depth={heading.depth}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </details>
+  <script is:inline>
+    (() => {
+      const toc = document.querySelector("[data-addon-toc]");
+      if (!toc) return;
+      // Collapsed where the list sits above the text instead of beside it.
+      const beside = window.matchMedia("(min-width: 1024px)");
+      const sync = () => {
+        toc.open = beside.matches;
+      };
+      sync();
+      beside.addEventListener("change", sync);
+
+      const watch = () => {
+        const links = [...toc.querySelectorAll("a[href^='#']")];
+        const targets = links
+          .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+          .filter(Boolean);
+        if (targets.length === 0) return;
+        let current = null;
+        let queued = false;
+        // Where a heading lands after a jump, plus some tolerance.
+        const line =
+          (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) +
+          (parseFloat(getComputedStyle(targets[0]).scrollMarginTop) || 0) +
+          24;
+        // The section in view is the last heading that passed this line.
+        const update = () => {
+          queued = false;
+          let active = null;
+          for (const target of targets) {
+            if (target.getBoundingClientRect().top <= line) active = target;
+          }
+          if (active === current) return;
+          current = active;
+          for (const link of links) {
+            if (active && decodeURIComponent(link.hash.slice(1)) === active.id) {
+              link.setAttribute("aria-current", "location");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          }
+        };
+        const queue = () => {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(update);
+        };
+        window.addEventListener("scroll", queue, { passive: true });
+        window.addEventListener("resize", queue, { passive: true });
+        update();
+      };
+      // The headings follow this list in the document.
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", watch, { once: true });
+      } else {
+        watch();
+      }
+    })();
+  </script>
+)}

@@ -1,137 +1,139 @@
-import { useMemo, useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { useCases, type UseCase, type UseCaseCategory } from "@/data/use-cases";
-import { t, type Locale } from "@/i18n/index";
-import { Button } from "@/components/ui/button";
+import { useEffect, useMemo, useState } from "react";
+import { PageHead, WaveRule } from "@/components/site";
 import {
-  MacOSLogo,
-  WindowsLogo,
-  IOSLogo,
-} from "@/components/ui/platform-logos";
-import { macDmgUrl } from "@/lib/platform-download";
+  useCaseGroups,
+  type UseCaseCategory,
+  type UseCaseGroup,
+} from "@/components/use-cases/taxonomy";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { t, type Locale } from "@/i18n/index";
 import { CategoryFilter } from "@/components/use-cases/category-filter";
-import { UseCaseCard } from "@/components/use-cases/use-case-card";
+import { UseCaseCTA } from "@/components/use-cases/use-case-cta";
+import {
+  UseCaseList,
+  type UseCaseEntry,
+} from "@/components/use-cases/use-case-list";
 
 interface UseCasesIndexProps {
   locale?: Locale;
-  allUseCases?: UseCase[];
+  entries: UseCaseEntry[];
   basePath?: string;
 }
 
+const groupSeeds: Record<UseCaseGroup, number> = { everyday: 7, industry: 19 };
+
 export default function UseCasesIndex({
   locale = "en",
-  allUseCases,
+  entries,
   basePath = "/use-cases",
 }: UseCasesIndexProps) {
   const [category, setCategory] = useState<UseCaseCategory | "all">("all");
+  const revealRoot = useScrollReveal();
 
-  const items = allUseCases ?? useCases;
+  // The filter lives in the URL (`?category=app`), read after hydration.
+  useEffect(() => {
+    const value = new URLSearchParams(window.location.search).get("category");
+    if (value === "app" || value === "workflow") setCategory(value);
+  }, []);
+
+  const selectCategory = (next: UseCaseCategory | "all") => {
+    setCategory(next);
+    const url = new URL(window.location.href);
+    if (next === "all") url.searchParams.delete("category");
+    else url.searchParams.set("category", next);
+    window.history.replaceState(window.history.state, "", url);
+  };
 
   const counts = useMemo(() => {
     const next: Record<UseCaseCategory | "all", number> = {
-      all: items.length,
+      all: entries.length,
       app: 0,
       workflow: 0,
     };
-    for (const uc of items) {
-      next[uc.category] += 1;
-    }
+    for (const entry of entries) next[entry.category] += 1;
     return next;
-  }, [items]);
+  }, [entries]);
 
-  const filtered = items.filter(
-    (uc) => category === "all" || uc.category === category,
-  );
+  const groups = useCaseGroups
+    .map((group) => ({
+      group,
+      entries: entries.filter(
+        (entry) =>
+          entry.group === group &&
+          (category === "all" || entry.category === category),
+      ),
+    }))
+    .filter((group) => group.entries.length > 0);
 
   return (
-    <>
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#eef2ff_0%,#f5f0ff_30%,#fbfbfd_70%)] py-20 dark:bg-[linear-gradient(180deg,#0b1220_0%,#111827_35%,#000000_75%)] sm:py-28">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-32 top-0 h-[420px] w-[420px] rounded-full bg-[#0071e3]/15 blur-[100px] dark:bg-[#0071e3]/20" />
-          <div className="absolute -right-32 top-16 h-[360px] w-[360px] rounded-full bg-[#7c3aed]/12 blur-[100px] dark:bg-[#7c3aed]/20" />
-          <div className="absolute bottom-0 left-1/4 h-[280px] w-[420px] rounded-full bg-[#10b981]/10 blur-[100px] dark:bg-[#10b981]/15" />
-          <div className="absolute -bottom-10 right-1/4 h-[260px] w-[360px] rounded-full bg-[#f59e0b]/10 blur-[100px] dark:bg-[#f59e0b]/15" />
-        </div>
+    <div
+      ref={revealRoot as React.RefObject<HTMLDivElement>}
+      className="site-page usecase-page"
+    >
+      <PageHead
+        title={t(locale, "useCases.heading")}
+        lede={t(locale, "useCases.description")}
+      >
+        <CategoryFilter
+          selected={category}
+          onChange={selectCategory}
+          locale={locale}
+          counts={counts}
+        />
+      </PageHead>
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display text-4xl font-bold tracking-tighter text-foreground sm:text-5xl lg:text-6xl">
-              {t(locale, "useCases.heading")}
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-              {t(locale, "useCases.description")}
-            </p>
-          </div>
+      <p className="sr-only" role="status">
+        {t(locale, "useCases.resultCount").replace(
+          "{count}",
+          String(groups.reduce((sum, group) => sum + group.entries.length, 0)),
+        )}
+      </p>
 
-          <div className="mt-10 flex justify-center">
-            <CategoryFilter
-              selected={category}
-              onChange={setCategory}
-              locale={locale}
-              counts={counts}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {filtered.map((uc) => (
-              <UseCaseCard
-                key={uc.slug}
-                useCase={uc}
-                basePath={basePath}
-                locale={locale}
+      <div data-testid="use-case-index">
+        {groups.map(({ group, entries: groupEntries }) => (
+          <section
+            key={group}
+            className="site-section site-section--tight-top"
+            data-testid={`use-case-group-${group}`}
+          >
+            <div className="site-wrap">
+              <WaveRule
+                label={t(locale, `useCases.group.${group}.label`)}
+                seed={groupSeeds[group]}
               />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <p className="mt-12 text-center text-muted-foreground">
-              {t(locale, "useCases.emptyState")}
-            </p>
-          )}
-
-          <div className="mt-16 sm:mt-20">
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 sm:p-12">
-              <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-20 top-1/2 h-[260px] w-[260px] -translate-y-1/2 rounded-full bg-[#0071e3]/10 blur-[80px]" />
-                <div className="absolute -right-16 -top-10 h-[220px] w-[220px] rounded-full bg-[#7c3aed]/10 blur-[80px]" />
-              </div>
-
-              <div className="relative flex flex-col items-center gap-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-                <div className="flex flex-col items-center gap-2 sm:items-start">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <MacOSLogo className="size-5" aria-hidden="true" />
-                    <WindowsLogo className="size-5" aria-hidden="true" />
-                    <IOSLogo className="size-5" aria-hidden="true" />
-                  </div>
-                  <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-                    {t(locale, "useCases.findCta.title")}
+              <div className="site-split">
+                <div className="site-split__head">
+                  <h2 className="site-title site-title--start">
+                    {t(locale, `useCases.group.${group}.title`)}
                   </h2>
-                  <p className="max-w-md text-sm text-muted-foreground sm:text-base">
-                    {t(locale, "useCases.findCta.subtitle")}
+                  <p className="site-lede site-lede--start">
+                    {t(locale, `useCases.group.${group}.text`)}
                   </p>
                 </div>
-                <Button size="pill" asChild>
-                  <a
-                    href={macDmgUrl}
-                    data-download-social-trigger
-                    data-download-platform="mac"
-                    data-download-target="mac_dmg"
-                    data-tracking-placement="use_case"
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    {t(locale, "useCases.cta.download")}
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
+                <UseCaseList
+                  entries={groupEntries}
+                  basePath={basePath}
+                  locale={locale}
+                />
               </div>
             </div>
+          </section>
+        ))}
+
+        {groups.length === 0 && (
+          <div className="site-wrap">
+            <p className="site-text usecase-empty">
+              {t(locale, "useCases.emptyState")}
+            </p>
           </div>
-        </div>
-      </section>
-    </>
+        )}
+      </div>
+
+      <UseCaseCTA
+        locale={locale}
+        titleKey="useCases.findCta.title"
+        subtitleKey="useCases.findCta.subtitle"
+      />
+    </div>
   );
 }

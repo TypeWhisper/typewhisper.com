@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/commercial.css";
 import { LegalSecurityReviewHero } from "@/components/business/legal-security-review/legal-security-review-hero";
 import { LegalSecurityReviewChecklist } from "@/components/business/legal-security-review/legal-security-review-checklist";
 import { LegalSecurityReviewDataFlow } from "@/components/business/legal-security-review/legal-security-review-data-flow";
@@ -7,7 +8,7 @@ import { LegalSecurityReviewBoundaries } from "@/components/business/legal-secur
 import { LegalSecurityReviewRelated } from "@/components/business/legal-security-review/legal-security-review-related";
 import { LegalSecurityReviewCTA } from "@/components/business/legal-security-review/legal-security-review-cta";
 import { getLegalSecurityReviewModule } from "@/data/legal-security-review";
-import { type Locale } from "@/i18n/index";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -21,7 +22,7 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const mod = getLegalSecurityReviewModule(locale);
 const content = mod.frontmatter;
-const { color } = content;
+const label = (key: string) => t(locale, `business.legalSecurityReview.${key}.label`);
 ---
 
 <BaseLayout
@@ -30,10 +31,12 @@ const { color } = content;
   canonicalPath={canonicalPath(locale, "/business/legal-security-review")}
   locale={locale}
 >
-  <LegalSecurityReviewHero hero={content.hero} locale={locale} color={color} />
-  <LegalSecurityReviewChecklist checklist={content.checklist} color={color} />
-  <LegalSecurityReviewDataFlow dataFlow={content.dataFlow} color={color} />
-  <LegalSecurityReviewBoundaries boundaries={content.boundaries} color={color} />
-  <LegalSecurityReviewRelated related={content.related} locale={locale} />
-  <LegalSecurityReviewCTA cta={content.cta} locale={locale} color={color} />
+  <div class="site-page commercial">
+    <LegalSecurityReviewHero hero={content.hero} locale={locale} />
+    <LegalSecurityReviewChecklist checklist={content.checklist} label={label("checklist")} />
+    <LegalSecurityReviewDataFlow dataFlow={content.dataFlow} label={label("dataFlow")} />
+    <LegalSecurityReviewBoundaries boundaries={content.boundaries} label={label("boundaries")} />
+    <LegalSecurityReviewRelated related={content.related} locale={locale} label={label("related")} />
+    <LegalSecurityReviewCTA cta={content.cta} locale={locale} label={label("cta")} />
+  </div>
 </BaseLayout>

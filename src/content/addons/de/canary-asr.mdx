@@ -1,0 +1,63 @@
+---
+slug: "canary-asr"
+name: "Canary ASR"
+author: "TypeWhisper"
+version: "1.0.1"
+icon: "Bird"
+description: "Lokale Canary-Spracherkennung auf Apple Silicon, mit dem Modell Sophea für Griechisch und Englisch und dem Import kompatibler Modelle."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.canary"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CanaryPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-canary-v1.0.1"
+principalClass: "CanaryPlugin"
+screenshotAlt: "Einstellungen von Canary ASR in TypeWhisper für macOS: ein Feld für das optionale Hugging-Face-Token und das Modell Sophea Canary mit der Schaltfläche „Laden & Aktivieren“"
+---
+
+## Über
+
+Canary ASR führt Canary-Spracherkennungsmodelle über MLX auf deinem Mac aus. Das Add-on bietet ein Modell zum Download an, Sophea Canary für Griechisch und Englisch, und importiert weitere kompatible Canary-Modelle.
+
+Das ist eine lokale Engine. Dein Audio wird auf deinem Mac transkribiert. Das Netzwerk nutzt das Add-on, um ein Modell herunterzuladen.
+
+Für TypeWhisper für Windows gibt es kein Add-on Canary ASR. Dort gehört das Modell Canary 180M Flash zu [Lokale Modelle (sherpa-onnx)](/de/addons/sherpa-onnx/).
+
+## Voraussetzungen
+
+Diese Version benötigt **TypeWhisper 1.7.0 oder neuer** auf macOS 14 oder neuer und einen Mac mit **Apple Silicon**.
+
+Sophea Canary ist ein Download von etwa 1,9 GB. Das Add-on nennt dafür 8 GB Arbeitsspeicher oder mehr. Du brauchst keinen API-Key und kein Konto.
+
+## Einrichtung
+
+1. Installiere und aktiviere **Canary ASR** unter **Einstellungen > Integrationen > Entdecken**.
+2. Öffne die Einstellungen des Add-ons und wähle **Laden & Aktivieren** neben **Sophea Canary (Greek / English)**.
+3. Wähle **Canary Speech (MLX)** in den Diktateinstellungen als Transkriptions-Engine.
+4. Stelle als Sprache des Diktats **Griechisch** oder **Englisch** ein. Canary erkennt die Sprache nicht von selbst.
+
+## Einstellungen
+
+| Einstellung | Funktion |
+| --- | --- |
+| **HuggingFace Token** | Optional. Ein Token erhöht die Download-Limits von Hugging Face. **Speichern** prüft das Token bei Hugging Face und legt ein gültiges im macOS-Schlüsselbund ab. **Entfernen** löscht das gespeicherte Token. |
+| **Modell** | Zeigt Sophea Canary und deine importierten Modelle mit Größe und Speicherbedarf. **Laden & Aktivieren** lädt Sophea Canary herunter und lädt es in den Speicher. **Deaktivieren** gibt den Speicher wieder frei; bei Sophea Canary löscht es auch die heruntergeladenen Dateien. |
+| **Modell importieren …** | Fügt ein Canary-Modell aus einem Hugging-Face-Repository oder aus einem lokalen Ordner mit `config.json`, Tokenizer-Dateien und `.safetensors`-Gewichten hinzu. Das Add-on prüft und lädt das Modell, bevor der Import abgeschlossen ist. |
+
+Ein importiertes Modell ist eine Kopie, die TypeWhisper behält; deine Originaldateien bleiben unverändert. Ein Token, das du im Import-Dialog für ein privates oder zugangsbeschränktes Repository eingibst, gilt nur für diesen Import und wird nicht gespeichert.
+
+## Transkription
+
+Das Add-on transkribiert die fertige Aufnahme. Während du sprichst, erscheint kein Zwischentext. Eine längere Aufnahme teilt es an einer nahen Sprechpause in Abschnitte von etwa 20 Sekunden und transkribiert sie nacheinander.
+
+Sophea Canary erkennt Griechisch und Englisch. Ohne gewählte Sprache bricht das Add-on mit einem Hinweis ab, der dich um die Auswahl bittet. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht an das Modell übergeben.
+
+## Lokale Verarbeitung und Datenschutz
+
+Die Erkennung läuft auf deinem Mac. Das Add-on sendet weder Audio noch Text an einen Cloud-Dienst.
+
+Die Dateien von Sophea Canary stammen aus dem Hugging-Face-Repository `KIEFERSA/Sophea-Canary-ASR-mlx`: Gewichte, Konfiguration und Tokenizer. TypeWhisper speichert sie unter `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.canary/models`, importierte Modelle daneben im Ordner `custom-models`. Kontakt zu Hugging Face nimmt das Add-on außerdem auf, wenn es ein Token prüft und wenn du ein Modell aus einem Repository importierst.

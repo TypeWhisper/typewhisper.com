@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readCurrentVersions } from "./helpers/current-versions";
 
 async function waitForHeaderHydration(page: Page) {
   await page.waitForFunction(() => {
@@ -65,12 +66,16 @@ test.describe("docs platform logos", () => {
     test(`${locale} docs release badges include platform versions`, async ({
       page,
     }) => {
-      const windowsBadge = locale === "de" ? "1.0 Stabil" : "1.0 Stable";
+      const { mac, windows, ios } = readCurrentVersions();
+      const stable = locale === "de" ? "Stabil" : "Stable";
+      const windowsBadge = `${windows.series} ${stable}`;
 
       await page.goto(`/${locale}/docs`);
-      await expect(page.locator("main")).toContainText("Windows 1.0.9");
+      await expect(page.locator("main")).toContainText(
+        `Windows ${windows.version}`,
+      );
       await expect(
-        page.locator(`a[href="/${locale}/docs/mac"]`).getByText("1.6", {
+        page.locator(`a[href="/${locale}/docs/mac"]`).getByText(mac.series, {
           exact: true,
         }),
       ).toBeVisible();
@@ -82,9 +87,7 @@ test.describe("docs platform logos", () => {
       await expect(
         page
           .locator(`a[href="/${locale}/docs/ios"]`)
-          .getByText(locale === "de" ? "1.1 Stabil" : "1.1 Stable", {
-            exact: true,
-          }),
+          .getByText(`${ios.series} ${stable}`, { exact: true }),
       ).toBeVisible();
 
       await page.goto(`/${locale}/docs/windows`);
@@ -181,22 +184,22 @@ test.describe("addons search", () => {
         search: "filler",
         macHeading: "Filler Words for macOS",
         detailText: "Filler Words removes configurable filler words",
-        macScreenshotAlt: "Filler Words macOS settings",
+        macScreenshotAlt: "Filler Words settings in TypeWhisper for macOS",
         windowsHeading: "Filler Words for Windows",
         windowsDescription:
           "Locally removes configurable English, German, and Japanese filler words from transcriptions.",
-        windowsScreenshotAlt: "Filler Words Windows settings",
+        windowsScreenshotAlt: "Filler Words settings in TypeWhisper for Windows",
       },
       {
         code: "de",
         search: "füll",
         macHeading: "Filler Words für macOS",
         detailText: "Filler Words entfernt konfigurierbare Füllwörter",
-        macScreenshotAlt: "Filler Words macOS Einstellungen",
+        macScreenshotAlt: "Einstellungen von Filler Words in TypeWhisper für macOS",
         windowsHeading: "Filler Words für Windows",
         windowsDescription:
           "Entfernt konfigurierbare englische, deutsche und japanische Füllwörter lokal aus Transkriptionen.",
-        windowsScreenshotAlt: "Filler Words Windows Einstellungen",
+        windowsScreenshotAlt: "Einstellungen von Filler Words in TypeWhisper für Windows",
       },
     ] as const;
 
@@ -228,19 +231,35 @@ test.describe("addons search", () => {
         ),
       ).toBeVisible();
 
+      // The previews of the family page carry the text of their edition.
+      await expect(
+        page
+          .locator('[data-testid="addon-edition-card"][data-platform="mac"]')
+          .getByAltText(locale.macScreenshotAlt, { exact: true }),
+      ).toBeVisible();
+      await expect(
+        page
+          .locator('[data-testid="addon-edition-card"][data-platform="windows"]')
+          .getByAltText(locale.windowsScreenshotAlt, { exact: true }),
+      ).toBeVisible();
+
       await page.goto(`/${locale.code}/addons/filler-words/macos`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.macHeading }),
       ).toBeVisible();
       await expect(page.getByText(locale.detailText).first()).toBeVisible();
-      await expect(page.getByAltText(locale.macScreenshotAlt)).toBeVisible();
+      await expect(page.getByAltText(locale.macScreenshotAlt, { exact: true })).toBeVisible();
+      // The caption repeats the alternative text, so screen readers skip it.
+      await expect(
+        page.locator("figcaption", { hasText: `${locale.macScreenshotAlt}.` }),
+      ).toHaveAttribute("aria-hidden", "true");
 
       await page.goto(`/${locale.code}/addons/filler-words/windows`);
       await expect(
         page.getByRole("heading", { level: 1, name: locale.windowsHeading }),
       ).toBeVisible();
       await expect(page.getByText(locale.windowsDescription).first()).toBeVisible();
-      await expect(page.getByAltText(locale.windowsScreenshotAlt)).toBeVisible();
+      await expect(page.getByAltText(locale.windowsScreenshotAlt, { exact: true })).toBeVisible();
     }
   });
 
@@ -533,10 +552,10 @@ test.describe("pricing & business pages", () => {
       }),
     ).toBeVisible();
     await expect(
-      page.locator('main img[src="/screenshots/de/mac/watch-folder.png"]'),
+      page.locator('main img[src="/screenshots/de/mac/file-transcription.png"]'),
     ).toBeVisible();
     await expect(
-      page.locator('main img[src="/screenshots/de/mac/rules.png"]'),
+      page.locator('main img[src="/screenshots/de/mac/workflows.png"]'),
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: /^one-pager herunterladen$/i }).first(),

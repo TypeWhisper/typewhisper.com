@@ -1,5 +1,7 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHead } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -41,42 +43,60 @@ const sections: PrivacySection[] = [
   canonicalPath={canonicalPath(locale, "/privacy")}
   locale={locale}
 >
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">{t(locale, "privacy.heading")}</h1>
-    <p class="mt-2 text-sm text-muted-foreground">{t(locale, "privacy.updated")}</p>
-    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-      {sections.map((section) => (
-        <section>
-          <h2 class="text-lg font-semibold text-foreground">
-            {t(locale, `privacy.section.${section.id}.title`)}
-          </h2>
+  <div class="site-page">
+    <PageHead
+      compact
+      wrap="prose"
+      label={t(locale, "legal.label")}
+      title={t(locale, "privacy.heading")}
+      meta={t(locale, "privacy.updated")}
+    />
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap site-wrap--prose">
+        <nav class="utility-toc" aria-labelledby="privacy-contents" data-testid="privacy-toc">
+          <p class="site-label site-label--muted" id="privacy-contents">{t(locale, "legal.contents")}</p>
+          <ol class="utility-toc__list">
+            {sections.map((section) => (
+              <li>
+                <a href={`#${section.id}`}>{t(locale, `privacy.section.${section.id}.title`)}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
 
-          {section.kind === "simple" && (
-            <p class="mt-2" set:html={t(locale, `privacy.section.${section.id}.p1`)} />
-          )}
-
-          {section.kind === "list" && (
+        <div class="site-prose utility-reading">
+          {sections.map((section) => (
             <>
-              <p class="mt-2">{t(locale, "privacy.section.localStorage.p1")}</p>
-              <ul class="mt-2 list-disc space-y-1 pl-5">
-                <li>{t(locale, "privacy.section.localStorage.item1")}</li>
-                <li>{t(locale, "privacy.section.localStorage.item2")}</li>
-                <li>{t(locale, "privacy.section.localStorage.item3")}</li>
-              </ul>
-              <p class="mt-2">{t(locale, "privacy.section.localStorage.p2")}</p>
-            </>
-          )}
+              <h2 id={section.id}>{t(locale, `privacy.section.${section.id}.title`)}</h2>
 
-          {section.kind === "link" && (
-            <p class="mt-2">
-              {t(locale, "privacy.section.securityReview.beforeLink")}
-              <a href={securityReviewHref} class="text-primary hover:underline">
-                {t(locale, "privacy.section.securityReview.linkText")}
-              </a>.
-            </p>
-          )}
-        </section>
-      ))}
-    </div>
+              {section.kind === "simple" && (
+                <p set:html={t(locale, `privacy.section.${section.id}.p1`)} />
+              )}
+
+              {section.kind === "list" && (
+                <>
+                  <p>{t(locale, "privacy.section.localStorage.p1")}</p>
+                  <ul>
+                    <li>{t(locale, "privacy.section.localStorage.item1")}</li>
+                    <li>{t(locale, "privacy.section.localStorage.item2")}</li>
+                    <li>{t(locale, "privacy.section.localStorage.item3")}</li>
+                  </ul>
+                  <p>{t(locale, "privacy.section.localStorage.p2")}</p>
+                </>
+              )}
+
+              {section.kind === "link" && (
+                <p>
+                  {t(locale, "privacy.section.securityReview.beforeLink")}
+                  <a href={securityReviewHref}>
+                    {t(locale, "privacy.section.securityReview.linkText")}
+                  </a>.
+                </p>
+              )}
+            </>
+          ))}
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>

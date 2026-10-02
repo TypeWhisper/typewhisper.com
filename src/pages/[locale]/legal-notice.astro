@@ -1,6 +1,8 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { type Locale } from "@/i18n/index";
+import { PageHead } from "@/components/site";
+import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
 interface Props {
@@ -20,8 +22,8 @@ const copy = locale === "de"
       kicker: "",
       sections: [
         {
-          title: "Angaben gemäß &sect; 5 TMG",
-          body: 'TypeWhisper ist ein Open-Source-Projekt. Kontaktinformationen und verantwortliche Personen findest du im <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub-Repository</a> des Projekts.',
+          title: "Angaben gemäß &sect; 5 DDG",
+          body: 'Verantwortlich für diese Website und das Projekt TypeWhisper:<br />Marco Hillger<br />Friedenstr. 72<br />15738 Zeuthen<br />Deutschland<br /><br />Kontakt: <a href="mailto:hello@typewhisper.com" class="text-primary hover:underline">hello@typewhisper.com</a><br /><br />TypeWhisper ist ein Open-Source-Projekt; den Quellcode findest du im <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub-Repository</a> des Projekts.',
         },
         {
           title: "Streitschlichtung",
@@ -40,8 +42,8 @@ const copy = locale === "de"
       kicker: "Impressum",
       sections: [
         {
-          title: "Information pursuant to &sect; 5 TMG",
-          body: `TypeWhisper is an open source project. For contact information and responsible parties, please refer to the project's <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub repository</a>.`,
+          title: "Information pursuant to &sect; 5 DDG",
+          body: `Responsible for this website and the TypeWhisper project:<br />Marco Hillger<br />Friedenstr. 72<br />15738 Zeuthen<br />Germany<br /><br />Contact: <a href="mailto:hello@typewhisper.com" class="text-primary hover:underline">hello@typewhisper.com</a><br /><br />TypeWhisper is an open source project; the source code is available in the project's <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">GitHub repository</a>.`,
         },
         {
           title: "Dispute Resolution",
@@ -61,16 +63,25 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/legal-notice")}
   locale={locale}
 >
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
-    <h1 class="font-display text-3xl font-bold tracking-tight">{copy.heading}</h1>
-    {copy.kicker && <p class="mt-2 text-sm text-muted-foreground">{copy.kicker}</p>}
-    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted-foreground">
-      {copy.sections.map((section) => (
-        <section>
-          <h2 class="text-lg font-semibold text-foreground" set:html={section.title} />
-          <p class="mt-2" set:html={section.body} />
-        </section>
-      ))}
-    </div>
+  <div class="site-page">
+    <PageHead
+      compact
+      wrap="prose"
+      label={t(locale, "legal.label")}
+      title={copy.heading}
+      meta={copy.kicker || undefined}
+    />
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap site-wrap--prose">
+        <div class="site-prose">
+          {copy.sections.map((section) => (
+            <>
+              <h2 set:html={section.title} />
+              <p set:html={section.body} />
+            </>
+          ))}
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>

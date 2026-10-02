@@ -1,0 +1,139 @@
+import { CodeBlock } from "@/components/ui/code-block";
+import * as snippets from "./snippets";
+
+## Overview
+
+TypeWhisper plugins are standard macOS bundles (.bundle) written in Swift. Each plugin links against the TypeWhisperPluginSDK package and exports a principal class conforming to one or more plugin protocols. The principal class must inherit from `NSObject` and use the `@objc(ClassName)` attribute so the bundle loader can instantiate it. Plugins are loaded at launch from `~/Library/Application Support/TypeWhisper/Plugins/`.
+
+## Plugin Types
+
+There are four plugin protocols you can adopt. A single plugin can conform to multiple protocols (e.g., both transcription and LLM).
+
+### TranscriptionEnginePlugin
+
+Provides a speech-to-text engine. Receives audio data (16kHz mono Float samples + pre-encoded WAV) and returns transcribed text. Supports model selection, language detection, translation, and optional streaming via a progress callback.
+
+### LLMProviderPlugin
+
+Provides an LLM for processing transcribed text via custom prompts. Receives a system prompt and user text, returns the model's response. Used for text correction, summarization, formatting, and more.
+
+### PostProcessorPlugin
+
+Processes text after transcription in a priority-based pipeline. Receives the transcribed text and context (active app, URL, language). Runs alongside built-in processors like snippets and dictionary.
+
+### ActionPlugin
+
+Performs an action with LLM-processed text instead of inserting it. Receives the processed text and context, returns a result message shown in the notch indicator. Can include a URL to open and a custom display duration.
+
+## Getting Started
+
+### Prerequisites
+
+- macOS 14.0+ (Sonoma) and Xcode 16+
+- Swift 6.0
+- Basic familiarity with macOS bundle targets
+
+### 1. Create a Bundle Target
+
+In Xcode, create a new macOS Bundle target. Set the principal class in your Info.plist to your plugin's main class name. The class must inherit from `NSObject` and be annotated with `@objc(ClassName)` so the runtime can find and instantiate it.
+
+### 2. Add the SDK Dependency
+
+Add TypeWhisperPluginSDK as a Swift Package dependency:
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.sdkDependency} />
+
+### 3. Create manifest.json
+
+Add a manifest.json to your bundle's Resources directory:
+
+<CodeBlock client:visible locale="en" lang="json" code={snippets.manifest} />
+
+`principalClass` must match the name in your `@objc(...)` annotation. `minOSVersion` is optional and defaults to 14.0. `hosting` controls the Local/Cloud category in the plugin catalog; `requiresAPIKey` only describes whether an API key credential is required.
+
+### 4. Build & Install
+
+Build your bundle and copy the .bundle file to `~/Library/Application Support/TypeWhisper/Plugins/`. Restart TypeWhisper to load the plugin.
+
+## SDK API Reference
+
+### TypeWhisperPlugin
+
+Base protocol all plugins must conform to.
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.typeWhisperPlugin} />
+
+### HostServices
+
+Provided to your plugin on activation. Gives access to keychain, preferences, file storage, app context, and the event bus.
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.hostServices} />
+
+Call `notifyCapabilitiesChanged()` when your plugin's available models or configuration state changes (e.g., after loading a model or receiving an API key).
+
+### LLMProviderPlugin
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.llmProviderPlugin} />
+
+### PluginModelInfo
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.pluginModelInfo} />
+
+### TranscriptionEnginePlugin
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.transcriptionEnginePlugin} />
+
+The streaming variant has a default implementation that falls back to the standard `transcribe` method. Override it and set `supportsStreaming` to `true` if your engine supports partial results.
+
+### PostProcessorPlugin
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.postProcessorPlugin} />
+
+### ActionPlugin
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.actionPlugin} />
+
+### EventBus
+
+Subscribe to app-wide events like recording start/stop, transcription completion, and text insertion.
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.eventBus} />
+
+### Helper Classes
+
+The SDK includes helpers for common patterns:
+
+- `PluginOpenAITranscriptionHelper` - OpenAI-compatible transcription API client
+- `PluginOpenAIChatHelper` - OpenAI-compatible chat completion client
+- `PluginWavEncoder` - Encode Float samples to WAV data
+
+## Example: Minimal LLM Plugin
+
+A complete LLM provider plugin that wraps an OpenAI-compatible API:
+
+<CodeBlock client:visible locale="en" lang="swift" code={snippets.exampleLlmPlugin} />
+
+## Distribution
+
+Build your plugin in Release configuration and distribute the resulting .bundle file. Users install it by copying to:
+
+<CodeBlock client:visible locale="en" lang="bash" code={snippets.installPath} />
+
+## Contribute Plugins
+
+If you want to share or upstream a plugin, submit it to the matching platform repository. The separate community plugin catalog is being retired; macOS and Windows plugins are reviewed in the app repositories that own them.
+
+### Provider access policy
+
+Plugin contributions that connect to external providers must use access paths the provider authorizes for third-party integrations. Acceptable paths include user-provided API keys, official developer platform billing, officially documented SDK or OAuth flows intended for third-party apps, and local-only integrations that do not impersonate a provider account.
+
+Plugins must not impersonate a {"provider's"} first-party client, use consumer subscription credentials as API access unless the provider explicitly supports that third-party path, or rely on unofficial OAuth clients, copied client IDs, hidden endpoints, or token refresh flows intended for another first-party product.
+
+### Where to submit
+
+1. Submit macOS plugins to <a href="https://github.com/TypeWhisper/typewhisper-mac" target="_blank" rel="noopener noreferrer">TypeWhisper/typewhisper-mac</a>.
+2. Submit Windows plugins to <a href="https://github.com/TypeWhisper/typewhisper-win" target="_blank" rel="noopener noreferrer">TypeWhisper/typewhisper-win</a>.
+3. Document setup, required credentials, supported platforms, and the authorized provider access path in the pull request or issue.
+4. The platform repository is the source of truth for build, review, release, and any catalog listing.
+
+The earlier separate community plugin repository flow is no longer used for submissions.

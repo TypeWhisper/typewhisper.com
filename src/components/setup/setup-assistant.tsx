@@ -1,6 +1,7 @@
 import { replacePageUrl } from "@/hooks/use-page-url";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState, type ReactNode } from "react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import { WaveRule } from "@/components/site";
 import {
   isLandingPlatform,
   selectLandingPlatform,
@@ -10,6 +11,53 @@ import { getPlatformDownloadTarget } from "@/lib/platform-download";
 import { t, type Locale } from "@/i18n/index";
 
 type Task = "dictation" | "files" | "workflows";
+
+function Field({
+  label,
+  value,
+  onChange,
+  children,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  children: ReactNode;
+}) {
+  return (
+    <label className="utility-field">
+      <span className="utility-field__label">{label}</span>
+      <span className="utility-field__control">
+        <select value={value} onChange={(e) => onChange(e.target.value)}>
+          {children}
+        </select>
+        <ChevronDown className="size-4" aria-hidden="true" />
+      </span>
+    </label>
+  );
+}
+
+function Step({
+  href,
+  title,
+  hint,
+}: {
+  href: string;
+  title: string;
+  hint?: string;
+}) {
+  return (
+    <li className="site-steps__item">
+      <div>
+        <a href={href} className="utility-step">
+          <span className="site-heading">{title}</span>
+          <ArrowRight className="size-5" aria-hidden="true" />
+        </a>
+        {hint && <p className="site-text utility-step__hint">{hint}</p>}
+      </div>
+    </li>
+  );
+}
+
 export function SetupAssistant({ locale }: { locale: Locale }) {
   const platform = useSyncedLandingPlatform();
   const [processing, setProcessing] = useState<"local" | "cloud">("local");
@@ -46,107 +94,94 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
       ? `/${locale}/addons/?platform=${platform}&category=transcription`
       : `${docs}/${platform === "ios" ? "profiles-and-processing" : "features"}`;
   return (
-    <div className="mt-8" data-testid="setup-assistant">
-      <div className="grid gap-5 sm:grid-cols-3">
-        <label className="grid gap-2 text-sm font-medium">
-          {t(locale, "setup.platform")}
-          <select
-            value={platform}
-            onChange={(e) => {
-              if (isLandingPlatform(e.target.value))
-                selectLandingPlatform(e.target.value);
-            }}
-            className="rounded-xl border bg-card px-3 py-3"
-          >
-            <option value="mac">macOS</option>
-            <option value="windows">Windows</option>
-            <option value="ios">iOS</option>
-          </select>
-        </label>
-        <label className="grid gap-2 text-sm font-medium">
-          {t(locale, "setup.processing")}
-          <select
-            value={processing}
-            onChange={(e) => setProcessing(e.target.value as "local" | "cloud")}
-            className="rounded-xl border bg-card px-3 py-3"
-          >
-            <option value="local">{t(locale, "setup.local")}</option>
-            <option value="cloud">{t(locale, "setup.cloud")}</option>
-          </select>
-        </label>
-        <label className="grid gap-2 text-sm font-medium">
-          {t(locale, "setup.task")}
-          <select
-            value={task}
-            onChange={(e) => setTask(e.target.value as Task)}
-            className="rounded-xl border bg-card px-3 py-3"
-          >
-            {(["dictation", "files", "workflows"] as const).map((value) => (
-              <option key={value} value={value}>
-                {t(locale, `setup.${value}`)}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+    <div className="utility-setup" data-testid="setup-assistant">
       <div
-        className="mt-8 rounded-2xl border bg-card p-6 sm:p-8"
-        aria-live="polite"
+        className="utility-setup__choices"
+        role="group"
+        aria-label={t(locale, "setup.choices")}
       >
-        <h2 className="text-2xl font-semibold">{t(locale, "setup.result")}</h2>
-        <p className="mt-3 text-muted-foreground">
-          {t(locale, `setup.${processing}Note`)}
-        </p>
-        <ol className="mt-6 list-decimal space-y-5 pl-5">
-          <li>
-            <a
-              href={`${docs}/installation`}
-              className="font-medium text-primary underline"
-            >
-              {t(locale, "setup.install")}
-            </a>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {t(locale, "setup.installHint")}
-            </p>
-          </li>
-          <li>
-            <a href={engines} className="font-medium text-primary underline">
-              {t(
-                locale,
-                processing === "local"
-                  ? "setup.localEngine"
-                  : "setup.cloudEngine",
-              )}
-            </a>
-          </li>
-          <li>
-            <a href={guide} className="font-medium text-primary underline">
-              {t(locale, `setup.first.${task}`)}
-            </a>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {t(locale, "setup.testHint")}
-            </p>
-          </li>
-        </ol>
-        {download.available && (
-          <Button asChild className="mt-8" size="pill">
-            <a
-              href={download.href}
-              target={download.opensNewTab ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              data-download-social-trigger
-              data-download-platform={download.platform}
-              data-download-target={download.target}
-              data-tracking-placement="setup"
-            >
-              {download.label}
-            </a>
-          </Button>
-        )}
+        <Field
+          label={t(locale, "setup.platform")}
+          value={platform}
+          onChange={(value) => {
+            if (isLandingPlatform(value)) selectLandingPlatform(value);
+          }}
+        >
+          <option value="mac">macOS</option>
+          <option value="windows">Windows</option>
+          <option value="ios">iOS</option>
+        </Field>
+        <Field
+          label={t(locale, "setup.processing")}
+          value={processing}
+          onChange={(value) => setProcessing(value as "local" | "cloud")}
+        >
+          <option value="local">{t(locale, "setup.local")}</option>
+          <option value="cloud">{t(locale, "setup.cloud")}</option>
+        </Field>
+        <Field
+          label={t(locale, "setup.task")}
+          value={task}
+          onChange={(value) => setTask(value as Task)}
+        >
+          {(["dictation", "files", "workflows"] as const).map((value) => (
+            <option key={value} value={value}>
+              {t(locale, `setup.${value}`)}
+            </option>
+          ))}
+        </Field>
       </div>
-      <p className="mt-4 text-sm text-muted-foreground">
-        {t(locale, "setup.share")}
-      </p>
+
+      <WaveRule label={t(locale, "setup.stepsLabel")} seed={17} />
+
+      <div className="site-split utility-setup__result" aria-live="polite">
+        <div className="site-split__head">
+          <h2 className="site-title site-title--start">
+            {t(locale, "setup.result")}
+          </h2>
+          <p className="site-lede site-lede--start">
+            {t(locale, `setup.${processing}Note`)}
+          </p>
+          {download.available && (
+            <div className="site-actions site-actions--start">
+              <a
+                href={download.href}
+                target={download.opensNewTab ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                className="site-button"
+                data-download-social-trigger
+                data-download-platform={download.platform}
+                data-download-target={download.target}
+                data-tracking-placement="setup"
+              >
+                {download.label}
+              </a>
+            </div>
+          )}
+        </div>
+        <ol className="site-steps">
+          <Step
+            href={`${docs}/installation`}
+            title={t(locale, "setup.install")}
+            hint={t(locale, "setup.installHint")}
+          />
+          <Step
+            href={engines}
+            title={t(
+              locale,
+              processing === "local"
+                ? "setup.localEngine"
+                : "setup.cloudEngine",
+            )}
+          />
+          <Step
+            href={guide}
+            title={t(locale, `setup.first.${task}`)}
+            hint={t(locale, "setup.testHint")}
+          />
+        </ol>
+      </div>
+      <p className="site-footnote">{t(locale, "setup.share")}</p>
     </div>
   );
 }

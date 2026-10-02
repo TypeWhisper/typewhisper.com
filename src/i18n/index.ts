@@ -9,6 +9,10 @@ const translations: Record<Locale, Record<string, string>> | null = import.meta
       de: (await import("./locales/de/index")).default,
     }
   : null;
+// Server only. Islands read messages that are already resolved.
+const resolveVersions = import.meta.env.SSR
+  ? (await import("../data/versions")).resolveVersions
+  : null;
 let clientMessages: Record<string, string> | undefined;
 function getClientMessages(): Record<string, string> {
   if (!clientMessages) {
@@ -18,10 +22,16 @@ function getClientMessages(): Record<string, string> {
   return clientMessages!;
 }
 
-/** Look up a translation key for the given locale. Falls back to English, then returns the key itself. */
+/**
+ * Look up a translation key for the given locale. Falls back to English, then
+ * returns the key itself. Version placeholders such as {macSeries} are
+ * resolved from src/data/versions.ts.
+ */
 export function t(locale: Locale, key: string): string {
-  if (import.meta.env.SSR)
-    return translations?.[locale]?.[key] ?? translations?.en[key] ?? key;
+  if (import.meta.env.SSR) {
+    const text = translations?.[locale]?.[key] ?? translations?.en[key] ?? key;
+    return resolveVersions ? resolveVersions(text) : text;
+  }
   return getClientMessages()[key] ?? key;
 }
 

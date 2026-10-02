@@ -20,6 +20,8 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/docs/mac/file-transcription")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.fileTranscription.title")}
+  lede={t(locale, "docs.mac.fileTranscription.subtitle")}
 >
   <DocsMacFileTranscription locale={locale} />
 </DocsLayout>

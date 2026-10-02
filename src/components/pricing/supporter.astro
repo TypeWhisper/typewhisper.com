@@ -1,0 +1,77 @@
+---
+import { ArrowUpRight } from "lucide-react";
+import { BarMark, SectionHead } from "@/components/site";
+import { Price } from "@/components/pricing/price";
+import { t, type Locale } from "@/i18n/index";
+import { supporterTiers } from "@/lib/pricing";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const perks = ["badge", "discord", "thanks"].map((key) => t(locale, `supporter.perk.${key}`));
+---
+
+<section id="supporter" class="site-section site-section--band commercial-anchor">
+  <div class="site-wrap">
+    <SectionHead
+      label={t(locale, "supporter.eyebrow")}
+      title={t(locale, "supporter.title")}
+      lede={t(locale, "supporter.subtitle")}
+      seed={29}
+    />
+
+    <ul class="site-tiers reveal-hidden">
+      {supporterTiers.map((tier) => (
+        <li>
+          <div class="site-tiers__link commercial-tier">
+            <h3 class="site-tiers__name">{t(locale, `supporter.tier.${tier.id}.name`)}</h3>
+            <Price locale={locale} amount={tier.price} suffix={t(locale, "supporter.oneTime")} />
+            <p class="site-tiers__text">{t(locale, `supporter.tier.${tier.id}.description`)}</p>
+            <a
+              href={tier.checkout}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-button site-button--quiet site-button--small commercial-tier__action"
+              data-checkout-tier={tier.id}
+              data-checkout-billing-period="one_time"
+              data-tracking-placement="pricing"
+              aria-label={`${t(locale, "supporter.become")}: ${t(locale, `supporter.tier.${tier.id}.name`)}`}
+            >
+              {t(locale, "supporter.become")}
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="commercial-pair reveal-hidden">
+      <div>
+        <h3 class="site-label site-label--strong">{t(locale, "supporter.perksTitle")}</h3>
+        <ul class="site-list">
+          {perks.map((perk) => (
+            <li>
+              <BarMark />
+              <span>{perk}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="site-callout commercial-pair__callout">
+          <p>{t(locale, "supporter.disclaimer")}</p>
+        </div>
+        <a
+          href="https://github.com/sponsors/seofood"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="site-link"
+        >
+          {t(locale, "supporter.githubSponsors")}
+          <ArrowUpRight className="size-4" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

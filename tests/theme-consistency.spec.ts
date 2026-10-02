@@ -131,6 +131,129 @@ for (const scenario of localeScenarios) {
   });
 }
 
+test.describe("landing canvases follow the theme", () => {
+  test.use({ locale: "en-US" });
+
+  /** Color of the most opaque pixel, which belongs to a waveform bar. */
+  async function waveColor(page: Page, testId: string) {
+    return page
+      .getByTestId(testId)
+      .locator("canvas")
+      .evaluate((element) => {
+        const canvas = element as HTMLCanvasElement;
+        const context = canvas.getContext("2d");
+        if (!context || canvas.width === 0 || canvas.height === 0) return null;
+        const { data } = context.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+        );
+        let best = -1;
+        for (let index = 3; index < data.length; index += 4) {
+          if (best < 0 || data[index] > data[best]) best = index;
+        }
+        if (best < 0 || data[best] < 60) return null;
+        return [data[best - 3], data[best - 2], data[best - 1]];
+      });
+  }
+
+  function distance(color: number[] | null, expected: number[]) {
+    if (!color) return Number.POSITIVE_INFINITY;
+    return Math.max(
+      ...color.map((value, index) => Math.abs(value - expected[index])),
+    );
+  }
+
+  test("hero and final waveform recolor at runtime without replaying the hero", async ({
+    page,
+  }) => {
+    await prepareDarkModeSession(page);
+    await page.goto("/en/?platform=mac");
+    await waitForHeaderHydration(page);
+
+    const hero = page.getByTestId("landing-hero");
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 4000 });
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "landing-hero"), [92, 175, 255]),
+      )
+      .toBeLessThan(10);
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "final-cta"), [92, 175, 255]),
+      )
+      .toBeLessThan(10);
+
+    await hero.evaluate((element) => {
+      const phases: string[] = [];
+      new MutationObserver(() =>
+        phases.push(element.getAttribute("data-phase") ?? ""),
+      ).observe(element, { attributeFilter: ["data-phase"] });
+      Object.assign(window, { __heroPhases: phases });
+    });
+
+    await page.getByTestId("theme-toggle").click();
+    await expect(page.locator("html")).toHaveClass(/light/);
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "landing-hero"), [0, 113, 227]),
+      )
+      .toBeLessThan(10);
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "final-cta"), [0, 113, 227]),
+      )
+      .toBeLessThan(10);
+    await expect(page.locator("h1").first()).toHaveCSS("opacity", "1");
+    await expect(page.locator(".landing")).toHaveCSS(
+      "background-color",
+      "rgb(251, 251, 253)",
+    );
+
+    await page.getByTestId("theme-toggle").click();
+    await expect(page.locator("html")).toHaveClass(/dark/);
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "landing-hero"), [92, 175, 255]),
+      )
+      .toBeLessThan(10);
+    await expect(page.locator(".landing")).toHaveCSS(
+      "background-color",
+      "rgb(0, 0, 0)",
+    );
+
+    expect(
+      await page.evaluate(
+        () =>
+          (window as typeof window & { __heroPhases: string[] }).__heroPhases,
+      ),
+    ).toEqual([]);
+  });
+
+  test("the landing page starts in the stored light theme", async ({
+    page,
+  }) => {
+    await prepareDarkModeSession(page, "light");
+    await page.goto("/en/?platform=mac");
+    await waitForHeaderHydration(page);
+
+    await expect(page.locator("html")).toHaveClass(/light/);
+    await expect(page.locator("html")).not.toHaveClass(/dark/);
+    const hero = page.getByTestId("landing-hero");
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 4000 });
+    await expect(page.locator("h1").first()).toHaveCSS(
+      "color",
+      "rgb(29, 29, 31)",
+    );
+    await expect
+      .poll(async () =>
+        distance(await waveColor(page, "landing-hero"), [0, 113, 227]),
+      )
+      .toBeLessThan(10);
+  });
+});
+
 test.describe("stored dark theme behavior", () => {
   test.use({ locale: "en-US" });
 

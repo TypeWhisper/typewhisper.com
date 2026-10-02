@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 
 // Derive the inventory from the owning landing screenshot map.
@@ -7,11 +7,33 @@ const source = await readFile(
   new URL("../src/lib/landing-screenshots.ts", import.meta.url),
   "utf8",
 );
+
+// macOS captures outside of the landing page: docs, use cases, accessibility.
+const macSources = [
+  "../src/pages/docs/mac/",
+  "../src/content/use-cases/en/",
+  "../src/content/use-cases/de/",
+  "../src/pages/[locale]/",
+];
+const macPaths = [];
+for (const directory of macSources) {
+  const base = new URL(directory, import.meta.url);
+  for (const entry of await readdir(base, { withFileTypes: true })) {
+    if (!entry.isFile() || !/\.(tsx|astro|mdx)$/.test(entry.name)) continue;
+    const text = await readFile(new URL(entry.name, base), "utf8");
+    for (const match of text.matchAll(/\/screenshots\/mac\/[\w-]+\.png/g))
+      macPaths.push(match[0]);
+  }
+}
+
 const paths = [
   ...new Set(
-    [...source.matchAll(/"(\/screenshots\/[^\"]+)"/g)].map((match) =>
-      match[1].replace(/\.png$/, ".webp"),
-    ),
+    [
+      ...[...source.matchAll(/"(\/screenshots\/[^\"]+)"/g)].map(
+        (match) => match[1],
+      ),
+      ...macPaths,
+    ].map((path) => path.replace(/\.png$/, ".webp")),
   ),
 ];
 const output = new URL("../public/_images/", import.meta.url);

@@ -2,14 +2,14 @@
 slug: qwen3-asr
 name: Qwen3 ASR
 author: TypeWhisper
-icon: Cpu
+icon: Languages
 description: Qwen3-ASR locally through MLX on macOS or ONNX Runtime on Windows.
 categories:
   - transcription
 platforms:
   - mac
   - windows
-source: bundled
+source: official
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin"
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin"
@@ -18,7 +18,7 @@ sourceUrls:
 
 ## About
 
-Qwen3 ASR is TypeWhisper's bundled local speech-to-text provider for Qwen3-ASR on Apple Silicon. Version `1.1.8` includes optional HuggingFace token storage, quick model picks, and ten MLX model variants from compact 0.6B quantized downloads to the larger 1.7B BF16 model.
+Qwen3 ASR is TypeWhisper's local speech-to-text provider for Qwen3-ASR on Apple Silicon. Version `1.1.8` includes optional HuggingFace token storage, quick model picks, and ten MLX model variants from compact 0.6B quantized downloads to the larger 1.7B BF16 model.
 
 Transcription runs on-device after the selected model has been downloaded. TypeWhisper does not send audio to a cloud transcription API for this provider, and no API key is required to transcribe.
 

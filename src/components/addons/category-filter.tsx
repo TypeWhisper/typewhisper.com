@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { type PluginCategory, categoryKeys } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
+import { FilterRow } from "./filter-row";
 
 const categories: (PluginCategory | "all")[] = [
   "all",
@@ -21,18 +21,17 @@ interface CategoryFilterProps {
 
 export function CategoryFilter({ selected, onChange, locale = "en" }: CategoryFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {categories.map((cat) => (
-        <Button
-          key={cat}
-          variant={selected === cat ? "default" : "outline"}
-          size="sm"
-          className="rounded-full"
-          onClick={() => onChange(cat)}
-        >
-          {cat === "all" ? t(locale, "addons.allCategories") : t(locale, categoryKeys[cat])}
-        </Button>
-      ))}
-    </div>
+    <FilterRow
+      label={t(locale, "addons.filter.category")}
+      selected={selected}
+      onChange={onChange}
+      options={categories.map((category) => ({
+        value: category,
+        label:
+          category === "all"
+            ? t(locale, "addons.allCategories")
+            : t(locale, categoryKeys[category]),
+      }))}
+    />
   );
 }

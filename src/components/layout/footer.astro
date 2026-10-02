@@ -1,7 +1,12 @@
 ---
 import { Logo } from "@/components/ui/logo";
-import { Waveform } from "@/components/ui/waveform";
-import { discordUrl, getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
+import {
+  discordUrl,
+  getIosAppStoreUrl,
+  getPlatformDownloadTarget,
+  iosVersion,
+} from "@/lib/platform-download";
+import { mulberry32 } from "@/lib/seeded-random";
 import type { Locale } from "@/i18n/index";
 import { t, localePath } from "@/i18n/index";
 
@@ -11,68 +16,200 @@ interface Props {
 
 const { locale = "en" } = Astro.props;
 const iosAppStoreUrl = getIosAppStoreUrl(locale);
+const macDownload = getPlatformDownloadTarget("mac", locale, "landing");
+
+// The page ends on one long, quiet recording. Enough bars for wide screens;
+// the band is centered and clipped, so narrow screens show its middle.
+const BAR_COUNT = 280;
+const random = mulberry32(59);
+const bars = Array.from({ length: BAR_COUNT }, (_, index) => {
+  const turn = (index / BAR_COUNT) * Math.PI * 2;
+  const phrase = 0.5 + 0.5 * Math.sin(turn * 7 + 1.3);
+  const syllable = 0.5 + 0.5 * Math.sin(turn * 29 + 0.4);
+  const level = (0.3 + 0.7 * random()) * (0.18 + 0.52 * phrase + 0.3 * syllable);
+  return {
+    height: Math.max(8, Math.round(level * 100)),
+    duration: 2400 + Math.round(random() * 2200),
+    delay: -Math.round(random() * 4000),
+  };
+});
+
+const groups = [
+  {
+    label: t(locale, "footer.group.product"),
+    links: [
+      { label: t(locale, "footer.features"), href: localePath(locale, "/#features") },
+      { label: t(locale, "footer.useCases"), href: localePath(locale, "/use-cases") },
+      { label: t(locale, "footer.addons"), href: localePath(locale, "/addons") },
+      { label: t(locale, "footer.pricing"), href: localePath(locale, "/pricing") },
+      { label: t(locale, "footer.business"), href: localePath(locale, "/business") },
+    ],
+  },
+  {
+    label: t(locale, "footer.group.help"),
+    links: [
+      { label: t(locale, "footer.docs"), href: localePath(locale, "/docs") },
+      { label: t(locale, "footer.support"), href: localePath(locale, "/support") },
+      { label: t(locale, "footer.releaseStatus"), href: localePath(locale, "/release-status") },
+      { label: t(locale, "footer.changelog"), href: localePath(locale, "/changelog") },
+    ],
+  },
+];
+
+const community = [
+  { label: t(locale, "footer.github"), href: "https://github.com/TypeWhisper" },
+  { label: t(locale, "footer.discord"), href: discordUrl },
+  { label: t(locale, "footer.kofi"), href: "https://ko-fi.com/seofood" },
+];
 ---
 
-<footer class="border-t border-border bg-card text-card-foreground">
-  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="mb-8 flex justify-center" aria-hidden="true">
-      <Waveform bars={56} motion="calm" className="h-5 w-full max-w-sm opacity-50" />
+<footer class="site-footer">
+  <div class="site-footer__wave" aria-hidden="true" data-footer-wave>
+    {
+      bars.map((bar) => (
+        <span
+          class="site-footer__bar"
+          style={`--h:${bar.height}%;--d:${bar.duration}ms;--o:${bar.delay}ms`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <Logo />
+      <p class="site-footer__tagline">{t(locale, "footer.tagline")}</p>
+      <p class="site-footer__made" title={t(locale, "madeInGermany.craft")}>
+        <img src="/flags/de.svg" alt="" aria-hidden="true" />
+        {t(locale, "madeInGermany.label")}
+      </p>
     </div>
-    <div class="flex flex-col gap-6">
-      <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Logo />
-        <div class="flex flex-col items-start gap-2 sm:items-end">
-          <p class="text-sm text-muted-foreground">
-            {t(locale, "footer.tagline")}
-          </p>
-          <span
-            class="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-            title={t(locale, "madeInGermany.craft")}
-          >
-            <img
-              src="/flags/de.svg"
-              alt=""
-              aria-hidden="true"
-              class="h-3 w-auto rounded-[2px]"
-            />
-            {t(locale, "madeInGermany.label")}
-          </span>
-        </div>
+
+    <nav class="site-footer__nav" aria-label={t(locale, "footer.navLabel")}>
+      {
+        groups.map((group) => (
+          <div class="site-footer__group">
+            <p class="site-footer__label">{group.label}</p>
+            <ul>
+              {group.links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      <div class="site-footer__group">
+        <p class="site-footer__label">{t(locale, "footer.group.apps")}</p>
+        <ul>
+          {
+            macDownload.available && (
+              <li>
+                <a
+                  href={macDownload.href}
+                  data-download-social-trigger
+                  data-download-platform={macDownload.platform}
+                  data-download-target={macDownload.target}
+                  data-download-version={macDownload.version}
+                  data-tracking-placement="footer"
+                >
+                  {t(locale, "footer.mac")}
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a
+              href="https://github.com/TypeWhisper/typewhisper-win/releases"
+              target="_blank"
+              rel="noopener noreferrer">{t(locale, "footer.windows")}</a
+            >
+          </li>
+          <li>
+            <a
+              href={iosAppStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-download-social-trigger
+              data-download-platform="ios"
+              data-download-target="ios_app_store"
+              data-download-version={iosVersion}
+              data-tracking-placement="footer">{t(locale, "footer.ios")}</a
+            >
+          </li>
+        </ul>
       </div>
 
-      <div class="h-px bg-border"></div>
-
-      <div class="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
-        <div class="flex flex-wrap gap-x-6 gap-y-2">
-          <a href={localePath(locale, "/#features")} class="transition-colors hover:text-foreground">{t(locale, "footer.features")}</a>
-          <a href={localePath(locale, "/pricing")} class="transition-colors hover:text-foreground">{t(locale, "footer.pricing")}</a>
-          <a href={localePath(locale, "/business")} class="transition-colors hover:text-foreground">{t(locale, "footer.business")}</a>
-          <a href={localePath(locale, "/sponsors")} class="transition-colors hover:text-foreground">{t(locale, "footer.sponsors")}</a>
-          <a href={localePath(locale, "/addons")} class="transition-colors hover:text-foreground">{t(locale, "footer.addons")}</a>
-          <a href={localePath(locale, "/docs")} class="transition-colors hover:text-foreground">{t(locale, "footer.docs")}</a>
-          <a href={localePath(locale, "/release-status")} class="transition-colors hover:text-foreground">{t(locale, "footer.releaseStatus")}</a>
-          <a href={localePath(locale, "/support")} class="transition-colors hover:text-foreground">{t(locale, "footer.support")}</a>
-          <a href={localePath(locale, "/changelog")} class="transition-colors hover:text-foreground">{t(locale, "footer.changelog")}</a>
-          <a href="https://github.com/TypeWhisper/typewhisper-win/releases" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.windows")}</a>
-          <a href={iosAppStoreUrl} target="_blank" rel="noopener noreferrer" data-download-social-trigger data-download-platform="ios" data-download-target="ios_app_store" data-download-version={iosVersion} data-tracking-placement="footer" class="transition-colors hover:text-foreground">{t(locale, "footer.ios")}</a>
-        </div>
-        <div class="flex flex-wrap gap-x-6 gap-y-2">
-          <a href={discordUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.discord")}</a>
-          <a href="https://github.com/TypeWhisper" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.github")}</a>
-          <a href="https://ko-fi.com/seofood" target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-foreground">{t(locale, "footer.kofi")}</a>
-        </div>
+      <div class="site-footer__group">
+        <p class="site-footer__label">{t(locale, "footer.group.community")}</p>
+        <ul>
+          {
+            community.map((link) => (
+              <li>
+                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href={localePath(locale, "/sponsors")}>{t(locale, "footer.sponsors")}</a>
+          </li>
+        </ul>
       </div>
+    </nav>
 
-      <div class="h-px bg-border"></div>
-
-      <div class="flex flex-col items-start gap-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p>&copy; {new Date().getFullYear()} {t(locale, "footer.copyright")}</p>
-        <div class="flex gap-x-6 gap-y-2 flex-wrap">
-          <a href={localePath(locale, "/privacy")} class="transition-colors hover:text-foreground">{t(locale, "footer.privacy")}</a>
-          <a href={localePath(locale, "/terms")} class="transition-colors hover:text-foreground">{t(locale, "footer.terms")}</a>
-          <a href={localePath(locale, "/legal-notice")} class="transition-colors hover:text-foreground">{t(locale, "footer.legalNotice")}</a>
-        </div>
-      </div>
+    <div class="site-footer__legal">
+      <p>&copy; {new Date().getFullYear()} {t(locale, "footer.copyright")}</p>
+      <ul>
+        <li><a href={localePath(locale, "/privacy")}>{t(locale, "footer.privacy")}</a></li>
+        <li><a href={localePath(locale, "/terms")}>{t(locale, "footer.terms")}</a></li>
+        <li><a href={localePath(locale, "/legal-notice")}>{t(locale, "footer.legalNotice")}</a></li>
+      </ul>
     </div>
   </div>
 </footer>
+
+<script>
+  // The closing waveform answers the pointer: bars near it rise, like a
+  // voice coming closer to the microphone.
+  const wave = document.querySelector<HTMLElement>("[data-footer-wave]");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (wave && !still.matches && window.matchMedia("(hover: hover)").matches) {
+    const bars = Array.from(wave.children) as HTMLElement[];
+    const reach = 140;
+    let frame = 0;
+    let pointerX: number | null = null;
+    let lifted: HTMLElement[] = [];
+
+    const render = () => {
+      frame = 0;
+      for (const bar of lifted) bar.style.removeProperty("--lift");
+      lifted = [];
+      if (pointerX === null) return;
+      for (const bar of bars) {
+        const box = bar.getBoundingClientRect();
+        const distance = Math.abs(box.left + box.width / 2 - pointerX);
+        if (distance > reach) continue;
+        const near = 1 - distance / reach;
+        bar.style.setProperty("--lift", (near * near * 1.6).toFixed(3));
+        lifted.push(bar);
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+
+    const footer = wave.closest("footer") ?? wave;
+    footer.addEventListener("pointermove", (event) => {
+      pointerX = (event as PointerEvent).clientX;
+      schedule();
+    });
+    footer.addEventListener("pointerleave", () => {
+      pointerX = null;
+      schedule();
+    });
+  }
+</script>

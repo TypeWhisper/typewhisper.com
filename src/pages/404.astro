@@ -1,8 +1,30 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { t, getLocaleFromPath, localePath } from "@/i18n/index";
+import { ArrowRight } from "lucide-react";
+import { BarMark } from "@/components/site";
+import { t, getLocaleFromPath, localePath, type Locale } from "@/i18n/index";
 
 const locale = getLocaleFromPath(Astro.url.pathname);
+
+function content(target: Locale) {
+  return {
+    locale: target,
+    label: t(target, "notFound.label"),
+    heading: t(target, "notFound.heading"),
+    description: t(target, "notFound.description"),
+    home: t(target, "notFound.backHome"),
+    docs: t(target, "notFound.docs"),
+    support: t(target, "notFound.support"),
+    homeHref: localePath(target, "/"),
+    docsHref: localePath(target, "/docs"),
+    supportHref: localePath(target, "/support"),
+  };
+}
+
+const copy = content(locale);
+// The static 404.html exists once; the script below takes the language from the address.
+const alternate = content(locale === "de" ? "en" : "de");
 ---
 <BaseLayout
   title={`${t(locale, "notFound.title")} - TypeWhisper`}
@@ -12,13 +34,44 @@ const locale = getLocaleFromPath(Astro.url.pathname);
   navigationPath="/"
   locale={locale}
 >
-  <div class="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center px-4 text-center">
-    <p class="text-6xl font-bold text-primary font-display">{t(locale, "notFound.title")}</p>
-    <h1 class="mt-4 text-2xl font-bold">{t(locale, "notFound.heading")}</h1>
-    <p class="mt-2 text-muted-foreground">{t(locale, "notFound.description")}</p>
-    <a href={localePath(locale, "/")} class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      {t(locale, "notFound.backHome")}
-    </a>
+  <div class="site-page utility-missing" data-not-found data-testid="not-found">
+    <div class="site-page-head site-page-head--center" data-testid="page-head">
+      <div class="site-wrap">
+        <p class="site-label">
+          <BarMark />
+          <span data-text="label">{copy.label}</span>
+        </p>
+        <h1 class="site-page-head__title" data-text="heading">{copy.heading}</h1>
+        <p class="site-page-head__lede" data-text="description">{copy.description}</p>
+        <div class="site-actions">
+          <a href={copy.homeHref} class="site-button" data-link="home">
+            <span data-text="home">{copy.home}</span>
+          </a>
+          <a href={copy.docsHref} class="site-link" data-link="docs">
+            <span data-text="docs">{copy.docs}</span>
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+          <a href={copy.supportHref} class="site-link" data-link="support">
+            <span data-text="support">{copy.support}</span>
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<script is:inline define:vars={{ alternate }}>
+  (function () {
+    var root = document.querySelector("[data-not-found]");
+    var wanted = window.location.pathname.split("/")[1];
+    if (!root || wanted !== alternate.locale) return;
+    root.lang = alternate.locale;
+    root.querySelectorAll("[data-text]").forEach(function (node) {
+      node.textContent = alternate[node.getAttribute("data-text")];
+    });
+    root.querySelectorAll("[data-link]").forEach(function (node) {
+      node.setAttribute("href", alternate[node.getAttribute("data-link") + "Href"]);
+    });
+  })();
+</script>

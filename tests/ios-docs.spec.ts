@@ -55,13 +55,17 @@ test.describe("detailed iOS documentation", () => {
         ).toBeVisible();
         await expect(
           page.locator(`nav a[href="/${locale}/docs/ios/${slug}"]`),
-        ).toHaveClass(/border-primary/);
-        await expect(
-          page.getByText(locale === "de" ? "Stabil" : "Stable", {
-            exact: true,
-          }).first(),
-        ).toBeVisible();
+        ).toHaveAttribute("aria-current", "page");
+        // The release notice belongs to the overview only.
+        await expect(page.locator(".docs-callout--release")).toHaveCount(0);
       }
+
+      await page.goto(`/${locale}/docs/ios`);
+      await expect(
+        page
+          .locator(".docs-callout--release")
+          .getByText(locale === "de" ? "Stabil" : "Stable", { exact: true }),
+      ).toBeVisible();
     });
   }
 
@@ -143,6 +147,53 @@ test.describe("detailed iOS documentation", () => {
       ),
     ).toBeVisible();
   });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} overview lists what is new in 1.1 and links the guides`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios`);
+
+      await expect(
+        page.getByRole("heading", {
+          level: 3,
+          name: locale === "de" ? "Neu in 1.1" : "What's new in 1.1",
+        }),
+      ).toBeVisible();
+
+      for (const [slug, title] of [
+        [
+          "profiles-and-processing",
+          locale === "de" ? "Schreibdienst wählen" : "Choose a writing service",
+        ],
+        [
+          "dictionary-and-snippets",
+          locale === "de"
+            ? "Wörterbuch importieren und exportieren"
+            : "Import and export the dictionary",
+        ],
+        [
+          "watch-and-shortcuts",
+          locale === "de"
+            ? "Über Kontrollzentrum oder Aktionstaste starten"
+            : "Start from Control Center or the Action Button",
+        ],
+      ]) {
+        const link = page.locator(
+          `#release-status a[href="/${locale}/docs/ios/${slug}#section-4"]`,
+        );
+        await expect(link).toBeVisible();
+        await link.click();
+        await expect(
+          page.locator("#section-4").getByRole("heading", {
+            level: 2,
+            name: title,
+          }),
+        ).toBeVisible();
+        await page.goBack();
+      }
+    });
+  }
 
   test("snippet placeholders expose localized list semantics", async ({
     page,

@@ -1,9 +1,12 @@
 ---
+import "@/styles/addons.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AddonsIndex from "@/pages/addons/_index.tsx";
+import { PageHead } from "@/components/site";
 import { getPlugins } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   locale: Locale;
@@ -23,5 +26,17 @@ const basePath = canonicalPath(locale, "/addons");
   canonicalPath={basePath}
   locale={locale}
 >
-  <AddonsIndex client:load locale={locale} allPlugins={allPlugins} basePath={basePath} />
+  <div class="site-page addon-page">
+    <PageHead
+      label={t(locale, "addons.label")}
+      title={t(locale, "addons.heading")}
+      lede={t(locale, "addons.subtitle")}
+    >
+      <a href={`${basePath}/develop`} class="site-link">
+        {t(locale, "addons.buildPlugin")}
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </a>
+    </PageHead>
+    <AddonsIndex client:load locale={locale} allPlugins={allPlugins} basePath={basePath} />
+  </div>
 </BaseLayout>

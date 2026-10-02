@@ -1,6 +1,7 @@
 import {
   buildGitHubHeaders,
   fetchReleaseData,
+  findPlatformsWithoutVersion,
   preservePreviousReleaseData,
 } from "./fetch-releases-lib.mjs";
 const { existsSync, readFileSync, writeFileSync } = await import("node:fs");
@@ -33,6 +34,20 @@ const fetched = await fetchReleaseData({
 const { releases, downloads } = preservePreviousReleaseData(fetched, previous, {
   logger: console,
 });
+
+// Release builds pass --require-versions: without the stable versions the
+// site would publish raw placeholders, so stop and keep the generated files.
+if (process.argv.includes("--require-versions")) {
+  const missing = findPlatformsWithoutVersion(downloads);
+  if (missing.length > 0) {
+    console.error(
+      `No stable version resolved for: ${missing.join(", ")}. ` +
+        "The release data could not be fetched and no earlier data exists. " +
+        "Nothing was written; run the build again once GitHub is reachable.",
+    );
+    process.exit(1);
+  }
+}
 
 writeFileSync(releasesPath, JSON.stringify(releases, null, 2) + "\n");
 console.log(`Wrote ${releases.length} releases to src/data/releases.json`);

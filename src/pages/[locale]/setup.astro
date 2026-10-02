@@ -1,5 +1,7 @@
 ---
+import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHead } from "@/components/site";
 import { SetupAssistant } from "@/components/setup/setup-assistant";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
@@ -13,11 +15,16 @@ const { locale } = Astro.props as { locale: Locale };
   canonicalPath={canonicalPath(locale, "/setup")}
   locale={locale}
 >
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-    <h1 class="text-3xl font-bold sm:text-4xl">{t(locale, "setup.title")}</h1>
-    <p class="mt-4 max-w-2xl text-lg text-muted-foreground">
-      {t(locale, "setup.subtitle")}
-    </p>
-    <SetupAssistant client:load locale={locale} />
+  <div class="site-page">
+    <PageHead
+      label={t(locale, "setup.label")}
+      title={t(locale, "setup.title")}
+      lede={t(locale, "setup.subtitle")}
+    />
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap">
+        <SetupAssistant client:load locale={locale} />
+      </div>
+    </section>
   </div>
 </BaseLayout>

@@ -1,0 +1,90 @@
+---
+import { ArrowRight } from "lucide-react";
+import { BarMark, WaveRule } from "@/components/site";
+import { FreeDownload } from "@/components/pricing/free-download";
+import { commercialTier, fill, priceFromLabel } from "@/components/pricing/format";
+import { t, type Locale } from "@/i18n/index";
+import type { CommercialTierId } from "@/lib/pricing";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const commercial: { id: CommercialTierId; examples: string[] }[] = [
+  { id: "individual", examples: ["included", "example1", "example2", "example3"] },
+  { id: "team", examples: ["included", "example1", "example2"] },
+  { id: "enterprise", examples: ["included", "example1", "example2"] },
+];
+
+const scenarios = [
+  {
+    id: "personal",
+    free: true,
+    title: t(locale, "pricing.decision.personal.title"),
+    price: t(locale, "pricing.decision.personal.recommend"),
+    examples: ["example1", "example2", "example3"].map((key) =>
+      t(locale, `pricing.decision.personal.${key}`),
+    ),
+  },
+  ...commercial.map(({ id, examples }) => {
+    const tier = commercialTier(id);
+    return {
+      id,
+      free: false,
+      title: t(locale, `pricing.decision.${id}.title`),
+      price: priceFromLabel(tier, locale),
+      examples: examples.map((key) =>
+        fill(t(locale, `pricing.decision.${id}.${key}`), { count: tier.devices }),
+      ),
+    };
+  }),
+];
+---
+
+<section class="site-section site-section--rule">
+  <div class="site-wrap">
+    <WaveRule label={t(locale, "pricing.decision.label")} seed={23} />
+    <div class="site-split site-split--aside">
+      <div class="site-split__head reveal-hidden">
+        <h2 class="site-title site-title--start">{t(locale, "pricing.decision.title")}</h2>
+        <p class="site-lede site-lede--start">{t(locale, "pricing.decision.subtitle")}</p>
+      </div>
+
+      <ul class="commercial-decide">
+        {scenarios.map((scenario) => (
+          <li class="commercial-decide__row">
+            <div class="commercial-decide__name">
+              <h3 class="site-heading">{scenario.title}</h3>
+              <p class={`site-meta ${scenario.free ? "commercial-decide__free" : ""}`}>{scenario.price}</p>
+            </div>
+            <ul class="site-list">
+              {scenario.examples.map((example) => (
+                <li>
+                  <BarMark />
+                  <span>{example}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="commercial-decide__action">
+              {scenario.free ? (
+                <FreeDownload client:visible locale={locale} className="site-link" arrow />
+              ) : (
+                <a
+                  href="#commercial-table"
+                  class="site-link"
+                  data-tracking-placement="pricing"
+                  aria-label={`${t(locale, "pricing.decision.action.commercial")}: ${scenario.title}`}
+                >
+                  {t(locale, "pricing.decision.action.commercial")}
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

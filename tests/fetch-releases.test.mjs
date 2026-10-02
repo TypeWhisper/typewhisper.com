@@ -1,7 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildRepoReleaseData,
   fetchReleaseData,
+  findPlatformsWithoutVersion,
   preservePreviousReleaseData,
 } from "../scripts/fetch-releases-lib.mjs";
 
@@ -119,6 +121,47 @@ test("fetchReleaseData paginates past plugin-heavy first pages and restores dire
     releases.some((release) => release.tag_name.startsWith("plugin-")),
     false,
   );
+});
+
+test("buildRepoReleaseData leaves model file releases out of the app releases", () => {
+  const { releases, download } = buildRepoReleaseData(
+    [
+      createRelease({
+        id: 3,
+        tag: "v1.1.0-daily.20261002.65",
+        publishedAt: "2026-10-02T10:28:38Z",
+      }),
+      createRelease({
+        id: 2,
+        tag: "model-parakeet-ultra-int8-v1",
+        name: "Parakeet Ultra 0.6B model files (int8)",
+        publishedAt: "2026-10-01T21:53:25Z",
+      }),
+      createRelease({
+        id: 1,
+        tag: "v1.0.9",
+        publishedAt: "2026-07-15T10:00:00Z",
+        assets: [
+          {
+            name: "TypeWhisper-win-x64-Setup.exe",
+            browser_download_url: "https://example.com/Setup.exe",
+          },
+        ],
+      }),
+    ],
+    {
+      platform: "windows",
+      fallbackUrl: "https://example.com/typewhisper-win/releases",
+      pickAsset: (assets) => assets.find((asset) => asset.name.endsWith(".exe")),
+    },
+    silentLogger,
+  );
+
+  assert.deepEqual(
+    releases.map((release) => release.tag_name),
+    ["v1.1.0-daily.20261002.65", "v1.0.9"],
+  );
+  assert.equal(download.version, "v1.0.9");
 });
 
 test("fetchReleaseData falls back when no stable release contains the expected asset", async () => {
@@ -259,4 +302,23 @@ test("preservePreviousReleaseData does not hide a successful fetch with no match
   assert.equal(downloads.mac.version, null);
   assert.equal(releases.length, 1);
   assert.equal(releases[0].tag_name, "v1.3.0-rc5");
+});
+
+test("findPlatformsWithoutVersion names every platform without a stable version", () => {
+  assert.deepEqual(
+    findPlatformsWithoutVersion({
+      mac: { url: "https://example.com/mac.dmg", version: "v1.6.1" },
+      windows: { url: "https://example.com/win.exe", version: "v1.0.9" },
+    }),
+    [],
+  );
+  assert.deepEqual(
+    findPlatformsWithoutVersion({
+      mac: { url: "https://example.com/mac.dmg", version: "v1.6.1" },
+      windows: { url: "https://example.com/releases", version: null },
+    }),
+    ["windows"],
+  );
+  assert.deepEqual(findPlatformsWithoutVersion({}), ["mac", "windows"]);
+  assert.deepEqual(findPlatformsWithoutVersion(undefined), ["mac", "windows"]);
 });

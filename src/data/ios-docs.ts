@@ -43,6 +43,7 @@ export interface IosDocPage {
   eyebrow: string;
   title: string;
   description: string;
+  /** May carry version placeholders; the page resolves them. */
   intro: string;
   sections: IosDocSection[];
   next?: IosDocSlug;
@@ -55,7 +56,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     description:
       "Requirements, permissions, local model setup, keyboard activation, and the first test recording for TypeWhisper on iPhone and iPad.",
     intro:
-      "TypeWhisper 1.1 is available from the App Store for iPhone and iPad. This guide takes you from installation through permissions, local models, keyboard setup, and your first recording.",
+      "TypeWhisper {iosVersion} is available from the App Store for iPhone and iPad. This guide takes you from installation through permissions, local models, keyboard setup, and your first recording.",
     sections: [
       {
         title: "Before you install",
@@ -111,6 +112,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Add the TypeWhisper keyboard if you want to dictate into other apps.",
           "Install the Watch app if you want to start recordings from your wrist.",
+          "Add the Start Recording control to Control Center, or assign it to the Action Button on supported iPhone models.",
           "Add TypeWhisper actions in Shortcuts or assign Quick Dictation to the Action Button.",
           "Enable private result notifications if you want an alert when a background capture finishes.",
         ],
@@ -224,7 +226,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Apple Speech can provide live results through the system speech framework when on-device recognition is available for your language and device.",
           "WhisperKit offers downloaded Whisper models for multilingual on-device transcription.",
           "Parakeet provides local recognition for supported languages. It returns the transcript after processing rather than a streaming preview.",
-          "Optional cloud engines are used only after you configure and select a provider.",
+          "Optional cloud engines, such as Meta with Muse Voice Transcribe, are used only after you configure and select a provider.",
         ],
         callout: {
           title: "Local is the default",
@@ -268,6 +270,23 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "TypeWhisper keeps the original recognition result alongside processed text. That makes it possible to compare what the speech engine heard with the formatted or translated result.",
           "Apple Translate can translate dictated text on device. Premium writing features can improve a fresh transcript, learn confirmed corrections, and create reviewable email drafts with a subject and body.",
         ],
+      },
+      {
+        title: "Choose a writing service",
+        paragraphs: [
+          "Formatting instructions and structured writing actions run through a writing service. Choose it under Settings > Writing Services.",
+        ],
+        bullets: [
+          "Apple Intelligence processes writing text on the device where it is available.",
+          "Downloaded local models run entirely on the device and do not require Apple Intelligence. TypeWhisper offers LFM2.5 2.6B (about 1.7 GB) and Gemma 4 E2B (about 2.8 GB). You review the model license before the download starts.",
+          "Cloud services such as OpenAI, OpenRouter, and Meta with Muse Spark run under your own account with that provider. The Meta API key is shared with Meta speech recognition.",
+          "Swipe the row of a local model to pause or remove its download.",
+        ],
+        callout: {
+          title: "What a writing service receives",
+          description:
+            "Local models and Apple Intelligence keep writing text on the device. A cloud service receives only the text needed for the selected writing task, not audio, History, or the dictionary.",
+        },
       },
     ],
     next: "files-history-and-inbox",
@@ -363,7 +382,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         ],
         image: {
           path: "/screenshots/ios/06-dictionary.png",
-          alt: "TypeWhisper dictionary and correction learning on iPhone",
+          alt: "TypeWhisper dictionary with terms and corrections on iPhone",
           layout: "phone",
         },
       },
@@ -405,6 +424,34 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Dictionary and snippets work locally without an account or subscription. Premium can sync them between signed-in TypeWhisper installations through automatic iCloud or a cloud folder selected with Apple's Files picker.",
         ],
       },
+      {
+        title: "Import and export the dictionary",
+        steps: [
+          {
+            title: "Open the menu in the Dictionary tab",
+            description:
+              "Tap the menu at the top right and choose Import from Another App.",
+          },
+          {
+            title: "Choose the file",
+            description:
+              "TypeWhisper reads TypeWhisper JSON, compatible JSON, Wispr Flow-compatible CSV, and plain text lists.",
+          },
+          {
+            title: "Check the preview",
+            description:
+              "The preview shows the detected format, the terms and corrections that are ready to import, duplicates, invalid rows, and the first entries.",
+          },
+          {
+            title: "Import",
+            description:
+              "Existing entries and duplicates stay unchanged. The import runs entirely on the device.",
+          },
+        ],
+        bullets: [
+          "Export Dictionary in the same menu saves your entries as a JSON file.",
+        ],
+      },
     ],
     next: "watch-and-shortcuts",
   },
@@ -414,7 +461,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     description:
       "Start a focused recording from your wrist, save Quick Dictations to Inbox, and build automations from the TypeWhisper App Intents.",
     intro:
-      "TypeWhisper can start from the Apple Watch, a Shortcut, widget, or Action Button. Background results are collected in Capture Inbox for later review.",
+      "TypeWhisper can start from the Apple Watch, Control Center, a Shortcut, a widget, or the Action Button. Background results are collected in Capture Inbox for later review.",
     sections: [
       {
         title: "Record from Apple Watch",
@@ -469,6 +516,24 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "If a transfer is delayed, keep the devices connected and open TypeWhisper on the iPhone.",
         ],
       },
+      {
+        title: "Start from Control Center or the Action Button",
+        paragraphs: [
+          "The Start Recording control starts a new TypeWhisper recording, also when TypeWhisper is not open. TypeWhisper lists the same steps under Settings > Control Center & Action Button.",
+        ],
+        steps: [
+          {
+            title: "Add the control to Control Center",
+            description:
+              "Open Control Center and tap the add button. Tap Add a Control, search for TypeWhisper, then choose Start Recording.",
+          },
+          {
+            title: "Assign it to the Action Button",
+            description:
+              "In iOS Settings, open Action Button and swipe to Controls. Choose Start Recording from TypeWhisper. This works on supported iPhone models.",
+          },
+        ],
+      },
     ],
     next: "privacy-and-premium",
   },
@@ -484,6 +549,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         title: "What stays local",
         bullets: [
           "On-device engines process recording audio on the iPhone or iPad.",
+          "Apple Intelligence and downloaded writing models process writing text entirely on the device.",
           "TypeWhisper does not include advertising or third-party tracking.",
           "Local History, dictionary, snippets, profiles, and model files remain in the app's storage unless you enable an export or sync feature.",
           "Normal keyboard typing works without Full Access.",
@@ -608,7 +674,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     description:
       "Voraussetzungen, Berechtigungen, lokale Modelle, Tastatur-Aktivierung und die erste Testaufnahme mit TypeWhisper auf iPhone und iPad.",
     intro:
-      "TypeWhisper 1.1 ist für iPhone und iPad im App Store verfügbar. Diese Anleitung führt dich von der Installation über Berechtigungen und lokale Modelle bis zur Tastatur-Einrichtung und ersten Aufnahme.",
+      "TypeWhisper {iosVersion} ist für iPhone und iPad im App Store verfügbar. Diese Anleitung führt dich von der Installation über Berechtigungen und lokale Modelle bis zur Tastatur-Einrichtung und ersten Aufnahme.",
     sections: [
       {
         title: "Vor der Installation",
@@ -664,7 +730,8 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Füge die TypeWhisper-Tastatur hinzu, wenn du in andere Apps diktieren möchtest.",
           "Installiere die Watch-App, wenn du Aufnahmen am Handgelenk starten möchtest.",
-          "Lege TypeWhisper-Aktionen in Kurzbefehle oder weise Quick Dictation der Aktionstaste zu.",
+          "Füge „Aufnahme starten“ zum Kontrollzentrum hinzu oder weise es auf unterstützten iPhone-Modellen der Aktionstaste zu.",
+          "Lege TypeWhisper-Aktionen in Kurzbefehle oder weise Schnelldiktat der Aktionstaste zu.",
           "Aktiviere private Ergebnis-Mitteilungen, wenn Hintergrundaufnahmen fertig verarbeitet sind.",
         ],
       },
@@ -757,7 +824,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Profile direkt über die Tastatur wechseln.",
           "Tastaturlayouts für Deutsch, Englisch, Spanisch, Französisch und Italienisch nutzen.",
           "Normal tippen, Zahlen und Satzzeichen eingeben, wischen, Vorschläge verwenden und die Tastatur wechseln.",
-          "Snippets erweitern oder ausgewählten Text mit einem passenden Profil verarbeiten.",
+          "Textbausteine erweitern oder ausgewählten Text mit einem passenden Profil verarbeiten.",
         ],
       },
     ],
@@ -777,7 +844,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Apple Speech benötigt wenig Einrichtung und kann Live-Ergebnisse über Apples Sprachframework liefern. Die lokale Verfügbarkeit hängt von Sprache und Gerät ab.",
           "WhisperKit bietet heruntergeladene Whisper-Modelle für mehrsprachige lokale Transkription.",
           "Parakeet erkennt unterstützte Sprachen lokal. Das Transkript erscheint nach der Verarbeitung; eine Streaming-Vorschau unterstützt diese iOS-Engine nicht.",
-          "Optionale Cloud-Engines werden erst verwendet, wenn du einen Anbieter einrichtest und auswählst.",
+          "Optionale Cloud-Engines wie Meta mit Muse Voice Transcribe werden erst verwendet, wenn du einen Anbieter einrichtest und auswählst.",
         ],
         callout: {
           title: "Lokal ist Standard",
@@ -821,6 +888,23 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "TypeWhisper bewahrt das ursprüngliche Erkennungsergebnis neben dem verarbeiteten Text auf. So kannst du vergleichen, was die Sprach-Engine gehört hat und was Formatierung oder Übersetzung daraus gemacht haben.",
           "Apple Translate kann diktierten Text lokal übersetzen. Premium-Schreibfunktionen können ein frisches Transkript verbessern, bestätigte Korrekturen lernen und prüfbare E-Mail-Entwürfe mit Betreff und Text erstellen.",
         ],
+      },
+      {
+        title: "Schreibdienst wählen",
+        paragraphs: [
+          "Formatierungsanweisungen und strukturierte Schreibaktionen laufen über einen Schreibdienst. Du wählst ihn unter Einstellungen > Schreibdienste.",
+        ],
+        bullets: [
+          "Apple Intelligence verarbeitet Text auf dem Gerät, wenn es dort verfügbar ist.",
+          "Geladene lokale Modelle laufen vollständig auf dem Gerät und benötigen kein Apple Intelligence. TypeWhisper bietet LFM2.5 2.6B (etwa 1,7 GB) und Gemma 4 E2B (etwa 2,8 GB). Vor dem Download siehst du die Modelllizenz.",
+          "Cloud-Dienste wie OpenAI, OpenRouter und Meta mit Muse Spark laufen über dein eigenes Konto beim Anbieter. Der Meta-API-Schlüssel gilt auch für die Meta-Spracherkennung.",
+          "Wische über die Zeile eines lokalen Modells, um den Download zu pausieren oder zu entfernen.",
+        ],
+        callout: {
+          title: "Was ein Schreibdienst erhält",
+          description:
+            "Lokale Modelle und Apple Intelligence behalten den Text auf dem Gerät. Ein Cloud-Dienst erhält nur den Text, der für die gewählte Schreibaufgabe nötig ist, aber weder Audio noch Verlauf oder Wörterbuch.",
+        },
       },
     ],
     next: "files-history-and-inbox",
@@ -875,7 +959,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Capture Inbox abarbeiten",
         paragraphs: [
-          "Quick Dictations, Apple-Watch-Aufnahmen, Kalenderentwürfe und fehlgeschlagene Aufnahmen mit Handlungsbedarf erscheinen in der Inbox. Ein Badge und optionale private Mitteilungen machen neue Ergebnisse sichtbar.",
+          "Schnelldiktate, Apple-Watch-Aufnahmen, Kalenderentwürfe und fehlgeschlagene Aufnahmen mit Handlungsbedarf erscheinen in der Inbox. Ein Badge und optionale private Mitteilungen machen neue Ergebnisse sichtbar.",
           "Auf dem iPad trennt die Seitenleiste Inbox, gesamten Verlauf und Gerätequellen. Wähle einen Eintrag, prüfe ihn, korrigiere eine fehlgeschlagene Verarbeitung oder markiere ihn als erledigt.",
         ],
         image: {
@@ -889,11 +973,11 @@ const de: Record<IosDocSlug, IosDocPage> = {
   },
   "dictionary-and-snippets": {
     eyebrow: "Wiederverwendbare Sprache",
-    title: "Wörterbuch und Snippets",
+    title: "Wörterbuch und Textbausteine",
     description:
       "TypeWhisper Namen und Fachbegriffe beibringen, bestätigte Korrekturen anlegen und kurze Auslöser in wiederverwendbaren Text mit dynamischen Platzhaltern verwandeln.",
     intro:
-      "Das Wörterbuch verbessert wiederkehrendes Vokabular. Snippets ersetzen nach der Transkription einen kurzen gesprochenen oder getippten Auslöser durch längeren Text.",
+      "Das Wörterbuch verbessert wiederkehrendes Vokabular. Textbausteine ersetzen nach der Transkription einen kurzen gesprochenen oder getippten Auslöser durch längeren Text.",
     sections: [
       {
         title: "Persönliches Wörterbuch aufbauen",
@@ -916,12 +1000,12 @@ const de: Record<IosDocSlug, IosDocPage> = {
         ],
         image: {
           path: "/screenshots/ios/06-dictionary.png",
-          alt: "TypeWhisper-Wörterbuch und Korrektur-Lernen auf dem iPhone",
+          alt: "TypeWhisper-Wörterbuch mit Begriffen und Korrekturen auf dem iPhone",
           layout: "phone",
         },
       },
       {
-        title: "Snippet erstellen",
+        title: "Textbaustein erstellen",
         steps: [
           {
             title: "Merkbaren Auslöser wählen",
@@ -955,7 +1039,35 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Nur synchronisieren, wenn du es willst",
         paragraphs: [
-          "Wörterbuch und Snippets funktionieren lokal ohne Account oder Abo. Premium kann sie zwischen angemeldeten TypeWhisper-Installationen über automatisches iCloud oder einen mit Apples Dateiauswahl gewählten Cloud-Ordner synchronisieren.",
+          "Wörterbuch und Textbausteine funktionieren lokal ohne Account oder Abo. Premium kann sie zwischen angemeldeten TypeWhisper-Installationen über automatisches iCloud oder einen mit Apples Dateiauswahl gewählten Cloud-Ordner synchronisieren.",
+        ],
+      },
+      {
+        title: "Wörterbuch importieren und exportieren",
+        steps: [
+          {
+            title: "Menü im Tab Wörterbuch öffnen",
+            description:
+              "Tippe oben rechts auf das Menü und wähle „Aus anderer App importieren“.",
+          },
+          {
+            title: "Datei wählen",
+            description:
+              "TypeWhisper liest TypeWhisper-JSON, kompatibles JSON, Wispr-Flow-kompatibles CSV und einfache Textlisten.",
+          },
+          {
+            title: "Vorschau prüfen",
+            description:
+              "Die Vorschau zeigt das erkannte Format, die importbereiten Begriffe und Korrekturen, Duplikate, ungültige Zeilen und die ersten Einträge.",
+          },
+          {
+            title: "Importieren",
+            description:
+              "Vorhandene Einträge und Duplikate bleiben unverändert. Der Import läuft vollständig auf dem Gerät.",
+          },
+        ],
+        bullets: [
+          "„Wörterbuch exportieren“ im selben Menü speichert deine Einträge als JSON-Datei.",
         ],
       },
     ],
@@ -965,9 +1077,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Erfassen, ohne zuerst die App zu öffnen",
     title: "Apple Watch, Kurzbefehle, Widgets und Aktionstaste",
     description:
-      "Am Handgelenk aufnehmen, Quick Dictations in der Inbox sammeln und Automationen aus den TypeWhisper-App-Aktionen bauen.",
+      "Am Handgelenk aufnehmen, Schnelldiktate in der Inbox sammeln und Automationen aus den TypeWhisper-App-Aktionen bauen.",
     intro:
-      "TypeWhisper kann über Apple Watch, Kurzbefehl, Widget oder Aktionstaste starten. Ergebnisse im Hintergrund landen zur späteren Prüfung in der Capture Inbox.",
+      "TypeWhisper kann über Apple Watch, Kontrollzentrum, Kurzbefehl, Widget oder Aktionstaste starten. Ergebnisse im Hintergrund landen zur späteren Prüfung in der Capture Inbox.",
     sections: [
       {
         title: "Mit der Apple Watch aufnehmen",
@@ -997,7 +1109,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Verfügbare Kurzbefehle-Aktionen",
         bullets: [
-          "Quick Dictation startet oder stoppt eine Aufnahme und speichert das Ergebnis in der Inbox.",
+          "Schnelldiktat startet oder stoppt eine Aufnahme und speichert das Ergebnis in der Inbox.",
           "Aufnahme starten, Aufnahme stoppen und Aufnahme pausieren oder fortsetzen steuern die aktive Aufnahme.",
           "Audiodatei transkribieren übergibt eine gewählte Datei an TypeWhisper.",
           "Letzte Transkription abrufen gibt den Text an die nächste Kurzbefehl-Aktion weiter.",
@@ -1006,7 +1118,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         callout: {
           title: "Aktionstaste",
           description:
-            "Erstelle einen Kurzbefehl mit Quick Dictation und weise ihn anschließend in den iOS-Einstellungen der Aktionstaste zu. Dieselbe Aktion kann in unterstützten Widgets liegen.",
+            "Erstelle einen Kurzbefehl mit Schnelldiktat und weise ihn anschließend in den iOS-Einstellungen der Aktionstaste zu. Dieselbe Aktion kann in unterstützten Widgets liegen.",
         },
       },
       {
@@ -1017,9 +1129,27 @@ const de: Record<IosDocSlug, IosDocPage> = {
           layout: "wide",
         },
         bullets: [
-          "Private Mitteilungen können melden, wenn Watch-Aufnahme oder Quick Dictation fertig verarbeitet sind.",
+          "Private Mitteilungen können melden, wenn Watch-Aufnahme oder Schnelldiktat fertig verarbeitet sind.",
           "Letzte Watch-Aufnahmen bleiben auf der Uhr sichtbar; der vollständige Eintrag liegt im iPhone-Verlauf.",
           "Bei verzögerter Übertragung beide Geräte verbunden lassen und TypeWhisper auf dem iPhone öffnen.",
+        ],
+      },
+      {
+        title: "Über Kontrollzentrum oder Aktionstaste starten",
+        paragraphs: [
+          "Das Steuerelement „Aufnahme starten“ startet eine neue TypeWhisper-Aufnahme, auch wenn TypeWhisper nicht geöffnet ist. Dieselben Schritte findest du in TypeWhisper unter Einstellungen > Kontrollzentrum & Aktionstaste.",
+        ],
+        steps: [
+          {
+            title: "Steuerelement zum Kontrollzentrum hinzufügen",
+            description:
+              "Öffne das Kontrollzentrum und tippe auf die Hinzufügen-Taste. Tippe auf „Steuerelement hinzufügen“, suche nach TypeWhisper und wähle „Aufnahme starten“.",
+          },
+          {
+            title: "Der Aktionstaste zuweisen",
+            description:
+              "Öffne in den iOS-Einstellungen „Aktionstaste“ und streiche zu „Steuerelemente“. Wähle „Aufnahme starten“ von TypeWhisper. Das funktioniert auf unterstützten iPhone-Modellen.",
+          },
         ],
       },
     ],
@@ -1031,14 +1161,15 @@ const de: Record<IosDocSlug, IosDocPage> = {
     description:
       "Verstehen, was auf dem Gerät bleibt, was ein gewählter Anbieter erhält, warum die Tastatur Vollzugriff braucht und welche Funktionen Premium benötigen.",
     intro:
-      "Lokales Diktieren, Wörterbuch, Snippets und Tastatur benötigen weder Account noch Abo. Cloud-Verarbeitung und Premium sind optionale Ebenen mit getrennten Datenwegen.",
+      "Lokales Diktieren, Wörterbuch, Textbausteine und Tastatur benötigen weder Account noch Abo. Cloud-Verarbeitung und Premium sind optionale Ebenen mit getrennten Datenwegen.",
     sections: [
       {
         title: "Was lokal bleibt",
         bullets: [
           "Lokale Engines verarbeiten Aufnahme-Audio auf iPhone oder iPad.",
+          "Apple Intelligence und geladene Schreibmodelle verarbeiten Text vollständig auf dem Gerät.",
           "TypeWhisper enthält keine Werbung und kein Drittanbieter-Tracking.",
-          "Lokaler Verlauf, Wörterbuch, Snippets, Profile und Modelle bleiben im App-Speicher, solange du keinen Export oder Sync aktivierst.",
+          "Lokaler Verlauf, Wörterbuch, Textbausteine, Profile und Modelle bleiben im App-Speicher, solange du keinen Export oder Sync aktivierst.",
           "Normales Tippen mit der Tastatur funktioniert ohne Vollzugriff.",
         ],
       },
@@ -1048,7 +1179,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Eine Cloud-Sprach-Engine erhält Audio nur, wenn du diesen Anbieter einrichtest und auswählst.",
           "Ein Cloud-Schreibanbieter erhält den Text, der für die von dir gestartete Schreibaktion nötig ist.",
           "Der Tastatur-Vollzugriff erlaubt Tastatur und Haupt-App, kurzlebigen Aufnahmezustand und Ergebnis zu teilen. Die Haupt-App nimmt das Mikrofon auf.",
-          "Premium-Berechtigungsanfragen enthalten Account-, Geräte- und Kaufstatus, nicht Wörterbuch- oder Snippet-Inhalte.",
+          "Premium-Berechtigungsanfragen enthalten Account-, Geräte- und Kaufstatus, nicht Wörterbuch- oder Textbaustein-Inhalte.",
         ],
       },
       {
@@ -1056,7 +1187,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Ein frisches Transkript verbessern und TypeWhisper bestätigte Korrekturen beibringen.",
           "Prüfbare E-Mail-Entwürfe mit Betreff und Text erstellen.",
-          "Wörterbuch und Snippets zwischen angemeldeten iPhone- und iPad-Installationen synchronisieren.",
+          "Wörterbuch und Textbausteine zwischen angemeldeten iPhone- und iPad-Installationen synchronisieren.",
           "Optional Text und Metadaten aus Verlauf und Inbox synchronisieren. Audio-Sync gilt nur für neue Einträge nach der Aktivierung.",
         ],
         callout: {
@@ -1086,7 +1217,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Sync-Ordner trennen oder löschen",
             description:
-              "Das Entfernen der Cloud-Vorgänge löscht lokale Wörterbuch- und Snippet-Daten nicht vom aktuellen Gerät.",
+              "Das Entfernen der Cloud-Vorgänge löscht lokale Wörterbuch- und Textbaustein-Daten nicht vom aktuellen Gerät.",
           },
         ],
       },
@@ -1128,7 +1259,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         ],
       },
       {
-        title: "Watch-Aufnahme oder Quick Dictation hängt in der Inbox",
+        title: "Watch-Aufnahme oder Schnelldiktat hängt in der Inbox",
         bullets: [
           "Lasse iPhone und Watch über Bluetooth oder WLAN verbunden und öffne TypeWhisper auf dem iPhone.",
           "Prüfe vor längeren Aufnahmen den freien Speicher auf der Watch.",

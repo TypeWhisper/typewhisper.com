@@ -1,0 +1,419 @@
+/*
+ * Use-case pages, prefix `usecase-`.
+ * Built from the `site-` primitives; this file holds only what they do not
+ * cover. Outside of a layer, so these rules win over primitives and utilities.
+ * Colors, type, and spacing come from the tokens in `src/index.css`.
+ */
+
+/* Anchors clear the sticky site header. */
+.usecase-page :is(h2, h3)[id] {
+  scroll-margin-top: calc(var(--header-height) + 2rem);
+}
+
+.usecase-code {
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--fill);
+  padding: 0.125em 0.375em;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* ---------- Page head: the label line leads back to the index ---------- */
+
+.usecase-page .usecase-crumb {
+  flex-wrap: wrap;
+  margin-block: -1rem 0.5rem;
+}
+
+.usecase-crumb__link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.usecase-crumb__link:hover {
+  color: var(--accent-text-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.usecase-crumb__here,
+.usecase-crumb__slash {
+  color: var(--muted-foreground);
+}
+
+/* ---------- Index: filter and hairline list ---------- */
+
+.usecase-chip {
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.usecase-chip__count {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.usecase-chip[aria-pressed="true"] .usecase-chip__count {
+  color: inherit;
+}
+
+/* One entry per row, closed by a hairline. */
+.usecase-list {
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+}
+
+.usecase-list > li:last-child .site-index__link {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.usecase-list .site-index__text {
+  max-width: 40rem;
+}
+
+.usecase-list .site-index__name {
+  align-items: flex-start;
+}
+
+/* Category and arrow close the first line of the name. */
+.usecase-list__side {
+  display: inline-flex;
+  min-height: 1.2em;
+  flex: none;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.usecase-list__category {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.usecase-empty {
+  margin: 0;
+  padding-bottom: var(--section-space);
+}
+
+.usecase-related__all {
+  margin-top: 1rem;
+}
+
+/* ---------- Spoken, written ---------- */
+
+/* Same columns as `site-split`, so the texts line up with the lists below. */
+.usecase-spoken {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: start;
+  gap: clamp(2.5rem, 7vw, 6rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.usecase-spoken__said,
+.usecase-spoken__typed {
+  border-top: 1px solid var(--hairline);
+  padding-top: 1.5rem;
+}
+
+.usecase-spoken__label {
+  margin: 0 0 0.875rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.usecase-spoken__label--typed {
+  color: var(--accent-text);
+}
+
+.usecase-spoken__raw {
+  margin: 0;
+  max-width: 26rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.usecase-spoken__raw del {
+  color: inherit;
+  text-decoration-line: line-through;
+  text-decoration-color: var(--accent-text);
+  text-decoration-thickness: 1.5px;
+}
+
+.usecase-spoken__text {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 3.4vw, 2.75rem);
+  font-variant-ligatures: none;
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  line-height: 1.16;
+  text-rendering: geometricPrecision;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+.usecase-spoken__text + .usecase-spoken__text {
+  margin-top: 0.2em;
+}
+
+.usecase-spoken__text--item {
+  padding-left: 0.72em;
+  text-indent: -0.72em;
+}
+
+.usecase-spoken__note {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---------- Screenshot ---------- */
+
+.usecase-shot {
+  max-width: 60rem;
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
+}
+
+/* The capture brings its own margin for the window shadow. */
+.usecase-shot .site-caption {
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+/* ---------- Steps ---------- */
+
+.usecase-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(1.75rem, 3.5vw, 3.5rem);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usecase-steps__item {
+  min-width: 0;
+  border-top: 1px solid var(--hairline);
+  padding-block: 1.5rem 0.5rem;
+}
+
+.usecase-steps__count {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+/* ---------- Benefits ---------- */
+
+.usecase-benefits {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usecase-benefits__item {
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  padding-block: 1.25rem;
+  color: var(--foreground);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.usecase-benefits__item:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.usecase-benefits__item .site-mark {
+  margin-top: 0.4em;
+}
+
+/* ---------- Long text with its sections beside it ---------- */
+
+.usecase-toc__list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usecase-toc__link {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border-top: 1px solid var(--hairline);
+  padding-block: 0.625rem;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    color 200ms var(--motion-ease-out),
+    border-color 200ms var(--motion-ease-out);
+}
+
+.usecase-toc__list > li:last-child .usecase-toc__link {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.usecase-toc__link:hover {
+  border-top-color: var(--accent-text);
+  color: var(--foreground);
+}
+
+/* The first headline of the text needs no line above: the section opens it. */
+.usecase-prose > h2:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* Code in a headline stays a part of the line. */
+.usecase-prose :is(h2, h3) code {
+  font-size: 0.72em;
+  font-weight: 500;
+  letter-spacing: 0;
+  vertical-align: 0.08em;
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 899px) {
+  .usecase-spoken {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .usecase-spoken__raw {
+    max-width: 34rem;
+  }
+
+  .usecase-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Rows like `site-steps`: the count beside the text. */
+  .usecase-steps__item {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    padding-block: 1.75rem;
+  }
+
+  .usecase-steps__item:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .usecase-steps__count {
+    grid-row: span 2;
+    margin: 0;
+    padding-top: 0.7rem;
+  }
+
+  .usecase-steps__item > :not(.usecase-steps__count) {
+    grid-column: 2;
+  }
+
+  .usecase-toc {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  /*
+   * The screenshot stays readable on a phone: shown larger and panned
+   * sideways. The strip starts at its right end, where the content of the
+   * window is. Same behaviour as the feature tour of the homepage.
+   */
+  .usecase-shot__pan {
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter) * -1);
+    direction: rtl;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2.75rem);
+    mask-image: linear-gradient(to right, transparent, #000 2.75rem);
+  }
+
+  .usecase-shot__pan::-webkit-scrollbar {
+    display: none;
+  }
+
+  .usecase-shot__pan picture {
+    width: 150vw;
+    direction: ltr;
+  }
+
+  .usecase-shot .site-caption {
+    text-align: left;
+  }
+
+  /*
+   * A table becomes a list on a phone: the head names the order of the
+   * lines once, every row stacks its cells.
+   */
+  .usecase-prose table {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .usecase-prose :is(thead, tbody, tr, th, td) {
+    display: block;
+  }
+
+  .usecase-prose :is(th, td) {
+    border: 0;
+    padding: 0;
+  }
+
+  .usecase-prose thead tr {
+    border-bottom: 1px solid var(--hairline-strong);
+    padding-bottom: 0.875rem;
+  }
+
+  .usecase-prose th + th {
+    margin-top: 0.25rem;
+  }
+
+  .usecase-prose tbody tr {
+    border-bottom: 1px solid var(--hairline);
+    padding-block: 1.125rem;
+  }
+
+  .usecase-prose td:first-child {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  .usecase-prose td + td {
+    margin-top: 0.375rem;
+  }
+
+  .usecase-prose td:last-child:not(:first-child) {
+    color: var(--foreground);
+  }
+}

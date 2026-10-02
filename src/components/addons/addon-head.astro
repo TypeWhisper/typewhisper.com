@@ -1,0 +1,85 @@
+---
+import { BarMark } from "@/components/site";
+import { AddonMark } from "@/components/addons/addon-mark";
+import type { Plugin } from "@/data/addons";
+import { t, type Locale } from "@/i18n/index";
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  locale: Locale;
+  /** Path to this page; the last entry is the page itself. */
+  crumbs: Crumb[];
+  label?: string;
+  title: string;
+  lede?: string;
+  /** Shows the logo or icon tile of the add-on beside the label. */
+  plugin?: Plugin;
+  testId?: string;
+}
+
+const { locale, crumbs, label, title, lede, plugin, testId } = Astro.props;
+// A page without links passes an empty slot.
+const actions = Astro.slots.has("default")
+  ? (await Astro.slots.render("default")).trim()
+  : "";
+---
+
+<div
+  class="site-page-head site-page-head--compact site-page-head--rule addon-head"
+  data-testid={testId ?? "page-head"}
+>
+  <div class="site-wrap">
+    <nav class="addon-crumbs" aria-label={t(locale, "addons.breadcrumb")}>
+      <ol>
+        {crumbs.map((crumb) => (
+          <li>
+            {crumb.href ? (
+              <a href={crumb.href}>{crumb.label}</a>
+            ) : (
+              <span aria-current="page">{crumb.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <div class="addon-head__grid">
+      <div class="addon-head__main">
+        {(plugin || label) && (
+          <div class="addon-head__kicker">
+            {plugin && (
+              <span class="site-index__mark addon-head__mark">
+                <AddonMark plugin={plugin} alt={plugin.name} />
+              </span>
+            )}
+            {label && (
+              <p class="site-label">
+                {!plugin && <BarMark />}
+                {label}
+              </p>
+            )}
+          </div>
+        )}
+        <h1 class="site-page-head__title">{title}</h1>
+        {lede && <p class="site-page-head__lede">{lede}</p>}
+        {Astro.slots.has("meta") && (
+          <ul class="addon-head__meta">
+            <slot name="meta" />
+          </ul>
+        )}
+        {actions && (
+          <div class="site-actions addon-head__actions" set:html={actions} />
+        )}
+      </div>
+      {Astro.slots.has("aside") && (
+        <div class="addon-head__aside">
+          <slot name="aside" />
+        </div>
+      )}
+    </div>
+  </div>
+</div>

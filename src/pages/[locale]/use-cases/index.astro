@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/use-cases.css";
 import UseCasesIndex from "@/pages/use-cases/_index.tsx";
 import { getUseCases } from "@/data/use-cases";
 import { t, type Locale } from "@/i18n/index";
@@ -14,7 +15,15 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const allUseCases = getUseCases(locale);
+const entries = getUseCases(locale).map(
+  ({ slug, name, description, category, group }) => ({
+    slug,
+    name,
+    description,
+    category,
+    group,
+  }),
+);
 const basePath = canonicalPath(locale, "/use-cases");
 ---
 <BaseLayout
@@ -23,5 +32,5 @@ const basePath = canonicalPath(locale, "/use-cases");
   canonicalPath={basePath}
   locale={locale}
 >
-  <UseCasesIndex client:load locale={locale} allUseCases={allUseCases} basePath={basePath} />
+  <UseCasesIndex client:load locale={locale} entries={entries} basePath={basePath} />
 </BaseLayout>

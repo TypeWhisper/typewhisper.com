@@ -2,10 +2,11 @@ import { replacePageUrl } from "@/hooks/use-page-url";
 import { useEffect, useState } from "react";
 import { ArrowRight, Search, X } from "lucide-react";
 import {
-  plugins,
+  getPlugins,
   categoryKeys,
   platformKeys,
-  sourceKeys,
+  retiredSourceFilters,
+  sourceFilters,
   type Plugin,
   type PluginCategory,
   type PluginPlatform,
@@ -17,7 +18,7 @@ import { PlatformFilter } from "@/components/addons/platform-filter";
 import { SourceFilter } from "@/components/addons/source-filter";
 import { AddonCard } from "@/components/addons/addon-card";
 import { getAddonCategoriesForPlatform } from "@/data/addon-edition-capabilities";
-import { Button } from "@/components/ui/button";
+import { WaveRule } from "@/components/site/wave-rule";
 
 interface AddonsIndexProps {
   locale?: Locale;
@@ -53,10 +54,19 @@ export default function AddonsIndex({
         const value = params.get(key);
         return value && Object.hasOwn(values, value) ? value : "all";
       };
+      const sourceParam = params.get("source") ?? "";
+      // A link with a retired source shows all sources and loses the parameter.
+      if (retiredSourceFilters.includes(sourceParam)) {
+        const url = new URL(location.href);
+        url.searchParams.delete("source");
+        replacePageUrl(url);
+      }
       setFilters({
         category: valid("category", categoryKeys),
         platform: valid("platform", platformKeys),
-        source: valid("source", sourceKeys),
+        source: (sourceFilters as readonly string[]).includes(sourceParam)
+          ? sourceParam
+          : "all",
         query: params.get("q") ?? "",
       });
     }
@@ -81,7 +91,7 @@ export default function AddonsIndex({
   const setSource = (source: string) => updateFilters({ source });
   const setQuery = (query: string) => updateFilters({ query });
 
-  const items = allPlugins ?? plugins;
+  const items = allPlugins ?? getPlugins(locale);
 
   const hasFilters =
     category !== "all" ||
@@ -119,36 +129,22 @@ export default function AddonsIndex({
   }
 
   return (
-    <div className="py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            {t(locale, "addons.heading")}
-          </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            {t(locale, "addons.subtitle")}
-          </p>
-          <Button variant="link" asChild className="mt-2">
-            <a href={`${basePath}/develop`}>
-              {t(locale, "addons.buildPlugin")}{" "}
-              <ArrowRight className="size-4" />
-            </a>
-          </Button>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-3">
-          <div className="relative">
-            <Search
-              className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-              aria-hidden="true"
-            />
+    <section className="site-section site-section--tight-top addon-catalog">
+      <div className="site-wrap">
+        <div
+          className="addon-filters"
+          role="search"
+          aria-label={t(locale, "addons.filter.group")}
+        >
+          <div className="addon-search">
+            <Search className="addon-search__icon" aria-hidden="true" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t(locale, "addons.searchPlaceholder")}
               aria-label={t(locale, "addons.searchPlaceholder")}
-              className="w-full rounded-full border bg-card py-2 pl-9 pr-9 text-sm outline-none transition-colors focus:border-primary focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+              className="addon-search__input"
               data-testid="addons-search"
             />
             {query && (
@@ -156,90 +152,120 @@ export default function AddonsIndex({
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label={t(locale, "addons.clearSearch")}
-                className="absolute right-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground"
+                className="addon-search__clear"
               >
-                <X className="size-3.5" />
+                <X className="size-4" aria-hidden="true" />
               </button>
             )}
           </div>
 
-          <CategoryFilter
-            selected={category as PluginCategory | "all"}
-            onChange={setCategory}
-            locale={locale}
-          />
-          <PlatformFilter
-            selected={platform as PluginPlatform | "all"}
-            onChange={setPlatform}
-            locale={locale}
-          />
-          <SourceFilter
-            selected={source as PluginSource | "all"}
-            onChange={setSource}
-            locale={locale}
-          />
+          <div className="addon-filters__rows">
+            <CategoryFilter
+              selected={category as PluginCategory | "all"}
+              onChange={setCategory}
+              locale={locale}
+            />
+            <PlatformFilter
+              selected={platform as PluginPlatform | "all"}
+              onChange={setPlatform}
+              locale={locale}
+            />
+            <SourceFilter
+              selected={source as PluginSource | "all"}
+              onChange={setSource}
+              locale={locale}
+            />
+          </div>
         </div>
 
-        <p className="mt-6 text-sm text-muted-foreground" role="status">
-          {t(locale, "addons.resultCount").replace(
-            "{count}",
-            String(filtered.length),
-          )}
-        </p>
         {!hasFilters && featured.length > 0 && (
-          <section className="mt-10" data-testid="featured-addons">
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              {t(locale, "addons.featured")}
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {featured.map((plugin) => (
-                <AddonCard
-                  key={`featured-${plugin.slug}`}
-                  plugin={plugin}
-                  basePath={basePath}
-                  locale={locale}
-                />
-              ))}
+          <section className="addon-group" data-testid="featured-addons">
+            <div className="addon-group__head">
+              <h2 className="site-label">{t(locale, "addons.featured")}</h2>
+              <WaveRule seed={17} align="start" />
             </div>
+            <ul className="site-index site-index--tiles site-index--open addon-index addon-index--featured">
+              {featured.map((plugin) => (
+                <li key={`featured-${plugin.slug}`}>
+                  <AddonCard
+                    plugin={plugin}
+                    basePath={basePath}
+                    locale={locale}
+                  />
+                </li>
+              ))}
+            </ul>
           </section>
         )}
 
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((plugin) => (
-            <AddonCard
-              key={plugin.slug}
-              plugin={plugin}
-              platform={platform as PluginPlatform | "all"}
-              basePath={basePath}
-              locale={locale}
-            />
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className="mt-12 flex flex-col items-center gap-4 text-center">
-            <p className="text-muted-foreground">
-              {t(
-                locale,
-                platform === "ios" ? "addons.iosEmpty" : "addons.noResults",
-              )}
+        <section className="addon-group">
+          <div className="addon-group__head">
+            <h2 className="site-label">
+              {t(locale, hasFilters ? "addons.results" : "addons.all")}
+            </h2>
+            <WaveRule seed={23} align="start" />
+            <p className="addon-group__count" role="status">
+              {filtered.length === 1
+                ? t(locale, "addons.resultCountOne")
+                : t(locale, "addons.resultCount").replace(
+                    "{count}",
+                    String(filtered.length),
+                  )}
             </p>
-            {platform === "ios" && (
-              <a
-                className="text-primary underline"
-                href={`/${locale}/docs/ios`}
-              >
-                {t(locale, "addons.iosGuide")}
-              </a>
-            )}
             {hasFilters && (
-              <Button variant="outline" size="sm" onClick={clearAllFilters}>
+              <button
+                type="button"
+                className="addon-group__reset"
+                onClick={clearAllFilters}
+              >
                 {t(locale, "addons.clearAll")}
-              </Button>
+              </button>
             )}
           </div>
-        )}
+
+          {filtered.length > 0 && (
+            <ul className="site-index site-index--tiles addon-index">
+              {filtered.map((plugin) => (
+                <li key={plugin.slug}>
+                  <AddonCard
+                    plugin={plugin}
+                    platform={platform as PluginPlatform | "all"}
+                    basePath={basePath}
+                    locale={locale}
+                    showRecommended
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {filtered.length === 0 && (
+            <div className="site-note addon-empty">
+              <p>
+                {t(
+                  locale,
+                  platform === "ios" ? "addons.iosEmpty" : "addons.noResults",
+                )}
+              </p>
+              {platform === "ios" && (
+                <a className="site-link" href={`/${locale}/docs/ios`}>
+                  {t(locale, "addons.iosGuide")}
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </a>
+              )}
+              {hasFilters && (
+                <button
+                  type="button"
+                  className="site-button site-button--quiet site-button--small"
+                  onClick={clearAllFilters}
+                >
+                  {t(locale, "addons.clearAll")}
+                </button>
+              )}
+            </div>
+          )}
+        </section>
       </div>
-    </div>
+    </section>
   );
 }

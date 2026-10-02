@@ -1,6 +1,8 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsInstallation from "@/pages/docs/windows/_installation.tsx";
+import DocsWindowsInstallation, {
+  windowsInstallationHead,
+} from "@/pages/docs/windows/_installation.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -22,6 +24,7 @@ const copy = locale === "de"
       title: "Installation - Windows - TypeWhisper",
       description: "Install TypeWhisper for Windows. System requirements, download, and first setup.",
     };
+const head = windowsInstallationHead(locale);
 ---
 <DocsLayout
   title={copy.title}
@@ -29,9 +32,8 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/installation")}
   locale={locale}
   platform="windows"
-  releaseStage="stable"
-  releaseTitle={t(locale, "docs.win.release.title")}
-  releaseDescription={t(locale, "docs.win.release.installationDescription")}
+  heading={head.heading}
+  lede={head.lede}
 >
   <DocsWindowsInstallation locale={locale} />
 </DocsLayout>

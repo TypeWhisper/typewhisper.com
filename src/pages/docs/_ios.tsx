@@ -1,8 +1,11 @@
-import { ArrowRight, Download, Mail, Smartphone } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Screenshot } from "@/components/ui/screenshot";
-import { getIosDocTitle, iosDocSlugs } from "@/data/ios-docs";
+import { ArrowRight } from "lucide-react";
+import {
+  DocsFigure,
+  DocsSection,
+  DocsSubheading,
+} from "@/components/docs/prose";
+import { getIosDocPage, iosDocSlugs } from "@/data/ios-docs";
+import { resolveVersions } from "@/data/versions";
 import { localePath, screenshotPath, type Locale } from "@/i18n/index";
 import { getIosAppStoreUrl, iosVersion } from "@/lib/platform-download";
 
@@ -61,6 +64,52 @@ const watchScreenshots = [
   },
 ] as const;
 
+// What the App Store release notes of 1.1 name, with the guide that explains it.
+const newIn11 = [
+  {
+    en: "On-device writing models that process text on the device",
+    de: "Lokale Schreibmodelle, die Text auf dem Gerät verarbeiten",
+    path: "/docs/ios/profiles-and-processing#section-4",
+  },
+  {
+    en: "Dictionary imports with a preview",
+    de: "Wörterbuchimporte mit Vorschau",
+    path: "/docs/ios/dictionary-and-snippets#section-4",
+  },
+  {
+    en: "Recording controls for Control Center and the Action Button",
+    de: "Aufnahmesteuerungen für das Kontrollzentrum und die Aktionstaste",
+    path: "/docs/ios/watch-and-shortcuts#section-4",
+  },
+  {
+    en: "Optional Meta speech and writing services",
+    de: "Optionale Meta-Dienste für Spracherkennung und Textbearbeitung",
+    path: "/docs/ios/profiles-and-processing#section-1",
+  },
+  {
+    en: "Better VoiceOver support",
+    de: "Bessere VoiceOver-Unterstützung",
+  },
+  {
+    en: "Faster and more reliable history search, transcript playback, keyboard suggestions, and audio handling",
+    de: "Schnellere und zuverlässigere Verlaufssuche, Transkriptwiedergabe, Tastaturvorschläge und Audioverarbeitung",
+  },
+] as const;
+
+export function iosOverviewHead(locale: Locale) {
+  const isDe = locale === "de";
+  return {
+    heading: "iOS",
+    badge: resolveVersions(
+      isDe ? "Version {iosSeries} stabil" : "Version {iosSeries} stable",
+    ),
+    lede: isDe
+      ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Profilen, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
+      : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, profiles, files, dictionary, snippets, Shortcuts, and optional Premium sync.",
+    download: isDe ? "Im App Store laden" : "Download on the App Store",
+  };
+}
+
 export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
   const isDe = locale === "de";
   const iosAppStoreUrl = getIosAppStoreUrl(locale);
@@ -71,264 +120,205 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
     locale,
     "/screenshots/ios/01-recording.webp",
   );
+  const previewLabel = isDe ? "Aktuelle App-Vorschau" : "Current App Preview";
 
   return (
-    <div>
-      <header className="border-b border-border pb-10 pt-4 sm:pb-12 sm:pt-8">
-        <div className="flex size-14 items-center justify-center rounded-2xl border border-border bg-card">
-          <Smartphone className="size-7 text-primary" />
-        </div>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <h1 className="font-display text-4xl font-bold tracking-tight">
-            iOS
-          </h1>
-          <Badge variant="outline">
-            {isDe ? "Version 1.1 stabil" : "Version 1.1 stable"}
-          </Badge>
-        </div>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-          {isDe
-            ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Profilen, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
-            : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, profiles, files, dictionary, snippets, Shortcuts, and optional Premium sync."}
-        </p>
-        <Button size="pill" asChild className="mt-6">
-          <a
-            href={iosAppStoreUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-download-social-trigger
-            data-download-platform="ios"
-            data-download-target="ios_app_store"
-            data-download-version={iosVersion}
-            data-tracking-placement="docs"
-          >
-            <Download className="size-4" />
-            {isDe ? "Im App Store laden" : "Download on the App Store"}
-          </a>
-        </Button>
-      </header>
-
-      <section className="grid gap-10 border-b border-border py-12 lg:grid-cols-[1fr_18rem] lg:items-center">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            {isDe ? "Aktuelle App-Vorschau" : "Current App Preview"}
-          </p>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">
-            {isDe
-              ? "Der komplette Ablauf in 30 Sekunden."
-              : "The complete flow in 30 seconds."}
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-            {isDe
-              ? "Die aktuelle Studio-Fassung zeigt Aufnahme, Live-Text und den Rückweg über die TypeWhisper-Tastatur in ein anderes Textfeld."
-              : "The current Studio cut shows recording, live text, and the return flow through the TypeWhisper keyboard into another text field."}
-          </p>
-          <dl className="mt-7 grid gap-5 border-y border-border py-5 sm:grid-cols-3">
-            <div>
-              <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                iPhone / iPad
-              </dt>
-              <dd className="mt-1 font-semibold">iOS 18+</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                Apple Watch
-              </dt>
-              <dd className="mt-1 font-semibold">watchOS 11+</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                {isDe ? "Lokaler Core" : "Local core"}
-              </dt>
-              <dd className="mt-1 font-semibold">
-                {isDe ? "Ohne Account" : "No account"}
-              </dd>
-            </div>
-          </dl>
-        </div>
-        <div className="mx-auto w-full max-w-[17rem] overflow-hidden rounded-[2rem] border border-border bg-card p-1.5 shadow-2xl shadow-black/20">
-          <video
-            className="w-full rounded-[1.6rem]"
-            playsInline
-            controls
-            preload="metadata"
-            poster={previewPoster}
-          >
-            <source src={previewSrc} type="video/mp4" />
-            {isDe
-              ? "Dein Browser unterstützt das Video-Tag nicht."
-              : "Your browser does not support the video tag."}
-          </video>
-        </div>
-      </section>
-
-      <section
-        className="border-b border-border py-12"
-        aria-labelledby="ios-guide-title"
+    <>
+      <DocsSection
+        id="preview"
+        label={previewLabel}
+        title={
+          isDe
+            ? "Der komplette Ablauf in 30 Sekunden."
+            : "The complete flow in 30 seconds."
+        }
       >
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          {isDe ? "Nicht nur eine Featureliste" : "More than a feature list"}
-        </p>
-        <h2
-          id="ios-guide-title"
-          className="mt-3 font-display text-3xl font-semibold tracking-tight"
-        >
-          {isDe ? "Die vollständige iOS-Anleitung." : "The complete iOS guide."}
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+        <div className="docs-beside">
+          <div>
+            <p>
+              {isDe
+                ? "Die aktuelle Studio-Fassung zeigt Aufnahme, Live-Text und den Rückweg über die TypeWhisper-Tastatur in ein anderes Textfeld."
+                : "The current Studio cut shows recording, live text, and the return flow through the TypeWhisper keyboard into another text field."}
+            </p>
+            <dl className="docs-facts">
+              <div>
+                <dt>iPhone / iPad</dt>
+                <dd>iOS 18+</dd>
+              </div>
+              <div>
+                <dt>Apple Watch</dt>
+                <dd>watchOS 11+</dd>
+              </div>
+              <div>
+                <dt>{isDe ? "Lokaler Core" : "Local core"}</dt>
+                <dd>{isDe ? "Ohne Account" : "No account"}</dd>
+              </div>
+            </dl>
+          </div>
+          <figure className="docs-figure docs-figure--video">
+            <video
+              playsInline
+              controls
+              preload="metadata"
+              poster={previewPoster}
+              aria-label={previewLabel}
+            >
+              <source src={previewSrc} type="video/mp4" />
+              {isDe
+                ? "Dein Browser unterstützt das Video-Tag nicht."
+                : "Your browser does not support the video tag."}
+            </video>
+          </figure>
+        </div>
+      </DocsSection>
+
+      <DocsSection
+        headingId="ios-guide-title"
+        label={isDe ? "Nicht nur eine Featureliste" : "More than a feature list"}
+        title={
+          isDe ? "Die vollständige iOS-Anleitung." : "The complete iOS guide."
+        }
+      >
+        <p>
           {isDe
             ? "Beginne bei Installation und Berechtigungen oder springe direkt zu dem Ablauf, den du einrichten oder reparieren möchtest."
             : "Start with installation and permissions, or jump straight to the workflow you want to set up or fix."}
         </p>
+        <ul className="docs-index">
+          {iosDocSlugs.map((slug) => {
+            const page = getIosDocPage(locale, slug);
+            return (
+              <li key={slug}>
+                <a
+                  href={localePath(locale, `/docs/ios/${slug}`)}
+                  className="docs-index__link"
+                >
+                  <span className="docs-index__name">{page.title}</span>
+                  <span className="docs-index__text">{page.description}</span>
+                  <ArrowRight aria-hidden="true" />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </DocsSection>
 
-        <div className="mt-8 border-y border-border">
-          {iosDocSlugs.map((slug, index) => (
-            <a
-              key={slug}
-              href={localePath(locale, `/docs/ios/${slug}`)}
-              className="group grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b border-border py-4 last:border-b-0"
-            >
-              <span className="font-mono text-xs text-primary">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="font-semibold text-foreground group-hover:text-primary">
-                {getIosDocTitle(locale, slug)}
-              </span>
-              <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section
-        className="border-b border-border py-12"
-        aria-labelledby="ios-screens-title"
-      >
-        <h2
-          id="ios-screens-title"
-          className="font-display text-3xl font-semibold tracking-tight"
-        >
-          {isDe
+      <DocsSection
+        headingId="ios-screens-title"
+        title={
+          isDe
             ? "iPhone und iPad, aktuell abgebildet."
-            : "iPhone and iPad, shown as they are now."}
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+            : "iPhone and iPad, shown as they are now."
+        }
+      >
+        <p>
           {isDe
             ? "Die Motive stammen aus den aktuellen lokalisierten App-Store-Renderings und zeigen Aufnahme, Tastatur sowie Verlauf und Capture Inbox."
             : "These images come from the current localized App Store renders and show recording, keyboard, and History with Capture Inbox."}
         </p>
-        <div className="-mx-4 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0">
+        <div className="docs-figures">
           {phoneScreenshots.map((screenshot) => (
-            <div
+            <DocsFigure
               key={screenshot.filename}
-              className="w-[14rem] flex-none snap-center overflow-hidden rounded-[2rem] border border-border bg-card p-1.5 shadow-xl shadow-black/10 sm:w-[16rem]"
-            >
-              <Screenshot
-                src={screenshotPath(
-                  locale,
-                  `/screenshots/ios/${screenshot.filename}`,
-                )}
-                alt={screenshot.alt[locale]}
-                className="w-full rounded-[1.6rem]"
-                loading="lazy"
-              />
-            </div>
+              kind="phone"
+              src={screenshotPath(
+                locale,
+                `/screenshots/ios/${screenshot.filename}`,
+              )}
+              alt={screenshot.alt[locale]}
+            />
           ))}
         </div>
-        <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-xl shadow-black/10">
-          <Screenshot
-            src={screenshotPath(locale, "/screenshots/ios/ipad/03-inbox.png")}
-            alt={
-              isDe
-                ? "TypeWhisper Capture Inbox auf dem iPad"
-                : "TypeWhisper Capture Inbox on iPad"
-            }
-            className="w-full rounded-xl"
-            loading="lazy"
-          />
-        </div>
-      </section>
+        <DocsFigure
+          kind="tablet"
+          src={screenshotPath(locale, "/screenshots/ios/ipad/03-inbox.png")}
+          alt={
+            isDe
+              ? "TypeWhisper Capture Inbox auf dem iPad"
+              : "TypeWhisper Capture Inbox on iPad"
+          }
+        />
+      </DocsSection>
 
-      <section
-        className="border-b border-border py-12"
-        aria-labelledby="ios-watch-title"
+      <DocsSection
+        headingId="ios-watch-title"
+        title={isDe ? "Aufnehmen am Handgelenk." : "Capture from your wrist."}
       >
-        <h2
-          id="ios-watch-title"
-          className="font-display text-3xl font-semibold tracking-tight"
-        >
-          {isDe ? "Aufnehmen am Handgelenk." : "Capture from your wrist."}
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+        <p>
           {isDe
             ? "Starte eine fokussierte Aufnahme auf der Apple Watch, übertrage sie ans iPhone und prüfe das Ergebnis in der Capture Inbox."
             : "Start a focused recording on Apple Watch, transfer it to iPhone, and review the result in Capture Inbox."}
         </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+        <div className="docs-figures docs-figures--3">
           {watchScreenshots.map((screenshot) => (
-            <div
+            <DocsFigure
               key={screenshot.filename}
-              className="overflow-hidden rounded-2xl border border-border bg-card p-1.5"
-            >
-              <Screenshot
-                src={screenshotPath(
-                  locale,
-                  `/screenshots/ios/watch/${screenshot.filename}`,
-                )}
-                alt={screenshot.alt[locale]}
-                className="w-full rounded-xl"
-                loading="lazy"
-              />
-            </div>
+              kind="watch"
+              src={screenshotPath(
+                locale,
+                `/screenshots/ios/watch/${screenshot.filename}`,
+              )}
+              alt={screenshot.alt[locale]}
+            />
           ))}
         </div>
-      </section>
+      </DocsSection>
 
-      <section className="grid gap-8 py-12 md:grid-cols-2">
-        <div>
-          <h2 className="font-display text-2xl font-semibold">
-            {isDe
-              ? "Aktueller Veröffentlichungsstatus"
-              : "Current release status"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {isDe
-              ? "Version 1.1 ist als stabiles Release für iPhone und iPad im App Store verfügbar. Die Apple-Watch-App ist enthalten."
-              : "Version 1.1 is available as a stable release for iPhone and iPad on the App Store. The Apple Watch app is included."}
-          </p>
-          <a
-            href={iosAppStoreUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-download-social-trigger
-            data-download-platform="ios"
-            data-download-target="ios_app_store"
-            data-download-version={iosVersion}
-            data-tracking-placement="docs"
-            className="mt-3 inline-block text-sm text-primary underline hover:text-primary/80"
-          >
-            {isDe ? "App Store öffnen" : "Open the App Store"}
-          </a>
-        </div>
-        <div className="border-l border-border pl-6">
-          <Mail className="size-5 text-primary" />
-          <h2 className="mt-3 font-display text-2xl font-semibold">
-            {isDe ? "Direkter Support" : "Direct support"}
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-muted-foreground">
-            {isDe
-              ? "Für konkrete Fragen zur iOS-Version: "
-              : "For specific questions about the iOS edition, email "}
-            <a
-              href="mailto:hello@typewhisper.com"
-              className="text-primary underline hover:text-primary/80"
-            >
-              hello@typewhisper.com
-            </a>
-            .
-          </p>
-        </div>
-      </section>
-    </div>
+      <DocsSection
+        id="release-status"
+        title={
+          isDe ? "Aktueller Veröffentlichungsstatus" : "Current release status"
+        }
+      >
+        <p>
+          {resolveVersions(
+            isDe
+              ? "Version {iosVersion} ist als stabiles Release für iPhone und iPad im App Store verfügbar. Die Apple-Watch-App ist enthalten."
+              : "Version {iosVersion} is available as a stable release for iPhone and iPad on the App Store. The Apple Watch app is included.",
+          )}
+        </p>
+        <a
+          href={iosAppStoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-download-social-trigger
+          data-download-platform="ios"
+          data-download-target="ios_app_store"
+          data-download-version={iosVersion}
+          data-tracking-placement="docs"
+          className="site-link"
+        >
+          {isDe ? "App Store öffnen" : "Open the App Store"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
+
+        <DocsSubheading id="new-in-1-1">
+          {isDe ? "Neu in 1.1" : "What's new in 1.1"}
+        </DocsSubheading>
+        <ul>
+          {newIn11.map((entry) => (
+            <li key={entry.en}>
+              {"path" in entry ? (
+                <a href={localePath(locale, entry.path)}>{entry[locale]}</a>
+              ) : (
+                entry[locale]
+              )}
+            </li>
+          ))}
+        </ul>
+      </DocsSection>
+
+      <DocsSection
+        id="support"
+        title={isDe ? "Direkter Support" : "Direct support"}
+      >
+        <p>
+          {isDe
+            ? "Für konkrete Fragen zur iOS-Version: "
+            : "For specific questions about the iOS edition, email "}
+          <a href="mailto:hello@typewhisper.com">hello@typewhisper.com</a>.
+        </p>
+      </DocsSection>
+    </>
   );
 }

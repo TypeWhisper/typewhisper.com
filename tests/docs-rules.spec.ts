@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { readCurrentVersions } from "./helpers/current-versions";
 
 test.describe("macOS workflows documentation", () => {
   test("/en/docs/mac/workflows renders the english workflows page", async ({
@@ -54,17 +55,42 @@ test.describe("macOS workflows documentation", () => {
     await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/?$/);
   });
 
-  test("prompt docs link to workflows", async ({ page }) => {
+  test("macOS prompt docs redirect to workflows", async ({ page }) => {
     await page.goto("/en/docs/mac/prompts");
-    await expect(
-      page.locator('a[href="/en/docs/mac/workflows"]').first(),
-    ).toBeVisible();
+    await expect(page).toHaveURL(/\/en\/docs\/mac\/workflows\/?$/);
 
     await page.goto("/de/docs/mac/prompts");
-    await expect(
-      page.locator('a[href="/de/docs/mac/workflows"]').first(),
-    ).toBeVisible();
+    await expect(page).toHaveURL(/\/de\/docs\/mac\/workflows\/?$/);
   });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} workflows page carries the palette quick start and the FAQ`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/mac/workflows`);
+
+      await expect(
+        page.locator("#quick-start").getByRole("heading", {
+          level: 2,
+          name:
+            locale === "de"
+              ? "Schnellstart mit der Workflow-Palette"
+              : "Quick Start with the Workflow Palette",
+        }),
+      ).toBeVisible();
+      await expect(
+        page.locator("#faq").getByRole("heading", { level: 2, name: "FAQ" }),
+      ).toBeVisible();
+      await expect(page.locator("#faq .docs-terms > li")).toHaveCount(6);
+
+      // Both sections are listed in the table of contents.
+      for (const anchor of ["quick-start", "faq"]) {
+        await expect(
+          page.locator(`.docs-toc a[href="#${anchor}"]`),
+        ).toHaveCount(1);
+      }
+    });
+  }
 
   test("macOS docs index links to troubleshooting", async ({ page }) => {
     await page.goto("/en/docs/mac");
@@ -111,18 +137,24 @@ test.describe("macOS workflows documentation", () => {
       page.getByText("Integrationen > Live Transcript"),
     ).toBeVisible();
     await expect(
-      page.getByText("Auto-open on recording deaktivieren"),
+      page.getByText("Automatisch bei Aufnahme öffnen deaktivieren"),
     ).toBeVisible();
-    await expect(page.getByText("Toggle Shortcut festlegen")).toBeVisible();
+    await expect(page.getByText("ein Tastenkürzel festlegen")).toBeVisible();
   });
 
   for (const locale of ["en", "de"] as const) {
-    test(`${locale} macOS docs present the 1.6 release`, async ({ page }) => {
+    test(`${locale} macOS docs present the current release and what is new in 1.7`, async ({
+      page,
+    }) => {
+      // The release line comes from the feed, the highlights are written by hand.
+      const { series } = readCurrentVersions().mac;
+
       await page.goto(`/${locale}/docs/mac`);
       await expect(
-        page.getByText(locale === "de" ? "1.6 Stabil" : "1.6 Stable", {
-          exact: true,
-        }),
+        page.getByText(
+          locale === "de" ? `${series} Stabil` : `${series} Stable`,
+          { exact: true },
+        ),
       ).toBeVisible();
 
       await page.goto(`/${locale}/docs/mac/installation`);
@@ -136,20 +168,28 @@ test.describe("macOS workflows documentation", () => {
         })
         .click();
       await expect(
-        page.getByRole("heading", { level: 2, name: "macOS 1.6" }),
+        page.getByRole("heading", { level: 2, name: `macOS ${series}` }),
       ).toBeVisible();
       await expect(
         page.getByRole("heading", {
           level: 2,
-          name: locale === "de" ? "Neu in 1.6" : "What's new in 1.6",
+          name: locale === "de" ? "Neu in 1.7" : "What's new in 1.7",
         }),
       ).toBeVisible();
-      await expect(page.getByText("Backup & Restore").first()).toBeVisible();
+      await expect(
+        page
+          .getByText(
+            locale === "de"
+              ? "iCloud-Synchronisierung für Verlauf und Posteingang"
+              : "iCloud synchronization for History and Inbox",
+          )
+          .first(),
+      ).toBeVisible();
       await expect(
         page.getByText(
           locale === "de"
-            ? /Automatischer privater iCloud-Sync bleibt in 1\.6 nicht verfügbar/
-            : /Automatic private iCloud sync remains unavailable in 1\.6/,
+            ? /Die automatische iCloud-Synchronisierung ist in 1\.7 verfügbar/
+            : /Automatic iCloud Sync is available in 1\.7/,
         ),
       ).toBeVisible();
     });

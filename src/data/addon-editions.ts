@@ -5,7 +5,9 @@ import screenshotManifest from "@/data/addon-edition-screenshots.json";
 
 export interface AddonEditionScreenshot {
   src: string;
-  alt: string;
+  /** Specific alternative text, instead of the template. */
+  alt?: string;
+  /** Specific caption; follows the alternative text when left out. */
   caption?: string;
   localized?: boolean;
 }

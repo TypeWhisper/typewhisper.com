@@ -1,297 +1,206 @@
-import { Screenshot } from "@/components/ui/screenshot";
-import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
+import {
+  DocsCode,
+  DocsFigure,
+  DocsSection,
+  DocsSubheading,
+  DocsTerms,
+} from "@/components/docs/prose";
+import { t, screenshotPath, type Locale } from "@/i18n/index";
+
+const fields = [
+  "apps",
+  "websites",
+  "language",
+  "task",
+  "translationMode",
+  "engine",
+  "prompt",
+  "promptProvider",
+  "manualShortcut",
+  "autoSubmit",
+  "inlineCommands",
+  "priority",
+];
+
+const formats = ["none", "auto", "markdown", "html", "plainText", "code"];
+
+const formattingExamples = ["obsidian", "mail", "codeApp", "unknown"];
+
+const setups = ["mail", "github", "translation", "languageHotkeys", "fallback"];
+
+const paletteExamples = ["input", "instruction", "output"];
+
+const questions = [1, 2, 3, 4, 5, 6];
 
 export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
   return (
-    <div>
-      <h1 className="font-display text-3xl font-bold tracking-tight">
-        {t(locale, "docs.mac.rules.title")}
-      </h1>
-      <p className="mt-3 text-muted-foreground">
-        {t(locale, "docs.mac.rules.subtitle")}
-      </p>
+    <>
+      <DocsSection id="how-workflows-work" title={t(locale, "docs.mac.rules.howWork.title")}>
+        <p>{t(locale, "docs.mac.rules.howWork.desc")}</p>
+      </DocsSection>
 
-      <div className="mt-8 space-y-6">
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.howWork.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.howWork.desc")}
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.matching.title")}</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.siteOnly.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.siteOnly.desc1")}{" "}
-                <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">github.com</code>{" "}
-                {t(locale, "docs.mac.rules.matching.siteOnly.desc2")}{" "}
-                <code className="rounded bg-card px-1.5 py-0.5 text-xs font-mono">gist.github.com</code>
-                {t(locale, "docs.mac.rules.matching.siteOnly.desc3")}
-              </p>
-            </div>
-            <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.appOnly.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.appOnly.desc")}
-              </p>
-            </div>
-            <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.hotkey.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.hotkey.desc")}
-              </p>
-            </div>
-            <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.manual.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.manual.desc")}
-              </p>
-            </div>
-            <div className="rounded-xl bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.matching.fallback.title")}</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {t(locale, "docs.mac.rules.matching.fallback.desc")}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.priority.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.priority.desc")}
-          </p>
-          <ol className="mt-3 list-decimal list-inside space-y-1.5 text-sm text-muted-foreground">
-            <li>{t(locale, "docs.mac.rules.priority.item1")}</li>
-            <li>{t(locale, "docs.mac.rules.priority.item2")}</li>
-            <li>{t(locale, "docs.mac.rules.priority.item3")}</li>
-          </ol>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.priority.manualHotkeyNote")}
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.creating.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.creating.desc")}
-          </p>
-          <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.apps.label")}</strong> - {t(locale, "docs.mac.rules.creating.apps.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.websites.label")}</strong> - {t(locale, "docs.mac.rules.creating.websites.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.language.label")}</strong> - {t(locale, "docs.mac.rules.creating.language.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.task.label")}</strong> - {t(locale, "docs.mac.rules.creating.task.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.translationMode.label")}</strong> - {t(locale, "docs.mac.rules.creating.translationMode.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.engine.label")}</strong> - {t(locale, "docs.mac.rules.creating.engine.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.prompt.label")}</strong> - {t(locale, "docs.mac.rules.creating.prompt.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.promptProvider.label")}</strong> - {t(locale, "docs.mac.rules.creating.promptProvider.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.manualShortcut.label")}</strong> - {t(locale, "docs.mac.rules.creating.manualShortcut.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.autoSubmit.label")}</strong> - {t(locale, "docs.mac.rules.creating.autoSubmit.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.creating.priority.label")}</strong> - {t(locale, "docs.mac.rules.creating.priority.desc")}
-            </li>
-          </ul>
-          <Screenshot
-            src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
-            alt={t(locale, "docs.mac.rules.creating.imgAlt")}
-            className="mt-4 rounded-xl"
+      <DocsSection id="quick-start" title={t(locale, "docs.mac.rules.palette.title")}>
+        <p>{t(locale, "docs.mac.rules.palette.desc")}</p>
+        <ol>
+          {[1, 2, 3, 4].map((step) => (
+            <li key={step}>{t(locale, `docs.mac.rules.palette.step${step}`)}</li>
+          ))}
+        </ol>
+        {paletteExamples.map((example) => (
+          <DocsCode
+            key={example}
+            kind="text"
+            locale={locale}
+            lang={t(locale, `docs.mac.rules.palette.${example}Label`)}
+            code={t(locale, `docs.mac.rules.palette.${example}`)}
           />
-        </div>
+        ))}
+        <p>
+          {t(locale, "docs.mac.rules.palette.help")}{" "}
+          <a href="#faq">{t(locale, "docs.mac.rules.palette.helpLink")}</a>
+        </p>
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.manualShortcut.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.manualShortcut.desc")}
-          </p>
-        </div>
+      <DocsSection id="matching" title={t(locale, "docs.mac.rules.matching.title")}>
+        <DocsTerms
+          items={[
+            {
+              title: t(locale, "docs.mac.rules.matching.siteOnly.title"),
+              description: (
+                <>
+                  {t(locale, "docs.mac.rules.matching.siteOnly.desc1")}{" "}
+                  <code>github.com</code>{" "}
+                  {t(locale, "docs.mac.rules.matching.siteOnly.desc2")}{" "}
+                  <code>gist.github.com</code>
+                  {t(locale, "docs.mac.rules.matching.siteOnly.desc3")}
+                </>
+              ),
+            },
+            ...["appOnly", "hotkey", "manual", "fallback"].map((kind) => ({
+              title: t(locale, `docs.mac.rules.matching.${kind}.title`),
+              description: t(locale, `docs.mac.rules.matching.${kind}.desc`),
+            })),
+          ]}
+        />
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.languageEngineHotkeys.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.languageEngineHotkeys.desc")}
-          </p>
-          <ol className="mt-3 list-decimal list-inside space-y-1.5 text-sm text-muted-foreground">
-            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step1")}</li>
-            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step2")}</li>
-            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step3")}</li>
-            <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step4")}</li>
-          </ol>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.languageEngineHotkeys.note")}
-          </p>
-        </div>
+      <DocsSection id="priority" title={t(locale, "docs.mac.rules.priority.title")}>
+        <p>{t(locale, "docs.mac.rules.priority.desc")}</p>
+        <ol>
+          <li>{t(locale, "docs.mac.rules.priority.item1")}</li>
+          <li>{t(locale, "docs.mac.rules.priority.item2")}</li>
+          <li>{t(locale, "docs.mac.rules.priority.item3")}</li>
+        </ol>
+        <p>{t(locale, "docs.mac.rules.priority.manualHotkeyNote")}</p>
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.promptOverride.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.promptOverride.desc")}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            <a href={localePath(locale, "/docs/mac/workflows")} className="text-primary hover:underline">
-              {t(locale, "docs.mac.rules.promptOverride.learn")}
-            </a>
-          </p>
-        </div>
+      <DocsSection id="creating" title={t(locale, "docs.mac.rules.creating.title")}>
+        <p>{t(locale, "docs.mac.rules.creating.desc")}</p>
+        <DocsTerms
+          items={fields.map((field) => ({
+            title: t(locale, `docs.mac.rules.creating.${field}.label`),
+            description: t(locale, `docs.mac.rules.creating.${field}.desc`),
+          }))}
+        />
+        <DocsFigure
+          src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
+          alt={t(locale, "docs.mac.rules.creating.imgAlt")}
+          loading="eager"
+        />
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.globalLLMFallbacks.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc1")}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc2")}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.globalLLMFallbacks.desc3")}
-          </p>
-        </div>
+      <DocsSection id="manual-shortcut" title={t(locale, "docs.mac.rules.manualShortcut.title")}>
+        <p>{t(locale, "docs.mac.rules.manualShortcut.desc")}</p>
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.multipleEngines.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.multipleEngines.desc")}
-          </p>
-        </div>
+      <DocsSection
+        id="language-and-engine-hotkeys"
+        title={t(locale, "docs.mac.rules.languageEngineHotkeys.title")}
+      >
+        <p>{t(locale, "docs.mac.rules.languageEngineHotkeys.desc")}</p>
+        <ol>
+          <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step1")}</li>
+          <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step2")}</li>
+          <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step3")}</li>
+          <li>{t(locale, "docs.mac.rules.languageEngineHotkeys.step4")}</li>
+        </ol>
+        <p>{t(locale, "docs.mac.rules.languageEngineHotkeys.note")}</p>
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.formatting.title")}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.formatting.desc1")}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {t(locale, "docs.mac.rules.formatting.desc2")}
-          </p>
+      <DocsSection id="prompt-override" title={t(locale, "docs.mac.rules.promptOverride.title")}>
+        <p>{t(locale, "docs.mac.rules.promptOverride.intro")}</p>
+        <p>{t(locale, "docs.mac.rules.promptOverride.templates")}</p>
+        <p>{t(locale, "docs.mac.rules.promptOverride.desc")}</p>
+      </DocsSection>
 
-          <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.none.label")}</strong> - {t(locale, "docs.mac.rules.formatting.none.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.auto.label")}</strong> - {t(locale, "docs.mac.rules.formatting.auto.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.markdown.label")}</strong> - {t(locale, "docs.mac.rules.formatting.markdown.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.html.label")}</strong> - {t(locale, "docs.mac.rules.formatting.html.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.plainText.label")}</strong> - {t(locale, "docs.mac.rules.formatting.plainText.desc")}
-            </li>
-            <li>
-              &bull; <strong>{t(locale, "docs.mac.rules.formatting.code.label")}</strong> - {t(locale, "docs.mac.rules.formatting.code.desc")}
-            </li>
-          </ul>
+      <DocsSection
+        id="global-llm-fallbacks"
+        title={t(locale, "docs.mac.rules.globalLLMFallbacks.title")}
+      >
+        <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc1")}</p>
+        <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc2")}</p>
+        <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc3")}</p>
+      </DocsSection>
 
-          <h3 className="mt-6 text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.title")}</h3>
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.obsidian.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.formatting.examples.obsidian.desc")}
-              </p>
-              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
-                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.obsidian.code")}</pre>
-              </div>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.mail.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.formatting.examples.mail.desc")}
-              </p>
-              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
-                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.mail.code")}</pre>
-              </div>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.codeApp.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.formatting.examples.codeApp.desc")}
-              </p>
-              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
-                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.codeApp.code")}</pre>
-              </div>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.examples.unknown.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.formatting.examples.unknown.desc")}
-              </p>
-              <div className="mt-3 rounded-md bg-card p-4 font-mono text-sm overflow-x-auto">
-                <pre className="whitespace-pre-wrap text-muted-foreground">{t(locale, "docs.mac.rules.formatting.examples.unknown.code")}</pre>
-              </div>
-            </div>
+      <DocsSection id="multiple-engines" title={t(locale, "docs.mac.rules.multipleEngines.title")}>
+        <p>{t(locale, "docs.mac.rules.multipleEngines.desc")}</p>
+      </DocsSection>
+
+      <DocsSection id="formatting" title={t(locale, "docs.mac.rules.formatting.title")}>
+        <p>{t(locale, "docs.mac.rules.formatting.desc1")}</p>
+        <p>{t(locale, "docs.mac.rules.formatting.desc2")}</p>
+        <DocsTerms
+          items={formats.map((format) => ({
+            title: t(locale, `docs.mac.rules.formatting.${format}.label`),
+            description: t(locale, `docs.mac.rules.formatting.${format}.desc`),
+          }))}
+        />
+
+        <DocsSubheading id="formatting-examples">
+          {t(locale, "docs.mac.rules.formatting.examples.title")}
+        </DocsSubheading>
+        {formattingExamples.map((example) => (
+          <div key={example}>
+            <h4>{t(locale, `docs.mac.rules.formatting.examples.${example}.title`)}</h4>
+            <p>{t(locale, `docs.mac.rules.formatting.examples.${example}.desc`)}</p>
+            <DocsCode
+              locale={locale}
+              lang={t(locale, "docs.example")}
+              code={t(locale, `docs.mac.rules.formatting.examples.${example}.code`)}
+            />
           </div>
+        ))}
 
-          <h3 className="mt-6 text-sm font-semibold">{t(locale, "docs.mac.rules.formatting.limitations.title")}</h3>
-          <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item1")}</li>
-            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item2")}</li>
-            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item3")}</li>
-            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item4")}</li>
-            <li>&bull; {t(locale, "docs.mac.rules.formatting.limitations.item5")}</li>
-          </ul>
-        </div>
+        <DocsSubheading id="formatting-limitations">
+          {t(locale, "docs.mac.rules.formatting.limitations.title")}
+        </DocsSubheading>
+        <ul>
+          {[1, 2, 3, 4, 5].map((item) => (
+            <li key={item}>
+              {t(locale, `docs.mac.rules.formatting.limitations.item${item}`)}
+            </li>
+          ))}
+        </ul>
+      </DocsSection>
 
-        <div className="rounded-2xl bg-card p-6">
-          <h2 className="text-lg font-semibold">{t(locale, "docs.mac.rules.examples.title")}</h2>
-          <div className="mt-4 space-y-3">
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.mail.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.examples.mail.desc")}
-              </p>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.github.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.examples.github.desc")}
-              </p>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.translation.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.examples.translation.desc")}
-              </p>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.languageHotkeys.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.examples.languageHotkeys.desc")}
-              </p>
-            </div>
-            <div className="rounded-md bg-background p-4">
-              <p className="text-sm font-semibold">{t(locale, "docs.mac.rules.examples.fallback.title")}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {t(locale, "docs.mac.rules.examples.fallback.desc")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <DocsSection id="examples" title={t(locale, "docs.mac.rules.examples.title")}>
+        <DocsTerms
+          items={setups.map((setup) => ({
+            title: t(locale, `docs.mac.rules.examples.${setup}.title`),
+            description: t(locale, `docs.mac.rules.examples.${setup}.desc`),
+          }))}
+        />
+      </DocsSection>
+
+      <DocsSection id="faq" title={t(locale, "docs.mac.rules.faq.title")}>
+        <DocsTerms
+          stacked
+          items={questions.map((item) => ({
+            title: t(locale, `docs.mac.rules.faq.q${item}.question`),
+            description: t(locale, `docs.mac.rules.faq.q${item}.answer`),
+          }))}
+        />
+      </DocsSection>
+    </>
   );
 }

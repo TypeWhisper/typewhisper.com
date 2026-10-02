@@ -174,12 +174,8 @@ for (const width of [1440, 390]) {
     context,
   }) => {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto("/de/?platform=windows&example=note");
-    const demo = page.getByTestId("hero-demo");
-    await expect(
-      demo.locator("xpath=ancestor::astro-island"),
-    ).not.toHaveAttribute("ssr", "");
-    await demo.getByRole("button", { name: "Chat", exact: true }).click();
+    await page.goto("/de/?platform=windows");
+    await hydrated(page);
     await page.getByTestId("landing-hero-tab-ios").click();
     if (width === 390)
       await page.getByRole("button", { name: "Menü", exact: true }).click();
@@ -187,10 +183,7 @@ for (const width of [1440, 390]) {
       name: width === 390 ? "English" : "EN",
       exact: true,
     });
-    await expect(link).toHaveAttribute(
-      "href",
-      "/en/?platform=ios&example=chat",
-    );
+    await expect(link).toHaveAttribute("href", "/en/?platform=ios");
     // Opening the href directly exercises copy/open-in-new-tab without a click handler.
     const destination = await context.newPage();
     await destination.goto((await link.getAttribute("href"))!);
@@ -198,10 +191,8 @@ for (const width of [1440, 390]) {
       destination.getByTestId("landing-hero-tab-ios"),
     ).toHaveAttribute("aria-pressed", "true");
     await expect(
-      destination
-        .getByTestId("hero-demo")
-        .getByRole("button", { name: "Chat", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
+      destination.getByRole("heading", { level: 1 }),
+    ).toHaveAccessibleName("Speak. Capture. Keep moving.");
     await destination.close();
 
     await page.goto("/de/setup/?platform=windows&processing=cloud&task=files");

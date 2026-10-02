@@ -1,10 +1,13 @@
 ---
+import "@/styles/addons.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { Badge } from "@/components/ui/badge";
-import { BrandLogo, canRenderBrandLogo } from "@/components/ui/brand-logo";
 import CommunityContent from "@/components/addons/community-content";
 import AddonEditionCard from "@/components/addons/addon-edition-card.astro";
+import AddonHead from "@/components/addons/addon-head.astro";
 import AddonHostRequirement from "@/components/addons/addon-host-requirement.astro";
+import AddonShot from "@/components/addons/addon-shot.astro";
+import AddonToc from "@/components/addons/addon-toc.astro";
+import { addonShotText } from "@/components/addons/shot-text";
 import {
   getAddonEditions,
   getDefaultAddonDetailScreenshot,
@@ -17,59 +20,9 @@ import {
   platformKeys,
   sourceKeys,
 } from "@/data/addons";
-import { screenshotPath, t, locales, webpPath } from "@/i18n/index";
+import { screenshotPath, t, locales } from "@/i18n/index";
 import { canonicalPath } from "@/lib/locale-routes";
-import {
-  Zap,
-  Brain,
-  Sparkles,
-  Send,
-  SquareKanban,
-  Cpu,
-  Radio,
-  AudioLines,
-  Waves,
-  Mic,
-  Plug,
-  AudioWaveform,
-  Gem,
-  Terminal,
-  Captions,
-  Cloud,
-  Flame,
-  Globe,
-  HardDrive,
-  Mountain,
-  Search,
-  ShieldCheck,
-  ArrowLeft,
-  ExternalLink,
-} from "lucide-react";
-
-const iconMap: Record<string, any> = {
-  Zap,
-  Brain,
-  Sparkles,
-  Send,
-  SquareKanban,
-  Cpu,
-  Radio,
-  AudioLines,
-  Waves,
-  Mic,
-  Plug,
-  AudioWaveform,
-  Gem,
-  Terminal,
-  Captions,
-  Cloud,
-  Flame,
-  Globe,
-  HardDrive,
-  Mountain,
-  Search,
-  ShieldCheck,
-};
+import { ArrowUpRight } from "lucide-react";
 
 export function getStaticPaths() {
   return locales.flatMap((locale) =>
@@ -83,11 +36,8 @@ export function getStaticPaths() {
 const { locale, plugin } = Astro.props;
 const mod = getPluginModule(plugin.slug, locale);
 const editions = getAddonEditions(plugin.slug, locale);
-const Icon = iconMap[plugin.icon];
+const isFamily = editions.length > 0;
 const isCommunity = isCommunityPlugin(plugin);
-const showBrandLogo = plugin.brandLogo
-  ? canRenderBrandLogo(plugin.brandLogo, "addon")
-  : false;
 const defaultScreenshot = plugin.screenshots === false ? undefined : getDefaultAddonDetailScreenshot(plugin);
 const defaultScreenshotSrc = defaultScreenshot
   ? defaultScreenshot.localized === false
@@ -104,6 +54,48 @@ const sourceLinks = plugin.sourceUrls
   : plugin.sourceUrl
     ? [{ label: t(locale, "addons.sourceCode"), url: plugin.sourceUrl }]
     : [];
+// A family names its editions; their pages carry releases and source links.
+const links = isFamily
+  ? plugin.apiDocsUrl
+    ? [{ label: t(locale, "addons.apiDocs"), url: plugin.apiDocsUrl }]
+    : []
+  : [
+      ...(plugin.homepage
+        ? [{ label: t(locale, "addons.homepage"), url: plugin.homepage }]
+        : []),
+      ...(plugin.apiDocsUrl
+        ? [{ label: t(locale, "addons.apiDocs"), url: plugin.apiDocsUrl }]
+        : []),
+      ...(plugin.releaseUrl
+        ? [
+            {
+              label: `${t(locale, "addons.editions.release")} ${plugin.version ?? ""}`.trim(),
+              url: plugin.releaseUrl,
+            },
+          ]
+        : []),
+      ...sourceLinks,
+    ];
+const categories = plugin.categories
+  .map((category) => t(locale, categoryKeys[category]))
+  .join(" · ");
+const platforms = plugin.platforms
+  .map((platform) => t(locale, platformKeys[platform]))
+  .join(" · ");
+const shot = addonShotText(locale, {
+  name: plugin.name,
+  platform:
+    plugin.platforms.length === 1 && plugin.platforms[0] === "windows"
+      ? "windows"
+      : "mac",
+  alt: plugin.screenshotAlt,
+  caption: plugin.screenshotCaption,
+});
+const headings = (
+  (mod as { getHeadings?: () => { depth: number; slug: string; text: string }[] } | undefined)
+    ?.getHeadings?.() ?? []
+).filter((heading) => heading.depth === 2);
+const hasToc = !isFamily && Boolean(mod) && headings.length > 1;
 ---
 
 <BaseLayout
@@ -113,253 +105,104 @@ const sourceLinks = plugin.sourceUrls
   canonicalPath={canonicalPath(locale, `/addons/${plugin.slug}`)}
   locale={locale}
 >
-  <div class="py-16 sm:py-20">
-    <div
-      class:list={[
-        "mx-auto px-4 sm:px-6",
-        editions.length > 0 ? "max-w-5xl" : "max-w-4xl",
+  <div class="site-page addon-page">
+    <AddonHead
+      locale={locale}
+      crumbs={[
+        { label: t(locale, "addons.heading"), href: canonicalPath(locale, "/addons") },
+        { label: plugin.name },
       ]}
+      label={isFamily ? t(locale, "addons.editions.eyebrow") : categories}
+      title={plugin.name}
+      lede={plugin.description}
+      plugin={plugin}
+      testId={isFamily ? "addon-edition-family" : undefined}
     >
-      <a
-        href={canonicalPath(locale, "/addons")}
-        class="mb-6 inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-      >
-        <ArrowLeft className="size-4" />
-        {t(locale, "addons.backToAddons")}
-      </a>
+      <Fragment slot="meta">
+        <li>
+          {t(locale, "addons.by")}{" "}
+          {!isFamily && plugin.authorUrl ? (
+            <a href={plugin.authorUrl} target="_blank" rel="noopener noreferrer">
+              {plugin.author}
+            </a>
+          ) : (
+            plugin.author
+          )}
+        </li>
+        <li>{t(locale, sourceKeys[plugin.source])}</li>
+        {isFamily && <li>{categories}</li>}
+        <li>{platforms}</li>
+      </Fragment>
+      {links.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="site-link"
+        >
+          {link.label}
+          <ArrowUpRight className="size-4" aria-hidden="true" />
+        </a>
+      ))}
+    </AddonHead>
 
-      {
-        editions.length > 0 ? (
-          <>
-            <header
-              class="border-b pb-8 sm:pb-10"
-              data-testid="addon-edition-family"
-            >
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                {t(locale, "addons.editions.eyebrow")}
-              </p>
-              <div class="mt-4 flex items-start gap-4">
-                <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl border bg-card shadow-sm">
-                  {showBrandLogo && plugin.brandLogo ? (
-                    <BrandLogo
-                      brand={plugin.brandLogo}
-                      context="addon"
-                      className="size-8 rounded-lg"
-                      alt={plugin.name}
-                    />
-                  ) : plugin.iconUrl ? (
-                    <img
-                      src={plugin.iconUrl}
-                      alt={plugin.name}
-                      class="size-8 rounded-lg"
-                    />
-                  ) : Icon ? (
-                    <Icon className="size-7 text-muted-foreground" />
-                  ) : null}
-                </div>
-                <div class="min-w-0">
-                  <div class="flex flex-wrap items-center gap-3">
-                    <h1 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-                      {plugin.name}
-                    </h1>
-                    <Badge variant="secondary" className="text-[10px]">
-                      {t(locale, sourceKeys[plugin.source])}
-                    </Badge>
-                  </div>
-                  <p class="mt-2 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-                    {plugin.description}
-                  </p>
-                  <p class="mt-2 text-sm text-muted-foreground">
-                    {t(locale, "addons.by")} {plugin.author}
-                  </p>
-                </div>
-              </div>
+    {
+      isFamily ? (
+        <section class="site-section addon-section" aria-labelledby="edition-heading">
+          <div class="site-wrap">
+            <h2 id="edition-heading" class="site-subtitle">
+              {t(locale, "addons.editions.heading")}
+            </h2>
+            <p class="site-text addon-section__lede">
+              {t(locale, "addons.editions.description")}
+            </p>
 
-              {plugin.apiDocsUrl && (
-                <a
-                  href={plugin.apiDocsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-                >
-                  <ExternalLink className="size-3.5" />{" "}
-                  {t(locale, "addons.apiDocs")}
-                </a>
+            <ul class="site-tiers site-tiers--2 addon-editions">
+              {editions.map((edition) => (
+                <AddonEditionCard
+                  edition={edition}
+                  name={plugin.name}
+                  familyPath={canonicalPath(locale, `/addons/${plugin.slug}`)}
+                  locale={locale}
+                />
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : (
+        <section class="site-section addon-section">
+          <div class:list={["site-wrap addon-doc", hasToc && "addon-doc--toc"]}>
+            {hasToc && (
+              <aside class="addon-doc__aside">
+                <AddonToc headings={headings} locale={locale} />
+              </aside>
+            )}
+            <div class="addon-doc__main">
+              {plugin.platforms.length === 1 && (
+                <AddonHostRequirement platform={plugin.platforms[0]} minAppVersion={plugin.minAppVersion} locale={locale} />
               )}
-            </header>
 
-            <section class="mt-10" aria-labelledby="edition-heading">
-              <div class="max-w-2xl">
-                <h2
-                  id="edition-heading"
-                  class="font-display text-2xl font-bold tracking-tight sm:text-3xl"
-                >
-                  {t(locale, "addons.editions.heading")}
-                </h2>
-                <p class="mt-3 leading-7 text-muted-foreground">
-                  {t(locale, "addons.editions.description")}
-                </p>
-              </div>
+              {defaultScreenshotSrc && (
+                <AddonShot
+                  src={defaultScreenshotSrc}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  captionRepeatsAlt={shot.captionRepeatsAlt}
+                  loading="eager"
+                />
+              )}
 
-              <div class="mt-7 grid gap-5 md:grid-cols-2">
-                {editions.map((edition) => (
-                  <AddonEditionCard
-                    edition={edition}
-                    familyPath={canonicalPath(locale, `/addons/${plugin.slug}`)}
-                    locale={locale}
-                  />
-                ))}
-              </div>
-            </section>
-          </>
-        ) : (
-          <>
-            <div class="flex items-start gap-4">
-              <div class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted">
-                {showBrandLogo && plugin.brandLogo ? (
-                  <BrandLogo
-                    brand={plugin.brandLogo}
-                    context="addon"
-                    className="size-8 rounded-lg"
-                    alt={plugin.name}
-                  />
-                ) : plugin.iconUrl ? (
-                  <img
-                    src={plugin.iconUrl}
-                    alt={plugin.name}
-                    class="size-8 rounded-lg"
-                  />
-                ) : Icon ? (
-                  <Icon className="size-7 text-muted-foreground" />
-                ) : null}
-              </div>
-              <div>
-                <div class="flex items-center gap-3">
-                  <h1 class="font-display text-2xl font-bold">{plugin.name}</h1>
-                  <Badge variant="secondary" className="text-[10px]">
-                    {t(locale, sourceKeys[plugin.source])}
-                  </Badge>
+              {mod ? (
+                <div class="site-prose addon-prose">
+                  <mod.default />
                 </div>
-                <p class="mt-0.5 text-sm text-muted-foreground">
-                  {t(locale, "addons.by")}{" "}
-                  {plugin.authorUrl ? (
-                    <a
-                      href={plugin.authorUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-primary hover:underline"
-                    >
-                      {plugin.author}
-                    </a>
-                  ) : (
-                    plugin.author
-                  )}
-                </p>
-                <div class="mt-2 flex flex-wrap gap-1.5">
-                  {plugin.categories.map((cat) => (
-                    <Badge variant="outline" className="text-[10px]">
-                      {t(locale, categoryKeys[cat])}
-                    </Badge>
-                  ))}
-                  {plugin.platforms.map((platform) => (
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] border-primary/30 text-primary/70"
-                    >
-                      {t(locale, platformKeys[platform])}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+              ) : isCommunity ? (
+                <CommunityContent client:load plugin={plugin} locale={locale} />
+              ) : null}
             </div>
-
-            {plugin.platforms.length === 1 && (
-              <AddonHostRequirement platform={plugin.platforms[0]} minAppVersion={plugin.minAppVersion} locale={locale} />
-            )}
-
-            {(plugin.apiDocsUrl ||
-              plugin.releaseUrl ||
-              sourceLinks.length > 0 ||
-              plugin.homepage) && (
-              <div class="mt-6 flex flex-wrap gap-4">
-                {plugin.homepage && (
-                  <a
-                    href={plugin.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                  >
-                    <ExternalLink className="size-3.5" />{" "}
-                    {t(locale, "addons.homepage")}
-                  </a>
-                )}
-                {plugin.apiDocsUrl && (
-                  <a
-                    href={plugin.apiDocsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                  >
-                    <ExternalLink className="size-3.5" />{" "}
-                    {t(locale, "addons.apiDocs")}
-                  </a>
-                )}
-                {plugin.releaseUrl && (
-                  <a href={plugin.releaseUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-1.5 text-sm text-primary hover:underline">
-                    <ExternalLink className="size-3.5" /> {t(locale, "addons.editions.release")} {plugin.version}
-                  </a>
-                )}
-                {sourceLinks.map((sourceLink) => (
-                  <a
-                    href={sourceLink.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
-                  >
-                    <ExternalLink className="size-3.5" /> {sourceLink.label}
-                  </a>
-                ))}
-              </div>
-            )}
-
-            {defaultScreenshotSrc && (
-              <div class="mt-8">
-                <picture>
-                  <source
-                    srcset={webpPath(defaultScreenshotSrc)}
-                    type="image/webp"
-                  />
-                  <img
-                    src={defaultScreenshotSrc}
-                    alt={`${plugin.name} ${t(locale, "addons.settingsAlt")}`}
-                    class="rounded-2xl border shadow-lg"
-                  />
-                </picture>
-              </div>
-            )}
-
-            {mod ? (
-              <div class="addon-prose prose prose-neutral dark:prose-invert mt-10 max-w-none">
-                <mod.default />
-              </div>
-            ) : isCommunity ? (
-              <CommunityContent client:load plugin={plugin} />
-            ) : null}
-          </>
-        )
-      }
-    </div>
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>
-
-<style>
-  :global(.addon-prose :not(pre) > code) {
-    overflow-wrap: anywhere;
-  }
-
-  :global(.addon-prose table) {
-    display: block;
-    max-width: 100%;
-    overflow-x: auto;
-  }
-</style>

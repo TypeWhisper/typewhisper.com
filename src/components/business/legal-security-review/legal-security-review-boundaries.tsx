@@ -1,41 +1,26 @@
-import type { CSSProperties } from "react";
-import { AlertTriangle } from "lucide-react";
+import { WaveRule } from "@/components/site";
 import type { LegalSecurityReviewContent } from "@/data/legal-security-review";
 
 interface LegalSecurityReviewBoundariesProps {
   boundaries: LegalSecurityReviewContent["boundaries"];
-  color: string;
+  label: string;
 }
 
+/** What the tool does not promise, each statement marked by a bar. */
 export function LegalSecurityReviewBoundaries({
   boundaries,
-  color,
+  label,
 }: LegalSecurityReviewBoundariesProps) {
   return (
-    <section className="py-12 sm:py-16">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <h2 className="reveal-fade-hidden font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          {boundaries.title}
-        </h2>
-        <ul className="reveal-hidden mt-8 space-y-4">
+    <section className="site-section">
+      <div className="site-wrap site-wrap--narrow">
+        <WaveRule label={label} seed={15} align="start" />
+        <div className="commercial-doc__head">
+          <h2 className="site-title site-title--start">{boundaries.title}</h2>
+        </div>
+        <ul className="commercial-limits">
           {boundaries.items.map((item) => (
-            <li
-              key={item}
-              className="flex gap-3 rounded-2xl border bg-card p-4 text-sm text-muted-foreground"
-            >
-              <span
-                className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full"
-                style={
-                  {
-                    backgroundColor: `${color}14`,
-                    color,
-                  } satisfies CSSProperties
-                }
-              >
-                <AlertTriangle className="size-3.5" strokeWidth={2.5} />
-              </span>
-              <span>{item}</span>
-            </li>
+            <li key={item}>{item}</li>
           ))}
         </ul>
       </div>

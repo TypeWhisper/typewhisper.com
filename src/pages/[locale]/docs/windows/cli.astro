@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import DocsWindowsCLI from "@/pages/docs/windows/_cli.tsx";
+import DocsWindowsCLI, { windowsCliHead } from "@/pages/docs/windows/_cli.tsx";
 import { t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 
@@ -22,6 +22,7 @@ const copy = locale === "de"
       title: "CLI Tool - Windows - TypeWhisper",
       description: "Install and use TypeWhisper from PowerShell and scripts.",
     };
+const head = windowsCliHead(locale);
 ---
 <DocsLayout
   title={copy.title}
@@ -29,9 +30,8 @@ const copy = locale === "de"
   canonicalPath={canonicalPath(locale, "/docs/windows/cli")}
   locale={locale}
   platform="windows"
-  releaseStage="stable"
-  releaseTitle={t(locale, "docs.win.release.title")}
-  releaseDescription={t(locale, "docs.win.release.cliDescription")}
+  heading={head.heading}
+  lede={head.lede}
 >
   <DocsWindowsCLI locale={locale} />
 </DocsLayout>

@@ -20,6 +20,8 @@ const { locale } = Astro.props;
   canonicalPath={canonicalPath(locale, "/docs/mac/workflows")}
   locale={locale}
   platform="mac"
+  heading={t(locale, "docs.mac.rules.title")}
+  lede={t(locale, "docs.mac.rules.subtitle")}
 >
   <DocsMacRules locale={locale} />
 </DocsLayout>

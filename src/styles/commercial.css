@@ -1,0 +1,675 @@
+/*
+ * Pricing, teams, security review, sponsors, accessibility: prefix `commercial-`.
+ * Only what the `site-` primitives do not cover. Outside of a layer, so these
+ * rules win over the primitives and over utilities.
+ */
+
+/* Targets of in-page links clear the sticky header. */
+.commercial-anchor {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+/* ---------- Statement: one paragraph set as large type ---------- */
+
+.commercial-statement {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: clamp(1.125rem, 1.7vw, 1.375rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* ---------- Tiers with an action ---------- */
+
+.commercial-plans__switch {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.commercial-plans .site-tiers {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.commercial-tier .site-tiers__name {
+  margin: 0;
+}
+
+/* One amount as display type; "from" in the size of the period behind it. */
+.commercial-price {
+  margin-bottom: 0;
+}
+
+.commercial-price__from {
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.commercial-tier .site-tiers__text {
+  margin-bottom: 0;
+}
+
+.commercial-tier .site-list {
+  margin-bottom: 2rem;
+}
+
+.commercial-tier .site-tiers__text:has(+ .commercial-tier__action) {
+  margin-bottom: 2rem;
+}
+
+/* The action sits on one line across the columns. */
+.commercial-tier__action {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* Notes below the tiers, on the inner edges of the outer columns. */
+.commercial-notes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 2rem;
+  padding: 1.25rem clamp(1.75rem, 3vw, 2.5rem) 0;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.9;
+}
+
+.commercial-notes p {
+  margin: 0;
+}
+
+/* A path through the settings of the app. */
+.commercial-path {
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--fill);
+  padding: 0.125rem 0.5rem;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Links in running text of these pages. */
+.commercial :is(p, li) > a:not([class]) {
+  color: var(--accent-text);
+  text-underline-offset: 0.2em;
+}
+
+.commercial :is(p, li) > a:not([class]):hover {
+  color: var(--accent-text-hover);
+}
+
+/* ---------- Comparison: two ruled columns with shared rows ---------- */
+
+.commercial-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.commercial-compare__plan {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 7;
+  min-width: 0;
+}
+
+.commercial-compare__head {
+  border-top: 1px solid var(--hairline-strong);
+  padding-block: 1.75rem 2rem;
+}
+
+.commercial-compare__head .site-subtitle {
+  margin-top: 1.25rem;
+}
+
+.commercial-compare__head .commercial-price {
+  margin-top: 0.625rem;
+}
+
+.commercial-compare__rows {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 5;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-compare__rows > li {
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: 1rem;
+  border-top: 1px solid var(--hairline);
+  padding-block: 1rem;
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+.commercial-compare__rows .site-mark {
+  margin-top: 0.4em;
+}
+
+.commercial-compare__action {
+  border-top: 1px solid var(--hairline);
+  padding-top: 1.5rem;
+}
+
+/* ---------- Decision rows ---------- */
+
+.commercial-decide {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-decide__row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 1rem clamp(1.5rem, 3vw, 3rem);
+  border-top: 1px solid var(--hairline);
+  padding-block: 1.875rem 1.25rem;
+}
+
+.commercial-decide__row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.commercial-decide__name .site-meta {
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+}
+
+.commercial-decide__free {
+  color: var(--accent-text);
+}
+
+.commercial-decide__row .site-list {
+  margin-top: 0.375rem;
+}
+
+.commercial-decide__action {
+  grid-column: 2;
+}
+
+/* ---------- Two blocks side by side below a list ---------- */
+
+.commercial-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-inline: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.commercial-pair__callout {
+  margin-top: 0;
+}
+
+.commercial-pair .site-link {
+  margin-top: 1rem;
+}
+
+/* A closing line instead of a whole section. */
+.commercial-closing {
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+.commercial-closing .site-note {
+  margin-top: 0;
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 899px) {
+  .commercial-notes {
+    padding-inline: 0;
+  }
+
+  .commercial-tier .site-tiers__price {
+    margin-top: 1rem;
+  }
+
+  .commercial-tier.site-tiers__link {
+    padding-inline: 0;
+  }
+
+  .commercial-pair {
+    padding-inline: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .commercial-compare {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.5rem, 8vw, 3.5rem) 0;
+  }
+
+  .commercial-compare__plan,
+  .commercial-compare__rows {
+    display: block;
+  }
+
+  .commercial-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .commercial-decide__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .commercial-decide__action {
+    grid-column: 1;
+  }
+
+  .commercial-tier__action {
+    align-self: stretch;
+  }
+}
+
+/* ---------- Teams ---------- */
+
+/* The note below a list of points, with its link. */
+.commercial-review {
+  margin-top: 2rem;
+}
+
+.commercial-review .site-link {
+  margin-top: 0.25rem;
+}
+
+/* ---------- Security review: a document to read ---------- */
+
+/* Way back above the page head. */
+.commercial-back {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.commercial-back .site-link {
+  font-size: 0.9375rem;
+}
+
+.commercial-back .site-link:hover svg {
+  transform: translateX(-3px);
+}
+
+.commercial-back__head.site-page-head {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.commercial-down:hover svg {
+  transform: translateY(3px);
+}
+
+.commercial-doc__head {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.commercial-doc__list {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* One question or statement as a row of a list. */
+.commercial-doc__item {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.commercial-doc__list .site-steps__item {
+  padding-block: 1.375rem;
+}
+
+.commercial-doc__list .site-steps__item::before {
+  padding-top: 0.5rem;
+}
+
+/* Building blocks along a vertical line: the path of the data. */
+.commercial-flow {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-flow__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.commercial-flow__item:last-child {
+  padding-bottom: 0;
+}
+
+/* The line runs from one node to the next. */
+.commercial-flow__item:not(:last-child)::before {
+  position: absolute;
+  top: 2.5rem;
+  bottom: 0.5rem;
+  left: 1rem;
+  width: 1px;
+  background: var(--hairline-strong);
+  content: "";
+}
+
+.commercial-flow__node {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  background: var(--background);
+}
+
+.commercial-flow__item .site-text {
+  margin-top: 0.5rem;
+  max-width: 40rem;
+}
+
+/* Statements of what is not promised. */
+.commercial-limits {
+  display: grid;
+  gap: 1.5rem;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-limits > li {
+  border-left: 2px solid var(--wave);
+  padding: 0.125rem 0 0.125rem 1.25rem;
+  color: var(--foreground);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* Links to further pages as rows: name, what waits there, arrow. */
+.commercial-links {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-links__link {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) auto;
+  align-items: baseline;
+  gap: 0.375rem clamp(1.5rem, 3vw, 3rem);
+  border-top: 1px solid var(--hairline);
+  padding-block: 1.5rem;
+  color: inherit;
+  transition: border-color 250ms var(--motion-ease-out);
+}
+
+.commercial-links > li:last-child .commercial-links__link {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.commercial-links__name {
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-variant-ligatures: none;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  text-rendering: geometricPrecision;
+}
+
+.commercial-links__text {
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.commercial-links__link svg {
+  align-self: center;
+  color: var(--muted-foreground);
+  transition:
+    color 200ms var(--motion-ease-out),
+    transform 200ms var(--motion-ease-out);
+}
+
+.commercial-links__link:hover {
+  border-color: var(--accent-text);
+}
+
+.commercial-links__link:hover svg {
+  color: var(--accent-text);
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 639px) {
+  .commercial-links__link {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .commercial-links__text {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .commercial-links__link svg {
+    grid-row: 1 / span 2;
+  }
+}
+
+/* ---------- Sponsors ---------- */
+
+.commercial-sponsors {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.commercial-sponsors .site-index {
+  margin-top: 1.25rem;
+}
+
+.commercial-example__details {
+  margin-top: 1.75rem;
+}
+
+/* The placement as it would be listed; dashes mark it as a placeholder. */
+.commercial-example {
+  margin: 0;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: 14px;
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.commercial-example__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 1.25rem;
+}
+
+.commercial-example__entry {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+.commercial-example__entry p {
+  margin: 0;
+}
+
+.commercial-example__entry .site-index__name {
+  display: block;
+  font-size: 1.25rem;
+}
+
+.commercial-example__entry .site-index__text {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+  line-clamp: none;
+}
+
+/* Looks like the link of an entry, leads nowhere. */
+.commercial-example__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding-top: 0.5rem;
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* Two blocks of headline, text, and ruled list side by side; their parts share rows. */
+.commercial-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(2.5rem, 7vw, 6rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.commercial-columns > div {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  align-content: start;
+  min-width: 0;
+}
+
+/* Headlines of different length end on one line. */
+.commercial-columns .site-title {
+  align-self: end;
+}
+
+.commercial-columns .site-text {
+  max-width: 34rem;
+}
+
+/* A second split below the first one, divided by a hairline. */
+.commercial-next {
+  border-top: 1px solid var(--hairline);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* Short statements between hairlines. */
+.commercial-rows {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commercial-rows > li {
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: 1rem;
+  border-top: 1px solid var(--hairline);
+  padding-block: 1rem;
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+.commercial-rows > li:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.commercial-rows .site-mark {
+  margin-top: 0.4em;
+}
+
+.commercial-rows--flush {
+  margin-top: 0;
+}
+
+.commercial-rows strong {
+  font-weight: 600;
+}
+
+.commercial-rows__more {
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 899px) {
+  .commercial-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3rem, 8vw, 4rem) 0;
+  }
+
+  .commercial-columns > div {
+    display: block;
+  }
+}
+
+/* ---------- Open source and accessibility ---------- */
+
+/* The name of the initiative below the lede, in the accent color. */
+.commercial-initiative .site-page-head__meta {
+  color: var(--accent-text);
+}
+
+/* Two real screenshots side by side; their captions share one line. */
+.commercial-shots {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem clamp(1rem, 3vw, 2.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* As wide as the capture is in proportion: both figures get the same height. */
+.commercial-shots .site-shot {
+  flex: var(--commercial-shot, 1) 1 0;
+}
+
+/* Holds the place of captures that come without their size. */
+.commercial-shots img {
+  aspect-ratio: var(--commercial-shot, auto);
+}
+
+.commercial-shots .site-caption {
+  padding-inline: 4%;
+}
+
+.commercial-legal-note {
+  max-width: 46rem;
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  text-wrap: pretty;
+}
+
+@media (max-width: 767px) {
+  .commercial-shots {
+    flex-direction: column;
+  }
+
+  .commercial-shots .site-shot {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* Three parallel blocks stay in one row on tablets; two and one would leave an orphan. */
+@media (min-width: 720px) and (max-width: 1023px) {
+  .site-grid.commercial-trio {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 1.75rem;
+  }
+}

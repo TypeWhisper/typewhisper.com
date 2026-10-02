@@ -1,30 +1,29 @@
 ---
 import { t, type Locale } from "@/i18n/index";
+import { Search } from "lucide-react";
+
 const { locale, platform } = Astro.props as {
   locale: Locale;
   platform?: string;
 };
+const id = `docs-query-${platform ?? "all"}`;
 ---
 
-<form
-  action={`/${locale}/docs/search/`}
-  class="my-4 flex min-w-0 gap-2"
-  role="search"
->
-  <label class="sr-only" for={`docs-query-${platform ?? "all"}`}
-    >{t(locale, "docs.search.label")}</label
-  >
+<form action={`/${locale}/docs/search/`} class="docs-search" role="search">
+  <label class="sr-only" for={id}>{t(locale, "docs.search.label")}</label>
+  <Search aria-hidden="true" />
   <input
-    id={`docs-query-${platform ?? "all"}`}
+    id={id}
     name="q"
     type="search"
     required
+    autocomplete="off"
     placeholder={t(locale, "docs.search.label")}
-    class="min-w-0 flex-1 rounded-lg border bg-card px-3 py-2 text-sm"
+    class="docs-search__input"
+    aria-keyshortcuts="/"
+    data-docs-search-input
   />
   {platform && <input type="hidden" name="platform" value={platform} />}
-  <button
-    class="rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
-    >{t(locale, "docs.search.submit")}</button
-  >
+  <kbd class="docs-search__key" title={t(locale, "docs.searchShortcut")}>/</kbd>
+  <button class="docs-search__submit">{t(locale, "docs.search.submit")}</button>
 </form>

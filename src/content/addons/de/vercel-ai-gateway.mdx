@@ -1,0 +1,66 @@
+---
+slug: "vercel-ai-gateway"
+name: "Vercel AI Gateway"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "Cloud"
+brandLogo: "vercel"
+description: "Cloud-Transkription und LLM-Workflows über Vercel AI Gateway mit einem API-Key, Modellkatalogen, Preisanzeige und Guthaben."
+categories:
+  - transcription
+  - llm
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.vercel-ai-gateway"
+minAppVersion: "1.7.0"
+minOsVersion: "14.0"
+homepage: "https://vercel.com/ai-gateway"
+apiDocsUrl: "https://vercel.com/docs/ai-gateway"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/VercelAIGatewayPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.0"
+principalClass: "VercelAIGatewayPlugin"
+---
+
+## Über
+
+Vercel AI Gateway verbindet TypeWhisper über einen einzigen API-Key mit Cloud-Transkriptionsmodellen und LLMs. Das Add-on hat getrennte Modellkataloge für Sprache und für Text-Workflows und zeigt Modellpreise und dein Guthaben.
+
+Das ist ein Cloud-Anbieter. Audio und Workflow-Text verlassen deinen Mac, wenn du ihn nutzt.
+
+## Voraussetzungen
+
+Diese Version benötigt **TypeWhisper 1.7.0 oder neuer** auf macOS 14 oder neuer.
+
+Du brauchst einen eigenen **API-Key für Vercel AI Gateway**. Die Spracherkennung über Vercel AI Gateway ist in der Beta. Transkriptionsmodelle sind für dein Team deshalb vielleicht noch nicht freigeschaltet.
+
+## Einrichtung
+
+1. Installiere und aktiviere **Vercel AI Gateway** unter **Einstellungen > Integrationen > Entdecken**.
+2. Öffne die Einstellungen des Add-ons. **API-Schlüssel erhalten** öffnet die API-Key-Seite deines Vercel-Teams.
+3. Füge den Key ein und wähle **Speichern**. Das Add-on legt den Key im macOS-Schlüsselbund ab, prüft ihn und lädt den Modellkatalog und dein Guthaben.
+4. Wähle ein **Transkriptionsmodell** und ein **LLM-Modell**.
+5. Wähle Vercel AI Gateway als Transkriptions-Engine oder LLM-Anbieter.
+
+## Einstellungen
+
+| Einstellung | Funktion |
+| --- | --- |
+| **API-Schlüssel** | Key eingeben, ein- oder ausblenden und speichern. Das Add-on meldet, ob der Key gültig ist, und zeigt dein Guthaben in US-Dollar. **Entfernen** löscht den gespeicherten Key. |
+| **Transkriptionsmodell** | Liste durchsuchen und das Modell für die Spracherkennung wählen. **Aktualisieren** lädt den aktuellen Katalog. |
+| **LLM-Modell** | Liste durchsuchen und das Modell für Workflow-Prompts wählen. Jeder Eintrag zeigt seinen Preis pro eine Million Eingabe- und Ausgabe-Tokens, **Kostenlos** oder **Preis nicht verfügbar**. |
+| **Temperatur** | **Anbieter-Standard** sendet keine Temperatur. **Benutzerdefiniert** legt einen Wert von 0 bis 2 fest. |
+
+Solange kein Katalog geladen ist, bietet das Add-on eine kurze Standardliste an und weist unter der Modellauswahl darauf hin. Für diese Einträge kennt es keine Preise und zeigt **Preis nicht verfügbar**, wie im Screenshot.
+
+## Transkription
+
+Das Add-on sendet die fertige Aufnahme in einer Anfrage an das Gateway. Während du sprichst, erscheint kein Zwischentext. Echtzeitmodelle, die Audio nur über eine Live-Verbindung annehmen, fehlen in der Liste.
+
+Eine eingestellte Sprache gibt das Add-on nur bei OpenAI-Transkriptionsmodellen als Hinweis weiter. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht gesendet.
+
+## Cloud-Verarbeitung und Datenschutz
+
+Audio wird zur Transkription an Vercel AI Gateway gesendet, Workflow-Text zur LLM-Verarbeitung. Das Gateway gibt die Anfrage an den Anbieter des gewählten Modells weiter. Verfügbare Modelle, Preise und das Guthaben stammen von Vercel AI Gateway.
+
+Nutze eine lokale Engine, wenn Inhalte auf deinem Mac bleiben müssen. Prüfe die Bedingungen und Datenschutzinformationen von Vercel und vom Anbieter des Modells, bevor du sensible Inhalte verwendest.
