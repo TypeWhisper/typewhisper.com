@@ -21,6 +21,61 @@ test.describe("hero waveform headline", () => {
     await expect(headline).toHaveCSS("opacity", "1");
   });
 
+  test("the headline is readable shortly after the first paint", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      const poll = () => {
+        const title = document.querySelector(".landing-hero__title");
+        if (title && getComputedStyle(title).opacity === "1") {
+          Object.assign(window, { __titleReadable: performance.now() });
+          return;
+        }
+        requestAnimationFrame(poll);
+      };
+      requestAnimationFrame(poll);
+    });
+    await page.goto("/en/?platform=mac");
+    const readable = await page.waitForFunction(
+      () =>
+        (window as typeof window & { __titleReadable?: number })
+          .__titleReadable,
+    );
+    const firstPaint = await page.evaluate(
+      () =>
+        performance.getEntriesByName("first-contentful-paint")[0]?.startTime ??
+        0,
+    );
+    // About one second on an idle machine; the bound leaves room for load.
+    expect((await readable.jsonValue())! - firstPaint).toBeLessThan(2500);
+  });
+
+  test("a canvas that cannot be laid out leaves the headline and recovers", async ({
+    page,
+  }) => {
+    await page.goto("/en/?platform=mac");
+    const hero = page.getByTestId("landing-hero");
+    const headline = hero.getByRole("heading", { level: 1 });
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 4000 });
+
+    // Too narrow for the waveform: the engine switches itself off.
+    await page.setViewportSize({ width: 180, height: 700 });
+    await expect(hero).toHaveAttribute("data-wave", "off");
+    await page.getByTestId("landing-hero-tab-ios").click();
+    await expect(headline).toHaveAccessibleName("Speak. Capture. Keep moving.");
+    await expect(headline).toHaveCSS("opacity", "1");
+    await expect(hero).toHaveAttribute("data-phase", "done");
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(hero).toHaveAttribute("data-wave", "on");
+    await page.getByTestId("landing-hero-tab-mac").click();
+    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 5000 });
+    await expect(headline).toHaveAccessibleName(
+      "Speak once. Keep writing everywhere.",
+    );
+    await expect(headline).toHaveCSS("opacity", "1");
+  });
+
   test("switching the platform plays the sequence again", async ({ page }) => {
     await page.goto("/en/?platform=mac");
     const hero = page.getByTestId("landing-hero");

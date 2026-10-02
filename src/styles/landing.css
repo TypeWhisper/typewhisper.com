@@ -49,7 +49,7 @@
     transparent 72%
   );
   opacity: 0.55;
-  transition: opacity 1200ms ease;
+  transition: opacity 400ms ease;
   pointer-events: none;
 }
 
@@ -92,7 +92,7 @@
   text-wrap: balance;
   /* Hidden until the waveform has typed it; shows on its own without script. */
   opacity: 0;
-  animation: landing-title-failsafe 600ms ease-out 3500ms forwards;
+  animation: landing-title-failsafe 400ms ease-out 1500ms forwards;
 }
 
 @media (min-width: 640px) {
