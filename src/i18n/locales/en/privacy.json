@@ -30,7 +30,7 @@
   "privacy.section.android.premium.title": "Premium on Android",
   "privacy.section.android.premium.p1": "Premium is bought through Google Play Billing. To tie Premium to an account, you sign in with Google or Apple. The TypeWhisper Premium service (app.typewhisper.com, hosted on Cloudflare) stores only a hashed account identifier, a hashed random install ID, hashed Google Play purchase tokens, and your entitlement. It does not store your name or email address. A Polar license bought on typewhisper.com can be linked to the account on the web.",
   "privacy.section.android.tracking.title": "No tracking",
-  "privacy.section.android.tracking.p1": "The Android app contains no advertising, analytics, crash reporting, or tracking SDKs. Feedback reaches us only as an email that you send from your own mail app. It can include the app version, Android version, device model, and a short error log without dictated text.",
+  "privacy.section.android.tracking.p1": "The Android app contains no advertising, analytics, crash reporting, or tracking SDKs. Feedback from the app reaches us only as an email that you send from your own mail app. It can include the app version, Android version, device model, and a short error log without dictated text. If you write to us on Discord instead, Discord's privacy policy applies to what you post there.",
   "privacy.section.deleteAccount.title": "Deleting Your Account",
   "privacy.section.deleteAccount.beforeLink": "You can delete your TypeWhisper Premium account in the app (on Android: Settings → Premium → Delete account) or on the web. The ",
   "privacy.section.deleteAccount.linkText": "account deletion page",

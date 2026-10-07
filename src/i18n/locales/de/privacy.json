@@ -30,7 +30,7 @@
   "privacy.section.android.premium.title": "Premium unter Android",
   "privacy.section.android.premium.p1": "Premium kaufst du über Google Play Billing. Um Premium an ein Konto zu binden, meldest du dich mit Google oder Apple an. Der TypeWhisper-Premium-Dienst (app.typewhisper.com, gehostet bei Cloudflare) speichert nur eine gehashte Konto-ID, eine gehashte zufällige Installations-ID, gehashte Google-Play-Kauftokens und deine Berechtigung. Name und E-Mail-Adresse speichert er nicht. Eine auf typewhisper.com gekaufte Polar-Lizenz lässt sich im Web mit dem Konto verknüpfen.",
   "privacy.section.android.tracking.title": "Kein Tracking",
-  "privacy.section.android.tracking.p1": "Die Android-App enthält keine SDKs für Werbung, Analyse, Absturzberichte oder Tracking. Feedback erreicht uns nur als E-Mail, die du selbst aus deiner Mail-App sendest. Sie kann App-Version, Android-Version, Gerätemodell und ein kurzes Fehlerprotokoll ohne diktierten Text enthalten.",
+  "privacy.section.android.tracking.p1": "Die Android-App enthält keine SDKs für Werbung, Analyse, Absturzberichte oder Tracking. Feedback aus der App erreicht uns nur als E-Mail, die du selbst aus deiner Mail-App sendest. Sie kann App-Version, Android-Version, Gerätemodell und ein kurzes Fehlerprotokoll ohne diktierten Text enthalten. Schreibst du uns stattdessen auf Discord, gilt für deine Beiträge dort die Datenschutzerklärung von Discord.",
   "privacy.section.deleteAccount.title": "Konto löschen",
   "privacy.section.deleteAccount.beforeLink": "Du kannst dein TypeWhisper-Premium-Konto in der App löschen (unter Android: Einstellungen → Premium → Konto löschen) oder im Web. Die ",
   "privacy.section.deleteAccount.linkText": "Seite zur Kontolöschung",

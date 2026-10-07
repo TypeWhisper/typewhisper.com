@@ -15,7 +15,7 @@
   "deleteAccount.section.deleted.p1": "Beim Löschen entfernt der TypeWhisper-Premium-Dienst:",
   "deleteAccount.section.deleted.item1": "Dein TypeWhisper-Konto",
   "deleteAccount.section.deleted.item2": "Die damit verbundenen Geräte",
-  "deleteAccount.section.deleted.item3": "Deine Premium-Berechtigungen",
+  "deleteAccount.section.deleted.item3": "Deine Premium-Berechtigungen, samt den gehashten Verweisen auf deine Käufe im App Store, bei Google Play und bei Polar",
   "deleteAccount.section.deleted.item4": "Die Einträge zu deinen Käufen über Google Play",
   "deleteAccount.section.deleted.item5": "Deine Anmeldesitzungen",
   "deleteAccount.section.deleted.p2": "Ist eine Polar-Lizenz von typewhisper.com mit dem Konto verknüpft, werden ihre Aktivierungen für dieses Konto deaktiviert.",

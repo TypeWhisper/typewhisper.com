@@ -15,7 +15,7 @@
   "deleteAccount.section.deleted.p1": "When the account is deleted, the TypeWhisper Premium service removes:",
   "deleteAccount.section.deleted.item1": "Your TypeWhisper account",
   "deleteAccount.section.deleted.item2": "The devices registered to it",
-  "deleteAccount.section.deleted.item3": "Your Premium entitlements",
+  "deleteAccount.section.deleted.item3": "Your Premium entitlements, including the hashed references to your App Store, Google Play, and Polar purchases",
   "deleteAccount.section.deleted.item4": "The records of your Google Play purchases",
   "deleteAccount.section.deleted.item5": "Your sign-in sessions",
   "deleteAccount.section.deleted.p2": "If a Polar license from typewhisper.com is linked to the account, its activations for the account are deactivated.",

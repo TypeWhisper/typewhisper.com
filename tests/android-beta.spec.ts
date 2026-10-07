@@ -33,10 +33,10 @@ for (const locale of ["en", "de"] as const) {
         "href",
         groupUrl,
       );
-      await expect(page.getByTestId("android-beta-step2")).toHaveAttribute(
-        "href",
-        playUrl,
-      );
+      // The Play opt-in is only offered once the closed test is published (androidBeta.listed).
+      await expect(page.getByTestId("android-beta-step2")).toHaveCount(0);
+      await expect(page.getByTestId("android-beta-step2-soon")).toBeVisible();
+      await expect(page.locator(`a[href="${playUrl}"]`)).toHaveCount(0);
       const notice = page.getByTestId("android-beta-notice");
       await expect(notice).toContainText("14");
       await expect(

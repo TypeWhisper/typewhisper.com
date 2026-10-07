@@ -14,6 +14,7 @@
   "android.join.step2.title": "Opt in and install from Google Play",
   "android.join.step2.text": "Open the testing page with the Google account that joined the group, tap Become a tester, then install TypeWhisper from Google Play. After joining the group, it can take a few minutes until the page lets you in.",
   "android.join.step2.button": "Opt in on Google Play",
+  "android.join.step2.soon": "The Google Play testing page opens once the beta starts. Join the group now so you can opt in right away.",
   "android.try.label": "What to try",
   "android.try.title": "What to try",
   "android.try.lede": "Everything below is in the beta. Try what you would use every day.",
