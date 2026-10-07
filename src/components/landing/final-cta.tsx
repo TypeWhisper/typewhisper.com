@@ -6,7 +6,11 @@ import {
   MacOSLogo,
   WindowsLogo,
 } from "@/components/ui/platform-logos";
-import { getPlatformDownloadTarget } from "@/lib/platform-download";
+import {
+  getPlatformDownloadTarget,
+  getWindowsStoreBetaUrl,
+  windowsBetaSeries,
+} from "@/lib/platform-download";
 import { platformVersions } from "@/lib/platform-versions";
 import {
   useSyncedLandingPlatform,
@@ -30,6 +34,8 @@ export function FinalCta({ locale = "en" }: { locale?: Locale }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const platform = useSyncedLandingPlatform();
   const download = getPlatformDownloadTarget(platform, locale, "landing");
+  // The stable release stays the main action; the beta is offered beside it.
+  const showWindowsBeta = platform === "windows";
 
   useEffect(() => {
     if (!canvas.current) return;
@@ -77,11 +83,36 @@ export function FinalCta({ locale = "en" }: { locale?: Locale }) {
               {download.label}
             </button>
           )}
+          {showWindowsBeta && (
+            <a
+              href={getWindowsStoreBetaUrl(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-describedby="landing-windows-beta-note"
+              data-testid="landing-footer-windows-beta"
+              data-download-social-trigger
+              data-download-platform="windows"
+              data-download-target="windows_store_beta"
+              data-tracking-placement="landing"
+              className="site-button site-button--quiet"
+            >
+              {t(locale, "downloadCta.windowsBeta.download")}
+            </a>
+          )}
           <a href={localePath(locale, "/release-status")} className="site-link">
             {t(locale, "downloadCta.releaseStatus")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
         </div>
+
+        {showWindowsBeta && (
+          <p id="landing-windows-beta-note" className="landing-final__beta">
+            {t(locale, "downloadCta.windowsBeta.note").replace(
+              "{version}",
+              windowsBetaSeries,
+            )}
+          </p>
+        )}
 
         <ul
           className="site-editions"
