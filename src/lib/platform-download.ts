@@ -11,6 +11,11 @@ export const windowsReleaseUrl =
 export { iosVersion };
 const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
+// The public beta is a separate Store product that installs alongside the
+// stable app. Update the series with each beta line.
+const windowsStoreBetaProductUrl =
+  "https://apps.microsoft.com/detail/9N183R19SQQ8";
+export const windowsBetaSeries = "1.1";
 const windowsStoreCampaignId = "DevShareMCLPCS";
 
 // Direct asset URLs for the latest stable release. Resolved at build time
@@ -47,14 +52,22 @@ interface PendingPlatformDownloadTarget {
 export type PlatformDownloadTarget =
   AvailablePlatformDownloadTarget | PendingPlatformDownloadTarget;
 
-export function getWindowsStoreUrl(locale: Locale): string {
+function windowsStoreListingUrl(productUrl: string, locale: Locale): string {
   const params = new URLSearchParams({
     cid: windowsStoreCampaignId,
     hl: locale === "de" ? "de-DE" : "en-US",
     gl: locale === "de" ? "DE" : "US",
   });
 
-  return `${windowsStoreProductUrl}?${params.toString()}`;
+  return `${productUrl}?${params.toString()}`;
+}
+
+export function getWindowsStoreUrl(locale: Locale): string {
+  return windowsStoreListingUrl(windowsStoreProductUrl, locale);
+}
+
+export function getWindowsStoreBetaUrl(locale: Locale): string {
+  return windowsStoreListingUrl(windowsStoreBetaProductUrl, locale);
 }
 
 export function getIosAppStoreUrl(locale: Locale): string {

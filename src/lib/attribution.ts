@@ -18,6 +18,7 @@ export type DownloadTarget =
   | "windows_github_installer_arm64"
   | "windows_github_releases"
   | "windows_store"
+  | "windows_store_beta"
   | "ios_app_store";
 
 export type TrackingPlacement =

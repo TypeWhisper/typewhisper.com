@@ -949,6 +949,15 @@
   font-size: clamp(2.5rem, 6.4vw, 5rem);
 }
 
+/* Says what the Windows beta beside the stable download is. */
+.landing .landing-final__beta {
+  max-width: 34rem;
+  margin: 1.25rem auto 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  text-wrap: pretty;
+}
+
 .landing .landing-final__note {
   max-width: 42rem;
   margin: 2rem auto 0;

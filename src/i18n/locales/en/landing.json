@@ -267,5 +267,7 @@
   "wallOfLove.source": "Read the article",
   "pricingTeaser.label": "Pricing",
   "faq.label": "Questions",
-  "downloadCta.editions": "All editions"
+  "downloadCta.editions": "All editions",
+  "downloadCta.windowsBeta.download": "Microsoft Store Beta",
+  "downloadCta.windowsBeta.note": "Public beta of TypeWhisper {version} for Windows 11 24H2 or later, on x64 and ARM64. It installs alongside the stable version with a separate profile for its settings and data, and receives updates through the Microsoft Store."
 }

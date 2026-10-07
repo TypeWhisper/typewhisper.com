@@ -137,6 +137,59 @@ for (const scenario of landingScenarios) {
   });
 }
 
+test.describe("landing Windows beta download", () => {
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale}: offers the Store beta beside the stable download`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/?platform=windows`);
+      const stable = page.getByTestId("landing-footer-download");
+      const beta = page.getByTestId("landing-footer-windows-beta");
+      await stable.scrollIntoViewIfNeeded();
+
+      await expect(stable).toHaveAttribute(
+        "data-download-target",
+        "windows_store",
+      );
+      await expect(stable).toHaveClass("site-button");
+      await expect(beta).toHaveClass("site-button site-button--quiet");
+      await expect(beta).toHaveText(
+        locale === "de" ? "Beta im Microsoft Store" : "Microsoft Store Beta",
+      );
+      await expect(beta).toHaveAttribute(
+        "href",
+        locale === "de"
+          ? "https://apps.microsoft.com/detail/9N183R19SQQ8?cid=DevShareMCLPCS&hl=de-DE&gl=DE"
+          : "https://apps.microsoft.com/detail/9N183R19SQQ8?cid=DevShareMCLPCS&hl=en-US&gl=US",
+      );
+      await expect(beta).toHaveAttribute("target", "_blank");
+      await expect(beta).toHaveAttribute("rel", "noopener noreferrer");
+      await expect(beta).toHaveAttribute(
+        "data-download-target",
+        "windows_store_beta",
+      );
+      await expect(beta).toHaveAccessibleDescription(
+        locale === "de"
+          ? /Windows 11 24H2 oder neuer, auf x64 und ARM64/
+          : /Windows 11 24H2 or later, on x64 and ARM64/,
+      );
+      await expect(page.getByTestId("final-cta")).not.toContainText("{version}");
+    });
+  }
+
+  test("leaves with the Windows platform", async ({ page }) => {
+    await page.goto("/en/?platform=windows");
+    const stable = page.getByTestId("landing-footer-download");
+    const beta = page.getByTestId("landing-footer-windows-beta");
+    await stable.scrollIntoViewIfNeeded();
+    await expect(beta).toBeVisible();
+
+    await page.getByTestId("landing-hero-tab-mac").click();
+    await expect(stable).toHaveAttribute("data-download-target", "mac_dmg");
+    await expect(beta).toHaveCount(0);
+  });
+});
+
 test("download clicks show the social follow banner", async ({ page }) => {
   await page.goto("/en/");
 
