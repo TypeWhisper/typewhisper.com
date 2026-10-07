@@ -14,6 +14,9 @@ const requiredChunks = [
   "support.json",
   "sponsors.json",
   "open-source-accessibility.json",
+  "privacy.json",
+  "android.json",
+  "delete-account.json",
   "docs/common.json",
   "docs/mac.json",
 ];

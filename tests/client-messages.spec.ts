@@ -205,6 +205,8 @@ for (const locale of ["en", "de"]) {
         "/release-status/",
         "/open-source-accessibility/",
         "/privacy/",
+        "/android/",
+        "/delete-account/",
         "/no-such-page/",
       ])
         await check(page, `/${locale}${path}`, found);

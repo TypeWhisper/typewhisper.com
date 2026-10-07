@@ -8,6 +8,8 @@ import support from "./support.json";
 import sponsors from "./sponsors.json";
 import openSourceAccessibility from "./open-source-accessibility.json";
 import privacy from "./privacy.json";
+import android from "./android.json";
+import deleteAccount from "./delete-account.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
 import platformReleases from "./platform-releases.json";
@@ -23,6 +25,8 @@ const translations = {
   ...sponsors,
   ...openSourceAccessibility,
   ...privacy,
+  ...android,
+  ...deleteAccount,
   ...docsCommon,
   ...docsMac,
   ...platformReleases,

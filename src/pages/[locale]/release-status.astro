@@ -4,6 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import { BarMark, PageHead } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
+import { androidBeta } from "@/lib/android-beta";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import {
   getWindowsStoreUrl,
@@ -31,9 +32,14 @@ interface StatusLink {
 }
 
 /** One block per edition: stage, what it means, what it contains, where to get it. */
-const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
+const editions: {
+  id: "mac" | "win" | "ios" | "android";
+  stage: "stable" | "beta";
+  links: StatusLink[];
+}[] = [
   {
     id: "mac",
+    stage: "stable",
     links: [
       {
         label: t(locale, "releaseStatus.mac.download"),
@@ -55,6 +61,7 @@ const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
   },
   {
     id: "win",
+    stage: "stable",
     links: [
       {
         label: t(locale, "releaseStatus.win.download"),
@@ -87,6 +94,7 @@ const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
   },
   {
     id: "ios",
+    stage: "stable",
     links: [
       {
         label: t(locale, "releaseStatus.ios.download"),
@@ -107,6 +115,21 @@ const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
       },
     ],
   },
+  ...(androidBeta.listed
+    ? [
+        {
+          id: "android" as const,
+          stage: "beta" as const,
+          links: [
+            {
+              label: t(locale, "releaseStatus.android.join"),
+              href: localePath(locale, "/android"),
+              kind: "docs" as const,
+            },
+          ],
+        },
+      ]
+    : []),
 ];
 ---
 
@@ -131,7 +154,7 @@ const editions: { id: "mac" | "win" | "ios"; links: StatusLink[] }[] = [
               <div class="utility-status__head">
                 <p class="site-label">
                   <BarMark />
-                  {t(locale, "releaseStage.stable")}
+                  {t(locale, `releaseStage.${edition.stage}`)}
                 </p>
                 <h2 class="site-subtitle">{t(locale, `releaseStatus.${edition.id}.title`)}</h2>
               </div>

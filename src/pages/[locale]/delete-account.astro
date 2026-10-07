@@ -1,0 +1,75 @@
+---
+import "@/styles/utility.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PageHead } from "@/components/site";
+import { t, localePath, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+
+const privacyHref = localePath(locale, "/privacy");
+
+// Google Play links to this page as the way to delete an account outside the app.
+const sections: { id: string; paragraphs: string[]; items: number; after?: string[] }[] = [
+  { id: "who", paragraphs: ["p1"], items: 0 },
+  { id: "inApp", paragraphs: ["p1"], items: 2 },
+  { id: "email", paragraphs: ["p1"], items: 0 },
+  { id: "deleted", paragraphs: ["p1"], items: 5, after: ["p2"] },
+  { id: "kept", paragraphs: [], items: 3 },
+];
+---
+
+<BaseLayout
+  title={t(locale, "deleteAccount.meta.title")}
+  description={t(locale, "deleteAccount.meta.description")}
+  canonicalPath={canonicalPath(locale, "/delete-account")}
+  locale={locale}
+>
+  <div class="site-page">
+    <PageHead
+      compact
+      wrap="prose"
+      label={t(locale, "legal.label")}
+      title={t(locale, "deleteAccount.heading")}
+      lede={t(locale, "deleteAccount.lede")}
+    />
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap site-wrap--prose">
+        <div class="site-prose utility-reading" data-testid="delete-account">
+          {sections.map((section) => (
+            <>
+              <h2 id={section.id}>{t(locale, `deleteAccount.section.${section.id}.title`)}</h2>
+              {section.paragraphs.map((key) => (
+                <p set:html={t(locale, `deleteAccount.section.${section.id}.${key}`)} />
+              ))}
+              {section.items > 0 && (
+                <ul>
+                  {Array.from({ length: section.items }, (_, index) => (
+                    <li>{t(locale, `deleteAccount.section.${section.id}.item${index + 1}`)}</li>
+                  ))}
+                </ul>
+              )}
+              {section.after?.map((key) => (
+                <p>{t(locale, `deleteAccount.section.${section.id}.${key}`)}</p>
+              ))}
+            </>
+          ))}
+
+          <h2 id="privacy">{t(locale, "deleteAccount.section.privacy.title")}</h2>
+          <p>
+            {t(locale, "deleteAccount.section.privacy.beforeLink")}
+            <a href={privacyHref}>{t(locale, "deleteAccount.section.privacy.linkText")}</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

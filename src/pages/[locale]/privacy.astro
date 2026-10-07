@@ -16,11 +16,16 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 
 const securityReviewHref = localePath(locale, "/business/legal-security-review");
+const deleteAccountHref = localePath(locale, "/delete-account");
+
+// The Android app gets one section with a short heading per topic.
+const androidTopics = ["speech", "writing", "keyboard", "storage", "premium", "tracking"] as const;
 
 type PrivacySection =
   | { id: "overview" | "dataCollection" | "analytics" | "premiumSync" | "contributions" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
   | { id: "localStorage"; kind: "list" }
-  | { id: "securityReview"; kind: "link" };
+  | { id: "android"; kind: "topics" }
+  | { id: "deleteAccount" | "securityReview"; kind: "link" };
 
 const sections: PrivacySection[] = [
   { id: "overview", kind: "simple" },
@@ -28,6 +33,8 @@ const sections: PrivacySection[] = [
   { id: "analytics", kind: "simple" },
   { id: "localStorage", kind: "list" },
   { id: "premiumSync", kind: "simple" },
+  { id: "android", kind: "topics" },
+  { id: "deleteAccount", kind: "link" },
   { id: "contributions", kind: "simple" },
   { id: "network", kind: "simple" },
   { id: "thirdParty", kind: "simple" },
@@ -85,7 +92,29 @@ const sections: PrivacySection[] = [
                 </>
               )}
 
-              {section.kind === "link" && (
+              {section.kind === "topics" && (
+                <>
+                  <p>{t(locale, "privacy.section.android.p1")}</p>
+                  {androidTopics.map((topic) => (
+                    <>
+                      <h3>{t(locale, `privacy.section.android.${topic}.title`)}</h3>
+                      <p>{t(locale, `privacy.section.android.${topic}.p1`)}</p>
+                    </>
+                  ))}
+                </>
+              )}
+
+              {section.id === "deleteAccount" && (
+                <p>
+                  {t(locale, "privacy.section.deleteAccount.beforeLink")}
+                  <a href={deleteAccountHref}>
+                    {t(locale, "privacy.section.deleteAccount.linkText")}
+                  </a>
+                  {t(locale, "privacy.section.deleteAccount.afterLink")}
+                </p>
+              )}
+
+              {section.id === "securityReview" && (
                 <p>
                   {t(locale, "privacy.section.securityReview.beforeLink")}
                   <a href={securityReviewHref}>

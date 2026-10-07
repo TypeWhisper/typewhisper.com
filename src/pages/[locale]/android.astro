@@ -1,0 +1,148 @@
+---
+import "@/styles/utility.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowUpRight } from "lucide-react";
+import { BarMark, PageHead, WaveRule } from "@/components/site";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { androidBeta } from "@/lib/android-beta";
+import { discordUrl } from "@/lib/platform-download";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+
+// Play only lets members of the Google Group opt in, so the group comes first. Until the closed
+// test is published (androidBeta.listed), the Play opt-in leads nowhere and is not offered.
+const steps = [
+  { id: "step1", href: androidBeta.googleGroupUrl, open: true },
+  { id: "step2", href: androidBeta.playOptInUrl, open: androidBeta.listed },
+];
+
+const feedback = [
+  {
+    label: t(locale, "android.notice.discord"),
+    text: t(locale, "android.notice.discordText"),
+    href: discordUrl,
+  },
+  {
+    label: androidBeta.feedbackEmail,
+    text: t(locale, "android.notice.emailText"),
+    href: `mailto:${androidBeta.feedbackEmail}`,
+  },
+];
+---
+
+<BaseLayout
+  title={t(locale, "android.meta.title")}
+  description={t(locale, "android.meta.description")}
+  canonicalPath={canonicalPath(locale, "/android")}
+  locale={locale}
+  noIndex={!androidBeta.listed}
+>
+  <div class="site-page">
+    <PageHead
+      label={t(locale, "android.label")}
+      title={t(locale, "android.title")}
+      lede={t(locale, "android.lede")}
+      meta={t(locale, "android.requirement")}
+    />
+
+    <section class="site-section site-section--tight-top" data-testid="android-beta-join">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "android.join.label")} seed={5} />
+        <div class="site-split">
+          <div class="site-split__head">
+            <h2 class="site-title site-title--start">{t(locale, "android.join.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "android.join.lede")}</p>
+          </div>
+          <ol class="site-steps">
+            {steps.map((step) => (
+              <li class="site-steps__item">
+                <div>
+                  <h3 class="site-heading">{t(locale, `android.join.${step.id}.title`)}</h3>
+                  <p class="site-text">{t(locale, `android.join.${step.id}.text`)}</p>
+                  {!step.open && (
+                    <p class="site-text" data-testid={`android-beta-${step.id}-soon`}>{t(locale, `android.join.${step.id}.soon`)}</p>
+                  )}
+                  {step.open && <div class="site-actions site-actions--start">
+                    <a
+                      href={step.href}
+                      class="site-button site-button--small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-testid={`android-beta-${step.id}`}
+                    >
+                      {t(locale, `android.join.${step.id}.button`)}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </a>
+                  </div>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section site-section--band">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "android.try.label")} seed={9} />
+        <div class="site-split">
+          <div class="site-split__head">
+            <h2 class="site-title site-title--start">{t(locale, "android.try.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "android.try.lede")}</p>
+          </div>
+          <ul class="site-points">
+            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+              <li class="site-points__item">
+                <BarMark className="site-points__mark utility-point__mark" />
+                <p class="utility-point">{t(locale, `android.try.item${item}`)}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section" data-testid="android-beta-notice">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "android.notice.label")} seed={13} />
+        <div class="site-split">
+          <div class="site-split__head">
+            <h2 class="site-title site-title--start">{t(locale, "android.notice.title")}</h2>
+            <p class="site-text">{t(locale, "android.notice.p1")}</p>
+            <p class="site-text">{t(locale, "android.notice.p2")}</p>
+            <p class="site-text">{t(locale, "android.notice.p3")}</p>
+          </div>
+          <div>
+            <ul class="utility-rows">
+              {feedback.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="utility-rows__link"
+                    target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  >
+                    <span class="utility-rows__name">{link.label}</span>
+                    <span class="utility-rows__text">{link.text}</span>
+                    <ArrowUpRight className="size-5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <h3 class="site-heading utility-after-rows">{t(locale, "android.requirements.title")}</h3>
+            <p class="site-text">{t(locale, "android.requirements.text")}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

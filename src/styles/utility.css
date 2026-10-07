@@ -678,6 +678,11 @@
   font-size: 0.9375rem;
 }
 
+/* A heading that continues below a block of link rows. */
+.utility-after-rows {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
 /* Three platforms stay side by side as long as they fit, then stack. */
 .utility-platforms {
   grid-template-columns: repeat(3, minmax(0, 1fr));
