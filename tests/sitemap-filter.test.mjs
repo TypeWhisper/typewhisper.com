@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import {
   createSitemapFilter,
+  isNoIndexHtml,
   isRedirectHtml,
 } from "../scripts/sitemap-filter.mjs";
 
@@ -17,6 +18,11 @@ const pageHtml =
 test("isRedirectHtml recognizes a meta refresh page", () => {
   assert.equal(isRedirectHtml(redirectHtml), true);
   assert.equal(isRedirectHtml(pageHtml), false);
+});
+
+test("isNoIndexHtml recognizes a page that asks not to be indexed", () => {
+  assert.equal(isNoIndexHtml('<head><meta name="robots" content="noindex"></head>'), true);
+  assert.equal(isNoIndexHtml(pageHtml), false);
 });
 
 test("createSitemapFilter drops redirect pages and keeps content pages", () => {
