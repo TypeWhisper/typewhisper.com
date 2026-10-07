@@ -32,7 +32,7 @@
   "privacy.section.android.tracking.title": "Kein Tracking",
   "privacy.section.android.tracking.p1": "Die Android-App enthält keine SDKs für Werbung, Analyse, Absturzberichte oder Tracking. Feedback erreicht uns nur als E-Mail, die du selbst aus deiner Mail-App sendest. Sie kann App-Version, Android-Version, Gerätemodell und ein kurzes Fehlerprotokoll ohne diktierten Text enthalten.",
   "privacy.section.deleteAccount.title": "Konto löschen",
-  "privacy.section.deleteAccount.beforeLink": "Du kannst dein TypeWhisper-Premium-Konto in der App löschen (unter Android: Einstellungen → Premium → Konto löschen) oder per E-Mail. Die ",
+  "privacy.section.deleteAccount.beforeLink": "Du kannst dein TypeWhisper-Premium-Konto in der App löschen (unter Android: Einstellungen → Premium → Konto löschen) oder im Web. Die ",
   "privacy.section.deleteAccount.linkText": "Seite zur Kontolöschung",
   "privacy.section.deleteAccount.afterLink": " erklärt beide Wege und was gelöscht wird.",
   "privacy.section.contributions.title": "Optionale Korrekturbeiträge",

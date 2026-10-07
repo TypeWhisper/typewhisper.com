@@ -32,7 +32,7 @@
   "privacy.section.android.tracking.title": "No tracking",
   "privacy.section.android.tracking.p1": "The Android app contains no advertising, analytics, crash reporting, or tracking SDKs. Feedback reaches us only as an email that you send from your own mail app. It can include the app version, Android version, device model, and a short error log without dictated text.",
   "privacy.section.deleteAccount.title": "Deleting Your Account",
-  "privacy.section.deleteAccount.beforeLink": "You can delete your TypeWhisper Premium account in the app (on Android: Settings → Premium → Delete account) or by email. The ",
+  "privacy.section.deleteAccount.beforeLink": "You can delete your TypeWhisper Premium account in the app (on Android: Settings → Premium → Delete account) or on the web. The ",
   "privacy.section.deleteAccount.linkText": "account deletion page",
   "privacy.section.deleteAccount.afterLink": " explains both ways and what is deleted.",
   "privacy.section.contributions.title": "Optional Correction Contributions",
