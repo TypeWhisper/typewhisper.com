@@ -9,6 +9,7 @@ import {
 import { mulberry32 } from "@/lib/seeded-random";
 import type { Locale } from "@/i18n/index";
 import { t, localePath } from "@/i18n/index";
+import { androidBeta } from "@/lib/android-beta";
 
 interface Props {
   locale?: Locale;
@@ -139,9 +140,11 @@ const community = [
               data-tracking-placement="footer">{t(locale, "footer.ios")}</a
             >
           </li>
-          <li>
-            <a href={localePath(locale, "/android")}>{t(locale, "footer.android")}</a>
-          </li>
+          {androidBeta.listed && (
+            <li>
+              <a href={localePath(locale, "/android")}>{t(locale, "footer.android")}</a>
+            </li>
+          )}
         </ul>
       </div>
 

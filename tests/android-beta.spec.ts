@@ -66,7 +66,7 @@ for (const locale of ["en", "de"] as const) {
       ).toBeVisible();
     });
 
-    test("privacy, footer, and release status link to the new pages", async ({
+    test("privacy and footer link the deletion page; the beta stays unlisted", async ({
       page,
     }) => {
       await page.goto(`/${locale}/privacy/`);
@@ -75,20 +75,17 @@ for (const locale of ["en", "de"] as const) {
         page.locator(`.site-prose a[href="/${locale}/delete-account/"]`),
       ).toBeVisible();
 
+      // The beta page is not linked until the closed test is published (androidBeta.listed).
       const footer = page.locator("footer");
       await expect(
         footer.getByRole("link", { name: copy[locale].android }),
-      ).toHaveAttribute("href", `/${locale}/android/`);
+      ).toHaveCount(0);
       await expect(
         footer.getByRole("link", { name: copy[locale].deleteLink }),
       ).toHaveAttribute("href", `/${locale}/delete-account/`);
 
       await page.goto(`/${locale}/release-status/`);
-      const android = page.getByTestId("release-status-android");
-      await expect(android).toContainText("Beta");
-      await expect(
-        android.locator(`a[href="/${locale}/android/"]`),
-      ).toBeVisible();
+      await expect(page.getByTestId("release-status-android")).toHaveCount(0);
     });
   });
 }

@@ -4,6 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import { BarMark, PageHead } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
+import { androidBeta } from "@/lib/android-beta";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import {
   getWindowsStoreUrl,
@@ -114,17 +115,21 @@ const editions: {
       },
     ],
   },
-  {
-    id: "android",
-    stage: "beta",
-    links: [
-      {
-        label: t(locale, "releaseStatus.android.join"),
-        href: localePath(locale, "/android"),
-        kind: "docs",
-      },
-    ],
-  },
+  ...(androidBeta.listed
+    ? [
+        {
+          id: "android" as const,
+          stage: "beta" as const,
+          links: [
+            {
+              label: t(locale, "releaseStatus.android.join"),
+              href: localePath(locale, "/android"),
+              kind: "docs" as const,
+            },
+          ],
+        },
+      ]
+    : []),
 ];
 ---
 

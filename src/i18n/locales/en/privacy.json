@@ -18,7 +18,7 @@
   "privacy.section.premiumSync.title": "Optional Premium Account and Sync",
   "privacy.section.premiumSync.p1": "Premium Sync is optional. Sign in with Apple gives the TypeWhisper entitlement service a stable account identifier. The service stores only hashed account, license, StoreKit transaction, session, and device references plus entitlement status, tier, expiry, device limit, and verification time. Polar license keys are used for validation and are not stored or logged in their original form. Dictionary and snippet contents never pass through the TypeWhisper entitlement service: they remain in the private iCloud container or Files/Finder folder selected by you. Signing out or an expired entitlement pauses sync without deleting local or already synchronized data. In-app account deletion removes the TypeWhisper account and its entitlement links; cloud files remain until you delete them separately.",
   "privacy.section.android.title": "Android App (Beta)",
-  "privacy.section.android.p1": "The Android app is in beta and follows the same local-first approach. This section describes what it does with your data. Its source code is not public.",
+  "privacy.section.android.p1": "The Android app is in beta and follows the same local-first approach. This section describes what it does with your data.",
   "privacy.section.android.speech.title": "Speech recognition",
   "privacy.section.android.speech.p1": "By default, the app turns speech into text on your phone, with Parakeet, Whisper, or Nemotron. Audio leaves the phone only if you pick a cloud speech engine and enter your own API key. It then goes directly from your phone to that provider: Groq, OpenAI, ElevenLabs, Soniox, Meta, Reson8, Deepgram, AssemblyAI, or your own server. Model files are downloaded from Hugging Face; the app sends no account or device identifiers with these downloads.",
   "privacy.section.android.writing.title": "Writing profiles",
@@ -45,7 +45,7 @@
   "privacy.section.securityReview.beforeLink": "For firm IT and privacy review, there is also a ",
   "privacy.section.securityReview.linkText": "public checklist covering data flow, storage locations, and optional cloud building blocks",
   "privacy.section.openSource.title": "Open Source",
-  "privacy.section.openSource.p1": "TypeWhisper is open source under the GPLv3 license. You can audit the entire source code on <a href=\"https://github.com/TypeWhisper\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-primary hover:underline\">GitHub</a>.",
+  "privacy.section.openSource.p1": "TypeWhisper is open source under the GPLv3 license. The source code of the macOS and Windows apps and of the plugins is on <a href=\"https://github.com/TypeWhisper\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-primary hover:underline\">GitHub</a>; the iPhone, iPad, and Android apps are not published there yet.",
   "privacy.section.contact.title": "Contact",
   "privacy.section.contact.p1": "If you have questions about this privacy policy, email <a href=\"mailto:hello@typewhisper.com\" class=\"text-primary hover:underline\">hello@typewhisper.com</a> or open an issue on our <a href=\"https://github.com/TypeWhisper\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-primary hover:underline\">GitHub organization</a>."
 }

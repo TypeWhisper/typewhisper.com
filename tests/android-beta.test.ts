@@ -22,8 +22,9 @@ test("the unprefixed Android and account deletion URLs redirect to a locale", as
   }
 });
 
-test("the footer links the Android beta and the account deletion page", async () => {
+test("the footer links the Android beta only once it is listed, and the account deletion page", async () => {
   const footer = await readFile("src/components/layout/footer.astro", "utf8");
+  assert.match(footer, /androidBeta\.listed && \(/);
   assert.match(footer, /localePath\(locale, "\/android"\)/);
   assert.match(footer, /localePath\(locale, "\/delete-account"\)/);
 });
