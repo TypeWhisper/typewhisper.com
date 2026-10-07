@@ -45,7 +45,7 @@ for (const locale of ["en", "de"] as const) {
       await expect(notice.locator('a[href^="https://discord.gg/"]')).toBeVisible();
     });
 
-    test("the account deletion page names the app path and the email", async ({
+    test("the account deletion page names the app path and the web page", async ({
       page,
     }) => {
       await page.goto(`/${locale}/delete-account/`);
@@ -55,9 +55,11 @@ for (const locale of ["en", "de"] as const) {
       ).toBeVisible();
       const body = page.getByTestId("delete-account");
       await expect(body).toContainText("Premium →");
-      await expect(body).toContainText("Delete my TypeWhisper account");
       await expect(
-        body.locator('a[href^="mailto:hello@typewhisper.com"]'),
+        body.locator('a[href="https://app.typewhisper.com/account/delete"]'),
+      ).toBeVisible();
+      await expect(
+        body.locator('a[href="mailto:hello@typewhisper.com"]'),
       ).toBeVisible();
       await expect(
         body.locator(`a[href="/${locale}/privacy/"]`),
