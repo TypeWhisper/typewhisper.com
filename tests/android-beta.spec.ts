@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-const groupUrl = "https://groups.google.com/g/typewhisper-android-beta";
-const playUrl = "https://play.google.com/apps/testing/com.typewhisper.android";
+const optInUrl = "https://play.google.com/apps/testing/com.typewhisper.android";
+const storeUrl = "https://play.google.com/store/apps/details?id=com.typewhisper.android";
 
 const copy = {
   en: {
@@ -20,7 +20,7 @@ const copy = {
 
 for (const locale of ["en", "de"] as const) {
   test.describe(`${locale} Android beta and account deletion`, () => {
-    test("the Android page leads through the group to the Play opt-in", async ({
+    test("the Android page leads through the Play opt-in to the Play listing", async ({
       page,
     }) => {
       await page.goto(`/${locale}/android/`);
@@ -31,16 +31,15 @@ for (const locale of ["en", "de"] as const) {
       await expect(page.getByTestId("page-head")).toContainText("Beta");
       await expect(page.getByTestId("android-beta-step1")).toHaveAttribute(
         "href",
-        groupUrl,
+        optInUrl,
       );
       await expect(page.getByTestId("android-beta-step2")).toHaveAttribute(
         "href",
-        playUrl,
+        storeUrl,
       );
-      await expect(page.getByTestId("android-beta-step2-soon")).toHaveCount(0);
       await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
       const notice = page.getByTestId("android-beta-notice");
-      await expect(notice).toContainText("14");
+      await expect(notice).toContainText("Premium");
       await expect(
         notice.locator('a[href="mailto:hello@typewhisper.com"]'),
       ).toBeVisible();

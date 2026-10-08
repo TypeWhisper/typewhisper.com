@@ -4,14 +4,14 @@ import test from "node:test";
 
 import { androidBeta } from "../src/lib/android-beta.ts";
 
-test("the Android beta links point at the tester group and the Play opt-in", () => {
-  assert.equal(
-    androidBeta.googleGroupUrl,
-    "https://groups.google.com/g/typewhisper-android-beta",
-  );
+test("the Android beta links point at the Play opt-in and the Play listing", () => {
   assert.equal(
     androidBeta.playOptInUrl,
     "https://play.google.com/apps/testing/com.typewhisper.android",
+  );
+  assert.equal(
+    androidBeta.playStoreUrl,
+    "https://play.google.com/store/apps/details?id=com.typewhisper.android",
   );
 });
 
