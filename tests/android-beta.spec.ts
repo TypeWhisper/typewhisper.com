@@ -33,10 +33,12 @@ for (const locale of ["en", "de"] as const) {
         "href",
         groupUrl,
       );
-      // The Play opt-in is only offered once the closed test is published (androidBeta.listed).
-      await expect(page.getByTestId("android-beta-step2")).toHaveCount(0);
-      await expect(page.getByTestId("android-beta-step2-soon")).toBeVisible();
-      await expect(page.locator(`a[href="${playUrl}"]`)).toHaveCount(0);
+      await expect(page.getByTestId("android-beta-step2")).toHaveAttribute(
+        "href",
+        playUrl,
+      );
+      await expect(page.getByTestId("android-beta-step2-soon")).toHaveCount(0);
+      await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
       const notice = page.getByTestId("android-beta-notice");
       await expect(notice).toContainText("14");
       await expect(
@@ -66,7 +68,7 @@ for (const locale of ["en", "de"] as const) {
       ).toBeVisible();
     });
 
-    test("privacy and footer link the deletion page; the beta stays unlisted", async ({
+    test("privacy and footer link the deletion page; footer and release status list the beta", async ({
       page,
     }) => {
       await page.goto(`/${locale}/privacy/`);
@@ -75,17 +77,16 @@ for (const locale of ["en", "de"] as const) {
         page.locator(`.site-prose a[href="/${locale}/delete-account/"]`),
       ).toBeVisible();
 
-      // The beta page is not linked until the closed test is published (androidBeta.listed).
       const footer = page.locator("footer");
       await expect(
         footer.getByRole("link", { name: copy[locale].android }),
-      ).toHaveCount(0);
+      ).toHaveAttribute("href", `/${locale}/android/`);
       await expect(
         footer.getByRole("link", { name: copy[locale].deleteLink }),
       ).toHaveAttribute("href", `/${locale}/delete-account/`);
 
       await page.goto(`/${locale}/release-status/`);
-      await expect(page.getByTestId("release-status-android")).toHaveCount(0);
+      await expect(page.getByTestId("release-status-android")).toBeVisible();
     });
   });
 }
