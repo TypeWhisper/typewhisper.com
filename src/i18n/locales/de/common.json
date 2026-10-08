@@ -91,7 +91,7 @@
   "releaseStatus.ios.download": "Im App Store laden",
   "releaseStatus.ios.docs": "iOS-Dokumentation lesen",
   "releaseStatus.android.title": "Android",
-  "releaseStatus.android.intro": "Android ist in einer geschlossenen Beta bei Google Play.",
+  "releaseStatus.android.intro": "Android ist in einer offenen Beta bei Google Play.",
   "releaseStatus.android.detail": "Tester bekommen Diktieren auf dem Gerät, die Diktier-Tastatur, Schreibprofile und die Inbox vor der öffentlichen Veröffentlichung. Rechne mit Fehlern.",
   "releaseStatus.android.description": "Benötigt Android 10 oder neuer. Jeder mit einem Google-Konto kann bei der Beta mitmachen.",
   "releaseStatus.android.join": "Bei der Android-Beta mitmachen",

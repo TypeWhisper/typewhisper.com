@@ -91,7 +91,7 @@
   "releaseStatus.ios.download": "Download on the App Store",
   "releaseStatus.ios.docs": "Read the iOS docs",
   "releaseStatus.android.title": "Android",
-  "releaseStatus.android.intro": "Android is in a closed beta on Google Play.",
+  "releaseStatus.android.intro": "Android is in an open beta on Google Play.",
   "releaseStatus.android.detail": "Testers get on-device dictation, the voice keyboard, writing profiles, and the Inbox before the public release. Expect bugs.",
   "releaseStatus.android.description": "Requires Android 10 or later. Anyone with a Google account can join the beta.",
   "releaseStatus.android.join": "Join the Android beta",
