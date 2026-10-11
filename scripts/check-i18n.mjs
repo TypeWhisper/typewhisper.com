@@ -17,6 +17,7 @@ const requiredChunks = [
   "privacy.json",
   "android.json",
   "delete-account.json",
+  "extensions.json",
   "docs/common.json",
   "docs/mac.json",
 ];

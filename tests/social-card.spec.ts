@@ -13,5 +13,7 @@ test("root exposes an English social card without changing the locale redirect",
   expect(html).toContain(`property="og:image" content="${socialImageUrl}"`);
   expect(html).toContain('name="twitter:card" content="summary_large_image"');
   expect(html).toContain("navigator.language");
-  expect(html).toContain('window.location.replace("/" + locale + targetPath)');
+  expect(html).toContain(
+    'window.location.replace("/" + locale + targetPath + window.location.search + window.location.hash)',
+  );
 });

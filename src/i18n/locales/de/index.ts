@@ -10,6 +10,7 @@ import openSourceAccessibility from "./open-source-accessibility.json";
 import privacy from "./privacy.json";
 import android from "./android.json";
 import deleteAccount from "./delete-account.json";
+import extensions from "./extensions.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
 import platformReleases from "./platform-releases.json";
@@ -27,6 +28,7 @@ const translations = {
   ...privacy,
   ...android,
   ...deleteAccount,
+  ...extensions,
   ...docsCommon,
   ...docsMac,
   ...platformReleases,

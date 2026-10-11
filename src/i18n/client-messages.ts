@@ -48,6 +48,8 @@ function routePrefixes(route: string): string[] {
       "setup.platform",
     ];
   if (route === "/setup") return ["setup"];
+  // The extensions page shows install commands in code blocks.
+  if (route === "/extensions") return codeBlock;
   if (route === "/use-cases") return ["useCases"];
   if (route === "/changelog")
     return ["changelog.month", "changelog.status", "changelog.pre.loading"];

@@ -683,6 +683,37 @@
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
 }
 
+/* A row whose link is not live yet: no hover, a label instead of the arrow. */
+.utility-rows__link--soon:hover .utility-rows__name {
+  color: var(--foreground);
+}
+
+.utility-rows__soon {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+/* ---------- Extensions ---------- */
+
+/* The app links the sections by anchor; keep them clear of the header. */
+.utility-extension {
+  scroll-margin-top: var(--header-height);
+}
+
+.utility-extension__meta {
+  margin-top: 1.25rem;
+}
+
+.utility-code {
+  margin-top: 1.25rem;
+}
+
 /* Three platforms stay side by side as long as they fit, then stack. */
 .utility-platforms {
   grid-template-columns: repeat(3, minmax(0, 1fr));
