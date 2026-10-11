@@ -1,0 +1,264 @@
+---
+import "@/styles/utility.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { BarMark, PageHead, WaveRule } from "@/components/site";
+import { CodeBlock } from "@/components/ui/code-block";
+import { t, localePath, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { integrations, mcpClientConfig } from "@/lib/integrations";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+
+interface InstallLink {
+  id: string;
+  name: string;
+  text?: string;
+  /** `null` while a store listing is not live: the row says "Coming soon". */
+  href: string | null;
+  external: boolean;
+}
+
+interface Section {
+  /** Anchor of the section; the app links /extensions/#browser. */
+  id: string;
+  key: string;
+  items: number;
+  /** Install command, shown above the links. */
+  command?: string;
+  commandNote?: string;
+  /** Client configuration, shown below the install command. */
+  config?: { lang: string; code: string; text: string };
+  links: InstallLink[];
+  setup?: string;
+}
+
+const githubLinks = (key: "mcp" | "pi"): InstallLink[] => [
+  {
+    id: `${key}-github`,
+    name: t(locale, "extensions.github"),
+    text: t(locale, `extensions.${key}.githubText`),
+    href: integrations[key].repoUrl,
+    external: true,
+  },
+  {
+    id: `${key}-npm`,
+    name: t(locale, "extensions.npm"),
+    text: integrations[key].npmUrl.replace("https://www.npmjs.com/package/", ""),
+    href: integrations[key].npmUrl,
+    external: true,
+  },
+];
+
+const sections: Section[] = [
+  {
+    id: "browser",
+    key: "browser",
+    items: 5,
+    links: [
+      {
+        id: "chrome",
+        name: t(locale, "extensions.browser.chrome"),
+        text: t(locale, "extensions.browser.chromeText"),
+        href: integrations.browser.chromeWebStoreUrl,
+        external: true,
+      },
+      {
+        id: "firefox",
+        name: t(locale, "extensions.browser.firefox"),
+        href: integrations.browser.firefoxAddonsUrl,
+        external: true,
+      },
+    ],
+    setup: t(locale, "extensions.browser.setup"),
+  },
+  {
+    id: "raycast",
+    key: "raycast",
+    items: 5,
+    links: [
+      {
+        id: "raycast",
+        name: t(locale, "extensions.raycast.store"),
+        text: t(locale, "extensions.raycast.storeText"),
+        href: integrations.raycast.storeUrl,
+        external: true,
+      },
+    ],
+  },
+  {
+    id: "stream-deck",
+    key: "streamDeck",
+    items: 5,
+    links: [
+      {
+        id: "stream-deck",
+        name: t(locale, "extensions.streamDeck.download"),
+        text: t(locale, "extensions.streamDeck.downloadText"),
+        href: integrations.streamDeck.releasesUrl,
+        external: true,
+      },
+    ],
+  },
+  {
+    id: "mcp",
+    key: "mcp",
+    items: 0,
+    command: integrations.mcp.installCommand,
+    config: {
+      lang: "json",
+      code: mcpClientConfig,
+      text: t(locale, "extensions.mcp.setup"),
+    },
+    links: githubLinks("mcp"),
+  },
+  {
+    id: "pi",
+    key: "pi",
+    items: 0,
+    command: integrations.pi.installCommand,
+    commandNote: t(locale, "extensions.pi.setup"),
+    links: githubLinks("pi"),
+  },
+  {
+    id: "cli",
+    key: "cli",
+    items: 0,
+    links: [
+      {
+        id: "cli-mac",
+        name: t(locale, "extensions.cli.mac"),
+        text: t(locale, "extensions.cli.macText"),
+        href: localePath(locale, "/docs/mac/cli"),
+        external: false,
+      },
+      {
+        id: "cli-windows",
+        name: t(locale, "extensions.cli.windows"),
+        text: t(locale, "extensions.cli.windowsText"),
+        href: localePath(locale, "/docs/windows/cli"),
+        external: false,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={t(locale, "extensions.meta.title")}
+  description={t(locale, "extensions.meta.description")}
+  canonicalPath={canonicalPath(locale, "/extensions")}
+  locale={locale}
+>
+  <div class="site-page">
+    <PageHead
+      label={t(locale, "extensions.label")}
+      title={t(locale, "extensions.title")}
+      lede={t(locale, "extensions.lede")}
+      meta={t(locale, "extensions.requirement")}
+    >
+      <nav aria-label={t(locale, "extensions.index.label")}>
+        <ul class="site-chips">
+          {sections.map((section) => (
+            <li>
+              <a href={`#${section.id}`} class="site-chip">{t(locale, `extensions.${section.key}.label`)}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </PageHead>
+
+    {sections.map((section, index) => (
+      <section
+        id={section.id}
+        class:list={[
+          "site-section utility-extension",
+          { "site-section--tight-top": index === 0, "site-section--band": index % 2 === 1 },
+        ]}
+        data-testid={`extensions-${section.id}`}
+      >
+        <div class="site-wrap">
+          <WaveRule label={t(locale, `extensions.${section.key}.label`)} seed={5 + index * 4} />
+          <div class="site-split">
+            <div class="site-split__head">
+              <h2 class="site-title site-title--start">{t(locale, `extensions.${section.key}.title`)}</h2>
+              <p class="site-lede site-lede--start">{t(locale, `extensions.${section.key}.lede`)}</p>
+              <p class="site-meta utility-extension__meta">{t(locale, `extensions.${section.key}.platforms`)}</p>
+              {section.items > 0 && (
+                <ul class="site-list">
+                  {Array.from({ length: section.items }, (_, item) => (
+                    <li>
+                      <BarMark />
+                      <span>{t(locale, `extensions.${section.key}.item${item + 1}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              {section.command && (
+                <>
+                  <h3 class="site-heading">{t(locale, "extensions.install")}</h3>
+                  <div class="utility-code" data-testid={`extensions-${section.id}-command`}>
+                    <CodeBlock client:visible locale={locale} lang="shell" code={section.command} />
+                  </div>
+                  {section.commandNote && <p class="site-text">{section.commandNote}</p>}
+                </>
+              )}
+              {section.config && (
+                <>
+                  <h3 class="site-heading utility-after-rows">{t(locale, "extensions.setup")}</h3>
+                  <p class="site-text">{section.config.text}</p>
+                  <div class="utility-code">
+                    <CodeBlock client:visible locale={locale} lang={section.config.lang} code={section.config.code} />
+                  </div>
+                </>
+              )}
+              <ul class:list={["utility-rows", { "utility-after-rows": section.command }]}>
+                {section.links.map((link) => (
+                  <li>
+                    {link.href ? (
+                      <a
+                        href={link.href}
+                        class="utility-rows__link"
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noopener noreferrer" : undefined}
+                        data-testid={`extensions-link-${link.id}`}
+                      >
+                        <span class="utility-rows__name">{link.name}</span>
+                        {link.text && <span class="utility-rows__text">{link.text}</span>}
+                        {link.external
+                          ? <ArrowUpRight className="size-5" aria-hidden="true" />
+                          : <ArrowRight className="size-5" aria-hidden="true" />}
+                      </a>
+                    ) : (
+                      <div class="utility-rows__link utility-rows__link--soon" data-testid={`extensions-soon-${link.id}`}>
+                        <span class="utility-rows__name">{link.name}</span>
+                        {link.text && <span class="utility-rows__text">{link.text}</span>}
+                        <span class="utility-rows__soon">{t(locale, "extensions.soon")}</span>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              {section.setup && (
+                <>
+                  <h3 class="site-heading utility-after-rows">{t(locale, "extensions.setup")}</h3>
+                  <p class="site-text">{section.setup}</p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
