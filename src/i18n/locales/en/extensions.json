@@ -27,7 +27,7 @@
   "extensions.raycast.label": "Raycast",
   "extensions.raycast.title": "TypeWhisper for Raycast",
   "extensions.raycast.lede": "Control TypeWhisper from Raycast without leaving the keyboard.",
-  "extensions.raycast.platforms": "macOS",
+  "extensions.raycast.platforms": "macOS and Windows",
   "extensions.raycast.item1": "Start a dictation, or dictate with a specific workflow.",
   "extensions.raycast.item2": "Search your transcription history.",
   "extensions.raycast.item3": "Transcribe audio files, and start or stop the recorder.",
