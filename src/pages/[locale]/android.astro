@@ -18,11 +18,10 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 
-// Play only lets members of the Google Group opt in, so the group comes first. Until the closed
-// test is published (androidBeta.listed), the Play opt-in leads nowhere and is not offered.
+// Open test: opt in on the testing page first, then install from the Play listing.
 const steps = [
-  { id: "step1", href: androidBeta.googleGroupUrl, open: true },
-  { id: "step2", href: androidBeta.playOptInUrl, open: androidBeta.listed },
+  { id: "step1", href: androidBeta.playOptInUrl },
+  { id: "step2", href: androidBeta.playStoreUrl },
 ];
 
 const feedback = [
@@ -68,10 +67,7 @@ const feedback = [
                 <div>
                   <h3 class="site-heading">{t(locale, `android.join.${step.id}.title`)}</h3>
                   <p class="site-text">{t(locale, `android.join.${step.id}.text`)}</p>
-                  {!step.open && (
-                    <p class="site-text" data-testid={`android-beta-${step.id}-soon`}>{t(locale, `android.join.${step.id}.soon`)}</p>
-                  )}
-                  {step.open && <div class="site-actions site-actions--start">
+                  <div class="site-actions site-actions--start">
                     <a
                       href={step.href}
                       class="site-button site-button--small"
@@ -82,7 +78,7 @@ const feedback = [
                       {t(locale, `android.join.${step.id}.button`)}
                       <ArrowUpRight className="size-4" aria-hidden="true" />
                     </a>
-                  </div>}
+                  </div>
                 </div>
               </li>
             ))}
