@@ -20,11 +20,13 @@ const deleteAccountHref = localePath(locale, "/delete-account");
 
 // The Android app gets one section with a short heading per topic.
 const androidTopics = ["speech", "writing", "keyboard", "storage", "premium", "tracking"] as const;
+const browserExtensionParagraphs = ["p1", "p2", "p3", "p4"] as const;
 
 type PrivacySection =
   | { id: "overview" | "dataCollection" | "analytics" | "premiumSync" | "contributions" | "network" | "thirdParty" | "openSource" | "contact"; kind: "simple" }
   | { id: "localStorage"; kind: "list" }
   | { id: "android"; kind: "topics" }
+  | { id: "browserExtension"; kind: "paragraphs" }
   | { id: "deleteAccount" | "securityReview"; kind: "link" };
 
 const sections: PrivacySection[] = [
@@ -32,6 +34,7 @@ const sections: PrivacySection[] = [
   { id: "dataCollection", kind: "simple" },
   { id: "analytics", kind: "simple" },
   { id: "localStorage", kind: "list" },
+  { id: "browserExtension", kind: "paragraphs" },
   { id: "premiumSync", kind: "simple" },
   { id: "android", kind: "topics" },
   { id: "deleteAccount", kind: "link" },
@@ -91,6 +94,11 @@ const sections: PrivacySection[] = [
                   <p>{t(locale, "privacy.section.localStorage.p2")}</p>
                 </>
               )}
+
+              {section.kind === "paragraphs" &&
+                browserExtensionParagraphs.map((paragraph) => (
+                  <p>{t(locale, `privacy.section.browserExtension.${paragraph}`)}</p>
+                ))}
 
               {section.kind === "topics" && (
                 <>
