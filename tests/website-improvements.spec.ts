@@ -317,3 +317,16 @@ test("platform switch stays inside the gutters at 320px and wraps with large tex
     expect(choice!.x + choice!.width).toBeLessThanOrEqual(390);
   }
 });
+
+for (const locale of ["en", "de"]) {
+  test(`${locale}: privacy policy covers the browser extension`, async ({
+    page,
+  }) => {
+    await page.goto(`/${locale}/privacy/`);
+    await expect(
+      page.getByTestId("privacy-toc").locator('a[href="#browserExtension"]'),
+    ).toBeVisible();
+    const section = page.locator("#browserExtension ~ p").first();
+    await expect(section).toContainText("127.0.0.1");
+  });
+}
