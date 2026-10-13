@@ -4,9 +4,12 @@ import test from "node:test";
 
 import { integrations } from "../src/lib/integrations.ts";
 
-test("the browser store listings stay unlinked until they are live", () => {
-  // Set the URL once a listing is published; the page then links it.
-  assert.equal(integrations.browser.chromeWebStoreUrl, null);
+test("the browser store listings are linked once they are live", () => {
+  assert.equal(
+    integrations.browser.chromeWebStoreUrl,
+    "https://chromewebstore.google.com/detail/typewhisper/gamnkdngnfamiajnbeglodoaoaifbheh",
+  );
+  // Set the URL once the Firefox listing is published; the page then links it.
   assert.equal(integrations.browser.firefoxAddonsUrl, null);
 });
 
