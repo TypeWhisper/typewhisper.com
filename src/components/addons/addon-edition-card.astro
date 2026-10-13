@@ -33,7 +33,7 @@ const platformLabel = t(locale, platformKeys[edition.platform]);
 
 // One real capture per edition, left out when the edition has none.
 const screenshot: AddonEditionScreenshot | undefined =
-  edition.screenshots?.[0] ?? getDefaultAddonEditionScreenshot(edition);
+  edition.screenshots?.[0] ?? getDefaultAddonEditionScreenshot(edition, locale);
 const previewSrc = screenshot
   ? screenshot.localized === false
     ? screenshot.src

@@ -234,6 +234,51 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
   });
 
+  test("Windows screenshots follow the page language where a German capture exists", async ({
+    page,
+  }) => {
+    for (const [path, id] of [
+      ["/addons/xai-grok/windows/", "com.typewhisper.xai"],
+      ["/addons/granite/windows/", "com.typewhisper.granite-speech"],
+      ["/addons/file-memory/windows/", "com.typewhisper.file-memory"],
+      ["/addons/gemma-local/", "com.typewhisper.gemma-local"],
+      ["/addons/sherpa-onnx/", "com.typewhisper.sherpa-onnx"],
+      ["/addons/whisper-cpp/", "com.typewhisper.whisper-cpp"],
+    ]) {
+      for (const [locale, suffix] of [
+        ["en", ""],
+        ["de", ".de"],
+      ]) {
+        await page.goto(`/${locale}${path}`);
+        await expect(
+          page.locator(
+            `img[src="/screenshots/windows/plugins/${id}${suffix}.png"]`,
+          ),
+        ).toBeVisible();
+        await expect(
+          page.locator(
+            `source[srcset="/screenshots/windows/plugins/${id}${suffix}.webp"]`,
+          ),
+        ).toHaveCount(1);
+      }
+    }
+
+    await page.goto("/de/addons/cohere/");
+    await expect(
+      page
+        .locator('[data-testid="addon-edition-card"][data-platform="windows"]')
+        .locator('img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]'),
+    ).toBeVisible();
+
+    // Without a German capture, German pages keep the English one.
+    await page.goto("/de/addons/google-cloud-stt/windows/");
+    await expect(
+      page.locator(
+        'img[src="/screenshots/windows/plugins/com.typewhisper.google-cloud-stt.png"]',
+      ),
+    ).toBeVisible();
+  });
+
   test("Authenticated Provider CLI 1.1.0 documents OpenCode with localized screenshots", async ({
     page,
   }) => {
@@ -329,7 +374,7 @@ test.describe("add-on platform editions", () => {
     await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
     await expect(
       page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.png"]',
+        'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]',
       ),
     ).toBeVisible();
     const guide = page.getByTestId("addon-edition-guide");

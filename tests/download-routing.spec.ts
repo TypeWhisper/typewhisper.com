@@ -170,8 +170,8 @@ test.describe("landing Windows beta download", () => {
       );
       await expect(beta).toHaveAccessibleDescription(
         locale === "de"
-          ? /Windows 11 24H2 oder neuer, auf x64 und ARM64/
-          : /Windows 11 24H2 or later, on x64 and ARM64/,
+          ? /Windows 11 24H2 oder neuer auf x64\./
+          : /Windows 11 24H2 or later on x64\./,
       );
       await expect(page.getByTestId("final-cta")).not.toContainText("{version}");
     });

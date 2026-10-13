@@ -99,22 +99,14 @@ test.describe("Windows documentation", () => {
     const x64 = page.getByRole("link", {
       name: "TypeWhisper-win-x64-Setup.exe",
     });
-    const arm64 = page.getByRole("link", {
-      name: "TypeWhisper-win-arm64-Setup.exe",
-    });
     const releases = page.getByRole("link", { name: "All releases" });
     await expect(x64).toHaveAttribute(
       "href",
       /github\.com\/TypeWhisper\/typewhisper-win\/releases/,
     );
-    await expect(arm64).toHaveAttribute(
-      "href",
-      /TypeWhisper-win-arm64-Setup\.exe$/,
-    );
-    await expect(arm64).toHaveAttribute(
-      "data-download-target",
-      "windows_github_installer_arm64",
-    );
+    // TypeWhisper for Windows 1.1 is built for x64 only.
+    await expect(page.getByRole("link", { name: /arm64/i })).toHaveCount(0);
+    await expect(page.getByText("x64 processor", { exact: true })).toBeVisible();
     await expect(releases).toHaveAttribute(
       "data-download-target",
       "windows_github_releases",
@@ -286,8 +278,8 @@ test.describe("Windows documentation", () => {
             height: element.naturalHeight,
           }),
         );
-        expect(dimensions.width).toBeLessThanOrEqual(1240);
-        expect(dimensions.width / dimensions.height).toBeCloseTo(1240 / 800, 2);
+        expect(dimensions.width).toBeLessThanOrEqual(1860);
+        expect(dimensions.width / dimensions.height).toBeCloseTo(1860 / 1200, 2);
         expect(
           (
             await request.get(
