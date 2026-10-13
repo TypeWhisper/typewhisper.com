@@ -28,11 +28,14 @@ for (const locale of ["en", "de"] as const) {
         await expect(page.locator(`nav a[href="#${id}"]`)).toBeVisible();
       }
 
-      // The browser listings are not live yet: no links, a note instead.
+      // Chrome links its store listing; the Firefox listing is not live yet.
       const browser = page.getByTestId("extensions-browser");
-      await expect(browser.getByTestId("extensions-soon-chrome")).toContainText(copy[locale].soon);
+      await expect(browser.getByTestId("extensions-link-chrome")).toHaveAttribute(
+        "href",
+        "https://chromewebstore.google.com/detail/typewhisper/gamnkdngnfamiajnbeglodoaoaifbheh",
+      );
       await expect(browser.getByTestId("extensions-soon-firefox")).toContainText(copy[locale].soon);
-      await expect(browser.locator("a")).toHaveCount(0);
+      await expect(browser.locator("a")).toHaveCount(1);
       await expect(browser).toContainText("127.0.0.1");
 
       await expect(page.getByTestId("extensions-link-raycast")).toHaveAttribute(
