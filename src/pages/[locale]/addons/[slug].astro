@@ -38,7 +38,7 @@ const mod = getPluginModule(plugin.slug, locale);
 const editions = getAddonEditions(plugin.slug, locale);
 const isFamily = editions.length > 0;
 const isCommunity = isCommunityPlugin(plugin);
-const defaultScreenshot = plugin.screenshots === false ? undefined : getDefaultAddonDetailScreenshot(plugin);
+const defaultScreenshot = plugin.screenshots === false ? undefined : getDefaultAddonDetailScreenshot(plugin, locale);
 const defaultScreenshotSrc = defaultScreenshot
   ? defaultScreenshot.localized === false
     ? defaultScreenshot.src

@@ -175,15 +175,25 @@ test("Windows screenshots cover every documented add-on that has a settings dial
     ),
   );
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
+  const germanScreenshotIds = new Set(screenshotManifest.windowsLocalized.de);
 
   assert.equal(windowsAddons.length, 39);
-  assert.equal(windowsScreenshotIds.size, 35);
+  assert.equal(windowsScreenshotIds.size, 39);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
       .map(({ slug }) => slug)
       .sort(),
-    ["file-memory", "granite", "sherpa-onnx", "whisper-cpp"],
+    [],
+  );
+  // These add-ons are not in the Windows catalog and have no German capture.
+  assert.equal(germanScreenshotIds.size, 35);
+  assert.deepEqual(
+    windowsAddons
+      .filter(({ id }) => !germanScreenshotIds.has(id))
+      .map(({ slug }) => slug)
+      .sort(),
+    ["google-cloud-stt", "live-transcript", "openai-vector-memory", "qwen3-asr"],
   );
 
   for (const id of windowsScreenshotIds) {
@@ -193,6 +203,29 @@ test("Windows screenshots cover every documented add-on that has a settings dial
     );
     await access(path.resolve(`public/screenshots/windows/plugins/${id}.png`));
     await access(path.resolve(`public/screenshots/windows/plugins/${id}.webp`));
+  }
+
+  for (const id of germanScreenshotIds) {
+    assert.ok(
+      windowsScreenshotIds.has(id),
+      `German Windows screenshot ${id} needs an English one`,
+    );
+    await access(
+      path.resolve(`public/screenshots/windows/plugins/${id}.de.png`),
+    );
+    await access(
+      path.resolve(`public/screenshots/windows/plugins/${id}.de.webp`),
+    );
+  }
+
+  for (const file of await readdir(
+    path.resolve("public/screenshots/windows/plugins"),
+  )) {
+    const [, id, locale] = file.match(/^(.+?)(?:\.(de))?\.(?:png|webp)$/) ?? [];
+    assert.ok(
+      locale ? germanScreenshotIds.has(id) : windowsScreenshotIds.has(id),
+      `${file} must be listed in the screenshot manifest`,
+    );
   }
 });
 

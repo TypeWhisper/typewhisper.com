@@ -14,9 +14,6 @@ import {
   windowsSetupUrl,
 } from "@/lib/platform-download";
 
-const ARM64_SETUP_URL =
-  "https://github.com/TypeWhisper/typewhisper-win/releases/latest/download/TypeWhisper-win-arm64-Setup.exe";
-
 export function windowsInstallationHead(locale: Locale) {
   return {
     heading: "Installation",
@@ -38,14 +35,14 @@ export default function DocsWindowsInstallation({
   const requirements = isDe
     ? [
         "Windows 10 oder Windows 11 (64-Bit)",
-        "x64- oder ARM64-Prozessor",
+        "x64-Prozessor",
         "Ausreichend freier Speicher für die gewählten lokalen Modelle",
         "Optional: NVIDIA CUDA, AMD Vulkan oder AMD ROCm zur Beschleunigung unterstützter lokaler Modelle",
         "Internetverbindung für Installation, Modell- und Add-on-Downloads sowie Cloud-Engines",
       ]
     : [
         "Windows 10 or Windows 11 (64-bit)",
-        "x64 or ARM64 processor",
+        "x64 processor",
         "Enough free disk space for your selected local models",
         "Optional: NVIDIA CUDA, AMD Vulkan, or AMD ROCm acceleration for supported local models",
         "Internet access for installation, model and add-on downloads, and cloud engines",
@@ -127,16 +124,6 @@ export default function DocsWindowsInstallation({
               data-tracking-placement="docs"
             >
               TypeWhisper-win-x64-Setup.exe
-            </a>
-          </li>
-          <li>
-            <a
-              href={ARM64_SETUP_URL}
-              data-download-platform="windows"
-              data-download-target="windows_github_installer_arm64"
-              data-tracking-placement="docs"
-            >
-              TypeWhisper-win-arm64-Setup.exe
             </a>
           </li>
           <li>

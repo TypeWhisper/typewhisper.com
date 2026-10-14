@@ -73,6 +73,27 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
       </DocsSection>
 
       <DocsSection
+        id="statistics"
+        title={isDe ? "Statistiken" : "Statistics"}
+      >
+        <p>
+          {isDe
+            ? "Die Statistiken fassen deine gespeicherten Diktate zusammen: Tage mit Einträgen, gespeicherte Einträge, erfasste Apps und Modelle, Wörter und aufgenommene Minuten. Ein Diagramm zeigt die Aktivität pro Tag, darunter stehen die meistgenutzten Apps und Modelle."
+            : "Statistics summarize your saved dictations: days with entries, saved entries, recorded apps and models, words, and recorded minutes. A chart shows activity per day, followed by the apps and models you use most."}
+        </p>
+        <p>
+          {isDe
+            ? "Wähle eine Woche, einen Monat, den gesamten Verlauf oder einen eigenen Zeitraum. Die Zahlen entstehen lokal aus deinem Verlauf; gelöschte oder nach der Aufbewahrungsfrist entfernte Einträge zählen nicht mehr mit."
+            : "Choose a week, a month, all history, or a custom range. The numbers are computed locally from your history, so deleted entries and entries removed by history retention no longer count."}
+        </p>
+        <DocsFigure
+          kind="framed"
+          src={screenshotPath(locale, "/screenshots/windows/statistics.png")}
+          alt={isDe ? "Statistiken mit Aktivität, Top-Apps und Modellen in TypeWhisper für Windows" : "TypeWhisper statistics for Windows with activity, top apps, and models"}
+        />
+      </DocsSection>
+
+      <DocsSection
         id="dictionary-and-snippets"
         title={isDe ? "Wörterbuch und Snippets" : "Dictionary and snippets"}
       >
