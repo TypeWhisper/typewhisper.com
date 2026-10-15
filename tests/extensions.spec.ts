@@ -4,13 +4,11 @@ const copy = {
   en: {
     title: "TypeWhisper in your other tools",
     footer: "Extensions",
-    soon: "Coming soon",
     macCli: "CLI for macOS",
   },
   de: {
     title: "TypeWhisper in deinen anderen Tools",
     footer: "Erweiterungen",
-    soon: "Bald verfügbar",
     macCli: "CLI für macOS",
   },
 } as const;
@@ -28,14 +26,17 @@ for (const locale of ["en", "de"] as const) {
         await expect(page.locator(`nav a[href="#${id}"]`)).toBeVisible();
       }
 
-      // Chrome links its store listing; the Firefox listing is not live yet.
+      // Both browsers link their store listings.
       const browser = page.getByTestId("extensions-browser");
       await expect(browser.getByTestId("extensions-link-chrome")).toHaveAttribute(
         "href",
         "https://chromewebstore.google.com/detail/typewhisper/gamnkdngnfamiajnbeglodoaoaifbheh",
       );
-      await expect(browser.getByTestId("extensions-soon-firefox")).toContainText(copy[locale].soon);
-      await expect(browser.locator("a")).toHaveCount(1);
+      await expect(browser.getByTestId("extensions-link-firefox")).toHaveAttribute(
+        "href",
+        "https://addons.mozilla.org/firefox/addon/typewhisper/",
+      );
+      await expect(browser.locator("a")).toHaveCount(2);
       await expect(browser).toContainText("127.0.0.1");
 
       await expect(page.getByTestId("extensions-link-raycast")).toHaveAttribute(

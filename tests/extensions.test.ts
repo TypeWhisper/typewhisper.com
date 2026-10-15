@@ -9,8 +9,10 @@ test("the browser store listings are linked once they are live", () => {
     integrations.browser.chromeWebStoreUrl,
     "https://chromewebstore.google.com/detail/typewhisper/gamnkdngnfamiajnbeglodoaoaifbheh",
   );
-  // Set the URL once the Firefox listing is published; the page then links it.
-  assert.equal(integrations.browser.firefoxAddonsUrl, null);
+  assert.equal(
+    integrations.browser.firefoxAddonsUrl,
+    "https://addons.mozilla.org/firefox/addon/typewhisper/",
+  );
 });
 
 test("the extension install links point at the published listings and repos", () => {
