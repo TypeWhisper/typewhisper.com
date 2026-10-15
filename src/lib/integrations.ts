@@ -7,7 +7,7 @@
 export const integrations = {
   browser: {
     chromeWebStoreUrl: "https://chromewebstore.google.com/detail/typewhisper/gamnkdngnfamiajnbeglodoaoaifbheh",
-    firefoxAddonsUrl: null as string | null,
+    firefoxAddonsUrl: "https://addons.mozilla.org/firefox/addon/typewhisper/",
   },
   raycast: {
     storeUrl: "https://www.raycast.com/SeoFood/typewhisper",
