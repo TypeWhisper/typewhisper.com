@@ -129,7 +129,7 @@ export function macDeploymentHead(locale: Locale) {
   return locale === "de"
     ? {
         heading: "Bereitstellung",
-        lede: "Verteile TypeWhisper für Mac in deiner Organisation: Edition und Installation, Updates, Anmeldeobjekt, Berechtigungen und Netzwerk-Hosts für Allowlists.",
+        lede: "Verteile TypeWhisper für Mac in deiner Organisation: Edition und Installation, Updates, Anmeldeobjekt, Berechtigungen und Netzwerk-Hosts für Firewall- und Proxy-Freigaben.",
       }
     : {
         heading: "Deployment",
@@ -235,7 +235,7 @@ export default function DocsMacDeployment({
         <p>
           {withCode(
             tx(
-              "Jedes Release enthält `TypeWhisper-v<version>.dmg` und eine ZIP-Datei. Die meisten MDMs installieren das DMG oder ein daraus gebautes Paket; lege `TypeWhisper.app` nach `/Applications`. Die Dateien liegen auf der ",
+              "Jedes Release enthält `TypeWhisper-v<version>.dmg` und eine ZIP-Datei. Die meisten MDMs installieren das DMG oder ein daraus erstelltes Paket; kopiere `TypeWhisper.app` nach `/Applications` (im Finder „Programme“). Die Dateien liegen auf der ",
               "Every release includes `TypeWhisper-v<version>.dmg` and a ZIP file. Most MDMs install the DMG or a package built from it; place `TypeWhisper.app` in `/Applications`. The files are on the ",
             ),
           )}
@@ -257,21 +257,26 @@ export default function DocsMacDeployment({
           trackTarget="mac_homebrew"
         />
         <p>
-          {tx(
-            "Deinstallieren heißt: App beenden und aus /Applications löschen. Einstellungen, Modelle und Plugins bleiben im Benutzerordner erhalten; die ",
-            "To uninstall, quit the app and delete it from /Applications. Settings, models, and plugins stay in the user's account; the ",
+          {withCode(
+            tx(
+              "Zum Deinstallieren beendest du die App und löschst sie aus `/Applications`. Einstellungen, Modelle und Plugins bleiben im Benutzerordner erhalten; die ",
+              "To uninstall, quit the app and delete it from `/Applications`. Settings, models, and plugins stay in the user's account; the ",
+            ),
           )}
           <a href={`${localePath(locale, "/docs/mac/installation")}#uninstall`}>
             {tx("Installationsseite", "installation page")}
           </a>
-          {tx(" nennt die Pfade für eine vollständige Bereinigung.", " lists the paths for a complete cleanup.")}
+          {tx(
+            " nennt die Pfade für eine vollständige Bereinigung. Das Löschen der App deaktiviert eine verwaltete Lizenz nicht; entferne die Aktivierung in Polar.",
+            " lists the paths for a complete cleanup. Deleting the app does not deactivate a managed license; remove the activation in Polar.",
+          )}
         </p>
 
         <DocsSubheading id="updates">{tx("Updates", "Updates")}</DocsSubheading>
         <p>
           {withCode(
             tx(
-              "Der Direkt-Download aktualisiert sich mit Sparkle über `https://typewhisper.github.io/typewhisper-mac/appcast.xml`. Mit `UpdateMode` steuerst du das: `0` überlässt Updates deiner Softwareverteilung, `1` zeigt neue Versionen nur an, `2` installiert nur, wenn der Benutzer es auslöst. Unter `0` verteilst du neue Versionen mit deinem MDM.",
+              "Der Direkt-Download aktualisiert sich mit Sparkle über `https://typewhisper.github.io/typewhisper-mac/appcast.xml`. Mit `UpdateMode` steuerst du das: `0` überlässt Updates deiner Softwareverteilung, `1` zeigt neue Versionen nur an, `2` installiert nur, wenn der Benutzer es startet. Unter `0` verteilst du neue Versionen mit deinem MDM.",
               "The direct download updates itself with Sparkle from `https://typewhisper.github.io/typewhisper-mac/appcast.xml`. `UpdateMode` controls this: `0` leaves updates to your deployment, `1` only announces new versions, and `2` installs only when the user starts it. Under `0`, deploy new versions with your MDM.",
             ),
           )}
@@ -279,7 +284,7 @@ export default function DocsMacDeployment({
         <p>
           {withCode(
             tx(
-              "Ein Update, das Sparkle vor einem strengeren `UpdateMode` schon für die automatische Installation geladen hat, kann sich beim Beenden von TypeWhisper noch installieren; Sparkle bietet keinen Weg, das abzubrechen. Verteile die Richtlinie deshalb zusammen mit der App.",
+              "Ein Update, das Sparkle vor einem strengeren `UpdateMode` schon für die automatische Installation geladen hat, kann beim Beenden von TypeWhisper noch installiert werden; Sparkle bietet keinen Weg, das abzubrechen. Verteile die Richtlinie deshalb zusammen mit der App.",
               "An update that Sparkle downloaded for automatic installation before a restrictive `UpdateMode` arrived can still install when TypeWhisper quits; Sparkle offers no way to cancel it. Deploy the policy together with the app to avoid that window.",
             ),
           )}
@@ -330,13 +335,13 @@ export default function DocsMacDeployment({
         </p>
         <DocsTable
           label={tx("Berechtigungen", "Permissions")}
-          head={[tx("Berechtigung", "Permission"), tx("Wofür und per PPPC", "Used for, and PPPC")]}
+          head={[tx("Berechtigung", "Permission"), tx("Verwendung und PPPC-Eintrag", "Used for and PPPC entry")]}
           rows={[
             [
               tx("Mikrofon", "Microphone"),
               withCode(
                 tx(
-                  "Diktat und Aufnahme. Lässt sich nicht vorab erteilen; Benutzer bestätigen die Abfrage. Ab macOS 27 kann die App-Einstellungs-Konfiguration es vorschlagen (`Microphone`: Allow).",
+                  "Diktat und Aufnahme. Lässt sich nicht vorab erteilen; Benutzer bestätigen die Abfrage. Ab macOS 27 kann die Konfiguration für App-Einstellungen es vorschlagen (`Microphone`: Allow).",
                   "Dictation and recording. Cannot be pre-approved; users approve the prompt. From macOS 27, the app settings configuration can propose it (`Microphone`: Allow).",
                 ),
               ),
@@ -345,7 +350,7 @@ export default function DocsMacDeployment({
               tx("Bedienungshilfen", "Accessibility"),
               withCode(
                 tx(
-                  "Direkt-Download: Diktat-Tastenkürzel, Text einfügen und den Kontext der aktiven App lesen. `Accessibility`: Allow; ab macOS 27 veraltet, dort schlägt die App-Einstellungs-Konfiguration es stattdessen vor.",
+                  "Direkt-Download: Diktat-Tastenkürzel, Text einfügen und den Kontext der aktiven App lesen. `Accessibility`: Allow; ab macOS 27 veraltet, dort schlägt die Konfiguration für App-Einstellungen es stattdessen vor.",
                   "Direct download: dictation shortcuts, inserting text, and reading the active app's context. `Accessibility`: Allow; deprecated from macOS 27, where the app settings configuration proposes it instead.",
                 ),
               ),
@@ -354,8 +359,8 @@ export default function DocsMacDeployment({
               tx("Bedienungshilfen (Ereignisse senden)", "Accessibility (post events)"),
               withCode(
                 tx(
-                  "Transkript einfügen; in der App-Store-Edition der Eintrag unter Bedienungshilfen in den Systemeinstellungen. `PostEvent`: Allow.",
-                  "Pasting the transcript; in the App Store edition, the Accessibility entry in System Settings. `PostEvent`: Allow.",
+                  "Transkript einfügen; in der App-Store-Edition der Eintrag unter Datenschutz & Sicherheit > Bedienungshilfen (ab macOS 27 „Gerätesteuerung und Datenzugriff“). `PostEvent`: Allow.",
+                  "Pasting the transcript; in the App Store edition, the entry under Privacy & Security > Accessibility (Device Control and Data Access from macOS 27). `PostEvent`: Allow.",
                 ),
               ),
             ],
@@ -369,7 +374,7 @@ export default function DocsMacDeployment({
               ),
             ],
             [
-              tx("Bildschirm- & Systemaudioaufnahme", "Screen & System Audio Recording"),
+              tx("Aufnahme von Bildschirm & Systemaudio", "Screen & System Audio Recording"),
               withCode(
                 tx(
                   "Systemaudio im Recorder. `ScreenCapture`: nur `AllowStandardUserToSetSystemService`.",
@@ -381,8 +386,8 @@ export default function DocsMacDeployment({
               tx("Automation (Apple Events)", "Automation (Apple Events)"),
               withCode(
                 tx(
-                  "Die aktuelle Browser-Adresse für Website-Workflows lesen. `AppleEvents`: Allow, mit einem Eintrag pro Browser als Empfänger.",
-                  "Reading the current browser address for website workflows. `AppleEvents`: Allow, with one entry per browser as receiver.",
+                  "Direkt-Download: die aktuelle Browser-Adresse für Website-Workflows lesen; die App-Store-Edition nutzt dafür die Browser-Erweiterung. `AppleEvents`: Allow, mit einem Eintrag pro Browser als Empfänger.",
+                  "Direct download: reading the current browser address for website workflows; the App Store edition uses the browser extension instead. `AppleEvents`: Allow, with one entry per browser as receiver.",
                 ),
               ),
             ],
@@ -399,7 +404,7 @@ export default function DocsMacDeployment({
               tx("Lokales Netzwerk", "Local Network"),
               withCode(
                 tx(
-                  "Gekoppelte iPhones und iPads, die den Mac zum Transkribieren nutzen. Nicht per PPPC einstellbar; Benutzer bestätigen die Abfrage. Ab macOS 27 kann die App-Einstellungs-Konfiguration es vorschlagen (`LocalNetwork`: Allow).",
+                  "Gekoppelte iPhones und iPads, die den Mac zum Transkribieren nutzen. Nicht per PPPC einstellbar; Benutzer bestätigen die Abfrage. Ab macOS 27 kann die Konfiguration für App-Einstellungen es vorschlagen (`LocalNetwork`: Allow).",
                   "Paired iPhones and iPads that use the Mac for transcription. Not configurable through PPPC; users approve the prompt. From macOS 27, the app settings configuration can propose it (`LocalNetwork`: Allow).",
                 ),
               ),
@@ -408,14 +413,14 @@ export default function DocsMacDeployment({
         />
         <p>
           {tx(
-            "Die Code-Anforderungen im Beispiel sind die festgelegten Anforderungen (Designated Requirements) von TypeWhisper. So prüfst du sie an einer installierten App:",
+            "Die Code-Anforderungen im Beispiel sind die Designated Requirements von TypeWhisper. So prüfst du sie an einer installierten App:",
             "The code requirements in the example are TypeWhisper's designated requirements. To check them against an installed app:",
           )}
         </p>
         <DocsCode locale={locale} lang="shell" code={codesignCommand} />
         <p>
           {tx(
-            "macOS wendet Datenschutzeinstellungen nur an, wenn ein MDM mit vom Benutzer bestätigter oder automatischer Geräteregistrierung sie ausliefert. Ein von Hand installiertes Profil reicht dafür nicht.",
+            "macOS wendet Datenschutzeinstellungen nur an, wenn ein MDM sie über eine automatisierte Geräteregistrierung oder eine vom Benutzer genehmigte MDM-Registrierung ausliefert. Ein von Hand installiertes Profil reicht dafür nicht.",
             "macOS applies privacy preferences only when an MDM with user-approved or automated device enrollment delivers them. A profile installed by hand is not enough.",
           )}
         </p>
@@ -426,8 +431,8 @@ export default function DocsMacDeployment({
         <p>
           {withCode(
             tx(
-              "Ab macOS 27 ist Bedienungshilfen in einem PPPC-Profil veraltet: macOS benachrichtigt den Benutzer und lässt ihn die Berechtigung in den Systemeinstellungen abschalten. Apples Ersatz ist der Schlüssel `Privacy` der deklarativen App-Einstellungs-Konfiguration (`com.apple.configuration.app.settings`) für betreute Macs mit macOS 27 oder neuer. Er legt Berechtigungen pro App fest, erkannt an Bundle-ID und Code-Anforderung, und der Benutzer bestätigt sie beim Start der App in einer einzigen Abfrage, zusammen mit der Begründung deiner Organisation. Vorschlagen lassen sich Bedienungshilfen, Mikrofon und lokales Netzwerk; still erteilt wird nichts.",
-              "From macOS 27, Accessibility in a PPPC profile is deprecated: macOS notifies the user and lets them turn it off in System Settings. Apple's replacement is the `Privacy` key of the declarative app settings configuration (`com.apple.configuration.app.settings`) for supervised Macs with macOS 27 or later. It sets permission defaults per app, matched by bundle identifier and code requirement, which the user confirms in one prompt when the app launches, together with your organization's justification. It can propose Accessibility, the microphone, and local network access, but never grants them silently.",
+              "Ab macOS 27 ist der Eintrag `Accessibility` in einem PPPC-Profil veraltet, und die Systemeinstellungen nennen den Bereich „Gerätesteuerung und Datenzugriff“: macOS benachrichtigt den Benutzer und lässt ihn die Berechtigung dort abschalten. Apples Ersatz ist der Schlüssel `Privacy` der deklarativen Konfiguration für App-Einstellungen (`com.apple.configuration.app.settings`) für betreute Macs mit macOS 27 oder neuer. Er schlägt pro App Berechtigungen vor, erkannt an Bundle-ID und Code-Anforderung; der Benutzer bestätigt sie beim Start der App in einer einzigen Abfrage, zusammen mit der Begründung deiner Organisation. Vorschlagen lassen sich Bedienungshilfen, Mikrofon und lokales Netzwerk; still erteilt wird nichts.",
+              "From macOS 27, the `Accessibility` entry in a PPPC profile is deprecated, and System Settings calls the pane Device Control and Data Access: macOS notifies the user and lets them turn the permission off there. Apple's replacement is the `Privacy` key of the declarative app settings configuration (`com.apple.configuration.app.settings`) for supervised Macs with macOS 27 or later. It sets permission defaults per app, matched by bundle identifier and code requirement, which the user confirms in one prompt when the app launches, together with your organization's justification. It can propose Accessibility, the microphone, and local network access, but never grants them silently.",
             ),
           )}
         </p>
@@ -453,7 +458,7 @@ export default function DocsMacDeployment({
           <li>
             {withCode(
               tx(
-                "Liefere sie mit einem MDM aus, das deklaratives Gerätemanagement auf dem Benutzerkanal unterstützt, weil macOS den Schlüssel `Privacy` nur für Benutzer anwendet. Gib ihr bei jeder Änderung ein neues `ServerToken`, sonst behält der Mac die vorige Version; die meisten MDMs setzen das Token selbst.",
+                "Liefere sie mit einem MDM aus, das deklarative Geräteverwaltung auf dem Benutzerkanal unterstützt, weil macOS den Schlüssel `Privacy` nur für Benutzer anwendet. Gib ihr bei jeder Änderung ein neues `ServerToken`, sonst behält der Mac die vorige Version; die meisten MDMs setzen das Token selbst.",
                 "Deliver it with an MDM that supports declarative device management on the user channel, because macOS applies the `Privacy` key only to users. Give it a new `ServerToken` whenever you change it, or the Mac keeps the previous version; most MDMs set the token themselves.",
               ),
             )}
@@ -552,14 +557,20 @@ export default function DocsMacDeployment({
           </li>
           <li>
             {tx(
-              "Gesperrte Einstellungen zeigen „Von deiner Organisation verwaltet.“, und abgelehnte Anbieter und Plugins nennen den Grund.",
-              "Locked settings show “Managed by your organization.”, and refused providers and plugins show the reason.",
+              "Gesperrte Einstellungen zeigen „Von deiner Organisation verwaltet“, und abgelehnte Anbieter und Plugins nennen den Grund.",
+              "Locked settings show “Managed by your organization”, and refused providers and plugins show the reason.",
             )}
           </li>
           <li>
             {tx(
               "Diktiere einmal mit der vorgesehenen Engine und, falls genutzt, mit einem Workflow mit Sprachmodell.",
               "Dictate once with the intended engine and, if used, a language model workflow.",
+            )}
+          </li>
+          <li>
+            {tx(
+              "Prüfe die Modelle, die deine Einrichtung braucht, besonders wenn Downloads abgeschaltet sind.",
+              "Confirm the models your setup needs, especially with downloads turned off.",
             )}
           </li>
           <li>
@@ -571,8 +582,8 @@ export default function DocsMacDeployment({
           <li>
             {withCode(
               tx(
-                "Mit `ManagedLicenseKey`: Einstellungen > Lizenz zeigt den verwalteten Zustand und die Aktivierung. Starte zweimal neu und prüfe, dass Polar keine zusätzlichen Aktivierungen zeigt. Wiederhole das mit einem zweiten Benutzer und mit einem ersten Start ohne Internet, gefolgt von „Aktivierung erneut versuchen“.",
-                "With `ManagedLicenseKey`: Settings > License shows the managed state and the activation. Restart twice and confirm that Polar shows no additional activations. Repeat with a second user and with an offline first launch followed by Retry Activation.",
+                "Mit `ManagedLicenseKey`: Einstellungen > Lizenz zeigt den verwalteten Zustand und die Aktivierung. Starte TypeWhisper zweimal neu und prüfe, dass Polar keine zusätzlichen Aktivierungen zeigt. Wiederhole das mit einem zweiten Benutzer und mit einem ersten Start ohne Internet, gefolgt von „Aktivierung erneut versuchen“. Ersetze danach den Schlüssel, entferne ihn und vergleiche das Ergebnis mit dem Ablauf unter „Verwalteter Lizenzschlüssel“.",
+                "With `ManagedLicenseKey`: Settings > License shows the managed state and the activation. Restart TypeWhisper twice and confirm that Polar shows no additional activations. Repeat with a second user and with an offline first launch followed by Retry Activation. Then replace the key, remove it, and compare the result with the lifecycle under Managed license key.",
               ),
             )}
           </li>

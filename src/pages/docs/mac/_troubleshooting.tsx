@@ -129,8 +129,8 @@ export default function DocsMacTroubleshooting({
       >
         <p>
           {locale === "de"
-            ? "Deine IT hat die Einstellung über ein Konfigurationsprofil festgelegt; sie zeigt dann „Von deiner Organisation verwaltet.“. Einstellungen > Erweitert > Verwaltete Einstellungen listet die verwalteten Werte auf diesem Mac und mögliche Probleme mit Richtlinien. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
-            : "Your IT department set it through a configuration profile, and it shows “Managed by your organization.” Settings > Advanced > Managed Settings lists the managed values on this Mac and any policy problems. Only your IT department can change the value; TypeWhisper cannot override it."}
+            ? "Deine IT hat die Einstellung über ein Konfigurationsprofil festgelegt; sie zeigt dann „Von deiner Organisation verwaltet.“ Einstellungen > Erweitert > Verwaltete Einstellungen listet die verwalteten Werte auf diesem Mac und mögliche Probleme mit Richtlinien. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
+            : "Your IT department set it through a configuration profile, and it shows “Managed by your organization.” Settings > Advanced > Managed Settings lists the managed values on this Mac and any policy problems. Only your IT department can change the value; you can't change it in TypeWhisper."}
         </p>
         <a
           href={localePath(locale, "/docs/mac/managed-settings")}
