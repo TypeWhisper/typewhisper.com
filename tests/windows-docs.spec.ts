@@ -177,7 +177,9 @@ test.describe("Windows documentation", () => {
         .allInnerTexts();
       expect([...listed].sort()).toEqual([...policyValues].sort());
       await expect(
-        page.getByRole("link", { name: "TypeWhisper-win-PolicyTemplates.zip" }),
+        page
+          .getByRole("link", { name: "TypeWhisper-win-PolicyTemplates.zip" })
+          .first(),
       ).toHaveAttribute(
         "href",
         "https://github.com/TypeWhisper/typewhisper-win/releases/latest/download/TypeWhisper-win-PolicyTemplates.zip",

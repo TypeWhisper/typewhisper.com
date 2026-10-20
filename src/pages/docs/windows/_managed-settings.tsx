@@ -44,8 +44,8 @@ const keys: PolicyKey[] = [
     type: ["REG_SZ", "REG_SZ"],
     scope: "enforced",
     behavior: [
-      "Activates a commercial license for every Windows user who starts TypeWhisper and manages the license controls in the app while it is set. Supporter keys are not accepted. Details under Managed license key below.",
-      "Aktiviert eine kommerzielle Lizenz für jeden Windows-Benutzer, der TypeWhisper startet, und verwaltet die Lizenzsteuerung in der App, solange der Wert gesetzt ist. Supporter-Schlüssel werden nicht akzeptiert. Details unten unter Verwalteter Lizenzschlüssel.",
+      "Activates a commercial license for every Windows user who starts TypeWhisper and manages the license controls in the app while it is set. Supporter keys are not accepted. See Managed license key below.",
+      "Aktiviert eine kommerzielle Lizenz für jeden Windows-Benutzer, der TypeWhisper startet, und verwaltet die Lizenzsteuerung in der App, solange der Wert gesetzt ist. Supporter-Schlüssel werden nicht akzeptiert. Siehe „Verwalteter Lizenzschlüssel“ weiter unten.",
     ],
   },
   {
@@ -330,6 +330,44 @@ export default function DocsWindowsManagedSettings({
       </DocsCallout>
 
       <DocsSection
+        id="quick-start"
+        title={tx("Schnellstart mit Gruppenrichtlinie", "Quick start with Group Policy")}
+      >
+        <ol>
+          <li>
+            {tx("Lade ", "Download ")}
+            <a href={policyTemplatesUrl}>TypeWhisper-win-PolicyTemplates.zip</a>
+            {tx(
+              " aus dem Release, das du verteilst, und kopiere die ADMX- und ADML-Dateien in den zentralen Speicher.",
+              " from the release you deploy and copy the ADMX and ADML files to the Central Store.",
+            )}
+          </li>
+          <li>
+            {tx(
+              "Öffne im Gruppenrichtlinienverwaltungs-Editor Computerkonfiguration > Administrative Vorlagen > TypeWhisper und setze die Einstellungen, die du brauchst, etwa „Cloud-Transkription erlauben“ oder „Update-Modus der Anwendung“.",
+              "In the Group Policy Management Editor, open Computer Configuration > Administrative Templates > TypeWhisper and configure the settings you need, such as “Allow cloud transcription” or “Application update mode”.",
+            )}
+          </li>
+          <li>
+            {withCode(
+              tx(
+                "Führe auf einem Testgerät `gpupdate /target:computer` aus und prüfe in TypeWhisper Einstellungen > Erweitert > Verwaltete Einstellungen.",
+                "Run `gpupdate /target:computer` on a test device and check Settings > Advanced > Managed settings in TypeWhisper.",
+              ),
+            )}
+          </li>
+        </ol>
+        <p>
+          {tx("Details stehen unter ", "Details are under ")}
+          <a href="#group-policy">{tx("Gruppenrichtlinie", "Group Policy")}</a>
+          {tx(". Für Intune oder andere Werkzeuge siehe ", ". For Intune or other tools, see ")}
+          <a href="#intune">Intune</a>
+          {tx(" und ", " and ")}
+          <a href="#script">{tx("Registry und Skripte", "Registry and scripts")}</a>.
+        </p>
+      </DocsSection>
+
+      <DocsSection
         id="how-it-works"
         title={tx(
           "So funktionieren verwaltete Einstellungen",
@@ -491,8 +529,8 @@ export default function DocsWindowsManagedSettings({
           <li>
             {withCode(
               tx(
-                "Lokale Parakeet-Engine: `com.typewhisper.sherpa-onnx`. Ihre Modell-IDs zeigt Diktat an, und `GET /v1/models` liefert sie als `provider_id` und `id`, zum Beispiel `parakeet-tdt-0.6b`.",
-                "Local Parakeet engine: `com.typewhisper.sherpa-onnx`. Its model IDs appear in Dictation, and `GET /v1/models` returns them as `provider_id` and `id`, for example `parakeet-tdt-0.6b`.",
+                "Lokale Parakeet-Engine: `com.typewhisper.sherpa-onnx`. Ihre Modell-IDs zeigt die Seite „Diktat“ an, und `GET /v1/models` liefert sie als `provider_id` und `id`, zum Beispiel `parakeet-tdt-0.6b`.",
+                "Local Parakeet engine: `com.typewhisper.sherpa-onnx`. Its model IDs appear on the Dictation page, and `GET /v1/models` returns them as `provider_id` and `id`, for example `parakeet-tdt-0.6b`.",
               ),
             )}
           </li>
@@ -531,14 +569,14 @@ export default function DocsWindowsManagedSettings({
         <p>
           {withCode(
             tx(
-              "Ein erzwungenes Transkriptionspaar hat Vorrang vor der Auswahl des Benutzers, vor Diktat-Workflows mit eigenem Modell, vor wartenden und wiederhergestellten Aufträgen und vor Anfragen an die HTTP-API. Eine Anfrage für eine andere Engine oder ein anderes Modell erhält `403 forbidden`. Die Auswahlfelder in Diktat und Einrichtung zeigen das Paar und sind gesperrt; die Schaltfläche Anbieter-Einstellungen bleibt für API-Schlüssel und Downloads erreichbar. Die eigene Auswahl des Benutzers bleibt gespeichert und gilt wieder, sobald das Paar entfernt wird. Hat ein Plugin eine eigene Modellauswahl, wird sie auf das erzwungene Modell gestellt und nach dem Entfernen der Richtlinie zurückgesetzt.",
+              "Ein erzwungenes Transkriptionspaar hat Vorrang vor der Auswahl des Benutzers, vor Diktat-Workflows mit eigenem Modell, vor wartenden und wiederhergestellten Aufträgen und vor Anfragen an die HTTP-API. Eine Anfrage für eine andere Engine oder ein anderes Modell erhält `403 forbidden`. Die Auswahlfelder in Diktat und Einrichtung zeigen das Paar und sind gesperrt; die Schaltfläche „Anbieter-Einstellungen“ bleibt für API-Schlüssel und Downloads erreichbar. Die eigene Auswahl des Benutzers bleibt gespeichert und gilt wieder, sobald das Paar entfernt wird. Hat ein Plugin eine eigene Modellauswahl, wird sie auf das erzwungene Modell gestellt und nach dem Entfernen der Richtlinie zurückgesetzt.",
               "An enforced transcription pair wins over the user's selection, dictation workflows with their own model, queued and recovered jobs, and HTTP API requests. A request for another engine or model gets `403 forbidden`. The pickers in Dictation and setup show the pair and are locked; the Provider settings button stays available for API keys and downloads. The user's own selection is kept and applies again when the pair is removed. A plugin's own model selection is switched to the enforced model and restored once the policy is removed.",
             ),
           )}
         </p>
         <p>
           {tx(
-            "Ein erzwungenes Textmodell-Paar ersetzt Anbieter und Modell jedes Workflows, des Standard-Workflow-LLM und der Übersetzung über die API. Der Workflow-Editor behält gespeicherte Auswahlen, sperrt aber die Auswahlfelder und nennt das erzwungene Paar; der Dialog Standard-LLM ist schreibgeschützt. Text an einen anderen Anbieter oder ein anderes Modell wird abgelehnt.",
+            "Ein erzwungenes Textmodell-Paar ersetzt Anbieter und Modell jedes Workflows, des Standard-Workflow-LLM und der Übersetzung über die API. Der Workflow-Editor behält gespeicherte Auswahlen, sperrt aber die Auswahlfelder und nennt das erzwungene Paar; der Dialog „Standard-LLM“ ist schreibgeschützt. Text an einen anderen Anbieter oder ein anderes Modell wird abgelehnt.",
             "An enforced text model pair replaces the provider and model of every workflow, the default workflow LLM, and API translation. The workflow editor keeps saved selections but locks the pickers and names the enforced pair; the Default LLM dialog is read-only. Text sent to another provider or model is refused.",
           )}
         </p>
@@ -569,7 +607,7 @@ export default function DocsWindowsManagedSettings({
           </li>
           <li>
             {tx(
-              "Einstellungen > Erweitert > Verwaltete Einstellungen listet diese Konflikte unter Probleme in der Richtlinie, direkt neben dem Paar.",
+              "Einstellungen > Erweitert > Verwaltete Einstellungen listet diese Konflikte unter „Probleme in der Richtlinie“, direkt neben dem Paar.",
               "Settings > Advanced > Managed settings lists these conflicts under Policy problems, next to the pair itself.",
             )}
           </li>
@@ -678,8 +716,8 @@ export default function DocsWindowsManagedSettings({
         <p>
           {withCode(
             tx(
-              "Verteile den Wert mit der Gruppenrichtlinie Verwalteter Lizenzschlüssel, einem Registry-Element in den Gruppenrichtlinien-Einstellungen (Group Policy Preferences), einem Intune-PowerShell-Skript im Systemkontext oder jedem anderen Werkzeug, das `HKLM` schreibt. Halte echte Schlüssel aus Shell-Verläufen und Skript-Logs heraus.",
-              "Deploy the value with the Group Policy setting Managed license key, a registry item in Group Policy Preferences, an Intune PowerShell script that runs in the system context, or any other tool that writes `HKLM`. Keep real keys out of shell history and script logs.",
+              "Verteile den Wert mit der Gruppenrichtlinie „Verwalteter Lizenzschlüssel“, einem Registry-Element in den Gruppenrichtlinieneinstellungen (Group Policy Preferences), einem Intune-PowerShell-Skript im Systemkontext oder jedem anderen Werkzeug, das `HKLM` schreibt. Halte echte Schlüssel aus Shell-Verläufen und Skript-Logs heraus.",
+              "Deploy the value with the Group Policy setting “Managed license key”, a registry item in Group Policy Preferences, an Intune PowerShell script that runs in the system context, or any other tool that writes `HKLM`. Keep real keys out of shell history and script logs.",
             ),
           )}
         </p>
@@ -690,13 +728,13 @@ export default function DocsWindowsManagedSettings({
         <ul>
           <li>
             {tx(
-              "Die App liest den Wert beim Start, wenn sich die Richtlinie im laufenden Betrieb ändert, und über Aktivierung erneut versuchen unter Einstellungen > Premium > Lizenz.",
+              "Die App liest den Wert beim Start, wenn sich die Richtlinie im laufenden Betrieb ändert, und über „Aktivierung erneut versuchen“ unter Einstellungen > Premium > Lizenz.",
               "The app reads the value at startup, when the policy changes while it runs, and through Retry activation in Settings > Premium > License.",
             )}
           </li>
           <li>
             {tx(
-              "Sie speichert Schlüssel und Aktivierung in der Lizenzdatei des Benutzers, verschlüsselt mit der Windows-Datenschutz-API (DPAPI), und aktiviert nicht bei jedem Start neu.",
+              "Sie speichert Schlüssel und Aktivierung in der Lizenzdatei des Benutzers, verschlüsselt mit Windows Data Protection (DPAPI), und aktiviert nicht bei jedem Start neu.",
               "It stores the key and its activation in the user's license file, encrypted with Windows Data Protection (DPAPI), and does not activate again on every launch.",
             )}
           </li>
@@ -716,8 +754,8 @@ export default function DocsWindowsManagedSettings({
           </li>
           <li>
             {tx(
-              "Solange der Schlüssel verwaltet wird, blendet die Lizenzseite Schlüsseleingabe, Gerätedeaktivierung und Kauflinks aus, unterdrückt Premium-Kaufhinweise und zeigt den Lizenzstatus ohne den Schlüssel.",
-              "While the key is managed, the License page hides key entry, device deactivation, and purchase links, suppresses Premium purchase prompts, and shows the license status without the key.",
+              "Solange der Schlüssel verwaltet wird, blendet die Lizenzseite Schlüsseleingabe, Gerätedeaktivierung und Kauflinks aus, unterdrückt Premium-Kaufhinweise und zeigt den Lizenzstatus ohne den Schlüssel. Supporter-Schlüssel lassen sich dann nicht eingeben.",
+              "While the key is managed, the License page hides key entry, device deactivation, and purchase links, suppresses Premium purchase prompts, and shows the license status without the key. Supporter keys cannot be entered while a managed key is configured.",
             )}
           </li>
         </ul>
@@ -796,16 +834,16 @@ export default function DocsWindowsManagedSettings({
           <li>
             {withCode(
               tx(
-                "Öffne die Richtlinie im Gruppenrichtlinienverwaltungs-Editor, für die lokale Richtlinie mit `gpedit.msc`, unter Computerkonfiguration > Administrative Vorlagen > TypeWhisper. Empfohlene Einstellungen liegen im Unterordner Empfohlene Einstellungen (Benutzer können sie ändern).",
-                "Open the policy in the Group Policy Management Editor, or `gpedit.msc` for the local policy, under Computer Configuration > Administrative Templates > TypeWhisper. Recommended settings are in the subfolder Recommended settings (users can change).",
+                "Öffne die Richtlinie im Gruppenrichtlinienverwaltungs-Editor, für die lokale Richtlinie mit `gpedit.msc`, unter Computerkonfiguration > Administrative Vorlagen > TypeWhisper. Empfohlene Einstellungen liegen im Unterordner „Empfohlene Einstellungen (Benutzer können sie ändern)“.",
+                "Open the policy in the Group Policy Management Editor, or `gpedit.msc` for the local policy, under Computer Configuration > Administrative Templates > TypeWhisper. Recommended settings are in the subfolder “Recommended settings (users can change)”.",
               ),
             )}
           </li>
           <li>
             {withCode(
               tx(
-                "Konfiguriere die Einstellungen. Schalter schreiben bei Aktiviert `1` und bei Deaktiviert `0`. Text-, Auswahl- und Listeneinstellungen schreiben ihre Werte, wenn sie aktiviert sind, und entfernen sie bei Deaktiviert. Nicht konfiguriert entfernt den Wert immer. Für eine Liste, die nichts erlaubt, trägst du als einzigen Eintrag `none` ein.",
-                "Configure the settings. Switches write `1` when Enabled and `0` when Disabled. Text, option, and list settings write their values when Enabled and remove them when Disabled. Not Configured always removes the value. For a list that allows nothing, enter the single entry `none`.",
+                "Konfiguriere die Einstellungen. Schalter schreiben bei Aktiviert `1` und bei Deaktiviert `0`. Text-, Auswahl- und Listeneinstellungen schreiben ihre Werte, wenn sie aktiviert sind, und entfernen sie bei Deaktiviert. Nicht konfiguriert entfernt den Wert immer. Für eine Liste, die nichts erlaubt, trägst du als einzigen Eintrag `none` ein. Beim Ersetzen einer Liste werden die alten nummerierten Einträge entfernt.",
+                "Configure the settings. Switches write `1` when Enabled and `0` when Disabled. Text, option, and list settings write their values when Enabled and remove them when Disabled. Not Configured always removes the value. For a list that allows nothing, enter the single entry `none`. Replacing a list removes the old numbered entries.",
               ),
             )}
           </li>
@@ -828,7 +866,7 @@ export default function DocsWindowsManagedSettings({
           )}
         </p>
         <DocsTable
-          label={tx("Gruppenrichtlinien-Einstellungen", "Group Policy settings")}
+          label={tx("Richtlinien im Editor", "Settings in the editor")}
           head={[tx("Einstellung", "Setting"), tx("Registry-Werte", "Registry values")]}
           rows={keys.map((key) => [
             pick(key.policy),
@@ -867,22 +905,22 @@ export default function DocsWindowsManagedSettings({
           <li>
             {withCode(
               tx(
-                "Öffne im Intune Admin Center Geräte > Konfiguration > ADMX importieren und lade `TypeWhisper.admx` mit der ADML-Datei für `en-US` hoch. Der Import akzeptiert nur `en-US`.",
-                "In the Intune admin center, open Devices > Configuration > Import ADMX and upload `TypeWhisper.admx` with the `en-US` ADML file. The import accepts `en-US` only.",
+                "Öffne im Intune Admin Center Geräte > Geräte verwalten > Konfiguration, wähle die Registerkarte „ADMX importieren“ und dann „Importieren“. Lade `TypeWhisper.admx` mit der ADML-Datei für `en-US` hoch. Der Import akzeptiert nur `en-US`.",
+                "In the Intune admin center, open Devices > Manage devices > Configuration, select the Import ADMX tab, then Import. Upload `TypeWhisper.admx` with the `en-US` ADML file. The import accepts `en-US` only.",
               ),
             )}
           </li>
           <li>
             {tx(
-              "Erstelle aus der importierten Vorlage ein Konfigurationsprofil, setze die Einstellungen und weise das Profil Gerätegruppen zu.",
-              "Create a configuration profile from the imported template, configure the settings, and assign the profile to device groups.",
+              "Erstelle unter Konfiguration > Erstellen > Neue Richtlinie ein Profil für Windows 10 und höher vom Typ Vorlagen > „Importierte Administrative Vorlagen (Vorschau)“, setze die Einstellungen und weise das Profil Gerätegruppen zu.",
+              "Under Configuration > Create > New policy, create a profile for Windows 10 and later of the type Templates > Imported Administrative templates (Preview), configure the settings, and assign the profile to device groups.",
             )}
           </li>
         </ol>
         <p>
           {tx(
-            "Entfernst du eine Einstellung aus dem Profil oder hebst die Zuweisung auf, steht der Wert wieder auf Nicht konfiguriert. Die App behandelt das als Entfernen: Erzwungene Werte verschwinden, und die eigenen Einstellungen der Benutzer gelten wieder. Microsoft führt den Import eigener ADMX-Vorlagen als öffentliche Vorschau; teste ihn zuerst in einem Pilot-Mandanten.",
-            "Removing a setting from the profile, or unassigning the profile, returns the value to Not Configured. The app treats that as removal: enforced values disappear and the users' own settings apply again. Microsoft lists the import of custom ADMX templates as a public preview; test it in a pilot tenant first.",
+            "Entfernst du eine Einstellung aus dem Profil oder hebst die Zuweisung auf, steht der Wert wieder auf Nicht konfiguriert. Die App behandelt das als Entfernen: Erzwungene Werte verschwinden, und die eigenen Einstellungen der Benutzer gelten wieder. Microsoft führt den Import eigener ADMX-Vorlagen als öffentliche Vorschau; teste ihn zuerst in einem Pilot-Mandanten. Für eine neuere Vorlage, etwa mit Einstellungen aus einem späteren Release, löschst du zuerst die Profile, die die alte Vorlage verwenden, dann die importierte Datei, und importierst danach die neuen Dateien; Intune lehnt eine zweite Datei mit demselben Namespace ab.",
+            "Removing a setting from the profile, or unassigning the profile, returns the value to Not Configured. The app treats that as removal: enforced values disappear and the users' own settings apply again. Microsoft lists the import of custom ADMX templates as a public preview; test it in a pilot tenant first. To move to a newer template, for example one with settings from a later release, first delete the profiles that use the old template, then the imported file, and import the new files afterward; Intune rejects a second file with the same namespace.",
           )}
         </p>
 
@@ -905,7 +943,8 @@ export default function DocsWindowsManagedSettings({
           )}
         </p>
         <DocsCode locale={locale} lang="text" code={omaUriPolicies} />
-        <DocsCode locale={locale} lang={tx("Beispiele", "Examples")} code={omaUriExamples(isDe)} />
+        <p>{tx("Zwei Beispiele:", "Two examples:")}</p>
+        <DocsCode locale={locale} lang="text" code={omaUriExamples(isDe)} />
         <p>
           {tx(
             "Prüfe die genauen URIs auf einem Pilotgerät, bevor du sie ausrollst.",
@@ -918,7 +957,7 @@ export default function DocsWindowsManagedSettings({
         <p>
           {withCode(
             tx(
-              "`Set-TypeWhisperPolicy.ps1` schreibt dieselben Werte aus einer PowerShell-Sitzung mit Administratorrechten: für Gruppenrichtlinien-Einstellungen (Group Policy Preferences), Intune-Skripte, andere Verwaltungswerkzeuge und Tests. Das Skript läuft in Windows PowerShell 5.1 und PowerShell 7 und legt Listen so an, wie App und Vorlage sie erwarten.",
+              "`Set-TypeWhisperPolicy.ps1` schreibt dieselben Werte aus einer PowerShell-Sitzung mit Administratorrechten: für Gruppenrichtlinieneinstellungen (Group Policy Preferences), Intune-Skripte, andere Verwaltungswerkzeuge und Tests. Das Skript läuft in Windows PowerShell 5.1 und PowerShell 7 und legt Listen so an, wie App und Vorlage sie erwarten.",
               "`Set-TypeWhisperPolicy.ps1` writes the same values from an elevated PowerShell session: for Group Policy Preferences, Intune scripts, other management tools, and tests. It runs in Windows PowerShell 5.1 and PowerShell 7 and writes lists the way the app and the template expect them.",
             ),
           )}
@@ -941,7 +980,7 @@ export default function DocsWindowsManagedSettings({
           <li>
             {withCode(
               tx(
-                "Einstellungen > Erweitert > Verwaltete Einstellungen zeigt die auf dem Gerät wirksamen Werte und unter Probleme in der Richtlinie alles, was nicht passt: ungültige Werte, unvollständige Paare, fehlende Anbieter oder Modelle und Einschränkungen unter `Recommended`.",
+                "Einstellungen > Erweitert > Verwaltete Einstellungen zeigt die auf dem Gerät wirksamen Werte und unter „Probleme in der Richtlinie“ alles, was nicht passt: ungültige Werte, unvollständige Paare, fehlende Anbieter oder Modelle und Einschränkungen unter `Recommended`.",
                 "Settings > Advanced > Managed settings shows the values in effect on the device and, under Policy problems, everything that does not fit: invalid values, incomplete pairs, missing providers or models, and restrictions placed under `Recommended`.",
               ),
             )}
@@ -954,8 +993,8 @@ export default function DocsWindowsManagedSettings({
           </li>
           <li>
             {tx(
-              "Der Supportbericht unter Einstellungen > Erweitert > Support-Diagnose > Supportbericht exportieren enthält denselben Abschnitt. Benutzer können ihn an dich oder an den TypeWhisper-Support schicken.",
-              "The support report from Settings > Advanced > Support diagnostics > Export support report contains the same section. Users can send it to you or to TypeWhisper support.",
+              "Der Supportbericht (Einstellungen > Erweitert > Support-Diagnose > Supportbericht > „Diagnose exportieren…“) enthält denselben Abschnitt. Benutzer können ihn an dich oder an den TypeWhisper-Support schicken.",
+              "The support report (Settings > Advanced > Support diagnostics > Support report > Export diagnostics…) contains the same section. Users can send it to you or to TypeWhisper support.",
             )}
           </li>
           <li>

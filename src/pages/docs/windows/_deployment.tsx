@@ -44,8 +44,8 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["huggingface.co", "*.hf.co"],
-    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, local text models, and local speech output. Huggingface.co redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
-    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Dictionary Boosting, whisper.cpp, lokale Textmodelle und lokale Sprachausgabe. Huggingface.co leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
+    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, local text models, and local speech output. The host redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
+    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Wörterbuch-Boosting, whisper.cpp, lokale Textmodelle und lokale Sprachausgabe. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
   ],
   [
     ["download.pytorch.org", "developer.download.nvidia.com", "api.nuget.org"],
@@ -110,18 +110,18 @@ msiexec /i TypeWhisper-win-x64.msi /qn /norestart
 msiexec /i TypeWhisper-win-x64.msi /qn /norestart VELOPACK_INSTALLDIR="D:\\Apps\\TypeWhisper"
 
 # ${isDe ? "Mit dem Produktcode der installierten Version deinstallieren" : "Uninstall with the product code of the installed version"}
-msiexec /x {<product code>} /qn /norestart`;
+msiexec /x '{<product code>}' /qn /norestart`;
 
-const dotnetCommands = (isDe: boolean) => `dotnet-runtime-10.0.<patch>-win-x64.exe /install /quiet /norestart
+const dotnetCommands = (isDe: boolean) => `.\\dotnet-runtime-10.0.<patch>-win-x64.exe /install /quiet /norestart
 
 # ${isDe ? "oder" : "or"}
 winget install Microsoft.DotNet.Runtime.10`;
 
 const perUserCommands = (isDe: boolean) => `# ${isDe ? "Für den aktuellen Benutzer installieren" : "Install for the current user"}
-TypeWhisper-win-x64-Setup.exe --silent
+.\\TypeWhisper-win-x64-Setup.exe --silent
 
 # ${isDe ? "Für den aktuellen Benutzer deinstallieren" : "Uninstall for the current user"}
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "& \\"$env:LOCALAPPDATA\\TypeWhisper\\Update.exe\\" --uninstall --silent"`;
+& "$env:LOCALAPPDATA\\TypeWhisper\\Update.exe" --uninstall --silent`;
 
 const hashCommand = `Get-FileHash .\\TypeWhisper-win-x64.msi -Algorithm SHA256`;
 
@@ -204,8 +204,8 @@ export default function DocsWindowsDeployment({
               <code>TypeWhisper-win-x64.msi</code>,
               withCode(
                 tx(
-                  "Alle Benutzer eines Geräts. Installiert nach `C:\\Program Files\\TypeWhisper`, läuft im Systemkontext und wird über deine Softwareverteilung aktualisiert. Die richtige Wahl für verwaltete und gemeinsam genutzte Geräte.",
-                  "All users of a device. Installs into `C:\\Program Files\\TypeWhisper`, runs in the system context, and is updated by your deployment. The right choice for managed and shared devices.",
+                  "Alle Benutzer eines Geräts. Installiert im Systemkontext nach `C:\\Program Files\\TypeWhisper` und wird über deine Softwareverteilung aktualisiert. Die richtige Wahl für gemeinsam genutzte Geräte.",
+                  "All users of a device. Installs into `C:\\Program Files\\TypeWhisper` in the system context and is updated by your deployment. The right choice for shared devices.",
                 ),
               ),
             ],
@@ -213,8 +213,8 @@ export default function DocsWindowsDeployment({
               <code>TypeWhisper-win-x64-Setup.exe</code>,
               withCode(
                 tx(
-                  "Einen Windows-Benutzer. Installiert nach `%LocalAppData%\\TypeWhisper`, läuft im Benutzerkontext und aktualisiert sich selbst, solange `UpdateMode` nichts anderes vorgibt.",
-                  "One Windows user. Installs into `%LocalAppData%\\TypeWhisper`, runs in the user context, and updates itself unless `UpdateMode` says otherwise.",
+                  "Einen Windows-Benutzer. Installiert im Benutzerkontext nach `%LocalAppData%\\TypeWhisper` und aktualisiert sich selbst, solange `UpdateMode` nichts anderes vorgibt.",
+                  "One Windows user. Installs into `%LocalAppData%\\TypeWhisper` in the user context and updates itself unless `UpdateMode` says otherwise.",
                 ),
               ),
             ],
@@ -222,7 +222,7 @@ export default function DocsWindowsDeployment({
         />
         <p>
           {tx(
-            "Beide Dateien liegen im jeweils neuesten stabilen Release, jeweils mit einer .sha256-Datei zur Prüfung:",
+            "Beide Dateien liegen im neuesten stabilen Release, jeweils mit einer .sha256-Datei zur Prüfung:",
             "Both files are attached to the latest stable release, each with a .sha256 file for verification:",
           )}
         </p>
@@ -272,13 +272,20 @@ export default function DocsWindowsDeployment({
           )}
         </p>
 
+        <p>
+          {tx(
+            "Wie das Setup ist auch das MSI von GitHub nicht codesigniert. Richtlinien zur Anwendungssteuerung, die eine Signatur verlangen, etwa App Control for Business oder AppLocker, brauchen dafür eine Ausnahme. Prüfe die Datei vorher mit ihrer SHA-256-Prüfsumme.",
+            "Like the setup, the MSI from GitHub is not code-signed. Application control policies that require a signature, such as App Control for Business or AppLocker, need an exception for it. Verify the file with its SHA-256 hash first.",
+          )}
+        </p>
+
         <DocsSubheading id="dotnet">
           {tx("Voraussetzung: .NET 10 Runtime", "Prerequisite: .NET 10 Runtime")}
         </DocsSubheading>
         <p>
           {tx(
-            "Das MSI braucht die .NET 10 Runtime (x64). Eine interaktive Installation bietet an, sie zu installieren; eine stille Installation tut das nicht. Verteile die Runtime daher zuerst, etwa als Abhängigkeit in Intune. Den Installer gibt es bei ",
-            "The MSI needs the .NET 10 Runtime (x64). An interactive installation offers to install it; a silent installation does not. Deploy the runtime first, for example as an Intune dependency. The installer is available at ",
+            "Das MSI braucht die .NET 10 Runtime (x64). Eine interaktive Installation bietet an, sie zu installieren; eine stille Installation tut das nicht. Verteile die Runtime daher zuerst, etwa als Abhängigkeit in Intune; dort muss sie selbst eine Win32-App sein. Den Installer gibt es bei ",
+            "The MSI needs the .NET 10 Runtime (x64). An interactive installation offers to install it; a silent installation does not. Deploy the runtime first, for example as an Intune dependency, which has to be a Win32 app itself. The installer is available at ",
           )}
           <a href={dotnetUrl} target="_blank" rel="noopener noreferrer">
             dotnet.microsoft.com
@@ -294,7 +301,7 @@ export default function DocsWindowsDeployment({
         <p>
           {withCode(
             tx(
-              "Der Produktcode ändert sich mit jeder Version. Du findest ihn in der Eigenschaft `ProductCode` des MSI oder auf einem Gerät mit Installation als `QuietUninstallString` unter `HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSI:TypeWhisper`. Verpackst du das MSI für Intune, trägt Intune den Deinstallationsbefehl mit dem Produktcode selbst ein.",
+              "Der Produktcode ändert sich mit jeder Version. Du findest ihn in der Eigenschaft `ProductCode` des MSI oder auf einem Gerät mit installierter App im Wert `QuietUninstallString` unter `HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSI:TypeWhisper`. Verpackst du das MSI für Intune, trägt Intune den Deinstallationsbefehl mit dem Produktcode selbst ein.",
               "The product code changes with every version. Read it from the MSI's `ProductCode` property, or on a device with the app installed from `QuietUninstallString` under `HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSI:TypeWhisper`. When you package the MSI for Intune, Intune fills in the uninstall command with the product code.",
             ),
           )}
@@ -306,14 +313,14 @@ export default function DocsWindowsDeployment({
         <p>
           {withCode(
             tx(
-              "Eine Installation für alle Benutzer aktualisiert deine Softwareverteilung. Die App prüft nicht auf App-Updates, lädt und installiert keine, zeigt unter Einstellungen > Konto & Info „App-Updates werden über die Softwareverteilung deiner Organisation verwaltet.“ und sperrt den Update-Kanal. Dafür brauchst du kein `UpdateMode`. Setzt du es trotzdem, bleib bei `0` oder `1`: Standardbenutzer können nicht nach `Program Files` schreiben, eine aus der App gestartete Installation unter `2` schlägt daher fehl. Plugin-Updates sind nicht betroffen, weil Plugins im Benutzerprofil liegen.",
+              "Eine Installation für alle Benutzer wird über deine Softwareverteilung aktualisiert. Die App prüft nicht auf App-Updates, lädt und installiert keine, zeigt unter Einstellungen > Konto & Info „App-Updates werden über die Softwareverteilung deiner Organisation verwaltet.“ und sperrt den Update-Kanal. Dafür brauchst du kein `UpdateMode`. Setzt du es trotzdem, bleib bei `0` oder `1`: Standardbenutzer können nicht nach `Program Files` schreiben, eine aus der App gestartete Installation unter `2` schlägt daher fehl. Plugin-Updates sind nicht betroffen, weil Plugins im Benutzerprofil liegen.",
               "Your deployment updates a machine-wide installation. The app does not check for, download, or install app updates, shows “App updates are managed by your organization's deployment.” in Settings > Account & about, and locks the update channel. You don't need `UpdateMode` for this. If you set it anyway, keep it at `0` or `1`: standard users cannot write to `Program Files`, so an installation started from the app under `2` fails. Plugin updates are not affected, because plugins live in the user's profile.",
             ),
           )}
         </p>
         <p>
           {tx(
-            "Für ein Upgrade verteilst du das neuere MSI auf dieselbe Weise, etwa über eine Ersetzung (Supersedence) in Intune. Es ersetzt die installierte Version direkt. Ein Release Candidate ist älter als das Stable-Release derselben Version.",
+            "Für ein Upgrade verteilst du das neuere MSI auf dieselbe Weise, etwa über eine Ablösung (Supersedence) in Intune. Es ersetzt die installierte Version direkt. Ein Release Candidate zählt als niedrigere Version als das Stable-Release derselben Version.",
             "To upgrade, deploy the newer MSI the same way, for example through supersedence in Intune. It replaces the installed version in place. A Release Candidate sorts below the Stable release of the same version.",
           )}
         </p>
@@ -345,7 +352,10 @@ export default function DocsWindowsDeployment({
             [tx("Installationsverhalten", "Install behavior"), "System"],
             [
               tx("Abhängigkeit", "Dependency"),
-              ".NET 10 Runtime (x64)",
+              tx(
+                ".NET 10 Runtime (x64), als eigene Win32-App paketiert",
+                ".NET 10 Runtime (x64), packaged as its own Win32 app",
+              ),
             ],
             [
               tx("Erkennungsregel", "Detection rule"),
@@ -359,7 +369,7 @@ export default function DocsWindowsDeployment({
             [
               tx("Upgrade", "Upgrade"),
               tx(
-                "Neueres MSI auf dieselbe Weise verteilen, etwa per Ersetzung",
+                "Neueres MSI auf dieselbe Weise verteilen, etwa per Ablösung",
                 "Deploy the newer MSI the same way, for example through supersedence",
               ),
             ],
@@ -400,8 +410,8 @@ export default function DocsWindowsDeployment({
               tx("Deinstallationsbefehl", "Uninstall command"),
               withCode(
                 tx(
-                  "Der PowerShell-Befehl oben. Intune löst in diesem Befehl keine Umgebungsvariablen auf; PowerShell ermittelt den LocalAppData-Pfad des Benutzers.",
-                  "The PowerShell command above. Intune does not expand environment variables in this command; PowerShell resolves the user's LocalAppData path.",
+                  "`powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& \\\"$env:LOCALAPPDATA\\TypeWhisper\\Update.exe\\\" --uninstall --silent\"`. Intune löst in diesem Feld keine Umgebungsvariablen auf; PowerShell ermittelt den LocalAppData-Pfad des Benutzers.",
+                  "`powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& \\\"$env:LOCALAPPDATA\\TypeWhisper\\Update.exe\\\" --uninstall --silent\"`. Intune does not expand environment variables in this field; PowerShell resolves the user's LocalAppData path.",
                 ),
               ),
             ],
@@ -477,8 +487,8 @@ export default function DocsWindowsDeployment({
       >
         <p>
           {tx(
-            "TypeWhisper ist eine Desktop-App. Windows fragt bei Desktop-Apps nicht einzeln nach dem Mikrofonzugriff, daher gibt es nichts vorab zu genehmigen. Die App kann aufnehmen, solange unter Einstellungen > Datenschutz und Sicherheit > Mikrofon zwei Schalter eingeschaltet sind:",
-            "TypeWhisper is a desktop app. Windows does not ask for microphone access per desktop app, so there is nothing to pre-approve. The app can record as long as two switches in Settings > Privacy & security > Microphone are on:",
+            "TypeWhisper ist eine Desktop-App. Windows fragt bei Desktop-Apps nicht einzeln nach dem Mikrofonzugriff, daher gibt es nichts vorab zu genehmigen. Die App kann aufnehmen, solange unter Einstellungen > Datenschutz & Sicherheit > Mikrofon zwei Schalter eingeschaltet sind (unter Windows 10: Einstellungen > Datenschutz > Mikrofon):",
+            "TypeWhisper is a desktop app. Windows does not ask for microphone access per desktop app, so there is nothing to pre-approve. The app can record as long as two switches in Settings > Privacy & security > Microphone are on (on Windows 10: Settings > Privacy > Microphone):",
           )}
         </p>
         <DocsTable
@@ -496,7 +506,7 @@ export default function DocsWindowsDeployment({
             ],
             [
               tx(
-                "Desktop-Apps den Zugriff auf Ihr Mikrofon erlauben (pro Benutzer)",
+                "Desktop-Apps auf Ihr Mikrofon zugreifen lassen (pro Benutzer)",
                 "Let desktop apps access your microphone (per user)",
               ),
               withCode(
@@ -507,8 +517,8 @@ export default function DocsWindowsDeployment({
         />
         <p>
           {tx(
-            "Die Gruppenrichtlinie „Windows-Apps Zugriff auf das Mikrofon gewähren“ (Computerkonfiguration > Administrative Vorlagen > Windows-Komponenten > App-Datenschutz) gilt nur für App-Pakete. Sie betrifft die Microsoft-Store-Version von TypeWhisper, deren Paketfamilienname in die Liste „Erzwungene Zulassung“ gehört, nicht aber die Installer von GitHub. Schaltet ein Benutzer einen Schalter aus, meldet TypeWhisper das fehlende Mikrofon in Status und Einrichtung, statt stumm zu scheitern.",
-            "The Group Policy “Let Windows apps access the microphone” (Computer Configuration > Administrative Templates > Windows Components > App Privacy) governs packaged apps only. It applies to the Microsoft Store version of TypeWhisper, whose package family name goes into its “Force Allow” list, and not to the GitHub installers. If a user turns a switch off, TypeWhisper reports the missing microphone in its status and setup instead of failing silently.",
+            "Die Gruppenrichtlinie „Windows-App-Zugriff auf das Mikrofon zulassen“ (englisch „Let Windows apps access the microphone“, unter Computerkonfiguration > Administrative Vorlagen > Windows-Komponenten > App-Datenschutz) gilt nur für paketierte Apps aus dem Store oder als MSIX. Sie betrifft die Microsoft-Store-Version von TypeWhisper, deren Paketfamilienname in die Liste der erzwungen zugelassenen Apps („Force Allow“) gehört, nicht aber die Installer von GitHub. Schaltet ein Benutzer einen Schalter aus, meldet TypeWhisper das fehlende Mikrofon in Status und Einrichtung, statt stumm zu scheitern.",
+            "The Group Policy “Let Windows apps access the microphone” (Computer Configuration > Administrative Templates > Windows Components > App Privacy) governs packaged (Store or MSIX) apps only. It applies to the Microsoft Store version of TypeWhisper, whose package family name goes into its “Force Allow” list, and not to the GitHub installers. If a user turns a switch off, TypeWhisper reports the missing microphone in its status and setup instead of failing silently.",
           )}
         </p>
         <p>
@@ -564,15 +574,19 @@ export default function DocsWindowsDeployment({
             )}
           </li>
           <li>
+            {tx("Importiere die ", "Import the ")}
+            <a href={`${managedSettings}#group-policy`}>
+              {tx("Gruppenrichtlinien-Vorlagen", "Group Policy templates")}
+            </a>
             {tx(
-              "Importiere die Gruppenrichtlinien-Vorlagen, setze einige Einstellungen und vergleiche sie mit Einstellungen > Erweitert > Verwaltete Einstellungen.",
-              "Import the Group Policy templates, set a few policies, and compare them with Settings > Advanced > Managed settings.",
+              ", setze einige Einstellungen und vergleiche sie mit Einstellungen > Erweitert > Verwaltete Einstellungen.",
+              ", set a few policies, and compare them with Settings > Advanced > Managed settings.",
             )}
           </li>
           <li>
             {withCode(
               tx(
-                "Verteile `ManagedLicenseKey` und prüfe Einstellungen > Premium > Lizenz in der Sitzung eines Standardbenutzers. Starte zweimal neu und stelle sicher, dass Polar keine zusätzlichen Aktivierungen zeigt. Wiederhole das mit einem zweiten Windows-Benutzer und mit einem ersten Start ohne Internet, gefolgt von Aktivierung erneut versuchen.",
+                "Verteile `ManagedLicenseKey` und prüfe Einstellungen > Premium > Lizenz in der Sitzung eines Standardbenutzers. Starte zweimal neu und stelle sicher, dass Polar keine zusätzlichen Aktivierungen zeigt. Wiederhole das mit einem zweiten Windows-Benutzer und mit einem ersten Start ohne Internet, gefolgt von „Aktivierung erneut versuchen“.",
                 "Deploy `ManagedLicenseKey` and check Settings > Premium > License in a standard user's session. Restart twice and confirm that Polar shows no additional activations. Repeat with a second Windows user and with an offline first launch followed by Retry activation.",
               ),
             )}

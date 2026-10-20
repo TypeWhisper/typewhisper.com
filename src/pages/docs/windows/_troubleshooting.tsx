@@ -241,8 +241,8 @@ export default function DocsWindowsTroubleshooting({
       >
         <p>
           {isDe
-            ? "Öffne Einstellungen > Über, prüfe zuerst das Fehlerprotokoll und klicke auf „Diagnose exportieren“. Die JSON-Datei enthält App-, Windows- und Laufzeitversion, Gebietsschema sowie protokollierte Fehler. Lies sie vor dem Teilen durch und sende sie nur an einen vertrauenswürdigen Support-Kanal."
-            : "Open Settings > About, review the error log first, and click Export Diagnostics. The JSON file contains app, Windows, and runtime versions, locale, and recorded errors. Review it before sharing and send it only through a trusted support channel."}
+            ? "Öffne Einstellungen > Erweitert > Support-Diagnose und klicke beim Supportbericht auf „Diagnose exportieren…“. Der Bericht enthält App- und Systemdetails, Mikrofonnamen und -zugriff, Modelle, Plugins, Workflow-Metadaten, Einstellungen und ein gespeichertes Diagnoseprotokoll, falls vorhanden. API-Schlüssel, Audio, Transkripte, Prompt-Inhalte und Dateipfade sind nicht enthalten, und nichts wird automatisch gesendet. Mikrofonnamen können Personennamen enthalten; lies den Bericht vor dem Teilen durch und sende ihn nur an einen vertrauenswürdigen Support-Kanal."
+            : "Open Settings > Advanced > Support diagnostics and click Export diagnostics… next to Support report. The report includes app and system details, microphone names and access, models, plugins, workflow metadata, settings, and any retained diagnostic log. It excludes API keys, audio, transcripts, prompt contents, and file paths, and nothing is sent automatically. Microphone names may contain personal names; review the report before sharing and send it only through a trusted support channel."}
         </p>
       </DocsSection>
     </>
