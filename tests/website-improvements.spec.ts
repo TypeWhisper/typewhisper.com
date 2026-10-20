@@ -86,7 +86,7 @@ for (const locale of ["en", "de"]) {
     );
   });
 
-  test(`${locale}: price switch retains three matching checkouts`, async ({
+  test(`${locale}: price switch offers yearly plans and keeps Enterprise a subscription`, async ({
     page,
   }) => {
     await page.goto(`/${locale}/pricing/`);
@@ -97,14 +97,40 @@ for (const locale of ["en", "de"]) {
     await expect(
       tiers.locator("xpath=ancestor::astro-island"),
     ).not.toHaveAttribute("ssr", "");
+    // Enterprise covers 50 devices; larger rollouts go through sales.
+    await expect(tiers).toContainText(
+      locale === "de" ? "Bis zu 50 Geräte" : "Up to 50 devices",
+    );
+    await expect(
+      tiers.locator('a[href="mailto:hello@typewhisper.com"]'),
+    ).toHaveCount(1);
+
+    await page
+      .getByRole("button", { name: locale === "de" ? /Jährlich/ : /Yearly/ })
+      .click();
+    await expect(
+      tiers.locator('[data-checkout-billing-period="yearly"]'),
+    ).toHaveCount(3);
+    await expect(tiers).toContainText(
+      locale === "de" ? "1.990\u00a0€" : "€1,990",
+    );
+
     await page.getByRole("button", { name: /Lifetime/ }).click();
     await expect(
       tiers.locator('[data-checkout-billing-period="lifetime"]'),
-    ).toHaveCount(3);
-    await expect(
-      tiers.locator('[data-checkout-billing-period="monthly"]'),
-    ).toHaveCount(0);
-    await expect(tiers).toContainText("999");
+    ).toHaveCount(2);
+    // Enterprise is sold as a subscription only and shows its yearly plan.
+    const enterprise = tiers.locator('[data-checkout-tier="enterprise"]');
+    await expect(enterprise).toHaveAttribute(
+      "data-checkout-billing-period",
+      "yearly",
+    );
+    await expect(tiers).toContainText("299");
+    await expect(tiers).toContainText(
+      locale === "de"
+        ? "Nur als Abo erhältlich"
+        : "Available as a subscription only",
+    );
   });
 
   test(`${locale}: add-on search survives detail, back, and reload`, async ({
