@@ -86,7 +86,7 @@ for (const locale of ["en", "de"]) {
     );
   });
 
-  test(`${locale}: price switch retains three matching checkouts`, async ({
+  test(`${locale}: price switch keeps Enterprise on its subscription`, async ({
     page,
   }) => {
     await page.goto(`/${locale}/pricing/`);
@@ -100,11 +100,18 @@ for (const locale of ["en", "de"]) {
     await page.getByRole("button", { name: /Lifetime/ }).click();
     await expect(
       tiers.locator('[data-checkout-billing-period="lifetime"]'),
-    ).toHaveCount(3);
-    await expect(
-      tiers.locator('[data-checkout-billing-period="monthly"]'),
-    ).toHaveCount(0);
-    await expect(tiers).toContainText("999");
+    ).toHaveCount(2);
+    // Enterprise is sold as a subscription only and keeps its monthly checkout.
+    const enterprise = tiers.locator('[data-checkout-tier="enterprise"]');
+    await expect(enterprise).toHaveAttribute(
+      "data-checkout-billing-period",
+      "monthly",
+    );
+    await expect(tiers).toContainText("299");
+    await expect(tiers).toContainText(
+      locale === "de" ? "Nur als Monatsabo" : "monthly subscription only",
+    );
+    await expect(tiers).not.toContainText("999");
   });
 
   test(`${locale}: add-on search survives detail, back, and reload`, async ({

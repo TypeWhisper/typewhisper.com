@@ -10,13 +10,14 @@ export interface CommercialTier {
   id: CommercialTierId;
   name: string;
   devices: number | "unlimited";
+  /** Tiers without `lifetime` are sold as a subscription only. */
   price: {
     monthly: number;
-    lifetime: number;
+    lifetime?: number;
   };
   checkout: {
     monthly: string;
-    lifetime: string;
+    lifetime?: string;
   };
 }
 
@@ -62,15 +63,15 @@ export const commercialTiers: CommercialTier[] = [
     },
   },
   {
+    // Subscription only, because it includes ongoing support. Enterprise
+    // Lifetime licenses sold earlier stay valid; the product is archived.
     id: "enterprise",
     name: "Enterprise",
     devices: "unlimited",
-    price: { monthly: 99, lifetime: 999 },
+    price: { monthly: 199 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_uzCNIsF0vY9gx2peWljyJU7JQoEzxHUueCPTA0MoOQe",
-      lifetime:
-        "https://buy.polar.sh/polar_cl_ngagiyJjXtxDBqv19EooEGJOLRcgzBWKBFYrZ2V2Xm7",
     },
   },
 ];
@@ -106,3 +107,33 @@ export const supporterTiers: SupporterTier[] = [
 ];
 
 export const entryCommercialPrice = commercialTiers[0].price.monthly;
+
+export interface CommercialOffer {
+  period: BillingPeriod;
+  amount: number;
+  checkout: string;
+}
+
+/**
+ * Price and checkout of a tier for the chosen billing period. A tier without
+ * a lifetime option offers its subscription instead.
+ */
+export function commercialOffer(
+  tier: CommercialTier,
+  period: BillingPeriod,
+): CommercialOffer {
+  const lifetimePrice = tier.price.lifetime;
+  const lifetimeCheckout = tier.checkout.lifetime;
+  if (
+    period === "lifetime" &&
+    lifetimePrice !== undefined &&
+    lifetimeCheckout !== undefined
+  ) {
+    return { period, amount: lifetimePrice, checkout: lifetimeCheckout };
+  }
+  return {
+    period: "monthly",
+    amount: tier.price.monthly,
+    checkout: tier.checkout.monthly,
+  };
+}
