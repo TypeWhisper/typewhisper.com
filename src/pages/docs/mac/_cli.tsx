@@ -172,12 +172,15 @@ typewhisper models unload --engine whisper`,
   },
   {
     key: "docs.mac.cli.examples.audioRestore",
-    code: `typewhisper audio --json > audio-settings.json
-echo '{"input_priority":[{"id":"BlackHole2ch_UID"}],"audio_ducking_enabled":false}' |
-  typewhisper audio set -
-# {comment}
-jq 'del(.input_devices, .active_input)' audio-settings.json |
-  typewhisper audio set -`,
+    code: `if typewhisper audio --json > audio-settings.json.tmp; then
+  mv audio-settings.json.tmp audio-settings.json
+  echo '{"input_priority":[{"id":"BlackHole2ch_UID"}],"audio_ducking_enabled":false}' |
+    typewhisper audio set -
+  printf '%s ' "{comment}"
+  read -r _
+  jq 'del(.input_devices, .active_input)' audio-settings.json |
+    typewhisper audio set -
+fi`,
     commentKey: "docs.mac.cli.examples.audioRestoreComment",
     since18: true,
   },

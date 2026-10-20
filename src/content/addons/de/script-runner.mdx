@@ -66,7 +66,7 @@ cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 
 **Füllwörter entfernen** - Füllwörter wie „um“ und „uh“ herausfiltern:
 ```bash
-perl -pe 's/ (?:uhm|uh|um|erm)(?=[ ,.!?]|$)//g'
+perl -pe 's/(?:^|(?<=\s))(?:uhm|uh|um|erm)\b,?\s*//gi; s/\s+([,.!?])/$1/g'
 ```
 
 **In Zwischenablage kopieren + zurückgeben** - Text in die Zwischenablage kopieren und trotzdem zurückgeben:

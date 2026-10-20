@@ -267,6 +267,7 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
 AUTH_HEADER="$(mktemp)"
+trap 'rm -f "$AUTH_HEADER"' EXIT
 jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 
 curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" -H @"$AUTH_HEADER"`}
@@ -519,6 +520,7 @@ curl -X DELETE http://localhost:8978/v1/dictionary/corrections \\
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
 AUTH_HEADER="$(mktemp)"
+trap 'rm -f "$AUTH_HEADER"' EXIT
 jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 
 (
@@ -661,26 +663,28 @@ curl -X PATCH http://localhost:8978/v1/settings/audio \\
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
 AUTH_HEADER="$(mktemp)"
+trap 'rm -f "$AUTH_HEADER"' EXIT
 jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 AUDIO_URL="http://localhost:$TYPEWHISPER_API_PORT/v1/settings/audio"
 
-saved="$(curl --fail --silent --show-error "$AUDIO_URL" -H @"$AUTH_HEADER")"
-
-curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
-  -H @"$AUTH_HEADER" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "input_priority": [{ "id": "BlackHole2ch_UID", "name": "BlackHole 2ch" }],
-    "audio_ducking_enabled": false
-  }'
-
-# ${t(locale, "docs.mac.api.audio.restoreComment")}
-
-jq 'del(.input_devices, .active_input)' <<<"$saved" | \\
+if saved="$(curl --fail --silent --show-error "$AUDIO_URL" -H @"$AUTH_HEADER")"; then
   curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
     -H @"$AUTH_HEADER" \\
     -H "Content-Type: application/json" \\
-    --data-binary @-
+    -d '{
+      "input_priority": [{ "id": "BlackHole2ch_UID", "name": "BlackHole 2ch" }],
+      "audio_ducking_enabled": false
+    }'
+
+  printf '%s ' "${t(locale, "docs.mac.api.audio.restoreComment")}"
+  read -r _
+
+  jq 'del(.input_devices, .active_input)' <<<"$saved" | \\
+    curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
+      -H @"$AUTH_HEADER" \\
+      -H "Content-Type: application/json" \\
+      --data-binary @-
+fi
 rm -f "$AUTH_HEADER"`}
         />
         <p>
