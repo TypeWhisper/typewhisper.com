@@ -4,6 +4,7 @@ import { t, type Locale } from "@/i18n/index";
 import {
   commercialOffer,
   commercialTiers,
+  salesEmail,
   type BillingPeriod,
   type CommercialTier,
   type CommercialTierId,
@@ -106,6 +107,16 @@ function Tier({
               {t(locale, `pricing.tiers.${tier.id}.${key}`)}
             </li>
           ))}
+          {tier.id === "enterprise" && (
+            <li>
+              <BarMark />
+              <a href={`mailto:${salesEmail}`}>
+                {fill(t(locale, "pricing.tiers.enterprise.more"), {
+                  count: tier.devices,
+                })}
+              </a>
+            </li>
+          )}
         </ul>
         <a
           href={offer.checkout}

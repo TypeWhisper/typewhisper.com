@@ -9,7 +9,7 @@ export type BillingPeriod = "monthly" | "yearly" | "lifetime";
 export interface CommercialTier {
   id: CommercialTierId;
   name: string;
-  devices: number | "unlimited";
+  devices: number;
   /** Every tier has both subscriptions; tiers without `lifetime` are sold as a subscription only. */
   price: {
     monthly: number;
@@ -72,11 +72,12 @@ export const commercialTiers: CommercialTier[] = [
     },
   },
   {
-    // Subscription only, because it includes ongoing support. Enterprise
-    // Lifetime licenses sold earlier stay valid; the product is archived.
+    // Subscription only, because it includes ongoing support. Larger rollouts
+    // go through sales. Enterprise Lifetime licenses sold earlier stay valid
+    // with their own device allowance; the product is archived.
     id: "enterprise",
     name: "Enterprise",
-    devices: "unlimited",
+    devices: 50,
     price: { monthly: 199, yearly: 1990 },
     checkout: {
       monthly:

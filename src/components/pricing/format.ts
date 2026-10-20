@@ -31,9 +31,6 @@ export function commercialTier(id: CommercialTierId): CommercialTier {
 }
 
 export function devicesLabel(tier: CommercialTier, locale: Locale): string {
-  if (tier.devices === "unlimited") {
-    return t(locale, "pricing.tiers.devicesUnlimited");
-  }
   return fill(t(locale, "pricing.tiers.devicesCount"), {
     count: tier.devices,
   });

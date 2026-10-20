@@ -97,6 +97,13 @@ for (const locale of ["en", "de"]) {
     await expect(
       tiers.locator("xpath=ancestor::astro-island"),
     ).not.toHaveAttribute("ssr", "");
+    // Enterprise covers 50 devices; larger rollouts go through sales.
+    await expect(tiers).toContainText(
+      locale === "de" ? "Bis zu 50 Geräte" : "Up to 50 devices",
+    );
+    await expect(
+      tiers.locator('a[href="mailto:hello@typewhisper.com"]'),
+    ).toHaveCount(1);
 
     await page
       .getByRole("button", { name: locale === "de" ? /Jährlich/ : /Yearly/ })

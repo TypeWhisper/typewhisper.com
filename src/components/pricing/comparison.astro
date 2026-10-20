@@ -13,6 +13,7 @@ interface Props {
 const { locale } = Astro.props;
 const individual = commercialTier("individual");
 const team = commercialTier("team");
+const enterprise = commercialTier("enterprise");
 
 const freeFeatures = [
   "allFeatures",
@@ -32,6 +33,7 @@ const commercialFeatures = [
   fill(t(locale, `pricing.commercial.feature.${key}`), {
     individual: individual.devices,
     team: team.devices,
+    enterprise: enterprise.devices,
   }),
 );
 ---

@@ -20,7 +20,7 @@ test("commercial plans expose the current device limits", () => {
     {
       individual: 3,
       team: 10,
-      enterprise: "unlimited",
+      enterprise: 50,
     },
   );
 });

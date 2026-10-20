@@ -34,6 +34,7 @@ const features = [
   title: t(locale, `business.feature.${key}.title`),
   description: fill(t(locale, `business.feature.${key}.description`), {
     count: teamTier.devices,
+    enterprise: enterpriseTier.devices,
   }),
 }));
 
@@ -153,7 +154,9 @@ const trust = ["local", "gpl", "noTelemetry"];
                 amount={enterpriseTier.price.monthly}
                 suffix={t(locale, "pricing.tiers.perMonth")}
               />
-              <p class="site-tiers__text">{t(locale, "business.pricing.enterpriseDevices")}</p>
+              <p class="site-tiers__text">
+                {fill(t(locale, "business.pricing.enterpriseDevices"), { count: enterpriseTier.devices })}
+              </p>
               <a
                 href={`mailto:${salesEmail}`}
                 class="site-button site-button--small commercial-tier__action"
