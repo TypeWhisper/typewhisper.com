@@ -5,14 +5,42 @@ import {
   DocsSection,
   DocsSubheading,
   DocsTable,
+  withCode,
 } from "@/components/docs/prose";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 
 type Endpoint = {
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   path: string;
   description: string;
+  /** The endpoint ships with TypeWhisper 1.8. */
+  since18?: boolean;
 };
+
+/** Fields of `GET /v1/settings/audio`, in response order. */
+const audioFields: Array<[field: string, key: string]> = [
+  ["input_devices", "docs.mac.api.audio.fields.inputDevices"],
+  ["input_priority", "docs.mac.api.audio.fields.inputPriority"],
+  ["active_input", "docs.mac.api.audio.fields.activeInput"],
+  ["audio_ducking_enabled", "docs.mac.api.audio.fields.duckingEnabled"],
+  ["audio_ducking_level", "docs.mac.api.audio.fields.duckingLevel"],
+  [
+    "pause_media_during_recording",
+    "docs.mac.api.audio.fields.pauseMedia",
+  ],
+  ["sound_feedback_enabled", "docs.mac.api.audio.fields.soundFeedback"],
+];
+
+/** Fields of an entry in `GET /v1/recorder/recordings`. */
+const recordingFields: Array<[fields: string[], key: string]> = [
+  [["source"], "docs.mac.api.recordings.fields.source"],
+  [["recording_id"], "docs.mac.api.recordings.fields.recordingId"],
+  [["completion_id"], "docs.mac.api.recordings.fields.completionId"],
+  [["completed_at"], "docs.mac.api.recordings.fields.completedAt"],
+  [["text"], "docs.mac.api.recordings.fields.text"],
+  [["audio_file", "transcript_file"], "docs.mac.api.recordings.fields.files"],
+  [["markdown_file"], "docs.mac.api.recordings.fields.markdown"],
+];
 
 function InlineCode({ children }: { children: ReactNode }) {
   return <code>{children}</code>;
@@ -26,6 +54,8 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
   const Json = ({ code }: { code: string }) => (
     <DocsCode code={code} lang="json" locale={locale} />
   );
+  // Features that ship with TypeWhisper 1.8 say so where they are described.
+  const availableFrom18 = t(locale, "docs.mac.api.availableFrom18");
 
   const endpointGroups: Array<{
     id: string;
@@ -45,6 +75,21 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           method: "GET",
           path: "/v1/models",
           description: t(locale, "docs.mac.api.endpoint.models"),
+        },
+        {
+          method: "POST",
+          path: "/v1/models/load",
+          description: t(locale, "docs.mac.api.endpoint.modelsLoad"),
+        },
+        {
+          method: "POST",
+          path: "/v1/models/unload",
+          description: t(locale, "docs.mac.api.endpoint.modelsUnload"),
+        },
+        {
+          method: "DELETE",
+          path: "/v1/models?engine=<id>&model=<id>",
+          description: t(locale, "docs.mac.api.endpoint.modelsDelete"),
         },
         {
           method: "POST",
@@ -111,6 +156,18 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           method: "POST",
           path: "/v1/settings/import",
           description: t(locale, "docs.mac.api.endpoint.settingsImport"),
+        },
+        {
+          method: "GET",
+          path: "/v1/settings/audio",
+          description: t(locale, "docs.mac.api.endpoint.audioGet"),
+          since18: true,
+        },
+        {
+          method: "PATCH",
+          path: "/v1/settings/audio",
+          description: t(locale, "docs.mac.api.endpoint.audioPatch"),
+          since18: true,
         },
       ],
     },
@@ -181,6 +238,12 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           path: "/v1/recorder/session?id=<uuid>",
           description: t(locale, "docs.mac.api.endpoint.recorderSession"),
         },
+        {
+          method: "GET",
+          path: "/v1/recorder/recordings?since=<time>",
+          description: t(locale, "docs.mac.api.endpoint.recorderRecordings"),
+          since18: true,
+        },
       ],
     },
   ];
@@ -242,7 +305,9 @@ curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" \\
                     </>
                   )}
                 </code>,
-                endpoint.description,
+                endpoint.since18
+                  ? `${endpoint.description} ${availableFrom18}`
+                  : endpoint.description,
               ])}
             />
           </div>
@@ -377,6 +442,35 @@ curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" \\
         <p>{t(locale, "docs.mac.api.listModels.description")}</p>
       </DocsSection>
 
+      <DocsSection
+        id="model-management"
+        title={t(locale, "docs.mac.api.manageModels.title")}
+      >
+        <p>{withCode(t(locale, "docs.mac.api.manageModels.description"))}</p>
+        <Shell
+          code={`curl -X POST http://localhost:8978/v1/models/load \\
+  -H "Content-Type: application/json" \\
+  -d '{"engine":"parakeet","model":"parakeet-tdt-0.6b-v3"}'
+
+curl -X POST http://localhost:8978/v1/models/unload \\
+  -H "Content-Type: application/json" \\
+  -d '{"engine":"parakeet"}'
+
+curl -X DELETE "http://localhost:8978/v1/models?engine=whisper&model=openai_whisper-large-v3_turbo"`}
+        />
+        <Json
+          code={`{
+  "engine": "parakeet",
+  "model": "parakeet-tdt-0.6b-v3",
+  "status": "ready"
+}`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.manageModels.responses"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.manageModels.delete"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.manageModels.errors"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.manageModels.managed"))}</p>
+      </DocsSection>
+
       <DocsSection id="history" title={t(locale, "docs.mac.api.history.title")}>
         <Shell
           code={`curl "http://localhost:8978/v1/history?q=meeting&limit=10&offset=0"
@@ -477,6 +571,123 @@ typewhisper import ~/.config/typewhisper/settings.json --json`}
         <p>{t(locale, "docs.mac.api.settings.dotfilesNote")}</p>
       </DocsSection>
 
+      <DocsSection
+        id="audio-settings"
+        title={t(locale, "docs.mac.api.audio.title")}
+      >
+        <p>{availableFrom18}</p>
+        <p>{withCode(t(locale, "docs.mac.api.audio.description"))}</p>
+        <p>{t(locale, "docs.mac.api.audio.useCase")}</p>
+        <Shell
+          code={`curl http://localhost:8978/v1/settings/audio
+
+curl -X PATCH http://localhost:8978/v1/settings/audio \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "input_priority": [{ "id": "BlackHole2ch_UID", "name": "BlackHole 2ch" }],
+    "audio_ducking_enabled": false
+  }'
+
+curl -X PATCH http://localhost:8978/v1/settings/audio \\
+  -H "Content-Type: application/json" \\
+  -d '{"input_priority":[]}'`}
+        />
+        <Json
+          code={`{
+  "input_devices": [
+    {
+      "id": "BuiltInMicrophoneDevice",
+      "name": "MacBook Pro Microphone",
+      "is_system_default": true
+    },
+    {
+      "id": "BlackHole2ch_UID",
+      "name": "BlackHole 2ch",
+      "is_system_default": false
+    }
+  ],
+  "input_priority": [
+    {
+      "id": "AppleUSBAudioEngine:HyperX:QuadCast 2",
+      "name": "HyperX QuadCast 2"
+    }
+  ],
+  "active_input": {
+    "id": "BuiltInMicrophoneDevice",
+    "name": "MacBook Pro Microphone"
+  },
+  "audio_ducking_enabled": true,
+  "audio_ducking_level": 0.2,
+  "pause_media_during_recording": false,
+  "sound_feedback_enabled": true
+}`}
+        />
+        <DocsSubheading id="audio-settings-fields">
+          {t(locale, "docs.mac.api.audio.fieldsTitle")}
+        </DocsSubheading>
+        <DocsTable
+          label={t(locale, "docs.mac.api.audio.fieldsTitle")}
+          head={[
+            t(locale, "docs.mac.api.audio.fieldHeader"),
+            t(locale, "docs.mac.api.audio.descriptionHeader"),
+          ]}
+          rows={audioFields.map(([field, key]) => [
+            // Long field names break after an underscore, not inside a word.
+            <code>
+              {field.split("_").map((part, index) => (
+                <span key={index}>
+                  {index > 0 && (
+                    <>
+                      _<wbr />
+                    </>
+                  )}
+                  {part}
+                </span>
+              ))}
+            </code>,
+            withCode(t(locale, key)),
+          ])}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.audio.patch"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.audio.errors"))}</p>
+        <DocsSubheading id="audio-settings-restore">
+          {t(locale, "docs.mac.api.audio.restoreTitle")}
+        </DocsSubheading>
+        <p>{withCode(t(locale, "docs.mac.api.audio.restore"))}</p>
+        <Shell
+          code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
+TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
+TYPEWHISPER_API_TOKEN="$(jq -r '.token' "$DISCOVERY")"
+AUDIO_URL="http://localhost:$TYPEWHISPER_API_PORT/v1/settings/audio"
+
+saved="$(curl --fail --silent --show-error "$AUDIO_URL" \\
+  -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN")"
+
+curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
+  -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "input_priority": [{ "id": "BlackHole2ch_UID", "name": "BlackHole 2ch" }],
+    "audio_ducking_enabled": false
+  }'
+
+# ${t(locale, "docs.mac.api.audio.restoreComment")}
+
+jq 'del(.input_devices, .active_input)' <<<"$saved" | \\
+  curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
+    -H "Authorization: Bearer $TYPEWHISPER_API_TOKEN" \\
+    -H "Content-Type: application/json" \\
+    --data-binary @-`}
+        />
+        <p>
+          {t(locale, "docs.mac.api.audio.cliBefore")}{" "}
+          <a href={localePath(locale, "/docs/mac/cli#command-audio")}>
+            {t(locale, "docs.mac.api.audio.cliLink")}
+          </a>{" "}
+          {withCode(t(locale, "docs.mac.api.audio.cliAfter"))}
+        </p>
+      </DocsSection>
+
       <DocsSection id="rules" title={t(locale, "docs.mac.api.rules.title")}>
         <Shell
           code={`curl http://localhost:8978/v1/rules
@@ -525,6 +736,77 @@ curl "http://localhost:8978/v1/recorder/session?id=<uuid>"`}
 }`}
         />
         <p>{t(locale, "docs.mac.api.recorder.states")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="recorder-recordings"
+        title={t(locale, "docs.mac.api.recordings.title")}
+      >
+        <p>{availableFrom18}</p>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.description"))}</p>
+        <Shell
+          code={`curl "http://localhost:8978/v1/recorder/recordings?since=1791100000.123456"
+curl "http://localhost:8978/v1/recorder/recordings?since=2026-10-04T07:46:40Z"`}
+        />
+        <Json
+          code={`{
+  "recordings": [
+    {
+      "source": "recorder",
+      "recording_id": "8F8C1F45-6D03-44D2-A38C-0C4DE4F7E5F7",
+      "completion_id": "59CBC40C-274A-47A9-804C-8774AB504401",
+      "completed_at": 1791100000.123456,
+      "text": "Meeting notes from the recording.",
+      "audio_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.m4a",
+      "transcript_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.txt",
+      "markdown_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.transcript.md"
+    }
+  ]
+}`}
+        />
+        <DocsSubheading id="recorder-recordings-fields">
+          {t(locale, "docs.mac.api.recordings.fieldsTitle")}
+        </DocsSubheading>
+        <ul>
+          {recordingFields.map(([fields, key]) => (
+            <li key={key}>
+              {fields.map((field, index) => (
+                <span key={field}>
+                  {index > 0 && ", "}
+                  <InlineCode>{field}</InlineCode>
+                </span>
+              ))}{" "}
+              – {withCode(t(locale, key))}
+            </li>
+          ))}
+        </ul>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.since"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.cursor"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.revisions"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.receipts"))}</p>
+        <DocsSubheading id="recorder-automation">
+          {t(locale, "docs.mac.api.recordings.automationTitle")}
+        </DocsSubheading>
+        <p>{t(locale, "docs.mac.api.recordings.automationIntro")}</p>
+        <ul>
+          <li>
+            <a href={localePath(locale, "/addons/webhook/macos")}>Webhook</a> –{" "}
+            {t(locale, "docs.mac.api.recordings.webhook")}
+          </li>
+          <li>
+            <a href={localePath(locale, "/addons/script-runner/macos")}>
+              Script Runner
+            </a>{" "}
+            – {t(locale, "docs.mac.api.recordings.script")}
+          </li>
+          <li>
+            <a href={localePath(locale, "/addons/develop#eventbus")}>
+              <code>recorderTranscriptReady</code>
+            </a>{" "}
+            – {withCode(t(locale, "docs.mac.api.recordings.event"))}
+          </li>
+        </ul>
+        <p>{withCode(t(locale, "docs.mac.api.recordings.bestEffort"))}</p>
       </DocsSection>
 
       <DocsSection id="errors" title={t(locale, "docs.mac.api.errors.title")}>
