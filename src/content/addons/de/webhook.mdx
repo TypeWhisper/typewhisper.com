@@ -18,7 +18,7 @@ sourceUrls:
 
 ## Über
 
-Das Webhook Plugin sendet Transkriptionen als POST- oder PUT-Request an die URLs, die du festlegst. Nutze es, um TypeWhisper mit deinen eigenen Diensten, Zapier, Make, n8n oder jeder HTTP-kompatiblen Automatisierungsplattform zu verbinden. Die Payload enthält den transkribierten Text zusammen mit Kontext wie der Quell-App und URL.
+Das Webhook-Plugin sendet Transkriptionen als POST- oder PUT-Request an die URLs, die du festlegst. Nutze es, um TypeWhisper mit deinen eigenen Diensten, Zapier, Make, n8n oder jeder HTTP-kompatiblen Automatisierungsplattform zu verbinden. Die Payload enthält den transkribierten Text zusammen mit Kontext wie der Quell-App und URL.
 
 ## Features
 
@@ -46,7 +46,7 @@ Verfügbar unter macOS ab TypeWhisper 1.8 mit Version 1.2.0 oder neuer dieses Ad
 
 Ist **Auch fertige Recorder-Transkripte senden** eingeschaltet, erhält der Webhook zusätzlich jedes Recorder-Transkript, sobald TypeWhisper es gespeichert hat. Das gilt für manuelle, Kalender- und API-Aufnahmen und auch für erneute Transkriptionen. Die Option ist standardmäßig ausgeschaltet, auch bei Webhooks, die du schon früher eingerichtet hast. Sie hängt nicht von **Webhook senden für** ab: Ein Webhook, der auf ausgewählte Workflows beschränkt ist, erhält Recorder-Transkripte trotzdem.
 
-TypeWhisper sendet den Request mit der Methode des Webhooks an seine URL und schickt diesen JSON-Body:
+TypeWhisper sendet den Request mit der Methode des Webhooks an dessen URL, mit diesem JSON-Body:
 
 ```json
 {

@@ -38,7 +38,9 @@ Die folgenden Umgebungsvariablen stehen deinen Skripten zur Verfügung, wenn sie
 - **TYPEWHISPER_BUNDLE_ID** - Bundle-Identifier der aktiven App (z.B. "com.apple.Safari")
 - **TYPEWHISPER_URL** - Aktuelle URL aus dem Browser, falls verfügbar
 - **TYPEWHISPER_LANGUAGE** - Sprachcode der Transkription (z.B. "en")
-- **TYPEWHISPER_PROFILE** - Name des aktiven TypeWhisper-Profils
+- **TYPEWHISPER_RULE** - Name der Regel, deren Filter gepasst hat, falls vorhanden
+- **TYPEWHISPER_PROFILE** - Derselbe Wert wie TYPEWHISPER_RULE, für ältere Skripte
+- **TYPEWHISPER_SELECTED_TEXT** - In der aktiven App markierter Text, falls vorhanden
 
 ## Beispiele
 
@@ -49,7 +51,7 @@ tr '[:lower:]' '[:upper:]'
 
 **Satzanfang groß** - Den ersten Buchstaben jedes Satzes groß schreiben:
 ```bash
-sed 's/\.\s*\([a-z]\)/. \U\1/g; s/^\([a-z]\)/\U\1/'
+perl -pe 's/(^|[.!?]\s+)([a-z])/$1\u$2/g'
 ```
 
 **Suchen & Ersetzen** - Bestimmte Wörter oder Phrasen ersetzen:
@@ -64,12 +66,12 @@ cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 
 **Füllwörter entfernen** - Gängige Füllwörter herausfiltern:
 ```bash
-sed 's/ \(uhm\|uh\|um\|like\|you know\) / /g; s/  */ /g'
+perl -pe 's/ (?:uhm|uh|um|like|you know)(?=[ ,.!?]|$)//g'
 ```
 
 **In Zwischenablage kopieren + zurückgeben** - Text in die Zwischenablage kopieren und trotzdem zurückgeben:
 ```bash
-tee >(pbcopy)
+text=$(cat); printf '%s' "$text" | pbcopy; printf '%s' "$text"
 ```
 
 **Externes Skript** - Ein externes Skript ausführen:
@@ -105,7 +107,8 @@ Derselbe Befehl läuft weiterhin auch für Diktate, die zu seinem Regelfilter pa
 
 ```bash
 if [ "$TYPEWHISPER_SOURCE" = recorder ]; then
-  cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
+  mkdir -p "$HOME/Meeting Notes" &&
+    cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
 else
   cat
 fi

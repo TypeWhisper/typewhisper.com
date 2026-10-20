@@ -38,7 +38,9 @@ The following environment variables are available to your scripts when they proc
 - **TYPEWHISPER_BUNDLE_ID** - Bundle identifier of the frontmost app (e.g. "com.apple.Safari")
 - **TYPEWHISPER_URL** - Current URL from the browser, if available
 - **TYPEWHISPER_LANGUAGE** - Language code of the transcription (e.g. "en")
-- **TYPEWHISPER_PROFILE** - Name of the active TypeWhisper profile
+- **TYPEWHISPER_RULE** - Name of the rule whose filter matched, if any
+- **TYPEWHISPER_PROFILE** - Same value as TYPEWHISPER_RULE, kept for older scripts
+- **TYPEWHISPER_SELECTED_TEXT** - Text selected in the frontmost app, if any
 
 ## Examples
 
@@ -49,7 +51,7 @@ tr '[:lower:]' '[:upper:]'
 
 **Sentence Case** - Capitalize the first letter of each sentence:
 ```bash
-sed 's/\.\s*\([a-z]\)/. \U\1/g; s/^\([a-z]\)/\U\1/'
+perl -pe 's/(^|[.!?]\s+)([a-z])/$1\u$2/g'
 ```
 
 **Search & Replace** - Replace specific words or phrases:
@@ -64,12 +66,12 @@ cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 
 **Remove Filler Words** - Strip out common filler words:
 ```bash
-sed 's/ \(uhm\|uh\|um\|like\|you know\) / /g; s/  */ /g'
+perl -pe 's/ (?:uhm|uh|um|like|you know)(?=[ ,.!?]|$)//g'
 ```
 
 **Pipe to Clipboard + Return** - Copy text to clipboard and still return it:
 ```bash
-tee >(pbcopy)
+text=$(cat); printf '%s' "$text" | pbcopy; printf '%s' "$text"
 ```
 
 **Custom Script File** - Run an external script:
@@ -105,7 +107,8 @@ The same command still runs for dictations that match its rule filter, and there
 
 ```bash
 if [ "$TYPEWHISPER_SOURCE" = recorder ]; then
-  cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
+  mkdir -p "$HOME/Meeting Notes" &&
+    cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
 else
   cat
 fi

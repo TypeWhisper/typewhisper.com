@@ -8,6 +8,7 @@ import { expect, test, type Page } from "@playwright/test";
 const copy = {
   en: {
     available: "Available from TypeWhisper 1.8.",
+    token: "From TypeWhisper 1.8, the API server requires the token by default",
     models: "Load, unload, and delete models",
     audio: "Audio settings",
     audioFields: "Fields",
@@ -23,6 +24,7 @@ const copy = {
   },
   de: {
     available: "Verfügbar ab TypeWhisper 1.8.",
+    token: "Ab TypeWhisper 1.8 verlangt der API-Server standardmäßig das Token",
     models: "Modelle laden, entladen und löschen",
     audio: "Audioeinstellungen",
     audioFields: "Felder",
@@ -82,10 +84,33 @@ test.describe("macOS 1.8 API documentation", () => {
       await expect(audioRows.filter({ hasText: "PATCH" })).toContainText(
         text.available,
       );
-      // The model routes shipped before 1.8 and carry no availability note.
+      await expect(audioRows.filter({ hasText: "GET" })).toContainText(
+        text.available,
+      );
       await expect(
-        reference.getByRole("row").filter({ hasText: "/v1/models/load" }),
-      ).not.toContainText(text.available);
+        reference.getByRole("row").filter({ hasText: "/v1/recorder/recordings" }),
+      ).toContainText(text.available);
+      // The model routes shipped before 1.8 and carry no availability note.
+      for (const route of ["/v1/models/load", "/v1/models/unload", "/v1/models?engine"]) {
+        await expect(
+          reference.getByRole("row").filter({ hasText: route }),
+        ).not.toContainText(text.available);
+      }
+    });
+
+    test(`${locale} describes the token and browser checks of 1.8`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/mac/api/`);
+      const setup = section(page, "setup-authentication");
+      await expect(setup).toContainText(text.token);
+      await expect(setup).toContainText(
+        'Authorization: Bearer $TYPEWHISPER_API_TOKEN',
+      );
+      await expect(setup).toContainText("Sec-Fetch-Site: cross-site");
+      await expect(
+        page.locator("#error-codes ~ ul li", { hasText: "403" }),
+      ).toHaveCount(1);
     });
 
     test(`${locale} documents model management, audio settings, and Recorder catch-up`, async ({
@@ -290,6 +315,10 @@ test.describe("Recorder automation in add-ons", () => {
       }
       // The former ten-second timeout belongs to no macOS release.
       await expect(page.locator("main")).not.toContainText("10s");
+      // Examples must run in macOS /bin/sh with BSD tools.
+      await expect(page.locator("main")).not.toContainText(">(pbcopy)");
+      await expect(page.locator("main")).not.toContainText("\\U\\1");
+      await expect(page.locator("main")).toContainText('mkdir -p "$HOME/Meeting Notes"');
     });
 
     test(`${locale} Windows editions do not offer Recorder automation`, async ({
