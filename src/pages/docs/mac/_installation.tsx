@@ -1,11 +1,11 @@
-import { Plus } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 import {
   DocsCallout,
   DocsCode,
   DocsSection,
   withCode,
 } from "@/components/docs/prose";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 import { macDmgUrl } from "@/lib/platform-download";
 
 export default function DocsMacInstallation({
@@ -86,6 +86,26 @@ export default function DocsMacInstallation({
         title={t(locale, "docs.mac.installation.firstLaunch.title")}
       >
         <p>{t(locale, "docs.mac.installation.firstLaunch.desc")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="organizations"
+        title={isDe ? "Für Organisationen" : "For organizations"}
+      >
+        <p>
+          {isDe
+            ? "Administratoren verteilen TypeWhisper mit einem MDM wie Iru oder Jamf Pro und steuern es ab Version 1.8 über Konfigurationsprofile. Editionen, Updates, Berechtigungen und Netzwerk-Hosts beschreibt die Seite Bereitstellung."
+            : "Administrators roll out TypeWhisper with an MDM such as Iru or Jamf Pro and, from version 1.8, control it through configuration profiles. Editions, updates, permissions, and network hosts are described on the Deployment page."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/mac/deployment")}
+          className="site-link"
+        >
+          {isDe
+            ? "TypeWhisper in der Organisation verteilen"
+            : "Roll out TypeWhisper in your organization"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
 
       <details id="upgrade" className="site-disclosure docs-disclosure docs-anchor-target">

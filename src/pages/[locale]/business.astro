@@ -76,12 +76,16 @@ const trust = ["local", "gpl", "noTelemetry"];
             </li>
           ))}
         </ul>
-        <p class="site-more">
+        <div class="site-actions">
+          <a href={localePath(locale, "/docs/mac/deployment")} class="site-link">
+            {t(locale, "business.features.deploymentMac")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
           <a href={localePath(locale, "/docs/windows/deployment")} class="site-link">
             {t(locale, "business.features.deployment")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
-        </p>
+        </div>
       </div>
     </section>
 

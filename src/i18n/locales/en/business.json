@@ -7,6 +7,7 @@
   "business.hero.ctaSales": "Contact sales",
   "business.hero.ctaPricing": "See pricing",
   "business.features.title": "Built for teams that care about privacy and control.",
+  "business.features.deploymentMac": "Roll out on the Mac with configuration profiles from Iru, Jamf Pro, or any MDM",
   "business.features.label": "For your team",
   "business.features.subtitle": "Everything you get as a team customer.",
   "business.features.deployment": "Roll out on Windows with Group Policy, Intune, or the MSI",
