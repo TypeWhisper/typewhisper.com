@@ -107,9 +107,11 @@ test.describe("macOS 1.8 API documentation", () => {
       const setup = section(page, "setup-authentication");
       await expect(setup).toContainText(text.token);
       await expect(setup).toContainText(
-        'Authorization: Bearer $TYPEWHISPER_API_TOKEN',
+        '-H @"$AUTH_HEADER"',
       );
       await expect(setup).toContainText("Sec-Fetch-Site: cross-site");
+      // The token never appears on a command line in the examples.
+      await expect(page.locator("main")).not.toContainText("Bearer $TYPEWHISPER_API_TOKEN");
       await expect(
         page.locator("#error-codes ~ ul li", { hasText: "403" }),
       ).toHaveCount(1);
