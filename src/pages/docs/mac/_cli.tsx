@@ -172,8 +172,8 @@ typewhisper models unload --engine whisper`,
   },
   {
     key: "docs.mac.cli.examples.audioRestore",
-    code: `if typewhisper audio --json > audio-settings.json.tmp; then
-  mv audio-settings.json.tmp audio-settings.json
+    code: `if typewhisper audio --json > audio-settings.json.tmp &&
+  mv audio-settings.json.tmp audio-settings.json; then
   echo '{"input_priority":[{"id":"BlackHole2ch_UID"}],"audio_ducking_enabled":false}' |
     typewhisper audio set -
   printf '%s ' "{comment}"

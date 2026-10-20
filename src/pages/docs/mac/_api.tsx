@@ -266,11 +266,13 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
         <Shell
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
-AUTH_HEADER="$(mktemp)"
-trap 'rm -f "$AUTH_HEADER"' EXIT
-jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 
-curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" -H @"$AUTH_HEADER"`}
+(
+  AUTH_HEADER="$(mktemp)" || exit
+  trap 'rm -f "$AUTH_HEADER"' EXIT
+  jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
+  curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" -H @"$AUTH_HEADER"
+)`}
         />
         <p>
           {t(locale, "docs.mac.api.auth.statusPublic")}{" "}
@@ -519,25 +521,24 @@ curl -X DELETE http://localhost:8978/v1/dictionary/corrections \\
         <Shell
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
-AUTH_HEADER="$(mktemp)"
-trap 'rm -f "$AUTH_HEADER"' EXIT
-jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 
 (
+  AUTH_HEADER="$(mktemp)" || exit
   settings_backup_tmp="$(mktemp ./typewhisper-settings.json.tmp.XXXXXX)" || exit
-  trap 'rm -f "$settings_backup_tmp"' EXIT
+  trap 'rm -f "$AUTH_HEADER" "$settings_backup_tmp"' EXIT
+  jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
+
   curl --fail --silent --show-error \\
     "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/export" \\
     -H @"$AUTH_HEADER" \\
-    --output "$settings_backup_tmp" && \\
-    mv "$settings_backup_tmp" typewhisper-settings.json
-) && \\
-curl --fail --silent --show-error -X POST \\
-  "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/import" \\
-  -H @"$AUTH_HEADER" \\
-  -H "Content-Type: application/json" \\
-  --data-binary @typewhisper-settings.json
-rm -f "$AUTH_HEADER"`}
+    --output "$settings_backup_tmp" &&
+    mv "$settings_backup_tmp" typewhisper-settings.json &&
+    curl --fail --silent --show-error -X POST \\
+      "http://localhost:$TYPEWHISPER_API_PORT/v1/settings/import" \\
+      -H @"$AUTH_HEADER" \\
+      -H "Content-Type: application/json" \\
+      --data-binary @typewhisper-settings.json
+)`}
         />
         <p>{t(locale, "docs.mac.api.settings.importBehavior")}</p>
         <DocsSubheading id="settings-import-response">
@@ -662,12 +663,14 @@ curl -X PATCH http://localhost:8978/v1/settings/audio \\
         <Shell
           code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
 TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
-AUTH_HEADER="$(mktemp)"
-trap 'rm -f "$AUTH_HEADER"' EXIT
-jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
 AUDIO_URL="http://localhost:$TYPEWHISPER_API_PORT/v1/settings/audio"
 
-if saved="$(curl --fail --silent --show-error "$AUDIO_URL" -H @"$AUTH_HEADER")"; then
+(
+  AUTH_HEADER="$(mktemp)" || exit
+  trap 'rm -f "$AUTH_HEADER"' EXIT
+  jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
+
+  saved="$(curl --fail --silent --show-error "$AUDIO_URL" -H @"$AUTH_HEADER")" || exit
   curl --fail --silent --show-error -X PATCH "$AUDIO_URL" \\
     -H @"$AUTH_HEADER" \\
     -H "Content-Type: application/json" \\
@@ -684,8 +687,7 @@ if saved="$(curl --fail --silent --show-error "$AUDIO_URL" -H @"$AUTH_HEADER")";
       -H @"$AUTH_HEADER" \\
       -H "Content-Type: application/json" \\
       --data-binary @-
-fi
-rm -f "$AUTH_HEADER"`}
+)`}
         />
         <p>
           {t(locale, "docs.mac.api.audio.cliBefore")}{" "}
