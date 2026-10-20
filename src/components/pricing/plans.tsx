@@ -11,7 +11,13 @@ import {
 import { devicesLabel, fill } from "./format";
 import { Price } from "./price";
 
-const periods: BillingPeriod[] = ["monthly", "lifetime"];
+const periods: BillingPeriod[] = ["monthly", "yearly", "lifetime"];
+
+const suffixKeys: Record<BillingPeriod, string> = {
+  monthly: "pricing.tiers.perMonth",
+  yearly: "pricing.tiers.perYear",
+  lifetime: "pricing.tiers.oneTime",
+};
 
 /** Promises of a tier beyond its devices, below `pricing.tiers.<id>.`. */
 const extras: Record<CommercialTierId, string[]> = {
@@ -45,6 +51,9 @@ export function Plans({ locale }: { locale: Locale }) {
           ))}
         </div>
       </div>
+      <p className="commercial-plans__note" aria-live="polite">
+        {t(locale, `pricing.commercial.${period}Note`)}
+      </p>
 
       <ul className="site-tiers" data-testid="commercial-tiers">
         {commercialTiers.map((tier) => (
@@ -64,12 +73,9 @@ function Tier({
   period: BillingPeriod;
   locale: Locale;
 }) {
-  // Enterprise has no lifetime option; it keeps its subscription in that view.
+  // Enterprise has no lifetime option; it shows its yearly subscription there.
   const offer = commercialOffer(tier, period);
-  const suffix =
-    offer.period === "lifetime"
-      ? t(locale, "pricing.tiers.oneTime")
-      : t(locale, "pricing.tiers.perMonth");
+  const suffix = t(locale, suffixKeys[offer.period]);
   const tagline =
     offer.period === period
       ? fill(t(locale, `pricing.tiers.${tier.id}.tagline`), {

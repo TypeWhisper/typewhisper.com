@@ -44,7 +44,7 @@
   "business.legalSecurityReview.cta.label": "Contact",
   "business.pricing.title": "Pricing for teams.",
   "business.pricing.label": "Team pricing",
-  "business.pricing.subtitle": "Team and Enterprise at a glance. Team is also available as Lifetime; Enterprise is a monthly subscription with faster support.",
+  "business.pricing.subtitle": "Team and Enterprise at a glance. Both are available monthly or yearly with two months free; Team also as Lifetime.",
   "business.pricing.teamDevices": "Up to {count} devices. Small teams.",
   "business.pricing.enterpriseDevices": "Unlimited devices. Reply within one business day, help with rollout and security reviews.",
   "business.pricing.startTeam": "Start Team plan",

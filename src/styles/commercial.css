@@ -27,6 +27,14 @@
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
+.commercial-plans__note {
+  margin: 0.875rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .commercial-plans .site-tiers {
   margin-top: clamp(2rem, 4vw, 3rem);
 }

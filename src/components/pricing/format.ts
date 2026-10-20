@@ -16,11 +16,12 @@ export function fill(
   );
 }
 
-/** Amount with the currency symbol in the order of the locale. */
+/** Amount with grouping and the currency symbol in the order of the locale. */
 export function formatPrice(locale: Locale, amount: number): string {
+  const value = amount.toLocaleString(locale === "de" ? "de-DE" : "en-US");
   return locale === "de"
-    ? `${amount} ${currencySymbol}`
-    : `${currencySymbol}${amount}`;
+    ? `${value} ${currencySymbol}`
+    : `${currencySymbol}${value}`;
 }
 
 export function commercialTier(id: CommercialTierId): CommercialTier {

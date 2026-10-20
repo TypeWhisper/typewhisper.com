@@ -35,7 +35,7 @@ export type DownloadPlatform = "mac" | "windows" | "ios";
 
 export interface CheckoutAttribution {
   tier: string;
-  billingPeriod: "monthly" | "lifetime" | "one_time";
+  billingPeriod: "monthly" | "yearly" | "lifetime" | "one_time";
   placement: TrackingPlacement;
 }
 

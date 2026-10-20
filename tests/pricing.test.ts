@@ -5,6 +5,7 @@ import {
   commercialOffer,
   commercialTiers,
   salesEmail,
+  yearlyPaidMonths,
 } from "../src/lib/pricing.ts";
 
 test("public commercial contact uses the shared hello address", () => {
@@ -30,10 +31,33 @@ test("Enterprise is sold as a subscription only", () => {
   assert.equal(enterprise.price.lifetime, undefined);
   assert.equal(enterprise.checkout.lifetime, undefined);
   assert.deepEqual(commercialOffer(enterprise, "lifetime"), {
-    period: "monthly",
-    amount: enterprise.price.monthly,
-    checkout: enterprise.checkout.monthly,
+    period: "yearly",
+    amount: enterprise.price.yearly,
+    checkout: enterprise.checkout.yearly,
   });
+});
+
+test("a year of the yearly subscription costs ten monthly prices", () => {
+  for (const tier of commercialTiers) {
+    assert.equal(tier.price.yearly, tier.price.monthly * yearlyPaidMonths);
+    assert.deepEqual(commercialOffer(tier, "yearly"), {
+      period: "yearly",
+      amount: tier.price.yearly,
+      checkout: tier.checkout.yearly,
+    });
+  }
+});
+
+test("every offered plan links to a Polar checkout", () => {
+  for (const tier of commercialTiers) {
+    for (const [period, url] of Object.entries(tier.checkout)) {
+      assert.match(
+        url,
+        /^https:\/\/buy\.polar\.sh\/polar_cl_\w+$/,
+        `${tier.id} ${period} has no Polar checkout link`,
+      );
+    }
+  }
 });
 
 test("Individual and Team keep their lifetime option", () => {

@@ -4,19 +4,21 @@
 
 export type CommercialTierId = "individual" | "team" | "enterprise";
 export type SupporterTierId = "bronze" | "silver" | "gold";
-export type BillingPeriod = "monthly" | "lifetime";
+export type BillingPeriod = "monthly" | "yearly" | "lifetime";
 
 export interface CommercialTier {
   id: CommercialTierId;
   name: string;
   devices: number | "unlimited";
-  /** Tiers without `lifetime` are sold as a subscription only. */
+  /** Every tier has both subscriptions; tiers without `lifetime` are sold as a subscription only. */
   price: {
     monthly: number;
+    yearly: number;
     lifetime?: number;
   };
   checkout: {
     monthly: string;
+    yearly: string;
     lifetime?: string;
   };
 }
@@ -37,15 +39,23 @@ export const polarOrganizationUrl = "https://polar.sh/typewhisper";
 export const polarCustomerPortalUrl = "https://polar.sh/typewhisper/portal";
 export const salesEmail = "hello@typewhisper.com";
 
+/** A year of the yearly subscription costs this many monthly prices. */
+export const yearlyPaidMonths = 10;
+
+// Checkout links of the yearly products, which do not exist in Polar yet.
+// tests/pricing.test.ts fails until they are filled in.
+const pendingYearlyCheckout = "";
+
 export const commercialTiers: CommercialTier[] = [
   {
     id: "individual",
     name: "Individual",
     devices: 3,
-    price: { monthly: 5, lifetime: 99 },
+    price: { monthly: 5, yearly: 50, lifetime: 99 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_Yfw7BSIXSNFESlrNPL0fNG8GHPqX9qhmxGce32wZfYJ",
+      yearly: pendingYearlyCheckout,
       lifetime:
         "https://buy.polar.sh/polar_cl_Uiv5AnvLoQjx4JowO3gGciT7MLOovY4oY4ESz3PIxgI",
     },
@@ -54,10 +64,11 @@ export const commercialTiers: CommercialTier[] = [
     id: "team",
     name: "Team",
     devices: 10,
-    price: { monthly: 19, lifetime: 299 },
+    price: { monthly: 19, yearly: 190, lifetime: 299 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_kSqGfvss0Ces3W7R4xw7hr5NdgvEbPbhhUGRH4ad3Hj",
+      yearly: pendingYearlyCheckout,
       lifetime:
         "https://buy.polar.sh/polar_cl_GjG4jf1fT9HGQn051cgN6xsWH9Xm6Z7oe0Ke71xq6Po",
     },
@@ -68,10 +79,11 @@ export const commercialTiers: CommercialTier[] = [
     id: "enterprise",
     name: "Enterprise",
     devices: "unlimited",
-    price: { monthly: 199 },
+    price: { monthly: 199, yearly: 1990 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_uzCNIsF0vY9gx2peWljyJU7JQoEzxHUueCPTA0MoOQe",
+      yearly: pendingYearlyCheckout,
     },
   },
 ];
@@ -116,24 +128,27 @@ export interface CommercialOffer {
 
 /**
  * Price and checkout of a tier for the chosen billing period. A tier without
- * a lifetime option offers its subscription instead.
+ * a lifetime option offers its yearly subscription instead.
  */
 export function commercialOffer(
   tier: CommercialTier,
   period: BillingPeriod,
 ): CommercialOffer {
-  const lifetimePrice = tier.price.lifetime;
-  const lifetimeCheckout = tier.checkout.lifetime;
-  if (
-    period === "lifetime" &&
-    lifetimePrice !== undefined &&
-    lifetimeCheckout !== undefined
-  ) {
-    return { period, amount: lifetimePrice, checkout: lifetimeCheckout };
+  if (period === "lifetime") {
+    const amount = tier.price.lifetime;
+    const checkout = tier.checkout.lifetime;
+    if (amount !== undefined && checkout !== undefined) {
+      return { period, amount, checkout };
+    }
+    return {
+      period: "yearly",
+      amount: tier.price.yearly,
+      checkout: tier.checkout.yearly,
+    };
   }
   return {
-    period: "monthly",
-    amount: tier.price.monthly,
-    checkout: tier.checkout.monthly,
+    period,
+    amount: tier.price[period],
+    checkout: tier.checkout[period],
   };
 }
