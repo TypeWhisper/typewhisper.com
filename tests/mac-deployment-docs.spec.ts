@@ -109,7 +109,7 @@ test.describe("Mac deployment documentation", () => {
       page.getByRole("link", { name: "profile generator", exact: true }),
     ).toHaveAttribute(
       "href",
-      "https://github.com/TypeWhisper/typewhisper-mac/blob/main/deployment/macos/make-typewhisper-profile.py",
+      "https://github.com/TypeWhisper/typewhisper-mac/blob/v1.8.0/deployment/macos/make-typewhisper-profile.py",
     );
   });
 

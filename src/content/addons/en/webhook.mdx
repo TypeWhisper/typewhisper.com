@@ -63,7 +63,7 @@ TypeWhisper sends the request to the webhook's URL with its method and this JSON
 
 `recording_id` stays the same for a recording. Each successful save, including a retranscription, gets a new `completion_id`. `completed_at` is the save time in Unix seconds. `markdown_file` is included only when a Markdown transcript was saved, which currently applies to calendar recordings with meeting metadata.
 
-If a delivery fails, TypeWhisper retries it once after five seconds with the same body, so deduplicate by `completion_id`. Delivery is best effort and happens only while TypeWhisper is running. To catch up on transcripts your endpoint missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API.
+If a delivery fails, TypeWhisper retries it once after five seconds with the same body, so deduplicate by `completion_id`. Delivery is best effort and happens only while TypeWhisper is running. To catch up on transcripts your endpoint missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API. It returns the latest saved transcript of each recording, not every revision: if a recording was retranscribed before you caught up, only the newer transcript is available.
 
 ## Setup
 

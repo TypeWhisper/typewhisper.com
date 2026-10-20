@@ -64,9 +64,9 @@ sed 's/old/new/g'
 cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 ```
 
-**Füllwörter entfernen** - Gängige Füllwörter herausfiltern:
+**Füllwörter entfernen** - Füllwörter wie „um“ und „uh“ herausfiltern:
 ```bash
-perl -pe 's/ (?:uhm|uh|um|like|you know)(?=[ ,.!?]|$)//g'
+perl -pe 's/ (?:uhm|uh|um|erm)(?=[ ,.!?]|$)//g'
 ```
 
 **In Zwischenablage kopieren + zurückgeben** - Text in die Zwischenablage kopieren und trotzdem zurückgeben:
@@ -114,7 +114,7 @@ else
 fi
 ```
 
-Skripte laufen nur, solange TypeWhisper läuft, und die Zustellung ist nicht garantiert. Transkripte, die ein Skript verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach.
+Skripte laufen nur, solange TypeWhisper läuft, und die Zustellung ist nicht garantiert. Transkripte, die ein Skript verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach. Der Endpunkt liefert je Aufnahme das zuletzt gespeicherte Transkript, nicht jede Fassung: Wurde eine Aufnahme vor dem Nachholen erneut transkribiert, bekommst du nur das neuere Transkript.
 
 ## Konfiguration
 

@@ -401,7 +401,7 @@ export default function DocsMacManagedSettings({
           <li>
             {tx("Lade den ", "Download the ")}
             <a
-              href={deploymentFileUrl("make-typewhisper-profile.py")}
+              href={`${macGitHubUrl}/blob/${generatorRelease}/deployment/macos/make-typewhisper-profile.py`}
               target="_blank"
               rel="noopener noreferrer"
             >

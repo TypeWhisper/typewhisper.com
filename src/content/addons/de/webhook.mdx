@@ -63,7 +63,7 @@ TypeWhisper sendet den Request mit der Methode des Webhooks an dessen URL, mit d
 
 `recording_id` bleibt für eine Aufnahme gleich. Jede erfolgreiche Speicherung, auch nach einer erneuten Transkription, erhält eine neue `completion_id`. `completed_at` ist der Zeitpunkt der Speicherung in Unix-Sekunden. `markdown_file` ist nur enthalten, wenn ein Markdown-Transkript gespeichert wurde. Das betrifft derzeit Kalenderaufnahmen mit Meeting-Metadaten.
 
-Schlägt eine Zustellung fehl, wiederholt TypeWhisper sie nach fünf Sekunden einmal mit demselben Body. Erkenne Duplikate deshalb an der `completion_id`. Die Zustellung ist nicht garantiert und erfolgt nur, solange TypeWhisper läuft. Transkripte, die dein Endpunkt verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach.
+Schlägt eine Zustellung fehl, wiederholt TypeWhisper sie nach fünf Sekunden einmal mit demselben Body. Erkenne Duplikate deshalb an der `completion_id`. Die Zustellung ist nicht garantiert und erfolgt nur, solange TypeWhisper läuft. Transkripte, die dein Endpunkt verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach. Der Endpunkt liefert je Aufnahme das zuletzt gespeicherte Transkript, nicht jede Fassung: Wurde eine Aufnahme vor dem Nachholen erneut transkribiert, bekommst du nur das neuere Transkript.
 
 ## Einrichtung
 

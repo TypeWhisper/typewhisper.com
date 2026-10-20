@@ -20,6 +20,7 @@ const copy = {
     webhookOption: "Also send completed Recorder transcripts",
     scriptOption: "Also run for completed Recorder transcripts",
     macOnly: "TypeWhisper for Windows does not offer this option.",
+    minimumVersion: "Available on macOS from TypeWhisper 1.8 with version 1.2.0 or newer of this add-on.",
     timeLimit: "On macOS, Script Runner stops every run after five seconds",
   },
   de: {
@@ -36,6 +37,7 @@ const copy = {
     webhookOption: "Auch fertige Recorder-Transkripte senden",
     scriptOption: "Auch für fertige Recorder-Transkripte ausführen",
     macOnly: "TypeWhisper für Windows bietet diese Option nicht.",
+    minimumVersion: "Verfügbar unter macOS ab TypeWhisper 1.8 mit Version 1.2.0 oder neuer dieses Add-ons.",
     timeLimit: "Unter macOS beendet Script Runner jeden Lauf nach fünf Sekunden",
   },
 } as const;
@@ -293,7 +295,7 @@ test.describe("Recorder automation in add-ons", () => {
       await expect(
         page.locator(`a[href="/${locale}/docs/mac/api/#recorder-recordings"]`),
       ).toBeVisible();
-      await expect(page.locator("main")).toContainText("1.2.1");
+      await expect(page.getByText(text.minimumVersion)).toBeVisible();
 
       await page.goto(`/${locale}/addons/script-runner/macos/`);
       await expect(

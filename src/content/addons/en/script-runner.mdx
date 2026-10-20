@@ -64,9 +64,9 @@ sed 's/old/new/g'
 cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 ```
 
-**Remove Filler Words** - Strip out common filler words:
+**Remove Filler Words** - Strip out filler sounds such as "um" and "uh":
 ```bash
-perl -pe 's/ (?:uhm|uh|um|like|you know)(?=[ ,.!?]|$)//g'
+perl -pe 's/ (?:uhm|uh|um|erm)(?=[ ,.!?]|$)//g'
 ```
 
 **Pipe to Clipboard + Return** - Copy text to clipboard and still return it:
@@ -114,7 +114,7 @@ else
 fi
 ```
 
-Scripts run only while TypeWhisper is running, and delivery is best effort. To catch up on transcripts a script missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API.
+Scripts run only while TypeWhisper is running, and delivery is best effort. To catch up on transcripts a script missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API. It returns the latest saved transcript of each recording, not every revision: if a recording was retranscribed before you caught up, only the newer transcript is available.
 
 ## Configuration
 
