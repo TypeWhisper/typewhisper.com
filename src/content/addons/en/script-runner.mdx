@@ -25,13 +25,14 @@ The Script Runner plugin pipes transcribed text through any shell command or scr
 - Run any shell command on transcribed text
 - Text flows through stdin/stdout - works with standard Unix pipes
 - Environment variables with context (app name, URL, language, profile)
-- Configurable timeout to prevent runaway scripts
-- Profile filter to limit execution to specific profiles
+- Five-second time limit per run on macOS to stop runaway scripts
+- Rule filter to limit execution to specific rules
+- Optional export runs for completed Recorder transcripts on macOS
 - Execution log for debugging
 
 ## Environment Variables
 
-The following environment variables are available to your scripts:
+The following environment variables are available to your scripts when they process a dictation. Runs for Recorder transcripts get their own variables, described under [Recorder transcripts](#recorder-transcripts).
 
 - **TYPEWHISPER_APP_NAME** - Name of the frontmost application (e.g. "Safari")
 - **TYPEWHISPER_BUNDLE_ID** - Bundle identifier of the frontmost app (e.g. "com.apple.Safari")
@@ -76,16 +77,57 @@ tee >(pbcopy)
 ~/scripts/process.sh
 ```
 
+## Recorder transcripts
+
+Available on macOS from TypeWhisper 1.8 with version 1.2.0 or newer of this add-on. TypeWhisper for Windows does not offer this option.
+
+With **Also run for completed Recorder transcripts** turned on, Script Runner also runs the command after TypeWhisper has saved a Recorder transcript. This includes manual, calendar, and API recordings as well as retranscriptions. The option is off by default, also for scripts you set up earlier. It does not depend on the rule filter.
+
+Runs for Recorder transcripts export the transcript instead of changing it:
+
+- The command receives the saved transcript through stdin. Each script gets the original transcript, not the output of another script.
+- Anything the command writes to stdout is ignored and does not change the saved transcript. The output may be empty.
+- A nonzero exit status counts as a failure and appears in the execution log.
+
+These environment variables describe the recording:
+
+- **TYPEWHISPER_SOURCE** - Always `recorder`
+- **TYPEWHISPER_RECORDING_ID** - UUID of the recording. It stays the same after a retranscription.
+- **TYPEWHISPER_COMPLETION_ID** - UUID of this successful save
+- **TYPEWHISPER_COMPLETED_AT** - Save time in Unix seconds
+- **TYPEWHISPER_AUDIO_FILE** - Path of the audio file
+- **TYPEWHISPER_TRANSCRIPT_FILE** - Path of the plain-text transcript
+- **TYPEWHISPER_MARKDOWN_FILE** - Path of the Markdown transcript. Set only when one was saved, which currently applies to calendar recordings with meeting metadata.
+
+On macOS, Script Runner stops every run after five seconds, for dictations and Recorder transcripts alike. Hand longer work to another process, for example by copying the transcript into a folder that a separate job processes.
+
+The same command still runs for dictations that match its rule filter, and there its stdout replaces the text as usual. To export only Recorder transcripts, check `TYPEWHISPER_SOURCE` and pass dictation text through unchanged:
+
+```bash
+if [ "$TYPEWHISPER_SOURCE" = recorder ]; then
+  cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
+else
+  cat
+fi
+```
+
+Scripts run only while TypeWhisper is running, and delivery is best effort. To catch up on transcripts a script missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API.
+
 ## Configuration
 
-- **Script Command** - The shell command to execute. Text is passed via stdin, output is read from stdout.
-- **Timeout** - Maximum execution time in seconds before the script is killed (default: 10s).
-- **Profile Filter** - Optionally limit execution to specific profiles.
+Each script has these settings:
+
+- **Name** - The name shown in the script list and the execution log.
+- **Command** - The shell command to execute. Text is passed via stdin, output is read from stdout.
+- **Also run for completed Recorder transcripts** - Also run the command for each saved Recorder transcript. Available on macOS from TypeWhisper 1.8; off by default.
+- **Rules** - Optionally limit dictation runs to specific rules. Without a selection, the script runs for all transcriptions.
+
+The five-second time limit on macOS is fixed and has no setting.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Integrations
-2. Find the Script Runner plugin and click Configure
-3. Enter your shell command or path to a script
-4. Optionally set a timeout and profile filter
-5. Transcriptions will be processed through your script automatically
+1. In TypeWhisper, open **Settings > Discover plugins** and install **Script Runner**.
+2. Select **Script Runner** in the Settings sidebar and click **Add Script**.
+3. Enter a name and your shell command or the path to a script.
+4. Optionally select rules to limit dictation runs. To export Recorder transcripts, turn on **Also run for completed Recorder transcripts**.
+5. Click **Save**. Matching transcriptions are processed through your script automatically.
