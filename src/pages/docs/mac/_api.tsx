@@ -277,6 +277,7 @@ curl "http://127.0.0.1:$TYPEWHISPER_API_PORT/v1/models" \\
           {t(locale, "docs.mac.api.auth.alternativeHeader")}
         </p>
         <p>{t(locale, "docs.mac.api.auth.discovery")}</p>
+        <p>{t(locale, "docs.mac.api.auth.browserRequests")}</p>
       </DocsSection>
 
       <DocsSection
@@ -830,6 +831,10 @@ curl "http://localhost:8978/v1/recorder/recordings?since=2026-10-04T07:46:40Z"`}
           <li>
             <InlineCode>401</InlineCode> –{" "}
             {t(locale, "docs.mac.api.errors.401")}
+          </li>
+          <li>
+            <InlineCode>403</InlineCode> –{" "}
+            {t(locale, "docs.mac.api.errors.403")}
           </li>
           <li>
             <InlineCode>404</InlineCode> –{" "}
