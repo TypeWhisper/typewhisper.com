@@ -42,10 +42,6 @@ export const salesEmail = "hello@typewhisper.com";
 /** A year of the yearly subscription costs this many monthly prices. */
 export const yearlyPaidMonths = 10;
 
-// Checkout links of the yearly products, which do not exist in Polar yet.
-// tests/pricing.test.ts fails until they are filled in.
-const pendingYearlyCheckout = "";
-
 export const commercialTiers: CommercialTier[] = [
   {
     id: "individual",
@@ -55,7 +51,8 @@ export const commercialTiers: CommercialTier[] = [
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_Yfw7BSIXSNFESlrNPL0fNG8GHPqX9qhmxGce32wZfYJ",
-      yearly: pendingYearlyCheckout,
+      yearly:
+        "https://buy.polar.sh/polar_cl_lnRsYNgI93u4CRXftmZU8JPn5EIGnbcbzGqLi3VBfzK",
       lifetime:
         "https://buy.polar.sh/polar_cl_Uiv5AnvLoQjx4JowO3gGciT7MLOovY4oY4ESz3PIxgI",
     },
@@ -68,7 +65,8 @@ export const commercialTiers: CommercialTier[] = [
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_kSqGfvss0Ces3W7R4xw7hr5NdgvEbPbhhUGRH4ad3Hj",
-      yearly: pendingYearlyCheckout,
+      yearly:
+        "https://buy.polar.sh/polar_cl_1MgHf8OcRjqEoxOvw3sorOKSPfAi6OIHVj3aN0nXytG",
       lifetime:
         "https://buy.polar.sh/polar_cl_GjG4jf1fT9HGQn051cgN6xsWH9Xm6Z7oe0Ke71xq6Po",
     },
@@ -83,7 +81,8 @@ export const commercialTiers: CommercialTier[] = [
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_uzCNIsF0vY9gx2peWljyJU7JQoEzxHUueCPTA0MoOQe",
-      yearly: pendingYearlyCheckout,
+      yearly:
+        "https://buy.polar.sh/polar_cl_LZkXVmog2aWoQqfWhIp19yEsaZNqHc0r3jU020T2oRi",
     },
   },
 ];
