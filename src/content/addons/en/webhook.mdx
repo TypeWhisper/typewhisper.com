@@ -18,23 +18,57 @@ sourceUrls:
 
 ## About
 
-The Webhook plugin sends every transcription as a POST request to a configurable URL. Use it to integrate TypeWhisper with your own services, Zapier, Make, n8n, or any HTTP-compatible automation platform. The payload includes the transcribed text along with context like the source app and URL.
+The Webhook plugin sends transcriptions as POST or PUT requests to the URLs you configure. Use it to integrate TypeWhisper with your own services, Zapier, Make, n8n, or any HTTP-compatible automation platform. The payload includes the transcribed text along with context like the source app and URL.
 
 ## Features
 
-- POST transcriptions to any URL
+- Send transcriptions to one or more URLs with POST or PUT
 - Includes app context (name, bundle ID, URL)
 - Works with Zapier, Make, n8n, and custom APIs
-- Configurable per-profile
+- Send for all transcriptions or only for selected workflows
 - JSON payload format
+- Optionally send completed Recorder transcripts on macOS
+- Delivery log for the latest requests
 
 ## Configuration
 
-- **Webhook URL** - The HTTP(S) endpoint that will receive POST requests with transcription data.
+Each webhook has these settings:
+
+- **Name** - The name shown in the webhook list.
+- **URL** - The HTTP(S) endpoint that receives the requests.
+- **Method** - POST or PUT.
+- **Also send completed Recorder transcripts** - Also send each saved Recorder transcript to this webhook. Available on macOS from TypeWhisper 1.8; off by default.
+- **Send webhook for** - All transcriptions, or only transcriptions from the workflows you select.
+
+## Recorder transcripts
+
+Available on macOS from TypeWhisper 1.8 with version 1.2.0 or newer of this add-on. TypeWhisper for Windows does not offer this option.
+
+With **Also send completed Recorder transcripts** turned on, the webhook also receives each Recorder transcript once TypeWhisper has saved it. This includes manual, calendar, and API recordings as well as retranscriptions. The option is off by default, also for webhooks you set up earlier. It does not depend on **Send webhook for**: a webhook limited to selected workflows still receives Recorder transcripts.
+
+TypeWhisper sends the request to the webhook's URL with its method and this JSON body:
+
+```json
+{
+  "source": "recorder",
+  "recording_id": "8F8C1F45-6D03-44D2-A38C-0C4DE4F7E5F7",
+  "completion_id": "59CBC40C-274A-47A9-804C-8774AB504401",
+  "completed_at": 1791100000.123456,
+  "text": "Meeting notes from the recording.",
+  "audio_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.m4a",
+  "transcript_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.txt",
+  "markdown_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.transcript.md"
+}
+```
+
+`recording_id` stays the same for a recording. Each successful save, including a retranscription, gets a new `completion_id`. `completed_at` is the save time in Unix seconds. `markdown_file` is included only when a Markdown transcript was saved, which currently applies to calendar recordings with meeting metadata.
+
+If a delivery fails, TypeWhisper retries it once after five seconds with the same body, so deduplicate by `completion_id`. Delivery is best effort and happens only while TypeWhisper is running. To catch up on transcripts your endpoint missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Integrations
-2. Find the Webhook plugin and click Configure
-3. Enter your webhook URL
-4. Transcriptions will be sent automatically after each dictation
+1. In TypeWhisper, open **Settings > Discover plugins** and install **Webhook Notifications**.
+2. Select **Webhook Notifications** in the Settings sidebar and click **Add Webhook**.
+3. Enter a name and the URL, and choose the method.
+4. Under **Send webhook for**, choose all transcriptions or selected workflows. To receive Recorder transcripts as well, turn on **Also send completed Recorder transcripts**.
+5. Click **Save**. TypeWhisper sends the webhook after each matching transcription.

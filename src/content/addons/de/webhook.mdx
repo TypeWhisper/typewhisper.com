@@ -18,23 +18,57 @@ sourceUrls:
 
 ## Über
 
-Das Webhook Plugin sendet jede Transkription als POST-Request an eine konfigurierbare URL. Nutze es, um TypeWhisper mit deinen eigenen Diensten, Zapier, Make, n8n oder jeder HTTP-kompatiblen Automatisierungsplattform zu verbinden. Die Payload enthält den transkribierten Text zusammen mit Kontext wie der Quell-App und URL.
+Das Webhook Plugin sendet Transkriptionen als POST- oder PUT-Request an die URLs, die du festlegst. Nutze es, um TypeWhisper mit deinen eigenen Diensten, Zapier, Make, n8n oder jeder HTTP-kompatiblen Automatisierungsplattform zu verbinden. Die Payload enthält den transkribierten Text zusammen mit Kontext wie der Quell-App und URL.
 
 ## Features
 
-- Transkriptionen per POST an beliebige URLs senden
+- Transkriptionen per POST oder PUT an eine oder mehrere URLs senden
 - Enthält App-Kontext (Name, Bundle-ID, URL)
 - Funktioniert mit Zapier, Make, n8n und eigenen APIs
-- Pro Profil konfigurierbar
+- Für alle Transkriptionen oder nur für ausgewählte Workflows senden
 - JSON-Payload-Format
+- Unter macOS optional auch fertige Recorder-Transkripte senden
+- Zustellprotokoll für die letzten Requests
 
 ## Konfiguration
 
-- **Webhook URL** - Der HTTP(S)-Endpunkt, der POST-Requests mit Transkriptionsdaten empfängt.
+Jeder Webhook hat diese Einstellungen:
+
+- **Name** - Der Name in der Webhook-Liste.
+- **URL** - Der HTTP(S)-Endpunkt, der die Requests empfängt.
+- **Methode** - POST oder PUT.
+- **Auch fertige Recorder-Transkripte senden** - Schickt zusätzlich jedes gespeicherte Recorder-Transkript an diesen Webhook. Verfügbar unter macOS ab TypeWhisper 1.8, standardmäßig ausgeschaltet.
+- **Webhook senden für** - Alle Transkriptionen oder nur Transkriptionen aus den Workflows, die du auswählst.
+
+## Recorder-Transkripte
+
+Verfügbar unter macOS ab TypeWhisper 1.8 mit Version 1.2.0 oder neuer dieses Add-ons. TypeWhisper für Windows bietet diese Option nicht.
+
+Ist **Auch fertige Recorder-Transkripte senden** eingeschaltet, erhält der Webhook zusätzlich jedes Recorder-Transkript, sobald TypeWhisper es gespeichert hat. Das gilt für manuelle, Kalender- und API-Aufnahmen und auch für erneute Transkriptionen. Die Option ist standardmäßig ausgeschaltet, auch bei Webhooks, die du schon früher eingerichtet hast. Sie hängt nicht von **Webhook senden für** ab: Ein Webhook, der auf ausgewählte Workflows beschränkt ist, erhält Recorder-Transkripte trotzdem.
+
+TypeWhisper sendet den Request mit der Methode des Webhooks an seine URL und schickt diesen JSON-Body:
+
+```json
+{
+  "source": "recorder",
+  "recording_id": "8F8C1F45-6D03-44D2-A38C-0C4DE4F7E5F7",
+  "completion_id": "59CBC40C-274A-47A9-804C-8774AB504401",
+  "completed_at": 1791100000.123456,
+  "text": "Meeting notes from the recording.",
+  "audio_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.m4a",
+  "transcript_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.txt",
+  "markdown_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.transcript.md"
+}
+```
+
+`recording_id` bleibt für eine Aufnahme gleich. Jede erfolgreiche Speicherung, auch nach einer erneuten Transkription, erhält eine neue `completion_id`. `completed_at` ist der Zeitpunkt der Speicherung in Unix-Sekunden. `markdown_file` ist nur enthalten, wenn ein Markdown-Transkript gespeichert wurde. Das betrifft derzeit Kalenderaufnahmen mit Meeting-Metadaten.
+
+Schlägt eine Zustellung fehl, wiederholt TypeWhisper sie nach fünf Sekunden einmal mit demselben Body. Erkenne Duplikate deshalb an der `completion_id`. Die Zustellung ist nicht garantiert und erfolgt nur, solange TypeWhisper läuft. Transkripte, die dein Endpunkt verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Integrationen
-2. Finde das Webhook Plugin und klicke auf Konfigurieren
-3. Gib deine Webhook-URL ein
-4. Transkriptionen werden nach jedem Diktat automatisch gesendet
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Webhook Notifications**.
+2. Wähle **Webhook Notifications** in der Seitenleiste der Einstellungen und klicke auf **Webhook hinzufügen**.
+3. Gib einen Namen und die URL ein und wähle die Methode.
+4. Lege unter **Webhook senden für** fest, ob der Webhook für alle Transkriptionen oder nur für ausgewählte Workflows gesendet wird. Wenn du zusätzlich Recorder-Transkripte erhalten willst, schalte **Auch fertige Recorder-Transkripte senden** ein.
+5. Klicke auf **Sichern**. TypeWhisper sendet den Webhook nach jeder passenden Transkription.
