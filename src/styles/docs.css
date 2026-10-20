@@ -1109,6 +1109,14 @@
   overflow-wrap: anywhere;
 }
 
+.docs-table__meta {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
 .docs-table__method {
   color: var(--accent-text);
   font-family: var(--font-mono);

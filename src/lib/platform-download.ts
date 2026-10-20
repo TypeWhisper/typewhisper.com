@@ -26,6 +26,11 @@ export const windowsSetupUrl: string = downloads.windows.url;
 export const macGitHubUrl = "https://github.com/TypeWhisper/typewhisper-mac";
 export const windowsGitHubUrl =
   "https://github.com/TypeWhisper/typewhisper-win";
+
+/** Asset of the latest stable Windows release whose name stays the same across versions. */
+export function windowsLatestAssetUrl(name: string): string {
+  return `${windowsReleaseUrl}/latest/download/${name}`;
+}
 export const orgGitHubUrl = "https://github.com/TypeWhisper";
 export const discordUrl = "https://discord.gg/pUFR4a65SD";
 

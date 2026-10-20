@@ -9,6 +9,7 @@
   "business.features.title": "Built for teams that care about privacy and control.",
   "business.features.label": "For your team",
   "business.features.subtitle": "Everything you get as a team customer.",
+  "business.features.deployment": "Roll out on Windows with Group Policy, Intune, or the MSI",
   "business.feature.deviceManagement.title": "Device management",
   "business.feature.deviceManagement.description": "License up to {count} (Team) or {enterprise} (Enterprise) devices under one license, with larger rollouts on request.",
   "business.feature.adminProfiles.title": "App-aware profiles",

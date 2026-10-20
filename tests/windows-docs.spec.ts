@@ -9,6 +9,8 @@ const routes = [
   ["/api", "HTTP API", "HTTP API"],
   ["/cli", "CLI Tool", "CLI-Tool"],
   ["/troubleshooting", "Troubleshooting", "Fehlerbehebung"],
+  ["/deployment", "Deployment", "Bereitstellung"],
+  ["/managed-settings", "Managed Settings", "Verwaltete Einstellungen"],
 ] as const;
 
 const sidebarSlugs = [
@@ -20,6 +22,8 @@ const sidebarSlugs = [
   "/api",
   "/cli",
   "/troubleshooting",
+  "/deployment",
+  "/managed-settings",
 ];
 
 test.describe("Windows documentation", () => {
@@ -116,6 +120,85 @@ test.describe("Windows documentation", () => {
         name: "Open TypeWhisper in the Microsoft Store",
       }),
     ).toHaveAttribute("href", /^https:\/\/apps\.microsoft\.com\//);
+  });
+
+  test("deployment documents the installers, hosts, and microphone", async ({
+    page,
+  }) => {
+    await page.goto("/en/docs/windows/deployment/");
+
+    await expect(
+      page.getByRole("link", { name: "TypeWhisper-win-x64.msi", exact: true }),
+    ).toHaveAttribute(
+      "href",
+      "https://github.com/TypeWhisper/typewhisper-win/releases/latest/download/TypeWhisper-win-x64.msi",
+    );
+    await expect(
+      page.getByText("msiexec /i TypeWhisper-win-x64.msi /qn /norestart").first(),
+    ).toBeVisible();
+    await expect(
+      page.getByText("TypeWhisper-win-x64-Setup.exe --silent").first(),
+    ).toBeVisible();
+    await expect(
+      page.getByText("MSI:TypeWhisper", { exact: false }).first(),
+    ).toBeVisible();
+    await expect(page.locator("#network code", { hasText: /^\*\.hf\.co$/ }).first()).toBeVisible();
+    await expect(
+      page.locator("#microphone code", { hasText: "NonPackaged" }),
+    ).toHaveCount(1);
+  });
+
+  test("managed settings list every policy value once", async ({ page }) => {
+    const policyValues = [
+      "ManagedLicenseKey",
+      "TranscriptionProviderId",
+      "TranscriptionModelId",
+      "LlmProviderId",
+      "LlmModelId",
+      "UpdateMode",
+      "UpdateChannel",
+      "AllowedUpdateChannels",
+      "LaunchAtLogin",
+      "SkipOnboardingWhenReady",
+      "SuppressOptionalPrompts",
+      "AllowCloudTranscription",
+      "AllowCloudTextProcessing",
+      "AllowedTranscriptionProviders",
+      "AllowedLlmProviders",
+      "AllowedPlugins",
+      "AllowPluginDownloads",
+      "AllowModelDownloads",
+    ];
+
+    for (const locale of ["en", "de"] as const) {
+      await page.goto(`/${locale}/docs/windows/managed-settings/`);
+      const listed = await page
+        .locator("#reference .docs-table td:first-child code")
+        .allInnerTexts();
+      expect([...listed].sort()).toEqual([...policyValues].sort());
+      await expect(
+        page.getByRole("link", { name: "TypeWhisper-win-PolicyTemplates.zip" }),
+      ).toHaveAttribute(
+        "href",
+        "https://github.com/TypeWhisper/typewhisper-win/releases/latest/download/TypeWhisper-win-PolicyTemplates.zip",
+      );
+    }
+
+    // The German page uses the setting names of the de-DE ADML file.
+    await expect(
+      page.locator("#policy-names ~ .docs-table", {
+        hasText: "Cloud-Transkription erlauben",
+      }),
+    ).toHaveCount(1);
+  });
+
+  test("business page links to the Windows deployment guide", async ({
+    page,
+  }) => {
+    await page.goto("/en/business/");
+    await expect(
+      page.locator('a[href="/en/docs/windows/deployment/"]'),
+    ).toBeVisible();
   });
 
   test("API and CLI use port 8978 and public discovery paths", async ({
@@ -300,6 +383,8 @@ test.describe("Windows documentation", () => {
       "/en/docs/windows/",
       "/en/docs/windows/api/",
       "/de/docs/windows/workflows/",
+      "/en/docs/windows/deployment/",
+      "/de/docs/windows/managed-settings/",
     ]) {
       await page.goto(route);
       const sizes = await page.evaluate(() => ({

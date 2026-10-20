@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { Check, Copy } from "lucide-react";
 import { Screenshot } from "@/components/ui/screenshot";
 import { t, type Locale } from "@/i18n/index";
@@ -263,11 +263,25 @@ export function DocsTerms({
   );
 }
 
+/**
+ * Code text that may wrap after the backslashes of a path and, with `words`,
+ * between the words of an identifier such as `AllowedTranscriptionProviders`.
+ */
+export function breakable(value: string, words = false): ReactNode {
+  const pattern = words ? /(?<=\\)|(?<=[a-z])(?=[A-Z])/ : /(?<=\\)/;
+  return value.split(pattern).map((part, index) => (
+    <Fragment key={index}>
+      {index > 0 && <wbr />}
+      {part}
+    </Fragment>
+  ));
+}
+
 /** Sets text between backticks as inline code. */
 export function withCode(text: string): ReactNode {
   return text
     .split("`")
     .map((part, index) =>
-      index % 2 === 1 ? <code key={index}>{part}</code> : part,
+      index % 2 === 1 ? <code key={index}>{breakable(part)}</code> : part,
     );
 }

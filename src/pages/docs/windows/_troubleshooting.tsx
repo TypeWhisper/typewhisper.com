@@ -214,6 +214,28 @@ export default function DocsWindowsTroubleshooting({
       </DocsSection>
 
       <DocsSection
+        id="managed-settings"
+        title={
+          isDe
+            ? "Einstellung ist von der Organisation gesperrt"
+            : "A setting is locked by your organization"
+        }
+      >
+        <p>
+          {isDe
+            ? "Deine IT hat die Einstellung über eine Richtlinie festgelegt. Einstellungen > Erweitert > Verwaltete Einstellungen zeigt die auf diesem Gerät wirksamen Werte und mögliche Probleme in der Richtlinie. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
+            : "Your IT department set it through a policy. Settings > Advanced > Managed settings shows the values in effect on this device and any policy problems. Only your IT department can change the value; TypeWhisper cannot override it."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/windows/managed-settings")}
+          className="site-link"
+        >
+          {isDe ? "Verwaltete Einstellungen für Administratoren" : "Managed settings for administrators"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
+      </DocsSection>
+
+      <DocsSection
         id="diagnostics"
         title={isDe ? "Diagnose exportieren" : "Export diagnostics"}
       >
