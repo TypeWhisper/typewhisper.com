@@ -224,7 +224,7 @@ export default function DocsWindowsTroubleshooting({
         <p>
           {isDe
             ? "Deine IT hat die Einstellung über eine Richtlinie festgelegt. Einstellungen > Erweitert > Verwaltete Einstellungen zeigt die auf diesem Gerät wirksamen Werte und mögliche Probleme in der Richtlinie. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
-            : "Your IT department set it through a policy. Settings > Advanced > Managed settings shows the values in effect on this device and any policy problems. Only your IT department can change the value; TypeWhisper cannot override it."}
+            : "Your IT department set it through a policy. Settings > Advanced > Managed settings shows the values in effect on this device and any policy problems. Only your IT department can change the value; you can't change it in TypeWhisper."}
         </p>
         <a
           href={localePath(locale, "/docs/windows/managed-settings")}
