@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const perks = ["badge", "discord", "thanks"].map((key) => t(locale, `supporter.perk.${key}`));
+const perks = ["badge", "discord"].map((key) => t(locale, `supporter.perk.${key}`));
 ---
 
 <section id="supporter" class="site-section site-section--band commercial-anchor">
