@@ -59,14 +59,14 @@ In the [TypeWhisper benchmark](https://typewhisper.github.io/typewhisper-benchma
 
 | Engine | Word error rate |
 | --- | --- |
-| GigaAM v3 (this add-on, with punctuation) | 4.3% |
+| GigaAM v3 with punctuation (sherpa-onnx export) | 4.3% |
 | OpenAI gpt-4o-transcribe (cloud) | 4.8% |
 | Whisper large-v3 | 5.2% |
 | Whisper large-v3 turbo | 5.9% |
 | Qwen3-ASR 1.7B | 8.9% |
 | Parakeet TDT 0.6B v3 | 10.1% |
 
-The recordings come from FLEURS, Russian LibriSpeech and Common Voice. The [benchmark repository](https://github.com/TypeWhisper/typewhisper-benchmark) describes the test sets and the method.
+The benchmark ran GigaAM through the sherpa-onnx export of the model. The model files of this add-on, run the way the add-on runs them, reached 4.0% on the same 300 recordings. The recordings come from FLEURS, Russian LibriSpeech and Common Voice. The [benchmark repository](https://github.com/TypeWhisper/typewhisper-benchmark) describes the test sets and the method.
 
 ## Local processing and privacy
 
