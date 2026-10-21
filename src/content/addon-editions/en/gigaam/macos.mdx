@@ -1,0 +1,28 @@
+---
+familySlug: "gigaam"
+platform: "mac"
+version: "1.0.0"
+description: "GigaAM v3 locally through ONNX Runtime on Apple silicon, for Russian dictation with punctuation."
+id: "com.typewhisper.gigaam"
+minAppVersion: "1.8.0"
+minOsVersion: "14.0"
+requirements:
+  - "TypeWhisper 1.8.0 or newer"
+  - "macOS 14.0 or newer on Apple silicon"
+  - "The direct download of TypeWhisper; the Mac App Store edition does not include this add-on"
+highlights:
+  - "Local speech-to-text processing"
+  - "Processing without uploading audio or text"
+  - "Punctuation and capital letters from the model"
+  - "Russian only"
+  - "Model download of about 230 MB"
+configuration:
+  - "Optionally store a Hugging Face token for more reliable model downloads"
+  - "Download, load and unload the model"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GigaAMPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gigaam-v1.0.0"
+processing: "local"
+screenshots:
+  - src: "/screenshots/plugins/gigaam.png"
+    alt: "GigaAM settings in TypeWhisper for macOS: a field for the optional Hugging Face token and the model GigaAM v3 with a Download & Load button"
+---

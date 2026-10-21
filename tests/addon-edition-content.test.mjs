@@ -110,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 36);
+  assert.equal(deFamilies.length, 37);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -177,8 +177,8 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
   const germanScreenshotIds = new Set(screenshotManifest.windowsLocalized.de);
 
-  assert.equal(windowsAddons.length, 39);
-  assert.equal(windowsScreenshotIds.size, 39);
+  assert.equal(windowsAddons.length, 40);
+  assert.equal(windowsScreenshotIds.size, 40);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
@@ -187,7 +187,7 @@ test("Windows screenshots cover every documented add-on that has a settings dial
     [],
   );
   // These add-ons are not in the Windows catalog and have no German capture.
-  assert.equal(germanScreenshotIds.size, 35);
+  assert.equal(germanScreenshotIds.size, 36);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !germanScreenshotIds.has(id))

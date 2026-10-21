@@ -2,7 +2,6 @@
 slug: "gigaam"
 name: "GigaAM"
 author: "TypeWhisper"
-version: "1.0.0"
 icon: "AudioWaveform"
 iconUrl: "/brand-logos/sber/logo.svg"
 description: "Lokale russische Spracherkennung mit GigaAM v3 von Sber, mit Satzzeichen und Großschreibung."
@@ -10,14 +9,13 @@ categories:
   - transcription
 platforms:
   - mac
+  - windows
 source: "official"
 id: "com.typewhisper.gigaam"
-minAppVersion: "1.8.0"
-minOsVersion: "14.0"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GigaAMPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gigaam-v1.0.0"
-principalClass: "GigaAMPlugin"
-screenshotAlt: "Einstellungen von GigaAM in TypeWhisper für macOS: ein Feld für das optionale Hugging-Face-Token und das Modell GigaAM v3 mit der Schaltfläche „Laden & Aktivieren“"
+sourceUrls:
+  mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GigaAMPlugin"
+  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/plugin-gigaam-v1.0.0/plugins/TypeWhisper.Plugin.GigaAm"
 ---
 
 ## Über
@@ -30,7 +28,7 @@ GigaAM erkennt nur Russisch. Für andere Sprachen wähle eine andere Engine.
 
 ## Voraussetzungen
 
-Diese Version benötigt **TypeWhisper 1.8.0 oder neuer** unter macOS 14 oder neuer und einen Mac mit **Apple Silicon**.
+Diese Version benötigt **TypeWhisper 1.8.0 oder neuer** unter macOS 14 oder neuer und einen Mac mit **Apple Silicon**. Es gibt das Add-on für die direkt heruntergeladene TypeWhisper-Version; die Mac-App-Store-Edition enthält es nicht.
 
 Das Modell ist ein Download von etwa 230 MB. Das Add-on gibt dafür 2 GB Arbeitsspeicher oder mehr an. Du brauchst keinen API-Schlüssel und kein Konto.
 

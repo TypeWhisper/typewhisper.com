@@ -1,0 +1,85 @@
+---
+familySlug: "gigaam"
+platform: "windows"
+version: "1.0.0"
+description: "GigaAM v3 lokal über ONNX Runtime auf der CPU, für russisches Diktat mit Satzzeichen."
+id: "com.typewhisper.gigaam"
+minAppVersion: "1.1.0"
+requirements:
+  - "TypeWhisper 1.1.0 oder neuer für Windows"
+  - "Windows 10 Build 19041 oder neuer, x64"
+highlights:
+  - "Lokale Sprach-zu-Text-Verarbeitung"
+  - "Verarbeitung ohne Upload von Audio oder Text"
+  - "Satzzeichen und Großschreibung vom Modell"
+  - "Nur Russisch"
+  - "Modelldownload von etwa 216 MB, geprüft gegen feste SHA-256-Werte"
+configuration:
+  - "Modell herunterladen und für das Diktat verwenden"
+  - "Heruntergeladene Modelldateien entfernen"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/plugin-gigaam-v1.0.0/plugins/TypeWhisper.Plugin.GigaAm"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gigaam-v1.0.0"
+processing: "local"
+screenshots:
+  - src: "/screenshots/windows/plugins/com.typewhisper.gigaam.de.png"
+    alt: "Einstellungen von GigaAM in TypeWhisper für Windows: das Modell GigaAM v3 (Russian, with punctuation) mit etwa 216 MB und der Schaltfläche „Modell verwenden“"
+    localized: false
+---
+
+## Über
+
+GigaAM führt GigaAM v3, das russische Spracherkennungsmodell von Sber, auf deinem PC aus. Das Add-on nutzt die End-to-End-Version des Modells, die Satzzeichen und Großbuchstaben selbst setzt. Es verwendet dieselben Modelldateien wie das macOS-Add-on, daher schreiben beide denselben Text.
+
+Das ist eine lokale Engine. Dein Audio wird auf deinem PC transkribiert. Das Netzwerk nutzt das Add-on nur, um das Modell herunterzuladen.
+
+GigaAM erkennt nur Russisch. Für andere Sprachen wählst du eine andere Engine.
+
+## Voraussetzungen
+
+Diese Version benötigt **TypeWhisper 1.1.0 oder neuer** unter Windows 10 Build 19041 oder neuer, x64. Das Modell ist ein Download von etwa 216 MB und läuft auf der CPU. Du brauchst keinen API-Schlüssel und kein Konto. Das Add-on bringt seine eigene ONNX Runtime und die nötigen Visual-C++-Laufzeitdateien mit.
+
+## Einrichtung
+
+1. Öffne **Einstellungen > Plugins entdecken**, wähle **GigaAM** und installiere es.
+2. Öffne **GigaAM** in der Seitenleiste der Einstellungen und wähle **Modell herunterladen** neben **GigaAM v3 (Russian, with punctuation)**.
+3. Wähle **Modell verwenden**, damit GigaAM dein Diktat transkribiert.
+4. Stelle die gesprochene Sprache auf **Russisch** oder lass sie auf automatisch.
+
+## Einstellungen
+
+| Einstellung | Was sie steuert |
+| --- | --- |
+| **Modell herunterladen** | Lädt die vier Modelldateien herunter und prüft jede gegen ihren festen SHA-256-Wert, bevor sie verwendet wird. |
+| **Modell verwenden** | Lädt GigaAM und wählt es für das Diktat aus. |
+| **Entfernen** | Löscht die heruntergeladenen Modelldateien. Das verwendete Modell lässt sich nicht entfernen; wähle vorher ein anderes. |
+
+## Transkription
+
+Der eingefügte Text stammt aus der fertigen Aufnahme. Wenn der Live-Text eingeschaltet ist, zeigt TypeWhisper beim Sprechen eine Vorschau. Eine Aufnahme über 20 Sekunden wird an einer nahen Pause in Abschnitte geteilt und Abschnitt für Abschnitt transkribiert. Beginnt ein Abschnitt mitten im Satz, bleibt sein erstes Wort kleingeschrieben.
+
+Das Modell schreibt Satzzeichen, Großbuchstaben und Zahlen als Ziffern. Jede Aufnahme wird als Russisch transkribiert, auch wenn das Diktat auf eine andere Sprache eingestellt ist. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht an das Modell übergeben.
+
+Ab TypeWhisper 1.3 führt die App GigaAM in ihrem separaten Transkriptionsprozess aus. Ein Fehler in der nativen Laufzeit kann TypeWhisper dann nicht beenden.
+
+## Genauigkeit
+
+Im [TypeWhisper-Benchmark](https://typewhisper.github.io/typewhisper-benchmark/) mit 300 russischen Aufnahmen machte GigaAM v3 weniger Fehler als die anderen Engines, die TypeWhisper für Russisch anbietet:
+
+| Engine | Wortfehlerrate |
+| --- | --- |
+| GigaAM v3 mit Satzzeichen (sherpa-onnx-Export) | 4,3 % |
+| OpenAI gpt-4o-transcribe (Cloud) | 4,8 % |
+| Whisper large-v3 | 5,2 % |
+| Whisper large-v3 turbo | 5,9 % |
+| Qwen3-ASR 1.7B | 8,9 % |
+| Parakeet TDT 0.6B v3 | 10,1 % |
+
+Der Benchmark lief mit dem sherpa-onnx-Export des Modells. Auf denselben 300 Aufnahmen schrieb das Windows-Add-on dieselben Wörter wie die Referenzimplementierung onnx-asr mit derselben Merkmalsextraktion. Die Aufnahmen stammen aus FLEURS, Russian LibriSpeech und Common Voice. Das [Benchmark-Repository](https://github.com/TypeWhisper/typewhisper-benchmark) beschreibt die Testdaten und die Methode.
+
+## Lokale Verarbeitung und Datenschutz
+
+Die Erkennung läuft auf deinem PC. Das Add-on sendet kein Audio und keinen Text an einen Cloud-Dienst.
+
+Die Modelldateien stammen aus dem Hugging-Face-Repository `istupakov/gigaam-v3-onnx`: die int8-Versionen von Encoder, Decoder und Joint-Netz sowie das Vokabular, festgelegt auf einen Stand und auf den SHA-256-Wert jeder Datei. TypeWhisper speichert sie unter `%LOCALAPPDATA%\TypeWhisper-WinUI\PluginData\com.typewhisper.gigaam\Models`.
+
+GigaAM v3 wird von Sber unter der MIT-Lizenz veröffentlicht. Die ONNX-Versionen des Modells und die mitgelieferte Merkmalsextraktion stammen aus dem Projekt onnx-asr von Ilya Stupakov, ebenfalls unter der MIT-Lizenz. Das Add-on bringt ONNX Runtime (MIT) mit; die Lizenzen liegen dem Add-on bei.
