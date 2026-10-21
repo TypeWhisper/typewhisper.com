@@ -51,6 +51,10 @@
     "mac": ["transcription", "llm"],
     "windows": ["transcription", "llm"]
   },
+  "gigaam": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
+  },
   "gladia": {
     "mac": ["transcription"],
     "windows": ["transcription"]
