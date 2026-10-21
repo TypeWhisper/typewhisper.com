@@ -8,7 +8,7 @@ import { BarMark, PageHead, SectionHead, WaveRule } from "@/components/site";
 import { Screenshot } from "@/components/ui/screenshot";
 import { t, localePath, screenshotPath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { salesEmail } from "@/lib/pricing";
+import { contactEmail } from "@/lib/pricing";
 
 interface Props {
   locale: Locale;
@@ -20,7 +20,7 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const key = (name: string) => t(locale, `openSourceAccessibility.${name}`);
-const contactHref = `mailto:${salesEmail}?subject=${encodeURIComponent("TypeWhisper Open Source & Accessibility Initiative")}`;
+const contactHref = `mailto:${contactEmail}?subject=${encodeURIComponent("TypeWhisper Open Source & Accessibility Initiative")}`;
 const onePagerHref =
   locale === "de"
     ? "/downloads/typewhisper-open-source-accessibility-one-pager-de.pdf"

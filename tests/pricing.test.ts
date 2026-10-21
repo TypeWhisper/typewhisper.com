@@ -4,12 +4,14 @@ import test from "node:test";
 import {
   commercialOffer,
   commercialTiers,
+  contactEmail,
   salesEmail,
   yearlyPaidMonths,
 } from "../src/lib/pricing.ts";
 
-test("public commercial contact uses the shared hello address", () => {
-  assert.equal(salesEmail, "hello@typewhisper.com");
+test("license questions go to licensing@, everything else to hello@", () => {
+  assert.equal(salesEmail, "licensing@typewhisper.com");
+  assert.equal(contactEmail, "hello@typewhisper.com");
 });
 
 test("commercial plans expose the current device limits", () => {
@@ -37,13 +39,25 @@ test("Enterprise is sold as a subscription only", () => {
   });
 });
 
-test("a year of the yearly subscription costs ten monthly prices", () => {
+test("a year of Enterprise costs ten monthly prices", () => {
+  const enterprise = commercialTiers.find((tier) => tier.id === "enterprise");
+  assert.ok(enterprise);
+  assert.equal(enterprise.price.yearly, enterprise.price.monthly * yearlyPaidMonths);
+});
+
+test("only Enterprise has a yearly plan", () => {
+  for (const tier of commercialTiers.filter((entry) => entry.id !== "enterprise")) {
+    assert.equal(tier.price.yearly, undefined, `${tier.id} has a yearly price`);
+    assert.equal(tier.checkout.yearly, undefined, `${tier.id} has a yearly checkout`);
+  }
+});
+
+test("the monthly view offers the monthly subscription of every tier", () => {
   for (const tier of commercialTiers) {
-    assert.equal(tier.price.yearly, tier.price.monthly * yearlyPaidMonths);
-    assert.deepEqual(commercialOffer(tier, "yearly"), {
-      period: "yearly",
-      amount: tier.price.yearly,
-      checkout: tier.checkout.yearly,
+    assert.deepEqual(commercialOffer(tier, "monthly"), {
+      period: "monthly",
+      amount: tier.price.monthly,
+      checkout: tier.checkout.monthly,
     });
   }
 });

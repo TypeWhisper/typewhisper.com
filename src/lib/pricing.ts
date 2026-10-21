@@ -5,20 +5,25 @@
 export type CommercialTierId = "individual" | "team" | "enterprise";
 export type SupporterTierId = "bronze" | "silver" | "gold";
 export type BillingPeriod = "monthly" | "yearly" | "lifetime";
+/** The periods of the pricing switch. A yearly plan shows in place of Lifetime. */
+export type BillingChoice = "monthly" | "lifetime";
 
 export interface CommercialTier {
   id: CommercialTierId;
   name: string;
   devices: number;
-  /** Every tier has both subscriptions; tiers without `lifetime` are sold as a subscription only. */
+  /**
+   * Every tier has a monthly subscription. Individual and Team add Lifetime;
+   * Enterprise has no Lifetime and adds a yearly subscription instead.
+   */
   price: {
     monthly: number;
-    yearly: number;
+    yearly?: number;
     lifetime?: number;
   };
   checkout: {
     monthly: string;
-    yearly: string;
+    yearly?: string;
     lifetime?: string;
   };
 }
@@ -37,9 +42,12 @@ export const currencySymbol = "\u20AC";
 
 export const polarOrganizationUrl = "https://polar.sh/typewhisper";
 export const polarCustomerPortalUrl = "https://polar.sh/typewhisper/portal";
-export const salesEmail = "hello@typewhisper.com";
+/** Licenses, billing, refunds, discounts, and sales. */
+export const salesEmail = "licensing@typewhisper.com";
+/** General support and every other question. */
+export const contactEmail = "hello@typewhisper.com";
 
-/** A year of the yearly subscription costs this many monthly prices. */
+/** A year of the Enterprise subscription costs this many monthly prices. */
 export const yearlyPaidMonths = 10;
 
 export const commercialTiers: CommercialTier[] = [
@@ -47,12 +55,10 @@ export const commercialTiers: CommercialTier[] = [
     id: "individual",
     name: "Individual",
     devices: 3,
-    price: { monthly: 5, yearly: 50, lifetime: 99 },
+    price: { monthly: 5, lifetime: 99 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_Yfw7BSIXSNFESlrNPL0fNG8GHPqX9qhmxGce32wZfYJ",
-      yearly:
-        "https://buy.polar.sh/polar_cl_lnRsYNgI93u4CRXftmZU8JPn5EIGnbcbzGqLi3VBfzK",
       lifetime:
         "https://buy.polar.sh/polar_cl_Uiv5AnvLoQjx4JowO3gGciT7MLOovY4oY4ESz3PIxgI",
     },
@@ -61,20 +67,19 @@ export const commercialTiers: CommercialTier[] = [
     id: "team",
     name: "Team",
     devices: 10,
-    price: { monthly: 19, yearly: 190, lifetime: 299 },
+    price: { monthly: 19, lifetime: 299 },
     checkout: {
       monthly:
         "https://buy.polar.sh/polar_cl_kSqGfvss0Ces3W7R4xw7hr5NdgvEbPbhhUGRH4ad3Hj",
-      yearly:
-        "https://buy.polar.sh/polar_cl_1MgHf8OcRjqEoxOvw3sorOKSPfAi6OIHVj3aN0nXytG",
       lifetime:
         "https://buy.polar.sh/polar_cl_GjG4jf1fT9HGQn051cgN6xsWH9Xm6Z7oe0Ke71xq6Po",
     },
   },
   {
-    // Subscription only, because it includes ongoing support. Larger rollouts
-    // go through sales. Enterprise Lifetime licenses sold earlier stay valid
-    // with their own device allowance; the product is archived.
+    // Subscription only, monthly or yearly, because it includes ongoing
+    // support. Larger rollouts go through sales. Enterprise Lifetime licenses
+    // sold earlier stay valid with their own device allowance; the product is
+    // archived.
     id: "enterprise",
     name: "Enterprise",
     devices: 50,
@@ -127,28 +132,26 @@ export interface CommercialOffer {
 }
 
 /**
- * Price and checkout of a tier for the chosen billing period. A tier without
- * a lifetime option offers its yearly subscription instead.
+ * Price and checkout of a tier for the chosen period of the pricing switch.
+ * A tier without Lifetime (Enterprise) offers its yearly subscription there.
  */
 export function commercialOffer(
   tier: CommercialTier,
-  period: BillingPeriod,
+  choice: BillingChoice,
 ): CommercialOffer {
-  if (period === "lifetime") {
-    const amount = tier.price.lifetime;
-    const checkout = tier.checkout.lifetime;
+  if (choice === "monthly") {
+    return {
+      period: "monthly",
+      amount: tier.price.monthly,
+      checkout: tier.checkout.monthly,
+    };
+  }
+  for (const period of ["lifetime", "yearly"] as const) {
+    const amount = tier.price[period];
+    const checkout = tier.checkout[period];
     if (amount !== undefined && checkout !== undefined) {
       return { period, amount, checkout };
     }
-    return {
-      period: "yearly",
-      amount: tier.price.yearly,
-      checkout: tier.checkout.yearly,
-    };
   }
-  return {
-    period,
-    amount: tier.price[period],
-    checkout: tier.checkout[period],
-  };
+  throw new Error(`${tier.id} has neither a Lifetime nor a yearly plan`);
 }

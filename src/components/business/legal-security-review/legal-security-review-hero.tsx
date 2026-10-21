@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowLeft } from "lucide-react";
 import { PageHead } from "@/components/site";
 import type { LegalSecurityReviewContent } from "@/data/legal-security-review";
-import { salesEmail } from "@/lib/pricing";
+import { contactEmail } from "@/lib/pricing";
 import { localePath, t, type Locale } from "@/i18n/index";
 
 interface LegalSecurityReviewHeroProps {
@@ -30,7 +30,7 @@ export function LegalSecurityReviewHero({
         compact
         className="commercial-back__head"
       >
-        <a href={`mailto:${salesEmail}`} className="site-button">
+        <a href={`mailto:${contactEmail}`} className="site-button">
           {t(locale, "business.legalSecurityReview.hero.ctaPrimary")}
         </a>
         <a href="#checklist" className="site-link commercial-down">

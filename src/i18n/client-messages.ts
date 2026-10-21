@@ -34,10 +34,8 @@ function routePrefixes(route: string): string[] {
       "pricing.tiers",
       "pricing.billingPeriod",
       "pricing.commercial.monthlyHeading",
-      "pricing.commercial.yearlyHeading",
       "pricing.commercial.lifetimeHeading",
       "pricing.commercial.monthlyNote",
-      "pricing.commercial.yearlyNote",
       "pricing.commercial.lifetimeNote",
       "pricing.decision.action.personal",
     ];

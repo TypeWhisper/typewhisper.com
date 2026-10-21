@@ -5,6 +5,7 @@ import {
   commercialOffer,
   commercialTiers,
   salesEmail,
+  type BillingChoice,
   type BillingPeriod,
   type CommercialTier,
   type CommercialTierId,
@@ -12,7 +13,9 @@ import {
 import { devicesLabel, fill } from "./format";
 import { Price } from "./price";
 
-const periods: BillingPeriod[] = ["monthly", "yearly", "lifetime"];
+// Individual and Team are sold monthly or as Lifetime. Enterprise has no
+// Lifetime; the Lifetime view shows its yearly subscription instead.
+const periods: BillingChoice[] = ["monthly", "lifetime"];
 
 const suffixKeys: Record<BillingPeriod, string> = {
   monthly: "pricing.tiers.perMonth",
@@ -29,7 +32,7 @@ const extras: Record<CommercialTierId, string[]> = {
 
 /** Billing switch and the three commercial tiers; prices and links follow the period. */
 export function Plans({ locale }: { locale: Locale }) {
-  const [period, setPeriod] = useState<BillingPeriod>("monthly");
+  const [period, setPeriod] = useState<BillingChoice>("monthly");
 
   return (
     <div className="commercial-plans">
@@ -71,10 +74,10 @@ function Tier({
   locale,
 }: {
   tier: CommercialTier;
-  period: BillingPeriod;
+  period: BillingChoice;
   locale: Locale;
 }) {
-  // Enterprise has no lifetime option; it shows its yearly subscription there.
+  // Enterprise has no Lifetime; it shows its yearly subscription there.
   const offer = commercialOffer(tier, period);
   const suffix = t(locale, suffixKeys[offer.period]);
   const tagline =
@@ -82,7 +85,7 @@ function Tier({
       ? fill(t(locale, `pricing.tiers.${tier.id}.tagline`), {
           count: tier.devices,
         })
-      : t(locale, "pricing.tiers.subscriptionOnly");
+      : t(locale, "pricing.tiers.yearlyInsteadOfLifetime");
 
   return (
     <li>
