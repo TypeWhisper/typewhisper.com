@@ -1,0 +1,76 @@
+---
+slug: "gigaam"
+name: "GigaAM"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "AudioWaveform"
+description: "Lokale russische Spracherkennung mit GigaAM v3 von Sber, mit Satzzeichen und Großschreibung."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.gigaam"
+minAppVersion: "1.8.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GigaAMPlugin"
+principalClass: "GigaAMPlugin"
+screenshotAlt: "Einstellungen von GigaAM in TypeWhisper für macOS: ein Feld für das optionale Hugging-Face-Token und das Modell GigaAM v3 mit der Schaltfläche „Laden & Aktivieren“"
+---
+
+## Über
+
+GigaAM führt GigaAM v3, das russische Spracherkennungsmodell von Sber, auf deinem Mac aus. Das Add-on nutzt die End-to-End-Version des Modells, die Satzzeichen und Großbuchstaben selbst setzt.
+
+Das ist eine lokale Engine. Deine Audioaufnahme wird auf deinem Mac transkribiert. Das Add-on nutzt das Netzwerk, um das Modell herunterzuladen.
+
+GigaAM erkennt nur Russisch. Für andere Sprachen wähle eine andere Engine.
+
+## Voraussetzungen
+
+Diese Version benötigt **TypeWhisper 1.8.0 oder neuer** unter macOS 14 oder neuer und einen Mac mit **Apple Silicon**.
+
+Das Modell ist ein Download von etwa 230 MB. Das Add-on gibt dafür 2 GB Arbeitsspeicher oder mehr an. Du brauchst keinen API-Schlüssel und kein Konto.
+
+## Einrichtung
+
+1. Installiere und aktiviere **GigaAM** unter **Einstellungen > Integrationen > Entdecken**.
+2. Öffne die Einstellungen des Add-ons und wähle **Laden & Aktivieren** neben **GigaAM v3 (Russian, with punctuation)**.
+3. Wähle in den Diktateinstellungen **GigaAM (Russisch)** als Transkriptions-Engine.
+4. Stelle die Sprache des Diktats auf **Russisch** oder lass sie auf automatischer Erkennung.
+
+## Einstellungen
+
+| Einstellung | Was sie steuert |
+| --- | --- |
+| **HuggingFace Token** | Optional. Ein Token erhöht die Download-Rate-Limits von Hugging Face. **Speichern** prüft das Token bei Hugging Face und legt ein gültiges im macOS-Schlüsselbund ab. **Entfernen** löscht das gespeicherte Token. |
+| **Modell** | Zeigt GigaAM v3 mit Größe und Speicherbedarf. **Laden & Aktivieren** lädt das Modell herunter und lädt es. **Deaktivieren** gibt das Modell im Arbeitsspeicher frei und löscht die heruntergeladenen Dateien. |
+
+## Transkription
+
+Das Add-on transkribiert die fertige Aufnahme. Es zeigt keinen Teiltext, während du sprichst. Eine Aufnahme über 20 Sekunden teilt es an einer nahen Pause in Abschnitte und transkribiert sie nacheinander.
+
+Das Modell setzt Satzzeichen und Großbuchstaben und schreibt Zahlen als Ziffern. Jede Aufnahme wird als Russisch transkribiert, auch wenn das Diktat auf eine andere Sprache eingestellt ist. Übersetzen wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht an das Modell übergeben.
+
+## Genauigkeit
+
+Im [TypeWhisper-Benchmark](https://typewhisper.github.io/typewhisper-benchmark/) mit 300 russischen Aufnahmen machte GigaAM v3 weniger Fehler als die anderen Engines, die TypeWhisper für Russisch anbietet:
+
+| Engine | Wortfehlerrate |
+| --- | --- |
+| GigaAM v3 (dieses Add-on, mit Satzzeichen) | 4,3 % |
+| OpenAI gpt-4o-transcribe (Cloud) | 4,8 % |
+| Whisper large-v3 | 5,2 % |
+| Whisper large-v3 turbo | 5,9 % |
+| Qwen3-ASR 1.7B | 8,9 % |
+| Parakeet TDT 0.6B v3 | 10,1 % |
+
+Die Aufnahmen stammen aus FLEURS, Russian LibriSpeech und Common Voice. Das [Benchmark-Repository](https://github.com/TypeWhisper/typewhisper-benchmark) beschreibt die Testsätze und die Methode.
+
+## Lokale Verarbeitung und Datenschutz
+
+Die Erkennung läuft auf deinem Mac. Das Add-on sendet weder Audio noch Text an einen Cloud-Dienst.
+
+Die Modelldateien stammen aus dem Hugging-Face-Repository `istupakov/gigaam-v3-onnx`: die int8-Versionen von Encoder, Decoder und Joint-Netz sowie das Vokabular. TypeWhisper speichert sie unter `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.gigaam/models`. Außerdem kontaktiert das Add-on Hugging Face, wenn es ein Token prüft.
+
+GigaAM v3 veröffentlicht Sber unter der MIT-Lizenz. Die ONNX-Versionen des Modells und die mitgelieferte Merkmalsextraktion stammen aus dem Projekt onnx-asr von Ilya Stupakov, ebenfalls unter der MIT-Lizenz.

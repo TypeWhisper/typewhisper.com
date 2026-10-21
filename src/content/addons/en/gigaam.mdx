@@ -1,0 +1,76 @@
+---
+slug: "gigaam"
+name: "GigaAM"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "AudioWaveform"
+description: "Local Russian speech recognition with GigaAM v3 by Sber, including punctuation and capitalization."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.gigaam"
+minAppVersion: "1.8.0"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GigaAMPlugin"
+principalClass: "GigaAMPlugin"
+screenshotAlt: "GigaAM settings in TypeWhisper for macOS: a field for the optional Hugging Face token and the model GigaAM v3 with a Download & Load button"
+---
+
+## About
+
+GigaAM runs GigaAM v3, the Russian speech recognition model by Sber, on your Mac. The add-on uses the end-to-end version of the model, which writes punctuation and capital letters itself.
+
+This is a local engine. Your audio is transcribed on your Mac. The add-on uses the network to download the model.
+
+GigaAM recognizes only Russian. For other languages, choose another engine.
+
+## Requirements
+
+This release requires **TypeWhisper 1.8.0 or newer** on macOS 14 or later and a Mac with **Apple silicon**.
+
+The model is a download of about 230 MB. The add-on states 2 GB of memory or more for it. You need no API key and no account.
+
+## Setup
+
+1. Install and enable **GigaAM** in **Settings > Integrations > Discover**.
+2. Open the add-on settings and select **Download & Load** beside **GigaAM v3 (Russian, with punctuation)**.
+3. Select **GigaAM (Russian)** as your transcription engine in the dictation settings.
+4. Set the language of the dictation to **Russian** or leave it on automatic detection.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **HuggingFace Token** | Optional. A token raises the download rate limits of Hugging Face. **Save** checks the token with Hugging Face and stores a valid one in the macOS Keychain. **Remove** deletes the stored token. |
+| **Model** | Shows GigaAM v3 with its size and memory requirement. **Download & Load** downloads the model and loads it. **Unload** releases the model from memory and deletes the downloaded files. |
+
+## Transcription
+
+The add-on transcribes the finished recording. It does not stream partial text while you speak. It splits a recording longer than 20 seconds into sections at a pause nearby and transcribes them one after the other.
+
+The model writes punctuation, capital letters and numbers as digits. Every recording is transcribed as Russian, also when the dictation is set to another language. Translation is not supported, and TypeWhisper dictionary terms are not passed to the model.
+
+## Accuracy
+
+In the [TypeWhisper benchmark](https://typewhisper.github.io/typewhisper-benchmark/) on 300 Russian recordings, GigaAM v3 made fewer errors than the other engines TypeWhisper offers for Russian:
+
+| Engine | Word error rate |
+| --- | --- |
+| GigaAM v3 (this add-on, with punctuation) | 4.3% |
+| OpenAI gpt-4o-transcribe (cloud) | 4.8% |
+| Whisper large-v3 | 5.2% |
+| Whisper large-v3 turbo | 5.9% |
+| Qwen3-ASR 1.7B | 8.9% |
+| Parakeet TDT 0.6B v3 | 10.1% |
+
+The recordings come from FLEURS, Russian LibriSpeech and Common Voice. The [benchmark repository](https://github.com/TypeWhisper/typewhisper-benchmark) describes the test sets and the method.
+
+## Local processing and privacy
+
+Recognition runs on your Mac. The add-on sends no audio and no text to a cloud service.
+
+The model files come from the Hugging Face repository `istupakov/gigaam-v3-onnx`: the int8 versions of the encoder, decoder and joint network and the vocabulary. TypeWhisper stores them in `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.gigaam/models`. The add-on also contacts Hugging Face when it checks a token.
+
+GigaAM v3 is published by Sber under the MIT license. The ONNX versions of the model and the feature extractor that ships with the add-on come from the onnx-asr project by Ilya Stupakov, also under the MIT license.
