@@ -10,6 +10,7 @@ import {
   getIosAppStoreUrl,
   iosVersion,
 } from "@/lib/platform-download";
+import { contactEmail, salesEmail } from "@/lib/pricing";
 
 interface Props {
   locale: Locale;
@@ -67,7 +68,7 @@ const platforms: { id: string; links: SupportLink[] }[] = [
     links: [
       {
         label: t(locale, "support.ios.contact"),
-        href: "mailto:hello@typewhisper.com",
+        href: `mailto:${contactEmail}`,
       },
       {
         label: t(locale, "support.ios.appStore"),
@@ -96,6 +97,12 @@ const community: SupportLink[] = [
     href: "https://github.com/TypeWhisper",
     external: true,
   },
+];
+
+// General support and license questions go to different addresses.
+const emails = [
+  { address: contactEmail, text: t(locale, "support.email.general") },
+  { address: salesEmail, text: t(locale, "support.email.licensing") },
 ];
 ---
 
@@ -176,6 +183,29 @@ const community: SupportLink[] = [
               <li>
                 <a href={link.href} class="utility-rows__link" target="_blank" rel="noopener noreferrer">
                   <span class="utility-rows__name">{link.label}</span>
+                  <ArrowUpRight className="size-5" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section site-section--rule" data-testid="support-email">
+      <div class="site-wrap">
+        <WaveRule label={t(locale, "support.email.label")} seed={17} />
+        <div class="site-split">
+          <div class="site-split__head">
+            <h2 class="site-title site-title--start">{t(locale, "support.email.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "support.email.description")}</p>
+          </div>
+          <ul class="utility-rows">
+            {emails.map((email) => (
+              <li>
+                <a href={`mailto:${email.address}`} class="utility-rows__link">
+                  <span class="utility-rows__name">{email.address}</span>
+                  <span class="utility-rows__text">{email.text}</span>
                   <ArrowUpRight className="size-5" aria-hidden="true" />
                 </a>
               </li>

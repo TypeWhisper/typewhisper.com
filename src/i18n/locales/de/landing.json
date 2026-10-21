@@ -188,7 +188,7 @@
   "pricingTeaser.supporter.priceFrom": "ab",
   "pricingTeaser.supporter.priceSuffix": "einmalig",
   "pricingTeaser.supporter.description": "Du liebst die App? Ein einmaliger Beitrag unterstützt die offene Entwicklung.",
-  "pricingTeaser.honor": "Kommerzielle Lizenzen bleiben einfach: monatlich, jährlich oder Lifetime, für Einzelpersonen und Teams.",
+  "pricingTeaser.honor": "Kommerzielle Lizenzen bleiben einfach: monatlich oder Lifetime, für Einzelpersonen und Teams.",
   "pricingTeaser.cta": "Premium-Preise ansehen",
   "spoken.email.context": "E-Mail",
   "spoken.chat.context": "Chat",
@@ -269,5 +269,5 @@
   "faq.label": "Fragen",
   "downloadCta.editions": "Alle Editionen",
   "downloadCta.windowsBeta.download": "Beta im Microsoft Store",
-  "downloadCta.windowsBeta.note": "Öffentliche Beta von TypeWhisper {version} für Windows 11 24H2 oder neuer auf x64. Sie wird neben der stabilen Version installiert, nutzt ein eigenes Profil für Einstellungen und Daten und erhält Updates über den Microsoft Store."
+  "downloadCta.windowsBeta.note": "Öffentliche Beta für Windows 11 24H2 oder neuer auf x64. Sie bekommt Release Candidates vor der stabilen Version und wird neben ihr installiert, mit eigenem Profil für Einstellungen und Daten. Updates kommen über den Microsoft Store."
 }

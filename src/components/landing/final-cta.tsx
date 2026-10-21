@@ -9,7 +9,6 @@ import {
 import {
   getPlatformDownloadTarget,
   getWindowsStoreBetaUrl,
-  windowsBetaSeries,
 } from "@/lib/platform-download";
 import { platformVersions } from "@/lib/platform-versions";
 import {
@@ -107,10 +106,7 @@ export function FinalCta({ locale = "en" }: { locale?: Locale }) {
 
         {showWindowsBeta && (
           <p id="landing-windows-beta-note" className="landing-final__beta">
-            {t(locale, "downloadCta.windowsBeta.note").replace(
-              "{version}",
-              windowsBetaSeries,
-            )}
+            {t(locale, "downloadCta.windowsBeta.note")}
           </p>
         )}
 

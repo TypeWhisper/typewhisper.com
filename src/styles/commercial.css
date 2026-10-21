@@ -91,6 +91,23 @@
   margin: 0;
 }
 
+/* The license path of each platform, side by side where they fit. */
+.commercial-activation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.75rem;
+}
+
+.commercial-activation__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 /* A path through the settings of the app. */
 .commercial-path {
   border: 1px solid var(--hairline);

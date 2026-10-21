@@ -23,6 +23,13 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
+
+// Where each app activates a license; the path differs by platform.
+const activation = ["mac", "windows", "mobile"].map((id) => ({
+  id,
+  platform: t(locale, `pricing.commercial.activation.${id}.platform`),
+  path: t(locale, `pricing.commercial.activation.${id}.path`),
+}));
 ---
 
 <BaseLayout
@@ -65,10 +72,17 @@ const { locale } = Astro.props;
         <Plans client:load locale={locale} />
 
         <div class="commercial-notes">
-          <p>
-            {t(locale, "pricing.commercial.activationBefore")}{" "}
-            <span class="commercial-path">{t(locale, "pricing.commercial.activationPath")}</span>
-          </p>
+          <div class="commercial-activation" data-testid="license-activation">
+            <p>{t(locale, "pricing.commercial.activation.intro")}</p>
+            <ul class="commercial-activation__list">
+              {activation.map((item) => (
+                <li data-platform={item.id}>
+                  {item.platform}{" "}
+                  <span class="commercial-path">{item.path}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <a
             href={polarCustomerPortalUrl}
             target="_blank"

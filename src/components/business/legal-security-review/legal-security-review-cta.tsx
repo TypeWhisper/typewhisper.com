@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { WaveRule } from "@/components/site";
 import type { LegalSecurityReviewContent } from "@/data/legal-security-review";
-import { salesEmail } from "@/lib/pricing";
+import { contactEmail } from "@/lib/pricing";
 import { localePath, t, type Locale } from "@/i18n/index";
 
 interface LegalSecurityReviewCTAProps {
@@ -24,7 +24,7 @@ export function LegalSecurityReviewCTA({
           <p className="site-lede site-lede--start">{cta.subtitle}</p>
         </div>
         <div className="site-actions site-actions--start">
-          <a href={`mailto:${salesEmail}`} className="site-button">
+          <a href={`mailto:${contactEmail}`} className="site-button">
             {t(locale, "business.legalSecurityReview.cta.primary")}
           </a>
           <a href={localePath(locale, "/business")} className="site-link">

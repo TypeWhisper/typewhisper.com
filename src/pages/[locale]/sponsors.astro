@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { BarMark, PageHead, SectionHead, WaveRule } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { salesEmail } from "@/lib/pricing";
+import { contactEmail } from "@/lib/pricing";
 import { sponsorsByKind, type Sponsor } from "@/data/sponsors";
 
 interface Props {
@@ -17,7 +17,7 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const sponsorMailto = `mailto:${salesEmail}?subject=${encodeURIComponent("TypeWhisper sponsorship")}`;
+const sponsorMailto = `mailto:${contactEmail}?subject=${encodeURIComponent("TypeWhisper sponsorship")}`;
 
 const sponsorModels = ["oss", "ecosystem"].map((key) => ({
   title: t(locale, `sponsors.model.${key}.title`),

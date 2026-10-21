@@ -86,7 +86,7 @@ for (const locale of ["en", "de"]) {
     );
   });
 
-  test(`${locale}: price switch offers yearly plans and keeps Enterprise a subscription`, async ({
+  test(`${locale}: price switch offers Monthly and Lifetime, Enterprise yearly instead of Lifetime`, async ({
     page,
   }) => {
     await page.goto(`/${locale}/pricing/`);
@@ -102,20 +102,19 @@ for (const locale of ["en", "de"]) {
       locale === "de" ? "Bis zu 50 Geräte" : "Up to 50 devices",
     );
     await expect(
-      tiers.locator('a[href="mailto:hello@typewhisper.com"]'),
+      tiers.locator('a[href="mailto:licensing@typewhisper.com"]'),
     ).toHaveCount(1);
 
-    await page
-      .getByRole("button", { name: locale === "de" ? /Jährlich/ : /Yearly/ })
-      .click();
-    await expect(
-      tiers.locator('[data-checkout-billing-period="yearly"]'),
-    ).toHaveCount(3);
-    await expect(tiers).toContainText(
-      locale === "de" ? "1.990\u00a0€" : "€1,990",
-    );
+    // Individual and Team have no yearly plan, so the switch has no Yearly.
+    const billing = page.getByRole("group", {
+      name: locale === "de" ? "Abrechnungszeitraum" : "Billing period",
+    });
+    await expect(billing.getByRole("button")).toHaveText([
+      locale === "de" ? "Monatlich" : "Monthly",
+      "Lifetime",
+    ]);
 
-    await page.getByRole("button", { name: /Lifetime/ }).click();
+    await billing.getByRole("button", { name: "Lifetime" }).click();
     await expect(
       tiers.locator('[data-checkout-billing-period="lifetime"]'),
     ).toHaveCount(2);
@@ -125,11 +124,74 @@ for (const locale of ["en", "de"]) {
       "data-checkout-billing-period",
       "yearly",
     );
+    await expect(
+      tiers.locator('[data-checkout-billing-period="yearly"]'),
+    ).toHaveCount(1);
     await expect(tiers).toContainText("299");
     await expect(tiers).toContainText(
+      locale === "de" ? "1.990\u00a0€" : "€1,990",
+    );
+    await expect(tiers).toContainText(
       locale === "de"
-        ? "Nur als Abo erhältlich"
-        : "Available as a subscription only",
+        ? "Jahresabo statt Lifetime"
+        : "Yearly subscription instead of Lifetime",
+    );
+  });
+
+  test(`${locale}: pricing names the license path of each platform`, async ({
+    page,
+  }) => {
+    await page.goto(`/${locale}/pricing/`);
+    const activation = page.getByTestId("license-activation");
+    const paths =
+      locale === "de"
+        ? {
+            mac: "Einstellungen > Lizenz",
+            windows: "Premium > Lizenz",
+            mobile: "Einstellungen > Premium",
+          }
+        : {
+            mac: "Settings > License",
+            windows: "Premium > License",
+            mobile: "Settings > Premium",
+          };
+    for (const [platform, path] of Object.entries(paths)) {
+      await expect(
+        activation.locator(`[data-platform="${platform}"] .commercial-path`),
+      ).toHaveText(path);
+    }
+    await expect(page.locator("main")).not.toContainText(
+      locale === "de" ? "Schon einen Schlüssel?" : "Already have a key?",
+    );
+  });
+
+  test(`${locale}: license questions go to licensing@ and support to hello@`, async ({
+    page,
+  }) => {
+    await page.goto(`/${locale}/pricing/`);
+    await expect(
+      page.locator('a[href="mailto:licensing@typewhisper.com"]'),
+    ).toHaveCount(2);
+    await expect(
+      page.locator('a[href="mailto:hello@typewhisper.com"]'),
+    ).toHaveCount(0);
+
+    await page.goto(`/${locale}/business/`);
+    await expect(
+      page.locator('a[href="mailto:licensing@typewhisper.com"]'),
+    ).toHaveCount(3);
+
+    await page.goto(`/${locale}/support/`);
+    const email = page.getByTestId("support-email");
+    await expect(
+      email.locator('a[href="mailto:hello@typewhisper.com"]'),
+    ).toBeVisible();
+    await expect(
+      email.locator('a[href="mailto:licensing@typewhisper.com"]'),
+    ).toContainText(
+      locale === "de"
+        ? "Lizenzen, Abrechnung, Erstattungen und Vertrieb"
+        : "Licenses, billing, refunds, and sales",
     );
   });
 
