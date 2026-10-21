@@ -269,5 +269,5 @@
   "faq.label": "Questions",
   "downloadCta.editions": "All editions",
   "downloadCta.windowsBeta.download": "Microsoft Store Beta",
-  "downloadCta.windowsBeta.note": "Public beta of TypeWhisper {version} for Windows 11 24H2 or later on x64. It installs alongside the stable version with a separate profile for its settings and data, and receives updates through the Microsoft Store."
+  "downloadCta.windowsBeta.note": "Public beta for Windows 11 24H2 or later on x64. It gets release candidates before the stable version and installs alongside it, with a separate profile for its settings and data. Updates come through the Microsoft Store."
 }
