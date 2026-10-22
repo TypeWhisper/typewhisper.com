@@ -44,8 +44,8 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["huggingface.co", "*.hf.co"],
-    "Model downloads of the local plugins: Parakeet, WhisperKit, Qwen3, Canary, Granite, Voxtral, Cohere Transcribe, Local LLM, Supertonic, speaker detection, and Hugging Face imports. The host redirects to `*.hf.co` content hosts on several subdomain levels; the wildcard has to cover all of them.",
-    "Modell-Downloads der lokalen Plugins: Parakeet, WhisperKit, Qwen3, Canary, Granite, Voxtral, Cohere Transcribe, Local LLM, Supertonic, Sprechererkennung und Importe von Hugging Face. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter; der Platzhalter muss alle abdecken.",
+    "Model downloads of the local plugins: Parakeet, WhisperKit, Qwen3, Canary, Granite, Voxtral, Cohere Transcribe, GigaAM, Local LLM, Supertonic, speaker detection, and Hugging Face imports. The host redirects to `*.hf.co` content hosts on several subdomain levels; the wildcard has to cover all of them.",
+    "Modell-Downloads der lokalen Plugins: Parakeet, WhisperKit, Qwen3, Canary, Granite, Voxtral, Cohere Transcribe, GigaAM, Local LLM, Supertonic, Sprechererkennung und Importe von Hugging Face. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter; der Platzhalter muss alle abdecken.",
   ],
   [
     ["www.typewhisper.com"],
