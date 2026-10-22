@@ -263,7 +263,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
   );
   await expect(page.locator("body")).toContainText("KIEFERSA/Sophea-Canary-ASR-mlx");
   await expect(
-    page.getByRole("link", { name: "Local Models (sherpa-onnx)" }),
+    page.getByRole("link", { name: "NVIDIA Parakeet", exact: true }),
   ).toHaveAttribute("href", "/en/addons/sherpa-onnx/");
   await expect(page.getByRole("link", { name: "Release 1.0.1" })).toHaveAttribute(
     "href",
@@ -305,7 +305,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
     "Das Add-on sendet weder Audio noch Text an einen Cloud-Dienst.",
   );
   await expect(
-    page.getByRole("link", { name: "Lokale Modelle (sherpa-onnx)" }),
+    page.getByRole("link", { name: "NVIDIA Parakeet", exact: true }),
   ).toHaveAttribute("href", "/de/addons/sherpa-onnx/");
   await expectNoHorizontalOverflow();
 });
