@@ -14,12 +14,12 @@ highlights:
   - "CLI-Profile, auch mehrere für dieselbe CLI, jeweils mit eigenem Namen, Programmpfad, Sitzungsverzeichnis und Modell"
   - "Automatische Erkennung nativer Windows-Installationen oder ein fester Programmpfad"
   - "Codex-Modelle aus der installierten CLI, Claude-Modellaliase und nur geprüfte, vollständig kostenlose OpenCode-Zen-Modelle"
-  - "Prüfung von Version, Anmeldung und Sicherheitsfunktionen, bevor eine CLI genutzt wird"
+  - "Prüfung von Version, Anmeldung und Sicherheitskontrollen, bevor eine CLI genutzt wird"
   - "Isolierte temporäre Arbeitsverzeichnisse mit strengen Zeit- und Größenlimits"
 configuration:
-  - "Unter „CLI-Profile“ ein Profil wählen oder mit + ein neues hinzufügen"
-  - "CLI wählen und bei Bedarf Profilname, Programmpfad und Umgebungsvariablen festlegen"
-  - "„Modelle aktualisieren“ wählen, ein Modell auswählen und „Profil speichern“ wählen"
+  - "Wähle unter „CLI-Profile“ ein Profil oder füge mit + ein neues hinzu"
+  - "Wähle die CLI und leg bei Bedarf „Profilname“, „Programmpfad“ und „Umgebungsvariablen“ fest"
+  - "Wähle „Modelle aktualisieren“, such ein „Modell“ aus und wähle „Profil speichern“"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AuthenticatedCli"
 releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-authenticated-cli-v1.3.5"
 screenshots:
@@ -40,7 +40,7 @@ Authenticated Provider CLIs 1.3.5 ist als [Plugin-Release für TypeWhisper unter
 2. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Authenticated Provider CLIs**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 3. Wähle unter **CLI-Profile** das Profil für deine CLI. Das Add-on beginnt mit je einem Profil für Codex CLI, Claude Code CLI, Antigravity CLI und OpenCode Zen.
 4. Lass **Programmpfad** für die automatische Erkennung leer. Findet Windows mehrere Installationen, wähle den Pfad der nativen `.exe` aus oder gib ihn ein.
-5. Wähle **Modelle aktualisieren**. Das Add-on prüft Version, Sicherheitsfunktionen und Anmeldung der CLI und lädt die Modelle dieser Sitzung.
+5. Wähle **Modelle aktualisieren**. Das Add-on prüft Version, Sicherheitskontrollen und Anmeldung der CLI und lädt die Modelle dieser Sitzung.
 6. Wähle ein **Modell** und dann **Profil speichern**.
 7. Wähle das Profil als LLM-Anbieter in einem Workflow. Workflows zeigen es unter seinem Profilnamen an.
 
@@ -74,7 +74,7 @@ Für OpenCode lädt das Add-on die `opencode/*`-Textmodelle über `opencode.exe 
 
 ## Isolation und Datenschutz
 
-Nur die Workflow-Anweisung und das Transkript beziehungsweise der ausgewählte Eingabetext werden an die Provider-CLI übergeben. Audio, CLI-Anmeldedaten, weitere TypeWhisper-Daten, Tools, Projektregeln und frühere Sitzungen sind nicht enthalten.
+Nur die Workflow-Anweisung und das Transkript beziehungsweise der ausgewählte Eingabetext werden an die Anbieter-CLI übergeben. Audio, CLI-Anmeldedaten, weitere TypeWhisper-Daten, Tools, Projektregeln und frühere Sitzungen sind nicht enthalten.
 
 Codex läuft sitzungslos in einer schreibgeschützten Sandbox ohne Benutzerkonfiguration und Regeln; Freigaben, Tools, Websuche, Projektanweisungen, Memories und Multi-Agent-Funktionen sind deaktiviert. Claude Code läuft im sicheren Modus für genau einen Durchgang ohne integrierte Tools, MCP-Tools, Browserzugriff, Slash-Befehle oder Sitzungsspeicherung. Jede Anfrage nutzt ein isoliertes temporäres Verzeichnis sowie Zeit- und Größenlimits.
 
