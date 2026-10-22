@@ -529,8 +529,8 @@ export default function DocsWindowsManagedSettings({
           <li>
             {withCode(
               tx(
-                "Lokale Parakeet-Engine: `com.typewhisper.sherpa-onnx`. Ihre Modell-IDs zeigt die Seite „Diktat“ an, und `GET /v1/models` liefert sie als `provider_id` und `id`, zum Beispiel `parakeet-tdt-0.6b`.",
-                "Local Parakeet engine: `com.typewhisper.sherpa-onnx`. Its model IDs appear on the Dictation page, and `GET /v1/models` returns them as `provider_id` and `id`, for example `parakeet-tdt-0.6b`.",
+                "Lokale Parakeet-Engine: `com.typewhisper.sherpa-onnx`. Ihre Modell-IDs zeigt die Seite „Diktat“ an, und `GET /v1/models` liefert sie im Feld `id`, zum Beispiel `parakeet-tdt-0.6b`. Die API selbst nennt die Engine `sherpa-onnx` mit `provider_id` `local`; in Richtlinien gehört die Paket-ID.",
+                "Local Parakeet engine: `com.typewhisper.sherpa-onnx`. Its model IDs appear on the Dictation page and as `id` in `GET /v1/models`, for example `parakeet-tdt-0.6b`. The API itself lists the engine as `sherpa-onnx` with the `provider_id` `local`; policies take the package ID.",
               ),
             )}
           </li>
@@ -772,8 +772,8 @@ export default function DocsWindowsManagedSettings({
           </li>
           <li>
             {tx(
-              "Wird der Wert entfernt, kehren beim nächsten Start oder Aktivierungsversuch die manuellen Lizenzfunktionen zurück. Die bestehende Aktivierung bleibt bestehen: Deaktiviere das Gerät manuell oder widerrufe die Lizenz in Polar. Zentrale Änderungen bemerkt die App bei ihrer normalen Prüfung, bei einer aktiven Lizenz nach bis zu sieben Tagen.",
-              "Removing the value brings back the manual license controls at the next launch or retry. It does not deactivate the existing activation: deactivate the device manually or revoke the license in Polar. The app notices central changes at its normal validation, up to seven days later for an active license.",
+              "Wird der Wert entfernt, kehren beim nächsten Start oder Aktivierungsversuch die manuellen Lizenzfunktionen zurück. Die bestehende Aktivierung bleibt bestehen: Deaktiviere das Gerät manuell oder widerrufe die Lizenz in Polar. Zentrale Änderungen bemerkt die App bei der nächsten Prüfung, beim Start, bei einem geänderten Schlüssel oder über „Aktivierung erneut versuchen“, sobald die letzte erfolgreiche Prüfung einer aktiven Lizenz mehr als sieben Tage zurückliegt.",
+              "Removing the value brings back the manual license controls at the next launch or retry. It does not deactivate the existing activation: deactivate the device manually or revoke the license in Polar. The app notices central changes at its next validation, at launch, when the key changes, or on Retry activation, once seven days have passed since the last successful check of an active license.",
             )}
           </li>
           <li>
