@@ -19,7 +19,7 @@ sourceUrls:
 
 ## Platform differences
 
-On macOS, Cloudflare ASR connects to your OpenAI-compatible transcription backend through a Cloudflare Tunnel. On Windows, it calls Cloudflare Workers AI directly using your account ID and API token.
+On macOS, Cloudflare ASR connects to your OpenAI-compatible transcription backend through a Cloudflare Tunnel. On Windows, it calls Cloudflare Workers AI directly, after you sign in with Cloudflare in your browser or enter your account ID and an API token.
 
 ## Setup on macOS: Cloudflare Tunnel
 
@@ -35,9 +35,9 @@ Audio is sent to the backend you operate through Cloudflare. Its model and proce
 
 ## Setup on Windows: Workers AI
 
-1. Obtain your Cloudflare **Account ID** and create an **API Token** authorized to use Workers AI for that account.
-2. In TypeWhisper, open **Settings > Discover plugins** and install the add-on, which is listed there as **Cloudflare Workers AI**. It then appears in the Settings sidebar, and its page opens.
-3. Enter your **Cloudflare account ID**, paste the API token into **API key**, select **Save settings**, then **Check connection**.
-4. Under **Transcription model**, choose **Whisper Large V3 Turbo** or **Whisper** and select **Use selected model**.
+1. In TypeWhisper, open **Settings > Discover plugins** and install the add-on, which is listed there as **Cloudflare Workers AI**. It then appears in the Settings sidebar, and its page opens.
+2. Select **Connect with Cloudflare** and sign in in your browser. If you granted access to several accounts, choose the **Cloudflare account** and select **Save settings**.
+3. Or enter your 32-character **Cloudflare account ID**, paste an API token with Workers AI access into **API key**, select **Save settings**, then **Check connection**.
+4. Under **Transcription model**, choose **Whisper Large V3 Turbo** or **Whisper** and, if it appears, select **Use selected model**.
 
-The Windows plugin constructs `https://api.cloudflare.com/client/v4/accounts/{account-id}/ai/run/@cf/openai/whisper` itself and authenticates with the API token. It offers Whisper, with automatic language detection, and Whisper Large V3 Turbo (`@cf/openai/whisper-large-v3-turbo`), which also accepts a spoken language and dictionary terms; no custom endpoint, Tunnel, or Access service token is needed. Audio is sent to Cloudflare Workers AI.
+The Windows plugin calls Workers AI under `https://api.cloudflare.com/client/v4/accounts/{account-id}/ai/run/` itself. It offers Whisper, with automatic language detection, and Whisper Large V3 Turbo (`@cf/openai/whisper-large-v3-turbo`), which also accepts a spoken language and dictionary terms; no custom endpoint, Tunnel, or Access service token is needed. Audio is sent to Cloudflare Workers AI.
