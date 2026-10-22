@@ -1,24 +1,25 @@
 ---
 familySlug: obsidian
 platform: mac
-version: "1.1.0"
-description: Speichere Transkriptionen als anpassbare Markdown-Notizen in deinem Obsidian-Vault, mit Vorlagen, Auto-Export und Live-Sync.
+version: "1.2.0"
+description: Speichere Diktate und Recorder-Transkripte als anpassbare Markdown-Notizen in deinem Obsidian-Vault, mit Vorlagen, Auto-Export und Live-Sync.
 id: com.typewhisper.obsidian
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - TypeWhisper 1.6.0 oder neuer
+  - TypeWhisper 1.8.0 oder neuer
   - macOS 14.0 oder neuer
 highlights:
   - Anpassbare Markdown-Notizvorlagen
-  - Auto-Export für jede Transkription
+  - Auto-Export für Diktate, Recorder-Transkripte oder beides
+  - Meeting-Notizen mit Titel und Teilnehmern im Frontmatter
   - Live-Sync für spätere Verlaufskorrekturen
   - Flexible Tagesnotizen und YAML-Frontmatter
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.2.0"
 screenshots:
   - src: /screenshots/plugins/obsidian.png
-    caption: Die macOS-Edition erkennt vorhandene Vaults und bietet nach der Auswahl alle Optionen für Vorlagen, Tagesnotizen, Auto-Export und Live-Sync.
+    caption: Die macOS-Edition erkennt vorhandene Vaults und bietet nach der Auswahl alle Optionen für Vorlagen, Tagesnotizen, Auto-Export und Live-Sync. Auto-Export kann Diktate, Recorder-Transkripte oder beides speichern.
 processing: "local"
 ---
 
@@ -26,13 +27,15 @@ processing: "local"
 
 Das Obsidian-Plugin speichert TypeWhisper-Transkriptionen als normale Markdown-Dateien direkt in einem Ordner deines Vaults. Du kannst einzelne Notizen über ein Workflow-Action-Ziel erstellen oder mit **Auto-Export** jede abgeschlossene Transkription automatisch ablegen.
 
-Version `1.1.0` erweitert die macOS-Version um frei konfigurierbare Markdown-Notizvorlagen, zusätzliche Metadaten und Live-Sync für spätere Korrekturen im TypeWhisper-Verlauf. Sie benötigt TypeWhisper `1.6.0` oder neuer auf macOS.
+Version `1.2.0` speichert auch Recorder-Transkripte, einschließlich Kalender-Meetings, und Auto-Export kann Diktate auslassen. Sie benötigt TypeWhisper `1.8.0` oder neuer auf macOS. Version `1.1.0` hat konfigurierbare Notizvorlagen, zusätzliche Metadaten und Live-Sync für spätere Korrekturen im TypeWhisper-Verlauf ergänzt.
 
 Quellen: [macOS-Plugin-Code](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin), [Implementierungs-PR #1089](https://github.com/TypeWhisper/typewhisper-mac/pull/1089)
 
 Der grundlegende Ablauf ist:
 
 `Diktat → optionale Workflow-Aufbereitung → Obsidian-Action oder Auto-Export → Markdown-Datei im Vault`
+
+`Aufnahme → Transkript → Auto-Export → Markdown-Datei im Vault`
 
 ## Einrichtung
 
@@ -41,7 +44,7 @@ Der grundlegende Ablauf ist:
 3. Lege optional einen **Unterordner** fest. Der Standard `TypeWhisper` speichert Notizen beispielsweise unter `<Vault>/TypeWhisper/`.
 4. Entscheide dich zwischen einzelnen Notizen und dem **Tagesnotiz-Modus**.
 5. Passe Dateiname, Notizvorlage, Frontmatter und Tags an.
-6. Wähle anschließend, ob du gezielt über das Action-Ziel **Save to Obsidian** exportieren oder **Auto-Export** für jede Transkription aktivieren möchtest.
+6. Wähle anschließend, ob du gezielt über das Action-Ziel **Save to Obsidian** exportieren oder **Auto-Export** aktivieren möchtest, und ob Auto-Export **Diktate**, **Recorder-Transkripte** oder beides speichert.
 
 Das Plugin erstellt den konfigurierten Unterordner bei Bedarf. Bei einzelnen Notizen verhindert es Überschreiben durch nummerierte Dateinamen wie `Notiz 1.md`, wenn ein Name bereits existiert.
 
@@ -60,7 +63,12 @@ Die mitgelieferte Anweisung bereinigt das Diktat und gibt nur Obsidian-kompatibl
 
 ### Automatischer Export
 
-Aktiviere **Auto-Export**, um jede abgeschlossene Transkription in den gewählten Vault zu schreiben. Das eignet sich als vollständiges Sprachjournal oder Archiv. Wenn dieselbe Transkription bereits über das Workflow-Action-Ziel exportiert wurde, ordnet Version `1.1.0` den Abschluss der vorhandenen Notiz zu, statt durch Auto-Export eine zweite Datei anzulegen.
+Aktiviere **Auto-Export**, um abgeschlossene Transkriptionen automatisch in den gewählten Vault zu schreiben. Zwei Schalter darunter legen fest, was exportiert wird:
+
+- **Diktate** ist standardmäßig an und speichert jedes abgeschlossene Diktat. Das eignet sich als vollständiges Sprachjournal oder Archiv.
+- **Recorder-Transkripte** ist standardmäßig aus und speichert jede fertige Aufnahme als eigene Notiz. Siehe [Recorder- und Meeting-Transkripte](#recorder--und-meeting-transkripte).
+
+Schalte **Diktate** aus und **Recorder-Transkripte** ein, wenn nur Meetings und Aufnahmen im Vault landen sollen. Wurde ein Diktat bereits über das Workflow-Action-Ziel exportiert, ordnet das Plugin den Abschluss der vorhandenen Notiz zu, statt durch Auto-Export eine zweite Datei anzulegen.
 
 ## Dateinamen
 
@@ -222,11 +230,23 @@ Frontmatter wird beim Erstellen einer neuen Tagesdatei einmalig geschrieben. Ein
 Beachte dabei:
 
 - Die Datei wird aus der konfigurierten Notizvorlage neu erzeugt. Manuelle Änderungen an dieser Datei in Obsidian können deshalb überschrieben werden.
-- Der Tagesnotiz-Modus bleibt absichtlich append-only; Live-Sync ist dort deaktiviert, damit eine Korrektur nicht den falschen Abschnitt verändert.
+- Der Tagesnotiz-Modus bleibt absichtlich append-only; Live-Sync ist dort deaktiviert, damit eine Korrektur nicht den falschen Abschnitt verändert. Speichert Auto-Export auch Recorder-Transkripte, bleibt der Schalter verfügbar und aktualisiert nur die eigenen Notizen der Aufnahmen.
 - Das Plugin verfolgt höchstens die neuesten 500 Zuordnungen und entfernt Zuordnungen nach 30 Tagen.
 - Aktualisiert werden nur vorhandene Markdown-Dateien innerhalb des aktuell konfigurierten Vaults. Dateien außerhalb des Vaults werden nicht verändert.
 
 Wenn du exportierte Notizen anschließend hauptsächlich in Obsidian weiterbearbeitest, deaktiviere Live-Sync, um diese Änderungen zu schützen.
+
+## Recorder- und Meeting-Transkripte
+
+Mit **Auto-Export** und **Recorder-Transkripte** wird jedes Transkript, das der Recorder speichert, zu einer Notiz im konfigurierten Unterordner. Das gilt für manuelle Aufnahmen, für Aufnahmen der Meeting-Automatik und für Aufnahmen, die über die API gestartet wurden.
+
+- **Kalender-Meetings** übernehmen die Markdown-Datei, die der Recorder neben der Aufnahme schreibt. Ihr Frontmatter enthält Titel, Datum, Beginn und Ende, Ort, Organisator und Teilnehmer des Meetings, sodass Dataview Meetings nach Teilnehmer oder Datum auflisten kann. Mit **YAML-Frontmatter** ergänzt das Plugin deine Tags.
+- **Andere Aufnahmen** verwenden deine **Notizvorlage** und das Frontmatter. `{{APP}}` steht dabei für `Recorder`, Datum und Uhrzeit sind der Zeitpunkt, an dem das Transkript gespeichert wurde.
+- Die Notiz heißt wie die Aufnahmedatei, zum Beispiel `20261022 - Weekly sync.md`.
+- Aufnahmen bekommen immer eine eigene Notiz, auch im **Tagesnotiz-Modus**.
+- Mit **Live-Sync** aktualisiert eine neue Transkription derselben Aufnahme ihre Notiz, statt eine zweite anzulegen.
+
+Die Notiz enthält den Text des Transkripts ohne Sprechernamen.
 
 ## Empfohlene Konfigurationen
 
@@ -236,3 +256,4 @@ Wenn du exportierte Notizen anschließend hauptsächlich in Obsidian weiterbearb
 | Vollständiges Transkriptionsarchiv | Auto-Export an; einzelne Notizen; Dateiname `{{DATE}} {{TIME}} {{APP}}` |
 | Laufendes Sprachjournal | Auto-Export an; Tagesnotiz-Modus an; Zeitstempelabschnitt oder Aufzählung |
 | Notizen nach dem Export manuell in Obsidian pflegen | Einzelne Notizen; Live-Sync aus |
+| Nur Aufnahmen und Meetings, keine Diktate | Auto-Export an; **Diktate** aus; **Recorder-Transkripte** an |

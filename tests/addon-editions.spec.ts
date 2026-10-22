@@ -441,7 +441,7 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
     await expect(
       page.getByText(
-        "TypeWhisper 1.6.0 oder neuer · macOS 14.0 oder neuer",
+        "TypeWhisper 1.8.0 oder neuer · macOS 14.0 oder neuer",
         { exact: true },
       ),
     ).toBeVisible();

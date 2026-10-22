@@ -1,24 +1,25 @@
 ---
 familySlug: obsidian
 platform: mac
-version: "1.1.0"
-description: Save transcriptions as customizable Markdown notes in your Obsidian vault, with templates, auto-export, and live sync.
+version: "1.2.0"
+description: Save dictations and Recorder transcripts as customizable Markdown notes in your Obsidian vault, with templates, auto-export, and live sync.
 id: com.typewhisper.obsidian
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - TypeWhisper 1.6.0 or newer
+  - TypeWhisper 1.8.0 or newer
   - macOS 14.0 or newer
 highlights:
   - Customizable Markdown note templates
-  - Auto-export for every transcription
+  - Auto-export for dictations, Recorder transcripts, or both
+  - Meeting notes with title and attendees in the frontmatter
   - Live sync for later History corrections
   - Flexible daily notes and YAML frontmatter
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.2.0"
 screenshots:
   - src: /screenshots/plugins/obsidian.png
-    caption: The macOS edition detects existing vaults and reveals all template, daily-note, auto-export, and live-sync options after a vault is selected.
+    caption: The macOS edition detects existing vaults and reveals all template, daily-note, auto-export, and live-sync options after a vault is selected. Auto-Export can include dictations, Recorder transcripts, or both.
 processing: "local"
 ---
 
@@ -26,13 +27,15 @@ processing: "local"
 
 The Obsidian plugin saves TypeWhisper transcriptions as regular Markdown files directly inside a folder in your vault. You can create selected notes through a workflow action target or enable **Auto-Export** to save every completed transcription automatically.
 
-Version `1.1.0` adds fully configurable Markdown note templates, additional metadata, and live sync for later corrections in TypeWhisper History to the macOS plugin. It requires TypeWhisper `1.6.0` or newer on macOS.
+Version `1.2.0` can also save Recorder transcripts, including calendar meetings, and lets Auto-Export leave out dictations. It requires TypeWhisper `1.8.0` or newer on macOS. Version `1.1.0` added configurable note templates, additional metadata, and live sync for later corrections in TypeWhisper History.
 
 Sources: [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin), [implementation PR #1089](https://github.com/TypeWhisper/typewhisper-mac/pull/1089)
 
 The basic flow is:
 
 `Dictation → optional workflow processing → Obsidian action or Auto-Export → Markdown file in the vault`
+
+`Recording → transcript → Auto-Export → Markdown file in the vault`
 
 ## Setup
 
@@ -41,7 +44,7 @@ The basic flow is:
 3. Optionally set a **Subfolder**. The `TypeWhisper` default saves notes under `<Vault>/TypeWhisper/`, for example.
 4. Choose between individual notes and **Daily Note Mode**.
 5. Customize the filename, note template, frontmatter, and tags.
-6. Decide whether to export selected dictations through the **Save to Obsidian** action target or enable **Auto-Export** for every transcription.
+6. Decide whether to export selected dictations through the **Save to Obsidian** action target or enable **Auto-Export**, and choose whether it saves **Dictations**, **Recorder transcripts**, or both.
 
 The plugin creates the configured subfolder when needed. For individual notes, it avoids overwriting existing files by adding a number such as `Note 1.md` when a filename already exists.
 
@@ -60,7 +63,12 @@ The included instruction cleans up the dictation and returns only Obsidian-compa
 
 ### Automatic Export
 
-Enable **Auto-Export** to write every completed transcription into the selected vault. This works well for a complete voice journal or archive. If the same transcription was already exported through the workflow action target, version `1.1.0` associates the completion with the existing note instead of creating a second file through Auto-Export.
+Enable **Auto-Export** to write completed transcriptions into the selected vault automatically. Two switches below it choose what is exported:
+
+- **Dictations** is on by default and saves every completed dictation. This works well for a complete voice journal or archive.
+- **Recorder transcripts** is off by default and saves each finished recording as its own note. See [Recorder and Meeting Transcripts](#recorder-and-meeting-transcripts).
+
+Turn off **Dictations** and turn on **Recorder transcripts** to keep only meetings and recordings in the vault. If a dictation was already exported through the workflow action target, the plugin associates its completion with the existing note instead of creating a second file through Auto-Export.
 
 ## Filenames
 
@@ -222,11 +230,23 @@ Frontmatter is written once when a new daily file is created. A generic daily fi
 Keep these details in mind:
 
 - The file is regenerated from the configured note template. Manual changes to that file in Obsidian may therefore be overwritten.
-- Daily Note Mode intentionally remains append-only; live sync is disabled there so a correction cannot modify the wrong section.
+- Daily Note Mode intentionally remains append-only; live sync is disabled there so a correction cannot modify the wrong section. When Auto-Export saves Recorder transcripts, the switch stays available and only updates the separate notes of recordings.
 - The plugin tracks at most the latest 500 associations and removes associations after 30 days.
 - Only existing Markdown files inside the currently configured vault are updated. Files outside the vault are never changed.
 
 If you mainly continue editing exported notes in Obsidian, disable live sync to protect those changes.
+
+## Recorder and Meeting Transcripts
+
+With **Auto-Export** and **Recorder transcripts** on, every transcript the Recorder saves becomes a note in the configured subfolder. This covers manual recordings, recordings started by Meeting Automation, and recordings started through the API.
+
+- **Calendar meetings** keep the Markdown file the Recorder writes next to the recording. Its frontmatter contains the meeting title, date, start and end time, location, organizer, and attendees, so Dataview can list meetings by attendee or date. With **YAML Frontmatter** on, the plugin adds your tags.
+- **Other recordings** use your **Note Template** and frontmatter, with `{{APP}}` set to `Recorder` and the time the transcript was saved as date and time.
+- The note is named after the recording file, for example `20261022 - Weekly sync.md`.
+- Recordings always get their own note, also in **Daily Note Mode**.
+- With **Live Sync History Edits** on, a new transcription of the same recording updates its note instead of creating a second one.
+
+The note contains the transcript text without speaker names.
 
 ## Recommended Configurations
 
@@ -236,3 +256,4 @@ If you mainly continue editing exported notes in Obsidian, disable live sync to 
 | Complete transcription archive | Auto-Export on; individual notes; filename `{{DATE}} {{TIME}} {{APP}}` |
 | Continuous voice journal | Auto-Export on; Daily Note Mode on; timestamp section or bullet list |
 | Maintain notes manually in Obsidian after export | Individual notes; live sync off |
+| Recordings and meetings only, no dictations | Auto-Export on; **Dictations** off; **Recorder transcripts** on |
