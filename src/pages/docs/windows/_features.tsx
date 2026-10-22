@@ -143,12 +143,22 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
 
       <DocsSection
         id="integrations-and-workflows"
-        title={isDe ? "Integrationen und Workflows" : "Integrations and workflows"}
+        title={isDe ? "Plugins und Workflows" : "Plugins and workflows"}
       >
         <p>
           {isDe
-            ? "Der Marketplace ergänzt lokale und Cloud-Engines, KI-Anbieter, Action-Plugins, Speicher und Hilfsfunktionen. Workflows verbinden diese Bausteine mit Apps, Websites, Tastenkürzeln oder einem globalen Fallback."
-            : "The marketplace adds local and cloud engines, AI providers, action plugins, memory, and utilities. Workflows connect these building blocks to apps, websites, hotkeys, or a global fallback."}
+            ? "Unter Einstellungen > Plugins entdecken ergänzt du lokale und Cloud-Engines, KI-Anbieter, Action-Plugins, Speicher und Hilfsfunktionen. Jedes installierte Plugin erhält eine eigene Seite in der Seitenleiste der Einstellungen, die sich direkt nach der Installation öffnet. Die Seite zeigt Status und Einstellungen des Plugins, etwa den API-Schlüssel oder die Modelle. Dort kannst du das Plugin deaktivieren oder deinstallieren und es aktualisieren, sobald eine neue Version bereitsteht. Beim Deinstallieren bleiben API-Schlüssel, Einstellungen und heruntergeladene Modelle erhalten."
+            : "Under Settings > Discover plugins, you add local and cloud engines, AI providers, action plugins, memory, and utilities. Every installed plugin gets its own page in the Settings sidebar, which opens right after the installation. The page shows the plugin's status and settings, such as the API key or models. There you can disable or uninstall the plugin, and update it when a new version is available. Uninstalling keeps the API key, preferences, and downloaded models."}
+        </p>
+        <p>
+          {isDe
+            ? "Plugins werden getrennt von der App aktualisiert. Standardmäßig prüft TypeWhisper einmal täglich, lädt neue Versionen im Hintergrund herunter und verwendet sie nach dem nächsten Neustart. Abschalten kannst du das unter Einstellungen > Konto & Info > Plugins automatisch aktualisieren."
+            : "Plugins update separately from the app. By default, TypeWhisper checks once a day, downloads new versions in the background, and uses them after the next restart. You can turn this off under Settings > Account & about > Update plugins automatically."}
+        </p>
+        <p>
+          {isDe
+            ? "Workflows verbinden diese Bausteine mit Apps, Websites, Tastenkürzeln oder einem globalen Fallback."
+            : "Workflows connect these building blocks to apps, websites, hotkeys, or a global fallback."}
         </p>
         <p className="docs-links">
           <a href={localePath(locale, "/addons")} className="site-link">
@@ -163,7 +173,12 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
         <DocsFigure
           kind="framed"
           src={screenshotPath(locale, "/screenshots/windows/integrations-marketplace.png")}
-          alt={isDe ? "Marketplace für TypeWhisper-Erweiterungen unter Windows" : "Marketplace for TypeWhisper extensions on Windows"}
+          alt={isDe ? "Plugins entdecken in den TypeWhisper-Einstellungen unter Windows" : "Discover plugins in the TypeWhisper settings on Windows"}
+        />
+        <DocsFigure
+          kind="framed"
+          src={screenshotPath(locale, "/screenshots/windows/integrations-installed.png")}
+          alt={isDe ? "Plugin-Seite von NVIDIA Parakeet mit lokalen Modellen in TypeWhisper für Windows" : "NVIDIA Parakeet plugin page with local models in TypeWhisper for Windows"}
         />
       </DocsSection>
     </>

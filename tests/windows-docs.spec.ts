@@ -430,8 +430,14 @@ test.describe("Windows documentation", () => {
       [
         "integrations-marketplace",
         "/docs/windows/features",
-        "Marketplace for TypeWhisper extensions on Windows",
-        "Marketplace für TypeWhisper-Erweiterungen unter Windows",
+        "Discover plugins in the TypeWhisper settings on Windows",
+        "Plugins entdecken in den TypeWhisper-Einstellungen unter Windows",
+      ],
+      [
+        "integrations-installed",
+        "/docs/windows/features",
+        "NVIDIA Parakeet plugin page with local models in TypeWhisper for Windows",
+        "Plugin-Seite von NVIDIA Parakeet mit lokalen Modellen in TypeWhisper für Windows",
       ],
       [
         "dictionary",

@@ -161,13 +161,13 @@ export default function DocsWindowsTroubleshooting({
           </li>
           <li>
             {isDe
-              ? "Öffne Integrationen > Installiert und prüfe Status, Konfiguration und verfügbare Updates des Add-ons."
-              : "Open Integrations > Installed and review the add-on status, configuration, and available updates."}
+              ? "Öffne die Seite des Add-ons in der Seitenleiste der Einstellungen und prüfe seinen Status, etwa „Bereit“, „Einrichtung erforderlich“ oder „Aktion erforderlich“, und seine Konfiguration. Ist ein Update verfügbar, zeigt die Seite „Aktualisieren“."
+              : "Open the add-on's page in the Settings sidebar and check its status, such as Ready, Setup required, or Needs attention, and its configuration. If an update is available, the page shows Update."}
           </li>
           <li>
             {isDe
-              ? "Starte TypeWhisper neu, wenn „App-Neustart erforderlich“ erscheint oder du die lokale Modellbeschleunigung geändert hast."
-              : "Restart TypeWhisper when App restart required appears or after changing local model acceleration."}
+              ? "Starte TypeWhisper neu, wenn ein Add-on „Neustart erforderlich“ anzeigt oder du die lokale Modellbeschleunigung geändert hast."
+              : "Restart TypeWhisper when an add-on shows Restart required or after changing local model acceleration."}
           </li>
           <li>
             {isDe
