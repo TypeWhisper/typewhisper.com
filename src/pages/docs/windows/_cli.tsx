@@ -5,6 +5,7 @@ import {
   DocsSection,
   DocsSubheading,
   DocsTable,
+  withCode,
 } from "@/components/docs/prose";
 import { localePath, t, type Locale } from "@/i18n/index";
 
@@ -26,6 +27,56 @@ const transcribeFlags: Flag[] = [
   ["--engine <id>", "Engine nur für diese Anfrage überschreiben", "Override the engine for this request"],
   ["--model <id>", "Modell nur für diese Anfrage überschreiben", "Override the model for this request"],
   ["--await-download", "Auf Wiederherstellung oder Download eines lokalen Modells warten", "Wait for a local model restore or download"],
+];
+
+const modelFlags: Flag[] = [
+  ["--engine <id>", "Engine, auf die sich der Befehl bezieht; immer erforderlich", "The engine to act on; always required"],
+  ["--model <id>", "Modell, auf das sich der Befehl bezieht; erforderlich für load und delete, von unload ignoriert", "The model to act on; required for load and delete, ignored by unload"],
+];
+
+interface ModelCommand {
+  /** Anchor of the command, `command-<id>`. */
+  id: string;
+  name: string;
+  /** Backticks set inline code. */
+  descriptionDe: string;
+  descriptionEn: string;
+  code: string;
+  /** What the command prints without `--json`. */
+  output: string;
+}
+
+const modelCommands: ModelCommand[] = [
+  {
+    id: "models-load",
+    name: "models load",
+    descriptionDe:
+      "Ein Modell laden und für die Transkription auswählen. Die Engine- und Modell-IDs liefert `typewhisper models`. Der Befehl lädt nichts herunter; ein lokales Modell muss also bereits heruntergeladen sein. Er wartet, bis das Modell geladen ist, und gibt dann den Status aus. Mit `--json` erhältst du die API-Antwort.",
+    descriptionEn:
+      "Load a model and select it for transcription. Take the engine and model IDs from `typewhisper models`. The command does not download anything, so a local model must already be downloaded. It waits until the model is loaded and then prints its status. Add `--json` for the API response.",
+    code: "typewhisper models load --engine sherpa-onnx --model parakeet-tdt-0.6b",
+    output: "ready: sherpa-onnx parakeet-tdt-0.6b",
+  },
+  {
+    id: "models-unload",
+    name: "models unload",
+    descriptionDe:
+      "Das Modell einer Engine entladen, um Arbeitsspeicher freizugeben. Die heruntergeladenen Dateien bleiben auf deinem PC. Der Befehl braucht nur `--engine`; `--model` nimmt er an, ignoriert es aber. Nach dem Entladen von Parakeet hat TypeWhisper kein Modell bereit, bis du wieder eines lädst.",
+    descriptionEn:
+      "Unload an engine's model to free memory. Its downloaded files stay on your PC. The command needs only `--engine`; it accepts `--model` but ignores it. After you unload Parakeet, TypeWhisper has no model ready until you load one again.",
+    code: "typewhisper models unload --engine sherpa-onnx",
+    output: "unloaded: sherpa-onnx parakeet-tdt-0.6b",
+  },
+  {
+    id: "models-delete",
+    name: "models delete",
+    descriptionDe:
+      "Die heruntergeladenen Dateien eines Modells löschen. Das funktioniert bei lokalen Engines, deren Plugin Modelldateien entfernen kann, etwa Parakeet und whisper.cpp; bei Cloud-Engines meldet TypeWhisper einen Fehler. Das Modell, das eine Engine ausgewählt hat oder noch geladen haben könnte, löscht TypeWhisper nicht.",
+    descriptionEn:
+      "Delete the downloaded files of a model. This works for local engines whose plugin can remove model files, such as Parakeet and whisper.cpp; for cloud engines, TypeWhisper returns an error. TypeWhisper does not delete the model an engine has selected or may still have loaded.",
+    code: "typewhisper models delete --engine sherpa-onnx --model canary-180m-flash",
+    output: "deleted: sherpa-onnx canary-180m-flash",
+  },
 ];
 
 export function windowsCliHead(locale: Locale) {
@@ -55,6 +106,7 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
   );
   const globalFlagsTitle = isDe ? "Globale Flags" : "Global flags";
   const transcribeFlagsTitle = isDe ? "Flags für transcribe" : "transcribe flags";
+  const modelFlagsTitle = isDe ? "Flags für Modellbefehle" : "Model command flags";
 
   return (
     <>
@@ -113,8 +165,33 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
         <DocsSubheading id="command-models">
           <code>models</code>
         </DocsSubheading>
-        <p>{isDe ? "Listet die aktuell verfügbaren lokalen und Cloud-Modelle." : "Lists the currently available local and cloud models."}</p>
+        <p>
+          {isDe
+            ? "Listet die aktuell verfügbaren lokalen und Cloud-Modelle. Die Spalten ID und ENGINE enthalten die IDs für die folgenden Befehle; ein Sternchen markiert das ausgewählte Modell."
+            : "Lists the currently available local and cloud models. The ID and ENGINE columns hold the IDs for the commands below; an asterisk marks the selected model."}
+        </p>
         <DocsCode locale={locale} lang="powershell" code="typewhisper models" />
+
+        {modelCommands.map((command) => (
+          <div key={command.id}>
+            <DocsSubheading id={`command-${command.id}`}>
+              <code>{command.name}</code>
+            </DocsSubheading>
+            <p>{withCode(isDe ? command.descriptionDe : command.descriptionEn)}</p>
+            <DocsCode locale={locale} lang="powershell" code={command.code} />
+            <DocsCode
+              locale={locale}
+              lang={isDe ? "Ausgabe" : "output"}
+              code={command.output}
+            />
+          </div>
+        ))}
+        <p>
+          {isDe ? "HTTP-API: " : "HTTP API: "}
+          <a href={localePath(locale, "/docs/windows/api#model-management")}>
+            {isDe ? "Modelle laden, entladen und löschen" : "Load, unload, and delete models"}
+          </a>
+        </p>
 
         <DocsSubheading id="command-transcribe">
           <code>transcribe &lt;file|-&gt;</code>
@@ -141,6 +218,17 @@ typewhisper transcribe - < audio.wav`}
         </p>
       </DocsSection>
 
+      <DocsSection id="model-flags" title={modelFlagsTitle}>
+        {flagsTable(modelFlagsTitle, modelFlags)}
+        <p>
+          {withCode(
+            isDe
+              ? "Diese Flags gelten für `models load`, `models unload` und `models delete`. Die gleichnamigen Flags von `transcribe` überschreiben das Modell nur für eine Anfrage."
+              : "These flags apply to `models load`, `models unload`, and `models delete`. The flags of the same name for `transcribe` override the model for one request only.",
+          )}
+        </p>
+      </DocsSection>
+
       <DocsSection id="examples" title={isDe ? "Beispiele" : "Examples"}>
         <DocsCode
           locale={locale}
@@ -151,6 +239,21 @@ typewhisper transcribe recording.wav --engine <engine-id> --model <model-id>
 typewhisper transcribe recording.wav --task translate --translate-to en
 typewhisper transcribe recording.wav --await-download
 typewhisper --port 9000 status`}
+        />
+        <p>
+          {withCode(
+            isDe
+              ? "Für einen Auftrag zu einem anderen Modell wechseln und es danach entladen, um Arbeitsspeicher freizugeben. `models load` macht das Modell auch zum ausgewählten Modell in TypeWhisper. Lade danach dein übliches Modell, um zurückzuwechseln:"
+              : "Switch to another model for one job and unload it afterwards to free memory. `models load` also makes it the selected model in TypeWhisper, so load your usual model again to switch back:",
+          )}
+        </p>
+        <DocsCode
+          locale={locale}
+          lang="powershell"
+          code={`typewhisper models
+typewhisper models load --engine whisper-cpp --model large-v3-turbo
+typewhisper transcribe interview.m4a
+typewhisper models unload --engine whisper-cpp`}
         />
         <a href={localePath(locale, "/docs/windows/api")} className="site-link">
           {isDe ? "HTTP API und Authentifizierung" : "HTTP API and authentication"}
