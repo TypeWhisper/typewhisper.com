@@ -619,14 +619,14 @@ test.describe("feature tour", () => {
     await figures.first().scrollIntoViewIfNeeded();
     await expect(figures.first().locator("img")).toBeVisible();
     await expect(figures.first().locator("figcaption")).toHaveText(
-      "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
+      "Settings, Discover plugins: filtered to add-ons that run locally on your Mac",
     );
     // The strip that scrolls sideways is a named stop for the keyboard.
     const pan = figures.first().locator(".landing-tour__pan");
     await expect(pan).toHaveAttribute("tabindex", "0");
     await expect(pan).toHaveRole("group");
     await expect(pan).toHaveAccessibleName(
-      "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
+      "Settings, Discover plugins: filtered to add-ons that run locally on your Mac",
     );
     // The panned strip starts at its right end: the window closes with the content edge.
     const frame = await figures.first().locator(".landing-shot").boundingBox();
