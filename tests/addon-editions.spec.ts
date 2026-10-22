@@ -130,7 +130,7 @@ test.describe("add-on platform editions", () => {
     const windowsCard = page.locator(
       '[data-testid="addon-edition-card"][data-platform="windows"]',
     );
-    await expect(windowsCard.getByText("v1.0.1", { exact: true })).toBeVisible();
+    await expect(windowsCard.getByText("v1.2.14", { exact: true })).toBeVisible();
 
     const macCard = page.locator(
       '[data-testid="addon-edition-card"][data-platform="mac"]',
@@ -152,7 +152,7 @@ test.describe("add-on platform editions", () => {
       page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
     ).toBeVisible();
     await expect(page.getByText("Muse Spark 1.2 and 1.1 for LLM workflow processing")).toBeVisible();
-    await expect(page.getByText("1.0.1", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.2.14", { exact: true })).toBeVisible();
     await expect(page.getByText("Optional speaker diarization for both live and uploaded audio")).toBeVisible();
 
     await page.goto("/de/addons/meta/windows/");
@@ -223,7 +223,7 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
     await expect(
       page.getByText(
-        "Low-latency and text-normalization controls for speech output",
+        "Optional low-latency speech output and spoken forms for numbers, abbreviations and symbols",
       ),
     ).toBeVisible();
 
@@ -234,7 +234,9 @@ test.describe("add-on platform editions", () => {
       ),
     ).toBeVisible();
     await expect(
-      page.getByText("Status preview only; workflow processing remains disabled"),
+      page.getByText(
+        "Not available for workflows: the CLI cannot isolate tools and project context",
+      ),
     ).toBeVisible();
 
     await page.goto("/en/addons/gemma-local/");
@@ -282,7 +284,7 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
   });
 
-  test("Authenticated Provider CLI 1.1.0 documents OpenCode with localized screenshots", async ({
+  test("Authenticated Provider CLI documents OpenCode with localized screenshots", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -334,8 +336,9 @@ test.describe("add-on platform editions", () => {
       ),
     ).toHaveCount(1);
     await expect(page.locator("body")).toContainText(
-      "The Windows edition does not expose OpenCode model variants or an effort override.",
+      "OpenCode: only Zen text models that are currently fully free. A model set in the workflow takes precedence.",
     );
+    await expect(page.getByText("1.3.5", { exact: true })).toBeVisible();
     await expectNoHorizontalOverflow();
 
     await page.goto("/de/addons/authenticated-cli/windows/");
@@ -352,7 +355,7 @@ test.describe("add-on platform editions", () => {
     await expectNoHorizontalOverflow();
   });
 
-  test("Cohere documents different capabilities on each platform", async ({ page }) => {
+  test("Cohere documents the capabilities of each platform", async ({ page }) => {
     await page.goto("/de/addons/cohere/macos/");
     await expect(
       page.getByRole("heading", { level: 1, name: "Cohere für macOS" }),
@@ -373,8 +376,8 @@ test.describe("add-on platform editions", () => {
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
     await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/$/);
     await expect(page.getByText("LLM-Anbieter für Workflow-Prompts")).toBeVisible();
-    await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toHaveCount(0);
-    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("Cohere Transcribe in 14 Sprachen")).toBeVisible();
+    await expect(page.getByText("1.1.4", { exact: true })).toBeVisible();
     await expect(
       page.locator(
         'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]',

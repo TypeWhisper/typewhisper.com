@@ -1,21 +1,23 @@
 ---
 familySlug: "filler-words"
 platform: "windows"
-version: "1.0.0"
-description: "Locally removes configurable English, German, and Japanese filler words from transcriptions."
+version: "1.1.0"
+description: "Locally removes configurable filler words and stuttered repetitions from transcriptions."
 id: "com.typewhisper.filler-words"
-minAppVersion: "1.0.0"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper 1.0.0 or newer"
+  - "TypeWhisper 1.1.0 or newer"
   - "Windows 10 or newer"
 highlights:
-  - "Local post-processing without API keys"
-  - "Configurable English, German, and Japanese filler words"
-  - "Case-insensitive matching"
-  - "Awareness of word boundaries, consecutive fillers, and adjacent punctuation"
+  - "Local post-processing without an API key"
+  - "Editable list with built-in English, German, and Japanese filler words"
+  - "Words such as “um” that are real words in other languages are removed only when the dictation language matches"
+  - "Removes punctuation attached to a filler and repairs spacing and sentence capitalization"
+  - "Collapses a word spoken three or more times in a row, such as “I I I”, to one"
 configuration:
-  - "Enter filler words one per line or separate them with commas and semicolons, then reset to the default list when needed"
+  - "Edit the list under Filler words with one word or phrase per line (commas and semicolons also separate entries) and choose Save settings"
+  - "Turn Collapse repeated words on or off and choose Save settings"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.FillerWords"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-filler-words-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-filler-words-v1.1.0"
 processing: "local"
 ---

@@ -5,6 +5,13 @@ import path from "node:path";
 
 const LOCALES = ["de", "en"];
 const PLATFORMS = ["mac", "windows"];
+// Releases of typewhisper-win that carry several plugins, from which the catalog
+// (plugins-v2.json) still downloads Deepgram 1.1.3, Groq 1.1.1, and Obsidian 1.0.0.
+const windowsBundleReleases = new Set([
+  "plugins-v2-categories-20260908",
+  "plugins-v2-deepgram-1.1.3-20260910",
+  "plugins-winui-20260923",
+]);
 
 function frontmatter(content) {
   const match = content.replace(/\r\n/g, "\n").match(/^---\n([\s\S]*?)\n---/);
@@ -144,7 +151,10 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
             scalar(data, "releaseVersion") || scalar(data, "version");
           assert.match(releaseVersion, /^\d+\.\d+\.\d+$/);
           assert.ok(
-            releaseUrl.endsWith(`-v${releaseVersion}`),
+            releaseUrl.endsWith(`-v${releaseVersion}`) ||
+              // The Windows catalog serves a few plugins from a release that bundles several.
+              (platform === "windows" &&
+                windowsBundleReleases.has(releaseUrl.split("/").pop())),
             `${locale}/${slug}/${filename} must link its release version`,
           );
         }
@@ -249,11 +259,13 @@ test("every platform edition has a detailed guide source", async () => {
 
   assert.deepEqual(Object.keys(capabilityMap).sort(), families);
   assert.deepEqual(capabilityMap.cohere.mac, ["transcription"]);
-  assert.deepEqual(capabilityMap.cohere.windows, ["llm"]);
-  assert.deepEqual(capabilityMap.fireworks.mac, ["transcription", "llm"]);
-  assert.deepEqual(capabilityMap.fireworks.windows, ["llm"]);
+  assert.deepEqual(capabilityMap.cohere.windows, ["transcription", "llm"]);
+  assert.deepEqual(capabilityMap["smallest-pulse"].mac, ["transcription"]);
+  assert.deepEqual(capabilityMap["smallest-pulse"].windows, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.soniox.mac, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.soniox.windows, ["transcription"]);
+  assert.deepEqual(capabilityMap.webhook.mac, ["utility"]);
+  assert.deepEqual(capabilityMap.webhook.windows, ["post-processing"]);
 
   for (const locale of LOCALES) {
     for (const slug of families) {
@@ -367,14 +379,14 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
 
       if (platform === "windows") {
         assert.equal(scalar(data, "status"), undefined);
-        assert.equal(scalar(data, "version"), "1.0.1");
+        assert.equal(scalar(data, "version"), "1.2.14");
         assert.equal(scalar(data, "id"), "com.typewhisper.meta");
-        assert.equal(scalar(data, "minAppVersion"), "1.0.10");
+        assert.equal(scalar(data, "minAppVersion"), "1.1.0");
         assert.equal(
           scalar(data, "sourceUrl"),
           "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta",
         );
-        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.0\.1$/);
+        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.2\.14$/);
         assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
       } else {
         assert.equal(scalar(data, "status"), undefined);
@@ -550,13 +562,14 @@ test("Authenticated Provider CLI docs cover the published OpenCode editions", as
       const data = frontmatter(content);
       const guide = body(content);
 
+      const version = platform === "mac" ? "1.1.0" : "1.3.5";
+
       assert.equal(scalar(data, "familySlug"), "authenticated-cli");
       assert.equal(scalar(data, "platform"), platform);
-      assert.equal(scalar(data, "version"), "1.1.0");
+      assert.equal(scalar(data, "version"), version);
       assert.equal(scalar(data, "id"), "com.typewhisper.authenticated-cli");
-      assert.match(
-        scalar(data, "releaseUrl"),
-        /plugin-authenticated-cli-v1\.1\.0$/,
+      assert.ok(
+        scalar(data, "releaseUrl").endsWith(`/plugin-authenticated-cli-v${version}`),
       );
       assert.match(guide, /OpenCode/);
       assert.match(
@@ -568,7 +581,7 @@ test("Authenticated Provider CLI docs cover the published OpenCode editions", as
         assert.equal(scalar(data, "minAppVersion"), "1.7.0");
         assert.match(content, /\/screenshots\/plugins\/authenticated-cli\.png/);
       } else {
-        assert.equal(scalar(data, "minAppVersion"), "1.0.9");
+        assert.equal(scalar(data, "minAppVersion"), "1.1.0");
         assert.match(
           content,
           locale === "de"

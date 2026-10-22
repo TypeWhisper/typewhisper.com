@@ -1,20 +1,24 @@
 ---
 familySlug: "gladia"
 platform: "windows"
-version: "1.0.0"
-description: "Gladia als Cloud-Transkription über den v2-Datei-Endpunkt."
+version: "1.2.4"
+description: "Gladia als Cloud-Transkription für Live-Diktat und fertige Aufnahmen."
 id: "com.typewhisper.gladia"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper für Windows"
+  - "TypeWhisper 1.1.0 oder neuer"
   - "Windows 10 oder neuer"
+  - "Gladia-API-Schlüssel"
 highlights:
   - "Cloudbasierte Sprach-zu-Text-Verarbeitung"
-  - "Datei- und Batch-Transkription"
-  - "Automatische Spracherkennung"
-  - "Eine geprüfte, fest definierte Modellauswahl"
+  - "Live-Text beim Sprechen über die Echtzeit-API von Gladia (solaria-1), wenn Live-Transkription eingeschaltet ist"
+  - "Fertige Aufnahmen und Audiodateien werden hochgeladen und transkribiert, auch als Rückfall, wenn eine Live-Sitzung abbricht"
+  - "Automatische Spracherkennung, eine feste Sprache oder mehrere Sprachhinweise mit Sprachwechsel"
+  - "Wörterbuchbegriffe gehen als benutzerdefiniertes Vokabular an Gladia (bis zu 100 Begriffe)"
 configuration:
-  - "API-Key verschlüsselt in TypeWhisper für Windows speichern und prüfen"
+  - "Gib deinen Gladia-API-Schlüssel ein, wähle Einstellungen speichern und dann Verbindung prüfen"
+  - "Wähle unter Transkriptionsmodell Ausgewähltes Modell verwenden, um mit Gladia zu diktieren"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gladia"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gladia-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gladia-v1.2.4"
 processing: "cloud"
 ---

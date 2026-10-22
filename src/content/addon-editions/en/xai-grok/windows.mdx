@@ -1,23 +1,26 @@
 ---
 familySlug: xai-grok
 platform: windows
-version: "1.0.1"
-description: xAI Grok cloud transcription, prompt processing, and text-to-speech with one encrypted Windows API key.
+version: "1.3.3"
+description: Grok Voice Transcribe with live text, Grok text models for workflows, and xAI text-to-speech, all with one xAI API key.
 id: com.typewhisper.xai
-minAppVersion: "1.0.9"
+minAppVersion: "1.1.0"
 requirements:
-  - TypeWhisper 1.0.9 or newer
+  - TypeWhisper 1.1.0 or newer
   - Windows 10 or newer
+  - An xAI API key
 highlights:
-  - Grok Speech to Text for recorded and real-time transcription
-  - Grok LLM provider with a refreshable model catalog
-  - Text-to-speech with refreshable built-in and custom xAI voices
-  - Low-latency and text-normalization controls for speech output
+  - Grok Voice Transcribe 2.0 or 1.0 for recorded audio and for live text while you dictate
+  - Up to 100 dictionary terms sent to xAI as key terms
+  - Grok text models for workflow prompts, with Grok 4.3 as the default and the models of your account after a refresh
+  - Text-to-speech with the voices Eve, Ara, Leo, Rex and Sal, voices loaded from xAI, or a custom voice ID
+  - Optional low-latency speech output and spoken forms for numbers, abbreviations and symbols
 configuration:
-  - Store and validate the API key in encrypted TypeWhisper for Windows settings
-  - Choose the transcription model and LLM model, then refresh the catalog when needed
-  - Choose or refresh a TTS voice, optionally enter a custom voice ID, and configure latency and normalization
+  - Enter your xAI API key, select Save settings, then Check connection
+  - Choose Grok Voice Transcribe 2.0 or 1.0 under Transcription model, and turn on Live transcription under Appearance if you want live text
+  - Select Refresh text models and choose the Text model for text processing
+  - Select Refresh voices, choose a Voice or enter a Custom voice ID (optional), set Low-latency speech and Normalize spoken text, then select Save settings
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Xai
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-xai-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-xai-v1.3.3"
 processing: "cloud"
 ---

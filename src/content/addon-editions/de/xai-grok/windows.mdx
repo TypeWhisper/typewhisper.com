@@ -1,23 +1,26 @@
 ---
 familySlug: xai-grok
 platform: windows
-version: "1.0.1"
-description: xAI-Grok-Cloud-Transkription, Prompt-Verarbeitung und Text-to-Speech mit einem verschlüsselt gespeicherten Windows-API-Schlüssel.
+version: "1.3.3"
+description: Grok Voice Transcribe mit Live-Text, Grok-Textmodelle für Workflows und Sprachausgabe von xAI, alles mit einem xAI-API-Schlüssel.
 id: com.typewhisper.xai
-minAppVersion: "1.0.9"
+minAppVersion: "1.1.0"
 requirements:
-  - TypeWhisper 1.0.9 oder neuer
+  - TypeWhisper 1.1.0 oder neuer
   - Windows 10 oder neuer
+  - Ein xAI-API-Schlüssel
 highlights:
-  - Grok Speech to Text für aufgezeichnete und laufende Transkription
-  - Grok als LLM-Anbieter mit aktualisierbarem Modellkatalog
-  - Text-to-Speech mit aktualisierbaren integrierten und benutzerdefinierten xAI-Stimmen
-  - Einstellungen für niedrige Latenz und Textnormalisierung bei der Sprachausgabe
+  - Grok Voice Transcribe 2.0 oder 1.0 für aufgenommenes Audio und für Live-Text beim Diktieren
+  - Bis zu 100 Wörterbuchbegriffe gehen als Schlüsselbegriffe an xAI
+  - Grok-Textmodelle für Workflow-Prompts, mit Grok 4.3 als Standard und nach einer Aktualisierung mit den Modellen deines Kontos
+  - Sprachausgabe mit den Stimmen Eve, Ara, Leo, Rex und Sal, mit von xAI geladenen Stimmen oder einer eigenen Stimmen-ID
+  - Optionale Sprachausgabe mit niedriger Latenz und gesprochene Formen für Zahlen, Abkürzungen und Symbole
 configuration:
-  - Speichere und validiere den API-Schlüssel verschlüsselt in TypeWhisper für Windows
-  - Wähle Transkriptions- und LLM-Modell und aktualisiere den Modellkatalog bei Bedarf
-  - Wähle oder aktualisiere eine TTS-Stimme, trage optional eine eigene Voice-ID ein und konfiguriere Latenz und Normalisierung
+  - xAI-API-Schlüssel eingeben, „Einstellungen speichern“ wählen und danach „Verbindung prüfen“
+  - Unter „Transkriptionsmodell“ Grok Voice Transcribe 2.0 oder 1.0 wählen und unter „Darstellung“ die „Live-Transkription“ einschalten, wenn du Live-Text sehen willst
+  - „Textmodelle aktualisieren“ wählen und das „Textmodell“ für die Textverarbeitung festlegen
+  - „Stimmen aktualisieren“ wählen, eine „Stimme“ auswählen oder eine „Eigene Stimmen-ID (optional)“ eintragen, „Sprachausgabe mit niedriger Latenz“ und „Gesprochenen Text normalisieren“ einstellen und mit „Einstellungen speichern“ übernehmen
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Xai
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-xai-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-xai-v1.3.3"
 processing: "cloud"
 ---

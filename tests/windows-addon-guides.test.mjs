@@ -124,3 +124,55 @@ test("Windows docs and landing text do not send users to Integrations", async ()
     }
   }
 });
+
+function scalar(data, key) {
+  return data.match(new RegExp(`^${key}: ["']?([^"'\\n]+)["']?$`, "m"))?.[1];
+}
+
+function atLeast(version, minimum) {
+  const [a, b] = [version, minimum].map((value) => value.split(".").map(Number));
+  for (let index = 0; index < 3; index += 1) {
+    if (a[index] !== b[index]) return a[index] > b[index];
+  }
+  return true;
+}
+
+// The catalog's minHostVersion is the plugin host version, 1.1.6 in both
+// TypeWhisper for Windows 1.1.0 and 1.2.0, not an app version. Every catalog
+// plugin therefore runs on 1.1.0, the first release with Discover plugins.
+test("Windows add-ons name an app version that has Discover plugins", async () => {
+  const newer = { en: "or newer", de: "oder neuer" };
+
+  for (const locale of LOCALES) {
+    const dir = path.resolve(`src/content/addon-editions/${locale}`);
+    for (const slug of await readdir(dir)) {
+      let content;
+      try {
+        content = await readFile(path.join(dir, slug, "windows.mdx"), "utf8");
+      } catch {
+        continue;
+      }
+
+      const { data } = split(content);
+      const minimum = scalar(data, "minAppVersion");
+      assert.ok(minimum && atLeast(minimum, "1.1.0"), `${locale}/${slug}: minAppVersion ${minimum}`);
+      assert.equal(
+        list(data, "requirements")[0],
+        `TypeWhisper ${minimum} ${newer[locale]}`,
+        `${locale}/${slug}: the first requirement names the app version`,
+      );
+    }
+
+    const addons = path.resolve(`src/content/addons/${locale}`);
+    for (const file of (await readdir(addons)).filter((name) => name.endsWith(".mdx"))) {
+      const { data } = split(await readFile(path.join(addons, file), "utf8"));
+      const platforms = list(data, "platforms");
+      if (platforms.length !== 1 || platforms[0] !== "windows") {
+        continue;
+      }
+
+      const minimum = scalar(data, "minAppVersion");
+      assert.ok(minimum && atLeast(minimum, "1.1.0"), `${locale}/${file}: minAppVersion ${minimum}`);
+    }
+  }
+});

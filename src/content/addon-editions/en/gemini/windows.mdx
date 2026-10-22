@@ -1,37 +1,42 @@
 ---
 familySlug: "gemini"
 platform: "windows"
-version: "1.3.0"
-description: "Google Gemini cloud transcription and Gemini/Gemma text processing with separate model catalogs."
+version: "1.3.10"
+description: "Google Gemini cloud transcription with live text, plus Gemini and Gemma text processing with separate model catalogs."
 id: "com.typewhisper.gemini"
-minAppVersion: "1.0.9"
+appName: "Google Gemini"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper 1.0.9 or newer"
+  - "TypeWhisper 1.1.0 or newer"
   - "Windows 10 or newer"
+  - "A Gemini API key from Google AI Studio"
 highlights:
-  - "Cloud transcription with Smart and Verbatim modes"
-  - "Gemini and Gemma models for workflow prompts"
-  - "Refreshable transcription and language-model catalogs"
-  - "Live preview with supported transcription models"
+  - "Recorded-audio transcription with Gemini 3.5 Transcribe or another transcribe model from your catalog"
+  - "Live text while recording with transcription models that have a live version"
+  - "Smart and Verbatim transcription modes, language hints, and dictionary terms"
+  - "Gemini and Gemma text models for workflow prompts, with a default model that a workflow can override"
+  - "Refresh models loads separate transcription and text catalogs for your API key"
 configuration:
-  - "Store and validate the API key in encrypted Windows settings"
-  - "Refresh models and select the transcription model in provider or workflow settings"
-  - "Choose Smart for cleaned dictation or Verbatim for literal output"
+  - "Enter your Gemini API key under API key, choose Save settings, and verify it with Check connection"
+  - "Choose Refresh models to load the transcription and text models available to your key"
+  - "Choose a Transcription model and set Transcription mode to Smart or Verbatim"
+  - "Choose the default Text model and set Temperature to Provider default or Custom (0 to 2)"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gemini"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.3.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.3.10"
 processing: "cloud"
 ---
 
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Google Gemini**. The add-on then appears in the Settings sidebar, and its page opens.
-2. Save your Google AI Studio API key and refresh the model catalog.
-3. Select Gemini as the transcription provider and choose an available transcription model.
-4. Choose **Smart** for cleaned dictation or **Verbatim** for a more literal result. Live previews require a model with live support.
-5. For text processing, select Gemini separately as the workflow's LLM provider and choose a Gemini or Gemma text model.
+2. Enter your Gemini API key from Google AI Studio under **API key**, choose **Save settings**, and verify the key with **Check connection**.
+3. Choose **Refresh models** to load the transcription and text models available to your key. Until you refresh, the add-on offers Gemini 3.5 Transcribe and the Gemini Flash Lite, Flash and Pro "latest" text models.
+4. Choose a **Transcription model**. Under **Transcription mode**, choose **Smart** for cleaned-up text or **Verbatim** to keep the spoken wording. Live text while recording needs a transcription model that has a live version, such as Gemini 3.5 Transcribe.
+5. For text processing, choose the default **Text model** and set **Temperature** to **Provider default** or **Custom** with a **Custom temperature** from 0 to 2. Choose **Save settings**.
+6. Select Google Gemini as the transcription engine in general settings, a profile, or a workflow override. For text processing, select it as a workflow's LLM provider; the workflow can choose a different Gemini or Gemma model.
 
 ## Models and privacy
 
-Transcription and language models are filtered separately. Available models depend on Google's catalog and your API access. The transcription provider does not support translation requests; translation can run as a separate text workflow.
+Transcription and text models are filtered into separate catalogs. Which models you can use depends on Google's catalog and your API access. Opening the add-on's page sends no request; only **Refresh models** fetches and saves the catalogs. The transcription provider does not support translation requests; translation can run as a separate text workflow.
 
-Audio and text are sent to Google for the capability you select. Billing and usage limits depend on your Google account.
+Audio and text are sent to Google for the capability you select. Recorded audio is uploaded through Google's Files API with `store: false` and deleted on a best-effort basis after the request succeeds, fails, or is canceled. Billing and usage limits depend on your Google account.

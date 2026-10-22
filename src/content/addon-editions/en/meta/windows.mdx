@@ -1,29 +1,29 @@
 ---
 familySlug: "meta"
 platform: "windows"
-version: "1.0.1"
+version: "1.2.14"
 description: "Muse Voice Transcribe for real-time and file transcription with optional speaker diarization, plus Muse Spark for LLM workflows."
 id: "com.typewhisper.meta"
-minAppVersion: "1.0.10"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper 1.0.10 or newer"
+  - "TypeWhisper 1.1.0 or newer"
   - "Windows 10 or newer"
   - "Meta Model API access and an API key"
 highlights:
-  - "Real-time and uploaded-file transcription with Muse Voice Transcribe"
+  - "Real-time and file transcription with Muse Voice Transcribe"
   - "Optional speaker diarization for both live and uploaded audio"
   - "Language and keyword biasing without disabling real-time streaming"
   - "Muse Spark 1.2 and 1.1 for LLM workflow processing"
-  - "Automatic discovery of compatible transcription and LLM models"
+  - "Refresh models loads the models available to your API key"
   - "Five reasoning-effort levels for Muse Spark"
 configuration:
-  - "Store the Meta API key securely and validate it with Test"
-  - "Refresh the model catalog from Meta or keep the built-in fallback models"
-  - "Choose the Muse Voice Transcribe model and optionally enable speaker diarization"
-  - "Choose the Muse Spark model used for LLM workflows"
-  - "Set Muse Spark reasoning effort to Minimal, Low, Medium, High, or X High"
+  - "Enter your Meta API key, select Save settings, then select Check connection"
+  - "Select Refresh models to load the models available to your key, or keep the built-in models"
+  - "Under Transcription model, choose a Muse Voice Transcribe model and select Use selected model"
+  - "Set Speaker labels to On if you need speaker-labelled text"
+  - "Choose the default Muse Spark model under Text model and set Reasoning effort to Minimal, Low, Medium, High, or Very high, then select Save settings"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.2.14"
 screenshots:
   - src: "/screenshots/windows/plugins/com.typewhisper.meta.png"
     caption: "API key validation, Muse Voice Transcribe with speaker diarization, Muse Spark model selection, and reasoning effort."
@@ -33,67 +33,67 @@ processing: "cloud"
 
 ## Availability
 
-Meta 1.0.1 is available as a [TypeWhisper for Windows plugin release](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.0.1). Its current source code is maintained on the repository's `main` branch.
+Meta 1.2.14 is available in **Settings > Discover plugins** in TypeWhisper for Windows 1.1.0 or newer and as a [plugin release](https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.2.14). Its current source code is maintained on the repository's `main` branch.
 
 ## What the Windows add-on does
 
-Version 1.0.1 provides two capabilities through one Meta API key:
+Version 1.2.14 provides two capabilities through one Meta API key:
 
-- **Transcription:** Muse Voice Transcribe handles live dictation and uploaded audio. It can include speaker labels when diarization is enabled.
-- **LLM workflows:** Muse Spark processes TypeWhisper workflow prompts. The built-in fallback catalog contains Muse Spark 1.2 and 1.1.
+- **Transcription:** Muse Voice Transcribe handles live dictation, finished recordings and audio files. It can label speakers when **Speaker labels** is on.
+- **LLM workflows:** Muse Spark processes TypeWhisper workflow prompts. The built-in catalog contains Muse Spark 1.2 and 1.1.
 
-Both capabilities use the same securely stored API key. The add-on loads compatible models from Meta's `/v1/models` endpoint and keeps its saved catalog if a later refresh fails.
+Both capabilities use the same API key, which TypeWhisper keeps in encrypted Windows user storage. **Refresh models** loads the compatible models available to your key from Meta's `/v1/models` endpoint. If a refresh fails, the previous catalog remains.
 
 ## Settings
 
+The add-on's page in the Settings sidebar shows these options. Changes to **Speaker labels**, **Text model** and **Reasoning effort** take effect when you select **Save settings**.
+
 | Setting | What it controls |
 | --- | --- |
-| **API Key** | Stores the Meta Model API credential in TypeWhisper's secure secret storage. **Test** validates the key and refreshes the model catalog. |
-| **Transcription Model** | Selects the Muse Voice Transcribe model. Muse Voice Transcribe 1.0 remains available as the documented fallback before a catalog is loaded. |
-| **Refresh** | Reloads compatible `muse-voice-transcribe-*` and `muse-spark-*` models from Meta. Saved fallback models remain usable if refreshing fails. |
-| **Speaker diarization** | Labels speakers in live and uploaded audio. Real-time transcription uses 16 kHz PCM over Meta's WebSocket API. |
-| **LLM Model** | Selects the Muse Spark model used by TypeWhisper workflows. Muse Spark 1.2 is the default fallback, with Muse Spark 1.1 also available. |
-| **Reasoning Effort** | Controls Muse Spark's internal reasoning with **Minimal**, **Low**, **Medium**, **High**, or **X High**. The default is **Medium**. |
+| **API key** | Stores the Meta Model API key. Enter a new key to replace the saved one; **Remove saved key** deletes it. |
+| **Check connection** | Checks the saved key against Meta. No audio is uploaded, and the model catalog stays unchanged. |
+| **Refresh models** | Loads the `muse-voice-transcribe-*` and `muse-spark-*` models available to your key and reports how many transcription and text models were found. |
+| **Transcription model** | Selects the Muse Voice Transcribe model. Before the first refresh, Muse Voice Transcribe 1.0 is available. **Use selected model** makes it the model for dictation. |
+| **Speaker labels** | **Off** or **On**. When on, Meta identifies speakers in live and recorded transcription. Each speaker turn starts on its own line with the speaker label that Meta returns. |
+| **Text model** | The default Muse Spark model for text processing. Before the first refresh, Muse Spark 1.2 and Muse Spark 1.1 are available. |
+| **Reasoning effort** | **Minimal**, **Low**, **Medium**, **High** or **Very high**. Higher effort can improve complex tasks but increases response time. The default is **Medium**. |
 
-Changing the API key clears the previously fetched model catalog and normalizes both model selections. Test or refresh the connection to load the catalog for the new key.
+Changing the API key clears the loaded model catalog. Model selections that the built-in catalog does not contain return to Muse Voice Transcribe 1.0 and Muse Spark 1.2. Select **Refresh models** to load the catalog for the new key.
 
 ## Setup tutorial
 
-1. Update to TypeWhisper 1.0.10 or newer and create an API key in the Meta Model API developer portal.
-2. In TypeWhisper for Windows, open **Settings > Discover plugins** and install **Meta**. The add-on then appears in the Settings sidebar, and its page opens.
-3. Paste the API key on the add-on's page. It is saved as a protected secret.
-4. Select **Test**. A valid key triggers a model refresh and reports how many transcription and language models were loaded.
-5. Choose a **Transcription Model** and an **LLM Model**.
-6. Enable **Speaker diarization** only when speaker-labelled output is useful.
-7. Leave **Reasoning Effort** at **Medium** for a balanced starting point, or choose another level for Muse Spark workflows.
+1. Make sure you use TypeWhisper for Windows 1.1.0 or newer, and create an API key in the Meta Model API developer portal.
+2. In TypeWhisper, open **Settings > Discover plugins** and install **Meta**. The add-on then appears in the Settings sidebar, and its page opens.
+3. Paste the key into **API key** and select **Save settings**.
+4. Select **Check connection**, then **Refresh models**. The page reports how many transcription and text models were loaded.
+5. Under **Transcription model**, choose a Muse Voice Transcribe model and select **Use selected model**.
+6. Set **Speaker labels** to **On** only when speaker-labelled text is useful.
+7. Choose a **Text model** and leave **Reasoning effort** at **Medium** for a balanced start. Then select **Save settings**.
 
 ## Use Muse Voice Transcribe
 
-1. Open the TypeWhisper profile you want to use and select **Meta** as the transcription engine.
-2. Set the expected input language or languages. The add-on forwards supported choices as language bias.
-3. Add important names and specialist terms to the TypeWhisper dictionary. Version 1.0.1 sends them as keywords in both file and real-time transcription without disabling streaming.
-4. Enable **Speaker diarization** before recording or importing a file when you need speaker labels.
-5. Record a short test and check the final text before using the profile for longer audio.
+1. Check that the add-on's page shows **Selected for dictation.** under **Transcription model**.
+2. Under **Settings > Dictation**, set the **Spoken language**, or leave it on **Automatic** and choose **Preferred languages**. The add-on passes supported languages to Meta as language bias.
+3. Add important names and specialist terms to the **Dictionary**. The add-on sends up to 100 of them, with 600 characters in total, to Meta as keywords. This works for live and recorded audio and does not disable streaming.
+4. Turn on **Live transcription** under **Settings > Appearance** if you want Meta to transcribe while you speak. Without it, the add-on uploads the finished recording.
+5. Record a short test and check the final text before using Meta for longer audio.
 
-In diarization mode, Meta's completed turns are combined with speaker labels when available. When recording stops, TypeWhisper drains queued audio and waits for Meta's terminal transcript before completing the result. Translation is not supported.
+In a live session with speaker labels on, the add-on waits until Meta has delivered all completed speaker turns before it finishes the result. If the live connection is interrupted, TypeWhisper transcribes the full recording after you stop. Translation is not supported.
 
 ## Use Muse Spark in a workflow
 
-1. Create or edit a TypeWhisper workflow that contains an LLM processing step.
-2. Select **Meta** as the LLM provider.
-3. Choose the Muse Spark model configured in the add-on settings.
-4. Start with **Medium** reasoning effort and test the workflow on representative dictated text.
-5. Increase the reasoning effort for more involved instructions, or reduce it when faster, simpler processing is sufficient.
-
-The Windows add-on supports parallel hedged LLM requests when TypeWhisper uses that execution mode.
+1. Create or edit a workflow under **Workflows**.
+2. Choose **Meta** under **Provider** and a Muse Spark model under **Model**.
+3. Start with **Medium** reasoning effort and test the workflow on representative dictated text.
+4. Increase **Reasoning effort** on the add-on's page for more involved instructions, or reduce it when faster, simpler processing is sufficient. The level applies to all Muse Spark requests from the add-on.
 
 ## Troubleshooting
 
-- **The model settings are hidden:** Enter an API key first. The model section appears after a key has been stored.
-- **Invalid API key:** Check the key in Meta's developer portal, paste it again, and select **Test**.
-- **Refreshing models fails:** The saved or built-in fallback catalog remains active. Retry **Refresh** after checking the connection and Meta API availability.
-- **No speaker labels appear:** Confirm that **Speaker diarization** was enabled before the live session or file transcription and that Meta returned speaker information.
-- **A newly available model is missing:** Use **Refresh**. Only model IDs beginning with `muse-voice-transcribe-` or `muse-spark-` are shown.
+- **The transcription model cannot be selected:** The page asks you to complete the provider configuration or says that an API key is required. Save an API key first.
+- **Check connection fails:** Check the key in Meta's developer portal, paste it again into **API key**, select **Save settings** and check the connection again.
+- **Refreshing models fails:** The previous catalog remains, so the saved or built-in models stay usable. Check the connection and Meta API availability, then select **Refresh models** again.
+- **No speaker labels appear:** Confirm that **Speaker labels** was set to **On** and saved before the recording or file transcription, and that Meta returned speaker information.
+- **A newly available model is missing:** Select **Refresh models**. Only model IDs beginning with `muse-voice-transcribe-` or `muse-spark-` are shown.
 
 ## Cloud processing and privacy
 
