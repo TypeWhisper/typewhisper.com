@@ -238,8 +238,8 @@ export default function DocsWindowsInstallation({
           {isDe ? " oder " : " or "}
           <code>%LOCALAPPDATA%\TypeWhisper</code>
           {isDe
-            ? ", und lässt diesen Ordner unverändert. Die Store-Beta übernimmt keine alten Daten."
-            : ", when it first starts without a profile, and leaves that folder unchanged. The Store beta does not import old data."}
+            ? " und lässt diesen Ordner unverändert. Die Store-Beta übernimmt keine Daten aus TypeWhisper 1.0."
+            : ", when it first starts without a profile, and leaves that folder unchanged. The Store beta does not import data from TypeWhisper 1.0."}
         </p>
         <ol>
           <li>{isDe ? "Beende TypeWhisper über das Tray-Menü." : "Quit TypeWhisper from the tray menu."}</li>

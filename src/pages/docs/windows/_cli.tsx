@@ -12,6 +12,7 @@ type Flag = [name: string, descriptionDe: string, descriptionEn: string];
 
 const globalFlags: Flag[] = [
   ["--port <N>", "Port überschreiben; sonst CLI-Discovery, danach Fallback 8978", "Override the port; otherwise try CLI discovery, then fallback 8978"],
+  ["--profile <directory>", "Discovery-Dateien aus diesem Profilordner lesen; ersetzt die Umgebungsvariable TYPEWHISPER_PROFILE", "Read the discovery files from this profile folder; overrides the TYPEWHISPER_PROFILE environment variable"],
   ["--api-token <token>", "Token aus Discovery und Umgebungsvariable überschreiben", "Override the discovery and environment token"],
   ["--json", "Maschinenlesbare JSON-Ausgabe", "Machine-readable JSON output"],
   ["--version", "CLI-Version ausgeben", "Print the CLI version"],
@@ -116,7 +117,7 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
         <ol>
           <li>{isDe ? "Öffne Einstellungen > Erweitert > Kommandozeilen-Tool und klicke auf Installieren." : "Open Settings > Advanced > Command line tool and click Install."}</li>
           <li>{isDe ? "Öffne danach ein neues Terminal, damit der aktualisierte Benutzer-PATH geladen wird." : "Open a new terminal afterward so the updated user PATH is loaded."}</li>
-          <li>{isDe ? "Schalte unter Einstellungen > Erweitert > API-Server „HTTP-API aktivieren“ ein und wähle „Anwenden“." : "In Settings > Advanced > API server, turn on Enable HTTP API and select Apply."}</li>
+          <li>{isDe ? "Schalte unter Einstellungen > Erweitert > API-Server „HTTP-API aktivieren“ ein." : "In Settings > Advanced > API server, turn on Enable HTTP API."}</li>
           <li>{isDe ? "Prüfe die Verbindung mit typewhisper status." : "Verify the connection with typewhisper status."}</li>
         </ol>
         <DocsCode locale={locale} lang="powershell" code="typewhisper status" />
@@ -142,9 +143,21 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
           <code>%LOCALAPPDATA%\TypeWhisper-WinUI</code>.
         </p>
         <p>
+          {isDe ? "Für ein anderes Profil, etwa das der Microsoft-Store-Version, gibst du dessen Ordner mit " : "To reach another profile, such as the Microsoft Store edition's, pass its folder with "}
+          <code>--profile &lt;directory&gt;</code>
+          {isDe ? " an oder setzt die Umgebungsvariable " : " or set the "}
+          <code>TYPEWHISPER_PROFILE</code>
+          {isDe ? " darauf. Die CLI liest dann nur die Discovery-Dateien dieses Ordners." : " environment variable to it. The CLI then reads only the discovery files in that folder."}
+        </p>
+        <DocsCode
+          locale={locale}
+          lang="powershell"
+          code={`typewhisper status --profile "$env:LOCALAPPDATA\\Packages\\TypeWhisper.TypeWhisper_51tqb5623pxja\\LocalCache\\Local\\TypeWhisper-WinUI"`}
+        />
+        <p>
           {isDe
-            ? "Den Token aus der Discovery-Datei verwendet die CLI nur für den dort angegebenen Port. Meldet die Discovery, dass kein Token verlangt wird, sendet sie keinen. Die Priorität lautet: --api-token, Umgebungsvariable TYPEWHISPER_API_TOKEN, Discovery."
-            : "The CLI uses the token from the discovery file only for the port listed there, and sends none when discovery reports that no token is required. Priority is --api-token, the TYPEWHISPER_API_TOKEN environment variable, then discovery."}
+            ? "Das Token aus der Discovery-Datei verwendet die CLI nur für den dort angegebenen Port; meldet die Discovery, dass kein Token verlangt wird, verwendet die CLI es nicht. Die Priorität lautet: --api-token, Umgebungsvariable TYPEWHISPER_API_TOKEN, Discovery."
+            : "The CLI uses the token from the discovery file only for the port listed there, and ignores it when discovery reports that no token is required. Priority is --api-token, the TYPEWHISPER_API_TOKEN environment variable, then discovery."}
         </p>
       </DocsSection>
 

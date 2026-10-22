@@ -66,7 +66,7 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
       >
         <ol>
           <li>{isDe ? "Öffne Einstellungen > Erweitert > API-Server." : "Open Settings > Advanced > API server."}</li>
-          <li>{isDe ? "Schalte „HTTP-API aktivieren“ ein, behalte Port 8978 oder trage einen anderen freien lokalen Port ein und wähle „Anwenden“." : "Turn on Enable HTTP API, keep port 8978 or enter another available local port, and select Apply."}</li>
+          <li>{isDe ? "Schalte „HTTP-API aktivieren“ ein; der Server startet sofort. Für einen anderen Port als 8978 trägst du ihn ein und wählst „Anwenden“." : "Turn on Enable HTTP API; the server starts right away. To use a port other than 8978, enter it and select Apply."}</li>
           <li>{isDe ? "Prüfe den Status in PowerShell:" : "Check the status from PowerShell:"}</li>
         </ol>
         <DocsCode
@@ -93,7 +93,7 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
           <code>api-discovery.json</code>{" "}
           {isDe ? "mit Port, Token, Adresse, API-Version, Prozess-ID und der Angabe, ob ein Token verlangt wird, sowie die ältere Datei " : "with port, token, address, API version, process ID, and whether a token is required, plus the legacy "}
           <code>api-port</code>
-          {isDe ? ". Wo die Microsoft-Store-Version ihr Profil ablegt, steht unter " : ". For where the Microsoft Store edition keeps its profile, see "}
+          {isDe ? ". Wo die Microsoft-Store-Version ihr Profil ablegt, steht unter " : " file. For where the Microsoft Store edition keeps its profile, see "}
           <a href={localePath(locale, "/docs/windows/installation#data-and-uninstall")}>
             {isDe ? "Datenablage und Deinstallation" : "Data location and uninstall"}
           </a>
@@ -115,8 +115,8 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
         />
         <p>
           {isDe
-            ? "Token-Authentifizierung ist optional. Wenn „API-Token verlangen“ aktiv ist, bleibt /v1/status öffentlich. Sende den Token bei allen anderen API-Anfragen als Bearer-Token oder im Header X-TypeWhisper-API-Token."
-            : "Token authentication is optional. When Require API token is enabled, /v1/status stays public. Send the token with every other API request as a bearer token or the X-TypeWhisper-API-Token header."}
+            ? "Token-Authentifizierung ist optional: Schalte „API-Token verlangen“ ein und wähle „Anwenden“. /v1/status bleibt dann öffentlich. Sende das Token bei allen anderen API-Anfragen als Bearer-Token oder im Header X-TypeWhisper-API-Token."
+            : "Token authentication is optional: turn on Require API token and select Apply. /v1/status then stays public. Send the token with every other API request as a bearer token or the X-TypeWhisper-API-Token header."}
         </p>
         <DocsCode
           locale={locale}

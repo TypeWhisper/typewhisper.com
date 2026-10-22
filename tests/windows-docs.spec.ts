@@ -263,11 +263,12 @@ test.describe("Windows documentation", () => {
     await expect(
       page.getByText("Settings > Advanced > API server", { exact: false }),
     ).toBeVisible();
+    // Turning the switch on starts the server; Apply only saves port and token changes.
     await expect(
-      page.getByText("Turn on Enable HTTP API", { exact: false }),
+      page.getByText("Turn on Enable HTTP API; the server starts right away.", { exact: false }),
     ).toBeVisible();
     await expect(
-      page.getByText("When Require API token is enabled", { exact: false }),
+      page.getByText("turn on Require API token and select Apply", { exact: false }),
     ).toBeVisible();
     await expect(
       page.getByText("api-discovery.json", { exact: false }).first(),
@@ -304,6 +305,13 @@ test.describe("Windows documentation", () => {
     ).toBeVisible();
     await expect(
       page.getByText("--await-download", { exact: true }),
+    ).toBeVisible();
+    // Another profile, such as the Store edition's, is reached with --profile.
+    await expect(
+      page.getByText("--profile <directory>", { exact: true }).first(),
+    ).toBeVisible();
+    await expect(
+      page.getByText("TYPEWHISPER_PROFILE", { exact: true }).first(),
     ).toBeVisible();
   });
 
