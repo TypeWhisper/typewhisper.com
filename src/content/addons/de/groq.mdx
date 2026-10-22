@@ -48,6 +48,8 @@ Groq bietet Cloud-Transkription mit Whisper-Modellen und Textverarbeitung mit LL
 
 Aktualisiere den Modellkatalog in TypeWhisper, um die für dein Konto verfügbaren Modelle zu sehen. Prüfe [Groqs Abkündigungen](https://console.groq.com/docs/deprecations), wenn ein älteres gespeichertes Modell nicht mehr funktioniert.
 
+Unter macOS ist ab Version 1.0.29 dieses Add-ons GPT-OSS 120B das Standard-LLM-Modell. Ein gespeichertes Modell, das in der aktuellen Modellliste fehlt, etwa das abgekündigte `llama-3.3-70b-versatile`, wird beim Senden einer Anfrage durch GPT-OSS 120B ersetzt. Deine Auswahl bleibt gespeichert und gilt wieder, wenn dein Konto das Modell erneut anbietet. Beim Start aktualisiert das Add-on eine zwischengespeicherte Modellliste, die einen Tag oder älter ist, im Hintergrund. Ein Workflow oder Fallback-Eintrag, der ein abgekündigtes Modell ausdrücklich nennt, behält es; wähle dort ein anderes Modell.
+
 ## Konfiguration
 
 - **API-Schlüssel** - Registriere dich auf console.groq.com und erstelle einen kostenlosen API-Schlüssel.
