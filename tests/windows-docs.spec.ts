@@ -26,19 +26,25 @@ const sidebarSlugs = [
   "/managed-settings",
 ];
 
-// Model load, unload, and delete in the API, available since 1.1.
+// Model load, unload, and delete in the API and CLI, available since 1.1.
 const modelCopy = {
   en: {
     title: "Load, unload, and delete models",
     managed:
       "From TypeWhisper for Windows 1.2, managed settings can refuse these routes with 403.",
     managedLink: "managed settings",
+    output: "output",
+    flags: "Model command flags",
+    switchModel: "Switch to another model for one job and unload it afterwards",
   },
   de: {
     title: "Modelle laden, entladen und löschen",
     managed:
       "Ab TypeWhisper für Windows 1.2 können verwaltete Einstellungen diese Routen mit 403 ablehnen.",
     managedLink: "verwaltete Einstellungen",
+    output: "Ausgabe",
+    flags: "Flags für Modellbefehle",
+    switchModel: "Für einen Auftrag zu einem anderen Modell wechseln und es danach entladen",
   },
 } as const;
 
@@ -316,6 +322,50 @@ test.describe("Windows documentation", () => {
       await expect(models).not.toContainText("parakeet-tdt-0.6b-v3");
       await expect(models).not.toContainText("openai_whisper");
     });
+
+    test(`${locale} CLI documents the model commands`, async ({ page }) => {
+      await page.goto(`/${locale}/docs/windows/cli/`);
+
+      for (const [id, name, output] of [
+        ["models-load", "models load", "ready: sherpa-onnx parakeet-tdt-0.6b"],
+        ["models-unload", "models unload", "unloaded: sherpa-onnx parakeet-tdt-0.6b"],
+        ["models-delete", "models delete", "deleted: sherpa-onnx canary-180m-flash"],
+      ] as const) {
+        await expectAnchoredHeading(page, 3, `command-${id}`, name);
+        const block = page.locator("[data-docs-code]", {
+          has: page.getByText(output, { exact: true }),
+        });
+        await expect(block).toHaveCount(1);
+        await expect(block.locator(".docs-code__label")).toHaveText(text.output);
+      }
+      await expect(
+        page.getByText("typewhisper models unload --engine sherpa-onnx", {
+          exact: true,
+        }),
+      ).toBeVisible();
+      await expect(
+        page
+          .locator("section#commands")
+          .getByRole("link", { name: text.title, exact: true }),
+      ).toHaveAttribute("href", `/${locale}/docs/windows/api/#model-management`);
+
+      await expectAnchoredHeading(page, 2, "model-flags", text.flags);
+      const flags = page.getByRole("region", { name: text.flags });
+      for (const flag of ["--engine <id>", "--model <id>"]) {
+        await expect(
+          flags.getByRole("cell", { name: flag, exact: true }),
+        ).toBeVisible();
+      }
+
+      const examples = page.locator("section#examples");
+      await expect(examples).toContainText(text.switchModel);
+      await expect(examples).toContainText(
+        "typewhisper models load --engine whisper-cpp --model large-v3-turbo",
+      );
+      await expect(examples).toContainText(
+        "typewhisper models unload --engine whisper-cpp",
+      );
+    });
   }
 
   test("Windows docs do not repeat superseded CPU-only, registry, or port claims", async ({
@@ -456,6 +506,8 @@ test.describe("Windows documentation", () => {
       "/en/docs/windows/",
       "/en/docs/windows/api/",
       "/de/docs/windows/api/",
+      "/en/docs/windows/cli/",
+      "/de/docs/windows/cli/",
       "/de/docs/windows/workflows/",
       "/en/docs/windows/deployment/",
       "/de/docs/windows/managed-settings/",
