@@ -254,7 +254,7 @@
   "features.windows.private.caption": "Dashboard: Statistik und Aktivität der letzten Woche",
   "features.windows.dictation.caption": "Diktat: Engine, Mikrofon und gesprochene Sprache",
   "features.windows.prompts.caption": "Workflows: aktive Workflows mit ihren Auslösern",
-  "features.windows.profiles.caption": "Integrationen: installierte Engines und KI-Anbieter",
+  "features.windows.profiles.caption": "NVIDIA Parakeet: Plugin-Seite mit lokalen Modellen und Verarbeitungsgerät",
   "features.windows.transcription.caption": "Datei-Transkription: Import, Modell und Warteschlange",
   "features.ios.private.caption": "App-Store-Screenshot: Aufnahme mit Live-Text",
   "features.ios.dictation.caption": "App-Store-Screenshot: die TypeWhisper-Tastatur in einer anderen App",

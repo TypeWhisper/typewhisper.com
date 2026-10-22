@@ -20,6 +20,8 @@ export interface AddonEdition {
   description: string;
   processing: "local" | "cloud" | "custom" | "hybrid";
   id?: string;
+  /** Name in the app's plugin list, when it differs from the add-on name on this site. */
+  appName?: string;
   minAppVersion?: string;
   minOsVersion?: string;
   requirements?: string[];
