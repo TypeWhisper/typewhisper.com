@@ -87,6 +87,8 @@
   "addons.editions.newerHost.link": "Check release status",
   "addons.editions.guide.activate.windowsMemory": "To reuse saved facts, open a workflow that processes text with an LLM and choose {name} under Memory context. Up to five matching entries are sent to that workflow's LLM provider. TypeWhisper for Windows does not extract memories automatically, and Dictation Only workflows do not use memory context.",
   "addons.editions.guide.example.windowsMemory": "Save a distinctive test fact such as “Project Aurora uses British English.”, choose {name} under Memory context in a text-processing workflow, and ask that workflow which spelling Aurora uses. Then set Memory context to Off and check that the answer no longer uses the fact.",
+  "addons.editions.guide.activate.windowsAction": "Create or open a workflow and choose {name} under Action Target.",
+  "addons.editions.guide.example.windowsAction": "Choose {name} under Action Target in a workflow and dictate a short, clearly structured test. Then inspect the object created at the destination.",
   "addons.label": "Open ecosystem",
   "addons.filter.group": "Filter add-ons",
   "addons.filter.category": "Category",

@@ -7,6 +7,7 @@ import {
   type PluginCategory,
 } from "@/data/addons";
 import { t, type Locale } from "@/i18n/index";
+import { addonEditionCapabilityName } from "@/lib/addon-edition-guide";
 
 interface Props {
   edition: AddonEdition;
@@ -20,8 +21,11 @@ const capabilities = getAddonEditionCapabilities(
   edition.platform,
 );
 
-const format = (key: string) =>
-  t(locale, key).replaceAll("{name}", plugin.name);
+const format = (key: string, name = plugin.name) =>
+  t(locale, key).replaceAll("{name}", name);
+// Activation steps and examples use the name under which the app lists the capability.
+const formatFor = (key: string, capability: PluginCategory) =>
+  format(key, addonEditionCapabilityName(edition, plugin.name, capability));
 
 const activationKeyByCapability: Record<PluginCategory, string> = {
   transcription: "addons.editions.guide.activate.transcription",
@@ -47,6 +51,17 @@ const exampleOverrides: Partial<Record<string, string>> = {
   webhook: "addons.editions.guide.example.webhook",
 };
 
+// TypeWhisper for Windows names and handles these capabilities differently from macOS.
+const windowsActivationKeys: Partial<Record<PluginCategory, string>> = {
+  memory: "addons.editions.guide.activate.windowsMemory",
+  action: "addons.editions.guide.activate.windowsAction",
+};
+const windowsExampleKeys: Partial<Record<PluginCategory, string>> = {
+  memory: "addons.editions.guide.example.windowsMemory",
+  action: "addons.editions.guide.example.windowsAction",
+};
+const isWindows = edition.platform === "windows";
+
 const configuration = edition.configuration ?? [];
 const hasSeparateSettings = !configuration.some((item) =>
   /no separate add-on|keine separate add-on/i.test(item),
@@ -66,18 +81,20 @@ const setupSteps = [
     : []),
   ...configuration,
   ...capabilities.map((capability) =>
-    format(capability === "memory" && edition.platform === "windows"
-      ? "addons.editions.guide.activate.windowsMemory"
-      : activationKeyByCapability[capability]),
+    formatFor(
+      (isWindows ? windowsActivationKeys[capability] : undefined)
+        ?? activationKeyByCapability[capability],
+      capability,
+    ),
   ),
 ];
 const examples = capabilities.map((capability) => ({
   capability,
-  text: format(
-    (capability === "memory" && edition.platform === "windows"
-      ? "addons.editions.guide.example.windowsMemory"
-      : exampleOverrides[edition.familySlug])
+  text: formatFor(
+    (isWindows ? windowsExampleKeys[capability] : undefined)
+      ?? exampleOverrides[edition.familySlug]
       ?? exampleKeyByCapability[capability],
+    capability,
   ),
 }));
 const processingKeys = {

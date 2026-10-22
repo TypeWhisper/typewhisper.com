@@ -176,3 +176,42 @@ test("Windows add-ons name an app version that has Discover plugins", async () =
     }
   }
 });
+
+function map(data, key) {
+  const block = data.match(new RegExp(`^${key}:\\n((?:  [\\w-]+: .+\\n?)+)`, "m"))?.[1] ?? "";
+  return Object.fromEntries(
+    [...block.matchAll(/^  ([\w-]+): ["']?(.+?)["']?$/gm)].map((match) => [match[1], match[2]]),
+  );
+}
+
+// The generated guide names a capability as the app lists it (see
+// addonEditionCapabilityName); a name for a capability the edition lacks
+// would never show, and both languages need the same capabilities.
+test("capability names of Windows editions belong to their capabilities", async () => {
+  const capabilities = JSON.parse(
+    await readFile(path.resolve("src/data/addon-edition-capabilities.json"), "utf8"),
+  );
+  const names = {};
+  for (const locale of LOCALES) {
+    const dir = path.resolve(`src/content/addon-editions/${locale}`);
+    for (const slug of await readdir(dir)) {
+      let content;
+      try {
+        content = await readFile(path.join(dir, slug, "windows.mdx"), "utf8");
+      } catch {
+        continue;
+      }
+      const declared = map(split(content).data, "capabilityNames");
+      for (const capability of Object.keys(declared)) {
+        assert.ok(
+          capabilities[slug]?.windows?.includes(capability),
+          `${locale}/${slug}: ${capability} is not a Windows capability`,
+        );
+      }
+      (names[slug] ??= {})[locale] = Object.keys(declared).sort();
+    }
+  }
+  for (const [slug, byLocale] of Object.entries(names)) {
+    assert.deepEqual(byLocale.de, byLocale.en, `${slug}: the same capabilities have names in both languages`);
+  }
+});

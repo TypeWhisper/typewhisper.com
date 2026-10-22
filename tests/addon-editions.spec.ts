@@ -398,6 +398,39 @@ test.describe("add-on platform editions", () => {
     await expect(page.getByText("macOS-Schlüsselbund")).toHaveCount(0);
   });
 
+  test("the generated Windows guide names providers and action targets as the app does", async ({
+    page,
+  }) => {
+    const guide = page.getByTestId("addon-edition-guide");
+
+    // Discover plugins and the provider pickers list Voxtral as Mistral.
+    await page.goto("/en/addons/voxtral/windows/");
+    await expect(guide).toContainText("install Voxtral, which is listed there as Mistral");
+    await expect(guide).toContainText("Under Settings > Dictation, select Mistral as the Provider");
+    await expect(guide).toContainText("In a workflow, select Mistral as the Provider");
+    await expect(guide).not.toContainText("select Voxtral");
+
+    // Granite's provider has a name of its own, in the app's language.
+    await page.goto("/de/addons/granite/windows/");
+    await expect(guide).toContainText(
+      "Wähle unter Einstellungen > Diktat Lokal (Granite Speech) als Anbieter und dann ein Modell.",
+    );
+
+    // An action target is listed under the name of its action.
+    await page.goto("/en/addons/linear/windows/");
+    await expect(guide).toContainText(
+      "Create or open a workflow and choose Create Linear issue under Action Target.",
+    );
+    await page.goto("/de/addons/file-memory/windows/");
+    await expect(guide).toContainText("wähle unter Aktionsziel In File Memory merken.");
+    await expect(guide).not.toContainText("Action-Ziel");
+
+    // Smallest AI's Spoken feedback step comes from the guide only once.
+    await page.goto("/en/addons/smallest-pulse/windows/");
+    await expect(guide.locator("li", { hasText: "Spoken feedback" })).toHaveCount(1);
+    await expect(guide).toContainText("choose a voice from Smallest AI under Voice");
+  });
+
   test("edition switch keeps platform-specific metadata and content separate", async ({
     page,
   }) => {

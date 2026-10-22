@@ -4,6 +4,9 @@ platform: "windows"
 version: "1.1.3"
 description: "Serverprofile für Transkription und Textverarbeitung mit jedem OpenAI-kompatiblen Server, etwa Ollama, LM Studio oder vLLM."
 id: "com.typewhisper.openai-compatible"
+capabilityNames:
+  transcription: "dein Serverprofil"
+  llm: "dein Serverprofil"
 minAppVersion: "1.1.0"
 requirements:
   - "TypeWhisper 1.1.0 oder neuer"
@@ -16,7 +19,7 @@ highlights:
   - "Modellvorschläge aus der Modellliste des Servers oder jede von Hand eingegebene Modell-ID"
   - "Batch- oder Echtzeit-Transkription, auch über bereitstellungsbezogene Endpunkte mit API-Version"
 configuration:
-  - "Trag einen Profilnamen und die Server-URL ein, zum Beispiel http://localhost:11434"
+  - "Trag einen Profilnamen und die Server-URL ein, zum Beispiel http://localhost:11434; unter diesem Namen erscheint das Profil als Anbieter"
   - "Trag einen API-Schlüssel nur ein, wenn dein Server einen verlangt, und wähle Verbindung testen"
   - "Wähle Modelle aktualisieren und trag dann eine Transkriptionsmodell-ID und eine Textmodell-ID ein; für einen reinen Textserver lässt du das Transkriptionsmodell leer"
   - "Pass bei Bedarf Transkriptionsmodus, Text-API, Temperatur, Denkmodus und Zeitlimit für Textanfragen an und wähle dann Profil speichern"

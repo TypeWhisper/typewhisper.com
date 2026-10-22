@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/index";
-import type { Plugin, PluginPlatform } from "@/data/addons";
+import type { Plugin, PluginCategory, PluginPlatform } from "@/data/addons";
 import screenshotManifest from "@/data/addon-edition-screenshots.json";
 import { windowsAddonScreenshotSrc } from "@/lib/addon-screenshots";
 
@@ -22,6 +22,11 @@ export interface AddonEdition {
   id?: string;
   /** Name in the app's plugin list, when it differs from the add-on name on this site. */
   appName?: string;
+  /**
+   * Name the app shows for a capability when it differs from `appName`,
+   * such as a workflow action target or a provider named after its profile.
+   */
+  capabilityNames?: Partial<Record<PluginCategory, string>>;
   minAppVersion?: string;
   minOsVersion?: string;
   requirements?: string[];
