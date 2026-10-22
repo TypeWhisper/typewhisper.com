@@ -17,6 +17,9 @@ type Endpoint = {
   since18?: boolean;
 };
 
+/** An error of a route: HTTP status, error codes, and what they mean. */
+type RouteError = [status: number, codes: string[], key: string];
+
 /** Fields of `GET /v1/settings/audio`, in response order. */
 const audioFields: Array<[field: string, key: string]> = [
   ["input_devices", "docs.mac.api.audio.fields.inputDevices"],
@@ -42,8 +45,158 @@ const recordingFields: Array<[fields: string[], key: string]> = [
   [["markdown_file"], "docs.mac.api.recordings.fields.markdown"],
 ];
 
+/** Speaker fields of a `GET /v1/history` entry, in response order. */
+const historySpeakerFields: Array<[field: string, key: string]> = [
+  ["recording_id", "docs.mac.api.history.speakers.fields.recordingId"],
+  ["speaker_state", "docs.mac.api.history.speakers.fields.speakerState"],
+  [
+    "transcript_revision",
+    "docs.mac.api.history.speakers.fields.transcriptRevision",
+  ],
+  [
+    "transcript_version",
+    "docs.mac.api.history.speakers.fields.transcriptVersion",
+  ],
+  ["speakers", "docs.mac.api.history.speakers.fields.speakers"],
+  ["speaker_segments", "docs.mac.api.history.speakers.fields.speakerSegments"],
+];
+
+/** Values of `voice_state` for a speaker of a History entry. */
+const voiceStates: Array<[value: string, key: string]> = [
+  ["none", "docs.mac.api.history.speakers.voiceStates.none"],
+  ["canEnroll", "docs.mac.api.history.speakers.voiceStates.canEnroll"],
+  ["suggestion", "docs.mac.api.history.speakers.voiceStates.suggestion"],
+  ["linked", "docs.mac.api.history.speakers.voiceStates.linked"],
+  ["outdated", "docs.mac.api.history.speakers.voiceStates.outdated"],
+];
+
+/** Body fields of the `/v1/history/speakers/*` routes. */
+const speakerRequestFields: Array<[fields: string[], key: string]> = [
+  [["history_id"], "docs.mac.api.speakers.request.historyId"],
+  [
+    ["transcript_revision", "transcript_version"],
+    "docs.mac.api.speakers.request.transcript",
+  ],
+  [["speaker_id"], "docs.mac.api.speakers.request.speakerId"],
+  [["name"], "docs.mac.api.speakers.request.name"],
+  [["profile_id"], "docs.mac.api.speakers.request.profileId"],
+  [["create_profile"], "docs.mac.api.speakers.request.createProfile"],
+];
+
+const speakerErrors: RouteError[] = [
+  [400, ["bad_request"], "docs.mac.api.speakers.errors.badRequest"],
+  [400, ["invalid_name"], "docs.mac.api.speakers.errors.invalidName"],
+  [401, ["unauthorized"], "docs.mac.api.speakers.errors.unauthorized"],
+  [403, ["premium_required"], "docs.mac.api.speakers.errors.premium"],
+  [
+    404,
+    ["history_not_found", "speaker_not_found"],
+    "docs.mac.api.speakers.errors.notFound",
+  ],
+  [409, ["speakers_not_ready"], "docs.mac.api.speakers.errors.notReady"],
+  [409, ["stale_transcript"], "docs.mac.api.speakers.errors.stale"],
+  [409, ["profile_name_exists"], "docs.mac.api.speakers.errors.nameExists"],
+  [
+    409,
+    ["profile_name_conflict"],
+    "docs.mac.api.speakers.errors.nameConflict",
+  ],
+  [
+    409,
+    ["confirmation_required", "suggestion_changed"],
+    "docs.mac.api.speakers.errors.suggestion",
+  ],
+  [409, ["sample_already_used"], "docs.mac.api.speakers.errors.sampleUsed"],
+  [409, ["stale_voice_samples"], "docs.mac.api.speakers.errors.staleVoice"],
+  [
+    409,
+    ["profile_unavailable"],
+    "docs.mac.api.speakers.errors.profileUnavailable",
+  ],
+  [
+    409,
+    ["profile_model_changed"],
+    "docs.mac.api.speakers.errors.modelChanged",
+  ],
+  [413, ["payload_too_large"], "docs.mac.api.speakers.errors.tooLarge"],
+  [422, ["name_required"], "docs.mac.api.speakers.errors.nameRequired"],
+  [
+    422,
+    ["voice_unavailable", "invalid_embedding"],
+    "docs.mac.api.speakers.errors.voiceUnavailable",
+  ],
+  [
+    500,
+    ["history_unavailable", "speaker_save_failed"],
+    "docs.mac.api.speakers.errors.saveFailed",
+  ],
+];
+
+/** Body fields of `PUT /v1/browser/context`. */
+const browserFields: Array<[field: string, key: string]> = [
+  ["client_id", "docs.mac.api.browser.fields.clientId"],
+  ["focused", "docs.mac.api.browser.fields.focused"],
+  ["url", "docs.mac.api.browser.fields.url"],
+  ["title", "docs.mac.api.browser.fields.title"],
+];
+
+const textErrors: RouteError[] = [
+  [400, ["bad_request"], "docs.mac.api.text.errors.badRequest"],
+  [
+    403,
+    ["writing_not_allowed"],
+    "docs.mac.api.text.errors.writingNotAllowed",
+  ],
+  [403, ["forbidden"], "docs.mac.api.text.errors.forbidden"],
+  [404, ["workflow_not_found"], "docs.mac.api.text.errors.notFound"],
+  [
+    409,
+    ["workflow_disabled", "workflow_not_runnable"],
+    "docs.mac.api.text.errors.workflow",
+  ],
+  [413, ["payload_too_large"], "docs.mac.api.text.errors.tooLarge"],
+  [413, ["context_length_exceeded"], "docs.mac.api.text.errors.context"],
+  [429, ["busy", "rate_limited"], "docs.mac.api.text.errors.busy"],
+  [502, ["llm_failed"], "docs.mac.api.text.errors.llmFailed"],
+  [503, ["llm_not_configured"], "docs.mac.api.text.errors.notConfigured"],
+  [503, ["cancelled"], "docs.mac.api.text.errors.cancelled"],
+  [504, ["timeout"], "docs.mac.api.text.errors.timeout"],
+];
+
 function InlineCode({ children }: { children: ReactNode }) {
   return <code>{children}</code>;
+}
+
+/** A field name that breaks after an underscore, not inside a word. */
+function FieldName({ name }: { name: string }) {
+  return (
+    <code>
+      {name.split("_").map((part, index) => (
+        <span key={index}>
+          {index > 0 && (
+            <>
+              _<wbr />
+            </>
+          )}
+          {part}
+        </span>
+      ))}
+    </code>
+  );
+}
+
+/** Several field names, separated by commas. */
+function FieldNames({ names }: { names: string[] }) {
+  return (
+    <>
+      {names.map((name, index) => (
+        <span key={name}>
+          {index > 0 && ", "}
+          <FieldName name={name} />
+        </span>
+      ))}
+    </>
+  );
 }
 
 export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
@@ -56,6 +209,51 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
   );
   // Features that ship with TypeWhisper 1.8 say so where they are described.
   const availableFrom18 = t(locale, "docs.mac.api.availableFrom18");
+
+  /** Field and description, one row per field. */
+  const FieldTable = ({
+    label,
+    rows,
+  }: {
+    label: string;
+    rows: Array<[fields: string[], key: string]>;
+  }) => (
+    <DocsTable
+      label={label}
+      head={[
+        t(locale, "docs.mac.api.table.field"),
+        t(locale, "docs.mac.api.table.description"),
+      ]}
+      rows={rows.map(([fields, key]) => [
+        <FieldNames names={fields} />,
+        withCode(t(locale, key)),
+      ])}
+    />
+  );
+
+  /** HTTP status and error codes of a route, with their meaning. */
+  const ErrorTable = ({
+    label,
+    errors,
+  }: {
+    label: string;
+    errors: RouteError[];
+  }) => (
+    <DocsTable
+      label={label}
+      head={[
+        t(locale, "docs.mac.api.table.status"),
+        t(locale, "docs.mac.api.table.meaning"),
+      ]}
+      rows={errors.map(([status, codes, key]) => [
+        <>
+          <span className="docs-table__method">{status}</span>{" "}
+          <FieldNames names={codes} />
+        </>,
+        withCode(t(locale, key)),
+      ])}
+    />
+  );
 
   const endpointGroups: Array<{
     id: string;
@@ -116,6 +314,30 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           method: "DELETE",
           path: "/v1/history?id=<uuid>",
           description: t(locale, "docs.mac.api.endpoint.historyDelete"),
+        },
+        {
+          method: "PUT",
+          path: "/v1/history/speakers/name",
+          description: t(locale, "docs.mac.api.endpoint.historySpeakersName"),
+          since18: true,
+        },
+        {
+          method: "POST",
+          path: "/v1/history/speakers/enroll",
+          description: t(
+            locale,
+            "docs.mac.api.endpoint.historySpeakersEnroll",
+          ),
+          since18: true,
+        },
+        {
+          method: "POST",
+          path: "/v1/history/speakers/confirm",
+          description: t(
+            locale,
+            "docs.mac.api.endpoint.historySpeakersConfirm",
+          ),
+          since18: true,
         },
         {
           method: "GET",
@@ -219,6 +441,12 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           ),
         },
         {
+          method: "PUT",
+          path: "/v1/browser/context",
+          description: t(locale, "docs.mac.api.endpoint.browserContext"),
+          since18: true,
+        },
+        {
           method: "POST",
           path: "/v1/recorder/start",
           description: t(locale, "docs.mac.api.endpoint.recorderStart"),
@@ -242,6 +470,36 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
           method: "GET",
           path: "/v1/recorder/recordings?since=<time>",
           description: t(locale, "docs.mac.api.endpoint.recorderRecordings"),
+          since18: true,
+        },
+      ],
+    },
+    {
+      id: "endpoints-text",
+      title: t(locale, "docs.mac.api.overview.text"),
+      endpoints: [
+        {
+          method: "GET",
+          path: "/v1/llm/models",
+          description: t(locale, "docs.mac.api.endpoint.llmModels"),
+          since18: true,
+        },
+        {
+          method: "POST",
+          path: "/v1/llm/process",
+          description: t(locale, "docs.mac.api.endpoint.llmProcess"),
+          since18: true,
+        },
+        {
+          method: "GET",
+          path: "/v1/workflows",
+          description: t(locale, "docs.mac.api.endpoint.workflows"),
+          since18: true,
+        },
+        {
+          method: "POST",
+          path: "/v1/workflows/run",
+          description: t(locale, "docs.mac.api.endpoint.workflowsRun"),
           since18: true,
         },
       ],
@@ -328,13 +586,17 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
   "status": "ready",
   "engine": "whisper",
   "model": "openai_whisper-large-v3_turbo",
-  "api_version": "1.1",
+  "api_version": "1.2",
   "supports_workflow_dictation": true,
   "supports_streaming": true,
-  "supports_translation": true
+  "supports_translation": true,
+  "supports_browser_context": true,
+  "capabilities": ["transcribe", "llm", "workflows"],
+  "remote_writing_allowed": false
 }`}
         />
         <p>{t(locale, "docs.mac.api.checkStatus.description")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.checkStatus.since18"))}</p>
       </DocsSection>
 
       <DocsSection
@@ -407,7 +669,19 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
           </li>
           <li>
             <InlineCode>apply_corrections</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.transcribe.params.applyCorrections")}
+            {withCode(
+              t(locale, "docs.mac.api.transcribe.params.applyCorrections"),
+            )}
+          </li>
+          <li>
+            <InlineCode>detect_speakers</InlineCode> – {availableFrom18}{" "}
+            {withCode(
+              t(locale, "docs.mac.api.transcribe.params.detectSpeakers"),
+            )}
+          </li>
+          <li>
+            <InlineCode>speaker_count</InlineCode> – {availableFrom18}{" "}
+            {withCode(t(locale, "docs.mac.api.transcribe.params.speakerCount"))}
           </li>
           <li>
             <InlineCode>?await_download=1</InlineCode> –{" "}
@@ -419,6 +693,47 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
           <InlineCode>POST /v1/transcribe/local-file</InlineCode>{" "}
           {t(locale, "docs.mac.api.transcribe.localFile")}
         </p>
+        <DocsSubheading id="transcription-speakers">
+          {t(locale, "docs.mac.api.transcribe.speakers.title")}
+        </DocsSubheading>
+        <p>{availableFrom18}</p>
+        <p>
+          {withCode(t(locale, "docs.mac.api.transcribe.speakers.description"))}
+        </p>
+        <Shell
+          code={`curl -X POST http://localhost:8978/v1/transcribe \\
+  -F "file=@interview.m4a" \\
+  -F "response_format=verbose_json" \\
+  -F "detect_speakers=true" \\
+  -F "speaker_count=2"`}
+        />
+        <Json
+          code={`{
+  "text": "How did the launch go? Better than we expected.",
+  "language": "en",
+  "duration": 5.8,
+  "processing_time": 2.1,
+  "engine": "parakeet",
+  "model": "parakeet-tdt-0.6b-v3",
+  "segments": [
+    {
+      "start": 0,
+      "end": 1.9,
+      "text": "How did the launch go?",
+      "speaker": "Speaker 1",
+      "speaker_confidence": 1
+    },
+    {
+      "start": 2.3,
+      "end": 5.8,
+      "text": "Better than we expected.",
+      "speaker": "Speaker 2",
+      "speaker_confidence": 1
+    }
+  ]
+}`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.transcribe.speakers.errors"))}</p>
       </DocsSection>
 
       <DocsSection
@@ -432,6 +747,7 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
     {
       "id": "openai_whisper-large-v3_turbo",
       "engine": "whisper",
+      "engine_name": "WhisperKit",
       "name": "Large v3 Turbo",
       "size_description": "~800 MB",
       "language_count": 99,
@@ -444,6 +760,7 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
 }`}
         />
         <p>{t(locale, "docs.mac.api.listModels.description")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.listModels.engineName"))}</p>
       </DocsSection>
 
       <DocsSection
@@ -481,6 +798,154 @@ curl -X DELETE "http://localhost:8978/v1/models?engine=whisper&model=openai_whis
 curl -X DELETE "http://localhost:8978/v1/history?id=<uuid>"`}
         />
         <p>{t(locale, "docs.mac.api.history.description")}</p>
+        <DocsSubheading id="history-speakers">
+          {t(locale, "docs.mac.api.history.speakers.title")}
+        </DocsSubheading>
+        <p>{availableFrom18}</p>
+        <p>{withCode(t(locale, "docs.mac.api.history.speakers.intro"))}</p>
+        <Shell
+          code={`curl "http://localhost:8978/v1/history?limit=10&include=speaker_segments"`}
+        />
+        <Json
+          code={`{
+  "entries": [
+    {
+      "id": "0B7A3C1E-2F4D-4E8A-9C61-3D5E7F9A1B2C",
+      "text": "Let's start with the roadmap. Sounds good to me.",
+      "raw_text": "Let's start with the roadmap. Sounds good to me.",
+      "timestamp": "2026-10-14T09:30:12Z",
+      "app_name": "Weekly Sync",
+      "duration": 6.1,
+      "language": "en",
+      "engine": "parakeet",
+      "model": "parakeet-tdt-0.6b-v3",
+      "words_count": 9,
+      "recording_id": "8F8C1F45-6D03-44D2-A38C-0C4DE4F7E5F7",
+      "speaker_state": "ready",
+      "transcript_revision": "6E2F8A4C-1B3D-4C5E-8F7A-9B0C1D2E3F4A",
+      "transcript_version": "f74d369e3227eb16d6374c3f0f6fbccdfec89351fc3ef4023182bb86ec8ff7d6",
+      "speakers": [
+        {
+          "id": "S1",
+          "name": "Lev",
+          "profile_id": "D3B07384-D113-4EC6-A3B0-1F2E3D4C5B6A",
+          "voice_state": "linked"
+        },
+        {
+          "id": "S2",
+          "name": "Speaker 2",
+          "suggested_name": "Mira",
+          "profile_id": "A1F2C3D4-5E6F-4A7B-8C9D-0E1F2A3B4C5D",
+          "voice_state": "suggestion"
+        }
+      ],
+      "speaker_segments": [
+        {
+          "start": 0,
+          "end": 2.4,
+          "speaker": "S1",
+          "text": "Let's start with the roadmap."
+        },
+        {
+          "start": 2.9,
+          "end": 6.1,
+          "speaker": "S2",
+          "text": "Sounds good to me."
+        }
+      ]
+    }
+  ],
+  "total": 1,
+  "limit": 10,
+  "offset": 0
+}`}
+        />
+        <FieldTable
+          label={t(locale, "docs.mac.api.history.speakers.title")}
+          rows={historySpeakerFields.map(([field, key]) => [[field], key])}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.history.speakers.voiceStates"))}</p>
+        <DocsTable
+          label="voice_state"
+          head={[
+            t(locale, "docs.mac.api.table.value"),
+            t(locale, "docs.mac.api.table.meaning"),
+          ]}
+          rows={voiceStates.map(([value, key]) => [
+            <code>{value}</code>,
+            withCode(t(locale, key)),
+          ])}
+        />
+      </DocsSection>
+
+      <DocsSection
+        id="speaker-profiles"
+        title={t(locale, "docs.mac.api.speakers.title")}
+      >
+        <p>{availableFrom18}</p>
+        <p>{t(locale, "docs.mac.api.speakers.description")}</p>
+        <p>{t(locale, "docs.mac.api.speakers.consent")}</p>
+        <ol>
+          {[1, 2, 3, 4].map((step) => (
+            <li key={step}>
+              {withCode(t(locale, `docs.mac.api.speakers.step${step}`))}
+            </li>
+          ))}
+        </ol>
+        <Shell
+          code={`DISCOVERY="$HOME/Library/Application Support/TypeWhisper/api-discovery.json"
+SPEAKERS_URL="http://127.0.0.1:$(jq -r '.port' "$DISCOVERY")/v1/history/speakers"
+
+(
+  AUTH_HEADER="$(mktemp)" || exit
+  trap 'rm -f "$AUTH_HEADER"' EXIT
+  jq -r '"Authorization: Bearer " + .token' "$DISCOVERY" > "$AUTH_HEADER"
+
+  curl -X PUT "$SPEAKERS_URL/name" \\
+    -H @"$AUTH_HEADER" \\
+    -H "Content-Type: application/json" \\
+    -d '{"history_id":"<history-uuid>","transcript_revision":"<revision-uuid>","transcript_version":"<version>","speaker_id":"S1","name":"Lev"}'
+
+  curl -X POST "$SPEAKERS_URL/enroll" \\
+    -H @"$AUTH_HEADER" \\
+    -H "Content-Type: application/json" \\
+    -d '{"history_id":"<history-uuid>","transcript_revision":"<revision-uuid>","transcript_version":"<version>","speaker_id":"S1"}'
+
+  curl -X POST "$SPEAKERS_URL/confirm" \\
+    -H @"$AUTH_HEADER" \\
+    -H "Content-Type: application/json" \\
+    -d '{"history_id":"<history-uuid>","transcript_revision":"<revision-uuid>","transcript_version":"<version>","speaker_id":"S2","profile_id":"<profile-uuid>"}'
+)`}
+        />
+        <DocsSubheading id="speaker-profiles-fields">
+          {t(locale, "docs.mac.api.requestFields")}
+        </DocsSubheading>
+        <FieldTable
+          label={t(locale, "docs.mac.api.requestFields")}
+          rows={speakerRequestFields}
+        />
+        <p>{t(locale, "docs.mac.api.speakers.body")}</p>
+        <Json
+          code={`{
+  "history_id": "0B7A3C1E-2F4D-4E8A-9C61-3D5E7F9A1B2C",
+  "transcript_revision": "6E2F8A4C-1B3D-4C5E-8F7A-9B0C1D2E3F4A",
+  "transcript_version": "f74d369e3227eb16d6374c3f0f6fbccdfec89351fc3ef4023182bb86ec8ff7d6",
+  "speaker_id": "S1",
+  "name": "Lev",
+  "profile_id": "D3B07384-D113-4EC6-A3B0-1F2E3D4C5B6A",
+  "voice_state": "linked",
+  "already_learned": false
+}`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.speakers.response"))}</p>
+        <DocsSubheading id="speaker-profiles-errors">
+          {t(locale, "docs.mac.api.errorsTitle")}
+        </DocsSubheading>
+        <ErrorTable
+          label={t(locale, "docs.mac.api.speakers.title")}
+          errors={speakerErrors}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.speakers.notes"))}</p>
       </DocsSection>
 
       <DocsSection
@@ -510,6 +975,12 @@ curl -X PUT http://localhost:8978/v1/dictionary/corrections \\
 curl -X DELETE http://localhost:8978/v1/dictionary/corrections \\
   -H "Content-Type: application/json" \\
   -d '{"original":"teh"}'`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.dictionary.regex"))}</p>
+        <Shell
+          code={`curl -X PUT http://localhost:8978/v1/dictionary/corrections \\
+  -H "Content-Type: application/json" \\
+  -d '{"original":"type ?whisper","replacement":"TypeWhisper","isRegex":true}'`}
         />
       </DocsSection>
 
@@ -541,18 +1012,30 @@ TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
 )`}
         />
         <p>{t(locale, "docs.mac.api.settings.importBehavior")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.settings.replace"))}</p>
+        <Shell
+          code={`curl -X POST "http://localhost:8978/v1/settings/import?mode=replace" \\
+  -H "Content-Type: application/json" \\
+  --data-binary @typewhisper-settings.json`}
+        />
         <DocsSubheading id="settings-import-response">
           {t(locale, "docs.mac.api.settings.importResponse")}
         </DocsSubheading>
         <Json
           code={`{
   "workflowsImported": 4,
+  "workflowsUpdated": 0,
+  "workflowsSkipped": 1,
   "dictionaryImported": 52,
   "dictionarySkipped": 3,
   "snippetsImported": 6,
   "snippetsSkipped": 1,
   "promptActionsImported": 2,
+  "promptActionsUpdated": 0,
+  "promptActionsSkipped": 0,
   "profilesImported": 2,
+  "profilesUpdated": 0,
+  "profilesSkipped": 0,
   "hotkeysApplied": 1,
   "hotkeysSkipped": 1,
   "pluginsInstalled": 2,
@@ -560,19 +1043,23 @@ TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
   "pluginsRegistryFetchFailed": false,
   "historyImported": 120,
   "historySkippedByRetention": 8,
+  "historySkippedAsDuplicate": 0,
+  "historySkippedUnreadableDestination": 0,
   "updateChannelApplied": true,
   "preferencesApplied": 27
 }`}
         />
+        <p>{withCode(t(locale, "docs.mac.api.settings.importFields"))}</p>
         <DocsSubheading id="settings-cli">
           {t(locale, "docs.mac.api.settings.cliTitle")}
         </DocsSubheading>
-        <p>{t(locale, "docs.mac.api.settings.cliDescription")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.settings.cliDescription"))}</p>
         <Shell
           code={`mkdir -p ~/.config/typewhisper
 typewhisper export ~/.config/typewhisper/settings.json
 typewhisper import ~/.config/typewhisper/settings.json
-typewhisper import ~/.config/typewhisper/settings.json --json`}
+typewhisper import ~/.config/typewhisper/settings.json --json
+typewhisper import ~/.config/typewhisper/settings.json --replace`}
         />
         <p>{t(locale, "docs.mac.api.settings.dotfilesNote")}</p>
       </DocsSection>
@@ -638,19 +1125,7 @@ curl -X PATCH http://localhost:8978/v1/settings/audio \\
             t(locale, "docs.mac.api.audio.descriptionHeader"),
           ]}
           rows={audioFields.map(([field, key]) => [
-            // Long field names break after an underscore, not inside a word.
-            <code>
-              {field.split("_").map((part, index) => (
-                <span key={index}>
-                  {index > 0 && (
-                    <>
-                      _<wbr />
-                    </>
-                  )}
-                  {part}
-                </span>
-              ))}
-            </code>,
+            <FieldName name={field} />,
             withCode(t(locale, key)),
           ])}
         />
@@ -708,6 +1183,90 @@ curl -X PUT "http://localhost:8978/v1/rules/toggle?id=<uuid>"`}
       </DocsSection>
 
       <DocsSection
+        id="text-processing"
+        title={t(locale, "docs.mac.api.text.title")}
+      >
+        <p>{availableFrom18}</p>
+        <p>{withCode(t(locale, "docs.mac.api.text.description"))}</p>
+        <DocsSubheading id="text-processing-llm">
+          {t(locale, "docs.mac.api.text.llmTitle")}
+        </DocsSubheading>
+        <Shell
+          code={`curl http://localhost:8978/v1/llm/models
+
+curl -X POST http://localhost:8978/v1/llm/process \\
+  -H "Content-Type: application/json" \\
+  -d '{"system_prompt":"Rewrite the text as a short, friendly reply. Return only the reply.","text":"thanks got it will send the file tomorrow"}'`}
+        />
+        <Json
+          code={`{
+  "models": [
+    {
+      "provider_id": "appleIntelligence",
+      "provider_name": "Apple Intelligence",
+      "name": "Apple Intelligence",
+      "ready": true
+    },
+    {
+      "provider_id": "Claude",
+      "provider_name": "Claude",
+      "model_id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "ready": true
+    }
+  ]
+}`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.text.llm"))}</p>
+        <p>
+          {withCode(t(locale, "docs.mac.api.text.fallbackBefore"))}{" "}
+          <a
+            href={localePath(
+              locale,
+              "/docs/mac/workflows#global-llm-fallbacks",
+            )}
+          >
+            {t(locale, "docs.mac.api.text.fallbackLink")}
+          </a>{" "}
+          {t(locale, "docs.mac.api.text.fallbackAfter")}
+        </p>
+        <DocsSubheading id="text-processing-workflows">
+          {t(locale, "docs.mac.api.text.workflowsTitle")}
+        </DocsSubheading>
+        <Shell
+          code={`curl http://localhost:8978/v1/workflows
+
+jq -n --rawfile text call-notes.txt \\
+  '{workflow_id: "<uuid>", text: $text, language: "en"}' |
+  curl -X POST http://localhost:8978/v1/workflows/run \\
+    -H "Content-Type: application/json" \\
+    --data-binary @- |
+  jq -r .text`}
+        />
+        <Json
+          code={`{
+  "workflows": [
+    {
+      "id": "3C2B1A09-8F7E-4D6C-B5A4-0D1E2F3A4B5C",
+      "name": "Meeting Notes",
+      "template": "meetingNotes"
+    }
+  ]
+}`}
+        />
+        <p>{withCode(t(locale, "docs.mac.api.text.workflows"))}</p>
+        <p>{withCode(t(locale, "docs.mac.api.text.run"))}</p>
+        <DocsSubheading id="text-processing-limits">
+          {t(locale, "docs.mac.api.text.limitsTitle")}
+        </DocsSubheading>
+        <p>{withCode(t(locale, "docs.mac.api.text.limits"))}</p>
+        <ErrorTable
+          label={t(locale, "docs.mac.api.text.limitsTitle")}
+          errors={textErrors}
+        />
+      </DocsSection>
+
+      <DocsSection
         id="dictation"
         title={t(locale, "docs.mac.api.dictation.title")}
       >
@@ -723,6 +1282,47 @@ curl "http://localhost:8978/v1/dictation/transcription?id=<uuid>"`}
         />
         <p>{t(locale, "docs.mac.api.dictation.workflow")}</p>
         <p>{t(locale, "docs.mac.api.dictation.polling")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.dictation.latency"))}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="browser-context"
+        title={t(locale, "docs.mac.api.browser.title")}
+      >
+        <p>{availableFrom18}</p>
+        <p>{withCode(t(locale, "docs.mac.api.browser.description"))}</p>
+        <p>
+          {t(locale, "docs.mac.api.browser.extensionBefore")}{" "}
+          <a href={localePath(locale, "/extensions#browser")}>
+            {t(locale, "docs.mac.api.browser.extensionLink")}
+          </a>{" "}
+          {t(locale, "docs.mac.api.browser.extensionAfter")}
+        </p>
+        <Shell
+          code={`curl -X PUT http://localhost:8978/v1/browser/context \\
+  -H "Content-Type: application/json" \\
+  -d '{"client_id":"c7d1e0f2-4b3a-4f9e-9a1d-2b6c8e0f1a3d","focused":true,"url":"https://github.com/TypeWhisper/typewhisper-mac/pulls","title":"Pull requests"}'
+
+curl -X PUT http://localhost:8978/v1/browser/context \\
+  -H "Content-Type: application/json" \\
+  -d '{"client_id":"c7d1e0f2-4b3a-4f9e-9a1d-2b6c8e0f1a3d","focused":false}'`}
+        />
+        <Json
+          code={`{
+  "status": "active",
+  "app_bundle_id": "com.google.Chrome",
+  "url": "https://github.com/TypeWhisper/typewhisper-mac/pulls"
+}`}
+        />
+        <DocsSubheading id="browser-context-fields">
+          {t(locale, "docs.mac.api.requestFields")}
+        </DocsSubheading>
+        <FieldTable
+          label={t(locale, "docs.mac.api.browser.title")}
+          rows={browserFields.map(([field, key]) => [[field], key])}
+        />
+        <p>{t(locale, "docs.mac.api.browser.behavior")}</p>
+        <p>{withCode(t(locale, "docs.mac.api.browser.response"))}</p>
       </DocsSection>
 
       <DocsSection
@@ -833,42 +1433,14 @@ curl "http://localhost:8978/v1/recorder/recordings?since=2026-10-04T07:46:40Z"`}
           {t(locale, "docs.mac.api.errors.commonCodes")}
         </DocsSubheading>
         <ul>
-          <li>
-            <InlineCode>400</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.400")}
-          </li>
-          <li>
-            <InlineCode>401</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.401")}
-          </li>
-          <li>
-            <InlineCode>403</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.403")}
-          </li>
-          <li>
-            <InlineCode>404</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.404")}
-          </li>
-          <li>
-            <InlineCode>409</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.409")}
-          </li>
-          <li>
-            <InlineCode>413</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.413")}
-          </li>
-          <li>
-            <InlineCode>501</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.501")}
-          </li>
-          <li>
-            <InlineCode>503</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.503")}
-          </li>
-          <li>
-            <InlineCode>500</InlineCode> –{" "}
-            {t(locale, "docs.mac.api.errors.500")}
-          </li>
+          {[400, 401, 403, 404, 409, 413, 422, 429, 501, 502, 503, 504, 500].map(
+            (status) => (
+              <li key={status}>
+                <InlineCode>{status}</InlineCode> –{" "}
+                {t(locale, `docs.mac.api.errors.${status}`)}
+              </li>
+            ),
+          )}
         </ul>
       </DocsSection>
     </>
