@@ -269,5 +269,5 @@
   "faq.label": "Questions",
   "downloadCta.editions": "All editions",
   "downloadCta.windowsBeta.download": "Microsoft Store Beta",
-  "downloadCta.windowsBeta.note": "Public beta for Windows 11 24H2 or later on x64. It gets release candidates before the stable version and installs alongside it, with a separate profile for its settings and data. Updates come through the Microsoft Store."
+  "downloadCta.windowsBeta.note": "Public beta for Windows 11 24H2 or later on x64. It gets the daily builds of the next version and installs alongside the stable app, with a separate profile for its settings and data. Updates come through the Microsoft Store."
 }
