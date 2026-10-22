@@ -36,8 +36,8 @@ Audio wird über Cloudflare an dein Backend gesendet. Modell und Verarbeitung h�
 ## Einrichtung auf Windows: Workers AI
 
 1. Ermittle deine Cloudflare **Account ID** und erstelle einen **API Token**, der Workers AI für dieses Konto verwenden darf.
-2. Öffne **Einstellungen > Integrationen**, suche **Cloudflare ASR** und öffne die Konfiguration.
-3. Trage **Account ID** und **API Token** ein und speichere die Konfiguration.
+2. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere das Add-on, das dort **Cloudflare Workers AI** heißt. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+3. Trage auf seiner Seite **Account ID** und **API Token** ein und speichere die Konfiguration.
 4. Wähle Cloudflare ASR als Transkriptions-Engine und verwende **Whisper (Cloudflare)**.
 
 Das Windows-Plugin setzt den Endpunkt `https://api.cloudflare.com/client/v4/accounts/{account-id}/ai/run/@cf/openai/whisper` selbst zusammen und authentifiziert sich mit dem API-Token. Es nutzt das feste Workers-AI-Whisper-Modell. Ein eigener Endpunkt, Tunnel oder Access-Service-Token ist nicht nötig. Audio wird an Cloudflare Workers AI gesendet.
