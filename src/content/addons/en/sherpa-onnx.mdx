@@ -1,16 +1,18 @@
 ---
 slug: sherpa-onnx
-name: Local Models (sherpa-onnx)
+name: NVIDIA Parakeet
 author: TypeWhisper
-version: "1.0.5"
+version: "1.3.1"
 icon: AudioLines
-description: Offline Windows transcription with sherpa-onnx models, including Parakeet and Canary.
+description: Offline transcription on Windows with NVIDIA Parakeet, Parakeet Ultra and Canary, on the CPU or, for Parakeet, on any graphics card with Vulkan.
 categories:
   - transcription
 platforms:
   - windows
 source: official
 id: "com.typewhisper.sherpa-onnx"
+minAppVersion: "1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-sherpa-onnx-v1.3.1"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
@@ -18,43 +20,53 @@ sourceUrls:
 
 ## About
 
-Local Models (sherpa-onnx) adds offline transcription to TypeWhisper for Windows using sherpa-onnx. The plugin currently exposes NVIDIA Parakeet for broad local transcription and Canary 180M Flash for a smaller model with translation support.
+NVIDIA Parakeet adds offline transcription to TypeWhisper for Windows. It runs the models Parakeet Ultra 0.6B, Parakeet TDT 0.6B and Canary 180M Flash on your PC, so your audio is not sent to a cloud service. On the CPU, the models run through sherpa-onnx. The two Parakeet models can also run on a graphics card from NVIDIA, AMD or Intel through Vulkan, using transcribe.cpp.
 
 ## Features
 
-- Offline transcription on Windows through sherpa-onnx
-- Downloadable model files from Hugging Face
-- Automatic, CPU, or NVIDIA CUDA acceleration
-- Managed CUDA runtime installation with a safety probe and CPU fallback
-- Download, load, unload, and remove controls for local models
-- Parakeet model with broad language coverage
-- Canary model with English, German, French, and Spanish support
-- Translation support when the Canary model is selected
-- No API key or cloud account required after the model is downloaded
+- Offline transcription on Windows: audio is processed on your PC
+- Three models: Parakeet Ultra 0.6B (recommended), Parakeet TDT 0.6B and Canary 180M Flash
+- The Parakeet models cover 25 European languages and detect the spoken language themselves
+- Canary transcribes English, German, French and Spanish and can translate them into English
+- Processing device: Automatic, CPU or Graphics card. Parakeet runs on graphics cards from NVIDIA, AMD or Intel through Vulkan; Canary always runs on the CPU
+- Live preview while you dictate
+- Dictionary boosting for Parakeet: the add-on includes the Parakeet CTC component, and you add terms in Dictionary
+- Long recordings are split into chunks automatically
+- Download, use and remove models on the add-on's page
+- Model files are checked against fixed SHA-256 hashes after the download
+- No API key or account required
 
 ## Transcription Models
 
-| Model | ID | Size | Languages | Translation |
-| --- | --- | --- | --- | --- |
-| Parakeet TDT 0.6B | `parakeet-tdt-0.6b` | ~670 MB | 25 | No |
-| Canary 180M Flash | `canary-180m-flash` | ~198 MB | 4 | Yes |
+| Model | ID | Publisher | Size | Languages | Graphics card | Translation |
+| --- | --- | --- | --- | --- | --- | --- |
+| Parakeet Ultra 0.6B | `parakeet-ultra-0.6b` | Moondream | ~670 MB | 25 | Yes | No |
+| Parakeet TDT 0.6B | `parakeet-tdt-0.6b` | NVIDIA | ~670 MB | 25 | Yes | No |
+| Canary 180M Flash | `canary-180m-flash` | NVIDIA | ~198 MB | 4 | No | Into English |
 
-## Configuration
+The sizes refer to the CPU files. For the graphics card, each Parakeet model downloads a separate version.
 
-- **Model** - Select either Parakeet TDT 0.6B or Canary 180M Flash.
-- **Download** - Downloads all required ONNX model files and token files.
-- **Language** - Canary supports `en`, `de`, `fr`, and `es`.
-- **Acceleration** - Use automatic selection, CPU, or NVIDIA CUDA. A changed runtime may require reloading the model.
+## Processing Device
+
+| Option | What it does |
+| --- | --- |
+| **Automatic** | Uses the graphics card once its files are downloaded, otherwise the CPU. If the graphics card cannot load the model and the model's CPU files are present, the model runs on the CPU. |
+| **CPU** | Works on every PC and runs all three models. |
+| **Graphics card** | Runs Parakeet on a graphics card from NVIDIA, AMD or Intel through Vulkan. The first switch downloads about 760 MB: the transcribe.cpp runtime and the graphics card version of the model. The add-on uses the first dedicated graphics card, or integrated graphics when there is none. |
 
 ## Setup
 
-1. In TypeWhisper, open **Settings > Discover plugins** and install the add-on, which is listed there as **NVIDIA Parakeet**. It then appears in the Settings sidebar, and its page opens. If you installed it during setup, open **NVIDIA Parakeet** in the sidebar instead.
-2. Under **Models**, select **Download** next to the model you want to use.
+1. In TypeWhisper, open **Settings > Discover plugins** and install **NVIDIA Parakeet**. It then appears in the Settings sidebar, and its page opens. If you installed it in the setup wizard, open **NVIDIA Parakeet** in the sidebar instead.
+2. Under **Models**, select **Download** next to the model you want. Parakeet Ultra 0.6B is the recommended model.
 3. Select **Use model** to use it for dictation.
+4. Optional: under **Processing device**, choose **Automatic**, **CPU** or **Graphics card**.
+5. For Canary, set **Spoken language** in the **Dictation** settings to English, German, French or Spanish. To translate into English, choose **Translate to English** as the **Transcription task** there.
 
 ## Notes
 
-- Parakeet is the recommended model for general offline transcription.
-- Canary is the option to use when you need translation support.
-- If the CUDA runtime cannot be loaded safely, TypeWhisper reports the reason and falls back to CPU.
-- The plugin stores model files under the plugin data directory in `Models/<model-id>/`.
+- Parakeet Ultra 0.6B is Moondream's retrained version of NVIDIA's Parakeet TDT 0.6B v3. It has the same size, speed and 25 languages and was more accurate in TypeWhisper's test: 4.05% against 4.96% word error rate on 50 FLEURS clips in German, English, French, Spanish and Italian. Parakeet TDT 0.6B stays available.
+- Canary does not detect the language. If no language it supports is set, it transcribes as English.
+- Canary always runs on the CPU, even when **Graphics card** is selected. If the graphics card fails while you switch, TypeWhisper keeps the previous device.
+- Versions before 1.3.0 used NVIDIA CUDA. Version 1.3.0 replaced it with Vulkan: the add-on deletes the old CUDA runtime of about 2.3 GB, and a saved NVIDIA CUDA choice counts as **Automatic**.
+- The add-on stores model files in its plugin data directory under `Models/<model-id>/`, the graphics card version in the `gpu` subfolder. Removing a model deletes both.
+- Older versions of the add-on were called Lokale Modelle (sherpa-onnx).

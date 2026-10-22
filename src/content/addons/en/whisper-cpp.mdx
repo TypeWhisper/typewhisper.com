@@ -1,10 +1,10 @@
 ---
 slug: whisper-cpp
-name: whisper.cpp (Local)
+name: Whisper (Local)
 author: TypeWhisper
-version: "1.0.3"
+version: "1.2.24"
 icon: Cpu
-description: Offline Windows transcription via Whisper.net and whisper.cpp model files.
+description: Offline Whisper transcription on Windows with whisper.cpp, on the CPU or on a graphics card with NVIDIA CUDA or Vulkan.
 categories:
   - transcription
 platforms:
@@ -14,59 +14,71 @@ id: "com.typewhisper.whisper-cpp"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
-minAppVersion: "1.0.7"
+minAppVersion: "1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-whisper-cpp-v1.2.24"
 ---
 
 ## About
 
-whisper.cpp (Local) adds offline Whisper transcription to TypeWhisper for Windows through Whisper.net. It downloads GGML model files, loads the selected local model, and can transcribe without sending audio to a cloud service.
+Whisper (Local) adds offline Whisper transcription to TypeWhisper for Windows. It runs whisper.cpp through Whisper.net, downloads GGML model files when you ask for them and transcribes on your PC, without sending audio to a cloud service.
 
 ## Features
 
 - Offline Whisper transcription on Windows
-- Uses Whisper.net with whisper.cpp runtime files
-- Built-in GGML model downloads
-- Download, load, unload, and remove controls for local models
-- Automatic language detection
-- Prompt support for transcription context
-- Translation support
-- Automatic, CPU, NVIDIA CUDA, AMD Vulkan, and custom AMD ROCm acceleration options
-- Runtime diagnostics with restart requirements and explicit CPU fallback reasons
-- No API key or cloud account required
+- 14 models from Tiny to Large V3 Turbo, as multilingual, English-only and smaller Q5_0 variants
+- Multilingual models cover 99 languages and detect the spoken language automatically
+- Live preview while you dictate
+- Your dictionary terms go to Whisper as its initial prompt, so names and technical terms are recognized more reliably
+- Native translation into English with multilingual models other than Large V3 Turbo
+- Processing device: Automatic, CPU, NVIDIA CUDA, Vulkan or AMD ROCm
+- The processing device shows what the loaded model runs on, for example `In use: Vulkan · NVIDIA GeForce RTX 4060 Ti`, or why it fell back to the CPU
+- Download, use and remove models on the add-on's page
+- Free disk space is checked before a download, and every download must match the exact size of the model file
+- No API key or account required
 
 ## Transcription Models
 
-| Model family | Variants |
+| Model | ID | Size | Languages | Translation |
+| --- | --- | --- | --- | --- |
+| Tiny | `tiny` | ~75 MB | 99 | Yes |
+| Tiny (English) | `tiny.en` | ~75 MB | English | No |
+| Tiny (Q5_0) | `tiny-q5_0` | ~31 MB | 99 | Yes |
+| Base (recommended) | `base` | ~142 MB | 99 | Yes |
+| Base (English) | `base.en` | ~142 MB | English | No |
+| Base (Q5_0) (recommended) | `base-q5_0` | ~57 MB | 99 | Yes |
+| Small | `small` | ~466 MB | 99 | Yes |
+| Small (English) | `small.en` | ~466 MB | English | No |
+| Small (Q5_0) | `small-q5_0` | ~182 MB | 99 | Yes |
+| Medium | `medium` | ~1.5 GB | 99 | Yes |
+| Medium (English) | `medium.en` | ~1.5 GB | English | No |
+| Medium (Q5_0) | `medium-q5_0` | ~601 MB | 99 | Yes |
+| Large V3 Turbo | `large-v3-turbo` | ~1.6 GB | 99 | No |
+| Large V3 Turbo (Q5_0) | `large-v3-turbo-q5_0` | ~684 MB | 99 | No |
+
+## Processing Device
+
+| Option | What it does |
 | --- | --- |
-| Tiny | multilingual, English-only, Q5_0 |
-| Base | multilingual, English-only, Q5_0 |
-| Small | multilingual, English-only, Q5_0 |
-| Medium | multilingual, English-only, Q5_0 |
-| Large V3 Turbo | full and Q5_0 |
-
-## Recommended Models
-
-| Model | ID | Size |
-| --- | --- | --- |
-| Base | `base` | ~142 MB |
-| Base (Q5_0) | `base-q5_0` | ~57 MB |
-
-## Configuration
-
-- **Model** - Choose the Whisper model to download and load.
-- **Prompt** - Optional context can be passed into the transcription processor.
-- **Translate** - Enables Whisper translation when requested by TypeWhisper.
-- **Acceleration** - Use automatic selection, CPU, NVIDIA CUDA, AMD Vulkan, or a custom ROCm `whisper.dll` path.
+| **Automatic** | Tries NVIDIA CUDA, then Vulkan, then the CPU. It does not download the CUDA files; choose **NVIDIA CUDA** once to install them. |
+| **CPU** | Runs on every PC. |
+| **NVIDIA CUDA** | Needs an NVIDIA graphics card. When the model loads for the first time, TypeWhisper downloads NVIDIA's cuBLAS libraries. Then restart TypeWhisper and select the model again. |
+| **Vulkan** | Runs on a graphics card through its Vulkan driver. The add-on picks the first dedicated graphics card and uses integrated graphics only when there is none. |
+| **AMD ROCm** | For a ROCm build of `whisper.dll` that you provide. Set the environment variable `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH` to the file or its folder and restart TypeWhisper. |
 
 ## Setup
 
-1. In TypeWhisper, open **Settings > Discover plugins** and install the add-on, which is listed there as **Whisper (Local)**. It then appears in the Settings sidebar, and its page opens.
-2. Under **Models**, select **Download model** next to your preferred model.
+1. In TypeWhisper, open **Settings > Discover plugins** and install **Whisper (Local)**. It then appears in the Settings sidebar, and its page opens.
+2. Under **Models**, select **Download model** next to the model you want. **Base** and **Base (Q5_0)** are marked **Recommended**.
 3. Select **Use model** to use it for dictation.
+4. Optional: under **Transcription**, choose a **Processing device** and select **Save settings**.
+5. Optional: to translate into English, use a multilingual model other than Large V3 Turbo and choose **Translate to English** as the **Transcription task** in the **Dictation** settings.
 
 ## Notes
 
-- Models are stored under the plugin data directory.
-- Quantized Q5_0 variants reduce download size compared with full models.
-- Larger Whisper models can improve accuracy but require more disk space and memory.
-- CUDA can be installed by TypeWhisper; Vulkan requires a compatible AMD driver, while ROCm uses `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH`.
+- English-only models always transcribe English. Multilingual models detect the language unless you set one under **Spoken language** in the **Dictation** settings.
+- English-only models and Large V3 Turbo, including its Q5_0 variant, cannot translate. With **Translate to English** selected, dictation reports this instead of recording.
+- The prompt with your dictionary terms is limited to 224 bytes; terms stay whole and in dictionary order. If a transcript only repeats dictionary terms, the add-on decodes the audio again without the prompt, so silence does not turn into dictionary terms.
+- Once a runtime has loaded, switching to a different processing device can require restarting TypeWhisper.
+- Quantized Q5_0 variants are smaller downloads than the full models. Larger models can be more accurate but need more disk space and memory.
+- The add-on stores model files in its plugin data directory under `Models/`.
+- Older versions of the add-on were called whisper.cpp (Local).

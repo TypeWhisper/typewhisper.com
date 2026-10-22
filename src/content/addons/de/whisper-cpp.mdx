@@ -1,10 +1,10 @@
 ---
 slug: whisper-cpp
-name: whisper.cpp (Local)
+name: Whisper (Local)
 author: TypeWhisper
-version: "1.0.3"
+version: "1.2.24"
 icon: Cpu
-description: Offline-Transkription unter Windows über Whisper.net und whisper.cpp-Modelldateien.
+description: Offline-Whisper-Transkription unter Windows mit whisper.cpp, auf dem Prozessor oder auf einer Grafikkarte mit NVIDIA CUDA oder Vulkan.
 categories:
   - transcription
 platforms:
@@ -14,59 +14,71 @@ id: "com.typewhisper.whisper-cpp"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
-minAppVersion: "1.0.7"
+minAppVersion: "1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-whisper-cpp-v1.2.24"
 ---
 
 ## Über
 
-whisper.cpp (Local) ergänzt TypeWhisper unter Windows um Offline-Whisper-Transkription über Whisper.net. Das Plugin lädt GGML-Modelldateien herunter, lädt das gewählte lokale Modell und kann Audio ohne Cloud-Dienst transkribieren.
+Whisper (Local) ergänzt TypeWhisper unter Windows um Offline-Transkription mit Whisper. Das Add-on führt whisper.cpp über Whisper.net aus, lädt GGML-Modelldateien herunter, wenn du sie anforderst, und transkribiert auf deinem PC, ohne Audio an einen Cloud-Dienst zu senden.
 
 ## Features
 
 - Offline-Whisper-Transkription unter Windows
-- Nutzt Whisper.net mit whisper.cpp-Runtime-Dateien
-- Integrierte GGML-Modell-Downloads
-- Steuerelemente zum Herunterladen, Laden, Entladen und Entfernen lokaler Modelle
-- Automatische Spracherkennung
-- Prompt-Unterstützung für Transkriptionskontext
-- Übersetzungsunterstützung
-- Automatische, CPU-, NVIDIA-CUDA-, AMD-Vulkan- und benutzerdefinierte AMD-ROCm-Beschleunigung
-- Runtime-Diagnose mit Neustartanforderungen und nachvollziehbaren Gründen für den CPU-Fallback
-- Kein API-Schlüssel oder Cloud-Konto erforderlich
+- 14 Modelle von Tiny bis Large V3 Turbo, als mehrsprachige, rein englische und kleinere Q5_0-Varianten
+- Mehrsprachige Modelle decken 99 Sprachen ab und erkennen die gesprochene Sprache automatisch
+- Live-Vorschau während du diktierst
+- Deine Wörterbuch-Begriffe gehen als Start-Prompt an Whisper, damit Namen und Fachbegriffe zuverlässiger erkannt werden
+- Native Übersetzung ins Englische mit mehrsprachigen Modellen außer Large V3 Turbo
+- Verarbeitungsgerät: Automatisch, CPU, NVIDIA CUDA, Vulkan oder AMD ROCm
+- Das Verarbeitungsgerät zeigt, worauf das geladene Modell läuft, zum Beispiel `In Verwendung: Vulkan · NVIDIA GeForce RTX 4060 Ti`, oder warum es auf den Prozessor ausgewichen ist
+- Modelle auf der Seite des Add-ons herunterladen, verwenden und entfernen
+- Vor einem Download wird der freie Speicherplatz geprüft, und jeder Download muss genau die Größe der Modelldatei haben
+- Kein API-Schlüssel und kein Konto nötig
 
 ## Transkriptionsmodelle
 
-| Modellfamilie | Varianten |
+| Modell | ID | Größe | Sprachen | Übersetzung |
+| --- | --- | --- | --- | --- |
+| Tiny | `tiny` | ~75 MB | 99 | Ja |
+| Tiny (English) | `tiny.en` | ~75 MB | Englisch | Nein |
+| Tiny (Q5_0) | `tiny-q5_0` | ~31 MB | 99 | Ja |
+| Base (empfohlen) | `base` | ~142 MB | 99 | Ja |
+| Base (English) | `base.en` | ~142 MB | Englisch | Nein |
+| Base (Q5_0) (empfohlen) | `base-q5_0` | ~57 MB | 99 | Ja |
+| Small | `small` | ~466 MB | 99 | Ja |
+| Small (English) | `small.en` | ~466 MB | Englisch | Nein |
+| Small (Q5_0) | `small-q5_0` | ~182 MB | 99 | Ja |
+| Medium | `medium` | ~1,5 GB | 99 | Ja |
+| Medium (English) | `medium.en` | ~1,5 GB | Englisch | Nein |
+| Medium (Q5_0) | `medium-q5_0` | ~601 MB | 99 | Ja |
+| Large V3 Turbo | `large-v3-turbo` | ~1,6 GB | 99 | Nein |
+| Large V3 Turbo (Q5_0) | `large-v3-turbo-q5_0` | ~684 MB | 99 | Nein |
+
+## Verarbeitungsgerät
+
+| Option | Was sie bewirkt |
 | --- | --- |
-| Tiny | mehrsprachig, nur Englisch, Q5_0 |
-| Base | mehrsprachig, nur Englisch, Q5_0 |
-| Small | mehrsprachig, nur Englisch, Q5_0 |
-| Medium | mehrsprachig, nur Englisch, Q5_0 |
-| Large V3 Turbo | vollständig und Q5_0 |
-
-## Empfohlene Modelle
-
-| Modell | ID | Größe |
-| --- | --- | --- |
-| Base | `base` | ~142 MB |
-| Base (Q5_0) | `base-q5_0` | ~57 MB |
-
-## Konfiguration
-
-- **Modell** - Wähle das Whisper-Modell, das heruntergeladen und geladen werden soll.
-- **Prompt** - Optionaler Kontext kann an den Transkriptionsprozessor übergeben werden.
-- **Übersetzen** - Aktiviert Whisper-Übersetzung, wenn TypeWhisper sie anfordert.
-- **Beschleunigung** - Nutze die automatische Auswahl, CPU, NVIDIA CUDA, AMD Vulkan oder einen eigenen ROCm-Pfad zu `whisper.dll`.
+| **Automatisch** | Versucht NVIDIA CUDA, dann Vulkan, dann den Prozessor. Die CUDA-Dateien lädt diese Option nicht herunter; wähle dafür einmal **NVIDIA CUDA**. |
+| **CPU** | Läuft auf jedem PC. |
+| **NVIDIA CUDA** | Braucht eine NVIDIA-Grafikkarte. Beim ersten Laden des Modells lädt TypeWhisper die cuBLAS-Bibliotheken von NVIDIA herunter. Starte TypeWhisper danach neu und wähle das Modell erneut aus. |
+| **Vulkan** | Läuft über den Vulkan-Treiber auf einer Grafikkarte. Das Add-on nimmt die erste eigenständige Grafikkarte und nutzt die integrierte Grafik nur, wenn es keine gibt. |
+| **AMD ROCm** | Für einen ROCm-Build von `whisper.dll`, den du selbst bereitstellst. Setze die Umgebungsvariable `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH` auf die Datei oder ihren Ordner und starte TypeWhisper neu. |
 
 ## Einrichtung
 
-1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere das Add-on, das dort **Whisper (Local)** heißt. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle unter **Modelle** neben deinem bevorzugten Modell **Modell herunterladen**.
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Whisper (Local)**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Wähle unter **Modelle** neben dem gewünschten Modell **Modell herunterladen**. **Base** und **Base (Q5_0)** sind als **Empfohlen** markiert.
 3. Wähle **Modell verwenden**, um es für das Diktat zu verwenden.
+4. Optional: Wähle unter **Transkription** ein **Verarbeitungsgerät** und dann **Einstellungen speichern**.
+5. Optional: Zum Übersetzen ins Englische nimmst du ein mehrsprachiges Modell außer Large V3 Turbo und wählst in den Einstellungen unter **Diktat** als **Transkriptionsaufgabe** **Ins Englische übersetzen**.
 
 ## Hinweise
 
-- Modelle werden im Plugin-Datenverzeichnis gespeichert.
-- Quantisierte Q5_0-Varianten reduzieren die Downloadgröße gegenüber vollständigen Modellen.
-- Größere Whisper-Modelle können die Genauigkeit verbessern, benötigen aber mehr Speicherplatz und Arbeitsspeicher.
-- TypeWhisper kann CUDA installieren; Vulkan benötigt einen kompatiblen AMD-Treiber, ROCm den Pfad in `TYPEWHISPER_WHISPERCPP_ROCM_LIBRARY_PATH`.
+- Rein englische Modelle transkribieren immer Englisch. Mehrsprachige Modelle erkennen die Sprache selbst, solange du in den Einstellungen unter **Diktat** keine **Gesprochene Sprache** festlegst.
+- Rein englische Modelle und Large V3 Turbo, auch in der Q5_0-Variante, können nicht übersetzen. Ist **Ins Englische übersetzen** gewählt, meldet das Diktat das, statt aufzunehmen.
+- Der Prompt mit deinen Wörterbuch-Begriffen ist auf 224 Byte begrenzt; Begriffe bleiben vollständig und in der Reihenfolge des Wörterbuchs. Wiederholt ein Transkript nur Wörterbuch-Begriffe, wertet das Add-on das Audio noch einmal ohne Prompt aus, damit aus Stille keine Wörterbuch-Begriffe werden.
+- Ist eine Laufzeit geladen, kann der Wechsel zu einem anderen Verarbeitungsgerät einen Neustart von TypeWhisper erfordern.
+- Quantisierte Q5_0-Varianten sind kleinere Downloads als die vollständigen Modelle. Größere Modelle können genauer sein, brauchen aber mehr Speicherplatz und Arbeitsspeicher.
+- Das Add-on speichert Modelldateien in seinem Plugin-Datenverzeichnis unter `Models/`.
+- Ältere Versionen des Add-ons hießen whisper.cpp (Local).
