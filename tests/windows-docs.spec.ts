@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const routes = [
   ["", "Windows Documentation", "Windows-Dokumentation"],
@@ -25,6 +25,34 @@ const sidebarSlugs = [
   "/deployment",
   "/managed-settings",
 ];
+
+// Model load, unload, and delete in the API, available since 1.1.
+const modelCopy = {
+  en: {
+    title: "Load, unload, and delete models",
+    managed:
+      "From TypeWhisper for Windows 1.2, managed settings can refuse these routes with 403.",
+    managedLink: "managed settings",
+  },
+  de: {
+    title: "Modelle laden, entladen und löschen",
+    managed:
+      "Ab TypeWhisper für Windows 1.2 können verwaltete Einstellungen diese Routen mit 403 ablehnen.",
+    managedLink: "verwaltete Einstellungen",
+  },
+} as const;
+
+async function expectAnchoredHeading(
+  page: Page,
+  level: 2 | 3,
+  id: string,
+  name: string,
+) {
+  const heading = page.getByRole("heading", { level, name, exact: true });
+  await expect(heading).toBeVisible();
+  await expect(heading.getByRole("link")).toHaveAttribute("href", `#${id}`);
+  await expect(page.locator(`.docs-toc a[href="#${id}"]`)).toHaveCount(1);
+}
 
 test.describe("Windows documentation", () => {
   for (const locale of ["en", "de"] as const) {
@@ -247,6 +275,49 @@ test.describe("Windows documentation", () => {
     ).toBeVisible();
   });
 
+  for (const locale of ["en", "de"] as const) {
+    const text = modelCopy[locale];
+
+    test(`${locale} API documents loading, unloading, and deleting models`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/windows/api/`);
+
+      const endpoints = page.locator("section#endpoints");
+      for (const [method, route] of [
+        ["POST", "/v1/models/load"],
+        ["POST", "/v1/models/unload"],
+        ["DELETE", "/v1/models"],
+      ] as const) {
+        const row = endpoints
+          .getByRole("row")
+          .filter({ has: page.getByRole("cell", { name: route, exact: true }) })
+          .filter({ has: page.getByRole("cell", { name: method, exact: true }) });
+        await expect(row).toHaveCount(1);
+        // The model routes shipped with 1.1 and carry no version note.
+        await expect(row).not.toContainText("1.2");
+      }
+
+      await expectAnchoredHeading(page, 2, "model-management", text.title);
+      const models = page.locator("section#model-management");
+      await expect(models).toContainText(
+        `'{"engine":"sherpa-onnx","model":"parakeet-tdt-0.6b"}' |`,
+      );
+      await expect(models).toContainText('--data-binary "@-"');
+      await expect(models).toContainText(
+        '"http://localhost:8978/v1/models?engine=sherpa-onnx&model=canary-180m-flash"',
+      );
+      await expect(models).toContainText('"status": "ready"');
+      await expect(models).toContainText(text.managed);
+      await expect(
+        models.getByRole("link", { name: text.managedLink, exact: true }),
+      ).toHaveAttribute("href", `/${locale}/docs/windows/managed-settings/`);
+      // The macOS model IDs do not exist on Windows.
+      await expect(models).not.toContainText("parakeet-tdt-0.6b-v3");
+      await expect(models).not.toContainText("openai_whisper");
+    });
+  }
+
   test("Windows docs do not repeat superseded CPU-only, registry, or port claims", async ({
     page,
   }) => {
@@ -384,6 +455,7 @@ test.describe("Windows documentation", () => {
     for (const route of [
       "/en/docs/windows/",
       "/en/docs/windows/api/",
+      "/de/docs/windows/api/",
       "/de/docs/windows/workflows/",
       "/en/docs/windows/deployment/",
       "/de/docs/windows/managed-settings/",
