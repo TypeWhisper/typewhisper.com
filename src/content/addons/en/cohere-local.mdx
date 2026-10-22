@@ -21,7 +21,7 @@ featured: false
 
 ## About
 
-Cohere Transcribe (Local) adds the open Cohere Transcribe 03-2026 model to TypeWhisper as a separate local provider. It uses pinned GGUF model weights through CrispASR, with Metal acceleration on Apple Silicon and CPU, NVIDIA CUDA, or AMD Vulkan on Windows.
+Cohere Transcribe (Local) adds the open Cohere Transcribe 03-2026 model to TypeWhisper as a separate local provider. It uses pinned GGUF model weights through CrispASR, with Metal acceleration on Apple Silicon and CPU, NVIDIA CUDA, or Vulkan on Windows.
 
 The model and runtime are downloaded when you configure the add-on. After the required files are available, audio transcription runs on your computer and is not sent to the Cohere cloud API. This add-on is separate from the existing Cohere cloud provider.
 
@@ -41,13 +41,13 @@ The model and runtime are downloaded when you configure the add-on. After the re
       <td>macOS</td>
       <td><code>1.0.1</code></td>
       <td>TypeWhisper <code>1.6.0</code> or newer, macOS <code>14.0</code> or newer, Apple Silicon (<code>arm64</code>)</td>
-      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.0.1">macOS 1.0.1 release</a></td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.2.4">macOS 1.0.1 release</a></td>
     </tr>
     <tr>
       <td>Windows</td>
       <td><code>1.0.1</code></td>
-      <td>TypeWhisper <code>1.0.6</code> or newer, Windows x64</td>
-      <td><a href="https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.0.1">Windows 1.0.1 release</a></td>
+      <td>TypeWhisper <code>1.1.0</code> or newer, Windows x64</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.2.4">Windows 1.2.4 release</a></td>
     </tr>
   </tbody>
 </table>
@@ -101,7 +101,7 @@ The macOS settings target 8 GB or larger Macs for Q4_K, Q5_0, and Q6_K. A 16 GB 
 - Mandatory Silero voice activity detection before transcription to suppress silence and low-noise hallucinations
 - Batch transcription for dictation and file transcription
 - No cloud API key required; an optional Hugging Face token can increase model download rate limits
-- No streaming, translation, speaker diarization, or dictionary term boosting
+- No streaming, translation, speaker diarization, or dictionary term boosting; on Windows, a local live preview transcribes the growing recording while you speak
 - Model, runtime, and VAD assets are pinned and checksum-verified
 - Cohere model weights are Apache-2.0 licensed; CrispASR and the VAD model are MIT licensed
 
@@ -119,7 +119,7 @@ The macOS settings target 8 GB or larger Macs for Q4_K, Q5_0, and Q6_K. A 16 GB 
     <tr>
       <td>Runtime</td>
       <td>CrispASR with Metal</td>
-      <td>CrispASR with CPU, NVIDIA CUDA, or AMD Vulkan</td>
+      <td>CrispASR with CPU, NVIDIA CUDA, or Vulkan</td>
     </tr>
     <tr>
       <td>Language handling</td>
@@ -255,7 +255,7 @@ That comparison in [macOS issue #1031](https://github.com/TypeWhisper/typewhispe
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Cohere Transcribe (Local)**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Add a Hugging Face token only if anonymous downloads are rate-limited.
 3. Choose a quantization. Start with **Fast (Q5_0)** unless download size or memory use is more important.
-4. On Windows, leave backend selection on automatic or choose CPU, NVIDIA CUDA, or AMD Vulkan.
+4. On Windows, leave **Processing device** on **Automatic** or choose **CPU**, **NVIDIA CUDA**, or **Vulkan**.
 5. Download and load the selected model.
 6. Select Cohere Transcribe (Local) as the transcription engine in Settings or in a profile.
 7. On macOS, select one of the 14 supported languages explicitly before transcribing.
