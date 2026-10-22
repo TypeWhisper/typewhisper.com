@@ -11,7 +11,7 @@ requirements:
   - "An HTTPS endpoint that accepts JSON (HTTP only on localhost)"
 highlights:
   - "Up to 50 destinations, each with its own name, URL and POST or PUT method"
-  - "JSON payload with the text, detected language, duration, workflow name and timestamp"
+  - "JSON payload with the fields text, detectedLanguage, durationSeconds, profileName (the workflow name, or null without a workflow) and timestamp"
   - "Delivery for all workflows or only selected ones; All workflows also covers dictation without a workflow"
   - "Optional authentication headers, stored encrypted"
   - "Send test message checks a destination with sample text before you turn delivery on"

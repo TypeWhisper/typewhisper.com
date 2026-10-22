@@ -17,10 +17,10 @@ highlights:
   - "Gemini- und Gemma-Textmodelle für Workflow-Prompts mit einem Standardmodell, das ein Workflow überschreiben kann"
   - "Modelle aktualisieren lädt getrennte Transkriptions- und Textkataloge für deinen API-Schlüssel"
 configuration:
-  - "Gib unter API-Schlüssel deinen Gemini-API-Schlüssel ein, wähle Einstellungen speichern und prüfe ihn mit Verbindung prüfen"
-  - "Wähle Modelle aktualisieren, um die für deinen Schlüssel verfügbaren Transkriptions- und Textmodelle zu laden"
-  - "Wähle ein Transkriptionsmodell und stelle den Transkriptionsmodus auf Smart oder Wortgetreu"
-  - "Wähle das Standard-Textmodell und stelle Temperatur auf Anbieterstandard oder Benutzerdefiniert (0 bis 2)"
+  - "Gib unter „API-Schlüssel“ deinen Gemini-API-Schlüssel ein, wähle „Einstellungen speichern“ und prüfe ihn mit „Verbindung prüfen“"
+  - "Wähle „Modelle aktualisieren“, um die für deinen Schlüssel verfügbaren Transkriptions- und Textmodelle zu laden"
+  - "Wähle ein „Transkriptionsmodell“ und stell den „Transkriptionsmodus“ auf „Smart“ oder „Wortgetreu“"
+  - "Wähle unter „Textmodell“ das Standardmodell und stell „Temperatur“ auf „Anbieterstandard“ oder „Benutzerdefiniert“ (0 bis 2)"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Gemini"
 releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemini-v1.3.10"
 processing: "cloud"
@@ -32,11 +32,11 @@ processing: "cloud"
 2. Gib unter **API-Schlüssel** deinen Gemini-API-Schlüssel aus Google AI Studio ein, wähle **Einstellungen speichern** und prüfe den Schlüssel mit **Verbindung prüfen**.
 3. Wähle **Modelle aktualisieren**, um die für deinen Schlüssel verfügbaren Transkriptions- und Textmodelle zu laden. Bis dahin bietet das Add-on Gemini 3.5 Transcribe und die Textmodelle Gemini Flash Lite, Flash und Pro in der jeweils neuesten Version („latest“) an.
 4. Wähle ein **Transkriptionsmodell**. Wähle unter **Transkriptionsmodus** **Smart** für bereinigten Text oder **Wortgetreu**, um den gesprochenen Wortlaut zu erhalten. Live-Text während der Aufnahme benötigt ein Transkriptionsmodell mit Live-Version, etwa Gemini 3.5 Transcribe.
-5. Für die Textverarbeitung wählst du das Standard-**Textmodell** und stellst **Temperatur** auf **Anbieterstandard** oder **Benutzerdefiniert** mit einer **Eigenen Temperatur** von 0 bis 2. Wähle **Einstellungen speichern**.
-6. Wähle Google Gemini als Transkriptions-Engine in den allgemeinen Einstellungen, einem Profil oder einer Workflow-Überschreibung. Für die Textverarbeitung wählst du es als LLM-Anbieter eines Workflows; der Workflow kann ein anderes Gemini- oder Gemma-Modell wählen.
+5. Für die Textverarbeitung wählst du das Standard-**Textmodell**, stellst **Temperatur** auf **Anbieterstandard** oder **Benutzerdefiniert** und gibst bei Bedarf unter **Eigene Temperatur** einen Wert von 0 bis 2 ein. Wähle **Einstellungen speichern**.
+6. Wähle unter **Einstellungen > Diktat** **Google Gemini** als **Anbieter**; ein Workflow vom Typ **Nur Diktat** kann auch ein eigenes Transkriptionsmodell verwenden. Für die Textverarbeitung wählst du Google Gemini in einem Workflow unter **Erweitert** als **Anbieter** oder als **Standard-LLM**; der Workflow kann ein anderes Gemini- oder Gemma-Modell wählen.
 
 ## Modelle und Datenschutz
 
 Transkriptions- und Textmodelle werden in getrennte Kataloge gefiltert. Welche Modelle nutzbar sind, hängt von Googles Katalog und deinem API-Zugang ab. Das Öffnen der Add-on-Seite sendet keine Anfrage; nur **Modelle aktualisieren** ruft die Kataloge ab und speichert sie. Der Transkriptionsanbieter unterstützt keine Übersetzungsanforderung; Übersetzungen können als separater Text-Workflow erfolgen.
 
-Audio und Text werden für die jeweils gewählte Funktion an Google gesendet. Aufnahmen werden über die Files API von Google mit `store: false` hochgeladen und nach erfolgreicher, fehlgeschlagener oder abgebrochener Anfrage nach Möglichkeit gelöscht. Abrechnung und Nutzungslimits richten sich nach deinem Google-Konto.
+Audio und Text werden für die jeweils gewählte Funktion an Google gesendet. Aufnahmen werden über die Files API von Google hochgeladen und mit einer Anfrage mit `store: false` transkribiert; die Datei wird nach erfolgreicher, fehlgeschlagener oder abgebrochener Anfrage nach Möglichkeit gelöscht. Abrechnung und Nutzungslimits richten sich nach deinem Google-Konto.

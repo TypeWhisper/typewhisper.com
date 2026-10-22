@@ -17,16 +17,16 @@ highlights:
   - "Modelle aktualisieren lädt die für deinen API-Schlüssel verfügbaren Modelle"
   - "Fünf Stufen für den Denkaufwand von Muse Spark"
 configuration:
-  - "Gib deinen Meta-API-Schlüssel ein, wähle Einstellungen speichern und dann Verbindung prüfen"
-  - "Wähle Modelle aktualisieren, um die für deinen Schlüssel verfügbaren Modelle zu laden, oder behalte die integrierten Modelle"
-  - "Wähle unter Transkriptionsmodell ein Muse-Voice-Transcribe-Modell und dann Ausgewähltes Modell verwenden"
-  - "Stelle Sprecherkennzeichnung auf Ein, wenn du Text mit Sprecherlabels brauchst"
-  - "Wähle unter Textmodell das Standard-Muse-Spark-Modell, stelle den Denkaufwand auf Minimal, Niedrig, Mittel, Hoch oder Sehr hoch und wähle dann Einstellungen speichern"
+  - "Gib deinen Meta-API-Schlüssel ein, wähle „Einstellungen speichern“ und dann „Verbindung prüfen“"
+  - "Wähle „Modelle aktualisieren“, um die für deinen Schlüssel verfügbaren Modelle zu laden, oder behalte die integrierten Modelle"
+  - "Wähle unter „Transkriptionsmodell“ ein Muse-Voice-Transcribe-Modell und, falls angezeigt, „Ausgewähltes Modell verwenden“"
+  - "Stell „Sprecherkennzeichnung“ auf „Ein“, wenn du Text mit Sprecherlabels brauchst"
+  - "Wähle unter „Textmodell“ das Standard-Muse-Spark-Modell, stell den „Denkaufwand“ auf „Minimal“, „Niedrig“, „Mittel“, „Hoch“ oder „Sehr hoch“ und wähle dann „Einstellungen speichern“"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta"
 releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-meta-v1.2.14"
 screenshots:
   - src: "/screenshots/windows/plugins/com.typewhisper.meta.de.png"
-    caption: "API-Key-Prüfung, Muse Voice Transcribe mit Sprechertrennung, Muse-Spark-Modellauswahl und Denkaufwand."
+    caption: "Prüfung des API-Schlüssels, Muse Voice Transcribe mit Sprecherkennzeichnung, Muse-Spark-Modellauswahl und Denkaufwand."
     localized: false
 processing: "cloud"
 ---
@@ -53,7 +53,7 @@ Die Seite des Add-ons in der Seitenleiste der Einstellungen zeigt diese Optionen
 | **API-Schlüssel** | Speichert den Schlüssel für die Meta Model API. Gib einen neuen Schlüssel ein, um den gespeicherten zu ersetzen; **Gespeicherten Schlüssel entfernen** löscht ihn. |
 | **Verbindung prüfen** | Prüft den gespeicherten Schlüssel bei Meta. Dabei wird kein Audio hochgeladen, und der Modellkatalog bleibt unverändert. |
 | **Modelle aktualisieren** | Lädt die `muse-voice-transcribe-*`- und `muse-spark-*`-Modelle, die für deinen Schlüssel verfügbar sind, und meldet, wie viele Transkriptions- und Textmodelle gefunden wurden. |
-| **Transkriptionsmodell** | Wählt das Muse-Voice-Transcribe-Modell aus. Vor der ersten Aktualisierung steht Muse Voice Transcribe 1.0 bereit. **Ausgewähltes Modell verwenden** macht es zum Modell für das Diktat. |
+| **Transkriptionsmodell** | Das gewählte Muse-Voice-Transcribe-Modell wird zum Modell für das Diktat. Vor der ersten Aktualisierung steht Muse Voice Transcribe 1.0 bereit. Solange das angezeigte Modell nicht verwendet wird, erscheint **Ausgewähltes Modell verwenden** und stellt das Diktat darauf um. |
 | **Sprecherkennzeichnung** | **Aus** oder **Ein**. Eingeschaltet erkennt Meta Sprecher bei Live-Transkription und aufgenommenem Audio. Jeder Sprecherabschnitt beginnt in einer eigenen Zeile mit dem Sprecherlabel, das Meta liefert. |
 | **Textmodell** | Das Standard-Muse-Spark-Modell für die Textverarbeitung. Vor der ersten Aktualisierung stehen Muse Spark 1.2 und Muse Spark 1.1 bereit. |
 | **Denkaufwand** | **Minimal**, **Niedrig**, **Mittel**, **Hoch** oder **Sehr hoch**. Ein höherer Denkaufwand kann komplexe Aufgaben verbessern, erhöht aber die Antwortzeit. Der Standard ist **Mittel**. |
@@ -66,7 +66,7 @@ Wenn du den API-Schlüssel änderst, löscht das Add-on den geladenen Modellkata
 2. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Meta**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 3. Füge den Schlüssel unter **API-Schlüssel** ein und wähle **Einstellungen speichern**.
 4. Wähle **Verbindung prüfen** und dann **Modelle aktualisieren**. Die Seite meldet, wie viele Transkriptions- und Textmodelle geladen wurden.
-5. Wähle unter **Transkriptionsmodell** ein Muse-Voice-Transcribe-Modell und dann **Ausgewähltes Modell verwenden**.
+5. Wähle unter **Transkriptionsmodell** ein Muse-Voice-Transcribe-Modell und, falls angezeigt, **Ausgewähltes Modell verwenden**.
 6. Stelle **Sprecherkennzeichnung** nur auf **Ein**, wenn du Text mit Sprecherlabels brauchst.
 7. Wähle ein **Textmodell** und lass den **Denkaufwand** für den Anfang auf **Mittel**. Wähle dann **Einstellungen speichern**.
 

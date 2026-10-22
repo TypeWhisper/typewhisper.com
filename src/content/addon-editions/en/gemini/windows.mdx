@@ -32,11 +32,11 @@ processing: "cloud"
 2. Enter your Gemini API key from Google AI Studio under **API key**, choose **Save settings**, and verify the key with **Check connection**.
 3. Choose **Refresh models** to load the transcription and text models available to your key. Until you refresh, the add-on offers Gemini 3.5 Transcribe and the Gemini Flash Lite, Flash and Pro "latest" text models.
 4. Choose a **Transcription model**. Under **Transcription mode**, choose **Smart** for cleaned-up text or **Verbatim** to keep the spoken wording. Live text while recording needs a transcription model that has a live version, such as Gemini 3.5 Transcribe.
-5. For text processing, choose the default **Text model** and set **Temperature** to **Provider default** or **Custom** with a **Custom temperature** from 0 to 2. Choose **Save settings**.
-6. Select Google Gemini as the transcription engine in general settings, a profile, or a workflow override. For text processing, select it as a workflow's LLM provider; the workflow can choose a different Gemini or Gemma model.
+5. For text processing, choose the default **Text model**, set **Temperature** to **Provider default** or **Custom**, and if needed enter a value from 0 to 2 under **Custom temperature**. Choose **Save settings**.
+6. Under **Settings > Dictation**, select **Google Gemini** as the **Provider**; a **Dictation Only** workflow can also use its own transcription model. For text processing, select Google Gemini as a workflow's **Provider** under **Advanced** or as the **Default LLM**; the workflow can choose a different Gemini or Gemma model.
 
 ## Models and privacy
 
 Transcription and text models are filtered into separate catalogs. Which models you can use depends on Google's catalog and your API access. Opening the add-on's page sends no request; only **Refresh models** fetches and saves the catalogs. The transcription provider does not support translation requests; translation can run as a separate text workflow.
 
-Audio and text are sent to Google for the capability you select. Recorded audio is uploaded through Google's Files API with `store: false` and deleted on a best-effort basis after the request succeeds, fails, or is canceled. Billing and usage limits depend on your Google account.
+Audio and text are sent to Google for the capability you select. Recorded audio is uploaded through Google's Files API and transcribed with a request that sets `store: false`; the uploaded file is deleted on a best-effort basis after the request succeeds, fails, or is canceled. Billing and usage limits depend on your Google account.
