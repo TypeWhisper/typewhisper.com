@@ -1,20 +1,26 @@
 ---
 familySlug: "file-memory"
 platform: "windows"
-version: "1.0.0"
-description: "Local JSON storage for extracted memories with simple text search."
+version: "1.4.1"
+description: "Local storage for facts you save, reused only in workflows that choose File Memory as their memory context."
 id: "com.typewhisper.file-memory"
+capabilityNames:
+  action: "Remember in File Memory"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper for Windows"
+  - "TypeWhisper 1.1.0 or newer"
   - "Windows 10 or newer"
+  - "An LLM provider in TypeWhisper to reuse memories in workflows"
 highlights:
-  - "Storage interface for memory entries"
-  - "Processing without uploading audio or text"
-  - "JSON storage inside the plugin data directory"
-  - "Duplicate memory entries are skipped"
+  - "Facts you save stay in memories.json in the add-on's data folder on this PC"
+  - "The Remember in File Memory workflow action saves a workflow's result; a Dictation Only workflow saves the transcript without LLM processing"
+  - "Memory context in a text-processing workflow sends up to five matching entries, each up to 1,600 characters, to that workflow's LLM provider"
+  - "Word-based ranking instead of semantic search; no automatic fact extraction and no recall outside workflows that select File Memory"
+  - "Duplicate and empty entries are rejected, and a damaged memory file is kept read-only instead of being replaced"
 configuration:
-  - "No separate add-on configuration; automatic dictation memory is not connected in the reviewed Windows host"
+  - "Choose + (Add memory), enter one fact or topic per entry under Memory, and choose Save memory"
+  - "Find entries with Search memories…, edit one and choose Save memory, or delete it with Remove memory…"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.FileMemory"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-file-memory-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-file-memory-v1.4.1"
 processing: "local"
 ---

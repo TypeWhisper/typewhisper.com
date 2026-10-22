@@ -124,3 +124,89 @@ test("Windows docs and landing text do not send users to Integrations", async ()
     }
   }
 });
+
+function scalar(data, key) {
+  return data.match(new RegExp(`^${key}: ["']?([^"'\\n]+)["']?$`, "m"))?.[1];
+}
+
+// The catalog's minHostVersion is the plugin host version, 1.1.6 in both
+// TypeWhisper for Windows 1.1.0 and 1.2.0, not an app version. Every catalog
+// plugin therefore runs on 1.1.0, the first release with Discover plugins, and
+// a later version here would wrongly exclude users of 1.1.
+const FIRST_APP_WITH_DISCOVER = "1.1.0";
+
+test("Windows add-ons name the first app version with Discover plugins", async () => {
+  const newer = { en: "or newer", de: "oder neuer" };
+
+  for (const locale of LOCALES) {
+    const dir = path.resolve(`src/content/addon-editions/${locale}`);
+    for (const slug of await readdir(dir)) {
+      let content;
+      try {
+        content = await readFile(path.join(dir, slug, "windows.mdx"), "utf8");
+      } catch {
+        continue;
+      }
+
+      const { data } = split(content);
+      const minimum = scalar(data, "minAppVersion");
+      assert.equal(minimum, FIRST_APP_WITH_DISCOVER, `${locale}/${slug}: minAppVersion`);
+      assert.equal(
+        list(data, "requirements")[0],
+        `TypeWhisper ${minimum} ${newer[locale]}`,
+        `${locale}/${slug}: the first requirement names the app version`,
+      );
+    }
+
+    const addons = path.resolve(`src/content/addons/${locale}`);
+    for (const file of (await readdir(addons)).filter((name) => name.endsWith(".mdx"))) {
+      const { data } = split(await readFile(path.join(addons, file), "utf8"));
+      const platforms = list(data, "platforms");
+      if (platforms.length !== 1 || platforms[0] !== "windows") {
+        continue;
+      }
+
+      const minimum = scalar(data, "minAppVersion");
+      assert.equal(minimum, FIRST_APP_WITH_DISCOVER, `${locale}/${file}: minAppVersion`);
+    }
+  }
+});
+
+function map(data, key) {
+  const block = data.match(new RegExp(`^${key}:\\n((?:  [\\w-]+: .+\\n?)+)`, "m"))?.[1] ?? "";
+  return Object.fromEntries(
+    [...block.matchAll(/^  ([\w-]+): ["']?(.+?)["']?$/gm)].map((match) => [match[1], match[2]]),
+  );
+}
+
+// The generated guide names a capability as the app lists it (see
+// addonEditionCapabilityName); a name for a capability the edition lacks
+// would never show, and both languages need the same capabilities.
+test("capability names of Windows editions belong to their capabilities", async () => {
+  const capabilities = JSON.parse(
+    await readFile(path.resolve("src/data/addon-edition-capabilities.json"), "utf8"),
+  );
+  const names = {};
+  for (const locale of LOCALES) {
+    const dir = path.resolve(`src/content/addon-editions/${locale}`);
+    for (const slug of await readdir(dir)) {
+      let content;
+      try {
+        content = await readFile(path.join(dir, slug, "windows.mdx"), "utf8");
+      } catch {
+        continue;
+      }
+      const declared = map(split(content).data, "capabilityNames");
+      for (const capability of Object.keys(declared)) {
+        assert.ok(
+          capabilities[slug]?.windows?.includes(capability),
+          `${locale}/${slug}: ${capability} is not a Windows capability`,
+        );
+      }
+      (names[slug] ??= {})[locale] = Object.keys(declared).sort();
+    }
+  }
+  for (const [slug, byLocale] of Object.entries(names)) {
+    assert.deepEqual(byLocale.de, byLocale.en, `${slug}: the same capabilities have names in both languages`);
+  }
+});

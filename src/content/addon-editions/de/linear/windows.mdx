@@ -1,20 +1,27 @@
 ---
 familySlug: "linear"
 platform: "windows"
-version: "1.0.0"
-description: "Erstellt Linear-Issues aus Transkriptionen mit Standard-Team und optionalem Projekt."
+version: "1.2.3"
+description: "Erstellt Linear-Issues aus Workflow-Text in einem ausgewählten Team und optionalen Projekt."
 id: "com.typewhisper.linear"
+capabilityNames:
+  action: "Linear-Issue erstellen"
+minAppVersion: "1.1.0"
 requirements:
-  - "TypeWhisper für Windows"
+  - "TypeWhisper 1.1.0 oder neuer"
   - "Windows 10 oder neuer"
+  - "Linear-Konto mit persönlichem API-Schlüssel"
 highlights:
-  - "Workflow-Action-Ziel"
-  - "Erstellung neuer Linear-Issues"
-  - "Auswahl von Team und Projekt"
-  - "Verarbeitung über den jeweiligen Cloud-Anbieter"
+  - "Workflow-Aktionsziel Linear-Issue erstellen"
+  - "Die erste Zeile wird zum Issue-Titel (bis zu 100 Zeichen), der ganze Text zur Beschreibung"
+  - "Teams und Projekte werden zur Auswahl aus deinem Linear-Konto geladen"
+  - "Link zum neuen Issue im Ergebnis"
+  - "Verbindung prüfen und das Laden der Teams erstellen nie ein Issue"
 configuration:
-  - "API-Key, erforderliche Team-ID und optionale Projekt-ID konfigurieren"
+  - "Gib deinen Linear-API-Schlüssel ein, wähle „Einstellungen speichern“ und dann „Verbindung prüfen“"
+  - "Wähle „Teams und Projekte laden“"
+  - "Wähle unter „Team“ ein Team und bei Bedarf unter „Projekt (optional)“ eines seiner Projekte, dann „Einstellungen speichern“; die Projektliste zeigt alle Projekte, auf die dein API-Schlüssel Zugriff hat, nicht nur die des Teams"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Linear"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-linear-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-linear-v1.2.3"
 processing: "cloud"
 ---

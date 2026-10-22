@@ -1,17 +1,18 @@
 ---
 slug: gemma-local
-name: Gemma 4 (Local)
+name: Gemma 3 (Local)
 author: TypeWhisper
-version: "1.0.1"
+version: "1.2.5"
 icon: Gem
-description: Local LLM provider for Windows using LLamaSharp and GGUF model files.
+description: Local LLM provider for Windows workflows that runs Gemma 3 GGUF models on the CPU with the bundled llama.cpp runtime.
 categories:
   - llm
 platforms:
   - windows
 source: official
 id: "com.typewhisper.gemma-local"
-minAppVersion: "1.0.9"
+minAppVersion: "1.1.0"
+releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemma-local-v1.2.5
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
@@ -19,39 +20,59 @@ sourceUrls:
 
 ## About
 
-Gemma 4 (Local) adds a local LLM provider to TypeWhisper for Windows. It runs GGUF model files through LLamaSharp and keeps prompt processing on the machine after the selected model has been downloaded and loaded.
+Gemma 3 (Local) adds a local LLM provider for workflows to TypeWhisper for Windows. It runs Google's Gemma 3 instruction models as GGUF files on your CPU, through LLamaSharp with the bundled llama.cpp CPU runtime. Once a model is downloaded and loaded, your workflow text is processed on your PC.
+
+Gemma 3 (Local) processes text in workflows. It is not a speech recognition engine. The Windows add-on offers Gemma 3 models only. For Gemma 4, Qwen3.5 and LFM2.5 on Windows, install the separate **Local LLM** add-on from **Settings > Discover plugins**; it can be installed alongside Gemma 3 (Local) and shares no models or settings with it. On the Mac, these models are part of [Local LLM (MLX)](/en/addons/local-llm-mlx/).
+
+## Requirements
+
+This release requires **TypeWhisper 1.1.0 or newer** on Windows 10 or newer, x64. You need no API key and no account. The add-on brings LLamaSharp and the llama.cpp CPU runtime with it and downloads the models from Hugging Face. Plan for enough disk space and memory for the model you choose; the 4B model is a file of about 2.5 GB.
 
 ## Features
 
-- Local LLM prompt processing on Windows
-- Powered by LLamaSharp with CPU backend support
-- GGUF model downloads from Hugging Face
-- Download, load, unload, and cancel controls in the plugin settings
-- Previously selected downloaded models can be loaded automatically in the background
-- No API key required for the core local workflow
+- Local text processing for workflows, after a one-time model download
+- Three Gemma 3 instruction models in GGUF format with Q4_K_M quantization: 4B, 12B and 27B
+- Runs on the CPU through LLamaSharp and llama.cpp; no GPU is used
+- Downloads from pinned Hugging Face revisions, checked against size and SHA-256, and continued after an interruption
+- Download, load, unload and remove controls on the add-on's page
+- TypeWhisper loads the last loaded model again after an idle release or a restart
+- Adjustable number of CPU threads
 
 ## Available Models
 
-| Model | ID | Size | Status |
+| Model | ID | GGUF file | Status |
 | --- | --- | --- | --- |
-| Gemma 4 4B (Q4_K_M) | `gemma4-4b-q4` | ~3 GB | Recommended |
-| Gemma 4 12B (Q4_K_M) | `gemma4-12b-q4` | ~8 GB | Available |
-| Gemma 4 27B (Q4_K_M) | `gemma4-27b-q4` | ~17 GB | Available |
+| Gemma 3 4B (Q4_K_M) | `gemma3-4b-q4` | about 2.5 GB | Recommended |
+| Gemma 3 12B (Q4_K_M) | `gemma3-12b-q4` | about 7.3 GB | Available |
+| Gemma 3 27B (Q4_K_M) | `gemma3-27b-q4` | about 16.5 GB | Available |
 
-## Configuration
+The add-on's page shows rounded sizes of about 3, 8 and 17 GB. The files come from the `unsloth/gemma-3-4b-it-GGUF`, `unsloth/gemma-3-12b-it-GGUF` and `unsloth/gemma-3-27b-it-GGUF` repositories on Hugging Face, each pinned to one revision.
 
-- **Model** - Choose which local Gemma model to download and load.
-- **Download** - Downloads the selected GGUF model file into the plugin data directory.
-- **Load / Unload** - Loads the downloaded model for prompt processing or releases it from memory.
+## Settings
+
+| Setting | What it does |
+| --- | --- |
+| **Download model** | Downloads the GGUF file and checks its size and SHA-256 before the model can be loaded. If a download is interrupted or cancelled, selecting **Download model** again continues where it stopped. |
+| **Cancel download** | Stops the running download. The partial file is kept so the download can continue later. |
+| **Load model** | Loads the downloaded model into memory so that workflows can use it. |
+| **Unload model** | Releases the model's memory. TypeWhisper then no longer loads it again on its own. |
+| **Remove** | Unloads the model if needed and deletes its GGUF file after you confirm with **Remove model**. |
+| **CPU threads** | Number of CPU threads for the model: **Automatic** (half of the available processors), 2, 4, 8 or 16, never more than your PC has. Takes effect the next time a model is loaded. Save it with **Save settings**. |
+| **Discard incomplete downloads** | Deletes the saved data of interrupted downloads. Completed models are kept. |
 
 ## Setup
 
-1. In TypeWhisper, open **Settings > Discover plugins** and install the add-on, which is listed there as **Gemma 3 (Local)**. It then appears in the Settings sidebar, and its page opens.
-2. Under **Models**, select **Download model** next to the model you want, then **Load model**.
-3. Select **Gemma 3 (Local)** as the LLM provider in your prompt workflow.
+1. In TypeWhisper, open **Settings > Discover plugins** and install **Gemma 3 (Local)**. It then appears in the Settings sidebar, and its page opens.
+2. Under **Models**, select **Download model** next to **Gemma 3 4B (Q4_K_M)**, the recommended model, or next to a larger model.
+3. When the download is complete, select **Load model**.
+4. Open **Workflows** in the Settings sidebar, open a workflow and, under **Advanced**, choose **Gemma 3 (Local)** as **Provider** and the loaded model as **Model**. To use Gemma for every workflow that follows the default, choose it under **Default LLM** instead.
 
 ## Notes
 
-- Models are stored under the plugin data directory in `Models/<model-id>/`.
-- The current Windows implementation uses LLamaSharp with the CPU backend.
-- Larger models need substantially more disk space and memory than the recommended 4B model.
+- Nothing is downloaded or loaded when you install or enable the add-on. You choose the model and load it yourself.
+- TypeWhisper remembers the model you loaded. If it was released after a period without use, as set under **Unload idle models** in **Settings > Advanced > Recording**, or after a restart, the next request loads it again.
+- Switching directly to another model keeps the current one available until the new one has loaded, so both need memory for a moment. On a PC with little memory, select **Unload model** first and then load the other model.
+- Gemma 3 has no separate system role. The add-on puts the workflow instructions at the start of the user turn, as described in Google's [Gemma prompt format](https://ai.google.dev/gemma/docs/core/prompt-structure).
+- The model works with a context of 4,096 tokens. If a text and its expected answer do not fit, the request stops with a message to split the text into smaller sections. An answer that reaches the token limit is reported as an error instead of being inserted cut off.
+- Models are stored in the add-on's plugin data folder under `Models\<model-id>\`, in the regular release at `%LOCALAPPDATA%\TypeWhisper-WinUI\PluginData\com.typewhisper.gemma-local\Models\`.
+- Larger models need much more disk space and memory than the 4B model. According to the add-on's documentation, the 12B and 27B models still need separate acceptance testing.

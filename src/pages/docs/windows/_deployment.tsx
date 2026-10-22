@@ -34,8 +34,8 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["api.github.com", "github.com", "release-assets.githubusercontent.com"],
-    "App update checks and downloads (unless `UpdateMode` is `0`) and plugin package downloads.",
-    "Prüfung und Download von App-Updates (außer bei `UpdateMode` `0`) sowie Downloads von Plugin-Paketen.",
+    "App update checks and downloads (unless `UpdateMode` is `0`), plugin package downloads, and the model and runtime files that some local plugins download from GitHub releases (Qwen3 ASR 0.6B, Parakeet Ultra, the graphics card runtime of NVIDIA Parakeet, and the CrispASR runtime of Cohere Transcribe).",
+    "Prüfung und Download von App-Updates (außer bei `UpdateMode` `0`), Downloads von Plugin-Paketen sowie die Modell- und Laufzeitdateien, die manche lokalen Plugins aus GitHub-Releases laden (Qwen3 ASR 0.6B, Parakeet Ultra, die Grafikkarten-Laufzeit von NVIDIA Parakeet und die CrispASR-Laufzeit von Cohere Transcribe).",
   ],
   [
     ["typewhisper.github.io"],
@@ -44,13 +44,18 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["huggingface.co", "*.hf.co"],
-    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, GigaAM, local text models, and local speech output. The host redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
-    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Wörterbuch-Boosting, whisper.cpp, GigaAM, lokale Textmodelle und lokale Sprachausgabe. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
+    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, GigaAM, Qwen3 ASR 1.7B, Cohere Transcribe, Granite Speech, local text models, and local speech output. The host redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
+    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Wörterbuch-Boosting, whisper.cpp, GigaAM, Qwen3 ASR 1.7B, Cohere Transcribe, Granite Speech, lokale Textmodelle und lokale Sprachausgabe. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
   ],
   [
-    ["download.pytorch.org", "developer.download.nvidia.com", "api.nuget.org"],
-    "Runtime files that some local plugins fetch while they load a model (Granite Speech, whisper.cpp with CUDA, ONNX runtimes). `AllowModelDownloads` does not cover them.",
-    "Laufzeitdateien, die manche lokalen Plugins beim Laden eines Modells nachladen (Granite Speech, whisper.cpp mit CUDA, ONNX-Laufzeiten). `AllowModelDownloads` erfasst sie nicht.",
+    ["www.python.org", "raw.githubusercontent.com", "pypi.org", "files.pythonhosted.org", "download.pytorch.org", "download-r2.pytorch.org"],
+    "The Python runtime that Granite Speech installs with its model: embedded Python from `www.python.org`, the pip installer from `raw.githubusercontent.com`, Python packages from `pypi.org` and `files.pythonhosted.org`, and PyTorch from `download.pytorch.org`, which serves its files from `download-r2.pytorch.org`.",
+    "Die Python-Laufzeit, die Granite Speech mit seinem Modell installiert: eingebettetes Python von `www.python.org`, das pip-Installationsprogramm von `raw.githubusercontent.com`, Python-Pakete von `pypi.org` und `files.pythonhosted.org` sowie PyTorch von `download.pytorch.org`, das seine Dateien über `download-r2.pytorch.org` ausliefert.",
+  ],
+  [
+    ["developer.download.nvidia.com", "api.nuget.org"],
+    "Runtime files that some local plugins fetch while they load a model (whisper.cpp with CUDA, ONNX runtimes). `AllowModelDownloads` does not cover them.",
+    "Laufzeitdateien, die manche lokalen Plugins beim Laden eines Modells nachladen (whisper.cpp mit CUDA, ONNX-Laufzeiten). `AllowModelDownloads` erfasst sie nicht.",
   ],
   [
     ["graph.microsoft.com", "www.googleapis.com"],
@@ -104,8 +109,8 @@ const pluginHosts: Array<[plugin: string, en: string, de: string]> = [
   ],
   [
     "Local plugins: Parakeet, whisper.cpp, local LLM, Gemma, Qwen, GigaAM, Cohere Transcribe, Granite Speech, Supertonic TTS",
-    "`huggingface.co` and `*.hf.co` for models; runtime hosts as above",
-    "`huggingface.co` und `*.hf.co` für Modelle; Laufzeit-Hosts wie oben",
+    "`huggingface.co` and `*.hf.co` for most models, the GitHub hosts above for some; runtime hosts as above",
+    "`huggingface.co` und `*.hf.co` für die meisten Modelle, für einige die GitHub-Hosts oben; Laufzeit-Hosts wie oben",
   ],
 ];
 

@@ -1,0 +1,47 @@
+---
+// Old URLs of retired editions forward to the add-on page. The pages of the
+// current editions come from [platform].astro.
+import { getPlugin } from "@/data/addons";
+import {
+  editionPlatformSlugs,
+  retiredAddonEditions,
+} from "@/data/addon-editions";
+import { locales, type Locale } from "@/i18n/index";
+import { canonicalPath } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+  target: string;
+}
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    retiredAddonEditions
+      .filter(({ familySlug }) => getPlugin(familySlug, locale))
+      .map(({ familySlug, platform }) => ({
+        params: {
+          locale,
+          slug: familySlug,
+          retiredPlatform: editionPlatformSlugs[platform],
+        },
+        props: {
+          locale,
+          target: canonicalPath(locale, `/addons/${familySlug}/`),
+        },
+      })),
+  );
+}
+
+const { target } = Astro.props;
+---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+  </head>
+  <body></body>
+</html>

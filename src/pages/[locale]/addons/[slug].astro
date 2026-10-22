@@ -151,10 +151,15 @@ const hasToc = !isFamily && Boolean(mod) && headings.length > 1;
         <section class="site-section addon-section" aria-labelledby="edition-heading">
           <div class="site-wrap">
             <h2 id="edition-heading" class="site-subtitle">
-              {t(locale, "addons.editions.heading")}
+              {t(locale, editions.length > 1 ? "addons.editions.heading" : "addons.editions.headingSingle")}
             </h2>
             <p class="site-text addon-section__lede">
-              {t(locale, "addons.editions.description")}
+              {editions.length > 1
+                ? t(locale, "addons.editions.description")
+                : t(locale, "addons.editions.descriptionSingle").replace(
+                    "{platform}",
+                    t(locale, platformKeys[editions[0].platform]),
+                  )}
             </p>
 
             <ul class="site-tiers site-tiers--2 addon-editions">

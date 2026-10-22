@@ -1,17 +1,18 @@
 ---
 slug: gemma-local
-name: Gemma 4 (Local)
+name: Gemma 3 (Local)
 author: TypeWhisper
-version: "1.0.1"
+version: "1.2.5"
 icon: Gem
-description: Lokaler LLM-Anbieter für Windows mit LLamaSharp und GGUF-Modelldateien.
+description: Lokaler LLM-Anbieter für Windows-Workflows, der Gemma-3-Modelle im GGUF-Format mit der mitgelieferten llama.cpp-Laufzeit auf der CPU ausführt.
 categories:
   - llm
 platforms:
   - windows
 source: official
 id: "com.typewhisper.gemma-local"
-minAppVersion: "1.0.9"
+minAppVersion: "1.1.0"
+releaseUrl: https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-gemma-local-v1.2.5
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GemmaLocal
@@ -19,39 +20,59 @@ sourceUrls:
 
 ## Über
 
-Gemma 4 (Local) ergänzt TypeWhisper unter Windows um einen lokalen LLM-Anbieter. Das Plugin führt GGUF-Modelldateien über LLamaSharp aus und verarbeitet Prompts lokal auf dem Rechner, sobald das gewählte Modell heruntergeladen und geladen wurde.
+Gemma 3 (Local) ergänzt TypeWhisper für Windows um einen lokalen LLM-Anbieter für Workflows. Das Add-on führt Googles Gemma-3-Instruktionsmodelle als GGUF-Dateien auf deiner CPU aus, über LLamaSharp mit der mitgelieferten llama.cpp-CPU-Laufzeit. Sobald ein Modell heruntergeladen und geladen ist, wird der Text deiner Workflows auf deinem PC verarbeitet.
+
+Gemma 3 (Local) verarbeitet Text in Workflows. Es ist keine Spracherkennungs-Engine. Das Windows-Add-on bietet nur Gemma-3-Modelle. Für Gemma 4, Qwen3.5 und LFM2.5 unter Windows installierst du unter **Einstellungen > Plugins entdecken** das separate Add-on **Local LLM**; es lässt sich neben Gemma 3 (Local) installieren und teilt keine Modelle oder Einstellungen mit ihm. Auf dem Mac gehören diese Modelle zu [Local LLM (MLX)](/de/addons/local-llm-mlx/).
+
+## Voraussetzungen
+
+Diese Version benötigt **TypeWhisper 1.1.0 oder neuer** unter Windows 10 oder neuer, x64. Du brauchst keinen API-Schlüssel und kein Konto. Das Add-on bringt LLamaSharp und die llama.cpp-CPU-Laufzeit mit und lädt die Modelle von Hugging Face herunter. Plane genug Speicherplatz und Arbeitsspeicher für das gewählte Modell ein; das 4B-Modell ist eine Datei von etwa 2,5 GB.
 
 ## Features
 
-- Lokale LLM-Prompt-Verarbeitung unter Windows
-- Basiert auf LLamaSharp mit CPU-Backend-Unterstützung
-- GGUF-Modell-Downloads von Hugging Face
-- Download-, Laden-, Entladen- und Abbrechen-Steuerung in den Plugin-Einstellungen
-- Zuvor gewählte heruntergeladene Modelle können im Hintergrund automatisch geladen werden
-- Kein API-Schlüssel für den lokalen Kern-Workflow erforderlich
+- Lokale Textverarbeitung für Workflows nach einem einmaligen Modelldownload
+- Drei Gemma-3-Instruktionsmodelle im GGUF-Format mit Q4_K_M-Quantisierung: 4B, 12B und 27B
+- Läuft über LLamaSharp und llama.cpp auf der CPU; eine GPU wird nicht genutzt
+- Downloads von festgelegten Hugging-Face-Ständen, geprüft gegen Größe und SHA-256 und nach einer Unterbrechung fortsetzbar
+- Schaltflächen zum Herunterladen, Laden, Entladen und Entfernen auf der Seite des Add-ons
+- TypeWhisper lädt das zuletzt geladene Modell nach einer Freigabe im Leerlauf oder einem Neustart wieder
+- Einstellbare Zahl von CPU-Threads
 
 ## Verfügbare Modelle
 
-| Modell | ID | Größe | Status |
+| Modell | ID | GGUF-Datei | Status |
 | --- | --- | --- | --- |
-| Gemma 4 4B (Q4_K_M) | `gemma4-4b-q4` | ~3 GB | Empfohlen |
-| Gemma 4 12B (Q4_K_M) | `gemma4-12b-q4` | ~8 GB | Verfügbar |
-| Gemma 4 27B (Q4_K_M) | `gemma4-27b-q4` | ~17 GB | Verfügbar |
+| Gemma 3 4B (Q4_K_M) | `gemma3-4b-q4` | etwa 2,5 GB | Empfohlen |
+| Gemma 3 12B (Q4_K_M) | `gemma3-12b-q4` | etwa 7,3 GB | Verfügbar |
+| Gemma 3 27B (Q4_K_M) | `gemma3-27b-q4` | etwa 16,5 GB | Verfügbar |
 
-## Konfiguration
+Die Seite des Add-ons zeigt gerundete Größen von etwa 3, 8 und 17 GB. Die Dateien stammen aus den Repositorys `unsloth/gemma-3-4b-it-GGUF`, `unsloth/gemma-3-12b-it-GGUF` und `unsloth/gemma-3-27b-it-GGUF` auf Hugging Face, jeweils festgelegt auf einen Stand.
 
-- **Modell** - Wähle aus, welches lokale Gemma-Modell heruntergeladen und geladen werden soll.
-- **Download** - Lädt die ausgewählte GGUF-Modelldatei in das Plugin-Datenverzeichnis.
-- **Laden / Entladen** - Lädt das heruntergeladene Modell für Prompt-Verarbeitung oder gibt es aus dem Speicher frei.
+## Einstellungen
+
+| Einstellung | Was sie bewirkt |
+| --- | --- |
+| **Modell herunterladen** | Lädt die GGUF-Datei herunter und prüft ihre Größe und ihren SHA-256-Wert, bevor sich das Modell laden lässt. Wird ein Download unterbrochen oder abgebrochen, setzt ein erneuter Klick auf **Modell herunterladen** ihn an der Stelle fort, an der er aufgehört hat. |
+| **Download abbrechen** | Stoppt den laufenden Download. Die Teildatei bleibt erhalten, damit der Download später fortgesetzt werden kann. |
+| **Modell laden** | Lädt das heruntergeladene Modell in den Arbeitsspeicher, damit Workflows es nutzen können. |
+| **Modell entladen** | Gibt den Arbeitsspeicher des Modells frei. TypeWhisper lädt es danach nicht mehr von selbst. |
+| **Entfernen** | Entlädt das Modell bei Bedarf und löscht seine GGUF-Datei, nachdem du mit **Modell entfernen** bestätigt hast. |
+| **CPU threads** | Zahl der CPU-Threads für das Modell: **Automatic** (die Hälfte der verfügbaren Prozessoren), 2, 4, 8 oder 16, nie mehr, als dein PC hat. Gilt ab dem nächsten Laden eines Modells. Speichere sie mit **Einstellungen speichern**. Auch in der deutschen App sind die Einstellung und ihre Auswahl englisch beschriftet. |
+| **Unvollständige Downloads verwerfen** | Löscht die gespeicherten Daten unterbrochener Downloads. Vollständige Modelle bleiben erhalten. |
 
 ## Einrichtung
 
-1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere das Add-on, das dort **Gemma 3 (Local)** heißt. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle unter **Modelle** neben dem gewünschten Modell **Modell herunterladen** und danach **Modell laden**.
-3. Wähle **Gemma 3 (Local)** als LLM-Anbieter in deinem Prompt-Workflow.
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Gemma 3 (Local)**. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Wähle unter **Modelle** **Modell herunterladen** neben **Gemma 3 4B (Q4_K_M)**, dem empfohlenen Modell, oder neben einem größeren Modell.
+3. Wähle nach Abschluss des Downloads **Modell laden**.
+4. Öffne **Workflows** in der Seitenleiste der Einstellungen, öffne einen Workflow und wähle unter **Erweitert** **Gemma 3 (Local)** als **Anbieter** und das geladene Modell als **Modell**. Soll Gemma für alle Workflows gelten, die dem Standard folgen, wähle es stattdessen unter **Standard-LLM**.
 
 ## Hinweise
 
-- Modelle werden im Plugin-Datenverzeichnis unter `Models/<model-id>/` gespeichert.
-- Die aktuelle Windows-Implementierung nutzt LLamaSharp mit CPU-Backend.
-- Größere Modelle benötigen deutlich mehr Speicherplatz und Arbeitsspeicher als das empfohlene 4B-Modell.
+- Beim Installieren oder Aktivieren des Add-ons wird nichts heruntergeladen oder geladen. Du wählst das Modell und lädst es selbst.
+- TypeWhisper merkt sich das Modell, das du geladen hast. Wurde es nach einer Zeit ohne Nutzung freigegeben, wie unter **Inaktive Modelle entladen** in **Einstellungen > Erweitert > Aufnahme** festgelegt, oder nach einem Neustart, lädt die nächste Anfrage es wieder.
+- Wechselst du direkt zu einem anderen Modell, bleibt das aktuelle verfügbar, bis das neue geladen ist; kurz brauchen also beide Arbeitsspeicher. Hat dein PC wenig Arbeitsspeicher, wähle zuerst **Modell entladen** und lade dann das andere Modell.
+- Gemma 3 hat keine eigene Systemrolle. Das Add-on stellt die Anweisungen des Workflows an den Anfang der Nutzereingabe, wie es Googles [Gemma-Promptformat](https://ai.google.dev/gemma/docs/core/prompt-structure) beschreibt.
+- Das Modell arbeitet mit einem Kontext von 4.096 Tokens. Passen ein Text und die erwartete Antwort nicht hinein, bricht die Anfrage mit dem Hinweis ab, den Text in kleinere Abschnitte zu teilen. Erreicht eine Antwort das Token-Limit, meldet das Add-on einen Fehler, statt sie abgeschnitten einzufügen.
+- Modelle werden im Plugin-Datenordner des Add-ons unter `Models\<model-id>\` gespeichert, in der regulären Version unter `%LOCALAPPDATA%\TypeWhisper-WinUI\PluginData\com.typewhisper.gemma-local\Models\`.
+- Größere Modelle brauchen deutlich mehr Speicherplatz und Arbeitsspeicher als das 4B-Modell. Laut der Dokumentation des Add-ons brauchen die Modelle 12B und 27B noch eine eigene Abnahmeprüfung.

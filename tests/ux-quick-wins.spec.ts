@@ -187,7 +187,7 @@ test.describe("addons search", () => {
         macScreenshotAlt: "Filler Words settings in TypeWhisper for macOS",
         windowsHeading: "Filler Words for Windows",
         windowsDescription:
-          "Locally removes configurable English, German, and Japanese filler words from transcriptions.",
+          "Locally removes configurable filler words and stuttered repetitions from transcriptions.",
         windowsScreenshotAlt: "Filler Words settings in TypeWhisper for Windows",
       },
       {
@@ -198,7 +198,7 @@ test.describe("addons search", () => {
         macScreenshotAlt: "Einstellungen von Filler Words in TypeWhisper für macOS",
         windowsHeading: "Filler Words für Windows",
         windowsDescription:
-          "Entfernt konfigurierbare englische, deutsche und japanische Füllwörter lokal aus Transkriptionen.",
+          "Entfernt konfigurierbare Füllwörter und gestotterte Wiederholungen lokal aus Transkriptionen.",
         windowsScreenshotAlt: "Einstellungen von Filler Words in TypeWhisper für Windows",
       },
     ] as const;

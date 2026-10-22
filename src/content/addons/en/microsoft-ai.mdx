@@ -9,23 +9,21 @@ categories:
   - transcription
 platforms:
   - mac
-  - windows
 source: official
 homepage: https://azure.microsoft.com/en-us/products/ai-services/ai-speech
 apiDocsUrl: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin"
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin"
-  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi"
 ---
 
 ## About
 
 Microsoft AI connects TypeWhisper to the MAI Transcribe models available through Azure Speech. The add-on sends a completed microphone recording or imported audio to Azure, then returns text with detected language information and segment timing. MAI Transcribe 2 can also attach speaker labels.
 
-Version `1.0.0` is available independently for macOS and Windows. Both editions provide the same core transcription controls, while using each operating system's secure credential storage. Microsoft currently describes MAI Transcribe in Azure Speech as a preview feature, so review the current Azure availability and preview terms before relying on it for production or sensitive workloads.
+Version `1.0.0` is available for macOS; TypeWhisper for Windows 1.1 and later no longer offers this add-on. Microsoft currently describes MAI Transcribe in Azure Speech as a preview feature, so review the current Azure availability and preview terms before relying on it for production or sensitive workloads.
 
-Sources: [Microsoft MAI Transcribe documentation](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin), [Windows plugin source](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
+Sources: [Microsoft MAI Transcribe documentation](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin)
 
 ## What the terms mean
 
@@ -59,7 +57,7 @@ MAI Transcribe 2 supports 60 language codes in the current plugin catalog; MAI T
 
 TypeWhisper also sends selected dictionary terms as Azure phrase-list hints. The add-on accepts up to 500 terms with at most 20,000 characters in total. Use this for people, product names, abbreviations, and technical vocabulary that ordinary language context may not resolve reliably.
 
-Sources: [Microsoft language support](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe#language-support), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin), [Windows plugin source](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi)
+Sources: [Microsoft language support](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe#language-support), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin)
 
 ## Azure connection and regions
 
@@ -83,7 +81,7 @@ Source: [Azure Speech regions](https://learn.microsoft.com/en-us/azure/ai-servic
 | **Endpoint or resource name** | Selects the Azure Speech resource. TypeWhisper accepts a supported Azure HTTPS endpoint or a bare resource name. | `https://eastus.api.cognitive.microsoft.com` or `my-speech-resource` |
 | **API Key** | Authenticates requests and is stored through the operating system's secure secret storage. | Copy either active Speech resource key from the Azure portal. |
 | **Save/Update connection** | Stores the normalized endpoint and credential. | Save once, then update after rotating the Azure key. |
-| **Remove** | Clears the stored API key and disables the connection on macOS. On Windows, clear both connection fields and save. | Remove credentials before switching Azure subscriptions or devices. |
+| **Remove** | Clears the stored API key and disables the connection. | Remove credentials before switching Azure subscriptions or devices. |
 | **Model** | Chooses MAI Transcribe 2 or 1.5, plus compatible models returned by the catalog. | Start with **MAI Transcribe 2**. |
 | **Refresh models** | Loads compatible model IDs from the connected Microsoft Foundry resource. | Refresh after Azure enables a new MAI Transcribe model for the resource. |
 | **Transcript style** | Chooses **Clean** or **Verbatim**. | Use Clean for notes and captions; use Verbatim for review or analysis. |
@@ -113,7 +111,6 @@ Source: [Azure Speech regions](https://learn.microsoft.com/en-us/azure/ai-servic
 | Platform | Host requirement | Audio limit enforced by the plugin |
 | --- | --- | --- |
 | macOS | TypeWhisper 1.7.0 and macOS 14 or newer | Up to 2 hours and 300 MB of normalized WAV audio |
-| Windows | TypeWhisper 1.0.9 and Windows 10 or newer | Shorter than 2 hours and smaller than 250 MB of normalized WAV audio |
 
 ## Cloud processing and privacy
 

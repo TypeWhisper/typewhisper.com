@@ -188,8 +188,8 @@ export default function DocsWindowsTroubleshooting({
         <ol>
           <li>
             {isDe
-              ? "Prüfe Einstellungen > Erweitert > API Server: aktiviert, Status „läuft“ und der erwartete Port."
-              : "Check Settings > Advanced > API Server: enabled, status running, and the expected port."}
+              ? "Prüfe Einstellungen > Erweitert > API-Server: „HTTP-API aktivieren“ ist eingeschaltet, der Status lautet „Lauscht auf http://127.0.0.1:<Port>“, und der Port passt zu deinem Client."
+              : "Check Settings > Advanced > API server: Enable HTTP API is on, the status reads Listening on http://127.0.0.1:<port>, and the port matches your client."}
           </li>
           <li>
             {isDe
@@ -203,8 +203,8 @@ export default function DocsWindowsTroubleshooting({
           </li>
           <li>
             {isDe
-              ? "Bei aktivem Token-Schutz: /v1/status bleibt frei; alle anderen Routen brauchen Authorization: Bearer oder X-TypeWhisper-API-Token."
-              : "With token protection enabled, /v1/status stays public; every other route needs Authorization: Bearer or X-TypeWhisper-API-Token."}
+              ? "Wenn „API-Token verlangen“ aktiv ist, bleibt /v1/status frei; alle anderen API-Routen brauchen Authorization: Bearer oder X-TypeWhisper-API-Token."
+              : "With Require API token enabled, /v1/status stays public; every other API route needs Authorization: Bearer or X-TypeWhisper-API-Token."}
           </li>
         </ol>
         <a href={localePath(locale, "/docs/windows/api")} className="site-link">
