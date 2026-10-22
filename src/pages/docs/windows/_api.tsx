@@ -67,7 +67,7 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
         <ol>
           <li>{isDe ? "Öffne Einstellungen > Erweitert > API-Server." : "Open Settings > Advanced > API server."}</li>
           <li>{isDe ? "Schalte „HTTP-API aktivieren“ ein; der Server startet sofort. Für einen anderen Port als 8978 trägst du ihn ein und wählst „Anwenden“." : "Turn on Enable HTTP API; the server starts right away. To use a port other than 8978, enter it and select Apply."}</li>
-          <li>{isDe ? "Prüfe den Status in PowerShell:" : "Check the status from PowerShell:"}</li>
+          <li>{isDe ? "Prüfe den Status in PowerShell. Hast du einen anderen Port gewählt, setze ihn hier und in den folgenden Beispielen ein:" : "Check the status from PowerShell. If you chose another port, use it here and in the examples below:"}</li>
         </ol>
         <DocsCode
           locale={locale}

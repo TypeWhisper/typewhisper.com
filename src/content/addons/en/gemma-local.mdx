@@ -70,7 +70,7 @@ The add-on's page shows rounded sizes of about 3, 8 and 17 GB. The files come fr
 ## Notes
 
 - Nothing is downloaded or loaded when you install or enable the add-on. You choose the model and load it yourself.
-- TypeWhisper remembers the model you loaded. If it was released after a period without use, as set under **Unload idle models** in **Settings > Advanced**, or after a restart, the next request loads it again.
+- TypeWhisper remembers the model you loaded. If it was released after a period without use, as set under **Unload idle models** in **Settings > Advanced > Recording**, or after a restart, the next request loads it again.
 - Switching directly to another model keeps the current one available until the new one has loaded, so both need memory for a moment. On a PC with little memory, select **Unload model** first and then load the other model.
 - Gemma 3 has no separate system role. The add-on puts the workflow instructions at the start of the user turn, as described in Google's [Gemma prompt format](https://ai.google.dev/gemma/docs/core/prompt-structure).
 - The model works with a context of 4,096 tokens. If a text and its expected answer do not fit, the request stops with a message to split the text into smaller sections. An answer that reaches the token limit is reported as an error instead of being inserted cut off.
