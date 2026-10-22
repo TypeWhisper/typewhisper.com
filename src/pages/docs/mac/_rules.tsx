@@ -16,6 +16,7 @@ const fields = [
   "engine",
   "prompt",
   "promptProvider",
+  "effort",
   "manualShortcut",
   "autoSubmit",
   "inlineCommands",
@@ -92,6 +93,7 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
           <li>{t(locale, "docs.mac.rules.priority.item3")}</li>
         </ol>
         <p>{t(locale, "docs.mac.rules.priority.manualHotkeyNote")}</p>
+        <p>{t(locale, "docs.mac.rules.priority.exclusions")}</p>
       </DocsSection>
 
       <DocsSection id="creating" title={t(locale, "docs.mac.rules.creating.title")}>
@@ -140,6 +142,7 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
         <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc1")}</p>
         <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc2")}</p>
         <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.desc3")}</p>
+        <p>{t(locale, "docs.mac.rules.globalLLMFallbacks.effort")}</p>
       </DocsSection>
 
       <DocsSection id="multiple-engines" title={t(locale, "docs.mac.rules.multipleEngines.title")}>

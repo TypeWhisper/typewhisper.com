@@ -678,3 +678,54 @@ test("catalog filters reflect the union of actual edition capabilities", async (
     }
   }
 });
+
+test("macOS guides use the Settings path of TypeWhisper for Mac 1.8", async () => {
+  const discover = {
+    en: "Settings > Discover plugins",
+    de: "Einstellungen > Plugins entdecken",
+  };
+  const oldPath = /Settings > Integrations|Einstellungen > Integrationen/;
+  // Built into the app, so there is nothing to install.
+  const builtIn = new Set(["apple-speech"]);
+
+  for (const locale of LOCALES) {
+    const dir = path.resolve(`src/content/addons/${locale}`);
+    for (const file of (await readdir(dir)).filter((name) => name.endsWith(".mdx"))) {
+      const content = await readFile(path.join(dir, file), "utf8");
+      const platforms = list(frontmatter(content), "platforms");
+      if (!platforms.includes("mac")) {
+        continue;
+      }
+
+      const slug = file.replace(/\.mdx$/, "");
+      const macEdition = platforms.includes("windows")
+        ? body(
+            await readFile(
+              path.resolve(`src/content/addon-editions/${locale}/${slug}/macos.mdx`),
+              "utf8",
+            ),
+          )
+        : "";
+      // Family pages may document Windows in their own sections or sentences.
+      const macGuide = (macEdition || body(content))
+        .split(/^(?=#{2,3} )/m)
+        .filter((section) => !/^#{2,3} .*Windows/.test(section))
+        .join("")
+        .split(/(?<=\.)\s+/)
+        .filter((sentence) => !sentence.includes("Windows"))
+        .join(" ");
+
+      assert.doesNotMatch(
+        macGuide,
+        oldPath,
+        `${locale}/${slug}: macOS guides open plugins under ${discover[locale]}`,
+      );
+      if (!builtIn.has(slug)) {
+        assert.ok(
+          macGuide.includes(discover[locale]),
+          `${locale}/${slug}: the macOS guide explains the installation under ${discover[locale]}`,
+        );
+      }
+    }
+  }
+});

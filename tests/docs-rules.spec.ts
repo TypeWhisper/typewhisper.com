@@ -119,7 +119,7 @@ test.describe("macOS workflows documentation", () => {
       }),
     ).toBeVisible();
     await expect(
-      page.getByText("Integrations > Live Transcript"),
+      page.getByText("Settings > Live Transcript"),
     ).toBeVisible();
     await expect(
       page.getByText("disable Auto-open on recording"),
@@ -134,7 +134,7 @@ test.describe("macOS workflows documentation", () => {
       }),
     ).toBeVisible();
     await expect(
-      page.getByText("Integrationen > Live Transcript"),
+      page.getByText("Einstellungen > Live Transcript"),
     ).toBeVisible();
     await expect(
       page.getByText("Automatisch bei Aufnahme öffnen deaktivieren"),

@@ -14,6 +14,7 @@ export default function DocsMacFileTranscription({
       >
         <p>{t(locale, "docs.mac.fileTranscription.manual.desc1")}</p>
         <p>{t(locale, "docs.mac.fileTranscription.manual.desc2")}</p>
+        <p>{t(locale, "docs.mac.fileTranscription.manual.defaultEngine")}</p>
         <DocsFigure
           src={screenshotPath(locale, "/screenshots/mac/file-transcription.png")}
           alt={t(locale, "docs.mac.fileTranscription.imgAlt")}

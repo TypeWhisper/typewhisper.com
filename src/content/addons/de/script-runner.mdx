@@ -25,19 +25,22 @@ Das Script Runner Plugin leitet transkribierten Text durch einen beliebigen Shel
 - Beliebige Shell-Befehle auf transkribiertem Text ausführen
 - Text fließt über stdin/stdout - funktioniert mit Standard-Unix-Pipes
 - Umgebungsvariablen mit Kontext (App-Name, URL, Sprache, Profil)
-- Konfigurierbares Timeout gegen unkontrollierte Skripte
-- Profilfilter zur Einschränkung auf bestimmte Profile
+- Zeitlimit von fünf Sekunden pro Lauf unter macOS gegen unkontrollierte Skripte
+- Regelfilter zur Einschränkung auf bestimmte Regeln
+- Unter macOS optional Exportläufe für fertige Recorder-Transkripte
 - Ausführungsprotokoll zur Fehlersuche
 
 ## Umgebungsvariablen
 
-Die folgenden Umgebungsvariablen stehen deinen Skripten zur Verfügung:
+Die folgenden Umgebungsvariablen stehen deinen Skripten zur Verfügung, wenn sie ein Diktat verarbeiten. Läufe für Recorder-Transkripte erhalten eigene Variablen, beschrieben unter [Recorder-Transkripte](#recorder-transkripte).
 
 - **TYPEWHISPER_APP_NAME** - Name der aktiven Anwendung (z.B. "Safari")
 - **TYPEWHISPER_BUNDLE_ID** - Bundle-Identifier der aktiven App (z.B. "com.apple.Safari")
 - **TYPEWHISPER_URL** - Aktuelle URL aus dem Browser, falls verfügbar
 - **TYPEWHISPER_LANGUAGE** - Sprachcode der Transkription (z.B. "en")
-- **TYPEWHISPER_PROFILE** - Name des aktiven TypeWhisper-Profils
+- **TYPEWHISPER_RULE** - Name der Regel, deren Filter gepasst hat, falls vorhanden
+- **TYPEWHISPER_PROFILE** - Derselbe Wert wie TYPEWHISPER_RULE, für ältere Skripte
+- **TYPEWHISPER_SELECTED_TEXT** - In der aktiven App markierter Text, falls vorhanden
 
 ## Beispiele
 
@@ -48,7 +51,7 @@ tr '[:lower:]' '[:upper:]'
 
 **Satzanfang groß** - Den ersten Buchstaben jedes Satzes groß schreiben:
 ```bash
-sed 's/\.\s*\([a-z]\)/. \U\1/g; s/^\([a-z]\)/\U\1/'
+perl -pe 's/(^|[.!?]\s+)([a-z])/$1\u$2/g'
 ```
 
 **Suchen & Ersetzen** - Bestimmte Wörter oder Phrasen ersetzen:
@@ -61,14 +64,14 @@ sed 's/old/new/g'
 cat; echo " ($(date '+%Y-%m-%d %H:%M'))"
 ```
 
-**Füllwörter entfernen** - Gängige Füllwörter herausfiltern:
+**Füllwörter entfernen** - Füllwörter wie „um“ und „uh“ herausfiltern:
 ```bash
-sed 's/ \(uhm\|uh\|um\|like\|you know\) / /g; s/  */ /g'
+perl -pe 's/(?:^|(?<=\s))(?:uhm|uh|um|erm)\b,?\s*//gi; s/\s+([,.!?])/$1/g'
 ```
 
 **In Zwischenablage kopieren + zurückgeben** - Text in die Zwischenablage kopieren und trotzdem zurückgeben:
 ```bash
-tee >(pbcopy)
+text=$(cat); printf '%s' "$text" | pbcopy; printf '%s' "$text"
 ```
 
 **Externes Skript** - Ein externes Skript ausführen:
@@ -76,16 +79,58 @@ tee >(pbcopy)
 ~/scripts/process.sh
 ```
 
+## Recorder-Transkripte
+
+Verfügbar unter macOS ab TypeWhisper 1.8 mit Version 1.2.0 oder neuer dieses Add-ons. TypeWhisper für Windows bietet diese Option nicht.
+
+Ist **Auch für fertige Recorder-Transkripte ausführen** eingeschaltet, führt Script Runner den Befehl zusätzlich aus, sobald TypeWhisper ein Recorder-Transkript gespeichert hat. Das gilt für manuelle, Kalender- und API-Aufnahmen und auch für erneute Transkriptionen. Die Option ist standardmäßig ausgeschaltet, auch bei Skripten, die du schon früher eingerichtet hast. Sie hängt nicht vom Regelfilter ab.
+
+Läufe für Recorder-Transkripte exportieren das Transkript, statt es zu verändern:
+
+- Der Befehl erhält das gespeicherte Transkript über stdin. Jedes Skript bekommt das ursprüngliche Transkript, nicht die Ausgabe eines anderen Skripts.
+- Was der Befehl auf stdout schreibt, wird ignoriert und verändert das gespeicherte Transkript nicht. Die Ausgabe darf leer sein.
+- Ein Exit-Status ungleich null gilt als Fehler und erscheint im Ausführungsprotokoll.
+
+Diese Umgebungsvariablen beschreiben die Aufnahme:
+
+- **TYPEWHISPER_SOURCE** - Immer `recorder`
+- **TYPEWHISPER_RECORDING_ID** - UUID der Aufnahme. Sie bleibt auch nach einer erneuten Transkription gleich.
+- **TYPEWHISPER_COMPLETION_ID** - UUID dieser erfolgreichen Speicherung
+- **TYPEWHISPER_COMPLETED_AT** - Zeitpunkt der Speicherung in Unix-Sekunden
+- **TYPEWHISPER_AUDIO_FILE** - Pfad der Audiodatei
+- **TYPEWHISPER_TRANSCRIPT_FILE** - Pfad des Transkripts als reiner Text
+- **TYPEWHISPER_MARKDOWN_FILE** - Pfad des Markdown-Transkripts. Nur gesetzt, wenn eines gespeichert wurde. Das betrifft derzeit Kalenderaufnahmen mit Meeting-Metadaten.
+
+Unter macOS beendet Script Runner jeden Lauf nach fünf Sekunden, bei Diktaten genauso wie bei Recorder-Transkripten. Gib längere Arbeit an einen anderen Prozess ab, etwa indem du das Transkript in einen Ordner kopierst, den ein separater Job verarbeitet.
+
+Derselbe Befehl läuft weiterhin auch für Diktate, die zu seinem Regelfilter passen. Dort ersetzt seine Ausgabe wie gewohnt den Text. Wenn du nur Recorder-Transkripte exportieren willst, prüfe `TYPEWHISPER_SOURCE` und gib Diktattext unverändert zurück:
+
+```bash
+if [ "$TYPEWHISPER_SOURCE" = recorder ]; then
+  mkdir -p "$HOME/Meeting Notes" &&
+    cp "$TYPEWHISPER_TRANSCRIPT_FILE" "$HOME/Meeting Notes/"
+else
+  cat
+fi
+```
+
+Skripte laufen nur, solange TypeWhisper läuft, und die Zustellung ist nicht garantiert. Transkripte, die ein Skript verpasst hat, holst du mit [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) über die lokale API nach. Der Endpunkt liefert je Aufnahme das zuletzt gespeicherte Transkript, nicht jede Fassung: Wurde eine Aufnahme vor dem Nachholen erneut transkribiert, bekommst du nur das neuere Transkript.
+
 ## Konfiguration
 
-- **Skript-Befehl** - Der auszuführende Shell-Befehl. Text wird über stdin übergeben, die Ausgabe wird von stdout gelesen.
-- **Timeout** - Maximale Ausführungszeit in Sekunden, bevor das Skript abgebrochen wird (Standard: 10s).
-- **Profilfilter** - Optional die Ausführung auf bestimmte Profile einschränken.
+Jedes Skript hat diese Einstellungen:
+
+- **Name** - Der Name in der Skriptliste und im Ausführungsprotokoll.
+- **Befehl** - Der auszuführende Shell-Befehl. Text wird über stdin übergeben, die Ausgabe wird von stdout gelesen.
+- **Auch für fertige Recorder-Transkripte ausführen** - Führt den Befehl zusätzlich für jedes gespeicherte Recorder-Transkript aus. Verfügbar unter macOS ab TypeWhisper 1.8, standardmäßig ausgeschaltet.
+- **Rules** - Beschränkt Diktatläufe optional auf bestimmte Regeln. Ohne Auswahl läuft das Skript für alle Transkriptionen.
+
+Das Zeitlimit von fünf Sekunden unter macOS ist fest und lässt sich nicht einstellen.
 
 ## Einrichtung
 
-1. Öffne TypeWhisper Einstellungen > Integrationen
-2. Finde das Script Runner Plugin und klicke auf Konfigurieren
-3. Gib deinen Shell-Befehl oder den Pfad zu einem Skript ein
-4. Setze optional ein Timeout und einen Profilfilter
-5. Transkriptionen werden automatisch durch dein Skript verarbeitet
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Script Runner**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Klicke auf **Skript hinzufügen**.
+3. Gib einen Namen und deinen Shell-Befehl oder den Pfad zu einem Skript ein.
+4. Wähle optional Regeln aus, um Diktatläufe einzuschränken. Wenn du Recorder-Transkripte exportieren willst, schalte **Auch für fertige Recorder-Transkripte ausführen** ein.
+5. Klicke auf **Sichern**. Passende Transkriptionen werden automatisch durch dein Skript verarbeitet.

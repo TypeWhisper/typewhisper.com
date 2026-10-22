@@ -135,25 +135,33 @@ Die Fallback-Modelle im API-Schlüssel-Modus enthalten `gpt-5.5`, `gpt-4.1-nano`
 
 Quellen: [OpenAI Models API](https://platform.openai.com/docs/api-reference/models/list), [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
+### Denkaufwand in Workflows
+
+Unter macOS kann ab Version 1.4.0 dieses Add-ons mit TypeWhisper 1.8 ein Workflow oder ein Eintrag der globalen LLM-Fallback-Liste, der OpenAI nutzt, einen eigenen **Effort** festlegen. Die Auswahl listet die Stufen des Modells, das die Anfrage nutzt: Keine bis Sehr hoch bei GPT-5.5, Keine bis Maximum bei GPT-5.6 und Niedrig bis Hoch bei o4-mini. Modelle ohne Denkaufwand wie GPT-4.1, GPT-4o und `*-chat`-Modelle zeigen keine Auswahl und erhalten keinen Effort.
+
+**Provider-Standard** nutzt die Einstellung **Denkaufwand** auf dieser Seite oder den Standard des Modells, wenn das Modell diese Stufe nicht anbietet, und nennt die Stufe, etwa *Provider-Standard (Mittel)*. Der Effort gilt mit API-Schlüssel und mit ChatGPT-Login. Ein Workflow oder Fallback-Eintrag, dessen Modell auf Provider-Standard steht, nutzt das hier gewählte **LLM-Modell**. Die Temperatur bleibt eine Einstellung dieser Seite; Workflows können sie für OpenAI nicht ändern.
+
+Die globale Fallback-Liste beschreibt der [Workflows-Leitfaden](/de/docs/mac/workflows/#global-llm-fallbacks).
+
 ## Einrichtungsbeispiele
+
+Installiere zuerst **OpenAI / ChatGPT** unter **Einstellungen > Plugins entdecken**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen.
 
 ### API-Schlüssel für Transkription, TTS und Prompts
 
-1. Öffne TypeWhisper Einstellungen > Integrationen.
-2. Konfiguriere **OpenAI / ChatGPT**.
-3. Wähle **API-Schlüssel**.
-4. Füge deinen OpenAI-API-Schlüssel ein und warte auf **Gültiger API-Schlüssel**.
-5. Wähle **Transkriptionsmodell**, **Text-to-Speech Voice** und **LLM-Modell**.
-6. Klicke **Aktualisieren**, wenn TypeWhisper die für dein OpenAI-Projekt verfügbaren Modelle abrufen soll.
+1. Wähle **OpenAI / ChatGPT** in der Seitenleiste der Einstellungen.
+2. Wähle **API-Schlüssel**.
+3. Füge deinen OpenAI-API-Schlüssel ein und warte auf **Gültiger API-Schlüssel**.
+4. Wähle **Transkriptionsmodell**, **Text-to-Speech Voice** und **LLM-Modell**.
+5. Klicke **Aktualisieren**, wenn TypeWhisper die für dein OpenAI-Projekt verfügbaren Modelle abrufen soll.
 
 ### ChatGPT- oder Codex-Login für Prompts
 
-1. Öffne TypeWhisper Einstellungen > Integrationen.
-2. Konfiguriere **OpenAI / ChatGPT**.
-3. Wähle **ChatGPT-Login**.
-4. Klicke **Im Browser anmelden** oder **Codex-Login importieren**.
-5. Wähle ein ChatGPT-/Codex-**LLM-Modell** und den **Denkaufwand**.
-6. Hinterlege zusätzlich einen OpenAI-API-Schlüssel, wenn du auch Transkription oder Text-to-Speech nutzen willst.
+1. Wähle **OpenAI / ChatGPT** in der Seitenleiste der Einstellungen.
+2. Wähle **ChatGPT-Login**.
+3. Klicke **Im Browser anmelden** oder **Codex-Login importieren**.
+4. Wähle ein ChatGPT-/Codex-**LLM-Modell** und den **Denkaufwand**.
+5. Hinterlege zusätzlich einen OpenAI-API-Schlüssel, wenn du auch Transkription oder Text-to-Speech nutzen willst.
 
 ## Hinweise
 

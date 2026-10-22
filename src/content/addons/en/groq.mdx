@@ -48,13 +48,14 @@ Groq provides cloud transcription with Whisper models and LLM text processing th
 
 Refresh the model catalog in TypeWhisper to see the models available to your account. Check [Groq’s deprecation notices](https://console.groq.com/docs/deprecations) when an older saved model stops working.
 
+On macOS, from version 1.0.29 of this add-on, GPT-OSS 120B is the default LLM model. A saved model that is missing from the current model list, such as the retired `llama-3.3-70b-versatile`, falls back to GPT-OSS 120B when a request is sent. Your selection stays saved and applies again if your account lists the model again. When the add-on starts, it refreshes a cached model list that is a day old or older in the background. A workflow or fallback entry that names a retired model explicitly keeps it, so choose another model there.
+
 ## Configuration
 
 - **API Key** - Sign up at console.groq.com and generate a free API key.
 
 ## Setup
 
-1. Open TypeWhisper Settings > Integrations
-2. Find the Groq plugin and click Configure
-3. Enter your Groq API key
-4. Select Groq as your transcription engine or LLM provider
+1. In TypeWhisper, open **Settings > Discover plugins** and install **Groq**. The add-on then appears in the Settings sidebar, and its page opens.
+2. Enter your Groq API key.
+3. Select Groq as your transcription engine or LLM provider.

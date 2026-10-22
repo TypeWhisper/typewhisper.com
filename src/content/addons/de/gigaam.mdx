@@ -28,14 +28,14 @@ GigaAM erkennt nur Russisch. Für andere Sprachen wähle eine andere Engine.
 
 ## Voraussetzungen
 
-Diese Version benötigt **TypeWhisper 1.8.0 oder neuer** unter macOS 14 oder neuer und einen Mac mit **Apple Silicon**. Es gibt das Add-on für die direkt heruntergeladene TypeWhisper-Version; die Mac-App-Store-Edition enthält es nicht.
+Diese Version benötigt **TypeWhisper 1.8.0 oder neuer** unter macOS 14 oder neuer und einen Mac mit **Apple Silicon**. Es gibt das Add-on für die direkt heruntergeladene TypeWhisper-Version, und ab TypeWhisper 1.8 enthält die Mac-App-Store-Edition es als eingebautes Plugin.
 
 Das Modell ist ein Download von etwa 230 MB. Das Add-on gibt dafür 2 GB Arbeitsspeicher oder mehr an. Du brauchst keinen API-Schlüssel und kein Konto.
 
 ## Einrichtung
 
-1. Installiere und aktiviere **GigaAM** unter **Einstellungen > Integrationen > Entdecken**.
-2. Öffne die Einstellungen des Add-ons und wähle **Laden & Aktivieren** neben **GigaAM v3 (Russian, with punctuation)**.
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **GigaAM**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Wähle **Laden & Aktivieren** neben **GigaAM v3 (Russian, with punctuation)**.
 3. Wähle in den Diktateinstellungen **GigaAM (Russisch)** als Transkriptions-Engine.
 4. Stelle die Sprache des Diktats auf **Russisch** oder lass sie auf automatischer Erkennung.
 
@@ -71,6 +71,6 @@ Der Benchmark hat GigaAM über den sherpa-onnx-Export des Modells ausgeführt. D
 
 Die Erkennung läuft auf deinem Mac. Das Add-on sendet weder Audio noch Text an einen Cloud-Dienst.
 
-Die Modelldateien stammen aus dem Hugging-Face-Repository `istupakov/gigaam-v3-onnx`: die int8-Versionen von Encoder, Decoder und Joint-Netz sowie das Vokabular. TypeWhisper speichert sie unter `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.gigaam/models`. Außerdem kontaktiert das Add-on Hugging Face, wenn es ein Token prüft.
+Die Modelldateien stammen aus dem Hugging-Face-Repository `istupakov/gigaam-v3-onnx`: die int8-Versionen von Encoder, Decoder und Joint-Netz sowie das Vokabular. TypeWhisper speichert sie unter `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.gigaam/models`, in der Mac-App-Store-Edition im Container der App. Außerdem kontaktiert das Add-on Hugging Face, wenn es ein Token prüft.
 
 GigaAM v3 veröffentlicht Sber unter der MIT-Lizenz. Die ONNX-Versionen des Modells und die mitgelieferte Merkmalsextraktion stammen aus dem Projekt onnx-asr von Ilya Stupakov, ebenfalls unter der MIT-Lizenz.

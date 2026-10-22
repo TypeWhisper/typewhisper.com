@@ -1,11 +1,11 @@
-import { Plus } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
 import {
   DocsCallout,
   DocsCode,
   DocsSection,
   withCode,
 } from "@/components/docs/prose";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 import { macDmgUrl } from "@/lib/platform-download";
 
 export default function DocsMacInstallation({
@@ -19,6 +19,7 @@ export default function DocsMacInstallation({
     ? [
         "Der CLI-Pfad ist nur relevant, wenn du das Tool über Einstellungen > Erweitert > Kommandozeilen-Tool installiert hast.",
         "Der Documents-Ordner ist optional und betrifft nur exportierte Aufnahmen oder Dateien, die du ebenfalls löschen möchtest.",
+        "Aufnahmen in einem Ordner, den du unter Einstellungen > Recorder > Aufnahmeordner gewählt hast, oder in einem dort gelisteten früheren Ordner liegen in diesem Ordner. Lösche sie im Finder, wenn du sie ebenfalls entfernen willst.",
         "Öffne zusätzlich den macOS-Schlüsselbund, suche nach `com.typewhisper.mac.apikey` und entferne passende Einträge, einschließlich Lizenzdaten unter `com.typewhisper.mac.apikey.license`.",
         "Wenn `~/Library` im Finder ausgeblendet ist, nutze Finder > Gehe zu > Gehe zum Ordner und füge den jeweiligen Pfad ein.",
         "Starte den Mac nach der Bereinigung neu und installiere anschließend die neueste Version erneut.",
@@ -26,6 +27,7 @@ export default function DocsMacInstallation({
     : [
         "The CLI path only matters if you installed the tool from Settings > Advanced > Command Line Tool.",
         "The Documents folder is optional and only affects exported recordings or files you also want to remove.",
+        "Recordings saved to a folder you chose under Settings > Recorder > Recordings Folder, or to an earlier folder listed there, are in that folder. Delete them in Finder if you want to remove them too.",
         "Also open macOS Keychain Access, search for `com.typewhisper.mac.apikey`, and remove matching entries, including license items under `com.typewhisper.mac.apikey.license`.",
         "If `~/Library` is hidden in Finder, use Finder > Go > Go to Folder and paste the path you need.",
         "Restart your Mac after cleanup, then install the latest version again.",
@@ -86,6 +88,28 @@ export default function DocsMacInstallation({
         title={t(locale, "docs.mac.installation.firstLaunch.title")}
       >
         <p>{t(locale, "docs.mac.installation.firstLaunch.desc")}</p>
+        <p>{t(locale, "docs.mac.installation.firstLaunch.engine")}</p>
+        <p>{t(locale, "docs.mac.installation.firstLaunch.language")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="organizations"
+        title={isDe ? "Für Organisationen" : "For organizations"}
+      >
+        <p>
+          {isDe
+            ? "Administratoren verteilen TypeWhisper mit einem MDM wie Iru oder Jamf Pro und steuern es ab Version 1.8 über Konfigurationsprofile. Editionen, Updates, Berechtigungen und Netzwerk-Hosts beschreibt die Seite Bereitstellung."
+            : "Administrators roll out TypeWhisper with an MDM such as Iru or Jamf Pro and, from version 1.8, control it through configuration profiles. Editions, updates, permissions, and network hosts are described on the Deployment page."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/mac/deployment")}
+          className="site-link"
+        >
+          {isDe
+            ? "TypeWhisper in der Organisation verteilen"
+            : "Roll out TypeWhisper in your organization"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
 
       <details id="upgrade" className="site-disclosure docs-disclosure docs-anchor-target">
