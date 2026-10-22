@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/index";
-import type { Plugin, PluginPlatform } from "@/data/addons";
+import type { Plugin, PluginCategory, PluginPlatform } from "@/data/addons";
 import screenshotManifest from "@/data/addon-edition-screenshots.json";
 import { windowsAddonScreenshotSrc } from "@/lib/addon-screenshots";
 
@@ -18,10 +18,15 @@ export interface AddonEdition {
   platform: PluginPlatform;
   version: string;
   description: string;
-  processing: "local" | "cloud" | "custom" | "hybrid";
+  processing: "local" | "cloud" | "custom";
   id?: string;
   /** Name in the app's plugin list, when it differs from the add-on name on this site. */
   appName?: string;
+  /**
+   * Name the app shows for a capability when it differs from `appName`,
+   * such as a workflow action target or a provider named after its profile.
+   */
+  capabilityNames?: Partial<Record<PluginCategory, string>>;
   minAppVersion?: string;
   minOsVersion?: string;
   requirements?: string[];
@@ -62,6 +67,21 @@ export const editionPlatformSlugs: Record<PluginPlatform, string> = {
 };
 
 const platformOrder: PluginPlatform[] = ["mac", "windows", "ios"];
+
+/**
+ * Editions that left a platform's plugin catalog. Their pages are gone, and
+ * the old URLs forward to the add-on page, which lists the remaining editions.
+ */
+export const retiredAddonEditions: ReadonlyArray<{
+  familySlug: string;
+  platform: PluginPlatform;
+}> = [
+  // TypeWhisper for Windows 1.1 dropped these plugins with the WPF host (typewhisper-win #497).
+  { familySlug: "google-cloud-stt", platform: "windows" },
+  { familySlug: "live-transcript", platform: "windows" },
+  { familySlug: "microsoft-ai", platform: "windows" },
+  { familySlug: "openai-vector-memory", platform: "windows" },
+];
 
 function getWindowsAddonScreenshot(
   pluginId: string | undefined,

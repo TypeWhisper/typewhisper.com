@@ -131,8 +131,8 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
       >
         <p>
           {isDe
-            ? "Transkriptions-Engines und Modelle werden als Erweiterungen installiert. Lokale Engines arbeiten offline; Cloud-Engines senden Audio an den gewählten Anbieter. Unterstützte lokale Modelle können automatisch, auf der CPU oder mit NVIDIA CUDA, AMD Vulkan beziehungsweise AMD ROCm geladen werden. Eine Änderung der Beschleunigung kann einen Neustart erfordern."
-            : "Transcription engines and models are installed as extensions. Local engines work offline; cloud engines send audio to the selected provider. Supported local models can load automatically, on the CPU, or with NVIDIA CUDA, AMD Vulkan, or AMD ROCm. Changing acceleration can require a restart."}
+            ? "Transkriptions-Engines und Modelle werden als Erweiterungen installiert. Lokale Engines arbeiten offline; Cloud-Engines senden Audio an den gewählten Anbieter. Unterstützte lokale Modelle können automatisch, auf der CPU oder je nach Modell mit NVIDIA CUDA, Vulkan beziehungsweise AMD ROCm geladen werden. Eine Änderung der Beschleunigung kann einen Neustart erfordern."
+            : "Transcription engines and models are installed as extensions. Local engines work offline; cloud engines send audio to the selected provider. Supported local models can load automatically, on the CPU, or, depending on the model, with NVIDIA CUDA, Vulkan, or AMD ROCm. Changing acceleration can require a restart."}
         </p>
         <p>
           {isDe

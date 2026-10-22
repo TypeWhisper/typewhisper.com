@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("add-on platform editions", () => {
-  test("Microsoft AI exposes source-checked macOS and Windows guides", async ({
+  test("Microsoft AI keeps its macOS guide and forwards the retired Windows edition", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -23,7 +23,13 @@ test.describe("add-on platform editions", () => {
       "src",
       "/brand-logos/microsoft-ai/logo.svg",
     );
-    await expect(page.getByTestId("addon-edition-card")).toHaveCount(2);
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Available platform" }),
+    ).toBeVisible();
+    await expect(page.getByText("This add-on is currently available for macOS only.", { exact: false })).toBeVisible();
+    const cards = page.getByTestId("addon-edition-card");
+    await expect(cards).toHaveCount(1);
+    await expect(cards).toHaveAttribute("data-platform", "mac");
     await expectNoHorizontalOverflow();
 
     await page.goto("/en/addons/microsoft-ai/macos/");
@@ -48,24 +54,16 @@ test.describe("add-on platform editions", () => {
     await expect(page.locator("body")).toContainText(
       "does not stream partial text",
     );
+    await expect(
+      page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]'),
+    ).toHaveCount(0);
     await expectNoHorizontalOverflow();
 
-    await page.goto("/en/addons/microsoft-ai/windows/");
+    await page.goto("/de/addons/microsoft-ai/");
     await expect(
-      page.getByRole("heading", {
-        level: 1,
-        name: "Microsoft AI for Windows",
-      }),
+      page.getByRole("heading", { level: 2, name: "Verfügbare Plattform" }),
     ).toBeVisible();
-    await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.png"]',
-      ),
-    ).toBeVisible();
-    await expect(page.locator("body")).toContainText(
-      "shorter than two hours and smaller than 250 MB",
-    );
-    await expectNoHorizontalOverflow();
+    await expect(page.getByText("Dieses Add-on gibt es derzeit nur für macOS.", { exact: false })).toBeVisible();
 
     await page.goto("/de/addons/microsoft-ai/macos/");
     await expect(
@@ -75,17 +73,30 @@ test.describe("add-on platform editions", () => {
       page.getByRole("heading", { level: 2, name: "Einrichtungs-Tutorial" }),
     ).toBeVisible();
     await expectNoHorizontalOverflow();
+  });
 
-    await page.goto("/de/addons/microsoft-ai/windows/");
+  test("retired Windows editions forward to the add-on page", async ({ page }) => {
+    for (const slug of [
+      "google-cloud-stt",
+      "live-transcript",
+      "microsoft-ai",
+      "openai-vector-memory",
+    ]) {
+      for (const locale of ["en", "de"] as const) {
+        await page.goto(`/${locale}/addons/${slug}/windows/`, { waitUntil: "commit" });
+        await expect(page).toHaveURL(new RegExp(`/${locale}/addons/${slug}/$`));
+        await expect(page.getByTestId("addon-edition-family")).toBeVisible();
+        await expect(
+          page.locator('[data-testid="addon-edition-card"][data-platform="windows"]'),
+        ).toHaveCount(0);
+      }
+    }
+
+    await page.goto("/addons/microsoft-ai/windows/", { waitUntil: "commit" });
+    await expect(page).toHaveURL(/\/(en|de)\/addons\/microsoft-ai\/$/);
     await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.de.png"]',
-      ),
+      page.getByRole("heading", { level: 1, name: "Microsoft AI" }),
     ).toBeVisible();
-    await expect(page.locator("body")).toContainText(
-      "unter zwei Stunden und unter 250 MB",
-    );
-    await expectNoHorizontalOverflow();
   });
 
   test("Meta exposes the published Windows and macOS editions", async ({
@@ -119,7 +130,7 @@ test.describe("add-on platform editions", () => {
     const windowsCard = page.locator(
       '[data-testid="addon-edition-card"][data-platform="windows"]',
     );
-    await expect(windowsCard.getByText("v1.0.1", { exact: true })).toBeVisible();
+    await expect(windowsCard.getByText("v1.2.14", { exact: true })).toBeVisible();
 
     const macCard = page.locator(
       '[data-testid="addon-edition-card"][data-platform="mac"]',
@@ -141,7 +152,7 @@ test.describe("add-on platform editions", () => {
       page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
     ).toBeVisible();
     await expect(page.getByText("Muse Spark 1.2 and 1.1 for LLM workflow processing")).toBeVisible();
-    await expect(page.getByText("1.0.1", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.2.14", { exact: true })).toBeVisible();
     await expect(page.getByText("Optional speaker diarization for both live and uploaded audio")).toBeVisible();
 
     await page.goto("/de/addons/meta/windows/");
@@ -212,7 +223,7 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
     await expect(
       page.getByText(
-        "Low-latency and text-normalization controls for speech output",
+        "Optional low-latency speech output and spoken forms for numbers, abbreviations and symbols",
       ),
     ).toBeVisible();
 
@@ -223,7 +234,9 @@ test.describe("add-on platform editions", () => {
       ),
     ).toBeVisible();
     await expect(
-      page.getByText("Status preview only; workflow processing remains disabled"),
+      page.getByText(
+        "Not available for workflows: the CLI cannot isolate tools and project context",
+      ),
     ).toBeVisible();
 
     await page.goto("/en/addons/gemma-local/");
@@ -269,17 +282,9 @@ test.describe("add-on platform editions", () => {
         .locator('[data-testid="addon-edition-card"][data-platform="windows"]')
         .locator('img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]'),
     ).toBeVisible();
-
-    // Without a German capture, German pages keep the English one.
-    await page.goto("/de/addons/google-cloud-stt/windows/");
-    await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.google-cloud-stt.png"]',
-      ),
-    ).toBeVisible();
   });
 
-  test("Authenticated Provider CLI 1.1.0 documents OpenCode with localized screenshots", async ({
+  test("Authenticated Provider CLI documents OpenCode with localized screenshots", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -331,8 +336,9 @@ test.describe("add-on platform editions", () => {
       ),
     ).toHaveCount(1);
     await expect(page.locator("body")).toContainText(
-      "The Windows edition does not expose OpenCode model variants or an effort override.",
+      "OpenCode: only Zen text models that are currently fully free. A model set in the workflow takes precedence.",
     );
+    await expect(page.getByText("1.3.5", { exact: true })).toBeVisible();
     await expectNoHorizontalOverflow();
 
     await page.goto("/de/addons/authenticated-cli/windows/");
@@ -349,7 +355,7 @@ test.describe("add-on platform editions", () => {
     await expectNoHorizontalOverflow();
   });
 
-  test("Cohere documents different capabilities on each platform", async ({ page }) => {
+  test("Cohere documents the capabilities of each platform", async ({ page }) => {
     await page.goto("/de/addons/cohere/macos/");
     await expect(
       page.getByRole("heading", { level: 1, name: "Cohere für macOS" }),
@@ -370,8 +376,8 @@ test.describe("add-on platform editions", () => {
     await page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]').click();
     await expect(page).toHaveURL(/\/de\/addons\/cohere\/windows\/$/);
     await expect(page.getByText("LLM-Anbieter für Workflow-Prompts")).toBeVisible();
-    await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toHaveCount(0);
-    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("Cohere Transcribe in 14 Sprachen")).toBeVisible();
+    await expect(page.getByText("1.1.4", { exact: true })).toBeVisible();
     await expect(
       page.locator(
         'img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]',
@@ -390,6 +396,39 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
     await expect(guide.getByText("LLM", { exact: true })).toHaveCount(2);
     await expect(page.getByText("macOS-Schlüsselbund")).toHaveCount(0);
+  });
+
+  test("the generated Windows guide names providers and action targets as the app does", async ({
+    page,
+  }) => {
+    const guide = page.getByTestId("addon-edition-guide");
+
+    // Discover plugins and the provider pickers list Voxtral as Mistral.
+    await page.goto("/en/addons/voxtral/windows/");
+    await expect(guide).toContainText("install Voxtral, which is listed there as Mistral");
+    await expect(guide).toContainText("Under Settings > Dictation, select Mistral as the Provider");
+    await expect(guide).toContainText("In a workflow, select Mistral as the Provider");
+    await expect(guide).not.toContainText("select Voxtral");
+
+    // Granite's provider has a name of its own, in the app's language.
+    await page.goto("/de/addons/granite/windows/");
+    await expect(guide).toContainText(
+      "Wähle unter Einstellungen > Diktat Lokal (Granite Speech) als Anbieter und dann ein Modell.",
+    );
+
+    // An action target is listed under the name of its action.
+    await page.goto("/en/addons/linear/windows/");
+    await expect(guide).toContainText(
+      "Create or open a workflow and choose Create Linear issue under Action Target.",
+    );
+    await page.goto("/de/addons/file-memory/windows/");
+    await expect(guide).toContainText("wähle unter Aktionsziel In File Memory merken.");
+    await expect(guide).not.toContainText("Action-Ziel");
+
+    // Smallest AI's Spoken feedback step comes from the guide only once.
+    await page.goto("/en/addons/smallest-pulse/windows/");
+    await expect(guide.locator("li", { hasText: "Spoken feedback" })).toHaveCount(1);
+    await expect(guide).toContainText("choose a voice from Smallest AI under Voice");
   });
 
   test("edition switch keeps platform-specific metadata and content separate", async ({

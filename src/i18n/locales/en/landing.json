@@ -122,7 +122,7 @@
   "engineComparison.mac.engine3.description": "Apple's native speech recognition. No manual model downloads - models are managed by macOS. Requires macOS 26+.",
   "engineComparison.win.engine1.name": "Parakeet TDT 0.6B",
   "engineComparison.win.engine1.badge": "Fast",
-  "engineComparison.win.engine1.description": "Parakeet through sherpa-onnx with CPU or supported NVIDIA CUDA acceleration.",
+  "engineComparison.win.engine1.description": "Parakeet on the CPU or on any graphics card with Vulkan support.",
   "engineComparison.win.engine2.name": "Canary 180M Flash",
   "engineComparison.win.engine2.badge": "Compact",
   "engineComparison.win.engine2.description": "Compact multilingual model with built-in translation. Supports EN, DE, FR, and ES.",

@@ -3,18 +3,29 @@ import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
 import {
   editionPlatformSlugs,
   getAddonEditionModules,
+  retiredAddonEditions,
 } from "@/data/addon-editions";
 
 export function getStaticPaths() {
-  return getAddonEditionModules("en").map((mod) => ({
-    params: {
-      slug: mod.frontmatter.familySlug,
-      platform: editionPlatformSlugs[mod.frontmatter.platform],
-    },
-  }));
+  return [
+    ...getAddonEditionModules("en").map((mod) => ({
+      params: {
+        slug: mod.frontmatter.familySlug,
+        platform: editionPlatformSlugs[mod.frontmatter.platform],
+      },
+      props: {
+        path: `/addons/${mod.frontmatter.familySlug}/${editionPlatformSlugs[mod.frontmatter.platform]}`,
+      },
+    })),
+    // A retired edition forwards straight to the add-on page.
+    ...retiredAddonEditions.map(({ familySlug, platform }) => ({
+      params: { slug: familySlug, platform: editionPlatformSlugs[platform] },
+      props: { path: `/addons/${familySlug}` },
+    })),
+  ];
 }
 
-const { slug, platform } = Astro.params;
+const { path } = Astro.props;
 ---
 
-<LocalizedRedirect path={`/addons/${slug}/${platform}`} />
+<LocalizedRedirect path={path} />

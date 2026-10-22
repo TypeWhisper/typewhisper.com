@@ -5,6 +5,13 @@ import path from "node:path";
 
 const LOCALES = ["de", "en"];
 const PLATFORMS = ["mac", "windows"];
+// Releases of typewhisper-win that carry several plugins, from which the catalog
+// (plugins-v2.json) still downloads Deepgram 1.1.3, Groq 1.1.1, and Obsidian 1.0.0.
+const windowsBundleReleases = new Set([
+  "plugins-v2-categories-20260908",
+  "plugins-v2-deepgram-1.1.3-20260910",
+  "plugins-winui-20260923",
+]);
 
 function frontmatter(content) {
   const match = content.replace(/\r\n/g, "\n").match(/^---\n([\s\S]*?)\n---/);
@@ -110,7 +117,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 37);
+  assert.equal(deFamilies.length, 33);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -144,7 +151,10 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
             scalar(data, "releaseVersion") || scalar(data, "version");
           assert.match(releaseVersion, /^\d+\.\d+\.\d+$/);
           assert.ok(
-            releaseUrl.endsWith(`-v${releaseVersion}`),
+            releaseUrl.endsWith(`-v${releaseVersion}`) ||
+              // The Windows catalog serves a few plugins from a release that bundles several.
+              (platform === "windows" &&
+                windowsBundleReleases.has(releaseUrl.split("/").pop())),
             `${locale}/${slug}/${filename} must link its release version`,
           );
         }
@@ -177,23 +187,23 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
   const germanScreenshotIds = new Set(screenshotManifest.windowsLocalized.de);
 
-  assert.equal(windowsAddons.length, 40);
-  assert.equal(windowsScreenshotIds.size, 40);
+  assert.equal(windowsAddons.length, 36);
+  assert.equal(windowsScreenshotIds.size, 35);
+  // Qwen3 ASR (Local) replaced the Qwen3 STT plugin of the old capture and has none yet.
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
       .map(({ slug }) => slug)
       .sort(),
-    [],
+    ["qwen3-asr"],
   );
-  // These add-ons are not in the Windows catalog and have no German capture.
-  assert.equal(germanScreenshotIds.size, 36);
+  assert.equal(germanScreenshotIds.size, 35);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !germanScreenshotIds.has(id))
       .map(({ slug }) => slug)
       .sort(),
-    ["google-cloud-stt", "live-transcript", "openai-vector-memory", "qwen3-asr"],
+    ["qwen3-asr"],
   );
 
   for (const id of windowsScreenshotIds) {
@@ -249,11 +259,13 @@ test("every platform edition has a detailed guide source", async () => {
 
   assert.deepEqual(Object.keys(capabilityMap).sort(), families);
   assert.deepEqual(capabilityMap.cohere.mac, ["transcription"]);
-  assert.deepEqual(capabilityMap.cohere.windows, ["llm"]);
-  assert.deepEqual(capabilityMap.fireworks.mac, ["transcription", "llm"]);
-  assert.deepEqual(capabilityMap.fireworks.windows, ["llm"]);
+  assert.deepEqual(capabilityMap.cohere.windows, ["transcription", "llm"]);
+  assert.deepEqual(capabilityMap["smallest-pulse"].mac, ["transcription"]);
+  assert.deepEqual(capabilityMap["smallest-pulse"].windows, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.soniox.mac, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.soniox.windows, ["transcription"]);
+  assert.deepEqual(capabilityMap.webhook.mac, ["utility"]);
+  assert.deepEqual(capabilityMap.webhook.windows, ["post-processing"]);
 
   for (const locale of LOCALES) {
     for (const slug of families) {
@@ -367,14 +379,14 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
 
       if (platform === "windows") {
         assert.equal(scalar(data, "status"), undefined);
-        assert.equal(scalar(data, "version"), "1.0.1");
+        assert.equal(scalar(data, "version"), "1.2.14");
         assert.equal(scalar(data, "id"), "com.typewhisper.meta");
-        assert.equal(scalar(data, "minAppVersion"), "1.0.10");
+        assert.equal(scalar(data, "minAppVersion"), "1.1.0");
         assert.equal(
           scalar(data, "sourceUrl"),
           "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Meta",
         );
-        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.0\.1$/);
+        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.2\.14$/);
         assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
       } else {
         assert.equal(scalar(data, "status"), undefined);
@@ -410,30 +422,7 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
   }
 });
 
-test("Microsoft AI docs match both published 1.0.0 editions", async () => {
-  const capabilityMap = JSON.parse(
-    await readFile(
-      path.resolve("src/data/addon-edition-capabilities.json"),
-      "utf8",
-    ),
-  );
-  const expected = {
-    mac: {
-      filename: "macos.mdx",
-      minAppVersion: "1.7.0",
-      minOsVersion: "14.0",
-      sourceUrl:
-        "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
-    },
-    windows: {
-      filename: "windows.mdx",
-      minAppVersion: "1.0.9",
-      minOsVersion: undefined,
-      sourceUrl:
-        "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi",
-    },
-  };
-
+test("Microsoft AI keeps its published macOS 1.0.0 edition", async () => {
   for (const locale of LOCALES) {
     const familyContent = await readFile(
       path.resolve(`src/content/addons/${locale}/microsoft-ai.mdx`),
@@ -443,7 +432,7 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
 
     assert.equal(scalar(family, "slug"), "microsoft-ai");
     assert.equal(scalar(family, "name"), "Microsoft AI");
-    assert.deepEqual(list(family, "platforms"), ["mac", "windows"]);
+    assert.deepEqual(list(family, "platforms"), ["mac"]);
     assert.deepEqual(list(family, "categories"), ["transcription"]);
     assert.equal(scalar(family, "version"), undefined);
     assert.equal(scalar(family, "id"), undefined);
@@ -454,42 +443,29 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
     assert.match(familyContent, /MAI Transcribe 2/);
     assert.match(familyContent, /MAI Transcribe 1\.5/);
 
-    for (const [platform, platformExpected] of Object.entries(expected)) {
-      const content = await readFile(
-        path.resolve(
-          `src/content/addon-editions/${locale}/microsoft-ai/${platformExpected.filename}`,
-        ),
-        "utf8",
-      );
-      const data = frontmatter(content);
-      const guide = body(content);
+    const content = await readFile(
+      path.resolve(`src/content/addon-editions/${locale}/microsoft-ai/macos.mdx`),
+      "utf8",
+    );
+    const data = frontmatter(content);
+    const guide = body(content);
 
-      assert.equal(scalar(data, "familySlug"), "microsoft-ai");
-      assert.equal(scalar(data, "platform"), platform);
-      assert.equal(scalar(data, "version"), "1.0.0");
-      assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
-      assert.equal(
-        scalar(data, "minAppVersion"),
-        platformExpected.minAppVersion,
-      );
-      assert.equal(
-        scalar(data, "minOsVersion"),
-        platformExpected.minOsVersion,
-      );
-      assert.equal(scalar(data, "sourceUrl"), platformExpected.sourceUrl);
-      assert.match(
-        scalar(data, "releaseUrl"),
-        /plugin-microsoft-ai-v1\.0\.0$/,
-      );
-      assert.deepEqual(capabilityMap["microsoft-ai"][platform], [
-        "transcription",
-      ]);
-      assert.match(guide, /MAI Transcribe 2/);
-      assert.match(
-        guide,
-        locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
-      );
-    }
+    assert.equal(scalar(data, "familySlug"), "microsoft-ai");
+    assert.equal(scalar(data, "platform"), "mac");
+    assert.equal(scalar(data, "version"), "1.0.0");
+    assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
+    assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+    assert.equal(scalar(data, "minOsVersion"), "14.0");
+    assert.equal(
+      scalar(data, "sourceUrl"),
+      "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
+    );
+    assert.match(scalar(data, "releaseUrl"), /plugin-microsoft-ai-v1\.0\.0$/);
+    assert.match(guide, /MAI Transcribe 2/);
+    assert.match(
+      guide,
+      locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+    );
   }
 
   await access(path.resolve("public/brand-logos/microsoft-ai/logo.svg"));
@@ -503,14 +479,63 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
       );
     }
   }
+});
 
-  for (const filename of [
-    "com.typewhisper.microsoft-ai.png",
-    "com.typewhisper.microsoft-ai.webp",
-    "com.typewhisper.microsoft-ai.de.png",
-    "com.typewhisper.microsoft-ai.de.webp",
-  ]) {
-    await access(path.resolve(`public/screenshots/windows/plugins/${filename}`));
+test("editions that left the Windows catalog leave no Windows page, data, or capture behind", async () => {
+  // TypeWhisper for Windows 1.1 dropped these plugins (typewhisper-win #497).
+  const retired = ["google-cloud-stt", "live-transcript", "microsoft-ai", "openai-vector-memory"];
+  const editionsSource = await readFile(
+    path.resolve("src/data/addon-editions.ts"),
+    "utf8",
+  );
+  const capabilityMap = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-capabilities.json"),
+      "utf8",
+    ),
+  );
+  const screenshotManifest = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-screenshots.json"),
+      "utf8",
+    ),
+  );
+  const screenshots = await readdir(
+    path.resolve("public/screenshots/windows/plugins"),
+  );
+
+  for (const slug of retired) {
+    // Their old Windows URLs forward to the add-on page.
+    assert.match(
+      editionsSource,
+      new RegExp(`\\{ familySlug: "${slug}", platform: "windows" \\}`),
+      `${slug}: list the retired Windows edition for its redirect`,
+    );
+    assert.equal(capabilityMap[slug], undefined, `${slug}: no edition capabilities`);
+    assert.ok(
+      !screenshotManifest.windows.includes(`com.typewhisper.${slug}`),
+      `${slug}: no Windows capture in the manifest`,
+    );
+    assert.deepEqual(
+      screenshots.filter((file) => file.startsWith(`com.typewhisper.${slug}.`)),
+      [],
+      `${slug}: no Windows capture`,
+    );
+
+    for (const locale of LOCALES) {
+      const familyContent = await readFile(
+        path.resolve(`src/content/addons/${locale}/${slug}.mdx`),
+        "utf8",
+      );
+      const family = frontmatter(familyContent);
+      assert.deepEqual(list(family, "platforms"), ["mac"], `${locale}/${slug}`);
+      assert.doesNotMatch(family, /typewhisper-win|Windows/, `${locale}/${slug} frontmatter`);
+      await assert.rejects(
+        access(path.resolve(`src/content/addon-editions/${locale}/${slug}/windows.mdx`)),
+        `${locale}/${slug}: the Windows edition is gone`,
+      );
+      await access(path.resolve(`src/content/addon-editions/${locale}/${slug}/macos.mdx`));
+    }
   }
 });
 
@@ -537,13 +562,14 @@ test("Authenticated Provider CLI docs cover the published OpenCode editions", as
       const data = frontmatter(content);
       const guide = body(content);
 
+      const version = platform === "mac" ? "1.1.0" : "1.3.5";
+
       assert.equal(scalar(data, "familySlug"), "authenticated-cli");
       assert.equal(scalar(data, "platform"), platform);
-      assert.equal(scalar(data, "version"), "1.1.0");
+      assert.equal(scalar(data, "version"), version);
       assert.equal(scalar(data, "id"), "com.typewhisper.authenticated-cli");
-      assert.match(
-        scalar(data, "releaseUrl"),
-        /plugin-authenticated-cli-v1\.1\.0$/,
+      assert.ok(
+        scalar(data, "releaseUrl").endsWith(`/plugin-authenticated-cli-v${version}`),
       );
       assert.match(guide, /OpenCode/);
       assert.match(
@@ -555,7 +581,7 @@ test("Authenticated Provider CLI docs cover the published OpenCode editions", as
         assert.equal(scalar(data, "minAppVersion"), "1.7.0");
         assert.match(content, /\/screenshots\/plugins\/authenticated-cli\.png/);
       } else {
-        assert.equal(scalar(data, "minAppVersion"), "1.0.9");
+        assert.equal(scalar(data, "minAppVersion"), "1.1.0");
         assert.match(
           content,
           locale === "de"
@@ -645,7 +671,7 @@ test("catalog filters reflect the union of actual edition capabilities", async (
         const filename = platform === "mac" ? "macos" : platform;
         const edition = frontmatter(await readFile(`src/content/addon-editions/${locale}/${slug}/${filename}.mdx`, "utf8"));
         assert.ok(
-          ["local", "cloud", "custom", "hybrid"].includes(scalar(edition, "processing")),
+          ["local", "cloud", "custom"].includes(scalar(edition, "processing")),
           `${locale}/${slug}/${filename}: declare data processing explicitly`,
         );
       }
