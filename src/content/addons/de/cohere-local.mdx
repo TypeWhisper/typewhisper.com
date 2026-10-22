@@ -21,7 +21,7 @@ featured: false
 
 ## Über
 
-Cohere Transcribe (Local) ergänzt TypeWhisper um das offene Modell Cohere Transcribe 03-2026 als eigenständigen lokalen Anbieter. Es verwendet festgeschriebene GGUF-Modellgewichte über CrispASR, mit Metal-Beschleunigung auf Apple Silicon sowie CPU, NVIDIA CUDA oder AMD Vulkan unter Windows.
+Cohere Transcribe (Local) ergänzt TypeWhisper um das offene Modell Cohere Transcribe 03-2026 als eigenständigen lokalen Anbieter. Es verwendet festgeschriebene GGUF-Modellgewichte über CrispASR, mit Metal-Beschleunigung auf Apple Silicon sowie CPU, NVIDIA CUDA oder Vulkan unter Windows.
 
 Modell und Laufzeit werden beim Einrichten des Add-ons heruntergeladen. Sobald die erforderlichen Dateien vorhanden sind, wird Audio auf deinem Computer transkribiert und nicht an die Cohere-Cloud-API gesendet. Dieses Add-on ist vom bestehenden Cohere-Cloud-Anbieter getrennt.
 
@@ -46,8 +46,8 @@ Modell und Laufzeit werden beim Einrichten des Add-ons heruntergeladen. Sobald d
     <tr>
       <td>Windows</td>
       <td><code>1.0.1</code></td>
-      <td>TypeWhisper <code>1.0.6</code> oder neuer, Windows x64</td>
-      <td><a href="https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.0.1">Windows-Release 1.0.1</a></td>
+      <td>TypeWhisper <code>1.1.0</code> oder neuer, Windows x64</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.2.4">Windows-Release 1.2.4</a></td>
     </tr>
   </tbody>
 </table>
@@ -101,7 +101,7 @@ Die macOS-Einstellungen setzen für Q4_K, Q5_0 und Q6_K einen Mac mit mindestens
 - Obligatorische Silero-Sprachaktivitätserkennung vor jeder Transkription, um Halluzinationen bei Stille und leisem Rauschen zu unterdrücken
 - Batch-Transkription für Diktate und Dateitranskription
 - Kein Cloud-API-Schlüssel erforderlich; ein optionales Hugging-Face-Token kann die Download-Limits erhöhen
-- Kein Streaming, keine Übersetzung, Sprechertrennung oder Verstärkung von Wörterbuchbegriffen
+- Kein Streaming, keine Übersetzung, Sprechertrennung oder Verstärkung von Wörterbuchbegriffen; unter Windows transkribiert eine lokale Live-Vorschau die wachsende Aufnahme beim Sprechen
 - Modell-, Laufzeit- und VAD-Dateien sind festgeschrieben und werden per Prüfsumme verifiziert
 - Cohere-Modellgewichte stehen unter Apache 2.0; CrispASR und das VAD-Modell unter der MIT-Lizenz
 
