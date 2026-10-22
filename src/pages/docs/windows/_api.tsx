@@ -65,8 +65,8 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
         title={isDe ? "Server aktivieren" : "Enable the server"}
       >
         <ol>
-          <li>{isDe ? "Öffne Einstellungen > Erweitert > API Server." : "Open Settings > Advanced > API Server."}</li>
-          <li>{isDe ? "Aktiviere den API-Server und behalte Port 8978 oder trage einen freien lokalen Port ein." : "Enable the API server and keep port 8978, or choose another available local port."}</li>
+          <li>{isDe ? "Öffne Einstellungen > Erweitert > API-Server." : "Open Settings > Advanced > API server."}</li>
+          <li>{isDe ? "Schalte „HTTP-API aktivieren“ ein, behalte Port 8978 oder trage einen anderen freien lokalen Port ein und wähle „Anwenden“." : "Turn on Enable HTTP API, keep port 8978 or enter another available local port, and select Apply."}</li>
           <li>{isDe ? "Prüfe den Status in PowerShell:" : "Check the status from PowerShell:"}</li>
         </ol>
         <DocsCode
@@ -87,31 +87,41 @@ export default function DocsWindowsAPI({ locale = "en" }: { locale?: Locale }) {
         title={isDe ? "Discovery und Token" : "Discovery and token"}
       >
         <p>
-          {isDe ? "Beim Start schreibt der Server zwei Discovery-Dateien nach " : "When it starts, the server writes two discovery files to "}
-          <code>%LOCALAPPDATA%\TypeWhisper-UserData</code>
-          {": "}
+          {isDe ? "Beim Start schreibt der Server zwei Discovery-Dateien in deinen Profilordner, bei der direkten Installation " : "When it starts, the server writes two discovery files to your profile folder, which is "}
+          <code>%LOCALAPPDATA%\TypeWhisper-WinUI</code>
+          {isDe ? ": " : " for the direct download: "}
           <code>api-discovery.json</code>{" "}
-          {isDe ? "mit Version, Port und Token sowie die ältere Datei " : "with version, port, and token, plus the legacy "}
-          <code>api-port</code>.
+          {isDe ? "mit Port, Token, Adresse, API-Version, Prozess-ID und der Angabe, ob ein Token verlangt wird, sowie die ältere Datei " : "with port, token, address, API version, process ID, and whether a token is required, plus the legacy "}
+          <code>api-port</code>
+          {isDe ? ". Wo die Microsoft-Store-Version ihr Profil ablegt, steht unter " : ". For where the Microsoft Store edition keeps its profile, see "}
+          <a href={localePath(locale, "/docs/windows/installation#data-and-uninstall")}>
+            {isDe ? "Datenablage und Deinstallation" : "Data location and uninstall"}
+          </a>
+          .
         </p>
         <DocsCode
           locale={locale}
           lang="json"
           code={`{
   "version": 1,
+  "token": "...",
+  "host": "127.0.0.1",
   "port": 8978,
-  "token": "..."
+  "base_url": "http://127.0.0.1:8978",
+  "api_version": "1.2",
+  "pid": 12345,
+  "requires_authentication": false
 }`}
         />
         <p>
           {isDe
-            ? "Token-Authentifizierung ist optional. Wenn „API-Token erforderlich“ aktiv ist, bleibt nur /v1/status öffentlich. Sende den Token bei allen anderen Anfragen als Bearer-Token oder im Header X-TypeWhisper-API-Token."
-            : "Token authentication is optional. When Require API Token is enabled, only /v1/status remains public. Send the token with every other request as a bearer token or the X-TypeWhisper-API-Token header."}
+            ? "Token-Authentifizierung ist optional. Wenn „API-Token verlangen“ aktiv ist, bleibt /v1/status öffentlich. Sende den Token bei allen anderen API-Anfragen als Bearer-Token oder im Header X-TypeWhisper-API-Token."
+            : "Token authentication is optional. When Require API token is enabled, /v1/status stays public. Send the token with every other API request as a bearer token or the X-TypeWhisper-API-Token header."}
         </p>
         <DocsCode
           locale={locale}
           lang="powershell"
-          code={`$discovery = Get-Content "$env:LOCALAPPDATA\\TypeWhisper-UserData\\api-discovery.json" | ConvertFrom-Json
+          code={`$discovery = Get-Content "$env:LOCALAPPDATA\\TypeWhisper-WinUI\\api-discovery.json" | ConvertFrom-Json
 curl.exe -H "Authorization: Bearer $($discovery.token)" "http://localhost:$($discovery.port)/v1/models"`}
         />
       </DocsSection>

@@ -37,14 +37,14 @@ export default function DocsWindowsInstallation({
         "Windows 10 oder Windows 11 (64-Bit)",
         "x64-Prozessor",
         "Ausreichend freier Speicher für die gewählten lokalen Modelle",
-        "Optional: NVIDIA CUDA, AMD Vulkan oder AMD ROCm zur Beschleunigung unterstützter lokaler Modelle",
+        "Optional: NVIDIA CUDA, Vulkan oder AMD ROCm zur Beschleunigung unterstützter lokaler Modelle",
         "Internetverbindung für Installation, Modell- und Add-on-Downloads sowie Cloud-Engines",
       ]
     : [
         "Windows 10 or Windows 11 (64-bit)",
         "x64 processor",
         "Enough free disk space for your selected local models",
-        "Optional: NVIDIA CUDA, AMD Vulkan, or AMD ROCm acceleration for supported local models",
+        "Optional: NVIDIA CUDA, Vulkan, or AMD ROCm acceleration for supported local models",
         "Internet access for installation, model and add-on downloads, and cloud engines",
       ];
 
@@ -212,16 +212,39 @@ export default function DocsWindowsInstallation({
         title={isDe ? "Datenablage und Deinstallation" : "Data location and uninstall"}
       >
         <p>
-          {isDe ? "Einstellungen, Modelle, Verlauf, Plugins und Aufnahmen liegen unter " : "Settings, models, history, plugins, and recordings are stored under "}
-          <code>%LOCALAPPDATA%\TypeWhisper-UserData</code>.{" "}
+          {isDe ? "Einstellungen, Modelle, Verlauf, Plugins und Aufnahmen liegen in deinem Profilordner. Bei der direkten Installation ist das " : "Settings, models, history, plugins, and recordings are stored in your profile folder. For the direct download, this is "}
+          <code>%LOCALAPPDATA%\TypeWhisper-WinUI</code>.{" "}
           {isDe
             ? "Diese Nutzerdaten bleiben bei einer normalen App-Deinstallation erhalten."
             : "This user data remains after a normal app uninstall."}
         </p>
+        <p>
+          {isDe
+            ? "Die Microsoft-Store-Version legt denselben Ordner im Paketordner der App ab, weil Windows ihre Schreibzugriffe dorthin umleitet: "
+            : "The Microsoft Store edition keeps the same folder inside the app's package folder, because Windows redirects its writes there: "}
+          <code>%LOCALAPPDATA%\Packages\TypeWhisper.TypeWhisper_51tqb5623pxja\LocalCache\Local\TypeWhisper-WinUI</code>.{" "}
+          {isDe
+            ? "Windows löscht diesen Ordner, wenn du die Store-App deinstallierst. Die öffentliche Store-Beta TypeWhisper Beta hat ein eigenes Profil namens "
+            : "Windows deletes this folder when you uninstall the Store app. The public Store beta, TypeWhisper Beta, has its own profile, "}
+          <code>TypeWhisper-WinUI-StoreBeta</code>
+          {isDe ? ", im Paketordner " : ", in the package folder "}
+          <code>TypeWhisper.TypeWhisperBeta_51tqb5623pxja</code>.
+        </p>
+        <p>
+          {isDe
+            ? "Hast du TypeWhisper 1.0 verwendet, übernimmt TypeWhisper 1.1 oder neuer beim ersten Start ohne Profil deine Daten einmalig aus dem alten Ordner "
+            : "If you used TypeWhisper 1.0, TypeWhisper 1.1 or later imports your data once from the old folder, "}
+          <code>%LOCALAPPDATA%\TypeWhisper-UserData</code>
+          {isDe ? " oder " : " or "}
+          <code>%LOCALAPPDATA%\TypeWhisper</code>
+          {isDe
+            ? ", und lässt diesen Ordner unverändert. Die Store-Beta übernimmt keine alten Daten."
+            : ", when it first starts without a profile, and leaves that folder unchanged. The Store beta does not import old data."}
+        </p>
         <ol>
           <li>{isDe ? "Beende TypeWhisper über das Tray-Menü." : "Quit TypeWhisper from the tray menu."}</li>
           <li>{isDe ? "Öffne Windows-Einstellungen > Apps > Installierte Apps und deinstalliere TypeWhisper." : "Open Windows Settings > Apps > Installed apps and uninstall TypeWhisper."}</li>
-          <li>{isDe ? "Für eine vollständige Bereinigung lösche den Ordner oben erst nach einer Sicherung wichtiger Daten." : "For a clean removal, back up anything important before deleting the folder above."}</li>
+          <li>{isDe ? "Für eine vollständige Bereinigung sichere wichtige Daten und lösche danach den Profilordner und einen eventuell übrig gebliebenen Ordner von TypeWhisper 1.0." : "For a clean removal, back up anything important, then delete the profile folder and any folder left over from TypeWhisper 1.0."}</li>
         </ol>
         <a
           href={localePath(locale, "/docs/windows/troubleshooting")}

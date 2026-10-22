@@ -34,8 +34,8 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["api.github.com", "github.com", "release-assets.githubusercontent.com"],
-    "App update checks and downloads (unless `UpdateMode` is `0`) and plugin package downloads.",
-    "Prüfung und Download von App-Updates (außer bei `UpdateMode` `0`) sowie Downloads von Plugin-Paketen.",
+    "App update checks and downloads (unless `UpdateMode` is `0`), plugin package downloads, and the model and runtime files that some local plugins download from GitHub releases (Qwen3 ASR 0.6B, Parakeet Ultra, and the graphics card runtime of NVIDIA Parakeet).",
+    "Prüfung und Download von App-Updates (außer bei `UpdateMode` `0`), Downloads von Plugin-Paketen sowie die Modell- und Laufzeitdateien, die manche lokalen Plugins aus GitHub-Releases laden (Qwen3 ASR 0.6B, Parakeet Ultra und die Grafikkarten-Laufzeit von NVIDIA Parakeet).",
   ],
   [
     ["typewhisper.github.io"],
@@ -104,8 +104,8 @@ const pluginHosts: Array<[plugin: string, en: string, de: string]> = [
   ],
   [
     "Local plugins: Parakeet, whisper.cpp, local LLM, Gemma, Qwen, GigaAM, Cohere Transcribe, Granite Speech, Supertonic TTS",
-    "`huggingface.co` and `*.hf.co` for models; runtime hosts as above",
-    "`huggingface.co` und `*.hf.co` für Modelle; Laufzeit-Hosts wie oben",
+    "`huggingface.co` and `*.hf.co` for most models, the GitHub hosts above for some; runtime hosts as above",
+    "`huggingface.co` und `*.hf.co` für die meisten Modelle, für einige die GitHub-Hosts oben; Laufzeit-Hosts wie oben",
   ],
 ];
 

@@ -126,7 +126,23 @@ test.describe("Windows documentation", () => {
       });
     await expect(onboarding.locator("ol > li")).toHaveCount(4);
     await expect(
-      page.getByText("%LOCALAPPDATA%\\TypeWhisper-UserData"),
+      page.getByText("%LOCALAPPDATA%\\TypeWhisper-WinUI", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        "%LOCALAPPDATA%\\Packages\\TypeWhisper.TypeWhisper_51tqb5623pxja\\LocalCache\\Local\\TypeWhisper-WinUI",
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByText("TypeWhisper-WinUI-StoreBeta", { exact: true }),
+    ).toBeVisible();
+    // TypeWhisper 1.1 and later only import from the 1.0 folder.
+    await expect(
+      page.getByText("%LOCALAPPDATA%\\TypeWhisper-UserData", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("imports your data once from the old folder", { exact: false }),
     ).toBeVisible();
     await expect(
       page.getByText("Start with Windows is enabled by default", {
@@ -245,11 +261,21 @@ test.describe("Windows documentation", () => {
       page.getByText("port 8978", { exact: false }).first(),
     ).toBeVisible();
     await expect(
-      page.getByText("Settings > Advanced > API Server", { exact: false }),
+      page.getByText("Settings > Advanced > API server", { exact: false }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Turn on Enable HTTP API", { exact: false }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("When Require API token is enabled", { exact: false }),
     ).toBeVisible();
     await expect(
       page.getByText("api-discovery.json", { exact: false }).first(),
     ).toBeVisible();
+    await expect(
+      page.getByText("%LOCALAPPDATA%\\TypeWhisper-WinUI", { exact: true }),
+    ).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("TypeWhisper-UserData");
     await expect(
       page.getByText("/v1/recorder/session", { exact: true }),
     ).toBeVisible();
@@ -264,15 +290,15 @@ test.describe("Windows documentation", () => {
       page.getByText("fallback 8978", { exact: false }).first(),
     ).toBeVisible();
     await expect(
-      page.getByText("%LOCALAPPDATA%\\TypeWhisper\\api-discovery.json", {
-        exact: true,
-      }),
-    ).toBeVisible();
-    await expect(
-      page.getByText("the CLI still checks the former folder", {
+      page.getByText("in the profile of the app that installed it", {
         exact: false,
       }),
     ).toBeVisible();
+    await expect(
+      page.getByText("%LOCALAPPDATA%\\TypeWhisper-WinUI", { exact: true }),
+    ).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("TypeWhisper-UserData");
+    await expect(page.locator("body")).not.toContainText("former folder");
     await expect(
       page.getByText("--language-hint <code>", { exact: true }),
     ).toBeVisible();

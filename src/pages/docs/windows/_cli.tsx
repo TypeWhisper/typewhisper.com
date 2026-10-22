@@ -1,13 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import {
-  DocsCallout,
   DocsCode,
   DocsSection,
   DocsSubheading,
   DocsTable,
   withCode,
 } from "@/components/docs/prose";
-import { localePath, t, type Locale } from "@/i18n/index";
+import { localePath, type Locale } from "@/i18n/index";
 
 type Flag = [name: string, descriptionDe: string, descriptionEn: string];
 
@@ -115,16 +114,16 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
         title={isDe ? "Installieren und vorbereiten" : "Install and prepare"}
       >
         <ol>
-          <li>{isDe ? "Öffne Einstellungen > Erweitert > Command Line Tool und klicke auf Installieren." : "Open Settings > Advanced > Command Line Tool and click Install."}</li>
+          <li>{isDe ? "Öffne Einstellungen > Erweitert > Kommandozeilen-Tool und klicke auf Installieren." : "Open Settings > Advanced > Command line tool and click Install."}</li>
           <li>{isDe ? "Öffne danach ein neues Terminal, damit der aktualisierte Benutzer-PATH geladen wird." : "Open a new terminal afterward so the updated user PATH is loaded."}</li>
-          <li>{isDe ? "Aktiviere unter Einstellungen > Erweitert > API Server den lokalen Server." : "Enable the local server in Settings > Advanced > API Server."}</li>
+          <li>{isDe ? "Schalte unter Einstellungen > Erweitert > API-Server „HTTP-API aktivieren“ ein und wähle „Anwenden“." : "In Settings > Advanced > API server, turn on Enable HTTP API and select Apply."}</li>
           <li>{isDe ? "Prüfe die Verbindung mit typewhisper status." : "Verify the connection with typewhisper status."}</li>
         </ol>
         <DocsCode locale={locale} lang="powershell" code="typewhisper status" />
         <p>
           {isDe
-            ? "Die CLI ist ein Client der lokalen HTTP API. TypeWhisper muss laufen und der API-Server muss aktiviert sein."
-            : "The CLI is a client for the local HTTP API. TypeWhisper must be running and the API server must be enabled."}
+            ? "Die CLI ist ein Client der lokalen HTTP-API. TypeWhisper muss laufen und die HTTP-API muss aktiviert sein."
+            : "The CLI is a client for the local HTTP API. TypeWhisper must be running and the HTTP API must be enabled."}
         </p>
       </DocsSection>
 
@@ -135,23 +134,17 @@ export default function DocsWindowsCLI({ locale = "en" }: { locale?: Locale }) {
         <p>
           {isDe ? "Ohne " : "Without "}
           <code>--port</code>
-          {isDe ? " liest die CLI zuerst " : ", the CLI first reads "}
-          <code>%LOCALAPPDATA%\TypeWhisper\api-discovery.json</code>
-          {isDe ? ", danach die ältere Datei " : ", then the legacy "}
+          {isDe ? " liest die CLI die Datei " : ", the CLI reads "}
+          <code>api-discovery.json</code>
+          {isDe ? " im Profil der App, die sie installiert hat, danach die ältere Datei " : " in the profile of the app that installed it, then the legacy "}
           <code>api-port</code>
-          {isDe ? " und verwendet zuletzt 8978 als Fallback." : " file, and finally falls back to 8978."}
+          {isDe ? ", und verwendet zuletzt 8978 als Fallback. Eine CLI ohne diese Bindung prüft " : " file, and finally falls back to 8978. A CLI without that binding checks "}
+          <code>%LOCALAPPDATA%\TypeWhisper-WinUI</code>.
         </p>
-        <DocsCallout label={t(locale, "docs.callout.note")}>
-          <p>
-            {isDe
-              ? "Hinweis zum aktuellen Stable-Client: Die App schreibt ihre Discovery-Dateien bereits nach %LOCALAPPDATA%\\TypeWhisper-UserData, die CLI prüft jedoch noch den früheren Ordner oben. Port 8978 funktioniert über den Fallback. Verwende bei einem abweichenden Port --port."
-              : "Current stable client note: the app now writes its discovery files to %LOCALAPPDATA%\\TypeWhisper-UserData, but the CLI still checks the former folder shown above. Port 8978 works through the fallback. Use --port for a different port."}
-          </p>
-        </DocsCallout>
         <p>
           {isDe
-            ? "Ein Token wird übernommen, wenn die CLI ihre Discovery-Datei findet. Setze beim aktuellen Stable-Client für Token-Schutz zuverlässig TYPEWHISPER_API_TOKEN oder --api-token. Die Priorität lautet: --api-token, Umgebungsvariable, Discovery."
-            : "A token is used when the CLI finds its discovery file. With the current stable client, set TYPEWHISPER_API_TOKEN or --api-token explicitly when token protection is enabled. Priority is --api-token, environment variable, then discovery."}
+            ? "Den Token aus der Discovery-Datei verwendet die CLI nur für den dort angegebenen Port. Meldet die Discovery, dass kein Token verlangt wird, sendet sie keinen. Die Priorität lautet: --api-token, Umgebungsvariable TYPEWHISPER_API_TOKEN, Discovery."
+            : "The CLI uses the token from the discovery file only for the port listed there, and sends none when discovery reports that no token is required. Priority is --api-token, the TYPEWHISPER_API_TOKEN environment variable, then discovery."}
         </p>
       </DocsSection>
 
