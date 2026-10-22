@@ -129,18 +129,13 @@ function scalar(data, key) {
   return data.match(new RegExp(`^${key}: ["']?([^"'\\n]+)["']?$`, "m"))?.[1];
 }
 
-function atLeast(version, minimum) {
-  const [a, b] = [version, minimum].map((value) => value.split(".").map(Number));
-  for (let index = 0; index < 3; index += 1) {
-    if (a[index] !== b[index]) return a[index] > b[index];
-  }
-  return true;
-}
-
 // The catalog's minHostVersion is the plugin host version, 1.1.6 in both
 // TypeWhisper for Windows 1.1.0 and 1.2.0, not an app version. Every catalog
-// plugin therefore runs on 1.1.0, the first release with Discover plugins.
-test("Windows add-ons name an app version that has Discover plugins", async () => {
+// plugin therefore runs on 1.1.0, the first release with Discover plugins, and
+// a later version here would wrongly exclude users of 1.1.
+const FIRST_APP_WITH_DISCOVER = "1.1.0";
+
+test("Windows add-ons name the first app version with Discover plugins", async () => {
   const newer = { en: "or newer", de: "oder neuer" };
 
   for (const locale of LOCALES) {
@@ -155,7 +150,7 @@ test("Windows add-ons name an app version that has Discover plugins", async () =
 
       const { data } = split(content);
       const minimum = scalar(data, "minAppVersion");
-      assert.ok(minimum && atLeast(minimum, "1.1.0"), `${locale}/${slug}: minAppVersion ${minimum}`);
+      assert.equal(minimum, FIRST_APP_WITH_DISCOVER, `${locale}/${slug}: minAppVersion`);
       assert.equal(
         list(data, "requirements")[0],
         `TypeWhisper ${minimum} ${newer[locale]}`,
@@ -172,7 +167,7 @@ test("Windows add-ons name an app version that has Discover plugins", async () =
       }
 
       const minimum = scalar(data, "minAppVersion");
-      assert.ok(minimum && atLeast(minimum, "1.1.0"), `${locale}/${file}: minAppVersion ${minimum}`);
+      assert.equal(minimum, FIRST_APP_WITH_DISCOVER, `${locale}/${file}: minAppVersion`);
     }
   }
 });

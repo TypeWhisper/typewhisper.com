@@ -4,7 +4,7 @@ import test from "node:test";
 import { windowsAddonScreenshotSrc } from "../src/lib/addon-screenshots.ts";
 
 const screenshots = {
-  windows: ["com.typewhisper.groq", "com.typewhisper.qwen3-stt"],
+  windows: ["com.typewhisper.groq", "com.typewhisper.qwen3-local"],
   windowsLocalized: { de: ["com.typewhisper.groq"] },
 };
 
@@ -21,8 +21,8 @@ test("German pages show the German Windows capture where one exists", () => {
 
 test("a capture without a German variant stays English on German pages", () => {
   assert.equal(
-    windowsAddonScreenshotSrc(screenshots, "com.typewhisper.qwen3-stt", "de"),
-    "/screenshots/windows/plugins/com.typewhisper.qwen3-stt.png",
+    windowsAddonScreenshotSrc(screenshots, "com.typewhisper.qwen3-local", "de"),
+    "/screenshots/windows/plugins/com.typewhisper.qwen3-local.png",
   );
 });
 
