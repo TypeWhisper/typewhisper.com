@@ -75,8 +75,14 @@ const pluginHosts: Array<[plugin: string, en: string, de: string]> = [
   ["ElevenLabs", "`api.elevenlabs.io`", ""],
   ["Fireworks", "`api.fireworks.ai`", ""],
   ["Gemini", "`generativelanguage.googleapis.com`", ""],
+  [
+    "GitHub Copilot",
+    "`github.com` and `api.github.com` for sign-in, and the Copilot service hosts under `*.githubcopilot.com`; GitHub's Copilot allowlist reference lists every host",
+    "`github.com` und `api.github.com` für die Anmeldung sowie die Copilot-Dienst-Hosts unter `*.githubcopilot.com`; GitHubs Copilot-Allowlist-Referenz nennt alle Hosts",
+  ],
   ["Gladia", "`api.gladia.io`, `files.gladia.io`", ""],
   ["Groq", "`api.groq.com`", ""],
+  ["Linear", "`api.linear.app`", ""],
   ["Meta", "`api.meta.ai`", ""],
   [
     "OpenAI",
