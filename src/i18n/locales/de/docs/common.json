@@ -10,6 +10,8 @@
   "docs.sidebar.httpApi": "HTTP API",
   "docs.sidebar.cliTool": "CLI Tool",
   "docs.sidebar.troubleshooting": "Fehlerbehebung",
+  "docs.sidebar.deployment": "Bereitstellung",
+  "docs.sidebar.managedSettings": "Verwaltete Einstellungen",
   "docs.sidebar.dictationKeyboard": "Diktat & Tastatur",
   "docs.sidebar.profilesProcessing": "Profile & Verarbeitung",
   "docs.sidebar.filesHistoryInbox": "Dateien, Verlauf & Inbox",

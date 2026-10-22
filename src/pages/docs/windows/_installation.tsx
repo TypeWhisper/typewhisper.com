@@ -161,6 +161,22 @@ export default function DocsWindowsInstallation({
             </a>
           </p>
         </DocsCallout>
+
+        <DocsSubheading id="organizations">
+          {isDe ? "Für Organisationen" : "For organizations"}
+        </DocsSubheading>
+        <p>
+          {isDe
+            ? "Ab Version 1.2 installiert ein MSI TypeWhisper für alle Benutzer eines Geräts. Stille Installation, Intune-Pakete und zentrale Einstellungen beschreibt die Seite Bereitstellung."
+            : "From version 1.2, an MSI installs TypeWhisper for all users of a device. Silent installation, Intune packages, and central settings are described on the Deployment page."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/windows/deployment")}
+          className="site-link"
+        >
+          {isDe ? "TypeWhisper in der Organisation verteilen" : "Roll out TypeWhisper in your organization"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
 
       <DocsSection

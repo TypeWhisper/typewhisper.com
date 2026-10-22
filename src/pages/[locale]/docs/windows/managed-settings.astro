@@ -1,0 +1,39 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsWindowsManagedSettings, {
+  windowsManagedSettingsHead,
+} from "@/pages/docs/windows/_managed-settings.tsx";
+import { type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const copy = locale === "de"
+  ? {
+      title: "Verwaltete Einstellungen - Windows - TypeWhisper",
+      description: "TypeWhisper für Windows per Gruppenrichtlinie, Intune oder Registry verwalten: alle Richtlinienwerte, Anbieter-Modell-Paare, Lizenzschlüssel, ADMX-Vorlagen und Skripte.",
+    }
+  : {
+      title: "Managed Settings - Windows - TypeWhisper",
+      description: "Manage TypeWhisper for Windows with Group Policy, Intune, or the registry: every policy value, provider and model pairs, the license key, ADMX templates, and scripts.",
+    };
+const head = windowsManagedSettingsHead(locale);
+---
+<DocsLayout
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={canonicalPath(locale, "/docs/windows/managed-settings")}
+  locale={locale}
+  platform="windows"
+  heading={head.heading}
+  lede={head.lede}
+>
+  <DocsWindowsManagedSettings locale={locale} />
+</DocsLayout>

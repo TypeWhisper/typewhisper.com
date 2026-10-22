@@ -214,13 +214,35 @@ export default function DocsWindowsTroubleshooting({
       </DocsSection>
 
       <DocsSection
+        id="managed-settings"
+        title={
+          isDe
+            ? "Einstellung ist von der Organisation gesperrt"
+            : "A setting is locked by your organization"
+        }
+      >
+        <p>
+          {isDe
+            ? "Deine IT hat die Einstellung über eine Richtlinie festgelegt. Einstellungen > Erweitert > Verwaltete Einstellungen zeigt die auf diesem Gerät wirksamen Werte und mögliche Probleme in der Richtlinie. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
+            : "Your IT department set it through a policy. Settings > Advanced > Managed settings shows the values in effect on this device and any policy problems. Only your IT department can change the value; you can't change it in TypeWhisper."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/windows/managed-settings")}
+          className="site-link"
+        >
+          {isDe ? "Verwaltete Einstellungen für Administratoren" : "Managed settings for administrators"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
+      </DocsSection>
+
+      <DocsSection
         id="diagnostics"
         title={isDe ? "Diagnose exportieren" : "Export diagnostics"}
       >
         <p>
           {isDe
-            ? "Öffne Einstellungen > Über, prüfe zuerst das Fehlerprotokoll und klicke auf „Diagnose exportieren“. Die JSON-Datei enthält App-, Windows- und Laufzeitversion, Gebietsschema sowie protokollierte Fehler. Lies sie vor dem Teilen durch und sende sie nur an einen vertrauenswürdigen Support-Kanal."
-            : "Open Settings > About, review the error log first, and click Export Diagnostics. The JSON file contains app, Windows, and runtime versions, locale, and recorded errors. Review it before sharing and send it only through a trusted support channel."}
+            ? "Öffne Einstellungen > Erweitert > Support-Diagnose und klicke beim Supportbericht auf „Diagnose exportieren…“. Der Bericht enthält App- und Systemdetails, Mikrofonnamen und -zugriff, Modelle, Plugins, Workflow-Metadaten, Einstellungen und ein gespeichertes Diagnoseprotokoll, falls vorhanden. API-Schlüssel, Audio, Transkripte, Prompt-Inhalte und Dateipfade sind nicht enthalten, und nichts wird automatisch gesendet. Mikrofonnamen können Personennamen enthalten; lies den Bericht vor dem Teilen durch und sende ihn nur an einen vertrauenswürdigen Support-Kanal."
+            : "Open Settings > Advanced > Support diagnostics and click Export diagnostics… next to Support report. The report includes app and system details, microphone names and access, models, plugins, workflow metadata, settings, and any retained diagnostic log. It excludes API keys, audio, transcripts, prompt contents, and file paths, and nothing is sent automatically. Microphone names may contain personal names; review the report before sharing and send it only through a trusted support channel."}
         </p>
       </DocsSection>
     </>

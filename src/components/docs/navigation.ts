@@ -30,6 +30,8 @@ const pages: Record<DocsPlatform, Array<[path: string, labelKey: string]>> = {
     ["/api", "docs.sidebar.httpApi"],
     ["/cli", "docs.sidebar.cliTool"],
     ["/troubleshooting", "docs.sidebar.troubleshooting"],
+    ["/deployment", "docs.sidebar.deployment"],
+    ["/managed-settings", "docs.sidebar.managedSettings"],
   ],
   ios: [
     ["", "docs.sidebar.overview"],
