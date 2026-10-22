@@ -44,8 +44,8 @@ const appHosts: Array<[hosts: string[], en: string, de: string]> = [
   ],
   [
     ["huggingface.co", "*.hf.co"],
-    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, local text models, and local speech output. The host redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
-    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Wörterbuch-Boosting, whisper.cpp, lokale Textmodelle und lokale Sprachausgabe. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
+    "Model downloads of the local plugins: Parakeet (sherpa-onnx), dictionary boosting files, whisper.cpp, GigaAM, local text models, and local speech output. The host redirects to `*.hf.co` content hosts on several subdomain levels, such as `us.aws.cdn.hf.co` and `cas-server.xethub.hf.co`; the wildcard has to cover all of them.",
+    "Modell-Downloads der lokalen Plugins: Parakeet (sherpa-onnx), Dateien für Wörterbuch-Boosting, whisper.cpp, GigaAM, lokale Textmodelle und lokale Sprachausgabe. Der Host leitet auf `*.hf.co`-Hosts über mehrere Subdomain-Ebenen weiter, etwa `us.aws.cdn.hf.co` und `cas-server.xethub.hf.co`; der Platzhalter muss alle abdecken.",
   ],
   [
     ["download.pytorch.org", "developer.download.nvidia.com", "api.nuget.org"],
@@ -97,7 +97,7 @@ const pluginHosts: Array<[plugin: string, en: string, de: string]> = [
     "Der Befehl, die CLI oder die URL, die der Benutzer konfiguriert",
   ],
   [
-    "Local plugins: Parakeet, whisper.cpp, local LLM, Gemma, Qwen, Cohere Transcribe, Granite Speech, Supertonic TTS",
+    "Local plugins: Parakeet, whisper.cpp, local LLM, Gemma, Qwen, GigaAM, Cohere Transcribe, Granite Speech, Supertonic TTS",
     "`huggingface.co` and `*.hf.co` for models; runtime hosts as above",
     "`huggingface.co` und `*.hf.co` für Modelle; Laufzeit-Hosts wie oben",
   ],
