@@ -52,8 +52,16 @@ const configuration = edition.configuration ?? [];
 const hasSeparateSettings = !configuration.some((item) =>
   /no separate add-on|keine separate add-on/i.test(item),
 );
+// Discover plugins lists the add-on under the name the app gives it.
+const installStep =
+  edition.appName && edition.appName !== plugin.name
+    ? format("addons.editions.guide.installListedAs").replaceAll(
+        "{appName}",
+        edition.appName,
+      )
+    : format("addons.editions.guide.install");
 const setupSteps = [
-  format("addons.editions.guide.install"),
+  installStep,
   ...(hasSeparateSettings
     ? [t(locale, "addons.editions.guide.openSettings")]
     : []),

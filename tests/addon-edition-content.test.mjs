@@ -612,6 +612,7 @@ test("localized editions keep platform identity, source, and version in sync", a
         "platform",
         "version",
         "id",
+        "appName",
         "sourceUrl",
         "releaseUrl",
         "releaseVersion",

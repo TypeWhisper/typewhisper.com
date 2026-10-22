@@ -55,6 +55,7 @@
   "addons.editions.guide.setup": "Einrichtung",
   "addons.editions.guide.examples": "In der Praxis",
   "addons.editions.guide.install": "Öffne in TypeWhisper Einstellungen > Plugins entdecken und installiere {name}. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich. Ist es schon installiert, öffne seine Seite direkt in der Seitenleiste.",
+  "addons.editions.guide.installListedAs": "Öffne in TypeWhisper Einstellungen > Plugins entdecken und installiere {name}, das dort {appName} heißt. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich. Ist es schon installiert, öffne seine Seite direkt in der Seitenleiste.",
   "addons.editions.guide.openSettings": "Prüfe auf der Seite des Add-ons die Optionen, die diese Edition bietet.",
   "addons.editions.guide.activate.transcription": "Wähle {name} als Transkriptions-Engine in den allgemeinen Einstellungen, einem Profil oder einer Workflow-Überschreibung.",
   "addons.editions.guide.activate.llm": "Wähle {name} als LLM-Anbieter für den Prompt oder die Übersetzung eines Workflows.",
