@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("add-on platform editions", () => {
-  test("Microsoft AI exposes source-checked macOS and Windows guides", async ({
+  test("Microsoft AI keeps its macOS guide and forwards the retired Windows edition", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -23,7 +23,13 @@ test.describe("add-on platform editions", () => {
       "src",
       "/brand-logos/microsoft-ai/logo.svg",
     );
-    await expect(page.getByTestId("addon-edition-card")).toHaveCount(2);
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Available platform" }),
+    ).toBeVisible();
+    await expect(page.getByText("This add-on is currently available for macOS only.", { exact: false })).toBeVisible();
+    const cards = page.getByTestId("addon-edition-card");
+    await expect(cards).toHaveCount(1);
+    await expect(cards).toHaveAttribute("data-platform", "mac");
     await expectNoHorizontalOverflow();
 
     await page.goto("/en/addons/microsoft-ai/macos/");
@@ -48,24 +54,16 @@ test.describe("add-on platform editions", () => {
     await expect(page.locator("body")).toContainText(
       "does not stream partial text",
     );
+    await expect(
+      page.getByTestId("addon-edition-switcher").locator('a[data-platform="windows"]'),
+    ).toHaveCount(0);
     await expectNoHorizontalOverflow();
 
-    await page.goto("/en/addons/microsoft-ai/windows/");
+    await page.goto("/de/addons/microsoft-ai/");
     await expect(
-      page.getByRole("heading", {
-        level: 1,
-        name: "Microsoft AI for Windows",
-      }),
+      page.getByRole("heading", { level: 2, name: "Verfügbare Plattform" }),
     ).toBeVisible();
-    await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.png"]',
-      ),
-    ).toBeVisible();
-    await expect(page.locator("body")).toContainText(
-      "shorter than two hours and smaller than 250 MB",
-    );
-    await expectNoHorizontalOverflow();
+    await expect(page.getByText("Dieses Add-on gibt es derzeit nur für macOS.", { exact: false })).toBeVisible();
 
     await page.goto("/de/addons/microsoft-ai/macos/");
     await expect(
@@ -75,17 +73,30 @@ test.describe("add-on platform editions", () => {
       page.getByRole("heading", { level: 2, name: "Einrichtungs-Tutorial" }),
     ).toBeVisible();
     await expectNoHorizontalOverflow();
+  });
 
-    await page.goto("/de/addons/microsoft-ai/windows/");
+  test("retired Windows editions forward to the add-on page", async ({ page }) => {
+    for (const slug of [
+      "google-cloud-stt",
+      "live-transcript",
+      "microsoft-ai",
+      "openai-vector-memory",
+    ]) {
+      for (const locale of ["en", "de"] as const) {
+        await page.goto(`/${locale}/addons/${slug}/windows/`, { waitUntil: "commit" });
+        await expect(page).toHaveURL(new RegExp(`/${locale}/addons/${slug}/$`));
+        await expect(page.getByTestId("addon-edition-family")).toBeVisible();
+        await expect(
+          page.locator('[data-testid="addon-edition-card"][data-platform="windows"]'),
+        ).toHaveCount(0);
+      }
+    }
+
+    await page.goto("/addons/microsoft-ai/windows/", { waitUntil: "commit" });
+    await expect(page).toHaveURL(/\/(en|de)\/addons\/microsoft-ai\/$/);
     await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.microsoft-ai.de.png"]',
-      ),
+      page.getByRole("heading", { level: 1, name: "Microsoft AI" }),
     ).toBeVisible();
-    await expect(page.locator("body")).toContainText(
-      "unter zwei Stunden und unter 250 MB",
-    );
-    await expectNoHorizontalOverflow();
   });
 
   test("Meta exposes the published Windows and macOS editions", async ({
@@ -268,14 +279,6 @@ test.describe("add-on platform editions", () => {
       page
         .locator('[data-testid="addon-edition-card"][data-platform="windows"]')
         .locator('img[src="/screenshots/windows/plugins/com.typewhisper.cohere.de.png"]'),
-    ).toBeVisible();
-
-    // Without a German capture, German pages keep the English one.
-    await page.goto("/de/addons/google-cloud-stt/windows/");
-    await expect(
-      page.locator(
-        'img[src="/screenshots/windows/plugins/com.typewhisper.google-cloud-stt.png"]',
-      ),
     ).toBeVisible();
   });
 

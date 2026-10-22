@@ -110,7 +110,7 @@ test("every cross-platform add-on has independent localized macOS and Windows ed
   );
 
   assert.deepEqual(deFamilies, enFamilies);
-  assert.equal(deFamilies.length, 37);
+  assert.equal(deFamilies.length, 33);
 
   for (const locale of LOCALES) {
     for (const slug of deFamilies) {
@@ -177,8 +177,8 @@ test("Windows screenshots cover every documented add-on that has a settings dial
   const windowsScreenshotIds = new Set(screenshotManifest.windows);
   const germanScreenshotIds = new Set(screenshotManifest.windowsLocalized.de);
 
-  assert.equal(windowsAddons.length, 40);
-  assert.equal(windowsScreenshotIds.size, 40);
+  assert.equal(windowsAddons.length, 36);
+  assert.equal(windowsScreenshotIds.size, 36);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !windowsScreenshotIds.has(id))
@@ -186,14 +186,13 @@ test("Windows screenshots cover every documented add-on that has a settings dial
       .sort(),
     [],
   );
-  // These add-ons are not in the Windows catalog and have no German capture.
-  assert.equal(germanScreenshotIds.size, 36);
+  assert.equal(germanScreenshotIds.size, 35);
   assert.deepEqual(
     windowsAddons
       .filter(({ id }) => !germanScreenshotIds.has(id))
       .map(({ slug }) => slug)
       .sort(),
-    ["google-cloud-stt", "live-transcript", "openai-vector-memory", "qwen3-asr"],
+    ["qwen3-asr"],
   );
 
   for (const id of windowsScreenshotIds) {
@@ -410,30 +409,7 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
   }
 });
 
-test("Microsoft AI docs match both published 1.0.0 editions", async () => {
-  const capabilityMap = JSON.parse(
-    await readFile(
-      path.resolve("src/data/addon-edition-capabilities.json"),
-      "utf8",
-    ),
-  );
-  const expected = {
-    mac: {
-      filename: "macos.mdx",
-      minAppVersion: "1.7.0",
-      minOsVersion: "14.0",
-      sourceUrl:
-        "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
-    },
-    windows: {
-      filename: "windows.mdx",
-      minAppVersion: "1.0.9",
-      minOsVersion: undefined,
-      sourceUrl:
-        "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.MicrosoftAi",
-    },
-  };
-
+test("Microsoft AI keeps its published macOS 1.0.0 edition", async () => {
   for (const locale of LOCALES) {
     const familyContent = await readFile(
       path.resolve(`src/content/addons/${locale}/microsoft-ai.mdx`),
@@ -443,7 +419,7 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
 
     assert.equal(scalar(family, "slug"), "microsoft-ai");
     assert.equal(scalar(family, "name"), "Microsoft AI");
-    assert.deepEqual(list(family, "platforms"), ["mac", "windows"]);
+    assert.deepEqual(list(family, "platforms"), ["mac"]);
     assert.deepEqual(list(family, "categories"), ["transcription"]);
     assert.equal(scalar(family, "version"), undefined);
     assert.equal(scalar(family, "id"), undefined);
@@ -454,42 +430,29 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
     assert.match(familyContent, /MAI Transcribe 2/);
     assert.match(familyContent, /MAI Transcribe 1\.5/);
 
-    for (const [platform, platformExpected] of Object.entries(expected)) {
-      const content = await readFile(
-        path.resolve(
-          `src/content/addon-editions/${locale}/microsoft-ai/${platformExpected.filename}`,
-        ),
-        "utf8",
-      );
-      const data = frontmatter(content);
-      const guide = body(content);
+    const content = await readFile(
+      path.resolve(`src/content/addon-editions/${locale}/microsoft-ai/macos.mdx`),
+      "utf8",
+    );
+    const data = frontmatter(content);
+    const guide = body(content);
 
-      assert.equal(scalar(data, "familySlug"), "microsoft-ai");
-      assert.equal(scalar(data, "platform"), platform);
-      assert.equal(scalar(data, "version"), "1.0.0");
-      assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
-      assert.equal(
-        scalar(data, "minAppVersion"),
-        platformExpected.minAppVersion,
-      );
-      assert.equal(
-        scalar(data, "minOsVersion"),
-        platformExpected.minOsVersion,
-      );
-      assert.equal(scalar(data, "sourceUrl"), platformExpected.sourceUrl);
-      assert.match(
-        scalar(data, "releaseUrl"),
-        /plugin-microsoft-ai-v1\.0\.0$/,
-      );
-      assert.deepEqual(capabilityMap["microsoft-ai"][platform], [
-        "transcription",
-      ]);
-      assert.match(guide, /MAI Transcribe 2/);
-      assert.match(
-        guide,
-        locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
-      );
-    }
+    assert.equal(scalar(data, "familySlug"), "microsoft-ai");
+    assert.equal(scalar(data, "platform"), "mac");
+    assert.equal(scalar(data, "version"), "1.0.0");
+    assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
+    assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+    assert.equal(scalar(data, "minOsVersion"), "14.0");
+    assert.equal(
+      scalar(data, "sourceUrl"),
+      "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
+    );
+    assert.match(scalar(data, "releaseUrl"), /plugin-microsoft-ai-v1\.0\.0$/);
+    assert.match(guide, /MAI Transcribe 2/);
+    assert.match(
+      guide,
+      locale === "de" ? /^##\s+.*Einrichtung.*$/m : /^##\s+.*Setup.*$/m,
+    );
   }
 
   await access(path.resolve("public/brand-logos/microsoft-ai/logo.svg"));
@@ -503,14 +466,63 @@ test("Microsoft AI docs match both published 1.0.0 editions", async () => {
       );
     }
   }
+});
 
-  for (const filename of [
-    "com.typewhisper.microsoft-ai.png",
-    "com.typewhisper.microsoft-ai.webp",
-    "com.typewhisper.microsoft-ai.de.png",
-    "com.typewhisper.microsoft-ai.de.webp",
-  ]) {
-    await access(path.resolve(`public/screenshots/windows/plugins/${filename}`));
+test("editions that left the Windows catalog leave no Windows page, data, or capture behind", async () => {
+  // TypeWhisper for Windows 1.1 dropped these plugins (typewhisper-win #497).
+  const retired = ["google-cloud-stt", "live-transcript", "microsoft-ai", "openai-vector-memory"];
+  const editionsSource = await readFile(
+    path.resolve("src/data/addon-editions.ts"),
+    "utf8",
+  );
+  const capabilityMap = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-capabilities.json"),
+      "utf8",
+    ),
+  );
+  const screenshotManifest = JSON.parse(
+    await readFile(
+      path.resolve("src/data/addon-edition-screenshots.json"),
+      "utf8",
+    ),
+  );
+  const screenshots = await readdir(
+    path.resolve("public/screenshots/windows/plugins"),
+  );
+
+  for (const slug of retired) {
+    // Their old Windows URLs forward to the add-on page.
+    assert.match(
+      editionsSource,
+      new RegExp(`\\{ familySlug: "${slug}", platform: "windows" \\}`),
+      `${slug}: list the retired Windows edition for its redirect`,
+    );
+    assert.equal(capabilityMap[slug], undefined, `${slug}: no edition capabilities`);
+    assert.ok(
+      !screenshotManifest.windows.includes(`com.typewhisper.${slug}`),
+      `${slug}: no Windows capture in the manifest`,
+    );
+    assert.deepEqual(
+      screenshots.filter((file) => file.startsWith(`com.typewhisper.${slug}.`)),
+      [],
+      `${slug}: no Windows capture`,
+    );
+
+    for (const locale of LOCALES) {
+      const familyContent = await readFile(
+        path.resolve(`src/content/addons/${locale}/${slug}.mdx`),
+        "utf8",
+      );
+      const family = frontmatter(familyContent);
+      assert.deepEqual(list(family, "platforms"), ["mac"], `${locale}/${slug}`);
+      assert.doesNotMatch(family, /typewhisper-win|Windows/, `${locale}/${slug} frontmatter`);
+      await assert.rejects(
+        access(path.resolve(`src/content/addon-editions/${locale}/${slug}/windows.mdx`)),
+        `${locale}/${slug}: the Windows edition is gone`,
+      );
+      await access(path.resolve(`src/content/addon-editions/${locale}/${slug}/macos.mdx`));
+    }
   }
 });
 
@@ -645,7 +657,7 @@ test("catalog filters reflect the union of actual edition capabilities", async (
         const filename = platform === "mac" ? "macos" : platform;
         const edition = frontmatter(await readFile(`src/content/addon-editions/${locale}/${slug}/${filename}.mdx`, "utf8"));
         assert.ok(
-          ["local", "cloud", "custom", "hybrid"].includes(scalar(edition, "processing")),
+          ["local", "cloud", "custom"].includes(scalar(edition, "processing")),
           `${locale}/${slug}/${filename}: declare data processing explicitly`,
         );
       }

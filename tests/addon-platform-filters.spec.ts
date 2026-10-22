@@ -380,7 +380,7 @@ test("every logo of the add-on index loads in both themes", async ({ page }) => 
 });
 
 test("utility categories remain consistent across platform filters", async ({ page }) => {
-  for (const platform of ["all", "mac", "windows"]) {
+  for (const platform of ["all", "mac"]) {
     await page.goto(`/en/addons/?platform=${platform}&category=utility`);
     for (const slug of ["live-transcript", "webhook"]) {
       const card = page.locator(`[data-testid="addon-card"][data-slug="${slug}"]`);
@@ -388,6 +388,15 @@ test("utility categories remain consistent across platform filters", async ({ pa
       await expect(card.getByText("Utility", { exact: true })).toBeVisible();
     }
   }
+
+  // Live Transcript left the Windows catalog.
+  await page.goto("/en/addons/?platform=windows&category=utility");
+  await expect(
+    page.locator('[data-testid="addon-card"][data-slug="live-transcript"]'),
+  ).toHaveCount(0);
+  const webhook = page.locator('[data-testid="addon-card"][data-slug="webhook"]');
+  await expect(webhook).toBeVisible();
+  await expect(webhook.getByText("Utility", { exact: true })).toBeVisible();
 });
 
 test("the Vercel logo follows the theme on the index and the detail page", async ({ page }) => {

@@ -18,7 +18,7 @@ export interface AddonEdition {
   platform: PluginPlatform;
   version: string;
   description: string;
-  processing: "local" | "cloud" | "custom" | "hybrid";
+  processing: "local" | "cloud" | "custom";
   id?: string;
   /** Name in the app's plugin list, when it differs from the add-on name on this site. */
   appName?: string;
@@ -62,6 +62,21 @@ export const editionPlatformSlugs: Record<PluginPlatform, string> = {
 };
 
 const platformOrder: PluginPlatform[] = ["mac", "windows", "ios"];
+
+/**
+ * Editions that left a platform's plugin catalog. Their pages are gone, and
+ * the old URLs forward to the add-on page, which lists the remaining editions.
+ */
+export const retiredAddonEditions: ReadonlyArray<{
+  familySlug: string;
+  platform: PluginPlatform;
+}> = [
+  // TypeWhisper for Windows 1.1 dropped these plugins with the WPF host (typewhisper-win #497).
+  { familySlug: "google-cloud-stt", platform: "windows" },
+  { familySlug: "live-transcript", platform: "windows" },
+  { familySlug: "microsoft-ai", platform: "windows" },
+  { familySlug: "openai-vector-memory", platform: "windows" },
+];
 
 function getWindowsAddonScreenshot(
   pluginId: string | undefined,

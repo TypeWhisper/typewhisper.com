@@ -59,10 +59,6 @@
     "mac": ["transcription"],
     "windows": ["transcription"]
   },
-  "google-cloud-stt": {
-    "mac": ["transcription"],
-    "windows": ["transcription"]
-  },
   "granite": {
     "mac": ["transcription"],
     "windows": ["transcription"]
@@ -75,17 +71,9 @@
     "mac": ["action"],
     "windows": ["action"]
   },
-  "live-transcript": {
-    "mac": ["utility"],
-    "windows": ["utility"]
-  },
   "meta": {
     "mac": ["transcription", "llm"],
     "windows": ["transcription", "llm"]
-  },
-  "microsoft-ai": {
-    "mac": ["transcription"],
-    "windows": ["transcription"]
   },
   "obsidian": {
     "mac": ["action"],
@@ -98,10 +86,6 @@
   "openai-compatible": {
     "mac": ["transcription", "llm"],
     "windows": ["transcription", "llm"]
-  },
-  "openai-vector-memory": {
-    "mac": ["memory"],
-    "windows": ["memory"]
   },
   "openrouter": {
     "mac": ["transcription", "llm"],

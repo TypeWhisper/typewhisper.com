@@ -44,7 +44,6 @@ const exampleKeyByCapability: Record<PluginCategory, string> = {
 };
 
 const exampleOverrides: Partial<Record<string, string>> = {
-  "live-transcript": "addons.editions.guide.example.liveTranscript",
   webhook: "addons.editions.guide.example.webhook",
 };
 
@@ -85,7 +84,6 @@ const processingKeys = {
   local: "addons.editions.guide.localProcessing",
   cloud: "addons.editions.guide.cloudProcessing",
   custom: "addons.editions.guide.customProcessing",
-  hybrid: "addons.editions.guide.hybridProcessing",
 } as const;
 ---
 
