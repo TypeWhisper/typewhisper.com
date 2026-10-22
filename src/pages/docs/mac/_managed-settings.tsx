@@ -1198,8 +1198,8 @@ export default function DocsMacManagedSettings({
         <ul>
           <li>
             {tx(
-              "Einstellungen > Erweitert > Verwaltete Einstellungen listet die verwalteten Werte mit Geltung (erzwungen oder empfohlen), ungültige Schlüssel und „Probleme mit Richtlinien“, dazu den Zeitpunkt der letzten Prüfung und die Schaltfläche „Aktualisieren“.",
-              "Settings > Advanced > Managed Settings lists the managed values with their scope (enforced or recommended), invalid keys, and Policy Problems, with the time of the last check and a Refresh button.",
+              "Einstellungen > Erweitert > Verwaltete Einstellungen listet die verwalteten Werte mit Geltung (erzwungen oder empfohlen), ungültige Schlüssel und „Probleme mit Richtlinien“, dazu den Zeitpunkt, zu dem die aktuellen Werte gelesen wurden (angezeigt als „Zuletzt geprüft“; er ändert sich erst, wenn sich die Werte ändern), und die Schaltfläche „Aktualisieren“.",
+              "Settings > Advanced > Managed Settings lists the managed values with their scope (enforced or recommended), invalid keys, and Policy Problems, with the time the current values were read (shown as “Last checked”; it changes only when the values change) and a Refresh button.",
             )}
           </li>
           <li>
