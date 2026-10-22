@@ -82,6 +82,24 @@ const commands: Command[] = [
     code: "typewhisper import typewhisper-settings.json",
   },
   {
+    id: "import-replace",
+    name: "import --replace",
+    key: "docs.mac.cli.commands.importReplace",
+    code: "typewhisper import typewhisper-settings.json --replace",
+    output: `Workflows: 0 imported, 1 updated, 7 skipped
+Dictionary: 0 imported, 52 skipped
+Snippets: 0 imported, 6 skipped
+Prompt Actions: 0 imported, 0 updated, 2 skipped
+Profiles: 0 imported, 0 updated, 2 skipped
+Hotkeys: 1 applied, 7 skipped
+Plugins: 0 installed, 2 skipped
+History: 0 imported, 41 skipped as duplicates, 0 skipped by retention
+Preferences: 27 applied
+Update channel applied`,
+    since18: true,
+    api: { anchor: "settings-backup", titleKey: "docs.mac.api.settings.title" },
+  },
+  {
     id: "audio",
     name: "audio",
     key: "docs.mac.cli.commands.audio",
@@ -107,7 +125,8 @@ Sound feedback: on`,
   },
 ];
 
-const options: Array<[flag: string, key: string]> = [
+/** Flag, description, and whether the flag ships with TypeWhisper 1.8. */
+const options: Array<[flag: string, key: string, since18?: boolean]> = [
   ["--port", "docs.mac.cli.options.port"],
   ["--api-token", "docs.mac.cli.options.apiToken"],
   ["--dev", "docs.mac.cli.options.dev"],
@@ -121,6 +140,7 @@ const options: Array<[flag: string, key: string]> = [
   ["--model", "docs.mac.cli.options.model"],
   ["--await-download", "docs.mac.cli.options.awaitDownload"],
   ["--no-corrections", "docs.mac.cli.options.noCorrections"],
+  ["--replace", "docs.mac.cli.options.replace", true],
 ];
 
 interface Example {
@@ -160,6 +180,11 @@ const examples: Example[] = [
   {
     key: "docs.mac.cli.examples.importJson",
     code: "typewhisper import settings.json --json",
+  },
+  {
+    key: "docs.mac.cli.examples.importReplace",
+    code: "typewhisper import ~/.config/typewhisper/settings.json --replace",
+    since18: true,
   },
   {
     key: "docs.mac.cli.examples.switchModel",
@@ -257,9 +282,10 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
           code={`mkdir -p ~/.config/typewhisper
 typewhisper export ~/.config/typewhisper/settings.json
 typewhisper import ~/.config/typewhisper/settings.json
-typewhisper import ~/.config/typewhisper/settings.json --json`}
+typewhisper import ~/.config/typewhisper/settings.json --json
+typewhisper import ~/.config/typewhisper/settings.json --replace`}
         />
-        <p>{t(locale, "docs.mac.cli.settings.behavior")}</p>
+        <p>{withCode(t(locale, "docs.mac.cli.settings.behavior"))}</p>
         <DocsCallout label={t(locale, "docs.callout.important")}>
           <p>{t(locale, "docs.mac.cli.settings.warning")}</p>
         </DocsCallout>
@@ -269,9 +295,14 @@ typewhisper import ~/.config/typewhisper/settings.json --json`}
         <DocsTable
           label={t(locale, "docs.mac.cli.options.title")}
           head={["Flag", t(locale, "docs.mac.cli.options.descHeader")]}
-          rows={options.map(([flag, key]) => [
+          rows={options.map(([flag, key, since18]) => [
             <code>{flag}</code>,
-            withCode(t(locale, key)),
+            <>
+              {withCode(t(locale, key))}
+              {since18 && (
+                <span className="docs-table__meta">{availableFrom18}</span>
+              )}
+            </>,
           ])}
         />
       </DocsSection>
