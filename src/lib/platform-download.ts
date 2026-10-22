@@ -12,7 +12,7 @@ export { iosVersion };
 const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 // The public beta is a separate Store product that installs alongside the
-// stable app and gets release candidates before the stable Store release.
+// stable app and gets the daily builds of the next version from main.
 const windowsStoreBetaProductUrl =
   "https://apps.microsoft.com/detail/9N183R19SQQ8";
 const windowsStoreCampaignId = "DevShareMCLPCS";
