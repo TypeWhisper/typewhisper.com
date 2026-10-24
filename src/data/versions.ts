@@ -27,7 +27,7 @@ import {
 // Entered by hand. Update them with each iOS or Android release.
 export const iosVersion = "1.1";
 // The versionName of the current production release on Google Play.
-export const androidVersion = "1.0";
+export const androidVersion = "1.0.0";
 
 type Feed = Partial<
   Record<"mac" | "windows", { version?: string | null } | null>
