@@ -53,7 +53,7 @@ const pages: Record<DocsPlatform, Array<[path: string, labelKey: string]>> = {
     ["/profiles-and-writing", "docs.sidebar.profilesWriting"],
     ["/quick-dictation-and-inbox", "docs.sidebar.quickDictationInbox"],
     ["/files-and-history", "docs.sidebar.filesHistory"],
-    ["/dictionary-and-snippets", "docs.sidebar.dictionarySnippets"],
+    ["/dictionary-and-snippets", "docs.sidebar.dictionaryTextSnippets"],
     ["/privacy-and-premium", "docs.sidebar.privacyPremium"],
     ["/troubleshooting", "docs.sidebar.troubleshooting"],
   ],

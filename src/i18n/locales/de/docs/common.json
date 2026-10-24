@@ -23,6 +23,7 @@
   "docs.sidebar.profilesWriting": "Profile & Schreiben",
   "docs.sidebar.quickDictationInbox": "Schnelldiktat & Inbox",
   "docs.sidebar.filesHistory": "Dateien & Verlauf",
+  "docs.sidebar.dictionaryTextSnippets": "Wörterbuch & Textbausteine",
   "docs.win.title": "Windows",
   "docs.win.badge": "{windowsSeries} Stabil",
   "docs.win.description": "Stabile Windows-Doku für Installation, Diktat, Datei-Transkription, Workflows und lokale Automatisierung.",
