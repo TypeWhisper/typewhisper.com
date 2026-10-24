@@ -17,10 +17,10 @@
   "android.features.item2": "The TypeWhisper keyboard for any app, with a QWERTZ or QWERTY layout.",
   "android.features.item3": "The dictation bubble: dictate into other apps while you keep your own keyboard.",
   "android.features.item4": "Optional cloud speech engines with your own API key.",
-  "android.features.item5": "Writing profiles: clean up, message, email, note, calendar event, checklist, summary, translation, or your own.",
+  "android.features.item5": "Writing profiles: Cleaned Text, Message, Email, Note, Calendar Event, Checklist, Summary, Translation, or your own.",
   "android.features.item6": "Quick dictations from the quick settings tile, the widget, an app shortcut, or the assist gesture, collected in the Inbox.",
   "android.features.item7": "File transcription with subtitles.",
-  "android.features.item8": "Premium: the email and calendar profiles, live transcription with Nemotron, and speaker detection.",
+  "android.features.item8": "Premium: the Email and Calendar Event formats, live transcription with Nemotron Live, and speaker detection.",
   "android.beta.label": "Beta program",
   "android.beta.title": "Try new versions early",
   "android.beta.p1": "New versions go to the beta program on Google Play first. Open the testing page with your Google account and tap Become a tester. Google Play then offers you the beta versions.",
@@ -31,5 +31,5 @@
   "android.beta.discordText": "Questions, bugs, and ideas with other users and testers.",
   "android.beta.emailText": "Bug reports and anything you would rather not post publicly.",
   "android.requirements.title": "Requirements",
-  "android.requirements.text": "Android 10 or later and Google Play."
+  "android.requirements.text": "A phone or tablet with Android 10 or later and Google Play."
 }

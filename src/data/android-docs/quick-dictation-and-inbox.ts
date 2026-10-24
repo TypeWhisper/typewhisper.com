@@ -129,7 +129,7 @@ export const en: IosDocPage = {
       ],
       bullets: [
         "Dictation copied and in Inbox appears when the text is ready. Tap it to open the entry in History.",
-        "Dictation failed shows the reason. The recording waits in Recoverable recordings in History, so you can transcribe it again.",
+        "Dictation failed shows the reason. If a recording was made, it waits in Recoverable recordings in History, so you can transcribe it again.",
         "With a Calendar Event profile active, Calendar draft ready appears instead. Its Add to calendar button opens your calendar app with the event filled in.",
         "If the date, the time or the end time was missing, the draft says so and uses a placeholder you can change in the calendar app.",
       ],
@@ -151,8 +151,8 @@ export const en: IosDocPage = {
       ],
       bullets: [
         "While entries wait, the History tab shows a badge with their number, and History opens on the Inbox filter. Tap All to see everything.",
-        "Entries you have not opened yet appear in bold. Opening an entry takes it out of the Inbox and removes its notification.",
-        "A calendar draft stays in the Inbox until you tap I saved the event or choose Discard calendar draft from the ⋮ menu.",
+        "Entries still in the Inbox appear in bold. Opening an entry takes it out of the Inbox and removes its notification.",
+        "Opening a calendar draft does not take it out of the Inbox. It stays there until you tap I saved the event, choose Discard calendar draft from the ⋮ menu or mark it as done.",
         "Swipe an entry to the right to mark it as done, or to put a finished entry back with Move to Inbox. Swipe left to delete it.",
         "To keep an opened entry for later, choose Move to Inbox from the ⋮ menu in its detail view.",
         "Touch and hold to select several entries, then tap Mark as done.",
@@ -192,7 +192,7 @@ export const de: IosDocPage = {
         {
           title: "Stoppen",
           description:
-            "Tippe noch einmal auf die Kachel, im Widget auf Stopp oder in der Benachrichtigung auf „Stopp“. Auch die Verknüpfung „Diktieren“ und die Assistent-Geste beenden ein laufendes Schnelldiktat.",
+            "Tippe noch einmal auf die Kachel, im Widget auf die Stopp-Taste oder in der Benachrichtigung auf „Stopp“. Auch die Verknüpfung „Diktieren“ und die Assistent-Geste beenden ein laufendes Schnelldiktat.",
         },
         {
           title: "Text einfügen",
@@ -293,11 +293,11 @@ export const de: IosDocPage = {
     {
       title: "Benachrichtigungen und Kalender-Entwürfe",
       paragraphs: [
-        "Erlaube Benachrichtigungen, damit du Schnelldiktate während der Aufnahme und nach dem Fertigwerden siehst. In den Android-Benachrichtigungseinstellungen für TypeWhisper heißen die Kategorien „Aufnahme“ und „Ergebnisse von Schnelldiktaten“.",
+        "Erlaube Benachrichtigungen, damit du Schnelldiktate während der Aufnahme siehst und erfährst, wann sie fertig sind. In den Android-Benachrichtigungseinstellungen für TypeWhisper heißen die Kategorien „Aufnahme“ und „Ergebnisse von Schnelldiktaten“.",
       ],
       bullets: [
         "„Diktat kopiert und in der Inbox“ erscheint, sobald der Text fertig ist. Tippst du darauf, öffnet sich der Eintrag im Verlauf.",
-        "„Diktat fehlgeschlagen“ nennt den Grund. Die Aufnahme wartet im Verlauf unter „Wiederherstellbare Aufnahmen“, damit du sie erneut transkribieren kannst.",
+        "„Diktat fehlgeschlagen“ nennt den Grund. Gab es eine Aufnahme, wartet sie im Verlauf unter „Wiederherstellbare Aufnahmen“, damit du sie erneut transkribieren kannst.",
         "Ist ein Profil „Kalendertermin“ aktiv, erscheint stattdessen „Kalender-Entwurf bereit“. Die Schaltfläche „Zum Kalender hinzufügen“ öffnet deine Kalender-App mit dem ausgefüllten Termin.",
         "Fehlten Datum, Uhrzeit oder Endzeit, weist der Entwurf darauf hin und trägt einen Platzhalter ein, den du in der Kalender-App ändern kannst.",
       ],
@@ -319,9 +319,9 @@ export const de: IosDocPage = {
       ],
       bullets: [
         "Solange Einträge warten, zeigt der Tab „Verlauf“ ein Badge mit ihrer Anzahl, und der Verlauf öffnet sich mit dem Filter „Inbox“. Tippe auf „Alle“, um alles zu sehen.",
-        "Noch nicht geöffnete Einträge stehen fett da. Öffnest du einen Eintrag, verlässt er die Inbox und seine Benachrichtigung verschwindet.",
-        "Ein Kalender-Entwurf bleibt in der Inbox, bis du „Ich habe den Termin gespeichert“ antippst oder im ⋮-Menü „Kalender-Entwurf verwerfen“ wählst.",
-        "Wische einen Eintrag nach rechts, um ihn als erledigt zu markieren oder einen erledigten mit „In die Inbox legen“ zurückzuholen. Nach links gewischt wird er gelöscht.",
+        "Einträge, die noch in der Inbox liegen, werden fett angezeigt. Öffnest du einen Eintrag, verlässt er die Inbox und seine Benachrichtigung verschwindet.",
+        "Öffnest du einen Kalender-Entwurf, bleibt er in der Inbox, bis du „Ich habe den Termin gespeichert“ antippst, im ⋮-Menü „Kalender-Entwurf verwerfen“ wählst oder ihn als erledigt markierst.",
+        "Wische einen Eintrag nach rechts, um ihn als erledigt zu markieren oder einen erledigten mit „In die Inbox legen“ zurückzuholen. Wischst du nach links, wird er gelöscht.",
         "Willst du einen geöffneten Eintrag für später aufheben, wähle in seiner Detailansicht im ⋮-Menü „In die Inbox legen“.",
         "Halte Einträge gedrückt, um mehrere auszuwählen, und tippe dann auf „Als erledigt markieren“.",
         "Auch fehlgeschlagene Schnelldiktate zählen zur Inbox. Sie warten oben im Verlauf unter „Wiederherstellbare Aufnahmen“, wo du sie erneut versuchen kannst.",

@@ -29,7 +29,7 @@ export const en: IosDocPage = {
         {
           title: "Review the result",
           description:
-            "The result card offers Copy and Share. Email profiles add Email draft, calendar profiles add Add to calendar. More options has Edit text, Add correction, Report AI text for profile results, and Delete.",
+            "The result card offers Copy and Share. Email profiles add Email draft, calendar profiles add Add to calendar. More options has Edit text, Add correction, Report AI text for profile results, Delete and, for a waiting calendar draft, Discard calendar draft.",
         },
       ],
       bullets: [
@@ -106,8 +106,8 @@ export const en: IosDocPage = {
         "Keyboard layout in Settings → Keyboard: Automatic (system language) uses QWERTZ for German and QWERTY otherwise. You can also pick QWERTZ or QWERTY directly.",
         "?123 switches to numbers and symbols. Long-press a letter for variants such as ä, ß, é or ñ. Double-tap Shift for caps lock.",
         "Number and phone fields open a number pad; phone fields add +, * and #.",
-        "In email, web address and number fields a dictated value goes in without spaces and without a final period.",
-        "Send after dictating: Never, When you end with “send” or “senden”, or Always. The command must be a sentence of its own and is removed from the text, so “Can you send me the file?” stays a question. Saying “press enter” at the end works too.",
+        "In email and web address fields a dictated value goes in without spaces and without a final period; email addresses are also lowercased. In number fields, spaces between digits are removed and the final period is dropped.",
+        "Send after dictating: Never, When you end with “send” or “senden”, or Always. The command must be a sentence of its own and is removed from the text, so “Can you send me the file?” stays a question. “Send it”, “abschicken” and “absenden” work as commands too, and so does “press enter” or “Enter drücken” at the end.",
         "Sending uses the field's own action, such as send, search or done. Fields without one get a line break.",
         "Space after dictation adds a space at the end so you can type on right away. It applies only when the cursor is at the end of the text, not in email, web or number fields, and not when the dictation is sent. The setting also applies to the dictation bubble.",
       ],
@@ -145,9 +145,9 @@ export const en: IosDocPage = {
       title: "Private fields and the Android dictionary",
       bullets: [
         "Dictations into password fields and incognito fields are not saved in history, and their recording is not kept. The Recent transcriptions button is hidden there.",
-        "In password fields the keyboard always uses plain dictation, never a writing profile, and does not offer Rewrite.",
+        "In password fields the keyboard always dictates without a profile and does not offer Rewrite.",
         "While the TypeWhisper keyboard is your active keyboard, TypeWhisper exchanges words with Android's personal dictionary, at most every 10 minutes when the keyboard opens. Android shares this dictionary only with the active keyboard.",
-        "Dictionary → Android dictionary shows the result and offers Sync now. Words you delete in TypeWhisper are not imported again.",
+        "On the Dictionary tab, Android dictionary shows the result and, while the TypeWhisper keyboard is active, offers Sync now. Words you delete in TypeWhisper are not imported again.",
       ],
     },
   ],
@@ -182,12 +182,12 @@ export const de: IosDocPage = {
         {
           title: "Ergebnis prüfen",
           description:
-            "Die Ergebniskarte bietet Kopieren und Teilen. E-Mail-Profile ergänzen E-Mail-Entwurf, Kalenderprofile Zum Kalender hinzufügen. Unter Weitere Optionen findest du Text bearbeiten, Korrektur hinzufügen, KI-Text melden bei Profil-Ergebnissen und Löschen.",
+            "Die Ergebniskarte bietet Kopieren und Teilen. E-Mail-Profile ergänzen E-Mail-Entwurf, Kalenderprofile Zum Kalender hinzufügen. Unter Weitere Optionen findest du Text bearbeiten, Korrektur hinzufügen, KI-Text melden bei Profil-Ergebnissen, Löschen und bei einem wartenden Kalender-Entwurf Kalender-Entwurf verwerfen.",
         },
       ],
       bullets: [
         "Live-Text beim Sprechen gibt es nur mit Nemotron Live, das Premium braucht. Pause und Beenden bleiben dann unten am Bildschirm. Andere Engines zeigen den Text, sobald du aufhörst.",
-        "Schlägt eine Transkription fehl und die Aufnahme wurde behalten, transkribiert Erneut versuchen sie mit der Engine aus den Einstellungen und kopiert den Text.",
+        "Schlägt eine Transkription fehl und wurde die Aufnahme behalten, tippe auf Erneut versuchen: TypeWhisper transkribiert sie mit der Engine aus den Einstellungen und kopiert den Text.",
         "Über Datei transkribieren auf demselben Bildschirm transkribierst du vorhandene Audio- und Videodateien.",
       ],
       image: {
@@ -257,10 +257,10 @@ export const de: IosDocPage = {
       title: "Tippen, Layouts und Senden",
       bullets: [
         "Tastaturlayout in Einstellungen → Tastatur: Automatisch (Systemsprache) nutzt QWERTZ für Deutsch und sonst QWERTY. Du kannst QWERTZ oder QWERTY auch fest wählen.",
-        "?123 wechselt zu Zahlen und Zeichen. Halte einen Buchstaben gedrückt für Varianten wie ä, ß, é oder ñ. Zweimal Umschalt tippen schaltet die Feststelltaste ein.",
+        "?123 wechselt zu Zahlen und Zeichen. Für Varianten wie ä, ß, é oder ñ hältst du einen Buchstaben gedrückt. Tippst du zweimal schnell auf Umschalt, bleibt die Großschreibung eingeschaltet.",
         "Zahlen- und Telefonfelder öffnen einen Ziffernblock; Telefonfelder haben zusätzlich +, * und #.",
-        "In E-Mail-, Webadress- und Zahlenfeldern landet ein diktierter Wert ohne Leerzeichen und ohne Punkt am Ende.",
-        "Nach dem Diktat senden: Nie, Wenn du mit „senden“ oder „send“ endest, oder Immer. Der Befehl muss ein eigener Satz sein und wird aus dem Text entfernt. „Kannst du mir die Datei senden?“ bleibt also eine Frage. Auch „abschicken“ und am Ende „Enter drücken“ funktionieren.",
+        "In E-Mail- und Webadressfeldern landet ein diktierter Wert ohne Leerzeichen und ohne Punkt am Ende; E-Mail-Adressen werden zusätzlich kleingeschrieben. In Zahlenfeldern werden Leerzeichen zwischen Ziffern entfernt, und der Punkt am Ende entfällt.",
+        "Nach dem Diktat senden: Nie, Wenn du mit „senden“ oder „send“ endest, oder Immer. Der Befehl muss ein eigener Satz sein und wird aus dem Text entfernt. „Kannst du mir die Datei senden?“ bleibt also eine Frage. Auch „abschicken“, „absenden“ und „send it“ funktionieren als Befehl, am Ende außerdem „Enter drücken“ oder „press enter“.",
         "Gesendet wird mit der Aktion des Feldes, etwa Senden, Suchen oder Fertig. Felder ohne eigene Aktion bekommen einen Zeilenumbruch.",
         "Leerzeichen nach dem Diktat hängt ein Leerzeichen an, damit du direkt weitertippen kannst. Das gilt nur, wenn der Cursor am Textende steht, nicht in E-Mail-, Web- und Zahlenfeldern und nicht, wenn das Diktat gesendet wird. Die Einstellung gilt auch für die Diktier-Bubble.",
       ],
@@ -298,9 +298,9 @@ export const de: IosDocPage = {
       title: "Private Felder und das Android-Wörterbuch",
       bullets: [
         "Diktate in Passwortfeldern und Inkognito-Feldern landen nicht im Verlauf, und die Aufnahme wird nicht behalten. Die Taste für Letzte Transkriptionen ist dort ausgeblendet.",
-        "In Passwortfeldern diktiert die Tastatur immer ohne Profil, nie mit einem Schreibprofil, und bietet kein Umschreiben an.",
+        "In Passwortfeldern diktiert die Tastatur immer ohne Profil und bietet kein Umschreiben an.",
         "Solange die TypeWhisper-Tastatur deine aktive Tastatur ist, tauscht TypeWhisper Wörter mit dem persönlichen Wörterbuch von Android aus, höchstens alle 10 Minuten beim Öffnen der Tastatur. Android teilt dieses Wörterbuch nur mit der aktiven Tastatur.",
-        "Unter Wörterbuch → Android-Wörterbuch siehst du das Ergebnis und kannst Jetzt abgleichen tippen. Wörter, die du in TypeWhisper löschst, kommen nicht zurück.",
+        "Im Tab Wörterbuch zeigt Android-Wörterbuch das Ergebnis und bietet, solange die TypeWhisper-Tastatur aktiv ist, Jetzt abgleichen an. Wörter, die du in TypeWhisper löschst, kommen nicht zurück.",
       ],
     },
   ],

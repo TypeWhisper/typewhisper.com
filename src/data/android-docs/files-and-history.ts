@@ -6,7 +6,7 @@ export const en: IosDocPage = {
   description:
     "Transcribe audio and video files, watch folders for new recordings, search and play back History, recover failed dictations and back up your data.",
   intro:
-    "File transcription turns existing recordings into text, also automatically from watched folders. History keeps every result, with playback, speakers and exports.",
+    "File transcription turns existing recordings into text, also automatically from watched folders. History keeps your results, with playback, speakers and exports.",
   sections: [
     {
       title: "Transcribe an audio or video file",
@@ -62,13 +62,13 @@ export const en: IosDocPage = {
         {
           title: "Set the folder's options",
           description:
-            "Tap the folder to give it its own Profile. Turn on Save transcript next to the file and choose under Save as: Text (.txt), Subtitles (.srt) or both. Existing files are never overwritten.",
+            "Tap the folder to give it its own Profile. Turn on Save transcript next to the file and choose under Save as: Text (.txt), Subtitles (.srt) or Text and subtitles (.txt and .srt). Existing files are never overwritten.",
         },
       ],
       bullets: [
         "New audio and video files, also in subfolders up to three levels deep, are transcribed with the language, speaker and audio choices above.",
         "TypeWhisper checks about every 15 minutes and whenever you open the app. Files that are still being recorded wait until they are finished.",
-        "Only while charging and Cloud services only on Wi-Fi hold new files back. With on-device speech recognition, files do not wait for Wi-Fi. A transcription that has already started finishes.",
+        "Below the folder list, turn on Only while charging or Cloud services only on Wi-Fi to hold new files back. Both are off by default and apply to all folders. With on-device speech recognition, files do not wait for Wi-Fi. Files already in the queue are still transcribed.",
         "Each folder row shows when it was last checked or why files are waiting. Use its switch to pause watching, or the remove button to stop watching it.",
         "Results go to History, not to the Inbox.",
       ],
@@ -102,7 +102,7 @@ export const en: IosDocPage = {
         "Copy and Share sit at the top. Emails written by a profile get an Email draft button, calendar drafts get Add to calendar.",
         "The ⋮ menu has Edit text, Add correction, Move to Inbox and Delete. After you edit the text, TypeWhisper offers to add the changed words as corrections.",
         "Export subtitles shares the transcript as SubRip (.srt) or WebVTT (.vtt). It is available for file transcriptions and for dictations whose recording was kept.",
-        "For text written by a profile, Report AI text prepares an email to the TypeWhisper team with that text. You see it in your mail app before sending.",
+        "For text written by a profile, Report AI text prepares an email to the TypeWhisper team with the profile, your dictation and the written text. You see it in your mail app before sending.",
       ],
     },
     {
@@ -118,21 +118,21 @@ export const en: IosDocPage = {
         "Name speakers saves names with the recording. Recognize this voice in future recordings creates a voice profile that stays on this phone. Save a voice only with the person's consent.",
       ],
       callout: {
-        title: "Turn on Keep recordings first",
+        title: "Choose a Keep recordings period first",
         description:
-          "Speaker detection and Transcribe again need the recording. TypeWhisper cannot add audio to an entry afterwards, so set Keep recordings before you dictate.",
+          "Speaker detection and Transcribe again need the recording. TypeWhisper cannot add audio to an entry afterwards, so choose a Keep recordings period other than Delete after transcription before you dictate.",
       },
     },
     {
       title: "Recover failed or interrupted recordings",
       paragraphs: [
-        "TypeWhisper writes each recording to the phone while you speak. If a transcription fails, for example without a network connection, or the app is closed during a dictation, the recording is kept for 24 hours.",
+        "TypeWhisper writes each recording to the phone while you speak. If a transcription fails, for example without a network connection, or the app is closed during a dictation, the recording is kept for 24 hours. Recordings without speech and dictations from password and incognito fields are not kept.",
       ],
       steps: [
         {
           title: "Open Recoverable recordings",
           description:
-            "The row sits at the top of History and says how many failed dictations can be transcribed again.",
+            "When there is something to recover, the row sits at the top of History. It says how many failed dictations can be transcribed again, or reads The last dictations, kept for 24 hours.",
         },
         {
           title: "Try again",
@@ -141,7 +141,7 @@ export const en: IosDocPage = {
         },
       ],
       bullets: [
-        "With Keep recordings on, the last three successful dictations are kept here too, so you can try them with another engine.",
+        "Unless Settings → General → Keep recordings is set to Delete after transcription, the last three successful dictations are kept here too, so you can try them with another engine.",
         "Recovered quick dictations go back to the Inbox.",
         "The delete button removes a recording right away.",
       ],
@@ -155,7 +155,7 @@ export const en: IosDocPage = {
         "Back up settings saves settings, profiles, snippets and the dictionary as a JSON file. API keys are never included.",
         "Restore a backup reads that JSON file. It adds missing profiles, snippets and dictionary entries, keeps existing ones and applies the saved settings. Enter your API keys again afterwards.",
         "Export all data saves the backup plus History, speaker transcripts, kept recordings and statistics as a ZIP file.",
-        "Delete all data removes History, recordings, dictionary, snippets, profiles, settings and API keys from this phone, then restarts the app. Downloaded models stay. This cannot be undone.",
+        "Delete all data removes History, recordings, dictionary, snippets, profiles, voice profiles, watched folders, statistics, settings and API keys from this phone, signs you out of your TypeWhisper account here and restarts the app. Downloaded models stay. This cannot be undone.",
         "Voice profiles are biometric data and stay out of every export and backup.",
         "In Settings under Tools, Statistics shows words, streaks, words per minute, time saved, sources, engines and usage by time of day for a week, a month or all time. It stays on this phone, and Clear statistics leaves History and recordings untouched.",
       ],
@@ -169,7 +169,7 @@ export const de: IosDocPage = {
   description:
     "Audio- und Videodateien transkribieren, Ordner auf neue Aufnahmen überwachen, den Verlauf durchsuchen und abspielen, Diktate retten und Daten sichern.",
   intro:
-    "Mit „Dateien transkribieren“ wird aus vorhandenen Aufnahmen Text, auf Wunsch automatisch aus überwachten Ordnern. Der Verlauf hebt jedes Ergebnis auf, mit Wiedergabe, Sprechern und Export.",
+    "Mit „Dateien transkribieren“ wird aus vorhandenen Aufnahmen Text, auf Wunsch automatisch aus überwachten Ordnern. Der Verlauf hebt deine Ergebnisse auf, mit Wiedergabe, Sprechern und Export.",
   sections: [
     {
       title: "Audio- oder Videodatei transkribieren",
@@ -225,13 +225,13 @@ export const de: IosDocPage = {
         {
           title: "Ordner einstellen",
           description:
-            "Tippe auf den Ordner, um ihm ein eigenes „Profil“ zu geben. Schalte „Transkript neben der Datei speichern“ ein und wähle unter „Speichern als“: „Text (.txt)“, „Untertitel (.srt)“ oder beides. Vorhandene Dateien werden nie überschrieben.",
+            "Tippe auf den Ordner, um ihm ein eigenes „Profil“ zu geben. Schalte „Transkript neben der Datei speichern“ ein und wähle unter „Speichern als“: „Text (.txt)“, „Untertitel (.srt)“ oder „Text und Untertitel (.txt und .srt)“. Vorhandene Dateien werden nie überschrieben.",
         },
       ],
       bullets: [
         "Neue Audio- und Videodateien, auch in Unterordnern bis drei Ebenen tief, werden mit Sprache, Sprechererkennung und Audio-Einstellung von oben transkribiert.",
         "TypeWhisper schaut etwa alle 15 Minuten nach und jedes Mal, wenn du die App öffnest. Dateien, die gerade noch aufgenommen werden, warten, bis sie fertig sind.",
-        "„Nur beim Laden“ und „Clouddienste nur im WLAN“ halten neue Dateien zurück. Mit Spracherkennung auf dem Gerät warten Dateien nicht aufs WLAN. Eine Transkription, die schon läuft, wird zu Ende gebracht.",
+        "Unter der Ordnerliste kannst du „Nur beim Laden“ oder „Clouddienste nur im WLAN“ einschalten, dann warten neue Dateien. Beide sind standardmäßig aus und gelten für alle Ordner. Mit Spracherkennung auf dem Gerät warten Dateien nicht aufs WLAN. Dateien, die schon in der Warteschlange stehen, werden trotzdem transkribiert.",
         "Jede Ordnerzeile zeigt, wann zuletzt geprüft wurde oder worauf Dateien warten. Mit dem Schalter pausierst du die Überwachung, mit der Entfernen-Taste beendest du sie.",
         "Die Ergebnisse landen im Verlauf, nicht in der Inbox.",
       ],
@@ -249,7 +249,7 @@ export const de: IosDocPage = {
         "Jede Zeile zeigt Datum, Uhrzeit und Engine. Ein Symbol verrät, woher der Eintrag kommt.",
         "Die Export-Taste oben teilt alle Einträge als „Markdown (.md)“, „Text (.txt)“ oder „JSON (.json)“.",
         "Halte einen Eintrag gedrückt, um ihn auszuwählen. Tippe weitere Einträge oder „Alle“ an und markiere sie dann als erledigt, exportiere oder lösche sie.",
-        "Nach links gewischt wird ein Eintrag gelöscht. Nach rechts gewischt markierst du ihn als erledigt oder holst ihn mit „In die Inbox legen“ zurück.",
+        "Wischst du einen Eintrag nach links, wird er gelöscht. Wischst du nach rechts, markierst du ihn als erledigt oder holst ihn mit „In die Inbox legen“ zurück.",
       ],
       image: {
         path: "/screenshots/android/03-history.png",
@@ -265,13 +265,13 @@ export const de: IosDocPage = {
         "„Kopieren“ und „Teilen“ findest du oben. E-Mails aus einem Profil bekommen die Schaltfläche „E-Mail-Entwurf“, Kalender-Entwürfe „Zum Kalender hinzufügen“.",
         "Im ⋮-Menü stehen „Text bearbeiten“, „Korrektur hinzufügen“, „In die Inbox legen“ und „Löschen“. Nach dem Bearbeiten bietet TypeWhisper an, die geänderten Wörter als Korrekturen zu übernehmen.",
         "„Untertitel exportieren“ teilt das Transkript als „SubRip (.srt)“ oder „WebVTT (.vtt)“. Das geht bei transkribierten Dateien und bei Diktaten, deren Aufnahme behalten wurde.",
-        "Bei Text aus einem Profil bereitet „KI-Text melden“ eine E-Mail mit diesem Text an das TypeWhisper-Team vor. Du siehst sie vor dem Senden in deiner Mail-App.",
+        "Bei Text aus einem Profil bereitet „KI-Text melden“ eine E-Mail mit Profil, deinem Diktat und dem geschriebenen Text an das TypeWhisper-Team vor. Du siehst sie vor dem Senden in deiner Mail-App.",
       ],
     },
     {
       title: "Wiedergabe, Sprecher und neu transkribieren",
       paragraphs: [
-        "Diktate behalten ihre Audiodatei nur, wenn beim Aufnehmen unter Einstellungen → Allgemein → „Aufnahmen behalten“ „7 Tage“, „30 Tage“, „90 Tage“ oder „Für immer behalten“ eingestellt war. Mit der Voreinstellung „Nach der Transkription löschen“ bleibt kein Audio. Audio aus Dateien bleibt erhalten, wenn „Audio behalten“ oder „Sprecher erkennen“ an war, und zwar bis du den Eintrag löschst.",
+        "Diktate behalten ihre Audiodatei nur, wenn „Aufnahmen behalten“ (Einstellungen → Allgemein) beim Aufnehmen auf „7 Tage“, „30 Tage“, „90 Tage“ oder „Für immer behalten“ stand. Mit der Voreinstellung „Nach der Transkription löschen“ bleibt kein Audio. Audio aus Dateien bleibt erhalten, wenn „Audio behalten“ oder „Sprecher erkennen“ an war, und zwar bis du den Eintrag löschst.",
       ],
       bullets: [
         "Mit Audio zeigt der Eintrag einen Player: Abspielen und Pause, 10 Sekunden zurück oder vor und eine Tempo-Taste, die zwischen 1×, 1,25×, 1,5×, 2× und 0,75× wechselt.",
@@ -281,21 +281,21 @@ export const de: IosDocPage = {
         "„Sprecher benennen“ speichert Namen mit der Aufnahme. „Diese Stimme künftig erkennen“ legt ein Stimmprofil an, das auf diesem Handy bleibt. Speichere eine Stimme nur mit Einverständnis der Person.",
       ],
       callout: {
-        title: "Erst „Aufnahmen behalten“ einschalten",
+        title: "Erst bei „Aufnahmen behalten“ eine Dauer wählen",
         description:
-          "Sprechererkennung und „Neu transkribieren“ brauchen die Aufnahme. TypeWhisper kann einem Eintrag nachträglich kein Audio hinzufügen. Stell „Aufnahmen behalten“ also ein, bevor du diktierst.",
+          "Sprechererkennung und „Neu transkribieren“ brauchen die Aufnahme. TypeWhisper kann einem Eintrag nachträglich kein Audio hinzufügen. Wähle bei „Aufnahmen behalten“ also vor dem Diktieren eine andere Einstellung als „Nach der Transkription löschen“.",
       },
     },
     {
       title: "Fehlgeschlagene oder unterbrochene Aufnahmen retten",
       paragraphs: [
-        "TypeWhisper schreibt jede Aufnahme schon während des Sprechens auf das Handy. Scheitert eine Transkription, etwa ohne Netz, oder wird die App während eines Diktats beendet, bleibt die Aufnahme 24 Stunden erhalten.",
+        "TypeWhisper schreibt jede Aufnahme schon während des Sprechens auf das Handy. Scheitert eine Transkription, etwa ohne Netz, oder wird die App während eines Diktats beendet, bleibt die Aufnahme 24 Stunden erhalten. Aufnahmen ohne Sprache und Diktate aus Passwort- und Inkognitofeldern werden nicht aufbewahrt.",
       ],
       steps: [
         {
           title: "„Wiederherstellbare Aufnahmen“ öffnen",
           description:
-            "Die Zeile steht oben im Verlauf und sagt, wie viele fehlgeschlagene Diktate du erneut transkribieren kannst.",
+            "Gibt es etwas wiederherzustellen, steht die Zeile oben im Verlauf. Sie zeigt, wie viele fehlgeschlagene Diktate du erneut transkribieren kannst, oder „Die letzten Diktate, 24 Stunden aufbewahrt“.",
         },
         {
           title: "Erneut versuchen",
@@ -304,7 +304,7 @@ export const de: IosDocPage = {
         },
       ],
       bullets: [
-        "Ist „Aufnahmen behalten“ eingeschaltet, liegen hier auch die letzten drei erfolgreichen Diktate, damit du sie mit einer anderen Engine probieren kannst.",
+        "Steht „Aufnahmen behalten“ (Einstellungen → Allgemein) nicht auf „Nach der Transkription löschen“, liegen hier auch die letzten drei erfolgreichen Diktate, damit du sie mit einer anderen Engine probieren kannst.",
         "Gerettete Schnelldiktate kommen zurück in die Inbox.",
         "Mit der Löschen-Taste entfernst du eine Aufnahme sofort.",
       ],
@@ -318,7 +318,7 @@ export const de: IosDocPage = {
         "„Einstellungen sichern“ speichert Einstellungen, Profile, Textbausteine und Wörterbuch als JSON-Datei. API-Schlüssel sind nie enthalten.",
         "„Sicherung wiederherstellen“ liest diese JSON-Datei. Fehlende Profile, Textbausteine und Wörterbuch-Einträge kommen dazu, vorhandene bleiben, und die gesicherten Einstellungen werden übernommen. Deine API-Schlüssel trägst du danach neu ein.",
         "„Alle Daten exportieren“ speichert die Sicherung plus Verlauf, Sprecher-Transkripte, behaltene Aufnahmen und Statistik als ZIP-Datei.",
-        "„Alle Daten löschen“ entfernt Verlauf, Aufnahmen, Wörterbuch, Textbausteine, Profile, Einstellungen und API-Schlüssel von diesem Handy und startet die App neu. Heruntergeladene Modelle bleiben. Das lässt sich nicht rückgängig machen.",
+        "„Alle Daten löschen“ entfernt Verlauf, Aufnahmen, Wörterbuch, Textbausteine, Profile, Stimmprofile, überwachte Ordner, Statistik, Einstellungen und API-Schlüssel von diesem Handy, meldet dich hier von deinem TypeWhisper-Konto ab und startet die App neu. Heruntergeladene Modelle bleiben. Das lässt sich nicht rückgängig machen.",
         "Stimmprofile sind biometrische Daten und bleiben aus jedem Export und jeder Sicherung draußen.",
         "In den Einstellungen unter „Werkzeuge“ zeigt „Statistik“ Wörter, Serien, Wörter pro Minute, gesparte Zeit, Quellen, genutzte Spracherkennung und Nutzung nach Tageszeit für eine Woche, einen Monat oder gesamt. Sie bleibt auf diesem Handy, und „Statistik löschen“ lässt Verlauf und Aufnahmen unberührt.",
       ],

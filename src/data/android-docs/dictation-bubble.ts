@@ -47,7 +47,7 @@ export const en: IosDocPage = {
         {
           title: "Allow the microphone",
           description:
-            "If TypeWhisper has no microphone access yet, Settings → Dictation bubble shows Allow microphone. When everything is set, it shows “Ready. Open a text field in another app to dictate.”",
+            "If TypeWhisper has no microphone access yet, Settings → Dictation bubble says “Allow microphone access in the TypeWhisper app.” and shows Allow microphone. If you denied it before, the button reads Open microphone settings. When everything is set, it shows “Ready. Open a text field in another app to dictate.”",
         },
       ],
       callout: {
@@ -92,7 +92,7 @@ export const en: IosDocPage = {
       bullets: [
         "Send after dictating: Never, When you end with “send” or “senden”, or Always. This is separate from the keyboard's setting. Some apps only send with their own send button. Sending needs Android 11 or newer.",
         "Space after dictation: shared with the TypeWhisper keyboard.",
-        "Appearance: Size Small, Medium or Large, Transparency up to 60 % and Reset position. Transparency applies while idle; recording, processing and pending text stay fully visible.",
+        "Appearance: Size Small, Medium or Large, Transparency up to 60% and Reset position. Transparency applies while idle; recording, processing and pending text stay fully visible.",
         "While recording: Left of the bubble and Right of the bubble each show Nothing, Time, Level, Profile or Engine. A preview shows the result.",
         "Show live text shows what you say next to the bubble. Nemotron Live streams it; other engines on this device recognize the last seconds again every 3 seconds, which uses more battery. Cloud engines show no live text, so your audio is not uploaded more than once.",
         "Engine for live text: Same as for dictation, or another engine on this device that is already downloaded. Live text size: Small, Medium or Large.",
@@ -104,7 +104,7 @@ export const en: IosDocPage = {
         "Apps without an assigned profile use your active profile. To translate or rewrite bubble dictations automatically, open a profile under Settings → Profiles (or Profiles in the bubble settings) and set Use automatically in these apps or Use automatically on these websites.",
       ],
       bullets: [
-        "Websites are recognized in Chrome, Firefox, Samsung Internet, Edge, Brave, Opera, Vivaldi and DuckDuckGo while the dictation bubble is on. Android shows TypeWhisper the address bar only through its accessibility service.",
+        "Websites are recognized in Chrome, Edge, Brave, Opera, Vivaldi and DuckDuckGo while the dictation bubble is on. Android lets TypeWhisper read the address bar only through its accessibility service.",
         "You can paste a full URL; only the domain is kept. Subdomains are included, so example.com also covers docs.example.com.",
         "If a profile has both apps and websites, both must match. A profile for the app and website wins over one for the website alone, which wins over one for the app alone.",
         "The TypeWhisper keyboard uses the same assignments. Calendar Event profiles are not applied in the bubble.",
@@ -116,8 +116,8 @@ export const en: IosDocPage = {
         "Bubble dictations appear in History with a Bubble tag and follow your recording retention settings.",
         "Private input fields are not saved. If Android cannot identify a field's privacy mode (including Android 12 and older), its dictations stay out of history.",
         "Password and sensitive fields are excluded; the bubble does not appear there.",
-        "To turn the bubble off, switch off Show dictation bubble in Settings → Dictation bubble. To remove the accessibility access as well, also turn TypeWhisper off in Android's accessibility settings.",
-        "If the bubble settings say the accessibility service is disconnected, turn TypeWhisper off and on in Android's accessibility settings.",
+        "To turn the bubble off, switch off Show dictation bubble in Settings → Dictation bubble. To remove the accessibility access as well, also turn off Dictation bubble in Android's accessibility settings.",
+        "If the bubble settings say the accessibility service is disconnected, turn Dictation bubble off and on again in Android's accessibility settings.",
       ],
     },
   ],
@@ -127,7 +127,7 @@ export const de: IosDocPage = {
   eyebrow: "Diktier-Bubble",
   title: "Mit der Bubble in anderen Apps diktieren",
   description:
-    "Behalte deine Tastatur und diktiere mit der optionalen Bubble in anderen Apps: worauf sie zugreift, wie du sie einschaltest, Einstellungen und Profile.",
+    "Behalte deine Tastatur und diktiere mit der optionalen Bubble in anderen Apps: worauf sie zugreift, wie du sie einschaltest, Einstellungen und Profile für Apps und Websites.",
   intro:
     "Die Diktier-Bubble ist eine optionale kleine Schaltfläche, die neben dem Textfeld erscheint, in dem du gerade schreibst. Tippe darauf, um zu diktieren, und nutze weiter deine gewohnte Tastatur.",
   sections: [
@@ -170,7 +170,7 @@ export const de: IosDocPage = {
         {
           title: "Mikrofon erlauben",
           description:
-            "Hat TypeWhisper noch keinen Mikrofonzugriff, zeigt Einstellungen → Diktier-Bubble die Schaltfläche Mikrofon erlauben. Ist alles eingerichtet, steht dort „Bereit. Öffne ein Textfeld in einer anderen App zum Diktieren.“",
+            "Hat TypeWhisper noch keinen Mikrofonzugriff, zeigt Einstellungen → Diktier-Bubble „Erlaube den Mikrofonzugriff in der TypeWhisper-App.“ und die Schaltfläche Mikrofon erlauben. Hast du den Zugriff vorher abgelehnt, heißt die Schaltfläche Mikrofoneinstellungen öffnen. Ist alles eingerichtet, steht dort „Bereit. Öffne ein Textfeld in einer anderen App zum Diktieren.“",
         },
       ],
       callout: {
@@ -227,7 +227,7 @@ export const de: IosDocPage = {
         "Ohne App-Zuordnung gilt dein aktives Profil. Damit Bubble-Diktate automatisch übersetzt oder umgeschrieben werden, öffne ein Profil unter Einstellungen → Profile (oder über Profile in den Bubble-Einstellungen) und lege Automatisch in diesen Apps oder Automatisch auf diesen Websites fest.",
       ],
       bullets: [
-        "Websites werden in Chrome, Firefox, Samsung Internet, Edge, Brave, Opera, Vivaldi und DuckDuckGo erkannt, solange die Diktier-Bubble an ist. Die Adressleiste zeigt Android TypeWhisper nur über den Bedienungshilfedienst.",
+        "Websites werden in Chrome, Edge, Brave, Opera, Vivaldi und DuckDuckGo erkannt, solange die Diktier-Bubble an ist. Die Adressleiste kann TypeWhisper nur über den Bedienungshilfedienst lesen.",
         "Du kannst eine komplette URL einfügen; gespeichert wird nur die Domain. Subdomains gelten mit, example.com deckt also auch docs.example.com ab.",
         "Hat ein Profil Apps und Websites, müssen beide passen. Ein Profil für App und Website geht vor einem nur für die Website, das wiederum vor einem nur für die App.",
         "Die TypeWhisper-Tastatur nutzt dieselben Zuordnungen. Kalendertermin-Profile wendet die Bubble nicht an.",
@@ -239,8 +239,8 @@ export const de: IosDocPage = {
         "Bubble-Diktate erscheinen mit dem Tag „Bubble“ im Verlauf und folgen deinen Einstellungen für gespeicherte Aufnahmen.",
         "Private Eingabefelder werden nicht gespeichert. Kann Android den Eingabemodus eines Feldes nicht zuordnen (auch unter Android 12 und älter), bleibt das Diktat ohne Verlauf.",
         "Passwortfelder und als sensibel markierte Felder sind ausgeschlossen; dort erscheint die Bubble nicht.",
-        "Zum Ausschalten deaktivierst du Diktier-Bubble anzeigen in Einstellungen → Diktier-Bubble. Willst du auch den Zugriff über die Bedienungshilfen entfernen, schalte TypeWhisper zusätzlich in den Android-Bedienungshilfen aus.",
-        "Melden die Bubble-Einstellungen, dass der Bedienungshilfedienst nicht verbunden ist, schalte TypeWhisper in den Android-Bedienungshilfen aus und wieder ein.",
+        "Zum Ausschalten deaktivierst du Diktier-Bubble anzeigen in Einstellungen → Diktier-Bubble. Willst du auch den Zugriff über die Bedienungshilfen entfernen, schalte zusätzlich Diktier-Bubble in den Android-Bedienungshilfen aus.",
+        "Melden die Bubble-Einstellungen, dass der Bedienungshilfedienst nicht verbunden ist, schalte Diktier-Bubble in den Android-Bedienungshilfen aus und wieder ein.",
       ],
     },
   ],

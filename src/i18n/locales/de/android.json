@@ -12,15 +12,15 @@
   "android.get.docs": "Zur Android-Anleitung",
   "android.features.label": "Funktionen",
   "android.features.title": "Was TypeWhisper auf Android kann",
-  "android.features.lede": "Der Kern funktioniert ohne Account. Mit einer lokalen Engine bleibt die Aufnahme auf deinem Smartphone.",
+  "android.features.lede": "Der Kern funktioniert ohne Konto. Mit einer lokalen Engine bleibt die Aufnahme auf deinem Handy.",
   "android.features.item1": "Diktieren auf dem Gerät mit Parakeet (25 europäische Sprachen), Whisper (99 Sprachen) und weiteren lokalen Modellen.",
   "android.features.item2": "Die TypeWhisper-Tastatur für jede App, mit QWERTZ- oder QWERTY-Layout.",
   "android.features.item3": "Die Diktier-Bubble: Diktiere in andere Apps und behalte dabei deine gewohnte Tastatur.",
   "android.features.item4": "Optionale Cloud-Spracherkennung mit deinem eigenen API-Schlüssel.",
-  "android.features.item5": "Schreibprofile: Aufräumen, Nachricht, E-Mail, Notiz, Kalendertermin, Checkliste, Zusammenfassung, Übersetzung oder eigene Profile.",
+  "android.features.item5": "Schreibprofile: Bereinigter Text, Nachricht, E-Mail, Notiz, Kalendertermin, Checkliste, Zusammenfassung, Übersetzung oder eigene Profile.",
   "android.features.item6": "Schnelldiktate über die Schnelleinstellungs-Kachel, das Widget, eine App-Verknüpfung oder die Assistenten-Geste, gesammelt in der Inbox.",
   "android.features.item7": "Dateien transkribieren, mit Untertiteln.",
-  "android.features.item8": "Premium: die Profile für E-Mail und Kalender, Live-Transkription mit Nemotron und Sprechererkennung.",
+  "android.features.item8": "Premium: die Formate E-Mail und Kalendertermin, Live-Transkription mit Nemotron Live und Sprechererkennung.",
   "android.beta.label": "Betaprogramm",
   "android.beta.title": "Neue Versionen früher ausprobieren",
   "android.beta.p1": "Neue Versionen kommen zuerst ins Betaprogramm bei Google Play. Öffne die Testseite mit deinem Google-Konto und tippe auf Tester werden. Google Play bietet dir dann die Betaversionen an.",
@@ -31,5 +31,5 @@
   "android.beta.discordText": "Fragen, Fehler und Ideen mit anderen Nutzern und Testern.",
   "android.beta.emailText": "Fehlerberichte und alles, was du nicht öffentlich posten möchtest.",
   "android.requirements.title": "Voraussetzungen",
-  "android.requirements.text": "Android 10 oder neuer und Google Play."
+  "android.requirements.text": "Ein Handy oder Tablet mit Android 10 oder neuer und Google Play."
 }

@@ -18,7 +18,7 @@ export const en: IosDocPage = {
         "Correction: replaces a word that still comes out wrong. Enter the wrong form under Heard as and the right text under Replace with, for example Par Kit → Parakeet. Leave Replace with empty to remove the word.",
         "Case sensitive makes an entry match only with exactly the same capitalization.",
         "Corrections apply after every dictation and again to the text a writing profile returns.",
-        "Entries made of letters and digits only match whole words, so a short entry does not change parts of longer words.",
+        "Entries that contain letters or digits match only whole words, so a short entry does not change parts of longer words.",
       ],
       image: {
         path: "/screenshots/android/07-dictionary.png",
@@ -32,7 +32,7 @@ export const en: IosDocPage = {
         "Parakeet uses your terms through the vocabulary boost, an extra model that is downloaded once. If Parakeet is your engine, saving your first term starts the download. Until it is ready, the Dictionary tab shows Terms need the vocabulary boost.",
         "Engines that accept a word list, such as several cloud engines, receive your terms together with the recording.",
         "Engines that cannot take terms get close misspellings fixed in the text afterwards. Ordinary words that only sound similar usually stay as they are.",
-        "Terms are not matched in Russian or Chinese text, for example from GigaAM or SenseVoice. Corrections still work there.",
+        "Terms are not matched in text written in non-Latin scripts, such as Russian, Ukrainian, Greek, Chinese, Japanese or Korean (for example from GigaAM or SenseVoice). Corrections still work there.",
       ],
     },
     {
@@ -99,7 +99,7 @@ export const en: IosDocPage = {
       bullets: [
         "Snippets apply after every transcription: in the app, in the TypeWhisper keyboard, with the dictation bubble, with quick dictation and for transcribed files.",
         "They expand after a writing profile has run, so the writing service does not rewrite your snippet text.",
-        "Triggers made of letters and digits only match whole words, so “ok” does not fire inside “book”.",
+        "Triggers that start and end with a letter or digit match only whole words, so “ok” does not fire inside “book”.",
         "Snippets react to dictated text, not to text you type.",
       ],
     },
@@ -110,7 +110,7 @@ export const de: IosDocPage = {
   eyebrow: "Deine eigenen Wörter",
   title: "Wörterbuch und Textbausteine",
   description:
-    "Bring TypeWhisper Namen und Fachwörter bei, korrigiere falsch erkannte Wörter, gleiche mit Android ab und mach aus kurzen Auslösern längere Texte.",
+    "Bring TypeWhisper Namen und Fachwörter bei, korrigiere falsch erkannte Wörter, gleiche mit dem persönlichen Android-Wörterbuch ab und mach aus kurzen Auslösern längere Texte.",
   intro:
     "Das Wörterbuch hilft TypeWhisper, Namen und Fachbegriffe richtig zu schreiben. Textbausteine ersetzen nach der Transkription einen kurzen gesprochenen Auslöser durch längeren Text.",
   sections: [
@@ -121,10 +121,10 @@ export const de: IosDocPage = {
       ],
       bullets: [
         "Begriff: ein Name, Produkt oder Fachwort, das erkannt werden soll, etwa TypeWhisper. Begriffe helfen schon bei der Spracherkennung.",
-        "Korrektur: ersetzt ein Wort, das trotzdem falsch ankommt. Trag die falsche Form unter Erkannt als ein und den richtigen Text unter Ersetzen durch, zum Beispiel Par Kit → Parakeet. Lässt du Ersetzen durch leer, wird das Wort entfernt.",
+        "Korrektur: ersetzt ein Wort, das weiterhin falsch erkannt wird. Trag die falsche Form unter Erkannt als ein und den richtigen Text unter Ersetzen durch, zum Beispiel Par Kit → Parakeet. Lässt du Ersetzen durch leer, wird das Wort entfernt.",
         "Mit Groß- und Kleinschreibung beachten greift ein Eintrag nur bei genau gleicher Schreibweise.",
         "Korrekturen wirken nach jedem Diktat und noch einmal auf den Text, den ein Schreibprofil zurückgibt.",
-        "Einträge aus Buchstaben und Ziffern greifen nur bei ganzen Wörtern. Ein kurzer Eintrag ändert also keine Teile längerer Wörter.",
+        "Einträge mit Buchstaben oder Ziffern greifen nur bei ganzen Wörtern. Ein kurzer Eintrag ändert also keine Teile längerer Wörter.",
       ],
       image: {
         path: "/screenshots/android/07-dictionary.png",
@@ -138,7 +138,7 @@ export const de: IosDocPage = {
         "Parakeet nutzt deine Begriffe über den Vokabular-Boost, ein zusätzliches Modell, das einmalig geladen wird. Ist Parakeet deine Engine, startet der Download, sobald du den ersten Begriff speicherst. Bis er fertig ist, zeigt der Tab Wörterbuch den Hinweis Begriffe brauchen den Vokabular-Boost.",
         "Engines, die eine Wortliste annehmen, zum Beispiel mehrere Cloud-Engines, bekommen deine Begriffe zusammen mit der Aufnahme.",
         "Bei Engines, die keine Begriffe annehmen, werden ähnlich geschriebene Wörter danach im Text korrigiert. Normale Wörter, die nur ähnlich klingen, bleiben in der Regel unverändert.",
-        "In russischem oder chinesischem Text, etwa von GigaAM oder SenseVoice, werden Begriffe nicht erkannt. Korrekturen funktionieren dort trotzdem.",
+        "In Text mit nicht lateinischer Schrift, etwa Russisch, Ukrainisch, Griechisch, Chinesisch, Japanisch oder Koreanisch (zum Beispiel von GigaAM oder SenseVoice), werden Begriffe nicht erkannt. Korrekturen funktionieren dort trotzdem.",
       ],
     },
     {
@@ -205,7 +205,7 @@ export const de: IosDocPage = {
       bullets: [
         "Textbausteine greifen nach jeder Transkription: in der App, in der TypeWhisper-Tastatur, mit der Diktier-Bubble, beim Schnelldiktat und bei transkribierten Dateien.",
         "Sie werden erst nach einem Schreibprofil eingesetzt. Der Schreibdienst formuliert deinen Textbaustein also nicht um.",
-        "Auslöser aus Buchstaben und Ziffern greifen nur bei ganzen Wörtern. „Tor“ löst also nicht mitten in „Motor“ aus.",
+        "Auslöser, die mit einem Buchstaben oder einer Ziffer beginnen und enden, greifen nur bei ganzen Wörtern. „Tor“ löst also nicht mitten in „Motor“ aus.",
         "Textbausteine reagieren auf diktierten Text, nicht auf getippten.",
       ],
     },

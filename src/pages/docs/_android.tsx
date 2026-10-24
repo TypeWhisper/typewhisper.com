@@ -55,7 +55,7 @@ export function androidOverviewHead(locale: Locale) {
       isDe ? "Version {androidSeries} stabil" : "Version {androidSeries} stable",
     ),
     lede: isDe
-      ? "Private Sprache-zu-Text für Android mit lokalen Engines, eigener Tastatur, Diktier-Bubble für jede App, Profilen, Schnelldiktat, Dateien, Wörterbuch und Snippets."
+      ? "Private Spracherkennung für Android mit lokalen Engines, eigener Tastatur, Diktier-Bubble für jede App, Profilen, Schnelldiktat, Dateien, Wörterbuch und Textbausteinen."
       : "Private speech-to-text for Android with on-device engines, its own keyboard, a dictation bubble for any app, profiles, quick dictation, files, dictionary, and snippets.",
     download: isDe ? "Bei Google Play laden" : "Get it on Google Play",
   };
@@ -87,12 +87,12 @@ export default function DocsAndroid({ locale = "en" }: { locale?: Locale }) {
             </p>
             <dl className="docs-facts">
               <div>
-                <dt>{isDe ? "Smartphone / Tablet" : "Phone / tablet"}</dt>
+                <dt>{isDe ? "Handy / Tablet" : "Phone / tablet"}</dt>
                 <dd>Android 10+</dd>
               </div>
               <div>
                 <dt>{isDe ? "Lokaler Core" : "Local core"}</dt>
-                <dd>{isDe ? "Ohne Account" : "No account"}</dd>
+                <dd>{isDe ? "Ohne Konto" : "No account"}</dd>
               </div>
               <div>
                 <dt>{isDe ? "Bezugsquelle" : "Available on"}</dt>
@@ -189,7 +189,7 @@ export default function DocsAndroid({ locale = "en" }: { locale?: Locale }) {
         <p>
           {resolveVersions(
             isDe
-              ? "Version {androidVersion} ist als stabiles Release für Smartphones und Tablets mit Android 10 oder neuer bei Google Play verfügbar."
+              ? "Version {androidVersion} ist als stabiles Release für Handys und Tablets mit Android 10 oder neuer bei Google Play verfügbar."
               : "Version {androidVersion} is available as a stable release for phones and tablets with Android 10 or later on Google Play.",
           )}
         </p>

@@ -11,23 +11,23 @@ export const en: IosDocPage = {
     {
       title: "What stays on your phone",
       bullets: [
-        "Engines marked on device, such as Parakeet, Whisper and Nemotron Live, turn speech into text on the phone and also work offline.",
+        "Engines marked (on device), such as Parakeet, Whisper and Nemotron Live, turn speech into text on the phone and also work offline.",
         "History, Inbox, dictionary, snippets, profiles, statistics, voice profiles and kept recordings stay in the app's storage. Android backup is turned off for TypeWhisper.",
         "Keep recordings in Settings → General decides how long audio is kept, from Delete after transcription to Keep forever.",
         "API keys are stored encrypted with a key from the Android Keystore. Backups and exports never include them.",
         "The app contains no advertising, analytics, crash reporting or tracking SDKs.",
-        "Settings → Data and backup lets you export everything with Export all data or remove it with Delete all data. Downloaded models stay. Voice profiles are biometric data and stay out of exports.",
+        "Settings → Data and backup lets you export everything with Export all data. Delete all data removes History, recordings, dictionary, snippets, profiles, voice profiles, watched folders, statistics, settings and API keys from this phone, signs you out of your TypeWhisper account here and restarts the app. Downloaded models stay. Voice profiles are biometric data and stay out of exports.",
       ],
     },
     {
       title: "When data leaves your phone",
       bullets: [
         "A cloud speech engine receives your recording only if you select it and enter your own API key under Settings → Cloud providers. The audio goes directly from your phone to that provider. Engines that accept a word list also receive your dictionary terms.",
-        "Android speech recognition stays on the phone when an offline language is installed. Allow online fallback lets Android send the recording to its speech provider if a language is missing. It is off by default. On phones without an on-device recognizer, the system recognizer may send audio to its provider, for example Google.",
+        "Android speech recognition stays on the phone when an offline language is installed. Allow online fallback lets Android send the recording to its speech provider if a language is missing. It is off by default. On phones without an on-device recognizer, Android speech recognition only works with Allow online fallback turned on; the system recognizer then sends the recording to its provider, for example Google.",
         "A writing service receives text only after you turn on Send dictations to … for rewriting in Settings → AI writing. It gets dictations that use a writing profile and text you select for rewriting. Plain dictation is not sent.",
         "Model files are downloaded from Hugging Face without account or device identifiers.",
-        "Premium sign-in and purchase checks go to the TypeWhisper Premium service. They carry account, device and purchase status, never your recordings, transcripts, dictionary or snippets.",
-        "Feedback reaches us only as an email you send from your own mail app.",
+        "Premium sign-in and purchase checks go to the TypeWhisper Premium service. They carry your account, a random ID for this installation and your purchase, never your recordings, transcripts, dictionary or snippets.",
+        "Feedback and reports about AI text reach us only as an email you send from your own mail app.",
       ],
     },
     {
@@ -36,7 +36,7 @@ export const en: IosDocPage = {
         "In password fields, the TypeWhisper keyboard dictates without a writing profile, saves nothing to the History and cannot rewrite selected text.",
         "In incognito fields, such as a private browser tab, dictations are not saved to the History and no audio is kept. Recent dictations stay hidden in the keyboard in both kinds of fields.",
         "The dictation bubble does not appear on password fields. If Android does not report what kind of field it is, the bubble treats it as incognito.",
-        "The bubble uses Android's accessibility service API only to find the text field, insert your dictation at the cursor, skip password fields and pick the profile for that app or website. This data stays on your phone and is not stored. The microphone starts only when you tap the bubble.",
+        "The bubble uses Android's accessibility service API only to find the text field and where windows such as the keyboard are on the screen, insert your dictation at the cursor, skip password fields, pick the profile for that app or website and, if you turn it on, send with the field's enter action. In browsers it reads the domain of the open page. This data stays on your phone and is not stored. The microphone starts only when you tap the bubble.",
         "While you record in the app, with quick dictation or with the bubble, a Recording notification is shown. For the bubble, it shows no dictated text and stays hidden on the lock screen.",
         "A finished quick dictation shows its text in a Quick dictation results notification.",
       ],
@@ -60,7 +60,7 @@ export const en: IosDocPage = {
       callout: {
         title: "When Premium ends",
         description:
-          "Your profiles, History and other data stay. Profiles with the Email or Calendar Event format are marked as locked, and dictations with them are inserted as plain text. Nemotron Live and speaker detection ask for Premium again; Parakeet keeps transcribing on the phone for free.",
+          "Your profiles, History and other data stay. Profiles with the Email or Calendar Event format, or with Nemotron Live as their engine, are marked as locked. In the keyboard and the bubble, dictations with them are inserted as plain text; on the Record tab you can choose Premium or plain dictation. Nemotron Live and speaker detection ask for Premium again; Parakeet keeps transcribing on the phone for free.",
       },
       image: {
         path: "/screenshots/android/premium.png",
@@ -84,7 +84,7 @@ export const en: IosDocPage = {
         {
           title: "Buy or link Premium",
           description:
-            "Buy Premium through Google Play as a monthly subscription (Monthly) or as a one-time purchase (Lifetime). Google Play shows the price, and a free trial for the subscription if you are eligible. If you already bought a license on typewhisper.com, tap Link Polar license under Already have a license? instead.",
+            "You need to be signed in first. Buy Premium through Google Play as a monthly subscription (Monthly, or Try 2 weeks free if Google Play offers you the trial) or as a one-time purchase (Lifetime). Google Play shows the price. If you already bought a license on typewhisper.com, tap Link Polar license under Already have a license? instead.",
         },
         {
           title: "Restore later",
@@ -121,23 +121,23 @@ export const de: IosDocPage = {
     {
       title: "Was auf dem Handy bleibt",
       bullets: [
-        "Engines mit dem Zusatz auf dem Gerät, etwa Parakeet, Whisper und Nemotron Live, machen auf dem Handy aus Sprache Text und funktionieren auch offline.",
+        "Engines mit dem Zusatz „(auf dem Gerät)“, etwa Parakeet, Whisper und Nemotron Live, machen auf dem Handy aus Sprache Text und funktionieren auch offline.",
         "Verlauf, Inbox, Wörterbuch, Textbausteine, Profile, Statistik, Stimmprofile und behaltene Aufnahmen bleiben im Speicher der App. Die Android-Sicherung ist für TypeWhisper abgeschaltet.",
         "Unter Einstellungen → Allgemein legst du mit Aufnahmen behalten fest, wie lange Audio bleibt, von Nach der Transkription löschen bis Für immer behalten.",
         "API-Schlüssel werden mit einem Schlüssel aus dem Android Keystore verschlüsselt gespeichert. Sicherungen und Exporte enthalten sie nie.",
         "Die App enthält keine Werbung, keine Analyse, keine Absturzberichte und keine Tracking-SDKs.",
-        "Unter Einstellungen → Daten und Sicherung exportierst du mit Alle Daten exportieren alles oder entfernst es mit Alle Daten löschen. Heruntergeladene Modelle bleiben. Stimmprofile sind biometrische Daten und bleiben aus Exporten draußen.",
+        "Unter Einstellungen → Daten und Sicherung exportierst du mit Alle Daten exportieren alles. Alle Daten löschen entfernt Verlauf, Aufnahmen, Wörterbuch, Textbausteine, Profile, Stimmprofile, überwachte Ordner, Statistik, Einstellungen und API-Schlüssel von diesem Handy, meldet dich hier von deinem TypeWhisper-Konto ab und startet die App neu. Heruntergeladene Modelle bleiben. Stimmprofile sind biometrische Daten und bleiben aus Exporten draußen.",
       ],
     },
     {
       title: "Wann Daten das Handy verlassen",
       bullets: [
         "Eine Cloud-Sprach-Engine erhält deine Aufnahme nur, wenn du sie auswählst und unter Einstellungen → Cloud-Anbieter deinen eigenen API-Schlüssel einträgst. Das Audio geht direkt von deinem Handy an diesen Anbieter. Engines, die eine Wortliste annehmen, bekommen auch deine Wörterbuch-Begriffe.",
-        "Die Android-Spracherkennung bleibt auf dem Handy, wenn eine Offline-Sprache installiert ist. Mit Online-Fallback erlauben darf Android die Aufnahme an seinen Spracherkennungsanbieter senden, falls eine Sprache fehlt. Das ist standardmäßig aus. Auf Handys ohne Erkennung auf dem Gerät kann die Systemerkennung Audio an ihren Anbieter senden, zum Beispiel Google.",
+        "Die Android-Spracherkennung bleibt auf dem Handy, wenn eine Offline-Sprache installiert ist. Schaltest du Online-Fallback erlauben ein, darf Android die Aufnahme an seinen Spracherkennungsanbieter senden, falls eine Sprache fehlt. Das ist standardmäßig aus. Auf Handys ohne Erkennung auf dem Gerät funktioniert die Android-Spracherkennung nur mit eingeschaltetem Online-Fallback erlauben; die Systemerkennung schickt die Aufnahme dann an ihren Anbieter, zum Beispiel Google.",
         "Ein Schreibdienst erhält erst Text, wenn du unter Einstellungen → KI-Schreiben Diktate zum Umschreiben an … senden einschaltest. Er bekommt Diktate mit Schreibprofil und Text, den du zum Umschreiben markierst. Reines Diktat wird nicht gesendet.",
         "Modelldateien kommen von Hugging Face, ohne Konto- oder Gerätekennungen.",
-        "Anmeldung und Kaufprüfung für Premium laufen über den TypeWhisper-Premium-Dienst. Dabei gehen Konto-, Geräte- und Kaufstatus mit, nie deine Aufnahmen, Transkripte, Wörterbuch-Einträge oder Textbausteine.",
-        "Feedback erreicht uns nur als E-Mail, die du aus deiner eigenen Mail-App sendest.",
+        "Anmeldung und Kaufprüfung für Premium laufen über den TypeWhisper-Premium-Dienst. Dabei gehen dein Konto, eine zufällige Kennung dieser Installation und dein Kauf mit, nie deine Aufnahmen, Transkripte, Wörterbuch-Einträge oder Textbausteine.",
+        "Feedback und Meldungen zu KI-Text erreichen uns nur als E-Mail, die du aus deiner eigenen Mail-App sendest.",
       ],
     },
     {
@@ -146,7 +146,7 @@ export const de: IosDocPage = {
         "In Passwortfeldern diktiert die TypeWhisper-Tastatur ohne Schreibprofil, speichert nichts im Verlauf und kann markierten Text nicht umschreiben.",
         "In Inkognito-Feldern, etwa in einem privaten Browser-Tab, landen Diktate nicht im Verlauf und es wird kein Audio behalten. Letzte Diktate blendet die Tastatur in beiden Feldarten aus.",
         "Die Diktier-Bubble erscheint nicht an Passwortfeldern. Meldet Android nicht, um welche Art von Feld es sich handelt, behandelt die Bubble es als Inkognito-Feld.",
-        "Die Bubble nutzt die Bedienungshilfen-Schnittstelle von Android nur, um das Textfeld zu finden, dein Diktat an der Cursorposition einzufügen, Passwortfelder auszulassen und das Profil für die App oder Website zu wählen. Diese Daten bleiben auf deinem Handy und werden nicht gespeichert. Das Mikrofon startet erst, wenn du die Bubble antippst.",
+        "Die Bubble nutzt die Bedienungshilfen-Schnittstelle von Android nur, um das Textfeld zu finden und zu sehen, wo Fenster wie die Tastatur auf dem Bildschirm liegen, dein Diktat an der Cursorposition einzufügen, Passwortfelder auszulassen, das Profil für die App oder Website zu wählen und, wenn du es einschaltest, mit der Eingabetaste des Feldes zu senden. In Browsern liest sie die Domain der geöffneten Seite. Diese Daten bleiben auf deinem Handy und werden nicht gespeichert. Das Mikrofon startet erst, wenn du die Bubble antippst.",
         "Während du in der App, per Schnelldiktat oder mit der Bubble aufnimmst, siehst du die Benachrichtigung Aufnahme. Bei der Bubble zeigt sie keinen diktierten Text und bleibt auf dem Sperrbildschirm verborgen.",
         "Ein fertiges Schnelldiktat zeigt seinen Text in einer Benachrichtigung Ergebnisse von Schnelldiktaten.",
       ],
@@ -170,7 +170,7 @@ export const de: IosDocPage = {
       callout: {
         title: "Wenn Premium endet",
         description:
-          "Profile, Verlauf und alle anderen Daten bleiben erhalten. Profile mit dem Format E-Mail oder Kalendertermin sind dann gesperrt, Diktate damit werden als reiner Text eingefügt. Nemotron Live und die Sprechererkennung verlangen wieder Premium; Parakeet transkribiert weiter kostenlos auf dem Handy.",
+          "Profile, Verlauf und alle anderen Daten bleiben erhalten. Profile mit dem Format E-Mail oder Kalendertermin oder mit Nemotron Live als Engine sind dann gesperrt. In Tastatur und Bubble werden Diktate damit als reiner Text eingefügt; im Tab Aufnehmen wählst du zwischen Premium und reinem Diktat. Nemotron Live und die Sprechererkennung verlangen wieder Premium; Parakeet transkribiert weiter kostenlos auf dem Handy.",
       },
       image: {
         path: "/screenshots/android/premium.png",
@@ -189,12 +189,12 @@ export const de: IosDocPage = {
         {
           title: "Anmelden",
           description:
-            "Premium gehört zu einem Konto und übersteht so auch eine Neuinstallation. Mit Apple anmelden öffnet den Browser: Nimm die Apple-ID von deinem iPhone, Mac oder Windows-PC, dann gilt Premium überall. Mit Google anmelden gilt Premium nur auf Android.",
+            "Premium gehört zu einem Konto und übersteht so auch eine Neuinstallation. Mit Apple anmelden öffnet den Browser: Nimm die Apple-ID von deinem iPhone, Mac oder Windows-PC, dann gilt Premium überall. Meldest du dich mit Google an, gilt Premium nur auf Android.",
         },
         {
           title: "Premium kaufen oder verknüpfen",
           description:
-            "Kauf Premium über Google Play als Monatsabo (Monatlich) oder als Einmalkauf (Einmalig). Den Preis zeigt Google Play, beim Abo auch eine kostenlose Testphase, wenn du sie nutzen kannst. Hast du schon eine Lizenz auf typewhisper.com gekauft, tippe stattdessen unter Schon eine Lizenz? auf Polar-Lizenz verknüpfen.",
+            "Dafür musst du angemeldet sein. Kauf Premium über Google Play als Monatsabo (Monatlich bzw. 2 Wochen gratis testen, wenn Google Play dir die Testphase anbietet) oder als Einmalkauf (Einmalig). Den Preis zeigt Google Play. Hast du schon eine Lizenz auf typewhisper.com gekauft, tippe stattdessen unter Schon eine Lizenz? auf Polar-Lizenz verknüpfen.",
         },
         {
           title: "Später wiederherstellen",
@@ -214,7 +214,7 @@ export const de: IosDocPage = {
         "Auf diesem Gerät abmelden beendet Premium auf diesem Handy. Deine Daten auf dem Handy bleiben.",
         "Konto löschen unter Einstellungen → Premium entfernt dein TypeWhisper-Konto. Käufe bleiben bei deinem Google- oder Apple-Konto und lassen sich später nach einer neuen Anmeldung wiederherstellen.",
         "Das Löschen des Kontos kündigt kein Abo. Kündige es in Google Play, sonst wird weiter abgerechnet.",
-        "Die Seite typewhisper.com/delete-account erklärt auch, wie du das Konto im Web löschst und was dabei gelöscht wird.",
+        "Die Seite typewhisper.com/de/delete-account erklärt auch, wie du das Konto im Web löschst und was dabei gelöscht wird.",
       ],
     },
   ],

@@ -54,12 +54,12 @@ export const en: IosDocPage = {
     {
       title: "Use a profile while you dictate",
       bullets: [
-        "Record screen: tap the Profile chip below the engine name and choose Dictation or a profile. It stays active until you change it.",
+        "Record screen: tap the “Profile: …” chip below the engine name and choose Dictation or a profile. It stays active until you change it.",
         "Keyboard: tap the profile chip. Your choice there also becomes the active profile. Calendar Event is not offered in the keyboard, because its result goes to the calendar app.",
         "Apps: with Use automatically in these apps, the keyboard and the dictation bubble switch to this profile in the apps you pick. Without assigned apps, they use the active profile.",
-        "Websites: with Use automatically on these websites, add domains such as example.com. You can paste a full URL; only the domain is kept and subdomains are included. Websites are recognized in Chrome, Firefox, Samsung Internet, Edge, Brave, Opera, Vivaldi and DuckDuckGo while the dictation bubble is on. If apps are chosen too, both must match.",
-        "Order: a profile for the app and the website wins over one for the website alone, which wins over one for the app alone. Within each step, the order in the profile list decides.",
-        "Text you already wrote: select it in any app, choose TypeWhisper in the selection menu, then Rewrite with a profile, and tap Replace. In the TypeWhisper keyboard, select text and tap Rewrite.",
+        "Websites: with Use automatically on these websites, add domains such as example.com. You can paste a full URL; only the domain is kept and subdomains are included. Websites are recognized in Chrome, Edge, Brave, Opera, Vivaldi and DuckDuckGo while the dictation bubble is on. If apps are chosen too, both must match.",
+        "Order: a profile for the app and the website wins over one for the website alone, which wins over one for the app alone. Within each step, the order in the profile list decides, which is the order you created the profiles in.",
+        "Text you already wrote: select it in any app, choose TypeWhisper in the selection menu, pick a profile under Rewrite with a profile and tap Replace (Copy for read-only text). In the TypeWhisper keyboard, select text and tap Rewrite.",
       ],
       callout: {
         title: "Password fields",
@@ -70,7 +70,7 @@ export const en: IosDocPage = {
     {
       title: "Connect an AI writing service",
       paragraphs: [
-        "Open Settings → AI writing and tap Set up step by step. Every step saves right away.",
+        "Open Settings → AI writing and tap Set up step by step (once the service is set up, the button reads Run the setup again). Every step saves right away.",
       ],
       steps: [
         {
@@ -101,8 +101,8 @@ export const en: IosDocPage = {
       ],
       bullets: [
         "The AI writing page also lets you change the service, the model (Load models fetches the list) and the switch Send dictations to … for rewriting.",
-        "Switching to another service or server address resets the model and your consent.",
-        "Groq, OpenAI and Meta share one key between speech recognition and AI writing. All keys are also listed under Settings → Cloud providers.",
+        "Switching to another service resets the model and your consent; a new server address resets your consent.",
+        "Groq, OpenAI, Meta and Own server share one key between speech recognition and AI writing; Own server also shares its Server URL. All keys are also listed under Settings → Cloud providers.",
       ],
       image: {
         path: "/screenshots/android/writing-settings.png",
@@ -112,7 +112,7 @@ export const en: IosDocPage = {
       callout: {
         title: "What a writing service receives",
         description:
-          "Only the text of dictations with a writing profile, after clean-up and dictionary corrections, plus the profile’s instructions and, for calendar events, the current date, time and time zone. It never receives your audio, your history or your dictionary. If the service is not set up or fails, TypeWhisper inserts the plain dictation and tells you why.",
+          "Only the text of dictations with a writing profile and text you choose to rewrite, after clean-up and dictionary corrections, plus the profile’s instructions and, for calendar events, the current date, time and time zone. It never receives your audio, your history or your dictionary. If the service is not set up or fails, TypeWhisper inserts the plain dictation and tells you why.",
       },
     },
     {
@@ -197,12 +197,12 @@ export const de: IosDocPage = {
     {
       title: "Profil beim Diktieren nutzen",
       bullets: [
-        "Aufnahme-Bildschirm: Tippe unter dem Namen der Engine auf den Chip Profil und wähle Diktat oder ein Profil. Es bleibt aktiv, bis du es änderst.",
+        "Aufnahme-Bildschirm: Tippe unter dem Namen der Engine auf den Chip „Profil: …“ und wähle Diktat oder ein Profil. Es bleibt aktiv, bis du es änderst.",
         "Tastatur: Tippe auf den Profil-Chip. Deine Wahl dort wird auch zum aktiven Profil. Kalendertermin steht in der Tastatur nicht zur Wahl, weil sein Ergebnis in die Kalender-App geht.",
         "Apps: Mit Automatisch in diesen Apps wechseln Tastatur und Diktier-Bubble in den gewählten Apps zu diesem Profil. Ohne zugeordnete Apps nutzen sie das aktive Profil.",
-        "Websites: Unter Automatisch auf diesen Websites fügst du Domains wie example.com hinzu. Du kannst eine komplette URL einfügen; gespeichert wird nur die Domain, Subdomains gelten mit. Erkannt werden Websites in Chrome, Firefox, Samsung Internet, Edge, Brave, Opera, Vivaldi und DuckDuckGo, solange die Diktier-Bubble an ist. Sind auch Apps gewählt, müssen beide passen.",
-        "Reihenfolge: Ein Profil für App und Website schlägt eines nur für die Website, und das schlägt eines nur für die App. Innerhalb jeder Stufe entscheidet die Reihenfolge in der Profilliste.",
-        "Schon geschriebener Text: Markiere ihn in einer beliebigen App, wähle im Auswahlmenü TypeWhisper, dann Mit Profil umschreiben, und tippe auf Ersetzen. In der TypeWhisper-Tastatur markierst du den Text und tippst auf Umschreiben.",
+        "Websites: Unter Automatisch auf diesen Websites fügst du Domains wie example.com hinzu. Du kannst eine komplette URL einfügen; gespeichert wird nur die Domain, Subdomains gelten mit. Erkannt werden Websites in Chrome, Edge, Brave, Opera, Vivaldi und DuckDuckGo, solange die Diktier-Bubble an ist. Sind auch Apps gewählt, müssen beide passen.",
+        "Reihenfolge: Ein Profil für App und Website geht einem nur für die Website vor, und dieses einem nur für die App. Innerhalb jeder Stufe entscheidet die Reihenfolge in der Profilliste, also die Reihenfolge, in der du die Profile angelegt hast.",
+        "Schon geschriebener Text: Markiere ihn in einer beliebigen App, wähle im Auswahlmenü TypeWhisper, tippe unter Mit Profil umschreiben auf ein Profil und dann auf Ersetzen (bei schreibgeschütztem Text auf Kopieren). In der TypeWhisper-Tastatur markierst du den Text und tippst auf Umschreiben.",
       ],
       callout: {
         title: "Passwortfelder",
@@ -213,7 +213,7 @@ export const de: IosDocPage = {
     {
       title: "Schreibdienst verbinden",
       paragraphs: [
-        "Öffne Einstellungen → KI-Schreiben und tippe auf Schritt für Schritt einrichten. Jeder Schritt wird sofort gespeichert.",
+        "Öffne Einstellungen → KI-Schreiben und tippe auf Schritt für Schritt einrichten (ist der Dienst eingerichtet, heißt die Schaltfläche Einrichtung erneut durchgehen). Jeder Schritt wird sofort gespeichert.",
       ],
       steps: [
         {
@@ -244,8 +244,8 @@ export const de: IosDocPage = {
       ],
       bullets: [
         "Auf der Seite KI-Schreiben änderst du außerdem Schreibdienst, Modell (Modelle laden holt die Liste) und den Schalter Diktate zum Umschreiben an … senden.",
-        "Wechselst du zu einem anderen Dienst oder einer anderen Server-Adresse, werden Modell und Zustimmung zurückgesetzt.",
-        "Groq, OpenAI und Meta nutzen einen Schlüssel für Spracherkennung und KI-Schreiben. Alle Schlüssel findest du auch unter Einstellungen → Cloud-Anbieter.",
+        "Wechselst du den Dienst, werden Modell und Zustimmung zurückgesetzt; bei einer neuen Server-Adresse nur die Zustimmung.",
+        "Groq, OpenAI, Meta und Eigener Server nutzen einen Schlüssel für Spracherkennung und KI-Schreiben; der eigene Server teilt auch seine Server-URL. Alle Schlüssel findest du auch unter Einstellungen → Cloud-Anbieter.",
       ],
       image: {
         path: "/screenshots/android/writing-settings.png",
@@ -255,14 +255,14 @@ export const de: IosDocPage = {
       callout: {
         title: "Was der Schreibdienst bekommt",
         description:
-          "Nur den Text von Diktaten mit Schreibprofil, nach Textaufbereitung und Wörterbuch-Korrekturen, dazu die Vorgaben des Profils und bei Kalenderterminen das aktuelle Datum mit Uhrzeit und Zeitzone. Dein Audio, deinen Verlauf und dein Wörterbuch bekommt er nie. Ist der Dienst nicht eingerichtet oder schlägt er fehl, fügt TypeWhisper das reine Diktat ein und sagt dir, warum.",
+          "Nur den Text von Diktaten mit Schreibprofil und von Text, den du umschreiben lässt, nach Textaufbereitung und Wörterbuch-Korrekturen, dazu die Vorgaben des Profils und bei Kalenderterminen das aktuelle Datum mit Uhrzeit und Zeitzone. Dein Audio, deinen Verlauf und dein Wörterbuch bekommt er nie. Ist der Dienst nicht eingerichtet oder schlägt er fehl, fügt TypeWhisper das reine Diktat ein und sagt dir, warum.",
       },
     },
     {
       title: "E-Mail- und Kalender-Entwürfe",
       bullets: [
         "E-Mail: Über dem Text steht „Betreff: …“. E-Mail-Entwurf auf dem Aufnahme-Bildschirm und im Verlauf öffnet deine Mail-App mit Betreff und Text. In Tastatur und Bubble wird nur der Text eingefügt; der Betreff bleibt im Verlauf.",
-        "Kalendertermin: Der Entwurf zeigt Name, Zeit, Ort und Notizen. Zum Kalender hinzufügen öffnet in deiner Kalender-App einen neuen Termin mit allen Angaben, gespeichert wird dort. TypeWhisper braucht dafür keine Kalenderberechtigung.",
+        "Kalendertermin: Der Entwurf zeigt Name, Zeit, Ort und Notizen. Zum Kalender hinzufügen öffnet in deiner Kalender-App einen neuen Termin mit allen Angaben; gespeichert wird der Termin dort. TypeWhisper braucht dafür keine Kalenderberechtigung.",
         "Die Kalender-App meldet nicht zurück, ob du gespeichert hast. Tippe nach der Rückkehr auf Ich habe den Termin gespeichert oder auf Entwurf erneut öffnen.",
         "Fehlende Angaben werden markiert: Ohne Datum oder Uhrzeit steht die nächste volle Stunde als Platzhalter drin, ohne Endzeit dauert der Termin eine Stunde.",
         "Nach einem Schnelldiktat mit einem Kalendertermin-Profil meldet die Benachrichtigung Kalender-Entwurf bereit und bietet Zum Kalender hinzufügen an.",

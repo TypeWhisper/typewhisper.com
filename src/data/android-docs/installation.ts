@@ -6,13 +6,13 @@ export const en: IosDocPage = {
   description:
     "Requirements, installing from Google Play and every step of the guided setup on Android: language, speech recognition, access, keyboard and bubble.",
   intro:
-    "TypeWhisper {androidVersion} is available on Google Play for Android phones. This guide covers the requirements and walks you through the guided setup up to your first dictation.",
+    "TypeWhisper {androidVersion} is available on Google Play for Android phones and tablets. This guide covers the requirements and walks you through the guided setup up to your first dictation.",
   sections: [
     {
       title: "Before you install",
       bullets: [
         "Android 10 or newer.",
-        "A phone with a 64-bit ARM processor (arm64).",
+        "A phone or tablet with a 64-bit ARM processor (arm64).",
         "About 670 MB of free storage for Parakeet, the recommended on-device speech model. Other models need their own space.",
         "Internet access to download models and to use a cloud service, if you choose one.",
         "Android speech recognition as an engine needs Android 13 or newer. Parakeet and the other on-device models work from Android 10.",
@@ -124,13 +124,13 @@ export const de: IosDocPage = {
   description:
     "Voraussetzungen, Installation über Google Play und jeder Schritt der Einrichtung unter Android: Sprache, Spracherkennung, Zugriff, Tastatur und Bubble.",
   intro:
-    "TypeWhisper {androidVersion} gibt es für Android-Handys bei Google Play. Hier erfährst du, was dein Handy braucht, und gehst die Einrichtung bis zu deinem ersten Diktat durch.",
+    "TypeWhisper {androidVersion} gibt es für Android-Handys und -Tablets bei Google Play. Hier erfährst du, was dein Handy braucht, und gehst die Einrichtung bis zu deinem ersten Diktat durch.",
   sections: [
     {
       title: "Vor der Installation",
       bullets: [
         "Android 10 oder neuer.",
-        "Ein Handy mit 64-Bit-ARM-Prozessor (arm64).",
+        "Ein Handy oder Tablet mit 64-Bit-ARM-Prozessor (arm64).",
         "Etwa 670 MB freier Speicher für Parakeet, das empfohlene Sprachmodell auf dem Gerät. Andere Modelle brauchen eigenen Platz.",
         "Eine Internetverbindung, um Modelle zu laden und, falls du einen wählst, einen Clouddienst zu nutzen.",
         "Die Android-Spracherkennung als Engine braucht Android 13 oder neuer. Parakeet und die anderen Modelle auf dem Gerät laufen ab Android 10.",
@@ -174,7 +174,7 @@ export const de: IosDocPage = {
         {
           title: "5. Tastatur",
           description:
-            "Tippe auf TypeWhisper-Tastatur aktivieren. Android öffnet seine Eingabe-Einstellungen, dort schaltest du die TypeWhisper-Tastatur ein. Android warnt, dass Tastaturen Eingaben lesen können; TypeWhisper schickt Audio nur an einen Clouddienst, wenn du einen auswählst. Zurück in der Einrichtung machst du TypeWhisper mit Tastatur wechseln zur aktiven Tastatur.",
+            "Tippe auf TypeWhisper-Tastatur aktivieren. Android öffnet seine Eingabe-Einstellungen, dort schaltest du die TypeWhisper-Tastatur ein. Android warnt, dass Tastaturen Eingaben lesen können; TypeWhisper schickt Audio nur an einen Clouddienst, wenn du einen auswählst. Zurück in der Einrichtung tippst du auf Tastatur wechseln und machst TypeWhisper zur aktiven Tastatur.",
         },
         {
           title: "6. Bubble (optional)",
