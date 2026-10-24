@@ -99,7 +99,7 @@ for (const locale of ["en", "de"]) {
     }) => {
       test.slow();
       const found: string[] = [];
-      for (const platform of ["mac", "windows", "ios"])
+      for (const platform of ["mac", "windows", "ios", "android"])
         await check(page, `/${locale}/?platform=${platform}`, found);
 
       await page.goto(`/${locale}/?platform=mac`);

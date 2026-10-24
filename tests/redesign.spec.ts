@@ -264,7 +264,7 @@ test.describe("new landing sections", () => {
 
     await expect(
       page.getByTestId("landing-platform-grid").locator("a"),
-    ).toHaveCount(3);
+    ).toHaveCount(4);
   });
 
   test("German landing page localizes the new sections", async ({ page }) => {
@@ -540,7 +540,7 @@ test.describe("feature tour", () => {
     { width: 1440, height: 900 },
     { width: 1920, height: 1080 },
   ]) {
-    for (const platform of ["mac", "windows", "ios"]) {
+    for (const platform of ["mac", "windows", "ios", "android"]) {
       test(`the pinned ${platform} screenshot fits ${viewport.width}x${viewport.height} below the header`, async ({
         page,
       }) => {
@@ -767,7 +767,7 @@ test.describe("premium section", () => {
     ).toBeLessThanOrEqual(390);
   });
 
-  test("Windows and iOS keep one screenshot beside both features", async ({
+  test("Windows, iOS, and Android keep one screenshot beside both features", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -790,5 +790,21 @@ test.describe("premium section", () => {
       page.getByTestId("ios-premium-visual").locator("img"),
     ).toHaveAttribute("src", "/screenshots/en/ios/06-dictionary.png");
     await expect(premium.locator("img")).toHaveCount(1);
+
+    await page.goto("/en/?platform=android");
+    await premium.scrollIntoViewIfNeeded();
+    await expect(premium).toHaveAttribute("data-platform", "android");
+    await expect(
+      page.getByTestId("android-premium-visual").locator("img"),
+    ).toHaveAttribute("src", "/screenshots/en/android/04-calendar.png");
+    await expect(premium.locator("img")).toHaveCount(1);
+    await expect(premium.getByRole("heading", { level: 3 })).toHaveText([
+      "Email and calendar drafts",
+      "Live text and speakers",
+    ]);
+    // Premium on Android is bought in Google Play; the guide explains it.
+    await expect(
+      premium.getByRole("link", { name: "How Premium works on Android" }),
+    ).toHaveAttribute("href", "/en/docs/android/privacy-and-premium/");
   });
 });
