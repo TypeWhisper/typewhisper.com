@@ -35,6 +35,7 @@ const screenshotSizes: Record<LandingPlatform, string> = {
   windows:
     "(min-width: 1024px) min(60vw, 850px), (min-width: 640px) calc(100vw - 64px), 150vw",
   ios: "(min-width: 1024px) 390px, 280px",
+  android: "(min-width: 1024px) 420px, 280px",
 };
 
 interface TourStep {

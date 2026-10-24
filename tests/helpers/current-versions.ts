@@ -21,14 +21,16 @@ function known(platform: VersionPlatform, value: PlatformVersion): KnownVersion 
 
 // src/data/versions.ts imports the feed as JSON, which the test runner cannot
 // load. The constant is read from the source text instead.
-function readIosVersion(): string | undefined {
+function readHandEnteredVersion(
+  name: "iosVersion" | "androidVersion",
+): string | undefined {
   const source = readFileSync("src/data/versions.ts", "utf8");
-  return /export const iosVersion = "([^"]+)"/.exec(source)?.[1];
+  return new RegExp(`export const ${name} = "([^"]+)"`).exec(source)?.[1];
 }
 
 /**
  * The versions the pages show: macOS and Windows from the generated release
- * feed, iOS from the constant in src/data/versions.ts.
+ * feed, iOS and Android from the constants in src/data/versions.ts.
  */
 export function readCurrentVersions(): Record<VersionPlatform, KnownVersion> {
   const feed = JSON.parse(
@@ -38,7 +40,11 @@ export function readCurrentVersions(): Record<VersionPlatform, KnownVersion> {
   return {
     mac: known("mac", describeVersion(feed.mac?.version)),
     windows: known("windows", describeVersion(feed.windows?.version)),
-    ios: known("ios", describeVersion(readIosVersion())),
+    ios: known("ios", describeVersion(readHandEnteredVersion("iosVersion"))),
+    android: known(
+      "android",
+      describeVersion(readHandEnteredVersion("androidVersion")),
+    ),
   };
 }
 

@@ -2,6 +2,13 @@ import downloads from "@/data/downloads.json";
 import { androidVersion, iosVersion } from "@/data/versions";
 import { t, type Locale } from "@/i18n/index";
 import type { DownloadTarget } from "@/lib/attribution";
+import {
+  detectPlatformFromUserAgent,
+  getAndroidPlayStoreUrl,
+  type Platform,
+} from "@/lib/platform-detection";
+
+export { detectPlatformFromUserAgent, getAndroidPlayStoreUrl, type Platform };
 
 export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
@@ -10,7 +17,6 @@ export const windowsReleaseUrl =
 // Maintained in src/data/versions.ts.
 export { androidVersion, iosVersion };
 const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
-const androidPackage = "com.typewhisper.android";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 // The public beta is a separate Store product that installs alongside the
 // stable app and gets the daily builds of the next version from main.
@@ -35,7 +41,6 @@ export function windowsLatestAssetUrl(name: string): string {
 export const orgGitHubUrl = "https://github.com/TypeWhisper";
 export const discordUrl = "https://discord.gg/pUFR4a65SD";
 
-export type Platform = "mac" | "windows" | "ios" | "android" | "other";
 export type DownloadTargetContext = "nav" | "landing";
 
 interface AvailablePlatformDownloadTarget {
@@ -78,45 +83,6 @@ export function getWindowsStoreBetaUrl(locale: Locale): string {
 export function getIosAppStoreUrl(locale: Locale): string {
   const storefront = locale === "de" ? "de" : "us";
   return `https://apps.apple.com/${storefront}/${iosAppStoreProductPath}`;
-}
-
-/** The Google Play listing, with the store's interface in the page language. */
-export function getAndroidPlayStoreUrl(locale: Locale): string {
-  const params = new URLSearchParams({
-    id: androidPackage,
-    hl: locale === "de" ? "de" : "en",
-  });
-  return `https://play.google.com/store/apps/details?${params.toString()}`;
-}
-
-export function detectPlatformFromUserAgent(
-  userAgent: string,
-  maxTouchPoints = 0,
-): Platform {
-  const normalized = userAgent.toLowerCase();
-
-  if (normalized.includes("windows")) {
-    return "windows";
-  }
-
-  if (normalized.includes("android")) {
-    return "android";
-  }
-
-  if (
-    normalized.includes("iphone") ||
-    normalized.includes("ipad") ||
-    normalized.includes("ipod")
-  ) {
-    return "ios";
-  }
-
-  if (normalized.includes("macintosh") || normalized.includes("mac os x")) {
-    // iPadOS Safari introduces itself as a Mac; no Mac has a touch screen.
-    return maxTouchPoints > 1 ? "ios" : "mac";
-  }
-
-  return "other";
 }
 
 export function detectPlatform(): Platform {

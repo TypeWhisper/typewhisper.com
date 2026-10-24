@@ -86,14 +86,22 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
   const download = getPlatformDownloadTarget(platform, locale, "landing");
   const docs = (page: string) =>
     localePath(locale, `/docs/${platform}/${page}`);
-  const guide =
-    platform === "ios"
-      ? docs(task === "files" ? "files-history-and-inbox" : task === "workflows" ? "profiles-and-processing" : "dictation-and-keyboard")
-      : docs(task === "files" ? "file-transcription" : task === "workflows" ? "workflows" : "features");
+  const guidePages = {
+    ios: ["dictation-and-keyboard", "files-history-and-inbox", "profiles-and-processing"],
+    android: ["dictation-and-keyboard", "files-and-history", "profiles-and-writing"],
+    desktop: ["features", "file-transcription", "workflows"],
+  } as const;
+  const [dictationPage, filesPage, workflowsPage] =
+    guidePages[platform === "ios" || platform === "android" ? platform : "desktop"];
+  const guide = docs(task === "files" ? filesPage : task === "workflows" ? workflowsPage : dictationPage);
+  // The phones have their engines built in; the desktop apps add cloud
+  // engines as add-ons.
   const engines =
-    processing === "cloud" && platform !== "ios"
-      ? `/${locale}/addons/?platform=${platform}&category=transcription`
-      : docs(platform === "ios" ? "profiles-and-processing" : "features");
+    platform === "android"
+      ? docs("engines-and-models")
+      : processing === "cloud" && platform !== "ios"
+        ? `/${locale}/addons/?platform=${platform}&category=transcription`
+        : docs(platform === "ios" ? "profiles-and-processing" : "features");
   return (
     <div className="utility-setup" data-testid="setup-assistant">
       <div
@@ -111,6 +119,7 @@ export function SetupAssistant({ locale }: { locale: Locale }) {
           <option value="mac">macOS</option>
           <option value="windows">Windows</option>
           <option value="ios">iOS</option>
+          <option value="android">Android</option>
         </Field>
         <Field
           label={t(locale, "setup.processing")}

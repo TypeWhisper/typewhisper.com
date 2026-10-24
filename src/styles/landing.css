@@ -209,6 +209,23 @@
   }
 }
 
+/* Four platforms stay on one line of a phone: names without logos. */
+@media (max-width: 479px) {
+  .landing .landing-hero .site-switch__item {
+    padding-inline: 0.75rem;
+  }
+
+  .landing .landing-hero .site-switch__item svg {
+    display: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .landing .landing-hero .site-switch__item {
+    padding-inline: 0.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing .landing-hero__title {
     opacity: 1;
@@ -389,6 +406,23 @@
   border-radius: 14px;
 }
 
+/* Phone screenshots in place of a video (Android, until it has one). */
+.landing .landing-phones__shots {
+  display: grid;
+  max-width: 36rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 3vw, 1.5rem);
+  margin-inline: auto;
+}
+
+.landing .landing-phones__shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+}
+
 /* ---------- Feature tour ---------- */
 .landing .landing-feature__title {
   margin: 0;
@@ -433,6 +467,10 @@
   --landing-shot-ratio: 0.4603;
 }
 
+.landing [data-platform="android"] {
+  --landing-shot-ratio: 0.5625;
+}
+
 /*
  * macOS captures carry a transparent margin for their window shadow. It hangs
  * outside the frame, so the window itself lines up with the grid.
@@ -450,7 +488,8 @@
   border: 1px solid var(--hairline);
 }
 
-.landing [data-platform="ios"] .landing-shot img {
+.landing [data-platform="ios"] .landing-shot img,
+.landing [data-platform="android"] .landing-shot img {
   border: 1px solid var(--hairline);
   border-radius: 18px;
 }
@@ -511,7 +550,8 @@
   margin-top: 1.5rem;
 }
 
-.landing .landing-tour[data-platform="ios"] .landing-tour__inline {
+.landing .landing-tour[data-platform="ios"] .landing-tour__inline,
+.landing .landing-tour[data-platform="android"] .landing-tour__inline {
   width: 100%;
   max-width: 17.5rem;
   margin-inline: auto;
@@ -529,7 +569,8 @@
     column-gap: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .landing .landing-tour[data-platform="ios"] .landing-tour__step {
+  .landing .landing-tour[data-platform="ios"] .landing-tour__step,
+  .landing .landing-tour[data-platform="android"] .landing-tour__step {
     grid-template-columns: minmax(0, 1fr) minmax(0, 17.5rem);
     justify-content: center;
   }
@@ -615,7 +656,8 @@
     margin: 0 auto;
   }
 
-  .landing .landing-tour[data-platform="ios"] .landing-tour__figure {
+  .landing .landing-tour[data-platform="ios"] .landing-tour__figure,
+  .landing .landing-tour[data-platform="android"] .landing-tour__figure {
     max-width: calc(
       (100vh - var(--header-height) - 12rem) * var(--landing-shot-ratio)
     );
@@ -654,7 +696,8 @@
     margin-top: 1.25rem;
   }
 
-  .landing .landing-tour[data-platform="ios"] .landing-tour__meta {
+  .landing .landing-tour[data-platform="ios"] .landing-tour__meta,
+  .landing .landing-tour[data-platform="android"] .landing-tour__meta {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
@@ -800,7 +843,8 @@
   border-radius: 12px;
 }
 
-.landing .landing-premium[data-platform="ios"] .landing-premium__grid {
+.landing .landing-premium[data-platform="ios"] .landing-premium__grid,
+.landing .landing-premium[data-platform="android"] .landing-premium__grid {
   grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
   justify-content: center;
 }
@@ -1010,11 +1054,13 @@
 @media (max-width: 899px) {
   .landing .landing-watch,
   .landing .landing-premium__grid,
-  .landing .landing-premium[data-platform="ios"] .landing-premium__grid {
+  .landing .landing-premium[data-platform="ios"] .landing-premium__grid,
+  .landing .landing-premium[data-platform="android"] .landing-premium__grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .landing .landing-premium[data-platform="ios"] .landing-premium__shot {
+  .landing .landing-premium[data-platform="ios"] .landing-premium__shot,
+  .landing .landing-premium[data-platform="android"] .landing-premium__shot {
     max-width: 17rem;
     margin-inline: auto;
   }
@@ -1031,8 +1077,12 @@
    * Screenshots stay readable on a phone: shown larger and panned sideways.
    * The strip starts at its right end, where the content of the window is.
    */
-  .landing .landing-tour:not([data-platform="ios"]) .landing-tour__pan,
-  .landing .landing-premium:not([data-platform="ios"]) .landing-premium__shot {
+  .landing
+    .landing-tour:not([data-platform="ios"], [data-platform="android"])
+    .landing-tour__pan,
+  .landing
+    .landing-premium:not([data-platform="ios"], [data-platform="android"])
+    .landing-premium__shot {
     overflow-x: auto;
     margin-inline: calc(var(--gutter) * -1);
     border-radius: 0;
@@ -1069,7 +1119,9 @@
     pointer-events: none;
   }
 
-  .landing .landing-tour:not([data-platform="ios"]) .landing-shot {
+  .landing
+    .landing-tour:not([data-platform="ios"], [data-platform="android"])
+    .landing-shot {
     width: 150vw;
     margin-inline: var(--gutter);
     direction: ltr;
@@ -1082,7 +1134,7 @@
   }
 
   .landing
-    .landing-premium:not([data-platform="ios"])
+    .landing-premium:not([data-platform="ios"], [data-platform="android"])
     .landing-premium__shot
     picture {
     width: 150vw;
@@ -1090,7 +1142,9 @@
     direction: ltr;
   }
 
-  .landing .landing-premium:not([data-platform="ios"]) .landing-premium__shot {
+  .landing
+    .landing-premium:not([data-platform="ios"], [data-platform="android"])
+    .landing-premium__shot {
     background: transparent;
   }
 }

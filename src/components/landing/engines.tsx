@@ -7,6 +7,7 @@ const subtitleKey = {
   mac: "engineComparison.subtitle.mac",
   windows: "engineComparison.subtitle.other",
   ios: "engineComparison.subtitle.ios",
+  android: "engineComparison.subtitle.android",
 } as const;
 
 /** Engine comparison for the selected platform, shown inside the disclosure. */
