@@ -1,13 +1,13 @@
 import { localePath, t, type Locale } from "@/i18n/index";
 
-export type DocsPlatform = "mac" | "windows" | "ios";
+export type DocsPlatform = "mac" | "windows" | "ios" | "android";
 
 export interface DocsNavLink {
   href: string;
   label: string;
 }
 
-export const docsPlatforms: DocsPlatform[] = ["mac", "windows", "ios"];
+export const docsPlatforms: DocsPlatform[] = ["mac", "windows", "ios", "android"];
 
 /** Pages of a platform in reading order: [path below the platform, label key]. */
 const pages: Record<DocsPlatform, Array<[path: string, labelKey: string]>> = {
@@ -44,12 +44,26 @@ const pages: Record<DocsPlatform, Array<[path: string, labelKey: string]>> = {
     ["/privacy-and-premium", "docs.sidebar.privacyPremium"],
     ["/troubleshooting", "docs.sidebar.troubleshooting"],
   ],
+  android: [
+    ["", "docs.sidebar.overview"],
+    ["/installation", "docs.sidebar.installation"],
+    ["/dictation-and-keyboard", "docs.sidebar.dictationKeyboard"],
+    ["/dictation-bubble", "docs.sidebar.dictationBubble"],
+    ["/engines-and-models", "docs.sidebar.enginesModels"],
+    ["/profiles-and-writing", "docs.sidebar.profilesWriting"],
+    ["/quick-dictation-and-inbox", "docs.sidebar.quickDictationInbox"],
+    ["/files-and-history", "docs.sidebar.filesHistory"],
+    ["/dictionary-and-snippets", "docs.sidebar.dictionarySnippets"],
+    ["/privacy-and-premium", "docs.sidebar.privacyPremium"],
+    ["/troubleshooting", "docs.sidebar.troubleshooting"],
+  ],
 };
 
 const platformTitleKeys: Record<DocsPlatform, string> = {
   mac: "docs.mac.title",
   windows: "docs.win.title",
   ios: "docs.ios.title",
+  android: "docs.android.title",
 };
 
 export function docsPlatformTitle(locale: Locale, platform: DocsPlatform) {

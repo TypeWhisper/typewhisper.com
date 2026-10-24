@@ -1,26 +1,29 @@
 import { expect, test } from "@playwright/test";
 
 const optInUrl = "https://play.google.com/apps/testing/com.typewhisper.android";
-const storeUrl = "https://play.google.com/store/apps/details?id=com.typewhisper.android";
+const storeUrl = {
+  en: "https://play.google.com/store/apps/details?id=com.typewhisper.android&hl=en",
+  de: "https://play.google.com/store/apps/details?id=com.typewhisper.android&hl=de",
+} as const;
 
 const copy = {
   en: {
     title: "TypeWhisper for Android",
     deleteTitle: "Delete your TypeWhisper account",
-    android: "Android Beta",
+    android: "Android",
     deleteLink: "Delete account",
   },
   de: {
     title: "TypeWhisper für Android",
     deleteTitle: "TypeWhisper-Konto löschen",
-    android: "Android-Beta",
+    android: "Android",
     deleteLink: "Konto löschen",
   },
 } as const;
 
 for (const locale of ["en", "de"] as const) {
-  test.describe(`${locale} Android beta and account deletion`, () => {
-    test("the Android page leads through the Play opt-in to the Play listing", async ({
+  test.describe(`${locale} Android page and account deletion`, () => {
+    test("the Android page links the Play listing, the guide and the beta program", async ({
       page,
     }) => {
       await page.goto(`/${locale}/android/`);
@@ -28,22 +31,23 @@ for (const locale of ["en", "de"] as const) {
       await expect(
         page.getByRole("heading", { level: 1, name: copy[locale].title }),
       ).toBeVisible();
-      await expect(page.getByTestId("page-head")).toContainText("Beta");
-      await expect(page.getByTestId("android-beta-step1")).toHaveAttribute(
+      await expect(page.getByTestId("android-play")).toHaveAttribute(
+        "href",
+        storeUrl[locale],
+      );
+      await expect(
+        page.getByTestId("android-get").locator(`a[href="/${locale}/docs/android/"]`),
+      ).toBeVisible();
+      await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
+      const beta = page.getByTestId("android-beta-program");
+      await expect(page.getByTestId("android-beta-optin")).toHaveAttribute(
         "href",
         optInUrl,
       );
-      await expect(page.getByTestId("android-beta-step2")).toHaveAttribute(
-        "href",
-        storeUrl,
-      );
-      await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
-      const notice = page.getByTestId("android-beta-notice");
-      await expect(notice).toContainText("Premium");
       await expect(
-        notice.locator('a[href="mailto:hello@typewhisper.com"]'),
+        beta.locator('a[href="mailto:hello@typewhisper.com"]'),
       ).toBeVisible();
-      await expect(notice.locator('a[href^="https://discord.gg/"]')).toBeVisible();
+      await expect(beta.locator('a[href^="https://discord.gg/"]')).toBeVisible();
     });
 
     test("the account deletion page names the app path and the web page", async ({
@@ -67,7 +71,7 @@ for (const locale of ["en", "de"] as const) {
       ).toBeVisible();
     });
 
-    test("privacy and footer link the deletion page; footer and release status list the beta", async ({
+    test("privacy and footer link the deletion page; footer and release status list Android", async ({
       page,
     }) => {
       await page.goto(`/${locale}/privacy/`);
@@ -85,7 +89,10 @@ for (const locale of ["en", "de"] as const) {
       ).toHaveAttribute("href", `/${locale}/delete-account/`);
 
       await page.goto(`/${locale}/release-status/`);
-      await expect(page.getByTestId("release-status-android")).toBeVisible();
+      const status = page.getByTestId("release-status-android");
+      await expect(status).toBeVisible();
+      await expect(status.locator(`a[href="${storeUrl[locale]}"]`)).toBeVisible();
+      await expect(status.locator(`a[href="/${locale}/docs/android/"]`)).toBeVisible();
     });
   });
 }

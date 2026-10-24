@@ -8,7 +8,12 @@ import {
 } from "@/components/docs/navigation";
 import { resolveVersions } from "@/data/versions";
 import { t, type Locale } from "@/i18n/index";
-import { IOSLogo, MacOSLogo, WindowsLogo } from "@/components/ui/platform-logos";
+import {
+  AndroidLogo,
+  IOSLogo,
+  MacOSLogo,
+  WindowsLogo,
+} from "@/components/ui/platform-logos";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import { ArrowRight } from "lucide-react";
 
@@ -23,14 +28,15 @@ export function getStaticPaths() {
 const { locale } = Astro.props;
 const metaDescription = resolveVersions(
   locale === "de"
-    ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS {macSeries}, Windows {windowsVersion} und iOS {iosVersion}."
-    : "TypeWhisper documentation for the stable macOS {macSeries}, Windows {windowsVersion}, and iOS {iosVersion} releases.",
+    ? "TypeWhisper-Dokumentation für die stabilen Releases auf macOS {macSeries}, Windows {windowsVersion}, iOS {iosVersion} und Android {androidVersion}."
+    : "TypeWhisper documentation for the stable macOS {macSeries}, Windows {windowsVersion}, iOS {iosVersion}, and Android {androidVersion} releases.",
 );
 
 const copy: Record<DocsPlatform, { key: string; Logo: typeof MacOSLogo }> = {
   mac: { key: "docs.mac", Logo: MacOSLogo },
   windows: { key: "docs.win", Logo: WindowsLogo },
   ios: { key: "docs.ios", Logo: IOSLogo },
+  android: { key: "docs.android", Logo: AndroidLogo },
 };
 ---
 
