@@ -16,7 +16,7 @@
   "nav.downloadIos": "Download on the App Store",
   "nav.downloadAndroid": "Get it on Google Play",
   "downloadCta.title": "Ready for TypeWhisper?",
-  "downloadCta.subtitle": "Free for Mac, Windows, iPhone, and iPad.",
+  "downloadCta.subtitle": "Free for Mac, Windows, iPhone, iPad, and Android.",
   "downloadCta.releaseStatus": "View release status",
   "downloadCta.licenseNote.before": "Free under GPLv3, including internal use of the GPL app. Commercial licenses for non-GPL terms and support start at 5 EUR/mo.",
   "downloadCta.licenseNote.link": "See pricing",
@@ -103,7 +103,7 @@
   "notFound.heading": "Page not found",
   "notFound.description": "The page you're looking for doesn't exist or has been moved.",
   "notFound.backHome": "Back to Home",
-  "structuredData.description": "TypeWhisper connects private speech-to-text with system-wide dictation, files, workflows, and automation across stable macOS, Windows, and iOS editions.",
+  "structuredData.description": "TypeWhisper connects private speech-to-text with system-wide dictation, files, workflows, and automation across stable macOS, Windows, iOS, and Android editions.",
   "docs.search.title": "Search documentation",
   "docs.search.label": "Search docs",
   "docs.search.placeholder": "For example: microphone, dictionary, API …",
@@ -143,5 +143,6 @@
   "setup.share": "Share these choices with the link in your address bar.",
   "downloadCta.requirement.mac": "macOS 14 or later",
   "downloadCta.requirement.windows": "Windows 10 and 11",
-  "downloadCta.requirement.ios": "iOS 18 or later"
+  "downloadCta.requirement.ios": "iOS 18 or later",
+  "downloadCta.requirement.android": "Android 10 or later"
 }

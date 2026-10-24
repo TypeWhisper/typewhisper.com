@@ -13,6 +13,8 @@ import { BarMark } from "@/components/site/bar-mark";
 import { watchPanRegion } from "@/lib/pan-region";
 
 const blocks: PremiumFeatureKey[] = ["sync", "dictionary"];
+// Premium on Android has its own features: drafts, and live text with speakers.
+const androidBlocks = ["formats", "live"] as const;
 const items = ["item1", "item2", "item3"] as const;
 
 /*
@@ -32,7 +34,7 @@ function FeatureText({
 }: {
   locale: Locale;
   prefix: string;
-  block: PremiumFeatureKey;
+  block: string;
 }) {
   return (
     <>
@@ -54,12 +56,22 @@ function FeatureText({
 
 /**
  * Premium features beside real screenshots. macOS pairs each feature with its
- * own detail window; Windows and iOS show one capture beside both features.
+ * own detail window; Windows, iOS, and Android show one capture beside both
+ * features.
  */
 export function Premium({ locale = "en" }: { locale?: Locale }) {
   const revealRoot = useScrollReveal();
   const platform = useSyncedLandingPlatform();
-  const prefix = platform === "ios" ? "premiumFeatures.ios" : "premiumFeatures";
+  const prefix =
+    platform === "ios" || platform === "android"
+      ? `premiumFeatures.${platform}`
+      : "premiumFeatures";
+  const textBlocks = platform === "android" ? androidBlocks : blocks;
+  // Android sells Premium in Google Play; its guide explains how.
+  const ctaHref = localePath(
+    locale,
+    platform === "android" ? "/docs/android/privacy-and-premium" : "/pricing",
+  );
 
   return (
     <section
@@ -124,7 +136,9 @@ export function Premium({ locale = "en" }: { locale?: Locale }) {
               role="group"
               aria-label={t(locale, `${prefix}.screenshotAlt`)}
               data-testid={
-                platform === "ios" ? "ios-premium-visual" : undefined
+                platform === "ios" || platform === "android"
+                  ? `${platform}-premium-visual`
+                  : undefined
               }
             >
               <Screenshot
@@ -139,7 +153,7 @@ export function Premium({ locale = "en" }: { locale?: Locale }) {
             </div>
 
             <div className="landing-premium__blocks">
-              {blocks.map((block) => (
+              {textBlocks.map((block) => (
                 <div
                   key={block}
                   className="landing-premium__block reveal-hidden"
@@ -153,7 +167,7 @@ export function Premium({ locale = "en" }: { locale?: Locale }) {
 
         <div className="site-note reveal-hidden">
           <p>{t(locale, `${prefix}.licenseNote`)}</p>
-          <a href={localePath(locale, "/pricing")} className="site-link">
+          <a href={ctaHref} className="site-link">
             {t(locale, `${prefix}.cta`)}
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
