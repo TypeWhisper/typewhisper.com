@@ -406,23 +406,6 @@
   border-radius: 14px;
 }
 
-/* Phone screenshots in place of a video (Android, until it has one). */
-.landing .landing-phones__shots {
-  display: grid;
-  max-width: 36rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(0.75rem, 3vw, 1.5rem);
-  margin-inline: auto;
-}
-
-.landing .landing-phones__shot {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--hairline);
-  border-radius: 18px;
-}
-
 /* ---------- Feature tour ---------- */
 .landing .landing-feature__title {
   margin: 0;

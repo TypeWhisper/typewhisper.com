@@ -49,15 +49,6 @@ export const premiumScreenshotByPlatform: Record<
   android: "/screenshots/android/04-calendar.png",
 };
 
-/**
- * Android has no screen recording yet. Until it has, the video section shows
- * these two captures: dictating in the app and with the keyboard in any app.
- */
-export const androidPreviewScreenshots = [
-  "/screenshots/android/01-record.png",
-  "/screenshots/android/08-keyboard.png",
-] as const;
-
 export type PremiumFeatureKey = "sync" | "dictionary";
 
 /** macOS shows the detail window of each Premium feature beside its text. */

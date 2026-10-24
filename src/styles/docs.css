@@ -1051,6 +1051,13 @@
   background: var(--surface);
 }
 
+/* A landscape product video (Android) instead of a phone recording. */
+.docs-prose .docs-figure--video-wide video {
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+}
+
 /* ---------- Tables ---------- */
 
 .docs-table {

@@ -702,7 +702,7 @@ test.describe("Android on the landing page", () => {
   });
 
   for (const locale of ["en", "de"] as const) {
-    test(`${locale}: the video section shows the Play screenshots until there is a video`, async ({
+    test(`${locale}: the video section plays the Android product video`, async ({
       page,
       request,
     }) => {
@@ -715,14 +715,21 @@ test.describe("Android on the landing page", () => {
       await expect(howItWorks).toContainText(
         locale === "de" ? "TypeWhisper auf Android." : "TypeWhisper on Android.",
       );
-      await expect(page.getByTestId("how-it-works-video")).toHaveCount(0);
-
-      const preview = page.getByTestId("android-preview");
-      await expect(preview.locator("img")).toHaveCount(2);
-      for (const name of ["01-record", "08-keyboard"]) {
-        const path = `/screenshots/${locale}/android/${name}.png`;
-        await expect(preview.locator(`img[src="${path}"]`)).toBeVisible();
-        expect((await request.get(path)).ok()).toBeTruthy();
+      const video = page.getByTestId("how-it-works-video");
+      await expect(video.locator("source")).toHaveAttribute(
+        "src",
+        `/android-overview-${locale}.mp4`,
+      );
+      await expect(video.locator("track")).toHaveAttribute(
+        "src",
+        `/android-overview-${locale}.vtt`,
+      );
+      for (const path of [
+        `/android-overview-${locale}.mp4`,
+        `/android-overview-${locale}.vtt`,
+        await video.getAttribute("poster"),
+      ]) {
+        expect((await request.get(path ?? "")).ok()).toBeTruthy();
       }
 
       // The other platforms keep their video.
@@ -730,7 +737,6 @@ test.describe("Android on the landing page", () => {
       await expect(
         page.getByTestId("how-it-works-video").locator("source"),
       ).toHaveAttribute("src", `/ios-app-preview-${locale}.mp4`);
-      await expect(page.getByTestId("android-preview")).toHaveCount(0);
     });
 
     test(`${locale}: tour, engines, and Premium show Android`, async ({

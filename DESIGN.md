@@ -278,7 +278,7 @@ Disclosure:
 | Class | What it is |
 |-------|------------|
 | `site-shot` | `<figure>` with a real screenshot (use the `Screenshot` component) and a `site-caption`. Modifiers: `--window` for macOS captures with their shadow margin, `--framed` for captures without shadow (Windows), `--phone` for iOS, `--stage` for a stage behind the image on a band |
-| `site-video` | `<figure>` with a real `<video controls>` and `<figcaption>`. `--phone` for portrait video. On the homepage, `landing-phones` puts phone screenshots in its place while a platform has no video (Android) |
+| `site-video` | `<figure>` with a real `<video controls>` and `<figcaption>`. `--phone` for portrait video |
 
 The pinned feature tour, the panned phone screenshots, and the frame in the shape of the screenshot (`landing-shot`) stay homepage-only.
 
@@ -361,4 +361,4 @@ Copy never spells out the current stable version of an app. It uses placeholders
 | 2026-09-28 | Global focus ring in the accent color, buttons as pills, cards without shadow, footer with the static waveform divider instead of animated bars | Header, footer, and shared components follow the hairline system |
 | 2026-09-28 | Current app versions come from `src/data/versions.ts` through placeholders in copy | Support, release status, docs, and changelog can no longer show different numbers |
 | 2026-09-28 | `--fill` differs from the landing mapping of `--muted` in the light theme (`#f5f5f7` instead of `#ffffff`); `--destructive` darkened to `#d70015` | A white fill disappears on paper-white; white text on the old red reached only 3.6:1 |
-| 2026-10-24 | Android becomes the fourth platform of the homepage. Its screenshots use the phone layout of iOS; the video section shows two Google Play screenshots until an Android video exists; the hero switch drops its logos below 480px so four platforms fit on one line | Android visitors see their edition and download first, without a second design for phones |
+| 2026-10-24 | Android becomes the fourth platform of the homepage. Its screenshots use the phone layout of iOS; the video section plays a landscape product video (studio render with voice-over and captions); the hero switch drops its logos below 480px so four platforms fit on one line | Android visitors see their edition and download first, without a second design for phones |

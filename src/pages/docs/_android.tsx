@@ -40,19 +40,34 @@ const phoneScreenshots = [
   },
 ] as const;
 
-/**
- * The product video of the overview, per language. Leave a language out
- * until its render is in public/.
- */
-const previewVideos: Partial<Record<Locale, { src: string; poster: string }>> =
-  {};
+/** The product video (studio render with voice-over), as on the homepage. */
+interface PreviewVideo {
+  src: string;
+  poster: string;
+  captions: string;
+}
+
+const previewVideos: Record<Locale, PreviewVideo> = {
+  en: {
+    src: "/android-overview-en.mp4",
+    poster: "/landing/android-overview-poster-en.jpg",
+    captions: "/android-overview-en.vtt",
+  },
+  de: {
+    src: "/android-overview-de.mp4",
+    poster: "/landing/android-overview-poster-de.jpg",
+    captions: "/android-overview-de.vtt",
+  },
+};
 
 export function androidOverviewHead(locale: Locale) {
   const isDe = locale === "de";
   return {
     heading: "Android",
     badge: resolveVersions(
-      isDe ? "Version {androidSeries} stabil" : "Version {androidSeries} stable",
+      isDe
+        ? "Version {androidSeries} stabil"
+        : "Version {androidSeries} stable",
     ),
     lede: isDe
       ? "Private Spracherkennung für Android mit lokalen Engines, eigener Tastatur, Diktier-Bubble für jede App, Profilen, Schnelldiktat, Dateien, Wörterbuch und Textbausteinen."
@@ -71,14 +86,14 @@ export default function DocsAndroid({ locale = "en" }: { locale?: Locale }) {
     <>
       <DocsSection
         id="preview"
-        label={preview ? previewLabel : undefined}
+        label={previewLabel}
         title={
           isDe
             ? "Sprechen statt tippen, in jeder App."
             : "Speak instead of typing, in any app."
         }
       >
-        <div className={preview ? "docs-beside" : undefined}>
+        <div>
           <div>
             <p>
               {isDe
@@ -100,28 +115,35 @@ export default function DocsAndroid({ locale = "en" }: { locale?: Locale }) {
               </div>
             </dl>
           </div>
-          {preview && (
-            <figure className="docs-figure docs-figure--video">
-              <video
-                playsInline
-                controls
-                preload="metadata"
-                poster={preview.poster}
-                aria-label={previewLabel}
-              >
-                <source src={preview.src} type="video/mp4" />
-                {isDe
-                  ? "Dein Browser unterstützt das Video-Tag nicht."
-                  : "Your browser does not support the video tag."}
-              </video>
-            </figure>
-          )}
+          {/* Landscape video: full width under the facts, not beside them. */}
+          <figure className="docs-figure docs-figure--video docs-figure--video-wide">
+            <video
+              playsInline
+              controls
+              preload="metadata"
+              poster={preview.poster}
+              aria-label={previewLabel}
+            >
+              <source src={preview.src} type="video/mp4" />
+              <track
+                kind="captions"
+                src={preview.captions}
+                srcLang={locale}
+                label={isDe ? "Deutsch" : "English"}
+              />
+              {isDe
+                ? "Dein Browser unterstützt das Video-Tag nicht."
+                : "Your browser does not support the video tag."}
+            </video>
+          </figure>
         </div>
       </DocsSection>
 
       <DocsSection
         headingId="android-guide-title"
-        label={isDe ? "Nicht nur eine Featureliste" : "More than a feature list"}
+        label={
+          isDe ? "Nicht nur eine Featureliste" : "More than a feature list"
+        }
         title={
           isDe
             ? "Die vollständige Android-Anleitung."
@@ -156,9 +178,7 @@ export default function DocsAndroid({ locale = "en" }: { locale?: Locale }) {
 
       <DocsSection
         headingId="android-screens-title"
-        title={
-          isDe ? "So sieht die App aus." : "What the app looks like."
-        }
+        title={isDe ? "So sieht die App aus." : "What the app looks like."}
       >
         <p>
           {isDe

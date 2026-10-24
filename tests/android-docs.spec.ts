@@ -33,6 +33,9 @@ test.describe("Android documentation", () => {
         page.locator(`a[href="${playUrl(locale)}"]`).first(),
       ).toBeVisible();
       await expect(
+        page.locator(`source[src="/android-overview-${locale}.mp4"]`),
+      ).toHaveCount(1);
+      await expect(
         page.locator(
           'a[href="https://play.google.com/apps/testing/com.typewhisper.android"]',
         ),
@@ -67,7 +70,9 @@ test.describe("Android documentation", () => {
           await image.scrollIntoViewIfNeeded();
           await expect
             .poll(() =>
-              image.evaluate((element: HTMLImageElement) => element.naturalWidth),
+              image.evaluate(
+                (element: HTMLImageElement) => element.naturalWidth,
+              ),
             )
             .toBeGreaterThan(0);
         }
@@ -87,7 +92,9 @@ test.describe("Android documentation", () => {
 
   test("the docs index and search list Android", async ({ page }) => {
     await page.goto("/en/docs/");
-    await expect(page.locator('a[href="/en/docs/android/"]').first()).toBeVisible();
+    await expect(
+      page.locator('a[href="/en/docs/android/"]').first(),
+    ).toBeVisible();
     await page.goto("/en/docs/search/?platform=android");
     await expect(
       page.getByRole("button", { name: "Android", pressed: true }),
