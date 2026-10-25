@@ -5,6 +5,10 @@ on:
     branches: [main]
   repository_dispatch:
     types: [release-published]
+  # iOS releases happen in App Store Connect and send no event. The build reads
+  # the live App Store version, so a regular rebuild picks up a new release.
+  schedule:
+    - cron: "17 */3 * * *"
   workflow_dispatch:
 
 env:

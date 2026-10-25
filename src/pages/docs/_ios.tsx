@@ -284,7 +284,7 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           data-download-social-trigger
           data-download-platform="ios"
           data-download-target="ios_app_store"
-          data-download-version={iosVersion}
+          data-download-version={iosVersion ?? undefined}
           data-tracking-placement="docs"
           className="site-link"
         >
