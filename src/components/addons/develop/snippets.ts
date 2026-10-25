@@ -168,7 +168,11 @@ public enum TypeWhisperEvent: Sendable {
     case transcriptionCompleted(TranscriptionCompletedPayload)
     case transcriptionFailed(TranscriptionFailedPayload)
     case textInserted(TextInsertedPayload)
+    case textCorrectionCommitted(TextCorrectionCommittedPayload)
     case actionCompleted(ActionCompletedPayload)
+    case partialTranscriptionUpdate(PartialTranscriptionPayload)
+    // TypeWhisper 1.8 or later
+    case recorderTranscriptReady(RecorderTranscriptReadyPayload)
 }`;
 
 export const exampleLlmPlugin = `import Foundation

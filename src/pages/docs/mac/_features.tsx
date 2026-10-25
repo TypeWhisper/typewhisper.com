@@ -116,6 +116,13 @@ export default function DocsMacFeatures({
       </DocsSection>
 
       <DocsSection
+        id="recorder"
+        title={t(locale, "docs.mac.features.recorder.title")}
+      >
+        <p>{t(locale, "docs.mac.features.recorder.desc")}</p>
+      </DocsSection>
+
+      <DocsSection
         id="whisper-mode"
         title={t(locale, "docs.mac.features.whisperMode.title")}
       >

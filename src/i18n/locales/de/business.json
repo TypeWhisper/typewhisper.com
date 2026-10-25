@@ -7,6 +7,7 @@
   "business.hero.ctaSales": "Sales kontaktieren",
   "business.hero.ctaPricing": "Preise ansehen",
   "business.features.title": "Gebaut für Teams, denen Privatsphäre und Kontrolle wichtig sind.",
+  "business.features.deploymentMac": "Auf dem Mac per Konfigurationsprofil mit Iru, Jamf Pro oder jedem MDM ausrollen",
   "business.features.label": "Für dein Team",
   "business.features.subtitle": "Alles, was du als Team-Kunde bekommst.",
   "business.features.deployment": "Unter Windows per Gruppenrichtlinie, Intune oder MSI ausrollen",

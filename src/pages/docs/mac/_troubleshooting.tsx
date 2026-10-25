@@ -1,5 +1,6 @@
+import { ArrowRight } from "lucide-react";
 import { DocsCode, DocsSection, DocsSubheading } from "@/components/docs/prose";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 
 export default function DocsMacTroubleshooting({
   locale = "en",
@@ -116,6 +117,30 @@ export default function DocsMacTroubleshooting({
           </strong>{" "}
           {t(locale, "docs.mac.troubleshooting.noAudio.desc1b")}
         </p>
+      </DocsSection>
+
+      <DocsSection
+        id="managed-settings"
+        title={
+          locale === "de"
+            ? "Einstellung ist von der Organisation gesperrt"
+            : "A setting is locked by your organization"
+        }
+      >
+        <p>
+          {locale === "de"
+            ? "Deine IT hat die Einstellung über ein Konfigurationsprofil festgelegt; sie zeigt dann „Von deiner Organisation verwaltet.“ Einstellungen > Erweitert > Verwaltete Einstellungen listet die verwalteten Werte auf diesem Mac und mögliche Probleme mit Richtlinien. Den Wert ändert nur deine IT; in TypeWhisper lässt er sich nicht überschreiben."
+            : "Your IT department set it through a configuration profile, and it shows “Managed by your organization.” Settings > Advanced > Managed Settings lists the managed values on this Mac and any policy problems. Only your IT department can change the value; you can't change it in TypeWhisper."}
+        </p>
+        <a
+          href={localePath(locale, "/docs/mac/managed-settings")}
+          className="site-link"
+        >
+          {locale === "de"
+            ? "Verwaltete Einstellungen für Administratoren"
+            : "Managed settings for administrators"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
     </>
   );
