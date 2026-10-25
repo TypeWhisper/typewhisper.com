@@ -15,7 +15,7 @@ test.describe("documentation reading mode", () => {
     ).toHaveText("macOS");
 
     const toc = page.getByRole("navigation", { name: "Auf dieser Seite" });
-    await expect(toc.getByRole("link")).toHaveCount(7);
+    await expect(toc.getByRole("link")).toHaveCount(8);
     await toc.getByRole("link", { name: "Deinstallieren" }).click();
     await expect(page).toHaveURL(/#uninstall$/);
     await expect(
