@@ -248,10 +248,14 @@ const APP_STORE_VERSION_RE = /^\d+\.\d+(\.\d+)?$/;
 export async function fetchIosAppStoreVersion({
   fetchFn = globalThis.fetch,
   logger = console,
+  timeoutMs = 15_000,
 } = {}) {
   try {
+    // The signal also covers reading the body, so a stalled response cannot
+    // hold up the build.
     const response = await fetchFn(IOS_LOOKUP_URL, {
       headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(timeoutMs),
     });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);

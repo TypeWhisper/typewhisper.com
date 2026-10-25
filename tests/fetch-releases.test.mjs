@@ -372,3 +372,14 @@ test("fetchIosAppStoreVersion returns null for failed or unexpected lookups", as
   };
   assert.equal(await fetchIosAppStoreVersion({ fetchFn: throwing, logger: quietLogger }), null);
 });
+
+test("fetchIosAppStoreVersion gives up on a stalled lookup", async () => {
+  const stalled = (_input, { signal }) =>
+    new Promise((_resolve, reject) => {
+      signal.addEventListener("abort", () => reject(signal.reason));
+    });
+  assert.equal(
+    await fetchIosAppStoreVersion({ fetchFn: stalled, logger: quietLogger, timeoutMs: 20 }),
+    null,
+  );
+});
