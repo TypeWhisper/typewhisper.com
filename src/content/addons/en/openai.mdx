@@ -135,14 +135,6 @@ Fallback API Key models include `gpt-5.5`, `gpt-4.1-nano`, `gpt-4.1-mini`, `gpt-
 
 Sources: [OpenAI Models API](https://platform.openai.com/docs/api-reference/models/list), [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses), [OpenAI plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
-### Reasoning effort in workflows
-
-On macOS, from version 1.4.0 of this add-on with TypeWhisper 1.8, a workflow or an entry of the global LLM fallback list that uses OpenAI can set its own **Effort**. The picker lists the levels of the model the request uses: None to X High for GPT-5.5, None to Maximum for GPT-5.6, and Low to High for o4-mini. Models without reasoning effort, such as GPT-4.1, GPT-4o, and `*-chat` models, show no picker and get no effort.
-
-**Provider Default** uses the **Reasoning Effort** setting on this page, or the model's default when the model does not offer that level, and the picker names the level, for example *Provider Default (Medium)*. The effort applies with an API key and with ChatGPT Login. A workflow or fallback entry that leaves the model on Provider Default uses the **LLM Model** selected on this page. The temperature stays a setting of this page; workflows cannot change it for OpenAI.
-
-See the [Workflows guide](/en/docs/mac/workflows/#global-llm-fallbacks) for the fallback list.
-
 ## Setup Examples
 
 First install **OpenAI / ChatGPT** under **Settings > Discover plugins**. The add-on then appears in the Settings sidebar.

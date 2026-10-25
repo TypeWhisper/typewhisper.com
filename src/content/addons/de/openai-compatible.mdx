@@ -87,8 +87,6 @@ Um OpenAI Compatible als Transkriptions-Engine zu verwenden, muss der Server auc
 
 Unter macOS haben Profile, die die LLM-API **Responses** nutzen, die Einstellung **Reasoning-Aufwand**. **Anbieterstandard** sendet kein `reasoning`; die anderen Stufen senden `reasoning: { effort: ... }` an `/v1/responses` und lassen die Temperatur weg. Jedes Profil ist ein eigener Provider mit eigener Einstellung.
 
-Ab Version 1.2.0 dieses Add-ons mit TypeWhisper 1.8 kann ein Workflow oder ein Eintrag der globalen LLM-Fallback-Liste für ein Responses-Profil einen eigenen **Effort** wählen: Niedrig, Mittel, Hoch, Sehr hoch oder Maximum, für jedes Modell, weil ein kompatibler Server nicht meldet, welche Modelle Reasoning nutzen. Sein **Provider-Standard** nutzt die Einstellung des Profils. Profile mit **Chat Completions**, auch für Ollama- und LM-Studio-Server, senden nie einen Effort und zeigen keine Effort-Auswahl; sie behalten den Schalter **Thinking-Erweiterung des Anbieters**.
-
 ## Fehlerbehebung
 
 - Wenn **Verbindung testen** fehlschlaegt, pruefe, ob der Server laeuft und ob die URL mit `/v1` endet.

@@ -31,7 +31,6 @@ Parakeet nutzt NVIDIAs Parakeet TDT-Modell für extrem schnelle Spracherkennung 
 - Kein API-Schlüssel oder Cloud-Konto nötig
 - Kompakte Modellgröße (~600 MB)
 - Optionales lokales Vocabulary Boosting aus deinem TypeWhisper-Wörterbuch
-- Nemotron 3.5 ASR Streaming für Live-Text, während du sprichst
 
 ## Transkriptionsmodelle
 
@@ -41,13 +40,8 @@ Parakeet nutzt NVIDIAs Parakeet TDT-Modell für extrem schnelle Spracherkennung 
 | Parakeet TDT v3 0.6B | `parakeet-tdt-0.6b-v3` | ~600 MB | 25 europäische Sprachen |
 | Fluid Speech Mini | `fluid-speech-mini` | ~250 MB | Englisch |
 | Parakeet TDT v2 0.6B | `parakeet-tdt-0.6b-v2` | ~600 MB | Englisch |
-| Nemotron 3.5 ASR Streaming | `nemotron-3.5-asr-streaming-0.6b` | ~665 MB | 28 Sprachen |
 
-Fluid Speech Mini braucht Version 1.5.0 dieses Add-ons, Nemotron 3.5 ASR Streaming Version 1.6.0; beide brauchen TypeWhisper 1.8. Jedes Modell braucht 8 GB Arbeitsspeicher oder mehr.
-
-### Nemotron 3.5 ASR Streaming
-
-NVIDIAs Nemotron 3.5 ASR Streaming ist das einzige Modell dieses Add-ons, das streamt. Während du diktierst, kommt etwa jede Sekunde neuer Text dazu, und der fertige Text steht bereit, wenn du aufhörst. Es ist ungenauer als Parakeet Ultra, das deshalb der Standard bleibt. TypeWhisper übergibt dem Modell die gesprochene Sprache des Diktats; bei automatischer Erkennung erkennt das Modell die Sprache selbst. Vocabulary Boosting ist für dieses Modell nicht verfügbar, Wörterbuch-Korrekturen greifen nach der Transkription weiterhin. NVIDIA veröffentlicht das Modell unter der Lizenz OpenMDW-1.1.
+Fluid Speech Mini braucht Version 1.5.0 dieses Add-ons und TypeWhisper 1.8. Jedes Modell braucht 8 GB Arbeitsspeicher oder mehr.
 
 ## Konfiguration
 
@@ -58,7 +52,7 @@ Wenn Vocabulary Boosting aktiviert ist, verwendet Parakeet deine eigenen TypeWhi
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Parakeet**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle ein Modell, etwa Ultra für mehrsprachige Diktate, Fluid Speech Mini für einen kleineren englischen Download oder Nemotron 3.5 ASR Streaming für Live-Text, und lade und aktiviere es in den Plugin-Einstellungen.
+2. Wähle ein Modell, etwa Ultra für mehrsprachige Diktate oder Fluid Speech Mini für einen kleineren englischen Download, und lade und aktiviere es in den Plugin-Einstellungen.
 3. Wähle Parakeet als Transkriptions-Engine in den Einstellungen oder in einem Profil.
 
 ## Workaround: Modelle manuell kopieren

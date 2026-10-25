@@ -1,10 +1,8 @@
 import {
-  DocsCode,
   DocsFigure,
   DocsSection,
   DocsSubheading,
   DocsTerms,
-  withCode,
 } from "@/components/docs/prose";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
@@ -21,21 +19,6 @@ export default function DocsMacFeatures({
     ["Advanced (0.40–0.95)", "docs.mac.features.dictionary.boostingAdvanced"],
   ];
 
-  const localPackExample = `{
-  "id": "acme-team-terms",
-  "name": "Acme Team Terms",
-  "description": "Product names and internal tools of the Acme team.",
-  "names": { "de": "Acme-Teambegriffe" },
-  "descriptions": { "de": "Produktnamen und interne Tools des Acme-Teams." },
-  "icon": "person.3",
-  "version": "1.0.0",
-  "author": "Acme Docs Team",
-  "terms": ["Acme Cloud", "Roadrunner", "QuickShip"],
-  "corrections": [
-    { "original": "quick ship", "replacement": "QuickShip", "caseSensitive": false }
-  ]
-}`;
-
   return (
     <>
       <DocsSection
@@ -43,19 +26,6 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.dictation.title")}
       >
         <p>{t(locale, "docs.mac.features.dictation.desc")}</p>
-        <p>{t(locale, "docs.mac.features.dictation.defaultEngine")}</p>
-
-        <DocsSubheading id="stop-after-silence">
-          {t(locale, "docs.mac.features.dictation.silenceTitle")}
-        </DocsSubheading>
-        <p>{t(locale, "docs.mac.features.dictation.silenceDesc")}</p>
-        <p>{t(locale, "docs.mac.features.dictation.silenceScope")}</p>
-
-        <DocsSubheading id="indicator-model">
-          {t(locale, "docs.mac.features.dictation.modelTitle")}
-        </DocsSubheading>
-        <p>{t(locale, "docs.mac.features.dictation.modelDesc")}</p>
-        <p>{t(locale, "docs.mac.features.dictation.modelNext")}</p>
       </DocsSection>
 
       <DocsSection
@@ -63,7 +33,6 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.streaming.title")}
       >
         <p>{t(locale, "docs.mac.features.streaming.desc")}</p>
-        <p>{t(locale, "docs.mac.features.streaming.nemotron")}</p>
       </DocsSection>
 
       <DocsSection id="workflows" title={t(locale, "docs.mac.features.ai.title")}>
@@ -112,30 +81,6 @@ export default function DocsMacFeatures({
           {t(locale, "docs.mac.features.dictionary.autoLearnTestTitle")}
         </DocsSubheading>
         <p>{t(locale, "docs.mac.features.dictionary.autoLearnTest")}</p>
-
-        <DocsSubheading id="local-term-packs">
-          {t(locale, "docs.mac.features.dictionary.localPacksTitle")}
-        </DocsSubheading>
-        <p>{t(locale, "docs.mac.features.dictionary.localPacksDesc")}</p>
-        <ol>
-          {[1, 2, 3, 4].map((step) => (
-            <li key={step}>
-              {t(locale, `docs.mac.features.dictionary.localPacksStep${step}`)}
-            </li>
-          ))}
-        </ol>
-        <DocsCode
-          locale={locale}
-          lang={t(locale, "docs.mac.features.dictionary.localPacksExample")}
-          code={localPackExample}
-        />
-        <p>{withCode(t(locale, "docs.mac.features.dictionary.localPacksRules"))}</p>
-        <p>
-          {t(locale, "docs.mac.features.dictionary.localPacksShare")}{" "}
-          <a href="https://github.com/TypeWhisper/typewhisper-mac/tree/main/termpacks">
-            {t(locale, "docs.mac.features.dictionary.localPacksShareLink")}
-          </a>
-        </p>
         <DocsFigure
           src={screenshotPath(locale, "/screenshots/mac/dictionary.png")}
           alt={t(locale, "docs.mac.features.dictionary.imgAlt")}
@@ -175,17 +120,6 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.recorder.title")}
       >
         <p>{t(locale, "docs.mac.features.recorder.desc")}</p>
-
-        <DocsSubheading id="recordings-folder">
-          {t(locale, "docs.mac.features.recorder.folderTitle")}
-        </DocsSubheading>
-        <p>{t(locale, "docs.mac.features.recorder.folderDesc")}</p>
-        <p>{t(locale, "docs.mac.features.recorder.folderEarlier")}</p>
-
-        <DocsSubheading id="recorder-queue">
-          {t(locale, "docs.mac.features.recorder.queueTitle")}
-        </DocsSubheading>
-        <p>{t(locale, "docs.mac.features.recorder.queueDesc")}</p>
       </DocsSection>
 
       <DocsSection
@@ -208,7 +142,6 @@ export default function DocsMacFeatures({
       >
         <p>{t(locale, "docs.mac.features.history.desc1")}</p>
         <p>{t(locale, "docs.mac.features.history.desc2")}</p>
-        <p>{t(locale, "docs.mac.features.history.llmUsage")}</p>
         <DocsFigure
           src={screenshotPath(locale, "/screenshots/mac/history.png")}
           alt={t(locale, "docs.mac.features.history.imgAlt")}

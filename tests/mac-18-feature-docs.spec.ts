@@ -1,89 +1,47 @@
 import { expect, test } from "@playwright/test";
 
 /*
- * TypeWhisper 1.8 for macOS adds silence stop for toggle dictations, the model
- * switcher in the indicator, local term packs, a configurable Recorder folder
- * with background transcription, LLM usage in History, Always workflow
- * exclusions, workflow effort for OpenAI, and GigaAM in the App Store edition.
+ * TypeWhisper 1.8.0 for macOS: the features page describes the Recorder, and
+ * the workflows guide describes the Effort picker of workflows and fallbacks.
  */
 
 const copy = {
   en: {
-    features: [
-      "Stop after silence",
-      "Switch the model from the indicator",
-      "Local term packs",
-      "Recordings folder",
-      "Back-to-back recordings",
-    ],
     recorder: "Recorder",
-    usage: "When a workflow processed the text with a language model",
-    exclusions: "Exclusions only affect the Always step",
+    recorderText: "The Recorder records the microphone, system audio, or both",
     effort: "Effort",
-    apiUsage: "LLM usage",
-    gigaam: "the Mac App Store edition includes it as a built-in plugin",
+    fallbackEffort: "Provider Default (Medium)",
   },
   de: {
-    features: [
-      "Nach Stille beenden",
-      "Modell im Indikator wechseln",
-      "Lokale Begriff-Pakete",
-      "Aufnahmeordner",
-      "Aufnahmen direkt nacheinander",
-    ],
     recorder: "Recorder",
-    usage: "Hat ein Workflow den Text mit einem Sprachmodell bearbeitet",
-    exclusions: "Ausschlüsse wirken nur im Schritt Immer",
+    recorderText: "Der Recorder nimmt das Mikrofon, das Systemaudio oder beides auf",
     effort: "Effort",
-    apiUsage: "LLM-Nutzung",
-    gigaam: "enthält die Mac-App-Store-Edition es als eingebautes Plugin",
+    fallbackEffort: "Provider-Standard (Mittel)",
   },
 } as const;
 
 for (const locale of ["en", "de"] as const) {
   const text = copy[locale];
 
-  test(`${locale}: the features page describes the 1.8 additions`, async ({
-    page,
-  }) => {
+  test(`${locale}: the features page describes the Recorder`, async ({ page }) => {
     await page.goto(`/${locale}/docs/mac/features/`);
     const main = page.locator("main");
-    for (const heading of text.features) {
-      await expect(main.getByRole("heading", { name: heading, level: 3 })).toBeVisible();
-    }
     await expect(
       main.getByRole("heading", { name: text.recorder, level: 2 }),
     ).toBeVisible();
-    await expect(main.locator("#local-term-packs ~ div pre").first()).toContainText(
-      '"id": "acme-team-terms"',
-    );
-    await expect(main).toContainText(text.usage);
+    await expect(main.locator("#recorder")).toContainText(text.recorderText);
   });
 
-  test(`${locale}: workflows describe Always exclusions and effort`, async ({
-    page,
-  }) => {
+  test(`${locale}: workflows describe the Effort picker`, async ({ page }) => {
     await page.goto(`/${locale}/docs/mac/workflows/`);
     const main = page.locator("main");
-    await expect(main.locator("#priority")).toContainText(text.exclusions);
     await expect(
       main
         .locator("#creating")
         .getByRole("heading", { name: text.effort, exact: true, level: 3 }),
     ).toHaveCount(1);
-  });
-
-  test(`${locale}: the API page lists llm_usage`, async ({ page }) => {
-    await page.goto(`/${locale}/docs/mac/api/`);
-    const section = page.locator("#history");
-    await expect(
-      section.getByRole("heading", { name: text.apiUsage, level: 3 }),
-    ).toBeVisible();
-    await expect(section).toContainText('"output_tokens": 18');
-  });
-
-  test(`${locale}: GigaAM names the App Store edition`, async ({ page }) => {
-    await page.goto(`/${locale}/addons/gigaam/macos/`);
-    await expect(page.locator("main")).toContainText(text.gigaam);
+    await expect(main.locator("#global-llm-fallbacks")).toContainText(
+      text.fallbackEffort,
+    );
   });
 }

@@ -93,7 +93,6 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
           <li>{t(locale, "docs.mac.rules.priority.item3")}</li>
         </ol>
         <p>{t(locale, "docs.mac.rules.priority.manualHotkeyNote")}</p>
-        <p>{t(locale, "docs.mac.rules.priority.exclusions")}</p>
       </DocsSection>
 
       <DocsSection id="creating" title={t(locale, "docs.mac.rules.creating.title")}>

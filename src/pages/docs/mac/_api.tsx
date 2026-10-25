@@ -876,39 +876,6 @@ curl -X DELETE "http://localhost:8978/v1/history?id=<uuid>"`}
             withCode(t(locale, key)),
           ])}
         />
-        <DocsSubheading id="history-llm-usage">
-          {t(locale, "docs.mac.api.history.llmUsage.title")}
-        </DocsSubheading>
-        <p>{availableFrom18}</p>
-        <p>{withCode(t(locale, "docs.mac.api.history.llmUsage.intro"))}</p>
-        <Json
-          code={`"llm_usage": {
-  "requests": 1,
-  "input_tokens": 1284,
-  "output_tokens": 18,
-  "providers": [
-    {
-      "provider": "Claude",
-      "provider_name": "Claude",
-      "model": "claude-haiku-4-5",
-      "requests": 1,
-      "input_tokens": 1284,
-      "output_tokens": 18
-    }
-  ]
-}`}
-        />
-        <FieldTable
-          label={t(locale, "docs.mac.api.history.llmUsage.title")}
-          rows={[
-            [["requests"], "docs.mac.api.history.llmUsage.fields.requests"],
-            [
-              ["input_tokens", "output_tokens"],
-              "docs.mac.api.history.llmUsage.fields.tokens",
-            ],
-            [["providers"], "docs.mac.api.history.llmUsage.fields.providers"],
-          ]}
-        />
       </DocsSection>
 
       <DocsSection
@@ -1379,7 +1346,6 @@ curl "http://localhost:8978/v1/recorder/session?id=<uuid>"`}
 }`}
         />
         <p>{t(locale, "docs.mac.api.recorder.states")}</p>
-        <p>{withCode(t(locale, "docs.mac.api.recorder.queue"))}</p>
       </DocsSection>
 
       <DocsSection

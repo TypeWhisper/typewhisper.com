@@ -87,8 +87,6 @@ To use OpenAI Compatible as a transcription engine, the server must also impleme
 
 On macOS, profiles that use the **Responses** LLM API have a **Reasoning Effort** setting. **Provider Default** sends no `reasoning`; the other levels send `reasoning: { effort: ... }` to `/v1/responses` and leave out the temperature. Each profile is its own provider with its own setting.
 
-From version 1.2.0 of this add-on with TypeWhisper 1.8, a workflow or an entry of the global LLM fallback list can pick its own **Effort** for a Responses profile: Low, Medium, High, X High, or Max, for every model, because a compatible server does not report which models reason. Its **Provider Default** uses the profile's setting. **Chat Completions** profiles, including Ollama and LM Studio servers, never send an effort and show no effort picker; they keep the **Provider Thinking Extension** toggle.
-
 ## Troubleshooting
 
 - If **Test Connection** fails, confirm that the server is running and that the URL ends in `/v1`.
