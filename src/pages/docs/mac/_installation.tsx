@@ -5,6 +5,7 @@ import {
   DocsSection,
   withCode,
 } from "@/components/docs/prose";
+import { StudioVideo } from "@/components/ui/studio-video";
 import { localePath, t, type Locale } from "@/i18n/index";
 import { macDmgUrl } from "@/lib/platform-download";
 
@@ -87,6 +88,71 @@ export default function DocsMacInstallation({
       >
         <p>{t(locale, "docs.mac.installation.firstLaunch.desc")}</p>
         <p>{t(locale, "docs.mac.installation.firstLaunch.language")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="iphone"
+        title={isDe ? "iPhone und iPad koppeln" : "Pair an iPhone or iPad"}
+      >
+        <p>
+          {isDe
+            ? "Ab TypeWhisper 1.8 transkribiert ein gekoppeltes iPhone oder iPad mit TypeWhisper für iOS 1.2 über das lokale Netzwerk mit den Modellen dieses Macs. Wenn du es erlaubst, nutzt es auch die Sprachmodelle und Workflows des Macs. Beides gehört zu Premium und ist standardmäßig aus."
+            : "From TypeWhisper 1.8, a paired iPhone or iPad running TypeWhisper for iOS 1.2 transcribes with this Mac's models over the local network. If you allow it, it also uses the Mac's language models and workflows. Both are part of Premium and off by default."}
+        </p>
+        <StudioVideo
+          slug="mac-ios-release"
+          locale={locale}
+          label={
+            isDe
+              ? "TypeWhisper 1.8 für den Mac und 1.2 fürs iPhone"
+              : "TypeWhisper 1.8 for Mac and 1.2 for iPhone"
+          }
+          caption={
+            isDe
+              ? "Mac App Store, Kopplung mit Code, Diktat auf dem iPhone und ein Mac-Workflow. 67 Sekunden, mit Untertiteln."
+              : "Mac App Store, pairing with a code, dictating on iPhone, and a Mac workflow. 67 seconds, with captions."
+          }
+        />
+        <ol>
+          <li>
+            {isDe
+              ? "Öffne auf dem Mac Einstellungen > Premium > iPhone und iPad, schalte „Gekoppelte Geräte im lokalen Netzwerk erlauben“ ein und klicke auf „Gerät koppeln …“."
+              : "On the Mac, open Settings > Premium > iPhone and iPad, turn on Allow Paired Devices on the Local Network, and click Pair Device…"}
+          </li>
+          <li>
+            {isDe
+              ? "Öffne TypeWhisper auf dem iPhone oder iPad, gehe zu Einstellungen > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
+              : "On the iPhone or iPad, open TypeWhisper, go to Settings > Mac, and choose your Mac under Macs on This Network."}
+          </li>
+          <li>
+            {isDe
+              ? "Beide Geräte zeigen denselben sechsstelligen Code. Tippe auf dem iPhone auf „Die Codes stimmen überein“ und klicke auf dem Mac auf „Bestätigen“."
+              : "Both devices show the same six-digit code. Tap The Codes Match on the iPhone and click Approve on the Mac."}
+          </li>
+          <li>
+            {isDe
+              ? "Tippe auf „Für Spracherkennung verwenden“. Das iPhone transkribiert dann mit dem Modell, das du unter „Modell auf dem Mac“ wählst."
+              : "Tap Use for Speech Recognition. The iPhone then transcribes with the model you choose under Model on the Mac."}
+          </li>
+        </ol>
+        <p>
+          {isDe
+            ? "Für Sprachmodelle und Workflows schaltest du auf dem Mac zusätzlich „Schreiben mit diesem Mac erlauben“ ein. Jeder Workflow erscheint dann als Format am Ende der Formatliste auf dem iPhone."
+            : "For language models and workflows, also turn on Allow Writing with This Mac. Each workflow then appears as a format at the end of the iPhone's format list."}
+        </p>
+        <DocsCallout label={t(locale, "docs.callout.important")}>
+          <p>
+            {isDe
+              ? "Die Verbindung ist verschlüsselt, und der Mac nimmt nur gekoppelte Geräte an. Ist auf dem Mac ein Cloud-Modell gewählt, sendet der Mac Audio oder Text weiterhin an diesen Anbieter. Bleibt der Mac auf dem iPhone unsichtbar, erlaube TypeWhisper in den Systemeinstellungen unter Datenschutz & Sicherheit > Lokales Netzwerk."
+              : "The connection is encrypted, and the Mac accepts only paired devices. If a cloud model is selected on the Mac, the Mac still sends audio or text to that provider. If the Mac stays invisible on the iPhone, allow TypeWhisper in System Settings under Privacy & Security > Local Network."}
+          </p>
+        </DocsCallout>
+        <a href={localePath(locale, "/docs/ios#mac")} className="site-link">
+          {isDe
+            ? "Den Mac auf dem iPhone nutzen"
+            : "Use your Mac from the iPhone"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
 
       <DocsSection

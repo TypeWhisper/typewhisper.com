@@ -1048,6 +1048,22 @@
   background: var(--surface);
 }
 
+/* A wide studio video in the reading column, captioned like a screenshot. */
+.docs-prose .site-video {
+  margin: 2rem 0 0;
+}
+
+.docs-prose .site-video video {
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+.docs-prose .site-video figcaption {
+  margin: 0.875rem 0 0;
+  max-width: none;
+  text-align: start;
+}
+
 /* ---------- Tables ---------- */
 
 .docs-table {
