@@ -232,3 +232,46 @@ export function findPlatformsWithoutVersion(
     .map((repo) => repo.platform)
     .filter((platform) => !downloads?.[platform]?.version);
 }
+
+// iOS has no GitHub release feed. Apple's public lookup returns the version
+// that is currently live in the App Store. The build fetches it, so visitors'
+// browsers never query Apple.
+export const IOS_APP_STORE_ID = "6759319267";
+export const IOS_BUNDLE_ID = "com.typewhisper.typewhisper-app";
+export const IOS_LOOKUP_URL = `https://itunes.apple.com/lookup?id=${IOS_APP_STORE_ID}&country=us`;
+const APP_STORE_VERSION_RE = /^\d+\.\d+(\.\d+)?$/;
+
+/**
+ * The live App Store version of the iOS app, or null when the lookup fails or
+ * returns something unexpected.
+ */
+export async function fetchIosAppStoreVersion({
+  fetchFn = globalThis.fetch,
+  logger = console,
+} = {}) {
+  try {
+    const response = await fetchFn(IOS_LOOKUP_URL, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const body = await response.json();
+    const app = body?.results?.find(
+      (result) => result?.bundleId === IOS_BUNDLE_ID,
+    );
+    if (!app) {
+      throw new Error(`no result for ${IOS_BUNDLE_ID}`);
+    }
+    if (!APP_STORE_VERSION_RE.test(app.version ?? "")) {
+      throw new Error(`unexpected version ${JSON.stringify(app.version)}`);
+    }
+    return {
+      version: app.version,
+      releasedAt: app.currentVersionReleaseDate ?? null,
+    };
+  } catch (err) {
+    logger.warn("Failed to fetch the iOS App Store version:", err.message);
+    return null;
+  }
+}

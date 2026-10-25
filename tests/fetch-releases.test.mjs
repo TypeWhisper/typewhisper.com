@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildRepoReleaseData,
+  fetchIosAppStoreVersion,
   fetchReleaseData,
+  IOS_BUNDLE_ID,
+  IOS_LOOKUP_URL,
   findPlatformsWithoutVersion,
   preservePreviousReleaseData,
 } from "../scripts/fetch-releases-lib.mjs";
@@ -321,4 +324,51 @@ test("findPlatformsWithoutVersion names every platform without a stable version"
   );
   assert.deepEqual(findPlatformsWithoutVersion({}), ["mac", "windows"]);
   assert.deepEqual(findPlatformsWithoutVersion(undefined), ["mac", "windows"]);
+});
+
+function lookupFetch(body, { ok = true, status = 200 } = {}) {
+  const seen = [];
+  const fetchFn = async (input) => {
+    seen.push(String(input));
+    return { ok, status, json: async () => body };
+  };
+  return { fetchFn, seen };
+}
+
+const quietLogger = { warn() {} };
+
+test("fetchIosAppStoreVersion reads the live App Store version of the iOS app", async () => {
+  const { fetchFn, seen } = lookupFetch({
+    resultCount: 1,
+    results: [
+      {
+        bundleId: IOS_BUNDLE_ID,
+        version: "1.2.0",
+        currentVersionReleaseDate: "2026-10-25T09:35:22Z",
+      },
+    ],
+  });
+
+  assert.deepEqual(await fetchIosAppStoreVersion({ fetchFn, logger: quietLogger }), {
+    version: "1.2.0",
+    releasedAt: "2026-10-25T09:35:22Z",
+  });
+  assert.deepEqual(seen, [IOS_LOOKUP_URL]);
+});
+
+test("fetchIosAppStoreVersion returns null for failed or unexpected lookups", async () => {
+  const cases = [
+    lookupFetch({}, { ok: false, status: 503 }),
+    lookupFetch({ resultCount: 0, results: [] }),
+    lookupFetch({ results: [{ bundleId: "com.example.other", version: "9.9" }] }),
+    lookupFetch({ results: [{ bundleId: IOS_BUNDLE_ID, version: "latest" }] }),
+  ];
+  for (const { fetchFn } of cases) {
+    assert.equal(await fetchIosAppStoreVersion({ fetchFn, logger: quietLogger }), null);
+  }
+
+  const throwing = async () => {
+    throw new Error("offline");
+  };
+  assert.equal(await fetchIosAppStoreVersion({ fetchFn: throwing, logger: quietLogger }), null);
 });

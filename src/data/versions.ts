@@ -1,9 +1,10 @@
 /**
  * Single source of truth for the current stable version of each platform.
  *
- * - macOS and Windows come from the generated release feed (downloads.json,
- *   written by scripts/fetch-releases.mjs). Nothing to maintain by hand.
- * - iOS has no feed: `iosVersion` below is the only number entered by hand.
+ * All three come from the generated feed (downloads.json, written by
+ * scripts/fetch-releases.mjs at build time). Nothing to maintain by hand:
+ * - macOS and Windows from their GitHub releases,
+ * - iOS from Apple's public App Store lookup.
  *
  * Copy never spells these numbers out. It uses the placeholders
  * {macVersion}, {macSeries}, {windowsVersion}, {windowsSeries},
@@ -23,13 +24,13 @@ import {
   type VersionPlatform,
 } from "./version-placeholders";
 
-// The only version number entered by hand. Update it with each iOS release.
-export const iosVersion = "1.1";
-
 type Feed = Partial<
-  Record<"mac" | "windows", { version?: string | null } | null>
+  Record<"mac" | "windows" | "ios", { version?: string | null } | null>
 >;
 const feed: Feed = downloads;
+
+/** The iOS version that is live in the App Store, e.g. "1.2.0". */
+export const iosVersion: string | null = feed.ios?.version ?? null;
 
 export const versions: Record<VersionPlatform, PlatformVersion> = {
   mac: describeVersion(feed.mac?.version),

@@ -1,5 +1,6 @@
 import {
   buildGitHubHeaders,
+  fetchIosAppStoreVersion,
   fetchReleaseData,
   findPlatformsWithoutVersion,
   preservePreviousReleaseData,
@@ -35,15 +36,24 @@ const { releases, downloads } = preservePreviousReleaseData(fetched, previous, {
   logger: console,
 });
 
+const ios = await fetchIosAppStoreVersion({ logger: console });
+if (ios) {
+  downloads.ios = ios;
+} else if (previous.downloads?.ios?.version) {
+  downloads.ios = previous.downloads.ios;
+  console.warn("Keeping the previous iOS version because the App Store lookup failed.");
+}
+
 // Release builds pass --require-versions: without the stable versions the
 // site would publish raw placeholders, so stop and keep the generated files.
 if (process.argv.includes("--require-versions")) {
   const missing = findPlatformsWithoutVersion(downloads);
+  if (!downloads.ios?.version) missing.push("ios");
   if (missing.length > 0) {
     console.error(
       `No stable version resolved for: ${missing.join(", ")}. ` +
         "The release data could not be fetched and no earlier data exists. " +
-        "Nothing was written; run the build again once GitHub is reachable.",
+        "Nothing was written; run the build again once GitHub and the App Store are reachable.",
     );
     process.exit(1);
   }
@@ -54,5 +64,5 @@ console.log(`Wrote ${releases.length} releases to src/data/releases.json`);
 
 writeFileSync(downloadsPath, JSON.stringify(downloads, null, 2) + "\n");
 console.log(
-  `Wrote downloads.json (mac=${downloads.mac?.version ?? "fallback"}, windows=${downloads.windows?.version ?? "fallback"})`
+  `Wrote downloads.json (mac=${downloads.mac?.version ?? "fallback"}, windows=${downloads.windows?.version ?? "fallback"}, ios=${downloads.ios?.version ?? "missing"})`
 );
