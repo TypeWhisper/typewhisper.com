@@ -143,7 +143,7 @@ test.describe("macOS workflows documentation", () => {
   });
 
   for (const locale of ["en", "de"] as const) {
-    test(`${locale} macOS docs present the current release and what is new in 1.7`, async ({
+    test(`${locale} macOS docs present the current release and what is new in 1.8`, async ({
       page,
     }) => {
       // The release line comes from the feed, the highlights are written by hand.
@@ -173,23 +173,23 @@ test.describe("macOS workflows documentation", () => {
       await expect(
         page.getByRole("heading", {
           level: 2,
-          name: locale === "de" ? "Neu in 1.7" : "What's new in 1.7",
+          name: locale === "de" ? "Neu in 1.8" : "What's new in 1.8",
         }),
       ).toBeVisible();
       await expect(
         page
           .getByText(
             locale === "de"
-              ? "iCloud-Synchronisierung für Verlauf und Posteingang"
-              : "iCloud synchronization for History and Inbox",
+              ? "Sprechererkennung mit Premium"
+              : "Speaker detection with Premium",
           )
           .first(),
       ).toBeVisible();
       await expect(
         page.getByText(
           locale === "de"
-            ? /Die automatische iCloud-Synchronisierung ist in 1\.7 verfügbar/
-            : /Automatic iCloud Sync is available in 1\.7/,
+            ? /Die automatische iCloud-Synchronisierung ist seit 1\.7 verfügbar/
+            : /Automatic iCloud Sync is available since 1\.7/,
         ),
       ).toBeVisible();
     });
