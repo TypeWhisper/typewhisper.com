@@ -98,32 +98,31 @@ Sources: [Qwen3 language handling](https://github.com/TypeWhisper/typewhisper-ma
 
 ## Setup Examples
 
+First install **Qwen3 ASR** under **Settings > Discover plugins**. The add-on then appears in the Settings sidebar.
+
 ### Fast local transcription on an 8 GB Mac
 
-1. Open TypeWhisper Settings > Integrations.
-2. Configure **Qwen3 ASR**.
-3. Leave **HuggingFace Token** empty unless downloads are rate-limited.
-4. Click **Download & Load** for **Qwen3 0.6B (6-bit)**.
-5. Select **Qwen3 ASR (MLX)** as the transcription engine in Settings or in a profile.
+1. Select **Qwen3 ASR** in the Settings sidebar.
+2. Leave **HuggingFace Token** empty unless downloads are rate-limited.
+3. Click **Download & Load** for **Qwen3 0.6B (6-bit)**.
+4. Select **Qwen3 ASR (MLX)** as the transcription engine in Settings or in a profile.
 
 ### Recommended setup for most 16 GB+ Macs
 
-1. Open TypeWhisper Settings > Integrations.
-2. Configure **Qwen3 ASR**.
-3. Click **Download & Load** for **Qwen3 1.7B (6-bit)**.
-4. Set the profile language when you want a language hint, or leave it unset for auto-detect.
-5. Add dictionary terms for product names, people, and domain vocabulary that should be biased into the transcript.
+1. Select **Qwen3 ASR** in the Settings sidebar.
+2. Click **Download & Load** for **Qwen3 1.7B (6-bit)**.
+3. Set the profile language when you want a language hint, or leave it unset for auto-detect.
+4. Add dictionary terms for product names, people, and domain vocabulary that should be biased into the transcript.
 
 ### Higher-quality setup on a 32 GB+ Mac
 
-1. Open TypeWhisper Settings > Integrations.
-2. Configure **Qwen3 ASR**.
-3. Click **Download & Load** for **Qwen3 1.7B (8-bit)**.
-4. Use **Qwen3 1.7B (BF16)** only when you specifically want an unquantized validation or comparison model.
+1. Select **Qwen3 ASR** in the Settings sidebar.
+2. Click **Download & Load** for **Qwen3 1.7B (8-bit)**.
+3. Use **Qwen3 1.7B (BF16)** only when you specifically want an unquantized validation or comparison model.
 
 ### Switch or remove a model
 
-1. Open **Qwen3 ASR** in the plugin settings.
+1. Select **Qwen3 ASR** in the Settings sidebar.
 2. Click **Unload** on the active model to release its memory without deleting the download.
 3. Click **Download & Load** on the next model.
 4. Reopen the transcription profile and confirm **Qwen3 ASR (MLX)** is still selected.

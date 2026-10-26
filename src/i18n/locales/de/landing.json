@@ -298,7 +298,7 @@
   "features.label": "Funktionen",
   "features.tour.step": "{current} von {total}",
   "features.tour.goToStep": "Screenshot {number} zeigen",
-  "features.mac.private.caption": "Einstellungen, Integrationen, Entdecken: gefiltert auf Add-ons, die lokal auf deinem Mac laufen",
+  "features.mac.private.caption": "Einstellungen, Plugins entdecken: gefiltert auf Add-ons, die lokal auf deinem Mac laufen",
   "features.mac.dictation.caption": "Einstellungen für das Diktat: gesprochene Sprache, Engine, Mikrofon und Sound",
   "features.mac.prompts.caption": "Einstellungen, Workflows: drei aktive Workflows mit ihren Auslösern",
   "features.mac.profiles.caption": "Einstellungen, Erweitert: Einstellungen sichern und wiederherstellen, Diagnose und Aufnahme-Optionen",

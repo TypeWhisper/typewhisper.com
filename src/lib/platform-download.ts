@@ -119,7 +119,7 @@ export function getPlatformDownloadTarget(
           label: t(locale, "platforms.ios.download"),
           platform,
           target: "ios_app_store",
-          version: iosVersion,
+          version: iosVersion ?? undefined,
           opensNewTab: true,
         };
       case "android":
@@ -164,7 +164,7 @@ export function getPlatformDownloadTarget(
         label: t(locale, "nav.downloadIos"),
         platform,
         target: "ios_app_store",
-        version: iosVersion,
+        version: iosVersion ?? undefined,
         opensNewTab: true,
       };
     case "android":

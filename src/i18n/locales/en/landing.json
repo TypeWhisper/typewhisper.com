@@ -298,7 +298,7 @@
   "features.label": "Features",
   "features.tour.step": "{current} of {total}",
   "features.tour.goToStep": "Show screenshot {number}",
-  "features.mac.private.caption": "Settings, Integrations, Discover: filtered to add-ons that run locally on your Mac",
+  "features.mac.private.caption": "Settings, Discover plugins: filtered to add-ons that run locally on your Mac",
   "features.mac.dictation.caption": "Dictation settings: spoken language, engine, microphone, and sound",
   "features.mac.prompts.caption": "Settings, Workflows: three active workflows with their triggers",
   "features.mac.profiles.caption": "Settings, Advanced: back up and restore settings, diagnostics, and recording options",

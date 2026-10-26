@@ -25,7 +25,7 @@ On macOS, Cloudflare ASR connects to your OpenAI-compatible transcription backen
 
 1. Deploy an OpenAI-compatible transcription backend behind a Cloudflare Tunnel.
 2. If the service is protected by Cloudflare Access, create a service token for it.
-3. Open **Settings > Integrations**, find **Cloudflare ASR**, and open its configuration.
+3. In TypeWhisper, open **Settings > Discover plugins** and install **Cloudflare ASR**. The add-on then appears in the Settings sidebar, and its page opens.
 4. Enter the backend's base URL. TypeWhisper appends `/v1/models` for model discovery and `/v1/audio/transcriptions` for transcription, so do not enter the full transcription endpoint.
 5. For an Access-protected service, enter **CF-Access-Client-Id** and **CF-Access-Client-Secret**.
 6. Refresh the backend's models and select one, or enter the model name manually when discovery is unavailable.

@@ -6,7 +6,7 @@ import {
 } from "../../src/data/version-placeholders";
 
 type ReleaseFeed = Partial<
-  Record<"mac" | "windows", { version?: string | null } | null>
+  Record<"mac" | "windows" | "ios", { version?: string | null } | null>
 >;
 
 /** A platform whose version is known, so specs can assert on plain strings. */
@@ -20,17 +20,15 @@ function known(platform: VersionPlatform, value: PlatformVersion): KnownVersion 
 }
 
 // src/data/versions.ts imports the feed as JSON, which the test runner cannot
-// load. The constant is read from the source text instead.
-function readHandEnteredVersion(
-  name: "iosVersion" | "androidVersion",
-): string | undefined {
+// load. The hand-entered Android constant is read from the source text instead.
+function readAndroidVersion(): string | undefined {
   const source = readFileSync("src/data/versions.ts", "utf8");
-  return new RegExp(`export const ${name} = "([^"]+)"`).exec(source)?.[1];
+  return /export const androidVersion = "([^"]+)"/.exec(source)?.[1];
 }
 
 /**
- * The versions the pages show: macOS and Windows from the generated release
- * feed, iOS and Android from the constants in src/data/versions.ts.
+ * The versions the pages show: macOS, Windows and iOS from the generated
+ * feed, Android from the constant in src/data/versions.ts.
  */
 export function readCurrentVersions(): Record<VersionPlatform, KnownVersion> {
   const feed = JSON.parse(
@@ -40,11 +38,8 @@ export function readCurrentVersions(): Record<VersionPlatform, KnownVersion> {
   return {
     mac: known("mac", describeVersion(feed.mac?.version)),
     windows: known("windows", describeVersion(feed.windows?.version)),
-    ios: known("ios", describeVersion(readHandEnteredVersion("iosVersion"))),
-    android: known(
-      "android",
-      describeVersion(readHandEnteredVersion("androidVersion")),
-    ),
+    ios: known("ios", describeVersion(feed.ios?.version)),
+    android: known("android", describeVersion(readAndroidVersion())),
   };
 }
 

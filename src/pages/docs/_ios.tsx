@@ -1,9 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import {
+  DocsCallout,
   DocsFigure,
   DocsSection,
   DocsSubheading,
 } from "@/components/docs/prose";
+import { StudioVideo } from "@/components/ui/studio-video";
 import { getIosDocPage, iosDocSlugs } from "@/data/ios-docs";
 import { resolveVersions } from "@/data/versions";
 import { localePath, screenshotPath, type Locale } from "@/i18n/index";
@@ -61,6 +63,39 @@ const watchScreenshots = [
       en: "Recent TypeWhisper recordings on Apple Watch",
       de: "Letzte TypeWhisper-Aufnahmen auf der Apple Watch",
     },
+  },
+] as const;
+
+// What the App Store release notes of 1.2 name.
+const newIn12 = [
+  {
+    en: "Use your Mac: transcribe with its speech models and write with its language models and workflows (Premium, TypeWhisper for Mac 1.8 or later)",
+    de: "Deinen Mac nutzen: mit seinen Spracherkennungsmodellen transkribieren und mit seinen Sprachmodellen und Workflows schreiben (Premium, TypeWhisper für Mac ab 1.8)",
+    anchor: "mac",
+  },
+  {
+    en: "On-device speaker detection with names, corrected turns, and optional local voice profiles (Premium)",
+    de: "Sprechererkennung auf dem Gerät mit Namen, korrigierbaren Wortbeiträgen und optionalen lokalen Stimmprofilen (Premium)",
+  },
+  {
+    en: "Read transcripts and results aloud with the voices installed on your device",
+    de: "Transkripte und Ergebnisse mit den installierten Stimmen deines Geräts vorlesen lassen",
+  },
+  {
+    en: "Ask questions about a transcript with your selected writing service (Premium)",
+    de: "Fragen zu einem Transkript über deinen gewählten Schreibdienst stellen (Premium)",
+  },
+  {
+    en: "Create a dictionary correction from misrecognized text in a transcript (Premium)",
+    de: "Aus falsch erkanntem Text im Transkript eine Wörterbuchkorrektur anlegen (Premium)",
+  },
+  {
+    en: "Gemini transcription with a live mode, Soniox live transcription, and Parakeet Ultra on supported devices",
+    de: "Gemini-Transkription mit Live-Modus, Soniox-Live-Transkription und Parakeet Ultra auf unterstützten Geräten",
+  },
+  {
+    en: "Ogg Opus voice notes, including WhatsApp, and a persistent queue for shared audio and video files",
+    de: "Ogg-Opus-Sprachnachrichten, etwa aus WhatsApp, und eine dauerhafte Warteschlange für geteilte Audio- und Videodateien",
   },
 ] as const;
 
@@ -170,6 +205,71 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
             </video>
           </figure>
         </div>
+      </DocsSection>
+
+      <DocsSection id="mac" title={isDe ? "Mit deinem Mac" : "Use your Mac"}>
+        <p>
+          {isDe
+            ? "Ab Version 1.2 koppelst du dein iPhone oder iPad über das lokale Netzwerk mit TypeWhisper für Mac. Du transkribierst dann mit einem Spracherkennungsmodell auf dem Mac, nutzt seine Sprachmodelle für deine Formate oder führst seine Text-Workflows beim Diktieren in der App oder Tastatur aus."
+            : "From version 1.2, you pair your iPhone or iPad with TypeWhisper for Mac over the local network. You then transcribe with a speech model on the Mac, use its language models for your formats, or run its text-processing workflows when dictating in the app or keyboard."}
+        </p>
+        <StudioVideo
+          slug="mac-ios-release"
+          locale={locale}
+          label={
+            isDe
+              ? "TypeWhisper 1.8 für den Mac und 1.2 fürs iPhone"
+              : "TypeWhisper 1.8 for Mac and 1.2 for iPhone"
+          }
+          caption={
+            isDe
+              ? "Kopplung mit Code, Diktat auf dem iPhone, Transkription auf dem Mac und ein Mac-Workflow. 67 Sekunden, mit Untertiteln."
+              : "Pairing with a code, dictating on iPhone, transcribing on the Mac, and a Mac workflow. 67 seconds, with captions."
+          }
+        />
+        <ol>
+          <li>
+            {isDe
+              ? "Öffne auf dem Mac TypeWhisper-Einstellungen > Premium > iPhone und iPad, erlaube gekoppelte Geräte und klicke auf „Gerät koppeln …“."
+              : "On your Mac, open TypeWhisper Settings > Premium > iPhone and iPad, allow paired devices, and click Pair Device…"}
+          </li>
+          <li>
+            {isDe
+              ? "Gehe in TypeWhisper auf dem iPhone zu Einstellungen > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
+              : "In TypeWhisper on the iPhone, go to Settings > Mac and choose your Mac under Macs on This Network."}
+          </li>
+          <li>
+            {isDe
+              ? "Prüfe, ob beide Geräte denselben sechsstelligen Code zeigen. Tippe auf „Die Codes stimmen überein“ und bestätige auf dem Mac."
+              : "Check that both devices show the same six-digit code. Tap The Codes Match and approve on the Mac."}
+          </li>
+          <li>
+            {isDe
+              ? "Tippe auf „Für Spracherkennung verwenden“ und wähle unter „Modell auf dem Mac“ ein Modell oder „Wie auf dem Mac ausgewählt“."
+              : "Tap Use for Speech Recognition and choose a model under Model on the Mac, or As Selected on the Mac."}
+          </li>
+        </ol>
+        <p>
+          {isDe
+            ? "Sprachmodelle und Workflows des Macs stehen bereit, wenn auf dem Mac „Schreiben mit diesem Mac erlauben“ eingeschaltet ist. Jeder Workflow erscheint als Format am Ende deiner Formatliste."
+            : "The Mac's language models and workflows are available when Allow Writing with This Mac is on. Each workflow appears as a format at the end of your format list."}
+        </p>
+        <DocsCallout label={isDe ? "Voraussetzungen" : "Requirements"}>
+          <p>
+            {isDe
+              ? "TypeWhisper für Mac ab Version 1.8 im selben lokalen Netzwerk und Zugang zu den Premium-Funktionen auf beiden Geräten. Die Verbindung ist verschlüsselt. Die auf dem Mac ausgewählten Modelle können dort eingerichtete Cloud-Anbieter nutzen."
+              : "TypeWhisper for Mac 1.8 or later on the same local network and access to Premium features on both devices. The connection is encrypted. Models selected on the Mac may use the cloud providers configured there."}
+          </p>
+        </DocsCallout>
+        <a
+          href={localePath(locale, "/docs/mac/installation#iphone")}
+          className="site-link"
+        >
+          {isDe
+            ? "Die Kopplung auf dem Mac einrichten"
+            : "Set up pairing on the Mac"}
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </a>
       </DocsSection>
 
       <DocsSection
@@ -284,13 +384,28 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           data-download-social-trigger
           data-download-platform="ios"
           data-download-target="ios_app_store"
-          data-download-version={iosVersion}
+          data-download-version={iosVersion ?? undefined}
           data-tracking-placement="docs"
           className="site-link"
         >
           {isDe ? "App Store öffnen" : "Open the App Store"}
           <ArrowRight className="size-4" aria-hidden="true" />
         </a>
+
+        <DocsSubheading id="new-in-1-2">
+          {isDe ? "Neu in 1.2" : "What's new in 1.2"}
+        </DocsSubheading>
+        <ul>
+          {newIn12.map((entry) => (
+            <li key={entry.en}>
+              {"anchor" in entry ? (
+                <a href={`#${entry.anchor}`}>{entry[locale]}</a>
+              ) : (
+                entry[locale]
+              )}
+            </li>
+          ))}
+        </ul>
 
         <DocsSubheading id="new-in-1-1">
           {isDe ? "Neu in 1.1" : "What's new in 1.1"}

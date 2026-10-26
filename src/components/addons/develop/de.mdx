@@ -99,6 +99,8 @@ Abonniere appweite Events wie Aufnahme-Start/Stopp, abgeschlossene Transkription
 
 <CodeBlock client:visible locale="de" lang="swift" code={snippets.eventBus} />
 
+`recorderTranscriptReady` ist ab TypeWhisper 1.8 verfügbar; Plugins, die es verarbeiten, brauchen `"minHostVersion": "1.8.0"` in ihrem Manifest. TypeWhisper sendet das Event, nachdem ein Recorder-Transkript und sein Abschlussbeleg gespeichert wurden, auch nach einer erneuten Transkription und bei ausgeschalteter Live-Vorschau. Es ist von `transcriptionCompleted` getrennt; Plugins, die auf Diktate reagieren, erhalten deshalb keine Recorder-Transkripte. Abonniere es nur, wenn Nutzer es in deinem Plugin ausdrücklich einschalten können. Die Payload enthält den gespeicherten `text`, die stabile `recordingID`, eine neue `completionID` für jede Speicherung, `completedAt`, `audioFilePath`, `transcriptFilePath` und optional `markdownFilePath`. Als JSON verwendet sie snake_case-Schlüssel, `"source": "recorder"` und Unix-Sekunden für `completed_at`. Die Zustellung ist nicht garantiert; [`GET /v1/recorder/recordings`](/de/docs/mac/api/#recorder-recordings) liefert zum Nachholen das zuletzt gespeicherte Ergebnis jeder Aufnahme.
+
 ### Hilfsklassen
 
 Das SDK enthält Helfer für häufige Muster:

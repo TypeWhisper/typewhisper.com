@@ -1,10 +1,12 @@
 /**
  * Single source of truth for the current stable version of each platform.
  *
- * - macOS and Windows come from the generated release feed (downloads.json,
- *   written by scripts/fetch-releases.mjs). Nothing to maintain by hand.
- * - iOS and Android have no feed: `iosVersion` and `androidVersion` below are
- *   the only numbers entered by hand.
+ * macOS, Windows and iOS come from the generated feed (downloads.json, written
+ * by scripts/fetch-releases.mjs at build time):
+ * - macOS and Windows from their GitHub releases,
+ * - iOS from Apple's public App Store lookup.
+ * Android has no feed: `androidVersion` below is the only number entered by
+ * hand.
  *
  * Copy never spells these numbers out. It uses the placeholders
  * {macVersion}, {macSeries}, {windowsVersion}, {windowsSeries},
@@ -24,15 +26,17 @@ import {
   type VersionPlatform,
 } from "./version-placeholders";
 
-// Entered by hand. Update them with each iOS or Android release.
-export const iosVersion = "1.1";
-// The versionName of the current production release on Google Play.
-export const androidVersion = "1.0.0";
-
 type Feed = Partial<
-  Record<"mac" | "windows", { version?: string | null } | null>
+  Record<"mac" | "windows" | "ios", { version?: string | null } | null>
 >;
 const feed: Feed = downloads;
+
+/** The iOS version that is live in the App Store, e.g. "1.2.0". */
+export const iosVersion: string | null = feed.ios?.version ?? null;
+
+// Entered by hand: the versionName of the current production release on
+// Google Play. Update it with each Android release.
+export const androidVersion = "1.0.0";
 
 export const versions: Record<VersionPlatform, PlatformVersion> = {
   mac: describeVersion(feed.mac?.version),
