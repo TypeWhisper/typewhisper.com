@@ -19,23 +19,50 @@ sourceUrls:
 
 ## Über
 
-Granite bringt IBMs Granite Speech-to-Text-Modelle zu TypeWhisper und läuft vollständig auf dem Gerät mit Apples MLX-Framework. Wie bei WhisperKit erfolgt die gesamte Verarbeitung lokal auf dem Apple Silicon Chip deines Macs - ohne Cloud-Dienste oder API-Schlüssel.
+Granite bringt IBMs Granite-Speech-Modelle zu TypeWhisper und läuft vollständig auf dem Gerät mit Apples MLX-Framework. Die gesamte Verarbeitung erfolgt lokal auf dem Apple Silicon Chip deines Macs - ohne Cloud-Dienste oder API-Schlüssel.
+
+Version 1.1.0 bringt IBMs Granite-Speech-5.0-Modelle. Granite 5.0 TurboCTC ist das neue Standardmodell: ein schnelles Modell, das Satzzeichen und Groß-/Kleinschreibung selbst setzt. Granite 5.0 2B übersetzt außerdem und nutzt deine Wörterbuch-Begriffe. Die Granite-4.0-Modelle bleiben verfügbar.
 
 ## Features
 
 - Vollständig lokale Transkription auf dem Gerät
-- Basiert auf IBM Granite Sprachmodellen
+- Granite 5.0 TurboCTC für schnelle Transkription in 7 Sprachen, mit Satzzeichen und Groß-/Kleinschreibung
+- Granite 5.0 2B für Übersetzung und Wörterbuch-Begriffe
 - Läuft auf Apple Silicon via MLX
 - Keine API-Schlüssel oder Cloud-Konten erforderlich
 - Datenschutzfreundlich - Audio verlässt nie deinen Mac
 
+## Transkriptionsmodelle
+
+| Modell | ID | Größe | RAM |
+| --- | --- | --- | --- |
+| Granite 5.0 TurboCTC (470M) (Standard) | `granite-speech-5.0-470m-turboctc` | ~950 MB | 8 GB+ |
+| Granite 5.0 2B | `granite-speech-5.0-2b` | ~4.6 GB | 16 GB+ |
+| Granite 4.0 1B (4-bit) | `granite-1b-speech-4bit` | ~2 GB | 8 GB+ |
+| Granite 4.0 1B (5-bit) | `granite-1b-speech-5bit` | ~2.2 GB | 8 GB+ |
+| Granite 4.0 1B (8-bit) | `granite-1b-speech-8bit` | ~2.9 GB | 16 GB+ |
+
+Granite 5.0 TurboCTC erkennt Englisch, Französisch, Deutsch, Spanisch, Portugiesisch, Italienisch und Japanisch. Granite 5.0 2B und Granite 4.0 unterstützen dieselben Sprachen außer Italienisch.
+
+- **Granite 5.0 TurboCTC** ist das schnellste Modell. Es setzt Satzzeichen und Groß-/Kleinschreibung, kann aber nicht übersetzen und nutzt keine Wörterbuch-Begriffe.
+- **Granite 5.0 2B** setzt Satzzeichen und Groß-/Kleinschreibung, übersetzt und gibt deine Wörterbuch-Begriffe als Schlüsselwörter an das Modell weiter. Es ist langsamer und braucht einen größeren Download.
+- **Granite 4.0 1B** ist das ältere Modell. Es schreibt meist klein und mit wenigen Satzzeichen. Wenn du bereits ein Granite-4.0-Modell nutzt, bleibt es nach dem Update ausgewählt.
+
+Die Granite-5.0-Modelle brauchen Version 1.1.0 dieses Add-ons.
+
+## Übersetzung und Wörterbuch-Begriffe
+
+Granite 5.0 2B und Granite 4.0 können Sprache übersetzen, zum Beispiel deutsche Sprache in englischen Text. Granite 5.0 TurboCTC kann das nicht: Solange es das aktive Modell ist, blenden der Recorder und die Datei-Transkription die Übersetzung aus, und eine Übersetzungsanfrage endet mit einem Fehler, der dich bittet, Granite 5.0 2B oder Granite 4.0 zu wählen.
+
+Mit Granite 5.0 2B und Granite 4.0 gibt TypeWhisper deine Wörterbuch-Begriffe als Schlüsselwörter nach der Transkriptions- oder Übersetzungsanweisung an das Modell weiter. Übersetzen funktioniert auch, während Wörterbuch-Begriffe aktiv sind. Wörterbuch-Korrekturen werden bei jedem Modell weiterhin nach der Transkription angewendet.
+
 ## Konfiguration
 
-- **Modell** - Wähle die gewünschte Granite-Modellvariante.
+- **Modell** - Lokales Granite-Modell wählen, herunterladen und verwalten.
+- **HuggingFace Token** - Optional. Erhöht die Download-Limits für die Modell-Downloads.
 
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Granite Speech**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle deine bevorzugte Modellvariante.
+2. Klicke bei einem Modell auf **Laden & Aktivieren**: Granite 5.0 TurboCTC für schnelles Diktieren oder Granite 5.0 2B, wenn du Übersetzung oder Wörterbuch-Begriffe brauchst.
 3. Wähle Granite als Transkriptions-Engine in den Einstellungen oder in einem Profil.
-4. Das Modell wird beim ersten Gebrauch automatisch heruntergeladen.

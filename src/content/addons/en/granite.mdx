@@ -19,23 +19,50 @@ sourceUrls:
 
 ## About
 
-Granite brings IBM's Granite speech-to-text models to TypeWhisper, running entirely on-device using Apple's MLX framework. Like WhisperKit, all processing happens locally on your Mac's Apple Silicon chip - no cloud services or API keys needed.
+Granite brings IBM's Granite Speech models to TypeWhisper and runs them entirely on-device with Apple's MLX framework. All processing happens locally on your Mac's Apple Silicon chip - no cloud services or API keys needed.
+
+Version 1.1.0 adds IBM's Granite Speech 5.0 models. Granite 5.0 TurboCTC is the new default: a fast model that writes punctuation and capitalization itself. Granite 5.0 2B also translates and uses your dictionary terms. The Granite 4.0 models stay available.
 
 ## Features
 
 - Fully local on-device transcription
-- Powered by IBM Granite speech models
+- Granite 5.0 TurboCTC for fast transcription in 7 languages, with punctuation and capitalization
+- Granite 5.0 2B for translation and dictionary terms
 - Runs on Apple Silicon via MLX
 - No API keys or cloud accounts required
 - Privacy-friendly - audio never leaves your Mac
 
+## Transcription Models
+
+| Model | ID | Size | RAM |
+| --- | --- | --- | --- |
+| Granite 5.0 TurboCTC (470M) (default) | `granite-speech-5.0-470m-turboctc` | ~950 MB | 8 GB+ |
+| Granite 5.0 2B | `granite-speech-5.0-2b` | ~4.6 GB | 16 GB+ |
+| Granite 4.0 1B (4-bit) | `granite-1b-speech-4bit` | ~2 GB | 8 GB+ |
+| Granite 4.0 1B (5-bit) | `granite-1b-speech-5bit` | ~2.2 GB | 8 GB+ |
+| Granite 4.0 1B (8-bit) | `granite-1b-speech-8bit` | ~2.9 GB | 16 GB+ |
+
+Granite 5.0 TurboCTC transcribes English, French, German, Spanish, Portuguese, Italian, and Japanese. Granite 5.0 2B and Granite 4.0 support the same languages except Italian.
+
+- **Granite 5.0 TurboCTC** is the fastest model. It writes punctuation and capitalization, but it cannot translate and does not use dictionary terms.
+- **Granite 5.0 2B** writes punctuation and capitalization, translates, and passes your dictionary terms to the model as keywords. It is slower and needs a larger download.
+- **Granite 4.0 1B** is the older model. It writes mostly lowercase with little punctuation. If you already use a Granite 4.0 model, it stays selected after the update.
+
+The Granite 5.0 models need version 1.1.0 of this add-on.
+
+## Translation and Dictionary Terms
+
+Granite 5.0 2B and Granite 4.0 can translate speech, for example German speech into English text. Granite 5.0 TurboCTC cannot: while it is the active model, the Recorder and file transcription hide the translation task, and a translation request returns an error that asks you to select Granite 5.0 2B or Granite 4.0.
+
+With Granite 5.0 2B and Granite 4.0, TypeWhisper passes your dictionary terms to the model as keywords after the transcription or translation instruction. Translation also works while dictionary terms are active. Dictionary corrections are still applied after transcription with every model.
+
 ## Configuration
 
-- **Model** - Select which Granite model variant to use.
+- **Model** - Choose, download, and manage the local Granite model.
+- **HuggingFace Token** - Optional. Increases download rate limits for the model downloads.
 
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Granite Speech**. The add-on then appears in the Settings sidebar, and its page opens.
-2. Select your preferred model variant.
+2. Click **Download & Load** for a model: Granite 5.0 TurboCTC for fast dictation, or Granite 5.0 2B if you need translation or dictionary terms.
 3. Select Granite as your transcription engine in Settings or in a profile.
-4. The model will be downloaded automatically on first use.
