@@ -21,13 +21,13 @@ sourceUrls:
 
 Granite bringt IBMs Granite-Speech-Modelle zu TypeWhisper und läuft vollständig auf dem Gerät mit Apples MLX-Framework. Die gesamte Verarbeitung erfolgt lokal auf dem Apple Silicon Chip deines Macs - ohne Cloud-Dienste oder API-Schlüssel.
 
-Version 1.1.0 bringt IBMs Granite-Speech-5.0-Modelle. Granite 5.0 TurboCTC ist das neue Standardmodell: ein schnelles Modell, das Satzzeichen und Groß-/Kleinschreibung selbst setzt. Granite 5.0 2B übersetzt außerdem und nutzt deine Wörterbuch-Begriffe. Die Granite-4.0-Modelle bleiben verfügbar.
+Version 1.1.0 bringt IBMs Granite-Speech-5.0-Modelle. Granite 5.0 TurboCTC ist das neue Standardmodell: ein schnelles Modell, das Satzzeichen und Groß-/Kleinschreibung selbst setzt. Granite 5.0 2B übersetzt außerdem und nutzt deine Wörterbuch-Begriffe. Die Granite-4.0-Modelle bleiben verfügbar. Mit Version 1.2.0 wählst du die Sprache, in die Granite übersetzt.
 
 ## Features
 
 - Vollständig lokale Transkription auf dem Gerät
 - Granite 5.0 TurboCTC für schnelle Transkription in 7 Sprachen, mit Satzzeichen und Groß-/Kleinschreibung
-- Granite 5.0 2B für Übersetzung und Wörterbuch-Begriffe
+- Granite 5.0 2B für Übersetzung in eine Zielsprache deiner Wahl und für Wörterbuch-Begriffe
 - Läuft auf Apple Silicon via MLX
 - Keine API-Schlüssel oder Cloud-Konten erforderlich
 - Datenschutzfreundlich - Audio verlässt nie deinen Mac
@@ -53,6 +53,17 @@ Die Granite-5.0-Modelle brauchen Version 1.1.0 dieses Add-ons.
 ## Übersetzung und Wörterbuch-Begriffe
 
 Granite 5.0 2B und Granite 4.0 können Sprache übersetzen, zum Beispiel deutsche Sprache in englischen Text. Granite 5.0 TurboCTC kann das nicht: Solange es das aktive Modell ist, blenden der Recorder und die Datei-Transkription die Übersetzung aus, und eine Übersetzungsanfrage endet mit einem Fehler, der dich bittet, Granite 5.0 2B oder Granite 4.0 zu wählen.
+
+Seit Version 1.2.0 wählst du die Zielsprache. Wähle im Recorder, in der Datei-Transkription oder in der Diktat-Wiederherstellung mit Granite 5.0 2B oder Granite 4.0 die Aufgabe **Ins Englische übersetzen**, dann erscheint neben der Aufgabenauswahl die Auswahl **Zielsprache**. Die Aufgabe nennt danach die gewählte Sprache, zum Beispiel **Übersetzen nach Französisch**. Standard ist Englisch, und jeder dieser Bereiche merkt sich seine eigene Auswahl.
+
+| Zielsprache | Übersetzt aus |
+| --- | --- |
+| Englisch | Französisch, Deutsch, Spanisch, Portugiesisch, Japanisch |
+| Französisch, Deutsch, Spanisch, Portugiesisch, Japanisch, Italienisch, Chinesisch | Englisch |
+
+Granite übersetzt am besten aus dem und ins Englische; Italienisch und Chinesisch sind für englische Sprache gedacht. Über die lokale API geht `task=translate` mit einer `target_language`, die Granite unterstützt, direkt an Granite, ohne Apple Translate.
+
+Die Auswahl der Zielsprache braucht TypeWhisper 1.8.1 oder neuer. Mit TypeWhisper 1.8.0 übersetzt Granite 1.2.0 wie Version 1.1.0.
 
 Mit Granite 5.0 2B und Granite 4.0 gibt TypeWhisper deine Wörterbuch-Begriffe als Schlüsselwörter nach der Transkriptions- oder Übersetzungsanweisung an das Modell weiter. Übersetzen funktioniert auch, während Wörterbuch-Begriffe aktiv sind. Wörterbuch-Korrekturen werden bei jedem Modell weiterhin nach der Transkription angewendet.
 

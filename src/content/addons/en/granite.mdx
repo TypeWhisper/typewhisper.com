@@ -21,13 +21,13 @@ sourceUrls:
 
 Granite brings IBM's Granite Speech models to TypeWhisper and runs them entirely on-device with Apple's MLX framework. All processing happens locally on your Mac's Apple Silicon chip - no cloud services or API keys needed.
 
-Version 1.1.0 adds IBM's Granite Speech 5.0 models. Granite 5.0 TurboCTC is the new default: a fast model that writes punctuation and capitalization itself. Granite 5.0 2B also translates and uses your dictionary terms. The Granite 4.0 models stay available.
+Version 1.1.0 adds IBM's Granite Speech 5.0 models. Granite 5.0 TurboCTC is the new default: a fast model that writes punctuation and capitalization itself. Granite 5.0 2B also translates and uses your dictionary terms. The Granite 4.0 models stay available. Version 1.2.0 lets you choose the language Granite translates into.
 
 ## Features
 
 - Fully local on-device transcription
 - Granite 5.0 TurboCTC for fast transcription in 7 languages, with punctuation and capitalization
-- Granite 5.0 2B for translation and dictionary terms
+- Granite 5.0 2B for translation into a target language you choose, and for dictionary terms
 - Runs on Apple Silicon via MLX
 - No API keys or cloud accounts required
 - Privacy-friendly - audio never leaves your Mac
@@ -53,6 +53,17 @@ The Granite 5.0 models need version 1.1.0 of this add-on.
 ## Translation and Dictionary Terms
 
 Granite 5.0 2B and Granite 4.0 can translate speech, for example German speech into English text. Granite 5.0 TurboCTC cannot: while it is the active model, the Recorder and file transcription hide the translation task, and a translation request returns an error that asks you to select Granite 5.0 2B or Granite 4.0.
+
+Since version 1.2.0 you choose the target language. In the Recorder, File Transcription, and Dictation Recovery, choose the **Translate to English** task with Granite 5.0 2B or Granite 4.0, and a **Target language** picker appears next to the task picker. The task then names the chosen language, for example **Translate to French**. English is the default, and each of these places remembers its own choice.
+
+| Target language | Translates from |
+| --- | --- |
+| English | French, German, Spanish, Portuguese, Japanese |
+| French, German, Spanish, Portuguese, Japanese, Italian, Chinese | English |
+
+Granite translates best to and from English; Italian and Chinese are meant for English speech. Through the local API, `task=translate` with a `target_language` that Granite supports goes straight to Granite, without Apple Translate.
+
+Choosing the target language needs TypeWhisper 1.8.1 or newer. With TypeWhisper 1.8.0, Granite 1.2.0 translates as version 1.1.0 did.
 
 With Granite 5.0 2B and Granite 4.0, TypeWhisper passes your dictionary terms to the model as keywords after the transcription or translation instruction. Translation also works while dictionary terms are active. Dictionary corrections are still applied after transcription with every model.
 
