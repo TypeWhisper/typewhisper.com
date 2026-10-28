@@ -4,7 +4,7 @@ id: com.typewhisper.local-llm-llamacpp
 name: Local LLM (llama.cpp)
 author: TypeWhisper
 icon: Cpu
-description: Run GGUF models on your Mac with llama.cpp and Metal, including any GGUF model from Hugging Face or your own .gguf file. No API key required.
+description: Run GGUF models on your Mac with llama.cpp and Metal, including single-file GGUF models from Hugging Face or your own .gguf file. No API key required.
 categories:
   - llm
 platforms:
@@ -16,13 +16,13 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperP
 
 ## About
 
-Local LLM (llama.cpp) runs workflows and prompts on your Mac with [llama.cpp](https://github.com/ggml-org/llama.cpp) and Metal. Cleanup, rewrites, summaries and translations work without sending text to the cloud. Besides the recommended Gemma 4 models, you can use any GGUF model from Hugging Face, for example a small 0.5B to 4B model that cleans up dictations in about a second, or import a `.gguf` file you already have.
+Local LLM (llama.cpp) runs workflows and prompts on your Mac with [llama.cpp](https://github.com/ggml-org/llama.cpp) and Metal. Cleanup, rewrites, summaries and translations work without sending text to the cloud. Besides the recommended Gemma 4 models, you can use any GGUF model from Hugging Face that comes as a single file, for example a small 0.5B to 4B model that cleans up dictations in about a second, or import a `.gguf` file you already have.
 
 ## Features
 
 - Fully local prompt processing with llama.cpp and Metal on Apple silicon
 - Gemma 4, Qwen3.5 and LFM2.5 models, the same files as in TypeWhisper for Windows
-- Any GGUF model from Hugging Face: enter the repository, pick a file, done
+- Single-file GGUF models from Hugging Face: enter the repository, pick a file, done
 - Import of `.gguf` files from your Mac
 - Downloads pinned to the repository's current commit and checked against their SHA-256
 - Thinking turned off for text cleanup, so answers come right away
@@ -46,7 +46,7 @@ The plugin recommends Gemma 4 E2B or E4B based on your Mac's memory.
 ## Your Own Models
 
 - **From Hugging Face** - Enter a repository such as `unsloth/Qwen3.5-2B-GGUF`, add a quantization like `unsloth/Qwen3.5-2B-GGUF:Q4_K_M`, or paste a huggingface.co link. Click `Find GGUF Files`, pick a file and click `Add & Download`.
-- **From a file** - Click `Import GGUF File…` and choose a `.gguf` file. The plugin copies it into its own folder; on the Mac's internal disk this takes no extra space, and your original file stays where it is.
+- **From a file** - Click `Import GGUF File…` and choose a `.gguf` file. The plugin copies it into its own folder and your original file stays where it is. When the file is on the same volume as TypeWhisper's data, usually the Mac's startup disk, the copy takes no extra space; from another volume it needs space for a full copy.
 
 Models with a chat template in their GGUF file work best; most instruct and chat models have one. Models split into several files and projector files (`mmproj-*.gguf`) are not offered.
 

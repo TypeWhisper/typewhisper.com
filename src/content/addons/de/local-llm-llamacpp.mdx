@@ -4,7 +4,7 @@ id: com.typewhisper.local-llm-llamacpp
 name: Local LLM (llama.cpp)
 author: TypeWhisper
 icon: Cpu
-description: Führt GGUF-Modelle mit llama.cpp und Metal auf deinem Mac aus, auch jedes GGUF-Modell von Hugging Face oder deine eigene .gguf-Datei. Kein API-Key erforderlich.
+description: Führt GGUF-Modelle mit llama.cpp und Metal auf deinem Mac aus, auch GGUF-Modelle aus einer einzelnen Datei von Hugging Face oder deine eigene .gguf-Datei. Kein API-Key erforderlich.
 categories:
   - llm
 platforms:
@@ -16,13 +16,13 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperP
 
 ## Über
 
-Local LLM (llama.cpp) führt Workflows und Prompts mit [llama.cpp](https://github.com/ggml-org/llama.cpp) und Metal auf deinem Mac aus. Bereinigen, Umschreiben, Zusammenfassen und Übersetzen funktionieren ohne Cloud-Upload. Neben den empfohlenen Gemma-4-Modellen kannst du jedes GGUF-Modell von Hugging Face nutzen, etwa ein kleines Modell mit 0,5B bis 4B Parametern, das Diktate in etwa einer Sekunde bereinigt, oder eine vorhandene `.gguf`-Datei importieren.
+Local LLM (llama.cpp) führt Workflows und Prompts mit [llama.cpp](https://github.com/ggml-org/llama.cpp) und Metal auf deinem Mac aus. Bereinigen, Umschreiben, Zusammenfassen und Übersetzen funktionieren ohne Cloud-Upload. Neben den empfohlenen Gemma-4-Modellen kannst du jedes GGUF-Modell von Hugging Face nutzen, das aus einer einzelnen Datei besteht, etwa ein kleines Modell mit 0,5B bis 4B Parametern, das Diktate in etwa einer Sekunde bereinigt, oder eine vorhandene `.gguf`-Datei importieren.
 
 ## Features
 
 - Vollständig lokale Prompt-Verarbeitung mit llama.cpp und Metal auf Apple Silicon
 - Gemma-4-, Qwen3.5- und LFM2.5-Modelle, dieselben Dateien wie in TypeWhisper für Windows
-- Jedes GGUF-Modell von Hugging Face: Repository eingeben, Datei auswählen, fertig
+- GGUF-Modelle aus einer einzelnen Datei von Hugging Face: Repository eingeben, Datei auswählen, fertig
 - Import von `.gguf`-Dateien von deinem Mac
 - Downloads sind auf den aktuellen Commit des Repositorys festgelegt und werden per SHA-256 geprüft
 - Beim Bereinigen ohne Denkschritt vor der Antwort, das Ergebnis kommt sofort
@@ -46,7 +46,7 @@ Das Plugin empfiehlt je nach Arbeitsspeicher deines Macs Gemma 4 E2B oder E4B.
 ## Eigene Modelle
 
 - **Von Hugging Face** - Gib ein Repository wie `unsloth/Qwen3.5-2B-GGUF` ein, ergänze eine Quantisierung wie `unsloth/Qwen3.5-2B-GGUF:Q4_K_M` oder füge einen huggingface.co-Link ein. Klicke auf `GGUF-Dateien suchen`, wähle eine Datei und klicke auf `Hinzufügen & Laden`.
-- **Aus einer Datei** - Klicke auf `GGUF-Datei importieren …` und wähle eine `.gguf`-Datei. Das Plugin kopiert sie in seinen eigenen Ordner. Auf dem internen Laufwerk des Macs belegt das keinen zusätzlichen Platz, und deine Originaldatei bleibt, wo sie ist.
+- **Aus einer Datei** - Klicke auf `GGUF-Datei importieren …` und wähle eine `.gguf`-Datei. Das Plugin kopiert sie in seinen eigenen Ordner, und deine Originaldatei bleibt, wo sie ist. Liegt die Datei auf demselben Volume wie die Daten von TypeWhisper, meist dem Startvolume des Macs, belegt die Kopie keinen zusätzlichen Platz. Von einem anderen Volume braucht sie Platz für eine vollständige Kopie.
 
 Am besten funktionieren Modelle mit Chat-Vorlage in der GGUF-Datei; die meisten Instruct- und Chat-Modelle haben eine. Modelle, die auf mehrere Dateien aufgeteilt sind, und Projektordateien (`mmproj-*.gguf`) werden nicht angeboten.
 
