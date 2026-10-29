@@ -2,16 +2,12 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import { androidBeta } from "../src/lib/android-beta.ts";
+import { androidBetaProgram } from "../src/lib/android.ts";
 
-test("the Android beta links point at the Play opt-in and the Play listing", () => {
+test("the Android beta program points at the Play opt-in page", () => {
   assert.equal(
-    androidBeta.playOptInUrl,
+    androidBetaProgram.optInUrl,
     "https://play.google.com/apps/testing/com.typewhisper.android",
-  );
-  assert.equal(
-    androidBeta.playStoreUrl,
-    "https://play.google.com/store/apps/details?id=com.typewhisper.android",
   );
 });
 
@@ -22,9 +18,8 @@ test("the unprefixed Android and account deletion URLs redirect to a locale", as
   }
 });
 
-test("the footer links the Android beta only once it is listed, and the account deletion page", async () => {
+test("the footer links the Android page and the account deletion page", async () => {
   const footer = await readFile("src/components/layout/footer.astro", "utf8");
-  assert.match(footer, /androidBeta\.listed && \(/);
   assert.match(footer, /localePath\(locale, "\/android"\)/);
   assert.match(footer, /localePath\(locale, "\/delete-account"\)/);
 });

@@ -30,15 +30,23 @@ export const featureScreenshotsByPlatform: Record<
     profiles: "/screenshots/ios/05-profiles.png",
     transcription: "/screenshots/ios/04-history.png",
   },
+  android: {
+    private: "/screenshots/android/02-inbox.png",
+    dictation: "/screenshots/android/06-profiles.png",
+    prompts: "/screenshots/android/05-email.png",
+    profiles: "/screenshots/android/07-dictionary.png",
+    transcription: "/screenshots/android/03-history.png",
+  },
 };
 
-/** Windows and iOS show one capture beside both Premium features. */
+/** Windows and the phones show one capture beside both Premium features. */
 export const premiumScreenshotByPlatform: Record<
   Exclude<LandingPlatform, "mac">,
   string
 > = {
   windows: "/screenshots/windows/premium-active.png",
   ios: "/screenshots/ios/06-dictionary.png",
+  android: "/screenshots/android/04-calendar.png",
 };
 
 export type PremiumFeatureKey = "sync" | "dictionary";

@@ -1,14 +1,21 @@
 import downloads from "@/data/downloads.json";
-import { iosVersion } from "@/data/versions";
+import { androidVersion, iosVersion } from "@/data/versions";
 import { t, type Locale } from "@/i18n/index";
 import type { DownloadTarget } from "@/lib/attribution";
+import {
+  detectPlatformFromUserAgent,
+  getAndroidPlayStoreUrl,
+  type Platform,
+} from "@/lib/platform-detection";
+
+export { detectPlatformFromUserAgent, getAndroidPlayStoreUrl, type Platform };
 
 export const macReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-mac/releases";
 export const windowsReleaseUrl =
   "https://github.com/TypeWhisper/typewhisper-win/releases";
 // Maintained in src/data/versions.ts.
-export { iosVersion };
+export { androidVersion, iosVersion };
 const iosAppStoreProductPath = "app/typewhisper-app/id6759319267";
 const windowsStoreProductUrl = "https://apps.microsoft.com/detail/9pf42zcr0jr0";
 // The public beta is a separate Store product that installs alongside the
@@ -34,7 +41,6 @@ export function windowsLatestAssetUrl(name: string): string {
 export const orgGitHubUrl = "https://github.com/TypeWhisper";
 export const discordUrl = "https://discord.gg/pUFR4a65SD";
 
-export type Platform = "mac" | "windows" | "ios" | "other";
 export type DownloadTargetContext = "nav" | "landing";
 
 interface AvailablePlatformDownloadTarget {
@@ -79,32 +85,6 @@ export function getIosAppStoreUrl(locale: Locale): string {
   return `https://apps.apple.com/${storefront}/${iosAppStoreProductPath}`;
 }
 
-export function detectPlatformFromUserAgent(
-  userAgent: string,
-  maxTouchPoints = 0,
-): Platform {
-  const normalized = userAgent.toLowerCase();
-
-  if (normalized.includes("windows")) {
-    return "windows";
-  }
-
-  if (
-    normalized.includes("iphone") ||
-    normalized.includes("ipad") ||
-    normalized.includes("ipod")
-  ) {
-    return "ios";
-  }
-
-  if (normalized.includes("macintosh") || normalized.includes("mac os x")) {
-    // iPadOS Safari introduces itself as a Mac; no Mac has a touch screen.
-    return maxTouchPoints > 1 ? "ios" : "mac";
-  }
-
-  return "other";
-}
-
 export function detectPlatform(): Platform {
   if (typeof navigator === "undefined") {
     return "other";
@@ -142,6 +122,16 @@ export function getPlatformDownloadTarget(
           version: iosVersion ?? undefined,
           opensNewTab: true,
         };
+      case "android":
+        return {
+          available: true,
+          href: getAndroidPlayStoreUrl(locale),
+          label: t(locale, "platforms.android.download"),
+          platform,
+          target: "android_play_store",
+          version: androidVersion,
+          opensNewTab: true,
+        };
       case "mac":
       case "other":
       default:
@@ -175,6 +165,16 @@ export function getPlatformDownloadTarget(
         platform,
         target: "ios_app_store",
         version: iosVersion ?? undefined,
+        opensNewTab: true,
+      };
+    case "android":
+      return {
+        available: true,
+        href: getAndroidPlayStoreUrl(locale),
+        label: t(locale, "nav.downloadAndroid"),
+        platform,
+        target: "android_play_store",
+        version: androidVersion,
         opensNewTab: true,
       };
     case "mac":

@@ -7,7 +7,7 @@ The landing page (`/en/`, `/de/`) is the approved reference. Every other page is
 
 ## Product Context
 
-- **What this is:** Marketing site for TypeWhisper, a privacy-first dictation app with stable macOS, Windows, and iOS editions.
+- **What this is:** Marketing site for TypeWhisper, a privacy-first dictation app with stable macOS, Windows, iOS, and Android editions.
 - **Who it's for:** Developers, writers, professionals; secondary: business/legal buyers.
 - **Positioning:** Free, local-first, open ecosystem (add-on marketplace + SDK), made in Germany.
 - **Project type:** Marketing site + docs, statically built with Astro 7 + Tailwind 4 + React 19 islands, EN/DE.
@@ -240,7 +240,7 @@ The `Button` component (`src/components/ui/button.tsx`) is for compact UI (heade
 | `site-index`, `__link`, `__name`, `__text`, `__meta`, `__accent` | Index of links, three columns, text clamped to three lines. `--2` two columns, `--open` full texts | Use cases, related pages |
 | `site-index--tiles` with `__mark`, `__logo`, `__icon`, `__body` | Index with a logo or icon tile in front | Add-ons, integrations |
 | `site-tiers`, `__link`, `__name` (`--accent`), `__price`, `__text` | Prices as columns of type, divided by hairlines. `--2` | Pricing |
-| `site-editions`, `__link`, `__body`, `__name`, `__version`, `__text` | One row per platform with icon and arrow | Downloads |
+| `site-editions`, `__link`, `__body`, `__name`, `__version`, `__text` | One row per platform with icon and arrow. `--4` for four platforms: one row, two by two below 1024px | Downloads |
 | `site-disclosure`, `__body` | `<details>` row with a plus icon that turns | FAQ, optional detail |
 | `site-quotes`, `site-quote`, `__source`, `__wordmark`, `__name`, `__link` | Quotes as large type with their source | Press, testimonials |
 | `site-table` | Wrapper of a `<table>`: hairline rows, mono head, scrolls sideways | Comparisons |
@@ -361,3 +361,4 @@ Copy never spells out the current stable version of an app. It uses placeholders
 | 2026-09-28 | Global focus ring in the accent color, buttons as pills, cards without shadow, footer with the static waveform divider instead of animated bars | Header, footer, and shared components follow the hairline system |
 | 2026-09-28 | Current app versions come from `src/data/versions.ts` through placeholders in copy | Support, release status, docs, and changelog can no longer show different numbers |
 | 2026-09-28 | `--fill` differs from the landing mapping of `--muted` in the light theme (`#f5f5f7` instead of `#ffffff`); `--destructive` darkened to `#d70015` | A white fill disappears on paper-white; white text on the old red reached only 3.6:1 |
+| 2026-10-24 | Android becomes the fourth platform of the homepage. Its screenshots use the phone layout of iOS; the video section plays a landscape product video (studio render with voice-over and captions); the hero switch drops its logos below 480px so four platforms fit on one line | Android visitors see their edition and download first, without a second design for phones |

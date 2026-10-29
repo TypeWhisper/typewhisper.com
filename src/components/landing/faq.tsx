@@ -11,7 +11,7 @@ interface FaqItem {
 
 // A version placeholder t() could not resolve, with its "(version …)" aside.
 const unresolvedVersionAside =
-  / \([^()]*\{(?:mac|windows|ios)(?:Version|Series)\}\)/g;
+  / \([^()]*\{(?:mac|windows|ios|android)(?:Version|Series)\}\)/g;
 
 const faqIds = ["free", "privacy", "platforms", "languages", "work", "builtIn"];
 

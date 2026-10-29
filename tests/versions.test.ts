@@ -13,12 +13,14 @@ const known = versionPlaceholders({
   mac: describeVersion("v1.6.1"),
   windows: describeVersion("v1.0.9"),
   ios: describeVersion("1.0"),
+  android: describeVersion("1.0.2"),
 });
 
 const withoutFeed = versionPlaceholders({
   mac: describeVersion(null),
   windows: describeVersion(undefined),
   ios: describeVersion("1.0"),
+  android: describeVersion("1.0.2"),
 });
 
 test("the full version drops the leading v and any suffix", () => {
@@ -60,6 +62,8 @@ test("every platform provides a version and a series placeholder", () => {
     windowsSeries: "1.0",
     iosVersion: "1.0",
     iosSeries: "1.0",
+    androidVersion: "1.0.2",
+    androidSeries: "1.0",
   });
 });
 
@@ -76,6 +80,8 @@ test("placeholders resolve to the text written by hand before", () => {
       "stable macOS 1.6, Windows 1.0.9, and iOS 1.0 releases.",
     ],
     ["(version {macVersion})", "(version 1.6.1)"],
+    ["Android 10 or later (version {androidVersion})", "Android 10 or later (version 1.0.2)"],
+    ["Android {androidSeries}", "Android 1.0"],
     ["{macSeries} and again {macSeries}", "1.6 and again 1.6"],
   ];
   for (const [text, expected] of cases)
@@ -96,10 +102,10 @@ test("other placeholders and plain text stay as written", () => {
 test("an unknown version leaves its placeholders untouched", () => {
   assert.equal(
     resolveVersionPlaceholders(
-      "macOS {macSeries} ({macVersion}), Windows {windowsVersion}, iOS {iosVersion}",
+      "macOS {macSeries} ({macVersion}), Windows {windowsVersion}, iOS {iosVersion}, Android {androidVersion}",
       withoutFeed,
     ),
-    "macOS {macSeries} ({macVersion}), Windows {windowsVersion}, iOS 1.0",
+    "macOS {macSeries} ({macVersion}), Windows {windowsVersion}, iOS 1.0, Android 1.0.2",
   );
   assert.equal(resolveVersionPlaceholders("{macSeries}", {}), "{macSeries}");
 });

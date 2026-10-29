@@ -169,12 +169,74 @@ function getIosRows(locale: Locale): ComparisonRow[] {
   ];
 }
 
+function getAndroidEngines(locale: Locale): Engine[] {
+  return [1, 2, 3].map((index) => ({
+    name: t(locale, `engineComparison.android.engine${index}.name`),
+    badge: t(locale, `engineComparison.android.engine${index}.badge`),
+    description: t(
+      locale,
+      `engineComparison.android.engine${index}.description`,
+    ),
+  }));
+}
+
+/*
+ * Parakeet, Whisper, and Android's own recognizer. Only Nemotron Live writes
+ * while you speak, so the streaming row would say "no" three times; whether an
+ * engine works offline tells these three apart instead.
+ */
+function getAndroidRows(locale: Locale): ComparisonRow[] {
+  return [
+    {
+      label: t(locale, "engineComparison.row.languages"),
+      values: [
+        comparisonValue(locale, "european25"),
+        "99",
+        comparisonValue(locale, "systemLanguages"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.offline"),
+      values: [true, true, comparisonValue(locale, "dependsOnLanguage")],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelSizes"),
+      values: [
+        "630–670 MB",
+        "104 MB – 1 GB",
+        comparisonValue(locale, "systemManaged"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.modelDownload"),
+      values: [
+        comparisonValue(locale, "manualInApp"),
+        comparisonValue(locale, "manualInApp"),
+        comparisonValue(locale, "viaAndroid"),
+      ],
+    },
+    {
+      label: t(locale, "engineComparison.row.bestFor"),
+      values: [
+        comparisonValue(locale, "europeanLanguages"),
+        comparisonValue(locale, "multilingual"),
+        comparisonValue(locale, "quickSetup"),
+      ],
+    },
+  ];
+}
+
 function getEngineData(platform: Platform, locale: Locale): { engines: Engine[]; rows: ComparisonRow[] } {
   switch (platform) {
     case "windows":
       return { engines: getWindowsEngines(locale), rows: getWindowsRows(locale) };
     case "ios":
       return { engines: getIosEngines(locale), rows: getIosRows(locale) };
+    case "android":
+      return {
+        engines: getAndroidEngines(locale),
+        rows: getAndroidRows(locale),
+      };
     default:
       return { engines: getMacEngines(locale), rows: getMacRows(locale) };
   }
@@ -312,6 +374,14 @@ export function EngineComparisonTable({ platform, locale = "en" }: { platform: P
           {t(locale, "engineComparison.ios.hint")}{" "}
           <a href={localePath(locale, "/docs/ios/profiles-and-processing")} className="underline underline-offset-4 hover:text-foreground">
             {t(locale, "engineComparison.ios.hintLink")}
+          </a>
+        </p>
+      )}
+      {platform === "android" && (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          {t(locale, "engineComparison.android.hint")}{" "}
+          <a href={localePath(locale, "/docs/android/engines-and-models")} className="underline underline-offset-4 hover:text-foreground">
+            {t(locale, "engineComparison.android.hintLink")}
           </a>
         </p>
       )}
