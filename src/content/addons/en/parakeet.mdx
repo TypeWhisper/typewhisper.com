@@ -85,7 +85,7 @@ The folder or repository needs these parts. Each model can be a compiled `.mlmod
 
 This covers the layout of FluidInference's Core ML repositories, such as `FluidInference/parakeet-tdt-0.6b-v3-coreml`, and the folder that FluidInference's [mobius converter](https://github.com/FluidInference/mobius/tree/main/models/stt/parakeet-tdt-v3-0.6b/coreml) writes. TypeWhisper copies only the files it needs.
 
-mobius writes no vocabulary. For a model with the standard Parakeet vocabulary, TypeWhisper adds it during the import. A fine-tune that adds tokens needs its own vocabulary: copy `vocab.txt` or `vocab.json` from the original model into the folder before you import it. For example, the Greek fine-tune `myned-ai/parakeet-tdt-0.6b-v3-greek` adds 33 tokens, and its `vocab.txt` is in its Hugging Face repository. If the vocabulary is missing, the import stops with a message before it copies anything.
+mobius writes no vocabulary. For a model with the standard Parakeet vocabulary, TypeWhisper adds it during the import. A fine-tune that adds tokens needs its own vocabulary: copy `vocab.txt` or `vocab.json` from the original model into the folder before you import it. For example, the Greek fine-tune `myned-ai/parakeet-tdt-0.6b-v3-greek` adds 33 tokens, and its `vocab.txt` is in its Hugging Face repository. If the vocabulary is missing, the import stops with a message before it copies or downloads the model files, for a local folder and for a Hugging Face repository.
 
 Supported are Parakeet TDT models with the vocabulary size of v2 (1,024 tokens) or of v3 and its extensions (8,192 tokens or more). Other speech recognition architectures cannot be imported into Parakeet.
 
