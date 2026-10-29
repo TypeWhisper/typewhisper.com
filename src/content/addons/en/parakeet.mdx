@@ -17,6 +17,7 @@ id: "com.typewhisper.parakeet"
 minAppVersion: "1.5.0"
 minOsVersion: "14.0"
 releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-parakeet-v1.3.1"
+screenshotAlt: "Parakeet settings in TypeWhisper for macOS: the optional Hugging Face token, the Import Model button and the built-in models with Download & Load buttons"
 ---
 
 ## About
@@ -31,6 +32,7 @@ Parakeet uses NVIDIA's Parakeet TDT model for extremely fast on-device speech re
 - No API key or cloud account needed
 - Compact model size (~600 MB)
 - Optional local vocabulary boosting from your TypeWhisper dictionary
+- Import of your own Parakeet TDT models converted to Core ML, for example a fine-tune for one language
 
 ## Transcription Models
 
@@ -54,6 +56,48 @@ If vocabulary boosting is enabled, Parakeet uses your custom TypeWhisper diction
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Parakeet**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Choose a model, for example Ultra for multilingual dictation or Fluid Speech Mini for a smaller English download, then download and load it in the plugin settings.
 3. Select Parakeet as your transcription engine in Settings or in a profile.
+
+## Import your own model
+
+Besides the built-in models, Parakeet loads Parakeet TDT models that you bring yourself, for example a fine-tune for one language converted to Core ML.
+
+1. In the Parakeet settings, select **Import Model…**.
+2. Choose **Hugging Face** and paste the repository URL, or choose **Local Folder** and select the folder with the model.
+3. Select **Import**. TypeWhisper copies the model, compiles it, loads it, and transcribes a short test before the import completes.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/en/plugins/parakeet-import-dialog.webp" type="image/webp" />
+    <img src="/screenshots/en/plugins/parakeet-import-dialog.png" width={1088} height={732} loading="lazy" decoding="async" alt="Parakeet import dialog with Local Folder selected and the folder parakeet-tdt-0.6b-v3-greek chosen" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>The import dialog lists the files the folder needs.</figcaption>
+</figure>
+
+The folder or repository needs these parts. Each model can be a compiled `.mlmodelc` or an `.mlpackage`, which TypeWhisper compiles during the import:
+
+| Part | Accepted names |
+| --- | --- |
+| Preprocessor | `Preprocessor`, `parakeet_preprocessor` |
+| Encoder | `Encoder`, `parakeet_encoder` |
+| Decoder | `Decoder`, `parakeet_decoder` |
+| Joint decision | `JointDecisionv3`, `JointDecision`, `parakeet_joint_decision_single_step` |
+| Vocabulary | `parakeet_vocab.json`, `vocab.json`, or `vocab.txt` |
+
+This covers the layout of FluidInference's Core ML repositories, such as `FluidInference/parakeet-tdt-0.6b-v3-coreml`, and the folder that FluidInference's [mobius converter](https://github.com/FluidInference/mobius/tree/main/models/stt/parakeet-tdt-v3-0.6b/coreml) writes. TypeWhisper copies only the files it needs.
+
+mobius writes no vocabulary. For a model with the standard Parakeet vocabulary, TypeWhisper adds it during the import. A fine-tune that adds tokens needs its own vocabulary: copy `vocab.txt` or `vocab.json` from the original model into the folder before you import it. For example, the Greek fine-tune `myned-ai/parakeet-tdt-0.6b-v3-greek` adds 33 tokens, and its `vocab.txt` is in its Hugging Face repository. If the vocabulary is missing, the import stops with a message before it copies anything.
+
+Supported are Parakeet TDT models with the vocabulary size of v2 (1,024 tokens) or of v3 and its extensions (8,192 tokens or more). Other speech recognition architectures cannot be imported into Parakeet.
+
+<figure>
+  <picture>
+    <source srcSet="/screenshots/en/plugins/parakeet-imported-model.webp" type="image/webp" />
+    <img src="/screenshots/en/plugins/parakeet-imported-model.png" width={1698} height={757} loading="lazy" decoding="async" alt="Parakeet model list with the imported model parakeet-tdt-0.6b-v3-greek loaded below the built-in models" className="rounded-2xl border shadow-lg" />
+  </picture>
+  <figcaption>Imported models appear below the built-in models.</figcaption>
+</figure>
+
+Imported models appear below the built-in models, and you choose them like any other Parakeet model. The trash button deletes TypeWhisper's copy of a model; your original files stay unchanged. TypeWhisper stores imported models in `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.parakeet/custom-models`.
 
 ## Manual copy workaround
 
