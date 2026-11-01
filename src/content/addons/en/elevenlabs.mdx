@@ -4,7 +4,7 @@ name: ElevenLabs
 author: TypeWhisper
 icon: AudioWaveform
 iconUrl: /brand-logos/elevenlabs/logo.svg
-description: Cloud transcription via ElevenLabs Scribe v2 with low-latency realtime streaming and REST fallback.
+description: Cloud transcription via ElevenLabs Scribe v2 with realtime streaming, REST fallback and word timestamps.
 categories:
   - transcription
 platforms:
@@ -16,17 +16,20 @@ sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisper
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ElevenLabsPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.ElevenLabs"
+screenshotAlt: "ElevenLabs settings in TypeWhisper for macOS: API key, model, transcription mode, and options for clean transcripts, audio events, speaker count and dictionary terms"
 ---
 
 ## About
 
-ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. The plugin is focused on fast live transcription: it uses realtime WebSocket streaming when available and automatically falls back to the REST endpoint if the streaming connection fails.
+ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. Short dictations stream over the realtime WebSocket API and return in about a second. Longer recordings, files and requests with dictionary terms go to the batch REST API, which also takes over when the streaming connection fails.
 
 ## Features
 
-- Scribe v2 transcription engine
-- Low-latency realtime streaming for live dictation previews
-- Automatic REST fallback for reliability
+- Scribe v2 transcription engine, and Scribe v2 Medical for clinical audio on Mac
+- Realtime streaming for dictations of up to 30 seconds, with automatic REST fallback
+- Batch transcription of long recordings and files
+- Word timestamps and sentence segments for speaker detection and the local HTTP API
+- Active TypeWhisper dictionary terms sent as recognition keyterms
 - Broad multilingual coverage with automatic language detection
 - API key validation in the configuration UI
 - API keys stored securely in the macOS Keychain
@@ -36,14 +39,26 @@ ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. T
 | Model | ID |
 | --- | --- |
 | Scribe v2 | `scribe_v2` |
+| Scribe v2 Medical | `scribe_v2_medical` |
+
+Scribe v2 Medical is tuned for clinical audio and costs the same as Scribe v2. It transcribes in batch only, without realtime streaming, and is available in the macOS add-on 1.1.0 and later. For protected health information under HIPAA, ElevenLabs requires a Business Associate Agreement first, which it offers to Enterprise customers.
 
 ## Configuration
 
-- **API Key** - Create an ElevenLabs API key in your account dashboard.
+- **API Key** - Create an ElevenLabs API key in your account dashboard. A key limited to Speech to Text is enough.
+- **Model** - Scribe v2, or Scribe v2 Medical on Mac.
+- **Transcription mode** - **Auto** streams short dictations and uses batch REST for everything else. **REST only** always uses the batch API, which avoids realtime concurrency limits.
+- **Clean transcript** - Removes filler words, false starts and other disfluencies.
+- **Audio events** - Adds non-speech events such as laughter to batch transcripts.
+- **Use TypeWhisper dictionary terms** - Sends your active dictionary terms as keyterms. ElevenLabs charges a 20% surcharge for keyterms, and a dictation with dictionary terms uses the batch API.
+
+## Word Timestamps
+
+With the macOS add-on 1.1.0 and later, ElevenLabs returns the time of every word. `verbose_json` responses of the local HTTP API contain segments split at sentence ends and pauses, and per-word times when the request asks for them with `timestamp_granularities[]=word`. This is useful for subtitles or for cutting quotes from interviews.
 
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **ElevenLabs**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Enter your ElevenLabs API key.
-3. Keep `Scribe v2` selected as the transcription model.
+3. Keep `Scribe v2` selected as the transcription model, or choose `Scribe v2 Medical` for clinical audio on Mac.
 4. Select ElevenLabs as your transcription engine in Settings or in a profile.
