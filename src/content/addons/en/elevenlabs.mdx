@@ -21,18 +21,18 @@ screenshotAlt: "ElevenLabs settings in TypeWhisper for macOS: API key, model, tr
 
 ## About
 
-ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. Short dictations stream over the realtime WebSocket API and return in about a second. Longer recordings, files and requests with dictionary terms go to the batch REST API, which also takes over when the streaming connection fails.
+ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. In Auto mode, dictations stream over the realtime WebSocket API while you speak, so TypeWhisper shows live text and has the final text ready shortly after you stop. Files, Scribe v2 Medical and requests that need the full recording go to the batch REST API, which also takes over when the streaming connection fails.
 
 ## Features
 
-- Scribe v2 transcription engine, and Scribe v2 Medical for clinical audio on Mac
-- Realtime streaming for dictations of up to 30 seconds, with automatic REST fallback
+- Scribe v2 transcription engine, and Scribe v2 Medical for clinical audio
+- Realtime streaming with live text while you dictate, with automatic REST fallback
 - Batch transcription of long recordings and files
-- Word timestamps and sentence segments for speaker detection and the local HTTP API
+- Sentence segments for subtitles and the local HTTP API, and word timestamps on Mac
 - Active TypeWhisper dictionary terms sent as recognition keyterms
 - Broad multilingual coverage with automatic language detection
 - API key validation in the configuration UI
-- API keys stored securely in the macOS Keychain
+- API keys stored securely in the macOS Keychain or, on Windows, encrypted for your Windows account
 
 ## Transcription Models
 
@@ -41,24 +41,26 @@ ElevenLabs adds cloud speech-to-text to TypeWhisper through the Scribe v2 API. S
 | Scribe v2 | `scribe_v2` |
 | Scribe v2 Medical | `scribe_v2_medical` |
 
-Scribe v2 Medical is tuned for clinical audio and costs the same as Scribe v2. It transcribes in batch only, without realtime streaming, and is available in the macOS add-on 1.1.0 and later. For protected health information under HIPAA, ElevenLabs requires a Business Associate Agreement, which it offers to Enterprise customers, and Zero Retention Mode for the requests. The add-on does not turn on Zero Retention Mode, so do not send protected health information through it.
+Scribe v2 Medical is tuned for clinical audio and costs the same as Scribe v2. It transcribes in batch only, without realtime streaming, and is available in the macOS add-on 1.1.0 and the Windows add-on 1.2.0 and later. For protected health information under HIPAA, ElevenLabs requires a Business Associate Agreement, which it offers to Enterprise customers, and Zero Retention Mode for the requests. The add-on does not turn on Zero Retention Mode, so do not send protected health information through it.
 
 ## Configuration
 
 - **API Key** - Create an ElevenLabs API key in your account dashboard. A key limited to Speech to Text is enough.
-- **Model** - Scribe v2, or Scribe v2 Medical on Mac.
-- **Transcription mode** - **Auto** streams short dictations and uses batch REST for everything else. **REST only** always uses the batch API, which avoids realtime concurrency limits.
+- **Model** - Scribe v2, or Scribe v2 Medical for clinical audio.
+- **Transcription mode** - **Auto** streams while you dictate and uses batch REST for files and as a fallback. **REST only** (on Windows: **After recording**) always uses the batch API, which avoids realtime concurrency limits and bills the lower batch rate.
 - **Clean transcript** - Removes filler words, false starts and other disfluencies.
 - **Audio events** - Adds non-speech events such as laughter to batch transcripts.
-- **Use TypeWhisper dictionary terms** - Sends your active dictionary terms as keyterms. ElevenLabs charges a 20% surcharge for keyterms, and a dictation with dictionary terms uses the batch API.
+- **Use TypeWhisper dictionary terms** - Sends your active dictionary terms as keyterms. ElevenLabs charges a 20% surcharge for keyterms. Realtime keyterms often wrap the whole transcript in quotation marks, so with dictionary terms the live text (on Windows from TypeWhisper 1.3) is only a preview, and the final text comes from the batch API with the terms. Those dictations are billed for realtime and batch.
 
-## Word Timestamps
+## Timestamps
 
 With the macOS add-on 1.1.0 and later, ElevenLabs returns the time of every word. `verbose_json` responses of the local HTTP API contain segments split at sentence ends and pauses, and per-word times when the request asks for them with `timestamp_granularities[]=word`. This is useful for subtitles or for cutting quotes from interviews.
+
+The Windows add-on 1.2.0 and later builds segments from the word timestamps as well: a segment ends at a sentence end, at a pause longer than one second, or after 30 seconds. SRT and VTT export and the local HTTP API use these segments. Per-word times are not available on Windows yet.
 
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **ElevenLabs**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Enter your ElevenLabs API key.
-3. Keep `Scribe v2` selected as the transcription model, or choose `Scribe v2 Medical` for clinical audio on Mac.
+3. Keep `Scribe v2` selected as the transcription model, or choose `Scribe v2 Medical` for clinical audio.
 4. Select ElevenLabs as your transcription engine in Settings or in a profile.
