@@ -11,10 +11,10 @@ requirements:
   - "Ein ElevenLabs-API-Schlüssel mit Zugriff auf Speech-to-Text"
 highlights:
   - "Scribe v2 als Cloud-Transkription mit automatischer oder fester Sprache"
-  - "Scribe v2 Medical für klinische Aufnahmen zum Preis von Scribe v2; das Modell transkribiert immer die vollständige Aufnahme, ohne Live-Text"
+  - "Scribe v2 Medical für klinische Aufnahmen zum Preis von Scribe v2; das Modell transkribiert immer die vollständige Aufnahme, ohne Live-Text; das Add-on schaltet den Zero Retention Mode von ElevenLabs nicht ein, schicke darüber deshalb keine geschützten Gesundheitsdaten"
   - "Live-Text mit Scribe v2 Realtime im Modus „Automatisch“; scheitert das Streaming, kann TypeWhisper die vollständige Aufnahme transkribieren"
   - "„Audioereignisse“ oder eine „Sprecherzahl“ ungleich 1 verwenden statt Live-Text die vollständige Aufnahme"
-  - "Mit aktiven Wörterbuchbegriffen zeigt TypeWhisper ab 1.3 trotzdem Live-Text und nimmt den endgültigen Text aus der vollständigen Aufnahme mit den Begriffen; ältere Versionen transkribieren solche Diktate nach dem Stoppen"
+  - "Mit aktiven Wörterbuchbegriffen zeigt TypeWhisper ab 1.3 trotzdem Live-Text und nimmt den endgültigen Text aus der vollständigen Aufnahme mit den Begriffen; solche Diktate werden für Echtzeit und Batch abgerechnet; ältere Versionen transkribieren sie nach dem Stoppen"
   - "Zeitsegmente, getrennt an Satzenden und Pausen, für SRT- und VTT-Untertitel und die lokale HTTP-API"
   - "„Bereinigtes Transkript“ entfernt Füllwörter und Satzabbrüche und ist standardmäßig eingeschaltet"
   - "Aktive TypeWhisper-Wörterbuchbegriffe werden als Keyterms gesendet; ElevenLabs berechnet dafür 20 % Aufpreis"

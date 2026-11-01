@@ -10,13 +10,13 @@ requirements:
   - "TypeWhisper 1.8.1 or newer"
   - "macOS 14.0 or newer"
 highlights:
-  - "Cloud transcription with Scribe v2, and Scribe v2 Medical for clinical audio"
+  - "Cloud transcription with Scribe v2, and Scribe v2 Medical for clinical audio; the add-on does not turn on ElevenLabs' Zero Retention Mode, so do not send protected health information through it"
   - "Live preview while you dictate: in Auto mode, Scribe v2 streams during the recording, and the final text is ready shortly after you stop"
   - "Long dictations with a live preview also run through the realtime session, which commits sections in speech pauses"
   - "Automatic REST fallback when streaming is unavailable"
   - "Scribe v2 Medical and REST only transcribe after the recording; a live preview then only comes from a loaded local engine"
-  - "Active dictionary terms passed to the provider; the final text then comes from the batch API, and dictations with a live preview are billed for realtime and batch"
-  - "Word timestamps and sentence segments in the local HTTP API"
+  - "Active dictionary terms passed to the provider; the final text then comes from the batch API, and dictations whose live preview streams from ElevenLabs are billed for realtime and batch"
+  - "Word timestamps and sentence segments in the local HTTP API (TypeWhisper 1.8.2 or newer)"
 configuration:
   - "Store, validate, or remove the API key in macOS Keychain"
   - "Choose Scribe v2 or Scribe v2 Medical and automatic realtime/REST or REST-only mode"

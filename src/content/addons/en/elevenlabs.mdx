@@ -47,14 +47,14 @@ Scribe v2 Medical is tuned for clinical audio and costs the same as Scribe v2. I
 
 - **API Key** - Create an ElevenLabs API key in your account dashboard. A key limited to Speech to Text is enough.
 - **Model** - Scribe v2, or Scribe v2 Medical for clinical audio.
-- **Transcription mode** - **Auto** streams while you dictate and uses batch REST for files and as a fallback. **REST only** (on Windows: **After recording**) always uses the batch API, which avoids realtime concurrency limits and bills the lower batch rate.
+- **Transcription mode** - **Auto** streams while you dictate and uses batch REST for files and as a fallback. On Windows, Audio events or a speaker count other than 1 also send dictations to batch REST, without live text. **REST only** (on Windows: **After recording**) always uses the batch API, which avoids realtime concurrency limits and bills the lower batch rate.
 - **Clean transcript** - Removes filler words, false starts and other disfluencies.
 - **Audio events** - Adds non-speech events such as laughter to batch transcripts.
-- **Use TypeWhisper dictionary terms** - Sends your active dictionary terms as keyterms. ElevenLabs charges a 20% surcharge for keyterms. Realtime keyterms often wrap the whole transcript in quotation marks, so with dictionary terms the live text (on Windows from TypeWhisper 1.3) is only a preview, and the final text comes from the batch API with the terms. Those dictations are billed for realtime and batch.
+- **Use TypeWhisper dictionary terms** - Sends your active dictionary terms as keyterms. ElevenLabs charges a 20% surcharge for keyterms. Realtime keyterms often wrap the whole transcript in quotation marks, so with dictionary terms the live text (on Windows from TypeWhisper 1.3) is only a preview, and the final text comes from the batch API with the terms. When ElevenLabs streams the preview, those dictations are billed for realtime and batch; with REST only, Scribe v2 Medical or on Windows before TypeWhisper 1.3, they are billed for batch only.
 
 ## Timestamps
 
-With the macOS add-on 1.1.0 and later, ElevenLabs returns the time of every word. `verbose_json` responses of the local HTTP API contain segments split at sentence ends and pauses, and per-word times when the request asks for them with `timestamp_granularities[]=word`. This is useful for subtitles or for cutting quotes from interviews.
+With the macOS add-on 1.1.0 and later and TypeWhisper 1.8.2 or newer, ElevenLabs returns the time of every word. `verbose_json` responses of the local HTTP API contain segments split at sentence ends and pauses, and per-word times when the request asks for them with `timestamp_granularities[]=word`. This is useful for subtitles or for cutting quotes from interviews.
 
 The Windows add-on 1.2.0 and later builds segments from the word timestamps as well: a segment ends at a sentence end, at a pause longer than one second, or after 30 seconds. SRT and VTT export and the local HTTP API use these segments. Per-word times are not available on Windows yet.
 
