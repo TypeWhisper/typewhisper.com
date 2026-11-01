@@ -76,7 +76,7 @@ export const en: IosDocPage = {
         {
           title: "Service",
           description:
-            "Choose OpenAI, OpenRouter, Groq, Meta, Anthropic (Claude), Google Gemini or Own server for an OpenAI-compatible server such as Ollama or LM Studio.",
+            "Choose OpenAI, OpenRouter, Groq, Meta, Anthropic (Claude), Google Gemini, xAI (Grok) or Own server for an OpenAI-compatible server such as Ollama or LM Studio.",
         },
         {
           title: "Access",
@@ -219,7 +219,7 @@ export const de: IosDocPage = {
         {
           title: "Dienst",
           description:
-            "Wähle OpenAI, OpenRouter, Groq, Meta, Anthropic (Claude), Google Gemini oder Eigener Server für einen OpenAI-kompatiblen Server wie Ollama oder LM Studio.",
+            "Wähle OpenAI, OpenRouter, Groq, Meta, Anthropic (Claude), Google Gemini, xAI (Grok) oder Eigener Server für einen OpenAI-kompatiblen Server wie Ollama oder LM Studio.",
         },
         {
           title: "Zugang",
