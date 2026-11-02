@@ -49,6 +49,10 @@ const copy: Record<DocsPlatform, { key: string; Logo: typeof MacOSLogo }> = {
       {t(locale, "setup.title")}
       <ArrowRight className="size-4" aria-hidden="true" />
     </a>
+    <a href={`/${locale}/tutorials/`} class="site-link">
+      {t(locale, "nav.tutorials")}
+      <ArrowRight className="size-4" aria-hidden="true" />
+    </a>
   </Fragment>
 
   <ul class="docs-index docs-index--platforms">

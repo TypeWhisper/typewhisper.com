@@ -1,0 +1,132 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/tutorials.css";
+import { BarMark, PageHead, WaveRule } from "@/components/site";
+import { StudioVideo } from "@/components/ui/studio-video";
+import { formatDuration, isoDuration, tutorials, type Tutorial } from "@/data/tutorials";
+import { locales, t, type Locale } from "@/i18n/index";
+import { canonicalPath } from "@/lib/locale-routes";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
+interface Props {
+  locale: Locale;
+  tutorial: Tutorial;
+}
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    tutorials.map((tutorial) => ({
+      params: { locale, slug: tutorial.slug },
+      props: { locale, tutorial },
+    })),
+  );
+}
+
+const { locale, tutorial } = Astro.props;
+const copy = tutorial.copy[locale];
+const site = "https://www.typewhisper.com";
+const pagePath = canonicalPath(locale, `/tutorials/${tutorial.slug}`);
+const videoBase = `${site}/videos/${tutorial.video}-${locale}`;
+const [docsRoute, docsHash] = tutorial.docsPath.split("#");
+const docsHref = `${canonicalPath(locale, docsRoute)}${docsHash ? `#${docsHash}` : ""}`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: copy.title,
+  description: copy.description,
+  thumbnailUrl: `${videoBase}-poster.jpg`,
+  contentUrl: `${videoBase}.mp4`,
+  uploadDate: tutorial.published,
+  duration: isoDuration(tutorial.duration[locale]),
+  inLanguage: locale,
+  url: `${site}${pagePath}`,
+  publisher: {
+    "@type": "Organization",
+    name: "TypeWhisper",
+    url: site,
+  },
+};
+
+const meta = [
+  t(locale, `tutorials.platform.${tutorial.platform}`),
+  formatDuration(tutorial.duration[locale]),
+  t(locale, "tutorials.captions"),
+  t(locale, "tutorials.recordedWith").replace("{version}", tutorial.appVersion),
+].join(" · ");
+---
+<BaseLayout
+  title={`${copy.title} - TypeWhisper`}
+  description={copy.description}
+  canonicalPath={pagePath}
+  locale={locale}
+  ogImage={`${videoBase}-poster.jpg`}
+  structuredData={structuredData}
+>
+  <div class="site-page tutorials-page">
+    <PageHead
+      label={t(locale, "tutorials.label")}
+      title={copy.title}
+      lede={copy.description}
+      meta={meta}
+      wrap="narrow"
+      compact
+    />
+
+    <section class="site-section site-section--tight-top">
+      <div class="site-wrap site-wrap--narrow">
+        <StudioVideo
+          slug={tutorial.video}
+          locale={locale}
+          label={copy.title}
+          caption={copy.caption}
+          portrait={tutorial.portrait}
+          className="tutorial-video"
+        />
+      </div>
+    </section>
+
+    <section class="site-section site-section--tight-top" data-testid="tutorial-steps">
+      <div class="site-wrap site-wrap--narrow">
+        <WaveRule label={t(locale, "tutorials.stepsLabel")} seed={53} align="start" />
+        <ol class="site-steps tutorial-steps">
+          {copy.steps.map((step) => (
+            <li class="site-steps__item">
+              <p class="tutorial-steps__text">{step}</p>
+            </li>
+          ))}
+        </ol>
+
+        <h2 class="site-label tutorial-notes__label">
+          <BarMark />
+          {t(locale, "tutorials.notesLabel")}
+        </h2>
+        <ul class="site-list tutorial-notes">
+          {copy.notes.map((note) => (
+            <li>
+              <BarMark />
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="site-actions site-actions--start tutorial-actions">
+          <a href={docsHref} class="site-link">
+            {copy.docsLabel}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+          <a href={canonicalPath(locale, "/tutorials")} class="site-link">
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            {t(locale, "tutorials.all")}
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { watchStudioVideoOrientation } from "@/lib/studio-video";
+
+  watchStudioVideoOrientation();
+</script>

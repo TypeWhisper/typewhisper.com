@@ -278,7 +278,7 @@ Disclosure:
 | Class | What it is |
 |-------|------------|
 | `site-shot` | `<figure>` with a real screenshot (use the `Screenshot` component) and a `site-caption`. Modifiers: `--window` for macOS captures with their shadow margin, `--framed` for captures without shadow (Windows), `--phone` for iOS, `--stage` for a stage behind the image on a band |
-| `site-video` | `<figure>` with a real `<video controls>` and `<figcaption>`. `--phone` for portrait video |
+| `site-video` | `<figure>` with a real `<video controls>` and `<figcaption>`. `--phone` for portrait video. `--adaptive` (from `StudioVideo` with `portrait`) holds a wide and a portrait cut of one Demo Studio clip; phones held upright see the portrait cut, and `watchStudioVideoOrientation()` continues playback in the other cut when the phone turns |
 
 The pinned feature tour, the panned phone screenshots, and the frame in the shape of the screenshot (`landing-shot`) stay homepage-only.
 
@@ -361,3 +361,4 @@ Copy never spells out the current stable version of an app. It uses placeholders
 | 2026-09-28 | Global focus ring in the accent color, buttons as pills, cards without shadow, footer with the static waveform divider instead of animated bars | Header, footer, and shared components follow the hairline system |
 | 2026-09-28 | Current app versions come from `src/data/versions.ts` through placeholders in copy | Support, release status, docs, and changelog can no longer show different numbers |
 | 2026-09-28 | `--fill` differs from the landing mapping of `--muted` in the light theme (`#f5f5f7` instead of `#ffffff`); `--destructive` darkened to `#d70015` | A white fill disappears on paper-white; white text on the old red reached only 3.6:1 |
+| 2026-11-03 | Tutorials section (`/tutorials/`) with Demo Studio videos; phones held upright get the Shorts cut of a clip, everything else the wide cut | Portrait video fills a phone screen instead of a small letterboxed strip, and both cuts share one set of captions |

@@ -1,0 +1,11 @@
+---
+import LocalizedRedirect from "@/components/LocalizedRedirect.astro";
+import { tutorials } from "@/data/tutorials";
+
+export function getStaticPaths() {
+  return tutorials.map((tutorial) => ({ params: { slug: tutorial.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+<LocalizedRedirect path={`/tutorials/${slug}`} />

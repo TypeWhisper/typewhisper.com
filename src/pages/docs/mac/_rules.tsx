@@ -5,7 +5,9 @@ import {
   DocsSubheading,
   DocsTerms,
 } from "@/components/docs/prose";
-import { t, screenshotPath, type Locale } from "@/i18n/index";
+import { StudioVideo } from "@/components/ui/studio-video";
+import { getTutorial } from "@/data/tutorials";
+import { localePath, t, screenshotPath, type Locale } from "@/i18n/index";
 
 const fields = [
   "apps",
@@ -33,7 +35,10 @@ const paletteExamples = ["input", "instruction", "output"];
 
 const questions = [1, 2, 3, 4, 5, 6];
 
+const selectionTutorial = getTutorial("translate-selected-text")!;
+
 export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
+  const tutorialCopy = selectionTutorial.copy[locale];
   return (
     <>
       <DocsSection id="how-workflows-work" title={t(locale, "docs.mac.rules.howWork.title")}>
@@ -112,6 +117,18 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
 
       <DocsSection id="manual-shortcut" title={t(locale, "docs.mac.rules.manualShortcut.title")}>
         <p>{t(locale, "docs.mac.rules.manualShortcut.desc")}</p>
+        <StudioVideo
+          slug={selectionTutorial.video}
+          locale={locale}
+          label={tutorialCopy.title}
+          caption={tutorialCopy.caption}
+          portrait={selectionTutorial.portrait}
+        />
+        <p>
+          <a href={localePath(locale, `/tutorials/${selectionTutorial.slug}`)}>
+            {t(locale, "docs.mac.rules.manualShortcut.tutorialLink")}
+          </a>
+        </p>
       </DocsSection>
 
       <DocsSection
