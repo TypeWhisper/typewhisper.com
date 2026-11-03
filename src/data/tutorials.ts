@@ -40,6 +40,56 @@ export interface Tutorial {
  */
 export const tutorials: Tutorial[] = [
   {
+    slug: "email-reply-workflow",
+    video: "mac-email-reply-workflow",
+    portrait: true,
+    platform: "mac",
+    published: "2026-11-04",
+    appVersion: "1.8.1",
+    duration: { en: 73, de: 73 },
+    docsPath: "/docs/mac/workflows/#how-workflows-work",
+    copy: {
+      en: {
+        title: "Turn spoken notes into an email reply",
+        description:
+          "Build your first workflow: an Email Reply workflow that runs whenever you dictate in Mail and turns rough spoken notes into a finished reply.",
+        caption:
+          "An Email Reply workflow turns a quick spoken note in Mail into a reply with greeting and closing.",
+        steps: [
+          "Open Settings > Workflows and click New Workflow.",
+          "Choose the Email Reply template.",
+          "Under Try It Out, click Insert Example or type a sample dictation, then click Run Test. Nothing is saved or inserted.",
+          "Under Trigger, choose Automatic, then App. Select Mail and click Done.",
+          "Click Save Workflow. Open a reply in Mail and say what you want to answer. TypeWhisper inserts the finished email.",
+        ],
+        notes: [
+          "Email Reply needs a language model. In the video, Parakeet transcribes on the Mac and Groq writes the reply in the cloud. With Apple Intelligence (macOS 26) or one of the Local LLM add-ons, the text stays on your Mac.",
+          "For other results, start from another template: Cleaned Text, Translation, Meeting Notes, Checklist, JSON, Summary, Dictation Only, or Custom Workflow. Instead of in an app, a workflow can also run on a website, with its own hotkey, always, or from the Workflow Palette.",
+        ],
+        docsLabel: "Workflows in the docs",
+      },
+      de: {
+        title: "Aus gesprochenen Notizen eine E-Mail-Antwort machen",
+        description:
+          "Richte deinen ersten Workflow ein: eine E-Mail-Antwort, die immer läuft, wenn du in Mail diktierst, und aus groben Notizen eine fertige Antwort macht.",
+        caption:
+          "Ein Workflow „E-Mail-Antwort“ macht in Mail aus einer kurz gesprochenen Notiz eine Antwort mit Anrede und Gruß.",
+        steps: [
+          "Öffne Einstellungen > Workflows und klicke auf „Neuer Workflow“.",
+          "Wähle die Vorlage „E-Mail-Antwort“.",
+          "Klicke unter „Ausprobieren“ auf „Beispiel einfügen“ oder tippe ein eigenes Beispiel-Diktat ein, dann auf „Test starten“. Gespeichert oder eingefügt wird dabei nichts.",
+          "Wähle unter „Trigger“ erst „Automatisch“, dann „App“. Wähle Mail aus und klicke auf „Fertig“.",
+          "Klicke auf „Workflow speichern“. Öffne in Mail eine Antwort und sag, was du antworten willst. TypeWhisper fügt die fertige E-Mail ein.",
+        ],
+        notes: [
+          "Die E-Mail-Antwort braucht ein Sprachmodell. Im Video transkribiert Parakeet auf dem Mac, und Groq schreibt die Antwort in der Cloud. Mit Apple Intelligence (macOS 26) oder einem der Local-LLM-Add-ons bleibt der Text auf deinem Mac.",
+          "Für andere Ergebnisse gibt es weitere Vorlagen: Bereinigter Text, Übersetzung, Besprechungsnotizen, Checkliste, JSON, Zusammenfassung, Nur Diktat und Eigener Workflow. Statt in einer App kann ein Workflow auch auf einer Website laufen, per eigenem Tastenkürzel, immer oder über die Workflow-Palette.",
+        ],
+        docsLabel: "Workflows in der Doku",
+      },
+    },
+  },
+  {
     slug: "compare-local-writing-models",
     video: "ios-compare-local-models",
     portrait: true,
