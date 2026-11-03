@@ -33,7 +33,9 @@ test("combined filters use the selected platform's capabilities", async ({ page 
   await expect(page.getByTestId("featured-addons")).toHaveCount(0);
   await expect(card("openai")).toBeVisible();
   await expect(card("smallest-pulse")).toBeVisible();
-  await expect(card("soniox")).toHaveCount(0);
+  // Soniox speaks on Windows since 1.4.0; Speechmatics still only transcribes there.
+  await expect(card("soniox")).toBeVisible();
+  await expect(card("speechmatics")).toHaveCount(0);
 });
 
 test("published add-ons that require a newer host explain compatibility", async ({ page }) => {
