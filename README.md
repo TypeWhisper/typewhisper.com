@@ -56,6 +56,8 @@ All routes exist under both `/en/` and `/de/`.
 | `/{locale}/addons/{slug}` | Individual add-on documentation |
 | `/{locale}/use-cases` | Use cases overview |
 | `/{locale}/use-cases/{slug}` | Individual use case pages |
+| `/{locale}/tutorials` | Tutorial videos from the Demo Studio |
+| `/{locale}/tutorials/{slug}` | One tutorial: video, setup steps, link to the docs |
 | `/{locale}/changelog` | Release notes |
 | `/{locale}/benchmark` | Speech engine performance comparison |
 | `/{locale}/privacy` | Privacy policy |

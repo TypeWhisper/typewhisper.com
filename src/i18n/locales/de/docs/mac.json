@@ -191,6 +191,7 @@
   "docs.mac.rules.creating.imgAlt": "Workflow-Liste mit drei aktiven Workflows und ihren Auslösern",
   "docs.mac.rules.manualShortcut.title": "Hotkey-Workflows",
   "docs.mac.rules.manualShortcut.desc": "Du kannst einem Workflow einen oder mehrere Shortcuts zuweisen und festlegen, was diese Shortcuts machen. Diktat starten nutzt den normalen Aufnahmeweg mit den Einstellungen dieses Workflows. Markierten Text verarbeiten überspringt die Aufnahme, liest die aktuelle Bedienungshilfen-Auswahl, fällt bei Bedarf auf Cmd+C und danach auf die Zwischenablage zurück und fügt das verarbeitete Ergebnis über denselben Pfad wie die Workflow-Palette ein.",
+  "docs.mac.rules.manualShortcut.tutorialLink": "Markierten Text übersetzen, Schritt für Schritt",
   "docs.mac.rules.languageEngineHotkeys.title": "Sprach- und Engine-Hotkeys",
   "docs.mac.rules.languageEngineHotkeys.desc": "Lege für jede Kombination aus Sprache und Engine, die du direkt auslösen willst, einen eigenen Workflow mit der Vorlage Nur Diktat an.",
   "docs.mac.rules.languageEngineHotkeys.step1": "Erstelle einen Workflow mit der Vorlage Nur Diktat für Englisch, setze Gesprochene Sprache auf Englisch, wähle WhisperKit plus das gewünschte Modell und weise einen Hotkey mit Diktat starten zu.",

@@ -1,0 +1,15 @@
+{
+  "nav.tutorials": "Tutorials",
+  "footer.tutorials": "Tutorials",
+  "tutorials.title": "Tutorials - TypeWhisper",
+  "tutorials.description": "Kurze TypeWhisper-Videos mit Untertiteln: eine Funktion in Aktion sehen und dann Schritt für Schritt einrichten.",
+  "tutorials.label": "Tutorials",
+  "tutorials.heading": "Erst zusehen. Dann einrichten.",
+  "tutorials.lede": "Kurze Videos, die jeweils eine Funktion von TypeWhisper zeigen, aufgenommen in der echten App, mit Untertiteln und den Schritten zum Nachmachen.",
+  "tutorials.platform.mac": "macOS",
+  "tutorials.captions": "Untertitel",
+  "tutorials.recordedWith": "TypeWhisper {version}",
+  "tutorials.stepsLabel": "So richtest du es ein",
+  "tutorials.notesLabel": "Gut zu wissen",
+  "tutorials.all": "Alle Tutorials"
+}

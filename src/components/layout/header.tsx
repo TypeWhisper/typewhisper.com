@@ -24,6 +24,10 @@ function getNavLinks(locale: Locale) {
     { href: localePath(locale, "/pricing"), label: t(locale, "nav.pricing") },
     { href: localePath(locale, "/docs"), label: t(locale, "nav.docs") },
     {
+      href: localePath(locale, "/tutorials"),
+      label: t(locale, "nav.tutorials"),
+    },
+    {
       href: localePath(locale, "/changelog"),
       label: t(locale, "nav.changelog"),
     },

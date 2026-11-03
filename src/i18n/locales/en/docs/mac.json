@@ -191,6 +191,7 @@
   "docs.mac.rules.creating.imgAlt": "Workflow list with three active workflows and their triggers",
   "docs.mac.rules.manualShortcut.title": "Hotkey Workflows",
   "docs.mac.rules.manualShortcut.desc": "You can assign one or more shortcuts to a workflow and choose what those shortcuts do. Start Dictation uses the normal recording path with that workflow's settings. Process Selected Text skips recording, reads the current accessibility selection, falls back to Cmd+C and then the clipboard when needed, and inserts the processed result through the same path as the Workflow Palette.",
+  "docs.mac.rules.manualShortcut.tutorialLink": "Translate selected text step by step",
   "docs.mac.rules.languageEngineHotkeys.title": "Language and engine hotkeys",
   "docs.mac.rules.languageEngineHotkeys.desc": "Create one Dictation Only workflow for each language and engine combination you want to trigger directly.",
   "docs.mac.rules.languageEngineHotkeys.step1": "Add a Dictation Only workflow for English, set Spoken Language to English, choose WhisperKit plus the model you want, and assign a Start Dictation hotkey.",
