@@ -183,7 +183,12 @@ test.describe("Tutorials", () => {
     }) => {
       let release = () => {};
       const gate = new Promise<void>((resolve) => (release = resolve));
+      let requested = () => {};
+      const portraitRequested = new Promise<void>(
+        (resolve) => (requested = resolve),
+      );
       await page.route("**/*-portrait.mp4", async (route) => {
+        requested();
         await gate;
         await route.continue();
       });
@@ -194,11 +199,24 @@ test.describe("Tutorials", () => {
 
       await page.setViewportSize({ width: 390, height: 844 });
       await expect.poll(() => playing(page, wide)).toBe(false);
+      // The portrait file is held at the route, so its metadata is pending.
+      await portraitRequested;
       await page.setViewportSize({ width: 844, height: 390 });
       await expect.poll(() => playing(page, wide)).toBe(true);
 
       release();
-      await page.waitForTimeout(1500);
+      // The cancelled handoff must not start the portrait cut once it loads.
+      await expect
+        .poll(() =>
+          page
+            .getByTestId(upright)
+            .evaluate(
+              (element) =>
+                (element as HTMLVideoElement).readyState >=
+                HTMLMediaElement.HAVE_METADATA,
+            ),
+        )
+        .toBe(true);
       expect(await playing(page, wide)).toBe(true);
       expect(await time(page, wide)).toBeGreaterThan(4.9);
       expect(await playing(page, upright)).toBe(false);
