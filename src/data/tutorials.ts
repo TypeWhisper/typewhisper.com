@@ -64,7 +64,7 @@ export const tutorials: Tutorial[] = [
         ],
         notes: [
           "The Email format is part of Premium. The local models are free downloads and run entirely on the iPhone.",
-          "Results depend on what you say. In the video, LFM2.5 wrote a full email, and Gemma 4 E2B kept the wording and added a subject.",
+          "Results depend on what you say. In the video, both models added a subject line. LFM2.5 also split the memo into paragraphs and smoothed the wording, while Gemma 4 E2B kept it almost word for word in one paragraph.",
           "On iPhones that support it, Apple Intelligence is a third option. To free up space, swipe the row of the model you don't need in Writing Services.",
         ],
         docsLabel: "Writing services in the docs",
@@ -84,7 +84,7 @@ export const tutorials: Tutorial[] = [
         ],
         notes: [
           "Das Format „E-Mail“ gehört zu Premium. Die lokalen Modelle sind kostenlos und laufen vollständig auf dem iPhone.",
-          "Die Ergebnisse hängen davon ab, was du sagst. Im Video schreibt LFM2.5 eine ausführliche E-Mail, Gemma 4 E2B lässt den Wortlaut stehen und ergänzt einen Betreff.",
+          "Die Ergebnisse hängen davon ab, was du sagst. Im Video ergänzen beide Modelle einen Betreff. LFM2.5 gliedert das Memo außerdem in Absätze und glättet die Formulierungen, Gemma 4 E2B übernimmt es fast wörtlich in einem Absatz.",
           "Auf iPhones, die es unterstützen, ist Apple Intelligence eine dritte Möglichkeit. Platz gewinnst du, indem du in den Schreibdiensten die Zeile des Modells wegwischst, das du nicht brauchst.",
         ],
         docsLabel: "Schreibdienste in der Doku",
