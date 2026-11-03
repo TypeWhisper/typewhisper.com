@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const slug = "translate-selected-text";
 const video = "mac-translate-selection";
@@ -124,6 +124,86 @@ test.describe("Tutorials", () => {
       ).toBeVisible();
     });
   }
+
+  test.describe("turning the phone during playback", () => {
+    const path = `/en/tutorials/${slug}/`;
+    const upright = "studio-video-portrait";
+    const wide = "studio-video";
+
+    const playing = (page: Page, testId: string) =>
+      page
+        .getByTestId(testId)
+        .evaluate((element) => !(element as HTMLVideoElement).paused);
+    const time = (page: Page, testId: string) =>
+      page
+        .getByTestId(testId)
+        .evaluate((element) => (element as HTMLVideoElement).currentTime);
+
+    async function startAt(page: Page, testId: string, seconds: number) {
+      await page.getByTestId(testId).evaluate(async (element, at) => {
+        const video = element as HTMLVideoElement;
+        video.preload = "metadata";
+        await new Promise<void>((resolve, reject) => {
+          video.addEventListener("loadedmetadata", () => resolve(), { once: true });
+          video.addEventListener("error", () => reject(video.error), { once: true });
+          video.load();
+        });
+        video.muted = true;
+        video.playbackRate = 1.5;
+        video.textTracks[0].mode = "showing";
+        video.currentTime = at;
+        await video.play();
+      }, seconds);
+    }
+
+    test("continues in the other cut with the same settings", async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(path);
+      await startAt(page, upright, 5);
+
+      await page.setViewportSize({ width: 844, height: 390 });
+      await expect.poll(() => playing(page, wide)).toBe(true);
+      expect(await time(page, wide)).toBeGreaterThan(4.9);
+      expect(await playing(page, upright)).toBe(false);
+      const settings = await page.getByTestId(wide).evaluate((element) => {
+        const video = element as HTMLVideoElement;
+        return {
+          muted: video.muted,
+          rate: video.playbackRate,
+          captions: video.textTracks[0].mode,
+        };
+      });
+      expect(settings).toEqual({ muted: true, rate: 1.5, captions: "showing" });
+    });
+
+    test("turning back before the other cut loads keeps the first one playing", async ({
+      page,
+    }) => {
+      let release = () => {};
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      await page.route("**/*-portrait.mp4", async (route) => {
+        await gate;
+        await route.continue();
+      });
+
+      await page.setViewportSize({ width: 844, height: 390 });
+      await page.goto(path);
+      await startAt(page, wide, 5);
+
+      await page.setViewportSize({ width: 390, height: 844 });
+      await expect.poll(() => playing(page, wide)).toBe(false);
+      await page.setViewportSize({ width: 844, height: 390 });
+      await expect.poll(() => playing(page, wide)).toBe(true);
+
+      release();
+      await page.waitForTimeout(1500);
+      expect(await playing(page, wide)).toBe(true);
+      expect(await time(page, wide)).toBeGreaterThan(4.9);
+      expect(await playing(page, upright)).toBe(false);
+    });
+  });
 
   test("tutorial files are served", async ({ request }) => {
     for (const locale of ["en", "de"]) {
