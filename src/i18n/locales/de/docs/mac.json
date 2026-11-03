@@ -190,6 +190,7 @@
   "docs.mac.rules.creating.priority.label": "Priorität",
   "docs.mac.rules.creating.priority.desc": "Bricht Gleichstände zwischen Workflows in derselben automatischen Match-Stufe",
   "docs.mac.rules.creating.imgAlt": "Workflow-Liste mit drei aktiven Workflows und ihren Auslösern",
+  "docs.mac.rules.creating.tryItOut": "Vor dem Speichern schickt „Ausprobieren“ ein Beispiel-Diktat mit den aktuellen Einstellungen durch den Workflow. Klicke auf „Beispiel einfügen“ oder tippe einen eigenen Text ein, dann auf „Test starten“. Gespeichert oder eingefügt wird dabei nichts. Der Test nutzt das Sprachmodell des Workflows, so siehst du das Ergebnis, bevor der Workflow richtig läuft. „Ausprobieren“ gibt es ab TypeWhisper 1.8.1.",
   "docs.mac.rules.manualShortcut.title": "Hotkey-Workflows",
   "docs.mac.rules.manualShortcut.desc": "Du kannst einem Workflow einen oder mehrere Shortcuts zuweisen und festlegen, was diese Shortcuts machen. Diktat starten nutzt den normalen Aufnahmeweg mit den Einstellungen dieses Workflows. Markierten Text verarbeiten überspringt die Aufnahme, liest die aktuelle Bedienungshilfen-Auswahl, fällt bei Bedarf auf Cmd+C und danach auf die Zwischenablage zurück und fügt das verarbeitete Ergebnis über denselben Pfad wie die Workflow-Palette ein.",
   "docs.mac.rules.manualShortcut.tutorialLink": "Markierten Text übersetzen, Schritt für Schritt",

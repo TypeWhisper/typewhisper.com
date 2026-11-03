@@ -123,6 +123,9 @@ test.describe("Tutorials", () => {
       await expect(
         section.locator(`a[href="/${locale}/tutorials/email-reply-workflow/"]`),
       ).toBeVisible();
+      await expect(page.locator("#creating")).toContainText(
+        locale === "de" ? "Ausprobieren" : "Try It Out",
+      );
       await page.goto(`/${locale}/tutorials/email-reply-workflow/`);
       await expect(
         page.getByTestId("tutorial-steps").locator(".site-steps__item"),

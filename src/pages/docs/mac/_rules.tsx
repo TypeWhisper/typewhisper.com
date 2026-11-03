@@ -141,6 +141,7 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
             description: t(locale, `docs.mac.rules.creating.${field}.desc`),
           }))}
         />
+        <p>{t(locale, "docs.mac.rules.creating.tryItOut")}</p>
         <DocsFigure
           src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
           alt={t(locale, "docs.mac.rules.creating.imgAlt")}

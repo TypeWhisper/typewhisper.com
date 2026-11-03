@@ -190,6 +190,7 @@
   "docs.mac.rules.creating.priority.label": "Priority",
   "docs.mac.rules.creating.priority.desc": "Break ties between workflows in the same automatic match tier",
   "docs.mac.rules.creating.imgAlt": "Workflow list with three active workflows and their triggers",
+  "docs.mac.rules.creating.tryItOut": "Before you save, Try It Out runs a sample dictation through the workflow with the current settings. Click \"Insert Example\" or type your own text, then click \"Run Test\". Nothing is saved or inserted. The test uses the language model of the workflow, so you can check the result before the workflow runs for real. Try It Out is available from TypeWhisper 1.8.1.",
   "docs.mac.rules.manualShortcut.title": "Hotkey Workflows",
   "docs.mac.rules.manualShortcut.desc": "You can assign one or more shortcuts to a workflow and choose what those shortcuts do. Start Dictation uses the normal recording path with that workflow's settings. Process Selected Text skips recording, reads the current accessibility selection, falls back to Cmd+C and then the clipboard when needed, and inserts the processed result through the same path as the Workflow Palette.",
   "docs.mac.rules.manualShortcut.tutorialLink": "Translate selected text step by step",
