@@ -45,7 +45,7 @@ export const tutorials: Tutorial[] = [
     portrait: true,
     platform: "ios",
     published: "2026-11-03",
-    appVersion: "1.2.3",
+    appVersion: "1.2.2",
     duration: { en: 82, de: 85 },
     docsPath: "/docs/ios/profiles-and-processing/#section-4",
     copy: {
