@@ -111,6 +111,25 @@ test.describe("Tutorials", () => {
       ).toBeVisible();
     });
 
+    test(`${locale} iOS docs show the writing models video under writing services`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/profiles-and-processing/`);
+      const section = page.locator("#section-4");
+      await expect(section.getByTestId("studio-video")).toHaveCount(1);
+      await expect(section.getByTestId("studio-video").locator("source")).toHaveAttribute(
+        "src",
+        `/videos/ios-compare-local-models-${locale}.mp4`,
+      );
+      await expect(
+        section.locator(`a[href="/${locale}/tutorials/compare-local-writing-models/"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/`);
+      await expect(
+        page.locator(`a[href="/${locale}/tutorials/compare-local-writing-models/"]`).first(),
+      ).toBeVisible();
+    });
+
     test(`${locale} header and footer link to the tutorials`, async ({
       page,
     }) => {

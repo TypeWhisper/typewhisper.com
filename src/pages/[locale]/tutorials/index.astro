@@ -15,7 +15,7 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-const platforms: TutorialPlatform[] = ["mac"];
+const platforms: TutorialPlatform[] = ["mac", "ios"];
 const groups = platforms
   .map((platform) => ({
     platform,
