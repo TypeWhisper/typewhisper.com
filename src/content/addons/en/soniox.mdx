@@ -42,10 +42,12 @@ The plugin supports Soniox data-residency regions. Select **United States**, **E
 
 | Mode | Default |
 | --- | --- |
-| Realtime dictation | Automatic latest realtime STT model, with `stt-rt-v5` fallback |
-| File transcription | Automatic latest async STT model, with `stt-async-v5` fallback |
+| Realtime dictation | Automatic latest realtime STT model, with `stt-rt-v6` fallback |
+| File transcription | Automatic latest async STT model, with `stt-async-v6` fallback |
 
-Use **Refresh** in the plugin settings after entering a valid API key to fetch the current Soniox model catalog for the selected region.
+Use **Refresh** in the plugin settings after entering a valid API key to fetch the current Soniox model catalog for the selected region. Since version 1.2.15, a model list saved before Soniox STT v6 refreshes in the background when TypeWhisper starts, and a pinned v5 model moves to **Automatic (Latest)**. Soniox retires the v5 models on December 15, 2026.
+
+Soniox STT v6 writes amounts the way they are spoken, with the currency as a word: "850 dollars" or "578.000 Euro" instead of "$850" or "578.000 €".
 
 ## Text-to-Speech
 
