@@ -204,19 +204,21 @@ test.describe("Tutorials", () => {
       await page.setViewportSize({ width: 844, height: 390 });
       await expect.poll(() => playing(page, wide)).toBe(true);
 
-      release();
       // The cancelled handoff must not start the portrait cut once it loads.
-      await expect
-        .poll(() =>
-          page
-            .getByTestId(upright)
-            .evaluate(
-              (element) =>
-                (element as HTMLVideoElement).readyState >=
-                HTMLMediaElement.HAVE_METADATA,
-            ),
-        )
-        .toBe(true);
+      // This listener comes after the one of the handoff, so once it has run,
+      // a handoff that was not cancelled would have run too.
+      // Wrapped in an object: evaluateHandle would wait for a bare promise.
+      const metadata = await page.getByTestId(upright).evaluateHandle(
+        (element) => ({
+          loaded: new Promise<void>((resolve) =>
+            element.addEventListener("loadedmetadata", () => resolve(), {
+              once: true,
+            }),
+          ),
+        }),
+      );
+      release();
+      await metadata.evaluate(({ loaded }) => loaded);
       expect(await playing(page, wide)).toBe(true);
       expect(await time(page, wide)).toBeGreaterThan(4.9);
       expect(await playing(page, upright)).toBe(false);
