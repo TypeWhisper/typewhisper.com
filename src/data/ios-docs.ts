@@ -29,6 +29,14 @@ export interface IosDocCallout {
   description: string;
 }
 
+/** A tutorial video shown in the section, with a link to its page. */
+export interface IosDocTutorial {
+  /** Slug in `src/data/tutorials.ts`. */
+  slug: string;
+  /** Link text to the tutorial page. */
+  link: string;
+}
+
 export interface IosDocSection {
   title: string;
   paragraphs?: string[];
@@ -37,6 +45,7 @@ export interface IosDocSection {
   code?: string[];
   callout?: IosDocCallout;
   image?: IosDocImage;
+  tutorial?: IosDocTutorial;
 }
 
 export interface IosDocPage {
@@ -286,6 +295,10 @@ const en: Record<IosDocSlug, IosDocPage> = {
           title: "What a writing service receives",
           description:
             "Local models and Apple Intelligence keep writing text on the device. A cloud service receives only the text needed for the selected writing task, not audio, History, or the dictionary.",
+        },
+        tutorial: {
+          slug: "compare-local-writing-models",
+          link: "Compare the local writing models step by step",
         },
       },
     ],
@@ -904,6 +917,10 @@ const de: Record<IosDocSlug, IosDocPage> = {
           title: "Was ein Schreibdienst erhält",
           description:
             "Lokale Modelle und Apple Intelligence behalten den Text auf dem Gerät. Ein Cloud-Dienst erhält nur den Text, der für die gewählte Schreibaufgabe nötig ist, aber weder Audio noch Verlauf oder Wörterbuch.",
+        },
+        tutorial: {
+          slug: "compare-local-writing-models",
+          link: "Lokale Schreibmodelle vergleichen, Schritt für Schritt",
         },
       },
     ],

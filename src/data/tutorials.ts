@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/index";
 
-export type TutorialPlatform = "mac";
+export type TutorialPlatform = "mac" | "ios";
 
 interface TutorialCopy {
   title: string;
@@ -39,6 +39,58 @@ export interface Tutorial {
  * language. Newest first.
  */
 export const tutorials: Tutorial[] = [
+  {
+    slug: "compare-local-writing-models",
+    video: "ios-compare-local-models",
+    portrait: true,
+    platform: "ios",
+    published: "2026-11-03",
+    appVersion: "1.2.2",
+    duration: { en: 82, de: 85 },
+    docsPath: "/docs/ios/profiles-and-processing/#section-4",
+    copy: {
+      en: {
+        title: "Compare the local writing models on iPhone",
+        description:
+          "Run the same voice memo through LFM2.5 and Gemma 4 E2B as an email in File Transcription, then keep the writing model that writes like you.",
+        caption:
+          "The same voice memo, written as an email on the iPhone by LFM2.5 2.6B and by Gemma 4 E2B.",
+        steps: [
+          "Under Settings > Writing Services > Local Models, download LFM2.5 2.6B (about 1.7 GB) and Gemma 4 E2B (about 2.8 GB).",
+          "Open Settings > File Transcription and set Format to Email, Writing Service to Local Models, and Writing Model to LFM2.5 2.6B.",
+          "Tap Add Audio or Video Files, choose a voice memo of how you usually dictate, and tap Transcribe All.",
+          "In the file's menu, tap Open in History. The Original tab shows what you said.",
+          "Back in File Transcription, set Writing Model to Gemma 4 E2B, tap Reset, add the same memo again, and tap Transcribe All.",
+        ],
+        notes: [
+          "The Email format is part of Premium. The local models are free downloads and run entirely on the iPhone.",
+          "Results depend on what you say. In the video, both models added a subject line. LFM2.5 also split the memo into paragraphs and smoothed the wording, while Gemma 4 E2B kept it almost word for word in one paragraph.",
+          "On iPhones that support it, Apple Intelligence is a third option. To free up space, swipe the row of the model you don't need in Writing Services.",
+        ],
+        docsLabel: "Writing services in the docs",
+      },
+      de: {
+        title: "Die lokalen Schreibmodelle auf dem iPhone vergleichen",
+        description:
+          "Lass dasselbe Sprachmemo in der Dateitranskription einmal von LFM2.5 und einmal von Gemma 4 E2B als E-Mail schreiben und behalte das Schreibmodell, das wie du schreibt.",
+        caption:
+          "Dasselbe Sprachmemo, auf dem iPhone einmal von LFM2.5 2.6B und einmal von Gemma 4 E2B als E-Mail geschrieben.",
+        steps: [
+          "Lade unter Einstellungen > Schreibdienste > Lokale Modelle beide Modelle: LFM2.5 2.6B (etwa 1,7 GB) und Gemma 4 E2B (etwa 2,8 GB).",
+          "Öffne Einstellungen > Dateitranskription und stelle Format auf „E-Mail“, Schreibdienst auf „Lokale Modelle“ und Schreibmodell auf „LFM2.5 2.6B“.",
+          "Tippe auf „Audio- oder Videodateien hinzufügen“, wähle ein Sprachmemo, so wie du sonst diktierst, und tippe auf „Alles transkribieren“.",
+          "Tippe im Menü der Datei auf „Im Verlauf öffnen“. Unter „Originalfassung“ steht, was du gesagt hast.",
+          "Stelle in der Dateitranskription das Schreibmodell auf „Gemma 4 E2B“, tippe auf „Zurücksetzen“, füge dasselbe Memo noch einmal hinzu und tippe auf „Alles transkribieren“.",
+        ],
+        notes: [
+          "Das Format „E-Mail“ gehört zu Premium. Die lokalen Modelle sind kostenlos und laufen vollständig auf dem iPhone.",
+          "Die Ergebnisse hängen davon ab, was du sagst. Im Video ergänzen beide Modelle einen Betreff. LFM2.5 gliedert das Memo außerdem in Absätze und glättet die Formulierungen, Gemma 4 E2B übernimmt es fast wörtlich in einem Absatz.",
+          "Auf iPhones, die es unterstützen, ist Apple Intelligence eine dritte Möglichkeit. Platz gewinnst du, indem du in den Schreibdiensten die Zeile des Modells wegwischst, das du nicht brauchst.",
+        ],
+        docsLabel: "Schreibdienste in der Doku",
+      },
+    },
+  },
   {
     slug: "translate-selected-text",
     video: "mac-translate-selection",
