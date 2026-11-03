@@ -127,6 +127,7 @@
   "docs.mac.rules.subtitle": "Create website, app, hotkey, manual, and fallback workflows for dictation and direct text processing.",
   "docs.mac.rules.howWork.title": "How Workflows Work",
   "docs.mac.rules.howWork.desc": "When you start dictating, TypeWhisper matches the current browser URL first, then the active app, against your enabled workflows. Matching workflows can override language, task, engine, translation mode, prompts, and related behavior automatically. Hotkey workflows can also process the current selection or clipboard directly without recording audio. The active workflow name is shown as a badge in the indicator together with why it matched.",
+  "docs.mac.rules.howWork.tutorialLink": "Set up an Email Reply workflow step by step",
   "docs.mac.rules.palette.title": "Quick Start with the Workflow Palette",
   "docs.mac.rules.palette.desc": "The Workflow Palette runs a workflow on text you have selected or copied, without a recording. It lists your workflows with the Manual trigger.",
   "docs.mac.rules.palette.step1": "Create a workflow with the Manual trigger under Settings > Workflows. For a first test, pick the Custom Workflow template and enter the instruction from the example below.",

@@ -14,11 +14,10 @@ test.describe("Tutorials", () => {
     }) => {
       await page.goto(`/${locale}/tutorials/`);
       await expect(page.locator("h1")).toHaveCount(1);
-      const card = page.getByTestId("tutorial-card").first();
-      await expect(card).toHaveAttribute(
-        "href",
-        `/${locale}/tutorials/${slug}/`,
+      const card = page.locator(
+        `[data-testid="tutorial-card"][href="/${locale}/tutorials/${slug}/"]`,
       );
+      await expect(card).toHaveCount(1);
       await expect(card).toContainText(titles[locale]);
       await expect(card.locator("img")).toHaveAttribute(
         "src",
@@ -109,6 +108,37 @@ test.describe("Tutorials", () => {
       await expect(
         section.locator(`a[href="/${locale}/tutorials/${slug}/"]`),
       ).toBeVisible();
+    });
+
+    test(`${locale} workflow docs open with the email reply video`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/mac/workflows/`);
+      const section = page.locator("#how-workflows-work");
+      await expect(section.getByTestId("studio-video")).toHaveCount(1);
+      await expect(section.getByTestId("studio-video").locator("source")).toHaveAttribute(
+        "src",
+        `/videos/mac-email-reply-workflow-${locale}.mp4`,
+      );
+      await expect(
+        section.locator(`a[href="/${locale}/tutorials/email-reply-workflow/"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/email-reply-workflow/`);
+      await expect(
+        page.getByTestId("tutorial-steps").locator(".site-steps__item"),
+      ).toHaveCount(5);
+      await expect(
+        page.locator(`a[href="/${locale}/docs/mac/workflows/#how-workflows-work"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/`);
+      const macCards = page
+        .getByTestId("tutorial-group")
+        .first()
+        .getByTestId("tutorial-card");
+      await expect(macCards.first()).toHaveAttribute(
+        "href",
+        `/${locale}/tutorials/email-reply-workflow/`,
+      );
     });
 
     test(`${locale} iOS docs show the writing models video under writing services`, async ({
@@ -245,17 +275,19 @@ test.describe("Tutorials", () => {
   });
 
   test("tutorial files are served", async ({ request }) => {
-    for (const locale of ["en", "de"]) {
-      for (const [file, type] of [
-        [`${video}-${locale}.mp4`, "video/mp4"],
-        [`${video}-${locale}-portrait.mp4`, "video/mp4"],
-        [`${video}-${locale}-poster.jpg`, "image/jpeg"],
-        [`${video}-${locale}-portrait-poster.jpg`, "image/jpeg"],
-        [`${video}-${locale}.vtt`, "text/vtt"],
-      ]) {
-        const response = await request.get(`/videos/${file}`);
-        expect(response.ok(), file).toBe(true);
-        expect(response.headers()["content-type"], file).toContain(type);
+    for (const clip of [video, "mac-email-reply-workflow", "ios-compare-local-models"]) {
+      for (const locale of ["en", "de"]) {
+        for (const [file, type] of [
+          [`${clip}-${locale}.mp4`, "video/mp4"],
+          [`${clip}-${locale}-portrait.mp4`, "video/mp4"],
+          [`${clip}-${locale}-poster.jpg`, "image/jpeg"],
+          [`${clip}-${locale}-portrait-poster.jpg`, "image/jpeg"],
+          [`${clip}-${locale}.vtt`, "text/vtt"],
+        ]) {
+          const response = await request.get(`/videos/${file}`);
+          expect(response.ok(), file).toBe(true);
+          expect(response.headers()["content-type"], file).toContain(type);
+        }
       }
     }
   });

@@ -127,6 +127,7 @@
   "docs.mac.rules.subtitle": "Erstelle Website-, App-, Hotkey-, manuelle und Fallback-Workflows für Diktat und direkte Textverarbeitung.",
   "docs.mac.rules.howWork.title": "Wie Workflows funktionieren",
   "docs.mac.rules.howWork.desc": "Wenn du mit dem Diktieren beginnst, gleicht TypeWhisper zuerst die aktuelle Browser-URL und danach die aktive App mit deinen aktiven Workflows ab. Passende Workflows können Sprache, Aufgabe, Engine, Übersetzungsmodus, Prompts und verwandtes Verhalten automatisch überschreiben. Hotkey-Workflows können außerdem die aktuelle Auswahl oder Zwischenablage direkt verarbeiten, ohne Audio aufzunehmen. Der aktive Workflow-Name erscheint als Badge im Indikator zusammen mit dem Grund für den Match.",
+  "docs.mac.rules.howWork.tutorialLink": "E-Mail-Antwort als Workflow einrichten, Schritt für Schritt",
   "docs.mac.rules.palette.title": "Schnellstart mit der Workflow-Palette",
   "docs.mac.rules.palette.desc": "Die Workflow-Palette wendet einen Workflow auf Text an, den du markiert oder kopiert hast, ganz ohne Aufnahme. Sie zeigt deine Workflows mit dem Trigger Manuell.",
   "docs.mac.rules.palette.step1": "Lege unter Einstellungen > Workflows einen Workflow mit dem Trigger Manuell an. Für den ersten Test wählst du die Vorlage Eigener Workflow und trägst die Anweisung aus dem Beispiel unten ein.",

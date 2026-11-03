@@ -35,14 +35,47 @@ const paletteExamples = ["input", "instruction", "output"];
 
 const questions = [1, 2, 3, 4, 5, 6];
 
-const selectionTutorial = getTutorial("translate-selected-text")!;
+/** A tutorial video in a section, with a link to its page. */
+function SectionTutorial({
+  locale,
+  slug,
+  link,
+}: {
+  locale: Locale;
+  slug: string;
+  link: string;
+}) {
+  const tutorial = getTutorial(slug);
+  if (!tutorial) {
+    throw new Error(`Unknown tutorial "${slug}" in the Mac workflow docs.`);
+  }
+  const copy = tutorial.copy[locale];
+  return (
+    <>
+      <StudioVideo
+        slug={tutorial.video}
+        locale={locale}
+        label={copy.title}
+        caption={copy.caption}
+        portrait={tutorial.portrait}
+      />
+      <p>
+        <a href={localePath(locale, `/tutorials/${tutorial.slug}`)}>{link}</a>
+      </p>
+    </>
+  );
+}
 
 export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
-  const tutorialCopy = selectionTutorial.copy[locale];
   return (
     <>
       <DocsSection id="how-workflows-work" title={t(locale, "docs.mac.rules.howWork.title")}>
         <p>{t(locale, "docs.mac.rules.howWork.desc")}</p>
+        <SectionTutorial
+          locale={locale}
+          slug="email-reply-workflow"
+          link={t(locale, "docs.mac.rules.howWork.tutorialLink")}
+        />
       </DocsSection>
 
       <DocsSection id="quick-start" title={t(locale, "docs.mac.rules.palette.title")}>
@@ -117,18 +150,11 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
 
       <DocsSection id="manual-shortcut" title={t(locale, "docs.mac.rules.manualShortcut.title")}>
         <p>{t(locale, "docs.mac.rules.manualShortcut.desc")}</p>
-        <StudioVideo
-          slug={selectionTutorial.video}
+        <SectionTutorial
           locale={locale}
-          label={tutorialCopy.title}
-          caption={tutorialCopy.caption}
-          portrait={selectionTutorial.portrait}
+          slug="translate-selected-text"
+          link={t(locale, "docs.mac.rules.manualShortcut.tutorialLink")}
         />
-        <p>
-          <a href={localePath(locale, `/tutorials/${selectionTutorial.slug}`)}>
-            {t(locale, "docs.mac.rules.manualShortcut.tutorialLink")}
-          </a>
-        </p>
       </DocsSection>
 
       <DocsSection
