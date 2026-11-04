@@ -19,7 +19,8 @@ export type DownloadTarget =
   | "windows_github_releases"
   | "windows_store"
   | "windows_store_beta"
-  | "ios_app_store";
+  | "ios_app_store"
+  | "android_play_store";
 
 export type TrackingPlacement =
   | "business"

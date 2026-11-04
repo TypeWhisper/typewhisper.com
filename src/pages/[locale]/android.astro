@@ -1,12 +1,16 @@
 ---
 import "@/styles/utility.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { BarMark, PageHead, WaveRule } from "@/components/site";
-import { t, type Locale } from "@/i18n/index";
+import { localePath, t, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
-import { androidBeta } from "@/lib/android-beta";
-import { discordUrl } from "@/lib/platform-download";
+import { androidBetaProgram } from "@/lib/android";
+import {
+  androidVersion,
+  discordUrl,
+  getAndroidPlayStoreUrl,
+} from "@/lib/platform-download";
 
 interface Props {
   locale: Locale;
@@ -18,22 +22,16 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 
-// Open test: opt in on the testing page first, then install from the Play listing.
-const steps = [
-  { id: "step1", href: androidBeta.playOptInUrl },
-  { id: "step2", href: androidBeta.playStoreUrl },
-];
-
 const feedback = [
   {
-    label: t(locale, "android.notice.discord"),
-    text: t(locale, "android.notice.discordText"),
+    label: t(locale, "android.beta.discord"),
+    text: t(locale, "android.beta.discordText"),
     href: discordUrl,
   },
   {
-    label: androidBeta.feedbackEmail,
-    text: t(locale, "android.notice.emailText"),
-    href: `mailto:${androidBeta.feedbackEmail}`,
+    label: androidBetaProgram.feedbackEmail,
+    text: t(locale, "android.beta.emailText"),
+    href: `mailto:${androidBetaProgram.feedbackEmail}`,
   },
 ];
 ---
@@ -43,7 +41,6 @@ const feedback = [
   description={t(locale, "android.meta.description")}
   canonicalPath={canonicalPath(locale, "/android")}
   locale={locale}
-  noIndex={!androidBeta.listed}
 >
   <div class="site-page">
     <PageHead
@@ -53,53 +50,52 @@ const feedback = [
       meta={t(locale, "android.requirement")}
     />
 
-    <section class="site-section site-section--tight-top" data-testid="android-beta-join">
+    <section class="site-section site-section--tight-top" data-testid="android-get">
       <div class="site-wrap">
-        <WaveRule label={t(locale, "android.join.label")} seed={5} />
+        <WaveRule label={t(locale, "android.get.label")} seed={5} />
         <div class="site-split">
           <div class="site-split__head">
-            <h2 class="site-title site-title--start">{t(locale, "android.join.title")}</h2>
-            <p class="site-lede site-lede--start">{t(locale, "android.join.lede")}</p>
+            <h2 class="site-title site-title--start">{t(locale, "android.get.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "android.get.lede")}</p>
           </div>
-          <ol class="site-steps">
-            {steps.map((step) => (
-              <li class="site-steps__item">
-                <div>
-                  <h3 class="site-heading">{t(locale, `android.join.${step.id}.title`)}</h3>
-                  <p class="site-text">{t(locale, `android.join.${step.id}.text`)}</p>
-                  <div class="site-actions site-actions--start">
-                    <a
-                      href={step.href}
-                      class="site-button site-button--small"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-testid={`android-beta-${step.id}`}
-                    >
-                      {t(locale, `android.join.${step.id}.button`)}
-                      <ArrowUpRight className="size-4" aria-hidden="true" />
-                    </a>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div class="site-actions site-actions--start">
+            <a
+              href={getAndroidPlayStoreUrl(locale)}
+              class="site-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="android-play"
+              data-download-social-trigger
+              data-download-platform="android"
+              data-download-target="android_play_store"
+              data-download-version={androidVersion}
+              data-tracking-placement="landing"
+            >
+              {t(locale, "android.get.button")}
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </a>
+            <a href={localePath(locale, "/docs/android")} class="site-link">
+              {t(locale, "android.get.docs")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="site-section site-section--band">
       <div class="site-wrap">
-        <WaveRule label={t(locale, "android.try.label")} seed={9} />
+        <WaveRule label={t(locale, "android.features.label")} seed={9} />
         <div class="site-split">
           <div class="site-split__head">
-            <h2 class="site-title site-title--start">{t(locale, "android.try.title")}</h2>
-            <p class="site-lede site-lede--start">{t(locale, "android.try.lede")}</p>
+            <h2 class="site-title site-title--start">{t(locale, "android.features.title")}</h2>
+            <p class="site-lede site-lede--start">{t(locale, "android.features.lede")}</p>
           </div>
           <ul class="site-points">
-            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <li class="site-points__item">
                 <BarMark className="site-points__mark utility-point__mark" />
-                <p class="utility-point">{t(locale, `android.try.item${item}`)}</p>
+                <p class="utility-point">{t(locale, `android.features.item${item}`)}</p>
               </li>
             ))}
           </ul>
@@ -107,15 +103,27 @@ const feedback = [
       </div>
     </section>
 
-    <section class="site-section" data-testid="android-beta-notice">
+    <section class="site-section" data-testid="android-beta-program">
       <div class="site-wrap">
-        <WaveRule label={t(locale, "android.notice.label")} seed={13} />
+        <WaveRule label={t(locale, "android.beta.label")} seed={13} />
         <div class="site-split">
           <div class="site-split__head">
-            <h2 class="site-title site-title--start">{t(locale, "android.notice.title")}</h2>
-            <p class="site-text">{t(locale, "android.notice.p1")}</p>
-            <p class="site-text">{t(locale, "android.notice.p2")}</p>
-            <p class="site-text">{t(locale, "android.notice.p3")}</p>
+            <h2 class="site-title site-title--start">{t(locale, "android.beta.title")}</h2>
+            <p class="site-text">{t(locale, "android.beta.p1")}</p>
+            <p class="site-text">{t(locale, "android.beta.p2")}</p>
+            <div class="site-actions site-actions--start">
+              <a
+                href={androidBetaProgram.optInUrl}
+                class="site-button site-button--small"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="android-beta-optin"
+              >
+                {t(locale, "android.beta.button")}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </a>
+            </div>
+            <p class="site-text">{t(locale, "android.beta.p3")}</p>
           </div>
           <div>
             <ul class="utility-rows">

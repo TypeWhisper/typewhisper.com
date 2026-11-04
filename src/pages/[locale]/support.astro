@@ -6,7 +6,9 @@ import { BarMark, PageHead, WaveRule } from "@/components/site";
 import { t, localePath, type Locale } from "@/i18n/index";
 import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
 import {
+  androidVersion,
   discordUrl,
+  getAndroidPlayStoreUrl,
   getIosAppStoreUrl,
   iosVersion,
 } from "@/lib/platform-download";
@@ -79,6 +81,31 @@ const platforms: { id: string; links: SupportLink[] }[] = [
           "data-download-platform": "ios",
           "data-download-target": "ios_app_store",
           ...(iosVersion ? { "data-download-version": iosVersion } : {}),
+          "data-tracking-placement": "support",
+        },
+      },
+    ],
+  },
+  {
+    id: "android",
+    links: [
+      {
+        label: t(locale, "support.android.troubleshooting"),
+        href: localePath(locale, "/docs/android/troubleshooting"),
+      },
+      {
+        label: t(locale, "support.android.contact"),
+        href: `mailto:${contactEmail}`,
+      },
+      {
+        label: t(locale, "support.android.playStore"),
+        href: getAndroidPlayStoreUrl(locale),
+        external: true,
+        attributes: {
+          "data-download-social-trigger": "",
+          "data-download-platform": "android",
+          "data-download-target": "android_play_store",
+          "data-download-version": androidVersion,
           "data-tracking-placement": "support",
         },
       },

@@ -2,12 +2,14 @@ import { replacePageUrl, subscribeToPageUrl } from "@/hooks/use-page-url";
 import { useSyncExternalStore } from "react";
 import { detectPlatform } from "@/lib/platform-download";
 
-export type LandingPlatform = "mac" | "windows" | "ios";
+export const landingPlatforms = ["mac", "windows", "ios", "android"] as const;
+
+export type LandingPlatform = (typeof landingPlatforms)[number];
 
 const storageKey = "typewhisper-platform";
 
 export function isLandingPlatform(value: unknown): value is LandingPlatform {
-  return value === "mac" || value === "windows" || value === "ios";
+  return landingPlatforms.includes(value as LandingPlatform);
 }
 
 function getSnapshot(): LandingPlatform {

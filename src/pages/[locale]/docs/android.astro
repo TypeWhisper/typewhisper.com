@@ -1,0 +1,56 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsAndroid, { androidOverviewHead } from "@/pages/docs/_android.tsx";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+import { androidVersion, getAndroidPlayStoreUrl } from "@/lib/platform-download";
+import { Download } from "lucide-react";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const description = locale === "de"
+  ? "Ausführliche TypeWhisper-Anleitung für Android: Einrichtung, Tastatur, Diktier-Bubble, Engines und Modelle, Profile, Schnelldiktat, Dateien, Wörterbuch, Datenschutz, Premium und Fehlerbehebung."
+  : "Complete TypeWhisper guidance for Android: setup, keyboard, dictation bubble, engines and models, profiles, quick dictation, files, dictionary, privacy, Premium, and troubleshooting.";
+const head = androidOverviewHead(locale);
+---
+<DocsLayout
+  title="Android - TypeWhisper"
+  description={description}
+  canonicalPath={canonicalPath(locale, "/docs/android")}
+  locale={locale}
+  platform="android"
+  releaseStage="stable"
+  releaseTitle={t(locale, "docs.android.release.title")}
+  releaseDescription={t(locale, "docs.android.release.description")}
+  heading={head.heading}
+  label={t(locale, "docs.title")}
+  lede={head.lede}
+>
+  <Fragment slot="meta">
+    <span class="docs-head__accent">{head.badge}</span>
+  </Fragment>
+  <Fragment slot="actions">
+    <a
+      href={getAndroidPlayStoreUrl(locale)}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="site-button site-button--small"
+      data-download-social-trigger
+      data-download-platform="android"
+      data-download-target="android_play_store"
+      data-download-version={androidVersion}
+      data-tracking-placement="docs"
+    >
+      <Download className="size-4" aria-hidden="true" />
+      {head.download}
+    </a>
+  </Fragment>
+  <DocsAndroid locale={locale} />
+</DocsLayout>

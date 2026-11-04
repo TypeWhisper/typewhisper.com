@@ -50,7 +50,9 @@ export function DocsSearch({ locale }: { locale: Locale }) {
       setQuery(params.get("q") ?? "");
       const value = params.get("platform");
       setPlatform(
-        value && ["mac", "windows", "ios"].includes(value) ? value : "all",
+        value && ["mac", "windows", "ios", "android"].includes(value)
+          ? value
+          : "all",
       );
       setLimit(10);
       setReady(true);
@@ -108,6 +110,7 @@ export function DocsSearch({ locale }: { locale: Locale }) {
     ["mac", "macOS"],
     ["windows", "Windows"],
     ["ios", "iOS"],
+    ["android", "Android"],
   ];
   return (
     <div className="docs-find" data-testid="docs-search">

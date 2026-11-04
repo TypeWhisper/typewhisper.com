@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactElement, type SVGProps } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import {
+  AndroidLogo,
   IOSLogo,
   MacOSLogo,
   WindowsLogo,
@@ -25,6 +26,7 @@ const editions: {
   { platform: "mac", Logo: MacOSLogo },
   { platform: "windows", Logo: WindowsLogo },
   { platform: "ios", Logo: IOSLogo },
+  { platform: "android", Logo: AndroidLogo },
 ];
 
 /** The waveform returns once more and ends in the download actions. */
@@ -111,7 +113,7 @@ export function FinalCta({ locale = "en" }: { locale?: Locale }) {
         )}
 
         <ul
-          className="site-editions"
+          className="site-editions site-editions--4"
           aria-label={t(locale, "downloadCta.editions")}
           data-testid="landing-platform-grid"
         >

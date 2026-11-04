@@ -16,6 +16,7 @@ export function Video({ locale = "en" }: { locale?: Locale }) {
   const platform = useSyncedLandingPlatform();
   const windowsSetup = locale === "de" && platform === "windows";
   const iosPreview = platform === "ios";
+  const android = platform === "android";
 
   let source = locale === "de" ? "/demo-de.mp4" : "/demo-en.mp4";
   let poster = `/landing/demo-poster-${locale === "de" ? "de" : "en"}.jpg`;
@@ -33,6 +34,13 @@ export function Video({ locale = "en" }: { locale?: Locale }) {
     poster = screenshotPath(locale, "/screenshots/ios/01-recording.webp");
     titleKey = "howItWorks.ios.title";
     captionKey = "howItWorks.ios.caption";
+  }
+  if (android) {
+    source =
+      locale === "de" ? "/android-overview-de.mp4" : "/android-overview-en.mp4";
+    poster = `/landing/android-overview-poster-${locale === "de" ? "de" : "en"}.jpg`;
+    titleKey = "howItWorks.android.title";
+    captionKey = "howItWorks.android.caption";
   }
 
   return (
@@ -67,6 +75,14 @@ export function Video({ locale = "en" }: { locale?: Locale }) {
                 srcLang="de"
                 label="Deutsch"
                 default
+              />
+            )}
+            {android && (
+              <track
+                kind="captions"
+                src={`/android-overview-${locale === "de" ? "de" : "en"}.vtt`}
+                srcLang={locale === "de" ? "de" : "en"}
+                label={locale === "de" ? "Deutsch" : "English"}
               />
             )}
             {t(locale, "howItWorks.videoFallback")}

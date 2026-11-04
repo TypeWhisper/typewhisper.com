@@ -1,7 +1,7 @@
 // Pure helpers behind src/data/versions.ts. No imports, so unit tests can
 // load this file without the generated release feed.
 
-export type VersionPlatform = "mac" | "windows" | "ios";
+export type VersionPlatform = "mac" | "windows" | "ios" | "android";
 
 export interface PlatformVersion {
   /** Full version without the leading "v", e.g. "1.6.1". */
@@ -43,7 +43,7 @@ export function versionPlaceholders(
   );
 }
 
-const placeholderPattern = /\{((?:mac|windows|ios)(?:Version|Series))\}/g;
+const placeholderPattern = /\{((?:mac|windows|ios|android)(?:Version|Series))\}/g;
 
 /** Replace known placeholders. Unknown versions stay as written. */
 export function resolveVersionPlaceholders(

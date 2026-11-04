@@ -8,6 +8,7 @@ import {
 } from "react";
 import { ArrowRight } from "lucide-react";
 import {
+  AndroidLogo,
   IOSLogo,
   MacOSLogo,
   WindowsLogo,
@@ -29,9 +30,17 @@ const platforms: {
   { id: "mac", Logo: MacOSLogo },
   { id: "windows", Logo: WindowsLogo },
   { id: "ios", Logo: IOSLogo },
+  { id: "android", Logo: AndroidLogo },
 ];
 
 const points = ["free", "local", "account"] as const;
+
+// The Android app is free but not published as open source.
+function pointKey(point: (typeof points)[number], platform: LandingPlatform) {
+  return point === "free" && platform === "android"
+    ? "hero.point.free.android"
+    : `hero.point.${point}`;
+}
 
 // Layout effects only exist in the browser; the server render skips them.
 const useBrowserLayoutEffect =
@@ -199,7 +208,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           {points.map((point) => (
             <li key={point}>
               <BarMark />
-              {t(locale, `hero.point.${point}`)}
+              {t(locale, pointKey(point, selectedPlatform))}
             </li>
           ))}
           <li title={t(locale, "madeInGermany.craft")}>

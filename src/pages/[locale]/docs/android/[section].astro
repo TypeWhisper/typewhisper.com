@@ -1,0 +1,63 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { DocsGuidePage } from "@/components/docs/guide-page";
+import {
+  androidDocSlugs,
+  getAndroidDocPage,
+  type AndroidDocSlug,
+} from "@/data/android-docs";
+import { resolveVersions } from "@/data/versions";
+import { locales, type Locale } from "@/i18n/index";
+import { canonicalPath } from "@/lib/locale-routes";
+import { androidVersion, getAndroidPlayStoreUrl } from "@/lib/platform-download";
+
+interface Props {
+  locale: Locale;
+  section: AndroidDocSlug;
+}
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) =>
+    androidDocSlugs.map((section) => ({
+      params: { locale, section },
+      props: { locale, section },
+    })),
+  );
+}
+
+const { locale, section } = Astro.props;
+const page = getAndroidDocPage(locale, section);
+const isDe = locale === "de";
+---
+<DocsLayout
+  title={`${page.title} - Android - TypeWhisper`}
+  description={resolveVersions(page.description)}
+  canonicalPath={canonicalPath(locale, `/docs/android/${section}`)}
+  locale={locale}
+  platform="android"
+  heading={page.title}
+  label={page.eyebrow}
+  lede={resolveVersions(page.intro)}
+>
+  <Fragment slot="meta">
+    <span>{isDe ? "Android 10 oder neuer" : "Android 10 or later"}</span>
+    <span>
+      {resolveVersions(
+        isDe ? "Version {androidSeries} stabil" : "Version {androidSeries} stable",
+      )}
+    </span>
+    <a
+      href={getAndroidPlayStoreUrl(locale)}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-download-social-trigger
+      data-download-platform="android"
+      data-download-target="android_play_store"
+      data-download-version={androidVersion}
+      data-tracking-placement="docs"
+    >
+      {isDe ? "Google Play öffnen" : "Open Google Play"}
+    </a>
+  </Fragment>
+  <DocsGuidePage locale={locale} page={page} />
+</DocsLayout>

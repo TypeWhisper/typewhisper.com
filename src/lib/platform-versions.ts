@@ -9,4 +9,5 @@ export const platformVersions: Record<LandingPlatform, string | null> = {
   mac: versions.mac.version,
   windows: versions.windows.version,
   ios: versions.ios.version,
+  android: versions.android.version,
 };

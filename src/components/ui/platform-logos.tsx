@@ -50,3 +50,26 @@ export function IOSLogo(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function AndroidLogo(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      data-platform-logo="android"
+      {...props}
+    >
+      <path d="M3.5 18.5a8.5 8.5 0 0 1 17 0Z" />
+      <path d="m7.4 11.1-1.9-3.3" />
+      <path d="m16.6 11.1 1.9-3.3" />
+      <circle cx="8.7" cy="15" r="0.4" fill="currentColor" />
+      <circle cx="15.3" cy="15" r="0.4" fill="currentColor" />
+    </svg>
+  );
+}

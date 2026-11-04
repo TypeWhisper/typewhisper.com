@@ -7,6 +7,12 @@ const IOS_APP_STORE_URL_EN =
   "https://apps.apple.com/us/app/typewhisper-app/id6759319267";
 const IOS_APP_STORE_URL_DE =
   "https://apps.apple.com/de/app/typewhisper-app/id6759319267";
+const PLAY_STORE_URL_EN =
+  "https://play.google.com/store/apps/details?id=com.typewhisper.android&hl=en";
+const PLAY_STORE_URL_DE =
+  "https://play.google.com/store/apps/details?id=com.typewhisper.android&hl=de";
+const ANDROID_USER_AGENT =
+  "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36";
 
 type GeneratedDownloads = {
   mac: { url: string };
@@ -74,6 +80,14 @@ const landingScenarios: LandingScenario[] = [
     maxTouchPoints: 5,
     expectedLabel: "Download on the App Store",
     expectedHref: IOS_APP_STORE_URL_EN,
+    opensNewTab: true,
+  },
+  {
+    name: "Android",
+    userAgent: ANDROID_USER_AGENT,
+    maxTouchPoints: 5,
+    expectedLabel: "Get it on Google Play",
+    expectedHref: PLAY_STORE_URL_EN,
     opensNewTab: true,
   },
 ];
@@ -635,6 +649,141 @@ test.describe("iOS App Store media", () => {
       const previewPath = `/ios-app-preview-${locale}.mp4`;
       await expect(page.locator(`source[src="${previewPath}"]`)).toHaveCount(1);
       expect((await request.get(previewPath)).ok()).toBeTruthy();
+    });
+  }
+});
+
+test.describe("Android on the landing page", () => {
+  test.use({ userAgent: ANDROID_USER_AGENT });
+
+  test("Android visitors get the Play listing everywhere", async ({ page }) => {
+    await page.goto("/en/");
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-landing-platform",
+      "android",
+    );
+    await expect(page.getByTestId("landing-hero-tab-android")).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    const hero = page.getByTestId("landing-hero-download");
+    await expect(hero).toHaveAttribute("href", PLAY_STORE_URL_EN);
+    await expect(hero).toHaveAttribute(
+      "data-download-target",
+      "android_play_store",
+    );
+    await expect(hero).toHaveAttribute(
+      "data-download-version",
+      readCurrentVersions().android.version,
+    );
+    await expect(page.getByTestId("landing-hero")).toContainText(
+      `Version ${readCurrentVersions().android.version} for Android 10 or later.`,
+    );
+    // The Android app is free, but its source is not published.
+    await expect(page.getByTestId("landing-hero")).toContainText("Free to use");
+    await expect(page.getByTestId("landing-hero")).not.toContainText(
+      "open source",
+    );
+
+    const editions = page.getByTestId("landing-platform-grid");
+    await editions.scrollIntoViewIfNeeded();
+    const android = editions.locator(
+      'a[data-download-target="android_play_store"]',
+    );
+    await expect(android).toHaveAttribute("href", PLAY_STORE_URL_EN);
+    await expect(android).toHaveAttribute("data-selected", "");
+    await expect(android).toContainText("Android 10 or later");
+
+    await page.goto("/en/pricing/");
+    await expect(page.getByTestId("pricing-free-download")).toHaveAttribute(
+      "href",
+      PLAY_STORE_URL_EN,
+    );
+  });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale}: the video section plays the Android product video`, async ({
+      page,
+      request,
+    }) => {
+      await page.goto(`/${locale}/?platform=android`);
+      const howItWorks = page.getByTestId("how-it-works");
+      await howItWorks.scrollIntoViewIfNeeded();
+      await expect(
+        howItWorks.locator("xpath=ancestor::astro-island"),
+      ).not.toHaveAttribute("ssr", "");
+      await expect(howItWorks).toContainText(
+        locale === "de" ? "TypeWhisper auf Android." : "TypeWhisper on Android.",
+      );
+      const video = page.getByTestId("how-it-works-video");
+      await expect(video.locator("source")).toHaveAttribute(
+        "src",
+        `/android-overview-${locale}.mp4`,
+      );
+      await expect(video.locator("track")).toHaveAttribute(
+        "src",
+        `/android-overview-${locale}.vtt`,
+      );
+      for (const path of [
+        `/android-overview-${locale}.mp4`,
+        `/android-overview-${locale}.vtt`,
+        await video.getAttribute("poster"),
+      ]) {
+        expect((await request.get(path ?? "")).ok()).toBeTruthy();
+      }
+
+      // The other platforms keep their video.
+      await page.getByTestId("landing-hero-tab-ios").click();
+      await expect(
+        page.getByTestId("how-it-works-video").locator("source"),
+      ).toHaveAttribute("src", `/ios-app-preview-${locale}.mp4`);
+    });
+
+    test(`${locale}: tour, engines, and Premium show Android`, async ({
+      page,
+      request,
+    }) => {
+      await page.goto(`/${locale}/?platform=android`);
+      await expect(page.getByTestId("landing-hero-download")).toHaveAttribute(
+        "href",
+        locale === "de" ? PLAY_STORE_URL_DE : PLAY_STORE_URL_EN,
+      );
+
+      const tour = page.getByTestId("feature-tour");
+      await tour.scrollIntoViewIfNeeded();
+      await expect(tour).toHaveAttribute("data-platform", "android");
+      const shots = tour.locator(".landing-tour__inline img");
+      await expect(shots).toHaveCount(5);
+      for (const [index, name] of [
+        "02-inbox",
+        "06-profiles",
+        "05-email",
+        "07-dictionary",
+        "03-history",
+      ].entries()) {
+        const path = `/screenshots/${locale}/android/${name}.png`;
+        await expect(shots.nth(index)).toHaveAttribute("src", path);
+        expect((await request.get(path)).ok()).toBeTruthy();
+      }
+
+      await page.locator(".landing-engines summary").click();
+      const engines = page.locator(".landing-engines__body");
+      await expect(engines.locator("table th[scope=col]")).toHaveText([
+        "Feature",
+        /^Parakeet/,
+        /^Whisper/,
+        locale === "de"
+          ? /^Android-Spracherkennung/
+          : /^Android speech recognition/,
+      ]);
+      await expect(
+        engines.locator(`a[href="/${locale}/docs/android/engines-and-models/"]`),
+      ).toBeVisible();
+
+      const premium = page.getByTestId("premium-features");
+      await premium.scrollIntoViewIfNeeded();
+      await expect(premium).toHaveAttribute("data-platform", "android");
+      await expect(premium).toContainText("Nemotron Live");
     });
   }
 });

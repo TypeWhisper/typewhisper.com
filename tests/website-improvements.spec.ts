@@ -239,6 +239,26 @@ for (const locale of ["en", "de"]) {
     await expect(setup.locator("select").first()).toHaveValue("windows");
     await expect(setup.locator("select").nth(1)).toHaveValue("cloud");
     await expect(setup.locator("select").nth(2)).toHaveValue("files");
+
+    // Android has its cloud engines built in, so the step leads to its guide.
+    await setup.locator("select").first().selectOption("android");
+    await expect(
+      setup.locator(`a[href="/${locale}/docs/android/engines-and-models/"]`),
+    ).toBeVisible();
+    await expect(
+      setup.locator(`a[href="/${locale}/docs/android/files-and-history/"]`),
+    ).toBeVisible();
+    await expect(
+      setup.locator(`a[href="/${locale}/docs/android/installation/"]`),
+    ).toBeVisible();
+    await setup.locator("select").nth(2).selectOption("workflows");
+    await expect(
+      setup.locator(`a[href="/${locale}/docs/android/profiles-and-writing/"]`),
+    ).toBeVisible();
+    await expect(setup.locator(".site-button")).toHaveAttribute(
+      "href",
+      `https://play.google.com/store/apps/details?id=com.typewhisper.android&hl=${locale}`,
+    );
   });
 
   test(`${locale}: documentation search returns localized platform guides`, async ({
@@ -383,7 +403,7 @@ test("the single 404 page turns German as a whole below /de/", async ({
   ).toHaveAttribute("href", /^\/en\//);
 });
 
-test("platform switch stays inside the gutters at 320px and wraps with large text", async ({
+test("four platforms stay on one line inside the gutters at 320px and wrap with large text", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 640 });
@@ -397,7 +417,7 @@ test("platform switch stays inside the gutters at 320px and wraps with large tex
   // Text at twice its size: the choices wrap instead of leaving the screen.
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addStyleTag({ content: "html { font-size: 200%; }" });
-  for (const id of ["mac", "windows", "ios"]) {
+  for (const id of ["mac", "windows", "ios", "android"]) {
     const choice = await page
       .getByTestId(`landing-hero-tab-${id}`)
       .boundingBox();
