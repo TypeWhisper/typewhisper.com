@@ -75,12 +75,12 @@ export const en: IosDocPage = {
         {
           title: "Tap Dictate",
           description:
-            "Tap the microphone button on the right of the toolbar. The keyboard shows “Listening… tap to finish” and a level bar.",
+            "Tap the blue microphone key on the right of the toolbar. While you speak, the toolbar shows “Listening…”, a waveform, the elapsed time and Cancel, and the key turns into a red stop key.",
         },
         {
           title: "Stop",
           description:
-            "Tap the button again. Or press and hold it for more than half a second, speak, and release to stop.",
+            "Tap the stop key. Or press and hold the microphone key for more than half a second, speak, and release to stop. Cancel throws the recording away.",
         },
         {
           title: "Check the inserted text",
@@ -232,12 +232,12 @@ export const de: IosDocPage = {
         {
           title: "Auf Diktieren tippen",
           description:
-            "Tippe rechts in der Leiste auf die Mikrofontaste. Die Tastatur zeigt „Hört zu … zum Beenden tippen“ und einen Pegel.",
+            "Tippe rechts in der Leiste auf die blaue Mikrofontaste. Während du sprichst, zeigt die Leiste „Hört zu …“, eine Wellenform, die Dauer und Abbrechen, und die Taste wird zur roten Stopptaste.",
         },
         {
           title: "Beenden",
           description:
-            "Tippe erneut auf die Taste. Oder halte sie länger als eine halbe Sekunde gedrückt, sprich und lass los, um zu beenden.",
+            "Tippe auf die Stopptaste. Oder halte die Mikrofontaste länger als eine halbe Sekunde gedrückt, sprich und lass los, um zu beenden. Abbrechen verwirft die Aufnahme.",
         },
         {
           title: "Eingefügten Text prüfen",
