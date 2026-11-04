@@ -101,6 +101,15 @@ Diese Umgebungsvariablen beschreiben die Aufnahme:
 - **TYPEWHISPER_TRANSCRIPT_FILE** - Pfad des Transkripts als reiner Text
 - **TYPEWHISPER_MARKDOWN_FILE** - Pfad des Markdown-Transkripts. Nur gesetzt, wenn eines gespeichert wurde. Das betrifft derzeit Kalenderaufnahmen mit Meeting-Metadaten.
 
+Ab Version 1.3.0 dieses Add-ons und TypeWhisper 1.8.1 bekommen Aufnahmen, die aus dem Kalender gestartet wurden, zusätzlich die Angaben zum Termin. Bei allen anderen Aufnahmen sind diese Variablen nicht gesetzt, so kann ein Skript beide unterscheiden:
+
+- **TYPEWHISPER_MEETING_TITLE** - Titel des Kalendertermins
+- **TYPEWHISPER_MEETING_START** - Beginn des Termins in ganzen Unix-Sekunden
+- **TYPEWHISPER_MEETING_END** - Ende des Termins in ganzen Unix-Sekunden
+- **TYPEWHISPER_MEETING_ATTENDEES** - Teilnehmer, einer pro Zeile: der Name oder, wenn der Kalender keinen Namen kennt, die E-Mail-Adresse
+
+Da Beginn und Ende ganze Sekunden sind, gibt `date -r "$TYPEWHISPER_MEETING_START" +%H:%M` die Startzeit aus.
+
 Unter macOS beendet Script Runner jeden Lauf nach fünf Sekunden, bei Diktaten genauso wie bei Recorder-Transkripten. Gib längere Arbeit an einen anderen Prozess ab, etwa indem du das Transkript in einen Ordner kopierst, den ein separater Job verarbeitet.
 
 Derselbe Befehl läuft weiterhin auch für Diktate, die zu seinem Regelfilter passen. Dort ersetzt seine Ausgabe wie gewohnt den Text. Wenn du nur Recorder-Transkripte exportieren willst, prüfe `TYPEWHISPER_SOURCE` und gib Diktattext unverändert zurück:

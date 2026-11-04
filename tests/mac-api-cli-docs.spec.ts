@@ -578,6 +578,10 @@ test.describe("Recorder automation in add-ons", () => {
         "TYPEWHISPER_AUDIO_FILE",
         "TYPEWHISPER_TRANSCRIPT_FILE",
         "TYPEWHISPER_MARKDOWN_FILE",
+        "TYPEWHISPER_MEETING_TITLE",
+        "TYPEWHISPER_MEETING_START",
+        "TYPEWHISPER_MEETING_END",
+        "TYPEWHISPER_MEETING_ATTENDEES",
       ]) {
         await expect(page.locator("main")).toContainText(variable);
       }
