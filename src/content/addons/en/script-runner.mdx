@@ -101,6 +101,15 @@ These environment variables describe the recording:
 - **TYPEWHISPER_TRANSCRIPT_FILE** - Path of the plain-text transcript
 - **TYPEWHISPER_MARKDOWN_FILE** - Path of the Markdown transcript. Set only when one was saved, which currently applies to calendar recordings with meeting metadata.
 
+From version 1.3.0 of this add-on and TypeWhisper 1.8.1, recordings started from the calendar also get the meeting's details. For all other recordings these variables are unset, so a script can tell the two apart:
+
+- **TYPEWHISPER_MEETING_TITLE** - Title of the calendar event
+- **TYPEWHISPER_MEETING_START** - Start of the event in whole Unix seconds
+- **TYPEWHISPER_MEETING_END** - End of the event in whole Unix seconds
+- **TYPEWHISPER_MEETING_ATTENDEES** - Attendees, one per line: the name, or the email address when the calendar has no name
+
+Because start and end are whole seconds, `date -r "$TYPEWHISPER_MEETING_START" +%H:%M` prints the start time.
+
 On macOS, Script Runner stops every run after five seconds, for dictations and Recorder transcripts alike. Hand longer work to another process, for example by copying the transcript into a folder that a separate job processes.
 
 The same command still runs for dictations that match its rule filter, and there its stdout replaces the text as usual. To export only Recorder transcripts, check `TYPEWHISPER_SOURCE` and pass dictation text through unchanged:
