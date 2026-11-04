@@ -78,7 +78,7 @@ export const en: IosDocPage = {
       bullets: [
         "The close button next to the bubble cancels the recording.",
         "If the field changed or could not accept text, the dictation waits and the bubble shows a paste symbol. Tap the bubble in a text field to insert it, or tap the close button to discard it.",
-        "The bubble does not appear in TypeWhisper itself, in password and sensitive fields, on the lock screen, or while you dictate in the app or keyboard. Turning the screen off cancels a bubble recording.",
+        "The bubble does not appear in TypeWhisper itself, in password and sensitive fields, on the lock screen, or while you dictate in the app or keyboard. The screen stays on while the bubble records. If it turns off anyway, the recording stops and is transcribed, and the bubble's paste button inserts it in a text field.",
       ],
       image: {
         path: "/screenshots/android/bubble.png",
@@ -201,7 +201,7 @@ export const de: IosDocPage = {
       bullets: [
         "Die Schließen-Taste neben der Bubble bricht die Aufnahme ab.",
         "Hat sich das Feld geändert oder konnte es keinen Text annehmen, wartet das Diktat, und die Bubble zeigt ein Einfügen-Symbol. Tippe in einem Textfeld auf die Bubble, um es einzufügen, oder auf die Schließen-Taste, um es zu verwerfen.",
-        "Die Bubble erscheint nicht in TypeWhisper selbst, in Passwortfeldern und als sensibel markierten Feldern, auf dem Sperrbildschirm und nicht, während du in der App oder mit der Tastatur diktierst. Schaltest du den Bildschirm aus, wird eine Bubble-Aufnahme abgebrochen.",
+        "Die Bubble erscheint nicht in TypeWhisper selbst, in Passwortfeldern und als sensibel markierten Feldern, auf dem Sperrbildschirm und nicht, während du in der App oder mit der Tastatur diktierst. Während die Bubble aufnimmt, bleibt der Bildschirm an. Geht er trotzdem aus, endet die Aufnahme und wird transkribiert; mit der Einfügen-Schaltfläche der Bubble übernimmst du sie in ein Textfeld.",
       ],
       image: {
         path: "/screenshots/android/bubble.png",

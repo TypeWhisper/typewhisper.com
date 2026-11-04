@@ -12,6 +12,7 @@ export const en: IosDocPage = {
       title: "Terms and corrections",
       paragraphs: [
         "Open the Dictionary tab and tap Add entry. At the top of the dialog, choose one of two entry types.",
+        "The question mark next to the search field opens How the dictionary works: which engines use terms, how corrections work, the Android dictionary, and the import formats with examples.",
       ],
       bullets: [
         "Term: a name, product or specialist word that should be recognized, such as TypeWhisper. Terms help while your speech is being recognized.",
@@ -118,6 +119,7 @@ export const de: IosDocPage = {
       title: "Begriffe und Korrekturen",
       paragraphs: [
         "Öffne den Tab Wörterbuch und tippe auf Eintrag hinzufügen. Oben im Dialog wählst du eine von zwei Eintragsarten.",
+        "Das Fragezeichen neben dem Suchfeld öffnet So funktioniert das Wörterbuch: welche Engines Begriffe nutzen, wie Korrekturen wirken, das Android-Wörterbuch und die Importformate mit Beispielen.",
       ],
       bullets: [
         "Begriff: ein Name, Produkt oder Fachwort, das erkannt werden soll, etwa TypeWhisper. Begriffe helfen schon bei der Spracherkennung.",

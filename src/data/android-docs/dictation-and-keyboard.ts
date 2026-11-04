@@ -36,6 +36,7 @@ export const en: IosDocPage = {
         "Live text while you speak appears only with Nemotron Live, which needs Premium. Pause and Stop then stay at the bottom of the screen. Other engines show the text after you stop.",
         "If a transcription fails and the recording was kept, Try again transcribes it with the engine from settings and copies the text.",
         "Transcribe a file on the same screen opens file transcription for existing audio and video.",
+        "A connected Bluetooth headset records with its own microphone on Android 12 and newer; a short tone in the headset tells you when it listens. Wired and USB headsets work on every version.",
       ],
       image: {
         path: "/screenshots/android/01-record.png",
@@ -90,7 +91,7 @@ export const en: IosDocPage = {
       bullets: [
         "Undo removes the last dictation. Original replaces it with what the engine heard, before corrections and profile.",
         "The history button opens Recent transcriptions; tap one to insert it again.",
-        "If you close the keyboard while recording, the recording is discarded.",
+        "The screen stays on while you dictate. If the keyboard closes or the screen turns off anyway, the recording stops and is transcribed: the keyboard inserts the text when it returns to the same field and otherwise offers it with Insert here. Outside private fields it is in History too.",
         "If you switch fields while TypeWhisper is still transcribing, the keyboard shows “Your dictation is ready. Choose where to insert it.” with Insert here and Dismiss.",
         "If the engine's model is missing, the keyboard shows the download size and offers Download model.",
       ],
@@ -105,6 +106,9 @@ export const en: IosDocPage = {
       bullets: [
         "Keyboard layout in Settings → Keyboard: Automatic (system language) uses QWERTZ for German and QWERTY otherwise. You can also pick QWERTZ or QWERTY directly.",
         "?123 switches to numbers and symbols. Long-press a letter for variants such as ä, ß, é or ñ. Double-tap Shift for caps lock.",
+        "The currency key on the symbol page follows your phone's region, for example $ in the US, £ in the UK and € in Germany. Press and hold it for $, €, £, ¥ and ¢.",
+        "The keyboard key left of the space bar switches to your next keyboard; press and hold it to pick one from Android's list.",
+        "The clipboard button in the toolbar lists text you copied in the last hour, newest first. Tap an entry to paste it, or remove entries one by one or with Clear all. The keyboard keeps up to 20 copies, only in memory, and leaves out copies that apps mark as sensitive, such as passwords. Clipboard history in Settings → Keyboard turns it off.",
         "Number and phone fields open a number pad; phone fields add +, * and #.",
         "In email and web address fields a dictated value goes in without spaces and without a final period; email addresses are also lowercased. In number fields, spaces between digits are removed and the final period is dropped.",
         "Send after dictating: Never, When you end with “send” or “senden”, or Always. The command must be a sentence of its own and is removed from the text, so “Can you send me the file?” stays a question. “Send it”, “abschicken” and “absenden” work as commands too, and so does “press enter” or “Enter drücken” at the end.",
@@ -115,7 +119,7 @@ export const en: IosDocPage = {
     {
       title: "Profiles and rewriting",
       paragraphs: [
-        "The chip on the left of the toolbar shows the profile for the next dictation. Tap it to choose Dictation or another profile; your choice also becomes the active profile in the app. Calendar Event profiles are not offered in the keyboard, and locked profiles open the Premium page.",
+        "The chip on the left of the toolbar shows the profile for the next dictation. Tap it to choose Dictation or another profile; all profiles appear in place of the keys, and your choice also becomes the active profile in the app. Calendar Event profiles are not offered in the keyboard, and locked profiles open the Premium page.",
         "A profile assigned to an app under Settings → Profiles is used automatically in that app. Website profiles work in the keyboard too, but only while the dictation bubble is on, because only its accessibility service can read the browser's address bar.",
       ],
       steps: [
@@ -189,6 +193,7 @@ export const de: IosDocPage = {
         "Live-Text beim Sprechen gibt es nur mit Nemotron Live, das Premium braucht. Pause und Beenden bleiben dann unten am Bildschirm. Andere Engines zeigen den Text, sobald du aufhörst.",
         "Schlägt eine Transkription fehl und wurde die Aufnahme behalten, tippe auf Erneut versuchen: TypeWhisper transkribiert sie mit der Engine aus den Einstellungen und kopiert den Text.",
         "Über Datei transkribieren auf demselben Bildschirm transkribierst du vorhandene Audio- und Videodateien.",
+        "Ein verbundenes Bluetooth-Headset nimmt ab Android 12 mit seinem eigenen Mikrofon auf; ein kurzer Ton im Headset zeigt dir, wann es zuhört. Kabel- und USB-Headsets funktionieren auf jeder Version.",
       ],
       image: {
         path: "/screenshots/android/01-record.png",
@@ -243,7 +248,7 @@ export const de: IosDocPage = {
       bullets: [
         "Rückgängig entfernt das letzte Diktat. Original ersetzt es durch das, was die Engine gehört hat, vor Korrekturen und Profil.",
         "Die Verlaufstaste öffnet Letzte Transkriptionen; tippe auf eine, um sie erneut einzufügen.",
-        "Schließt du die Tastatur während der Aufnahme, wird die Aufnahme verworfen.",
+        "Beim Diktieren bleibt der Bildschirm an. Schließt sich die Tastatur oder geht der Bildschirm trotzdem aus, endet die Aufnahme und wird transkribiert: Kehrt die Tastatur ins selbe Feld zurück, landet der Text dort, sonst bietet sie ihn mit Hier einfügen an. Außerhalb privater Felder steht er auch im Verlauf.",
         "Wechselst du das Feld, während TypeWhisper noch transkribiert, zeigt die Tastatur „Dein Diktat ist fertig. Wähle, wo du es einfügen möchtest.“ mit Hier einfügen und Verwerfen.",
         "Fehlt das Modell der Engine, zeigt die Tastatur die Downloadgröße und bietet Modell herunterladen an.",
       ],
@@ -258,6 +263,9 @@ export const de: IosDocPage = {
       bullets: [
         "Tastaturlayout in Einstellungen → Tastatur: Automatisch (Systemsprache) nutzt QWERTZ für Deutsch und sonst QWERTY. Du kannst QWERTZ oder QWERTY auch fest wählen.",
         "?123 wechselt zu Zahlen und Zeichen. Für Varianten wie ä, ß, é oder ñ hältst du einen Buchstaben gedrückt. Tippst du zweimal schnell auf Umschalt, bleibt die Großschreibung eingeschaltet.",
+        "Die Währungstaste auf der Zeichenseite richtet sich nach der Region deines Handys, zum Beispiel $ in den USA, £ in Großbritannien und € in Deutschland. Hältst du sie gedrückt, gibt es $, €, £, ¥ und ¢.",
+        "Die Tastaturtaste links neben der Leertaste wechselt zur nächsten Tastatur; hältst du sie gedrückt, wählst du eine aus der Liste von Android.",
+        "Die Zwischenablage-Taste in der Leiste zeigt Text, den du in der letzten Stunde kopiert hast, den neuesten zuerst. Tippe auf einen Eintrag, um ihn einzufügen, oder entferne Einträge einzeln oder mit Alle löschen. Die Tastatur behält bis zu 20 Kopien, nur im Speicher, und lässt Kopien aus, die Apps als vertraulich markieren, etwa Passwörter. Verlauf der Zwischenablage in Einstellungen → Tastatur schaltet das ab.",
         "Zahlen- und Telefonfelder öffnen einen Ziffernblock; Telefonfelder haben zusätzlich +, * und #.",
         "In E-Mail- und Webadressfeldern landet ein diktierter Wert ohne Leerzeichen und ohne Punkt am Ende; E-Mail-Adressen werden zusätzlich kleingeschrieben. In Zahlenfeldern werden Leerzeichen zwischen Ziffern entfernt, und der Punkt am Ende entfällt.",
         "Nach dem Diktat senden: Nie, Wenn du mit „senden“ oder „send“ endest, oder Immer. Der Befehl muss ein eigener Satz sein und wird aus dem Text entfernt. „Kannst du mir die Datei senden?“ bleibt also eine Frage. Auch „abschicken“, „absenden“ und „send it“ funktionieren als Befehl, am Ende außerdem „Enter drücken“ oder „press enter“.",
@@ -268,7 +276,7 @@ export const de: IosDocPage = {
     {
       title: "Profile und Umschreiben",
       paragraphs: [
-        "Der Chip links in der Leiste zeigt das Profil für das nächste Diktat. Tippe darauf, um Diktat oder ein anderes Profil zu wählen; deine Wahl wird auch zum aktiven Profil in der App. Kalendertermin-Profile bietet die Tastatur nicht an, gesperrte Profile öffnen die Premium-Seite.",
+        "Der Chip links in der Leiste zeigt das Profil für das nächste Diktat. Tippe darauf, um Diktat oder ein anderes Profil zu wählen; alle Profile erscheinen anstelle der Tasten, und deine Wahl wird auch zum aktiven Profil in der App. Kalendertermin-Profile bietet die Tastatur nicht an, gesperrte Profile öffnen die Premium-Seite.",
         "Ein Profil, das du unter Einstellungen → Profile einer App zuordnest, gilt in dieser App automatisch. Website-Profile wirken auch in der Tastatur, aber nur, solange die Diktier-Bubble an ist: Nur ihr Bedienungshilfedienst kann die Adressleiste des Browsers lesen.",
       ],
       steps: [

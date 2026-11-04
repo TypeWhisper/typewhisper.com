@@ -40,7 +40,7 @@ export const en: IosDocPage = {
       title: "The TypeWhisper keyboard does not appear",
       bullets: [
         "Open Settings → Keyboard and tap Enable TypeWhisper Keyboard. Android opens its input settings, where you turn on TypeWhisper Keyboard.",
-        "Then tap Switch keyboard on the same page and choose TypeWhisper as the active keyboard. On the TypeWhisper keyboard itself, the globe key switches to your next keyboard.",
+        "Then tap Switch keyboard on the same page and choose TypeWhisper as the active keyboard. On the TypeWhisper keyboard itself, the keyboard key left of the space bar switches to your next keyboard; press and hold it to pick one.",
         "If the keyboard shows an error that needs setup, such as a missing model or API key, tap the message to open the app.",
         "“Your dictation is ready. Choose where to insert it.” appears when the text field changed while the dictation was processed. Tap Insert here in the field you want, or Dismiss.",
         "In password and incognito fields, dictation works, but nothing is saved to History or kept for recovery. In password fields, profiles are not applied.",
@@ -130,7 +130,7 @@ export const de: IosDocPage = {
       title: "Die TypeWhisper-Tastatur erscheint nicht",
       bullets: [
         "Öffne Einstellungen → Tastatur und tippe auf TypeWhisper-Tastatur aktivieren. Android öffnet seine Eingabe-Einstellungen, dort schaltest du die TypeWhisper-Tastatur ein.",
-        "Tippe danach auf derselben Seite auf Tastatur wechseln und wähle TypeWhisper als aktive Tastatur. Auf der TypeWhisper-Tastatur selbst wechselst du mit der Globustaste zur nächsten Tastatur.",
+        "Tippe danach auf derselben Seite auf Tastatur wechseln und wähle TypeWhisper als aktive Tastatur. Auf der TypeWhisper-Tastatur selbst wechselst du mit der Tastaturtaste links neben der Leertaste zur nächsten Tastatur; hältst du sie gedrückt, wählst du eine aus.",
         "Zeigt die Tastatur einen Fehler, der eine Einrichtung braucht, etwa ein fehlendes Modell oder einen fehlenden API-Schlüssel, tippe auf die Meldung, um die App zu öffnen.",
         "„Dein Diktat ist fertig. Wähle, wo du es einfügen möchtest.“ erscheint, wenn sich das Textfeld während der Verarbeitung geändert hat. Tippe im gewünschten Feld auf Hier einfügen oder auf Verwerfen.",
         "In Passwort- und Inkognitofeldern funktioniert das Diktieren, im Verlauf wird aber nichts gespeichert und nichts zur Wiederherstellung aufbewahrt. In Passwortfeldern werden keine Profile angewendet.",
