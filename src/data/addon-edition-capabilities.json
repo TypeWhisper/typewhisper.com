@@ -109,7 +109,7 @@
   },
   "soniox": {
     "mac": ["transcription", "tts"],
-    "windows": ["transcription"]
+    "windows": ["transcription", "tts"]
   },
   "speechmatics": {
     "mac": ["transcription"],

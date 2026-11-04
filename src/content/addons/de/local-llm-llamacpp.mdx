@@ -1,0 +1,64 @@
+---
+slug: local-llm-llamacpp
+id: com.typewhisper.local-llm-llamacpp
+name: Local LLM (llama.cpp)
+author: TypeWhisper
+icon: Cpu
+description: Führt GGUF-Modelle mit llama.cpp und Metal auf deinem Mac aus, auch GGUF-Modelle aus einer einzelnen Datei von Hugging Face oder deine eigene .gguf-Datei. Kein API-Key erforderlich.
+categories:
+  - llm
+platforms:
+  - mac
+source: official
+minAppVersion: "1.8.0"
+sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/LlamaCppPlugin
+---
+
+## Über
+
+Local LLM (llama.cpp) führt Workflows und Prompts mit [llama.cpp](https://github.com/ggml-org/llama.cpp) und Metal auf deinem Mac aus. Bereinigen, Umschreiben, Zusammenfassen und Übersetzen funktionieren ohne Cloud-Upload. Neben den empfohlenen Gemma-4-Modellen kannst du jedes GGUF-Modell von Hugging Face nutzen, das aus einer einzelnen Datei besteht, etwa ein kleines Modell mit 0,5B bis 4B Parametern, das Diktate in etwa einer Sekunde bereinigt, oder eine vorhandene `.gguf`-Datei importieren.
+
+## Features
+
+- Vollständig lokale Prompt-Verarbeitung mit llama.cpp und Metal auf Apple Silicon
+- Gemma-4-, Qwen3.5- und LFM2.5-Modelle, dieselben Dateien wie in TypeWhisper für Windows
+- GGUF-Modelle aus einer einzelnen Datei von Hugging Face: Repository eingeben, Datei auswählen, fertig
+- Import von `.gguf`-Dateien von deinem Mac
+- Downloads sind auf den aktuellen Commit des Repositorys festgelegt und werden per SHA-256 geprüft
+- Beim Bereinigen ohne Denkschritt vor der Antwort, das Ergebnis kommt sofort
+- Regler für die Temperatur zwischen präziser und kreativer Ausgabe
+- Optionaler Hugging-Face-Token für höhere Download-Rate-Limits sowie private oder zugangsbeschränkte Modelle
+- Kein API-Key erforderlich
+
+## Empfohlene Modelle
+
+| Modell | Download-Größe | Empfohlener RAM | Status |
+| --- | --- | --- | --- |
+| Gemma 4 E2B (Q4_K_M) | ~3.1 GB | 8 GB+ | Empfohlen |
+| Gemma 4 E4B (Q4_K_M) | ~5 GB | 16 GB+ | Empfohlen |
+| Gemma 4 E4B (Q8_0) | ~8.2 GB | 16 GB+ | Unterstützt |
+| Gemma 4 26B-A4B (Q4_K_M, MoE) | ~17 GB | 32 GB+ | Experimentell |
+| Qwen3.5 2B (Q4_K_M) | ~1.3 GB | 8 GB+ | Experimentell |
+| LFM2.5 2.6B (Q4_K_M) | ~1.7 GB | 8 GB+ | Experimentell |
+
+Das Plugin empfiehlt je nach Arbeitsspeicher deines Macs Gemma 4 E2B oder E4B.
+
+## Eigene Modelle
+
+- **Von Hugging Face** - Gib ein Repository wie `unsloth/Qwen3.5-2B-GGUF` ein, ergänze eine Quantisierung wie `unsloth/Qwen3.5-2B-GGUF:Q4_K_M` oder füge einen huggingface.co-Link ein. Klicke auf `GGUF-Dateien suchen`, wähle eine Datei und klicke auf `Hinzufügen & Laden`.
+- **Aus einer Datei** - Klicke auf `GGUF-Datei importieren …` und wähle eine `.gguf`-Datei. Das Plugin kopiert sie in seinen eigenen Ordner, und deine Originaldatei bleibt, wo sie ist. Liegt die Datei auf demselben Volume wie die Daten von TypeWhisper, meist dem Startvolume des Macs, belegt die Kopie keinen zusätzlichen Platz. Von einem anderen Volume braucht sie Platz für eine vollständige Kopie.
+
+Am besten funktionieren Modelle mit Chat-Vorlage in der GGUF-Datei; die meisten Instruct- und Chat-Modelle haben eine. Modelle, die auf mehrere Dateien aufgeteilt sind, und Projektordateien (`mmproj-*.gguf`) werden nicht angeboten.
+
+## Einrichtung
+
+1. Öffne in TypeWhisper `Einstellungen > Plugins entdecken` und installiere `Local LLM (llama.cpp)`. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Wähle ein empfohlenes Modell und klicke auf `Laden & Aktivieren`, oder füge unter `Deine Modelle` ein eigenes Modell hinzu. Experimentelle Modelle startest du mit `Trotzdem versuchen`.
+3. Sobald das Modell geladen ist, wähle `Local LLM (llama.cpp)` als LLM-Anbieter in deinem Workflow oder Prompt.
+
+## Hinweise
+
+- Mit dem ersten Modell lädt das Plugin auch llama.cpp 0.7.0 (etwa 12 MB) von GitHub. Es läuft als lokaler Server, den nur dein Mac erreicht, und bekommt bei jedem Start einen neuen Zufallsschlüssel.
+- Nach dem automatischen Entladen oder einem Absturz des Modellservers lädt der nächste Prompt das Modell erneut.
+- Das Plugin braucht einen Mac mit Apple Silicon und TypeWhisper 1.8.0 oder neuer. In der App-Store-Version ist es nicht verfügbar, weil es das heruntergeladene llama.cpp-Programm ausführt.
+- LFM2.5 steht unter der LFM Open License, die kommerzielle Nutzung nur unter 10 Mio. USD Jahresumsatz kostenlos erlaubt. Hinzugefügte Modelle behalten die Lizenz ihres Repositorys.

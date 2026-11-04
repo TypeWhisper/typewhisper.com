@@ -263,7 +263,7 @@ test("every platform edition has a detailed guide source", async () => {
   assert.deepEqual(capabilityMap["smallest-pulse"].mac, ["transcription"]);
   assert.deepEqual(capabilityMap["smallest-pulse"].windows, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.soniox.mac, ["transcription", "tts"]);
-  assert.deepEqual(capabilityMap.soniox.windows, ["transcription"]);
+  assert.deepEqual(capabilityMap.soniox.windows, ["transcription", "tts"]);
   assert.deepEqual(capabilityMap.webhook.mac, ["utility"]);
   assert.deepEqual(capabilityMap.webhook.windows, ["post-processing"]);
 

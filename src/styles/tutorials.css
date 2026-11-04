@@ -1,0 +1,125 @@
+/* Tutorials: index of videos and one page per video. Outside of a layer,
+   scoped under .tutorials-page, like the other page styles. */
+
+.tutorials-page .tutorial-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 3rem);
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tutorials-page .tutorial-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.625rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tutorials-page .tutorial-card__poster {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--surface);
+  transition: border-color 250ms var(--motion-ease-out);
+}
+
+.tutorials-page .tutorial-card__poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tutorials-page .tutorial-card__duration {
+  position: absolute;
+  right: 0.625rem;
+  bottom: 0.625rem;
+  border-radius: 999px;
+  background: var(--glass);
+  padding: 0.25rem 0.625rem;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(12px);
+}
+
+.tutorials-page .tutorial-card__name {
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-variant-ligatures: none;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  text-rendering: geometricPrecision;
+  text-wrap: balance;
+  transition: color 200ms var(--motion-ease-out);
+}
+
+.tutorials-page .tutorial-card__text {
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.tutorials-page a.tutorial-card:hover .tutorial-card__poster {
+  border-color: var(--accent-text);
+}
+
+.tutorials-page a.tutorial-card:hover .tutorial-card__name {
+  color: var(--accent-text);
+}
+
+.tutorials-page .tutorial-video {
+  margin-top: 0;
+}
+
+.tutorials-page .tutorial-steps {
+  margin-top: 1.5rem;
+}
+
+.tutorials-page .tutorial-steps__text {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.tutorials-page .tutorial-steps .site-steps__item {
+  padding-block: 1.375rem;
+}
+
+.tutorials-page .tutorial-steps .site-steps__item::before {
+  padding-top: 0.45rem;
+}
+
+.tutorials-page .tutorial-notes__label {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.tutorials-page .tutorial-actions {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+@media (max-width: 1023px) {
+  .tutorials-page .tutorial-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .tutorials-page .tutorial-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

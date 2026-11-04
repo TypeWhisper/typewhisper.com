@@ -11,6 +11,7 @@ import privacy from "./privacy.json";
 import android from "./android.json";
 import deleteAccount from "./delete-account.json";
 import extensions from "./extensions.json";
+import tutorials from "./tutorials.json";
 import docsCommon from "./docs/common.json";
 import docsMac from "./docs/mac.json";
 import platformReleases from "./platform-releases.json";
@@ -29,6 +30,7 @@ const translations = {
   ...android,
   ...deleteAccount,
   ...extensions,
+  ...tutorials,
   ...docsCommon,
   ...docsMac,
   ...platformReleases,

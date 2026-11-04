@@ -25,3 +25,9 @@ const { locale } = Astro.props;
 >
   <DocsMacRules locale={locale} />
 </DocsLayout>
+
+<script>
+  import { watchStudioVideoOrientation } from "@/lib/studio-video";
+
+  watchStudioVideoOrientation();
+</script>

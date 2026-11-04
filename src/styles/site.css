@@ -574,6 +574,33 @@
     text-align: center;
   }
 
+  /* Clip with a portrait cut: phones held upright show that one instead.
+     The query matches portraitQuery in src/lib/studio-video.ts. */
+  .site-video--adaptive video.site-video__portrait {
+    display: none;
+  }
+
+  @media (orientation: portrait) and (max-width: 639px) {
+    .site-video--adaptive video.site-video__wide {
+      display: none;
+    }
+
+    .site-video--adaptive video.site-video__portrait {
+      display: block;
+      width: min(100%, calc((100svh - var(--header-height) - 4rem) * 9 / 16));
+      margin-inline: auto;
+      aspect-ratio: 9 / 16;
+    }
+  }
+
+  /* A phone turned sideways: the wide cut fits the screen height. */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .site-video--adaptive video.site-video__wide {
+      width: min(100%, calc((100svh - var(--header-height) - 2rem) * 16 / 9));
+      margin-inline: auto;
+    }
+  }
+
   .site-video--phone video {
     max-width: 18rem;
     margin-inline: auto;

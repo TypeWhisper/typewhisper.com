@@ -4,7 +4,7 @@ name: ElevenLabs
 author: TypeWhisper
 icon: AudioWaveform
 iconUrl: /brand-logos/elevenlabs/logo.svg
-description: Cloud-Transkription mit ElevenLabs Scribe v2, latenzarmem Echtzeit-Streaming und REST-Fallback.
+description: Cloud-Transkription mit ElevenLabs Scribe v2, Echtzeit-Streaming, REST-Fallback und Wortzeitstempeln.
 categories:
   - transcription
 platforms:
@@ -16,34 +16,51 @@ sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisper
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ElevenLabsPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.ElevenLabs"
+screenshotAlt: "ElevenLabs-Einstellungen in TypeWhisper für macOS: API-Schlüssel, Modell, Transkriptionsmodus und Optionen für bereinigte Transkripte, Audioereignisse, Sprecheranzahl und Wörterbucheinträge"
 ---
 
 ## Über
 
-ElevenLabs bringt Cloud-Sprache-zu-Text über die Scribe-v2-API in TypeWhisper. Das Plugin ist auf schnelle Live-Transkription ausgelegt: Wenn möglich nutzt es Realtime-WebSocket-Streaming und fällt bei Problemen automatisch auf den REST-Endpunkt zurück.
+ElevenLabs bringt Cloud-Sprache-zu-Text über die Scribe-v2-API in TypeWhisper. Im Modus „Automatisch“ streamen Diktate schon während des Sprechens über die Echtzeit-WebSocket-API. TypeWhisper zeigt so Live-Text, und der Endtext steht kurz nach dem Stoppen bereit. Dateien, Scribe v2 Medical und Anfragen, die die vollständige Aufnahme brauchen, gehen an die Batch-REST-API, die auch einspringt, wenn die Streaming-Verbindung scheitert.
 
 ## Features
 
-- Scribe-v2-Transkriptions-Engine
-- Latenzarmes Echtzeit-Streaming für Live-Vorschauen
-- Automatischer REST-Fallback für mehr Zuverlässigkeit
+- Scribe-v2-Transkriptions-Engine und Scribe v2 Medical für klinische Aufnahmen
+- Echtzeit-Streaming mit Live-Text während des Diktats und automatischem REST-Fallback
+- Batch-Transkription langer Aufnahmen und Dateien
+- Satzsegmente für Untertitel und die lokale HTTP-API, auf dem Mac auch Wortzeitstempel
+- Aktive TypeWhisper-Wörterbucheinträge als Erkennungsschlüsselbegriffe
 - Breite Mehrsprachen-Unterstützung mit automatischer Spracherkennung
 - API-Key-Validierung in der Konfigurationsoberfläche
-- API-Schlüssel sicher im macOS-Schlüsselbund gespeichert
+- API-Schlüssel sicher im macOS-Schlüsselbund oder unter Windows für dein Windows-Konto verschlüsselt gespeichert
 
 ## Transkriptionsmodelle
 
 | Modell | ID |
 | --- | --- |
 | Scribe v2 | `scribe_v2` |
+| Scribe v2 Medical | `scribe_v2_medical` |
+
+Scribe v2 Medical ist auf klinische Aufnahmen abgestimmt und kostet so viel wie Scribe v2. Das Modell transkribiert nur im Batch, ohne Echtzeit-Streaming, und ist ab dem macOS-Add-on 1.1.0 und dem Windows-Add-on 1.2.0 verfügbar. Für Gesundheitsdaten nach HIPAA verlangt ElevenLabs ein Business Associate Agreement, das es Enterprise-Kunden anbietet, und den Zero Retention Mode für die Anfragen. Das Add-on schaltet den Zero Retention Mode nicht ein. Schicke darüber deshalb keine geschützten Gesundheitsdaten.
 
 ## Konfiguration
 
-- **API-Schlüssel** - Erstelle einen ElevenLabs-API-Schlüssel in deinem Account-Dashboard.
+- **API-Schlüssel** - Erstelle einen ElevenLabs-API-Schlüssel in deinem Account-Dashboard. Ein auf Speech to Text beschränkter Schlüssel genügt.
+- **Modell** - Scribe v2 oder Scribe v2 Medical für klinische Aufnahmen.
+- **Transkriptionsmodus** - **Automatisch** streamt während des Diktats und nutzt Batch-REST für Dateien und als Fallback. Unter Windows schicken auch „Audioereignisse“ oder eine „Sprecherzahl“ ungleich 1 Diktate an Batch-REST, ohne Live-Text. **Nur REST** (unter Windows: **Nach der Aufnahme**) verwendet immer die Batch-API, umgeht so die Grenzen für gleichzeitige Echtzeit-Verbindungen und wird zum günstigeren Batch-Tarif abgerechnet.
+- **Bereinigtes Transkript** - Entfernt Füllwörter, Fehlstarts und andere Unflüssigkeiten.
+- **Audioereignisse** - Ergänzt Batch-Transkripte um Geräusche wie Lachen.
+- **TypeWhisper-Wörterbucheinträge verwenden** - Sendet deine aktiven Wörterbucheinträge als Schlüsselbegriffe. ElevenLabs berechnet dafür einen Aufschlag von 20 %. In Echtzeit setzen Schlüsselbegriffe oft das ganze Transkript in Anführungszeichen. Mit Wörterbuchbegriffen ist der Live-Text (unter Windows ab TypeWhisper 1.3) deshalb nur eine Vorschau, und der Endtext kommt mit den Begriffen von der Batch-API. Streamt ElevenLabs die Vorschau, werden solche Diktate für Echtzeit und Batch abgerechnet; mit „Nur REST“, Scribe v2 Medical oder unter Windows vor TypeWhisper 1.3 nur für Batch.
+
+## Zeitstempel
+
+Ab dem macOS-Add-on 1.1.0 und TypeWhisper 1.8.2 liefert ElevenLabs die Zeit jedes Wortes. `verbose_json`-Antworten der lokalen HTTP-API enthalten an Satzenden und Pausen getrennte Segmente und, wenn die Anfrage sie mit `timestamp_granularities[]=word` anfordert, die Zeiten der einzelnen Wörter. Das hilft bei Untertiteln oder beim Schneiden von O-Tönen aus Interviews.
+
+Ab dem Windows-Add-on 1.2.0 entstehen die Segmente ebenfalls aus den Wortzeitstempeln: Ein Segment endet am Satzende, nach einer Pause von mehr als einer Sekunde oder nach 30 Sekunden. Der SRT- und VTT-Export und die lokale HTTP-API verwenden diese Segmente. Zeiten einzelner Wörter gibt es unter Windows noch nicht.
 
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **ElevenLabs**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Gib deinen ElevenLabs-API-Schlüssel ein.
-3. Belasse `Scribe v2` als Transkriptionsmodell.
+3. Belasse `Scribe v2` als Transkriptionsmodell oder wähle `Scribe v2 Medical` für klinische Aufnahmen.
 4. Wähle ElevenLabs als Transkriptions-Engine in den Einstellungen oder in einem Profil.

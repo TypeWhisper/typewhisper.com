@@ -5,7 +5,9 @@ import {
   DocsSubheading,
   DocsTerms,
 } from "@/components/docs/prose";
-import { t, screenshotPath, type Locale } from "@/i18n/index";
+import { StudioVideo } from "@/components/ui/studio-video";
+import { getTutorial } from "@/data/tutorials";
+import { localePath, t, screenshotPath, type Locale } from "@/i18n/index";
 
 const fields = [
   "apps",
@@ -33,11 +35,47 @@ const paletteExamples = ["input", "instruction", "output"];
 
 const questions = [1, 2, 3, 4, 5, 6];
 
+/** A tutorial video in a section, with a link to its page. */
+function SectionTutorial({
+  locale,
+  slug,
+  link,
+}: {
+  locale: Locale;
+  slug: string;
+  link: string;
+}) {
+  const tutorial = getTutorial(slug);
+  if (!tutorial) {
+    throw new Error(`Unknown tutorial "${slug}" in the Mac workflow docs.`);
+  }
+  const copy = tutorial.copy[locale];
+  return (
+    <>
+      <StudioVideo
+        slug={tutorial.video}
+        locale={locale}
+        label={copy.title}
+        caption={copy.caption}
+        portrait={tutorial.portrait}
+      />
+      <p>
+        <a href={localePath(locale, `/tutorials/${tutorial.slug}`)}>{link}</a>
+      </p>
+    </>
+  );
+}
+
 export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
   return (
     <>
       <DocsSection id="how-workflows-work" title={t(locale, "docs.mac.rules.howWork.title")}>
         <p>{t(locale, "docs.mac.rules.howWork.desc")}</p>
+        <SectionTutorial
+          locale={locale}
+          slug="email-reply-workflow"
+          link={t(locale, "docs.mac.rules.howWork.tutorialLink")}
+        />
       </DocsSection>
 
       <DocsSection id="quick-start" title={t(locale, "docs.mac.rules.palette.title")}>
@@ -103,6 +141,7 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
             description: t(locale, `docs.mac.rules.creating.${field}.desc`),
           }))}
         />
+        <p>{t(locale, "docs.mac.rules.creating.tryItOut")}</p>
         <DocsFigure
           src={screenshotPath(locale, "/screenshots/mac/workflows.png")}
           alt={t(locale, "docs.mac.rules.creating.imgAlt")}
@@ -112,6 +151,11 @@ export default function DocsMacRules({ locale = "en" }: { locale?: Locale }) {
 
       <DocsSection id="manual-shortcut" title={t(locale, "docs.mac.rules.manualShortcut.title")}>
         <p>{t(locale, "docs.mac.rules.manualShortcut.desc")}</p>
+        <SectionTutorial
+          locale={locale}
+          slug="translate-selected-text"
+          link={t(locale, "docs.mac.rules.manualShortcut.tutorialLink")}
+        />
       </DocsSection>
 
       <DocsSection

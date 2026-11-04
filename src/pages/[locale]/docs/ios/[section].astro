@@ -62,3 +62,9 @@ const isDe = locale === "de";
   </Fragment>
   <DocsIOSGuide locale={locale} slug={section} />
 </DocsLayout>
+
+<script>
+  import { watchStudioVideoOrientation } from "@/lib/studio-video";
+
+  watchStudioVideoOrientation();
+</script>

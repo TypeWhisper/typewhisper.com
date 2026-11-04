@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import "@/styles/tutorials.css";
+import { PageHead, WaveRule } from "@/components/site";
+import { formatDuration, tutorials, type TutorialPlatform } from "@/data/tutorials";
+import { t, type Locale } from "@/i18n/index";
+import { canonicalPath, getLocaleStaticPaths } from "@/lib/locale-routes";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return getLocaleStaticPaths();
+}
+
+const { locale } = Astro.props;
+const platforms: TutorialPlatform[] = ["mac", "ios"];
+const groups = platforms
+  .map((platform) => ({
+    platform,
+    entries: tutorials.filter((tutorial) => tutorial.platform === platform),
+  }))
+  .filter((group) => group.entries.length > 0);
+---
+<BaseLayout
+  title={t(locale, "tutorials.title")}
+  description={t(locale, "tutorials.description")}
+  canonicalPath={canonicalPath(locale, "/tutorials")}
+  locale={locale}
+>
+  <div class="site-page tutorials-page">
+    <PageHead
+      label={t(locale, "tutorials.label")}
+      title={t(locale, "tutorials.heading")}
+      lede={t(locale, "tutorials.lede")}
+    />
+
+    {groups.map(({ platform, entries }, index) => (
+      <section class="site-section site-section--tight-top" data-testid="tutorial-group">
+        <div class="site-wrap">
+          <WaveRule label={t(locale, `tutorials.platform.${platform}`)} seed={41 + index} align="start" />
+          <ul class="tutorial-cards">
+            {entries.map((tutorial) => {
+              const copy = tutorial.copy[locale];
+              return (
+                <li>
+                  <a
+                    href={canonicalPath(locale, `/tutorials/${tutorial.slug}`)}
+                    class="tutorial-card"
+                    data-testid="tutorial-card"
+                  >
+                    <span class="tutorial-card__poster">
+                      <img
+                        src={`/videos/${tutorial.video}-${locale}-poster.jpg`}
+                        alt=""
+                        width="1920"
+                        height="1080"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span class="tutorial-card__duration">
+                        {formatDuration(tutorial.duration[locale])}
+                      </span>
+                    </span>
+                    <span class="tutorial-card__name">{copy.title}</span>
+                    <span class="tutorial-card__text">{copy.description}</span>
+                    <span class="site-index__meta">
+                      <span>{t(locale, `tutorials.platform.${tutorial.platform}`)}</span>
+                      <span>{t(locale, "tutorials.captions")}</span>
+                      <span>
+                        {t(locale, "tutorials.recordedWith").replace("{version}", tutorial.appVersion)}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
