@@ -213,7 +213,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         ],
         bullets: [
           "Switch profiles directly from the keyboard.",
-          "Use English, German, Spanish, French, or Italian typing layouts.",
+          "Use English, German, Spanish, French, or Italian typing layouts, or type Simplified Chinese with Pinyin and pick characters above the keys.",
           "Use normal letters, numbers, punctuation, swipe typing, suggestions, and the next-keyboard control.",
           "Expand snippets or process selected text when the selected profile supports it.",
         ],
@@ -835,7 +835,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         ],
         bullets: [
           "Profile direkt über die Tastatur wechseln.",
-          "Tastaturlayouts für Deutsch, Englisch, Spanisch, Französisch und Italienisch nutzen.",
+          "Tastaturlayouts für Deutsch, Englisch, Spanisch, Französisch und Italienisch nutzen oder vereinfachtes Chinesisch per Pinyin tippen und die Schriftzeichen über den Tasten wählen.",
           "Normal tippen, Zahlen und Satzzeichen eingeben, wischen, Vorschläge verwenden und die Tastatur wechseln.",
           "Textbausteine erweitern oder ausgewählten Text mit einem passenden Profil verarbeiten.",
         ],
