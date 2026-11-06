@@ -1,0 +1,31 @@
+---
+familySlug: "mistral"
+platform: "mac"
+version: "1.3.0"
+description: "Voxtral Transcribe 3 with live text through Voxtral Realtime, dictionary terms, speaker labels, and Mistral text models with reasoning levels."
+id: "com.minerale.mistralai"
+minAppVersion: "1.8.1"
+minOsVersion: "14.0"
+requirements:
+  - "TypeWhisper 1.8.1 or newer"
+  - "macOS 14.0 or newer"
+  - "A Mistral API key"
+highlights:
+  - "Live (default): dictations with a live preview stream to Voxtral Mini Transcribe Realtime 3, and the selected transcription model writes the final text from the recording; both are billed, about $0.69 per hour with Voxtral Mini Transcribe 3"
+  - "After recording: the recording goes to the selected transcription model when you stop, at $0.21 per hour with Voxtral Mini Transcribe 3 or $0.24 with Voxtral Small Transcribe 3, without a live preview from Mistral"
+  - "In our tests the final text was there 0.3 to 0.4 seconds after the stop in Live mode, and 0.4 to 0.5 seconds with After recording"
+  - "Recordings and files always use the transcription model"
+  - "Active dictionary terms sent as context, in live sessions and file transcriptions"
+  - "Speaker labels for recordings with several people; they turn off live streaming"
+  - "58 languages, with automatic detection or a fixed language"
+  - "Model lists from your Mistral account, loaded when you save the key, when you first open the settings or with Refresh, then refreshed once a day"
+  - "Reasoning level per text model in the add-on settings; workflows can pick their own level"
+configuration:
+  - "Store, validate, or remove the API key in macOS Keychain"
+  - "Choose the transcription model, and Live or After recording under Transcription"
+  - "Turn on Speaker labels for recordings with several people"
+  - "Choose the LLM model, its reasoning level and the temperature"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MistralAIPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-mistral-v1.3.0"
+processing: "cloud"
+---
