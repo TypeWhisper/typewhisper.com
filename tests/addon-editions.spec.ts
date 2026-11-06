@@ -99,6 +99,25 @@ test.describe("add-on platform editions", () => {
     ).toBeVisible();
   });
 
+  test("the Windows Mistral edition moved from Voxtral to Mistral AI", async ({ page }) => {
+    for (const locale of ["en", "de"] as const) {
+      await page.goto(`/${locale}/addons/voxtral/windows/`, { waitUntil: "commit" });
+      await expect(page).toHaveURL(new RegExp(`/${locale}/addons/mistral/windows/$`));
+      await expect(page.getByRole("heading", { level: 1, name: "Mistral AI" })).toBeVisible();
+
+      await page.goto(`/${locale}/addons/mistral/`);
+      await expect(
+        page.locator('[data-testid="addon-edition-card"][data-platform="windows"]'),
+      ).toHaveCount(1);
+      await expect(
+        page.locator('[data-testid="addon-edition-card"][data-platform="mac"]'),
+      ).toHaveCount(1);
+    }
+
+    await page.goto("/addons/voxtral/windows/", { waitUntil: "commit" });
+    await expect(page).toHaveURL(/\/(en|de)\/addons\/mistral\/windows\/$/);
+  });
+
   test("Meta exposes the published Windows and macOS editions", async ({
     page,
   }) => {
@@ -403,12 +422,19 @@ test.describe("add-on platform editions", () => {
   }) => {
     const guide = page.getByTestId("addon-edition-guide");
 
-    // Discover plugins and the provider pickers list Voxtral as Mistral.
-    await page.goto("/en/addons/voxtral/windows/");
-    await expect(guide).toContainText("install Voxtral, which is listed there as Mistral");
-    await expect(guide).toContainText("Under Settings > Dictation, select Mistral as the Provider");
-    await expect(guide).toContainText("In a workflow, select Mistral as the Provider");
-    await expect(guide).not.toContainText("select Voxtral");
+    // Discover plugins and the provider picker list Cloudflare ASR as Cloudflare Workers AI.
+    await page.goto("/en/addons/cloudflare-asr/windows/");
+    await expect(guide).toContainText(
+      "install Cloudflare ASR, which is listed there as Cloudflare Workers AI",
+    );
+    await expect(guide).toContainText(
+      "Under Settings > Dictation, select Cloudflare Workers AI as the Provider",
+    );
+    await expect(guide).not.toContainText("select Cloudflare ASR");
+
+    // A text provider is named in the workflow step.
+    await page.goto("/en/addons/cohere/windows/");
+    await expect(guide).toContainText("In a workflow, select Cohere as the Provider");
 
     // Granite's provider has a name of its own, in the app's language.
     await page.goto("/de/addons/granite/windows/");

@@ -75,6 +75,10 @@
     "mac": ["transcription", "llm"],
     "windows": ["transcription", "llm"]
   },
+  "mistral": {
+    "mac": ["transcription", "llm"],
+    "windows": ["transcription", "llm"]
+  },
   "obsidian": {
     "mac": ["action"],
     "windows": ["action"]
@@ -118,10 +122,6 @@
   "supertonic": {
     "mac": ["tts"],
     "windows": ["tts"]
-  },
-  "voxtral": {
-    "mac": ["transcription"],
-    "windows": ["transcription", "llm"]
   },
   "webhook": {
     "mac": ["utility"],

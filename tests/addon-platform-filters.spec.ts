@@ -16,11 +16,14 @@ test("combined filters use the selected platform's capabilities", async ({ page 
   await page.goto("/en/addons/?platform=windows&category=llm");
   await expect(page.getByTestId("featured-addons")).toHaveCount(0);
   await expect(card("cohere")).toBeVisible();
-  await expect(card("voxtral")).toBeVisible();
+  await expect(card("mistral")).toBeVisible();
+  // Voxtral is the local macOS engine; the Windows Mistral plugin is an edition of Mistral AI.
+  await expect(card("voxtral")).toHaveCount(0);
   await expect(card("cohere").getByText("macOS", { exact: true })).toHaveCount(0);
 
-  // The macOS edition of Voxtral transcribes only; the Windows edition also offers text models.
+  // Voxtral only transcribes.
   await page.goto("/en/addons/?platform=mac&category=llm");
+  await expect(card("mistral")).toBeVisible();
   await expect(card("voxtral")).toHaveCount(0);
 
   await page.goto("/de/addons/?platform=mac&category=transcription");

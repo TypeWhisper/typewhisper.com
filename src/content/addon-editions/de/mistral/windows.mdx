@@ -1,0 +1,64 @@
+---
+familySlug: "mistral"
+platform: "windows"
+version: "1.4.0"
+description: "Voxtral Transcribe 3 und Voxtral Realtime 3 über die Mistral-API, mit Wörterbucheinträgen, 58 Sprachen und Mistral-Textmodellen mit Denkaufwand-Stufen."
+id: "com.typewhisper.voxtral"
+appName: "Mistral"
+minAppVersion: "1.1.0"
+requirements:
+  - "TypeWhisper 1.1.0 oder neuer"
+  - "Windows 10 oder neuer"
+  - "Ein Mistral-API-Schlüssel"
+highlights:
+  - "Voxtral Mini Transcribe 3 als Standard-Transkriptionsmodell, Voxtral Small Transcribe 3 als Alternative"
+  - "Voxtral Mini Transcribe Realtime 3 zeigt Live-Text beim Sprechen (TypeWhisper 1.3 oder neuer; ältere Versionen transkribieren nach dem Stoppen), und den fertigen Text liefert der Upload der Aufnahme an Voxtral Mini Transcribe 3, das Diktate genauer erkannt hat und 0,4 bis 0,6 Sekunden nach dem Stoppen fertig war; beides wird abgerechnet"
+  - "Dateien und vollständige Aufnahmen mit gewähltem Realtime-Modell gehen per Upload an Voxtral Mini Transcribe 3 statt per Streaming: Eine 63-Sekunden-Aufnahme dauerte 1 Sekunde statt 40"
+  - "Aktive Wörterbucheinträge gehen als Kontext an Mistral, bei Uploads und Live-Sitzungen"
+  - "58 Sprachen, mit automatischer Erkennung oder einer festen Sprache; eine Sprache, die das gewählte Modell nicht kennt, wird weggelassen"
+  - "„Modelle aktualisieren“ lädt eine bereinigte Liste aus deinem Mistral-Konto: ein Eintrag pro Modell statt einer pro Alias, ohne Voxtral-2-Modelle neben ihren Nachfolgern und ohne Code-, Labs-, Audio-Chat- und Sprachausgabe-Modelle"
+  - "Mistral-Textmodelle für Workflow-Prompts mit demselben API-Schlüssel, mit Mistral Small 4 als Standard"
+  - "Denkaufwand pro Textmodell, voreingestellt auf die schnellste Stufe; er gilt auch, wenn ein Workflow das Modell nutzt"
+  - "Mistrals eigene Fehlermeldung statt der rohen Antwort"
+  - "Gespeicherte Voxtral-2-, Realtime-2- und ausgemusterte Textmodelle wechseln zu ihrem aktuellen Nachfolger"
+configuration:
+  - "Trag deinen Mistral-API-Schlüssel ein, wähle „Einstellungen speichern“ und danach „Verbindung prüfen“"
+  - "Wähle „Modelle aktualisieren“, um die Modelle deines Kontos zu laden"
+  - "Wähle unter „Transkriptionsmodell“ Voxtral Mini Transcribe Realtime 3 für Live-Text (mit eingeschalteter „Live-Transkription“ unter „Darstellung“) oder Voxtral Mini bzw. Small Transcribe 3, um nach dem Stoppen zu transkribieren"
+  - "Wähle „Textmodell“, seinen „Denkaufwand“ und die „Temperatur“ und dann „Einstellungen speichern“"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Voxtral"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-voxtral-v1.4.0"
+processing: "cloud"
+---
+
+## Einrichtung
+
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Mistral**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Trag deinen Mistral-API-Schlüssel unter **API-Schlüssel** ein, wähle **Einstellungen speichern** und prüfe den Schlüssel mit **Verbindung prüfen**.
+3. Wähle **Modelle aktualisieren**, um die Modelle deines Kontos zu laden. Bis dahin bietet das Add-on die unten aufgeführte aktuelle Modellreihe an.
+4. Wähle ein **Transkriptionsmodell**. Voxtral Mini Transcribe Realtime 3 zeigt Live-Text beim Sprechen, wenn unter **Darstellung** die **Live-Transkription** eingeschaltet ist; Voxtral Mini Transcribe 3 und Voxtral Small Transcribe 3 transkribieren nach dem Stoppen.
+5. Wähle für die Textverarbeitung das **Textmodell**, seinen **Denkaufwand**, falls das Modell einen hat, und die **Temperatur** und dann **Einstellungen speichern**.
+6. Wähle unter **Einstellungen > Diktat** **Mistral** als **Anbieter**. Für die Textverarbeitung wählst du Mistral in einem Workflow unter **Erweitert** als **Anbieter** oder als **Standard-LLM**.
+
+## Modelle
+
+| Transkriptionsmodell | Einsatz |
+| --- | --- |
+| Voxtral Mini Transcribe 3 | Standard; Dateien, Aufnahmen und der fertige Text von Live-Diktaten |
+| Voxtral Small Transcribe 3 | Laut Mistral das genaueste Transkriptionsmodell |
+| Voxtral Mini Transcribe Realtime 3 | Live-Text beim Diktieren (TypeWhisper 1.3 oder neuer) |
+
+| Textmodell | Denkaufwand |
+| --- | --- |
+| Mistral Large 4 | Niedrig (Standard), Mittel, Hoch |
+| Mistral Medium 3.5 | Aus (Standard), Hoch |
+| Mistral Small 4 (Standard) | Aus (Standard), Hoch |
+| Ministral 3 14B, 8B und 3B | – |
+
+Der für ein Modell eingestellte Denkaufwand gilt auch, wenn ein Workflow das Modell nutzt. Ist Voxtral Mini Transcribe Realtime 3 gewählt, kommen der fertige Text eines Diktats, Dateien und vollständige Aufnahmen von Voxtral Mini Transcribe 3. Ein Konto ohne Modell für Datei-Transkription behält den Live-Text als fertigen Text.
+
+## Preise und Datenschutz
+
+Mistrals Listenpreise im November 2026, pro Stunde Audio: Voxtral Mini Transcribe 3 0,21 $, Voxtral Small Transcribe 3 0,24 $ und Voxtral Mini Transcribe Realtime 3 0,48 $. Diktate mit Live-Text werden für das Realtime-Modell und den abschließenden Upload abgerechnet, etwa 0,69 $ pro Stunde. Textmodelle werden pro Token abgerechnet. Ein Modell in der Liste ist keine Zusage, dass dein Workspace es nutzen darf: Bei einem Limit von null Anfragen pro Minute scheitern Anfragen mit einem Rate-Limit-Fehler.
+
+Audio und Text gehen für die gewählte Funktion an Mistral. Das Öffnen der Add-on-Seite sendet keine Anfrage; nur **Verbindung prüfen** und **Modelle aktualisieren** kontaktieren Mistral.

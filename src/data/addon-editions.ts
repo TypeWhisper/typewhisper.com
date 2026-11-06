@@ -83,6 +83,20 @@ export const retiredAddonEditions: ReadonlyArray<{
   { familySlug: "openai-vector-memory", platform: "windows" },
 ];
 
+/**
+ * Editions that moved to another add-on page. Their old URLs forward to the
+ * edition on the new page.
+ */
+export const movedAddonEditions: ReadonlyArray<{
+  familySlug: string;
+  platform: PluginPlatform;
+  toFamilySlug: string;
+}> = [
+  // The Windows Mistral plugin (com.typewhisper.voxtral) has its own page next to
+  // the macOS one under Mistral AI; Voxtral on Mac is the local MLX engine.
+  { familySlug: "voxtral", platform: "windows", toFamilySlug: "mistral" },
+];
+
 function getWindowsAddonScreenshot(
   pluginId: string | undefined,
   locale: Locale,
