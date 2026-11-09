@@ -90,7 +90,7 @@
   "releaseStatus.win.githubInstaller": "Download GitHub installer",
   "releaseStatus.win.docs": "Read Windows docs",
   "releaseStatus.ios.title": "iOS {iosVersion}",
-  "releaseStatus.ios.description": "Private speech-to-text with on-device engines, a voice keyboard, profiles, files, Shortcuts, dictionary, snippets, and Apple Watch support. Version 1.1 adds on-device writing models, dictionary imports with a preview, and recording controls for Control Center and the Action Button.",
+  "releaseStatus.ios.description": "Private speech-to-text with on-device engines, a voice keyboard, formats, files, Shortcuts, dictionary, snippets, and Apple Watch support. Version 1.2 adds transcription and writing with a paired Mac, on-device speaker detection, read aloud, questions about a transcript, and formatting typed text without a recording.",
   "releaseStatus.ios.download": "Download on the App Store",
   "releaseStatus.ios.docs": "Read the iOS docs",
   "releaseStatus.android.title": "Android {androidVersion}",
