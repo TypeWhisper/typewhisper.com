@@ -125,6 +125,29 @@ test.describe("detailed iOS documentation", () => {
     ).toBeVisible();
   });
 
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} overview links the 1.2.4 additions to their guides`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/`);
+
+      const link = page.locator(
+        `#release-status a[href="/${locale}/docs/ios/profiles-and-processing/#section-5"]`,
+      );
+      await expect(link).toBeVisible();
+      await link.click();
+      await expect(
+        page.locator("#section-5").getByRole("heading", {
+          level: 2,
+          name:
+            locale === "de"
+              ? "Text ohne Aufnahme formatieren"
+              : "Format text without a recording",
+        }),
+      ).toBeVisible();
+    });
+  }
+
   test("installation and troubleshooting describe the public App Store path", async ({
     page,
   }) => {
