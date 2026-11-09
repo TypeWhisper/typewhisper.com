@@ -133,58 +133,67 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Daily dictation",
     title: "Dictation and the voice keyboard",
     description:
-      "Record in TypeWhisper, dictate into other iOS apps, enable Full Access safely, switch profiles, and understand the keyboard return flow.",
+      "Record in TypeWhisper, add the keyboard, dictate into other apps, get back to your text field, keep the keyboard ready, and use it next to a hardware keyboard on iPad.",
     intro:
-      "You can dictate in TypeWhisper itself or use the TypeWhisper keyboard in another app. Both paths use the containing app for microphone capture and transcription.",
+      "You can dictate in TypeWhisper itself or use the TypeWhisper keyboard in another app. In both cases the TypeWhisper app records and transcribes.",
     sections: [
       {
         title: "Record in the app",
         steps: [
           {
-            title: "Choose a profile",
+            title: "Choose a format",
             description:
-              "Select the language, engine, model, translation target, and output style you need.",
+              "On the Record tab, the format decides what happens to the text after transcription. Dictation keeps the transcript as it is. All Formats shows the full list.",
           },
           {
             title: "Start recording",
             description:
-              "Tap the microphone. The waveform shows audio capture; supported engines also show live text.",
+              "Tap the record button. The waveform shows the audio level. Speech recognition with a live preview also shows the text while you speak.",
           },
           {
             title: "Pause or stop",
             description:
-              "Pause when you need a break, resume the same recording, or stop to create the final result.",
+              "Pause and resume the same recording as often as you need. To stop, hold the stop button briefly.",
           },
           {
             title: "Review the result",
             description:
-              "Compare raw and processed text, copy or share it, apply another profile, or keep it in History.",
+              "Copy or share the text, have it read aloud, apply another format, or find it later in History.",
           },
+        ],
+        bullets: [
+          "The speech recognition menu on the Record tab switches the model for the next recording.",
+          "Format Text on the Record tab formats pasted or typed text without a recording.",
         ],
       },
       {
         title: "Add the TypeWhisper keyboard",
         steps: [
           {
+            title: "Open the keyboard settings",
+            description:
+              "In TypeWhisper, open Settings > Keyboard. The Setup section shows whether the keyboard is enabled and Full Access is verified.",
+          },
+          {
             title: "Add the keyboard",
             description:
-              "Open Settings > General > Keyboard > Keyboards > Add New Keyboard and choose TypeWhisper.",
+              "Tap Keyboard Enabled. iOS Settings opens on the TypeWhisper page. Tap Keyboards there and turn on TypeWhisper. You can also add it under Settings > General > Keyboard > Keyboards > Add New Keyboard.",
           },
           {
             title: "Enable Allow Full Access",
             description:
-              "Open the TypeWhisper keyboard entry and enable Full Access. Normal typing works without it, but voice dictation and the shared return state require it.",
+              "Turn on Allow Full Access for the TypeWhisper keyboard. Normal typing works without it, but voice dictation requires it.",
           },
           {
             title: "Select it in a text field",
             description:
-              "Open Notes or another standard text field, hold the globe key, and choose TypeWhisper.",
+              "Open Notes or another standard text field, hold the globe key, and choose TypeWhisper. Opening the keyboard once also lets the app verify Full Access.",
           },
         ],
         callout: {
           title: "Why the main app opens",
           description:
-            "iOS keyboard extensions cannot capture microphone audio directly. The microphone button opens TypeWhisper, which records and transcribes, while the extension only exchanges the selected state and result through the shared app container.",
+            "iOS keyboard extensions cannot capture microphone audio directly. That is why the first dictation opens TypeWhisper. The app records and transcribes, and the keyboard inserts the result.",
         },
         image: {
           path: "/screenshots/ios/03-keyboard.png",
@@ -198,24 +207,82 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Tap the keyboard microphone",
             description:
-              "TypeWhisper opens and starts a keyboard recording. Use the previous-app link at the top left to return to the original text field.",
+              "The first dictation opens TypeWhisper, which starts the keyboard recording.",
+          },
+          {
+            title: "Return to your text field",
+            description:
+              "TypeWhisper shows the hint Swipe up, then left at the bottom of the screen. Follow it, or tap the previous-app link at the top left.",
           },
           {
             title: "Speak and stop",
             description:
-              "Speak while the TypeWhisper keyboard is active, then tap its microphone button again to stop.",
+              "Speak while the TypeWhisper keyboard is in front, then tap its microphone again to stop.",
           },
           {
             title: "Wait for insertion",
             description:
-              "The main app finishes transcription and the keyboard inserts the result into the original text field.",
+              "TypeWhisper finishes the transcription and the keyboard inserts the text at the cursor.",
           },
         ],
         bullets: [
-          "Switch profiles directly from the keyboard.",
-          "Use English, German, Spanish, French, or Italian typing layouts, or type Simplified Chinese with Pinyin and pick characters above the keys.",
-          "Use normal letters, numbers, punctuation, swipe typing, suggestions, and the next-keyboard control.",
-          "Expand snippets or process selected text when the selected profile supports it.",
+          "Instead of tapping, you can hold the microphone to talk and release it to insert the text.",
+          "The undo button in the top bar removes the dictation you just inserted.",
+          "iOS does not allow third-party keyboards in password fields and in some apps. Apple's keyboard appears there instead.",
+        ],
+      },
+      {
+        title: "Stay ready for the next dictation",
+        paragraphs: [
+          "After the first dictation, TypeWhisper stays ready in the background. Later dictations start directly from the keyboard, without opening the app again.",
+        ],
+        bullets: [
+          "Keep Ready for Next Dictation under Settings > Keyboard > Keyboard Dictation is on by default, with a Ready Duration of 5 minutes.",
+          "Set the Ready Duration to between 1 and 30 minutes, or turn the option off.",
+          "The iOS microphone indicator can stay visible until that time runs out. Shorten the duration or turn the option off to end it sooner.",
+          "Music and other audio keep their volume while TypeWhisper stays ready.",
+          "Once the time has run out, the next dictation opens TypeWhisper again.",
+        ],
+      },
+      {
+        title: "Formats and tools in the top bar",
+        bullets: [
+          "Tap a format in the top bar to use it for the next dictation. More Formats shows the full list.",
+          "Right after a dictation, tap a format to apply it to the text you just inserted.",
+          "Select up to 4,000 characters and tap a format to rewrite the selection.",
+          "Quick Fix corrects spelling and grammar in the selected text or in the paragraph before the cursor. You can undo it for 30 seconds.",
+          "Type a snippet's trigger and a space to insert the snippet, or pick one with the Snippets button. Delete right after to get the trigger back.",
+          "With the Email format, Reply to copied mail uses an email you copied beforehand as context for your reply.",
+          "Formats that write with a downloaded local model work in the TypeWhisper app, but not in the keyboard. With your Mac as the writing service, dictation works, but rewriting text inside the keyboard needs another writing service.",
+          "Change the order of the formats under Settings > Smart Formatting. Show or hide the Quick Fix and Snippets buttons under Settings > Keyboard > Top Bar.",
+        ],
+      },
+      {
+        title: "Keyboard modes, iPad, and hardware keyboards",
+        bullets: [
+          "On iPad, the key at the bottom right of the layout hides the TypeWhisper keyboard.",
+          "Settings > Keyboard > Keyboard Mode offers Full Keyboard and Tools Only. Tools Only keeps the top bar and one row with the globe key, the microphone, delete, and return, without letter keys, for when you type with another keyboard.",
+          "Tools Only with Hardware Keyboard is on by default. While a hardware keyboard such as the Magic Keyboard is connected, the TypeWhisper keyboard then shows only its tools, and the letter keys return when you detach it.",
+        ],
+        callout: {
+          title: "Next to a hardware keyboard",
+          description:
+            "iPadOS hides third-party keyboards while a hardware keyboard is attached. The TypeWhisper keyboard appears next to a hardware keyboard only if the onscreen keyboard is turned on under Settings > Accessibility > Touch > AssistiveTouch.",
+        },
+      },
+      {
+        title: "Typing and keyboard options",
+        paragraphs: [
+          "All keyboard options are under Settings > Keyboard in TypeWhisper.",
+        ],
+        bullets: [
+          "Keyboard Layout: Automatic, English, Deutsch, Español, Français, Italiano, or 简体中文（拼音）. The layout changes only the keys. Dictation continues to use your Input Languages.",
+          "Chinese with Pinyin: type Pinyin and choose Simplified Chinese characters above the keys. Space inserts the first candidate, Return the typed letters. Words you choose come first next time and stay on the device.",
+          "Key Size in Compact, Standard, or Large, and Character Preview, which enlarges each letter above your finger.",
+          "Auto-Capitalization, the “.” Shortcut for a period after a double tap on the space bar, Word Suggestions, Swipe to Type with Show Swipe Trail, and Expand Snippets While Typing.",
+          "Key Sounds and Haptics.",
+          "With Premium, Learn Typed Words adds unfamiliar words you type with the TypeWhisper keyboard to your Dictionary.",
+          "Reset Keyboard Settings returns every option on this page to its default.",
         ],
       },
     ],
@@ -623,7 +690,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Solve the common cases",
     title: "Troubleshooting iPhone, iPad, keyboard, and Watch",
     description:
-      "Fix missing permissions, model downloads, keyboard return flow, Watch transfers, cloud providers, and Premium sync.",
+      "Fix missing permissions, model downloads and preparation, the keyboard return flow, hardware keyboards on iPad, Watch transfers, cloud providers, and Premium sync.",
     intro:
       "Start with the exact entry point that failed. A recording in the app, keyboard dictation, Watch transfer, file import, and sync each have a different dependency.",
     sections: [
@@ -638,19 +705,40 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Open iOS Settings > Privacy & Security > Microphone and confirm TypeWhisper is enabled.",
           "If you selected Apple Speech, confirm Speech Recognition permission is enabled too.",
-          "Open TypeWhisper's model manager and confirm the selected local model finished downloading and compiling.",
+          "Open Settings > Speech Recognition in TypeWhisper and confirm the selected local model finished downloading and preparing.",
           "Check available device storage and retry a paused or failed model download on a reliable connection.",
+          "Fast Local needs at least 4 GB of memory and Live Local at least 6 GB. On devices with less, the app says so instead of loading the model.",
+          "If iOS closed TypeWhisper while a local model was being prepared, the app explains the likely cause and does not load that model again on its own. Try again under Settings > Speech Recognition, or choose Apple Speech.",
           "Disconnect an unexpected Bluetooth audio route or select the intended microphone, then run a short test.",
+        ],
+      },
+      {
+        title: "Speech recognition or the keyboard seems stuck on preparing",
+        bullets: [
+          "The first preparation of a local speech model can take a few minutes, longer on iPad. Later starts are much faster.",
+          "Open TypeWhisper and keep it open until Preparing speech recognition… is done. Settings > Speech Recognition shows the status of the model.",
+          "Run a short recording in the app first, then dictate from the keyboard.",
+          "If you need text right away, choose Apple Speech, which needs no download.",
         ],
       },
       {
         title: "The keyboard is missing or does not insert text",
         bullets: [
-          "Add TypeWhisper under Settings > General > Keyboard > Keyboards > Add New Keyboard.",
+          "Add TypeWhisper under Settings > General > Keyboard > Keyboards > Add New Keyboard, or tap Keyboard Enabled under Settings > Keyboard in TypeWhisper.",
           "Enable Allow Full Access for voice dictation and the shared result path.",
           "Open the main app once, complete its microphone and speech permissions, and run a test recording there.",
           "Use a normal text field for testing. iOS does not allow third-party keyboards in some secure fields.",
-          "After tapping the keyboard microphone, return through the previous-app link and keep the TypeWhisper keyboard selected until insertion finishes.",
+          "After tapping the keyboard microphone, return with the hint Swipe up, then left or through the previous-app link, and keep the TypeWhisper keyboard selected until insertion finishes.",
+          "A format marked Setup Required in the keyboard needs speech recognition or a writing service first.",
+        ],
+      },
+      {
+        title: "The keyboard is missing next to a Magic Keyboard",
+        bullets: [
+          "iPadOS hides third-party keyboards while a hardware keyboard is attached.",
+          "Turn on the onscreen keyboard under Settings > Accessibility > Touch > AssistiveTouch. The TypeWhisper keyboard then appears next to the hardware keyboard.",
+          "With a hardware keyboard connected, the TypeWhisper keyboard shows only its tools. To keep the letter keys, turn off Tools Only with Hardware Keyboard under Settings > Keyboard > Keyboard Mode.",
+          "To hide the TypeWhisper keyboard on iPad, tap the key at the bottom right.",
         ],
       },
       {
@@ -667,13 +755,14 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Confirm the selected provider credential and network connection, then test with a short recording.",
           "Switch to an on-device engine to separate provider problems from microphone or model problems.",
+          "For TypeWhisper on Mac, both devices need the same local network, TypeWhisper for Mac 1.8 or later, and access to Premium features. The Mac must allow paired devices.",
           "For Premium sync, confirm Sign in with Apple, active entitlement, selected sync mode, and access to the chosen Files folder.",
           "Use Sync Now after reconnecting the folder. Re-select a folder when iOS reports that access is no longer available.",
         ],
         callout: {
           title: "Still stuck?",
           description:
-            "Include the iOS version, device model, selected engine and profile, capture source, and the exact visible error when contacting hello@typewhisper.com.",
+            "Include the iOS version, device model, selected speech recognition and format, capture source, and the exact visible error when contacting hello@typewhisper.com.",
         },
       },
     ],
@@ -755,58 +844,67 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Tägliches Diktieren",
     title: "Diktat und Diktier-Tastatur",
     description:
-      "In TypeWhisper aufnehmen, in andere iOS-Apps diktieren, Vollzugriff bewusst aktivieren, Profile wechseln und den Tastatur-Rückweg verstehen.",
+      "In TypeWhisper aufnehmen, die Tastatur hinzufügen, in andere Apps diktieren, zum Textfeld zurückkehren, die Tastatur bereit halten und sie auf dem iPad neben einer Hardware-Tastatur nutzen.",
     intro:
-      "Du kannst direkt in TypeWhisper diktieren oder die TypeWhisper-Tastatur in einer anderen App verwenden. In beiden Fällen übernimmt die Haupt-App Mikrofonaufnahme und Transkription.",
+      "Du kannst direkt in TypeWhisper diktieren oder die TypeWhisper-Tastatur in einer anderen App verwenden. In beiden Fällen nimmt die TypeWhisper-App auf und transkribiert.",
     sections: [
       {
         title: "In der App aufnehmen",
         steps: [
           {
-            title: "Profil wählen",
+            title: "Format wählen",
             description:
-              "Wähle Sprache, Engine, Modell, Übersetzungsziel und die gewünschte Ausgabeform.",
+              "Im Tab „Aufnehmen“ legt das Format fest, was nach der Transkription mit dem Text passiert. „Diktat“ lässt das Transkript unverändert. „Alle Formate“ zeigt die ganze Liste.",
           },
           {
             title: "Aufnahme starten",
             description:
-              "Tippe auf das Mikrofon. Die Wellenform zeigt den Audioeingang. Eine Live-Vorschau ist nur bei Engines mit Streaming-Unterstützung verfügbar.",
+              "Tippe auf die Aufnahmetaste. Die Wellenform zeigt den Audiopegel. Eine Spracherkennung mit Live-Vorschau zeigt den Text schon beim Sprechen.",
           },
           {
             title: "Pausieren oder stoppen",
             description:
-              "Pausiere für eine Unterbrechung, setze dieselbe Aufnahme fort oder stoppe für das finale Ergebnis.",
+              "Pausiere dieselbe Aufnahme und setze sie fort, so oft du möchtest. Zum Stoppen hältst du die Stopptaste kurz gedrückt.",
           },
           {
             title: "Ergebnis prüfen",
             description:
-              "Vergleiche Rohtext und verarbeiteten Text, kopiere oder teile ihn, wende ein anderes Profil an oder behalte ihn im Verlauf.",
+              "Kopiere oder teile den Text, lass ihn vorlesen, wende ein anderes Format an oder finde ihn später im Verlauf.",
           },
+        ],
+        bullets: [
+          "Das Spracherkennungsmenü im Tab „Aufnehmen“ wechselt das Modell für die nächste Aufnahme.",
+          "„Text formatieren“ im Tab „Aufnehmen“ formatiert eingefügten oder getippten Text ohne Aufnahme.",
         ],
       },
       {
         title: "TypeWhisper-Tastatur hinzufügen",
         steps: [
           {
+            title: "Tastatureinstellungen öffnen",
+            description:
+              "Öffne in TypeWhisper Einstellungen > Tastatur. Der Abschnitt „Einrichtung“ zeigt, ob die Tastatur aktiviert und der Vollzugriff bestätigt ist.",
+          },
+          {
             title: "Tastatur hinzufügen",
             description:
-              "Öffne Einstellungen > Allgemein > Tastatur > Tastaturen > Tastatur hinzufügen und wähle TypeWhisper.",
+              "Tippe auf „Tastatur aktiviert“. Die iOS-Einstellungen öffnen sich auf der TypeWhisper-Seite. Tippe dort auf „Tastaturen“ und schalte TypeWhisper ein. Alternativ fügst du sie unter Einstellungen > Allgemein > Tastatur > Tastaturen > Tastatur hinzufügen hinzu.",
           },
           {
             title: "Vollen Zugriff erlauben",
             description:
-              "Öffne den TypeWhisper-Eintrag und aktiviere Vollzugriff. Normales Tippen funktioniert ohne ihn, Diktat und gemeinsamer Rückgabezustand benötigen ihn.",
+              "Schalte für die TypeWhisper-Tastatur „Vollen Zugriff erlauben“ ein. Normales Tippen funktioniert ohne ihn, das Diktieren braucht ihn.",
           },
           {
             title: "Im Textfeld auswählen",
             description:
-              "Öffne Notizen oder ein anderes normales Textfeld, halte die Globus-Taste gedrückt und wähle TypeWhisper.",
+              "Öffne Notizen oder ein anderes normales Textfeld, halte die Globustaste gedrückt und wähle TypeWhisper. Sobald du die Tastatur einmal geöffnet hast, kann die App auch den Vollzugriff bestätigen.",
           },
         ],
         callout: {
           title: "Warum sich die Haupt-App öffnet",
           description:
-            "iOS-Tastaturerweiterungen dürfen Mikrofon-Audio nicht direkt aufnehmen. Die Taste öffnet TypeWhisper für Aufnahme und Transkription; die Erweiterung tauscht nur gewählten Zustand und Ergebnis über den gemeinsamen App-Container aus.",
+            "iOS-Tastaturerweiterungen dürfen Mikrofon-Audio nicht direkt aufnehmen. Deshalb öffnet das erste Diktat TypeWhisper. Die App nimmt auf und transkribiert, die Tastatur fügt das Ergebnis ein.",
         },
         image: {
           path: "/screenshots/ios/03-keyboard.png",
@@ -820,24 +918,82 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Tastatur-Mikrofon antippen",
             description:
-              "TypeWhisper öffnet sich und startet eine Tastatur-Aufnahme. Kehre über den Link zur vorherigen App oben links ins ursprüngliche Textfeld zurück.",
+              "Das erste Diktat öffnet TypeWhisper, und die App startet die Tastaturaufnahme.",
+          },
+          {
+            title: "Zum Textfeld zurückkehren",
+            description:
+              "TypeWhisper zeigt unten den Hinweis „Nach oben, dann nach links wischen“. Folge ihm oder tippe oben links auf den Link zur vorherigen App.",
           },
           {
             title: "Sprechen und stoppen",
             description:
-              "Sprich bei aktiver TypeWhisper-Tastatur und tippe danach erneut auf deren Mikrofon-Taste.",
+              "Sprich, während die TypeWhisper-Tastatur im Vordergrund ist, und tippe zum Stoppen erneut auf ihr Mikrofon.",
           },
           {
             title: "Einfügung abwarten",
             description:
-              "Die Haupt-App beendet die Transkription und die Tastatur setzt das Ergebnis ins ursprüngliche Textfeld ein.",
+              "TypeWhisper schließt die Transkription ab, und die Tastatur fügt den Text am Cursor ein.",
           },
         ],
         bullets: [
-          "Profile direkt über die Tastatur wechseln.",
-          "Tastaturlayouts für Deutsch, Englisch, Spanisch, Französisch und Italienisch nutzen oder vereinfachtes Chinesisch per Pinyin tippen und die Schriftzeichen über den Tasten wählen.",
-          "Normal tippen, Zahlen und Satzzeichen eingeben, wischen, Vorschläge verwenden und die Tastatur wechseln.",
-          "Textbausteine erweitern oder ausgewählten Text mit einem passenden Profil verarbeiten.",
+          "Statt zu tippen, kannst du das Mikrofon gedrückt halten, um zu sprechen. Beim Loslassen wird der Text eingefügt.",
+          "Die Zurücknehmen-Taste in der oberen Leiste entfernt das gerade eingefügte Diktat.",
+          "In Passwortfeldern und einzelnen Apps lässt iOS keine Tastaturen von Drittanbietern zu. Dort erscheint Apples Tastatur.",
+        ],
+      },
+      {
+        title: "Für das nächste Diktat bereit bleiben",
+        paragraphs: [
+          "Nach dem ersten Diktat bleibt TypeWhisper im Hintergrund bereit. Weitere Diktate starten dann direkt aus der Tastatur, ohne dass sich die App erneut öffnet.",
+        ],
+        bullets: [
+          "„Für nächstes Diktat bereit halten“ unter Einstellungen > Tastatur > Tastatur-Diktat ist standardmäßig eingeschaltet, mit einer Bereitschaftsdauer von 5 Minuten.",
+          "Stelle die Bereitschaftsdauer auf 1 bis 30 Minuten ein oder schalte die Option aus.",
+          "Die iOS-Mikrofonanzeige kann sichtbar bleiben, bis diese Zeit abgelaufen ist. Verkürze die Dauer oder schalte die Option aus, damit sie früher verschwindet.",
+          "Musik und anderes Audio behalten ihre Lautstärke, während TypeWhisper bereit bleibt.",
+          "Ist die Zeit abgelaufen, öffnet das nächste Diktat wieder TypeWhisper.",
+        ],
+      },
+      {
+        title: "Formate und Werkzeuge in der oberen Leiste",
+        bullets: [
+          "Tippe in der oberen Leiste auf ein Format, um es für das nächste Diktat zu verwenden. „Weitere Formate“ zeigt die ganze Liste.",
+          "Tippe direkt nach einem Diktat auf ein Format, um es auf den gerade eingefügten Text anzuwenden.",
+          "Markiere bis zu 4.000 Zeichen und tippe auf ein Format, um die Auswahl umzuschreiben.",
+          "Die Schnellkorrektur korrigiert Rechtschreibung und Grammatik im markierten Text oder im Absatz vor dem Cursor. 30 Sekunden lang kannst du sie rückgängig machen.",
+          "Tippe den Auslöser eines Textbausteins und ein Leerzeichen, um ihn einzufügen, oder wähle einen über die Taste „Textbausteine“. Löschst du direkt danach, kommt der Auslöser zurück.",
+          "Im Format „E-Mail“ nutzt „Auf kopierte Mail antworten“ eine zuvor kopierte E-Mail als Kontext für deine Antwort.",
+          "Formate, die mit einem geladenen lokalen Modell schreiben, funktionieren in der TypeWhisper-App, aber nicht in der Tastatur. Mit deinem Mac als Schreibdienst funktioniert das Diktieren, das Umschreiben von Text in der Tastatur braucht aber einen anderen Schreibdienst.",
+          "Die Reihenfolge der Formate änderst du unter Einstellungen > Intelligente Formatierung. Die Tasten „Schnellkorrektur“ und „Textbausteine“ blendest du unter Einstellungen > Tastatur > Obere Leiste ein oder aus.",
+        ],
+      },
+      {
+        title: "Tastaturmodus, iPad und Hardware-Tastaturen",
+        bullets: [
+          "Auf dem iPad blendet die Taste unten rechts im Layout die TypeWhisper-Tastatur aus.",
+          "Unter Einstellungen > Tastatur > Tastaturmodus wählst du „Volle Tastatur“ oder „Nur Werkzeuge“. „Nur Werkzeuge“ behält die obere Leiste und eine Zeile mit Globustaste, Mikrofon, Löschtaste und Zeilenumbruch, ohne Buchstabentasten, wenn du mit einer anderen Tastatur tippst.",
+          "„Nur Werkzeuge mit Hardware-Tastatur“ ist standardmäßig eingeschaltet. Solange eine Hardware-Tastatur wie das Magic Keyboard verbunden ist, zeigt die TypeWhisper-Tastatur dann nur ihre Werkzeuge, und die Buchstabentasten kommen zurück, sobald du sie abnimmst.",
+        ],
+        callout: {
+          title: "Neben einer Hardware-Tastatur",
+          description:
+            "iPadOS blendet Tastaturen von Drittanbietern aus, solange eine Hardware-Tastatur verbunden ist. Neben einer Hardware-Tastatur erscheint die TypeWhisper-Tastatur nur, wenn die Bildschirmtastatur unter Einstellungen > Bedienungshilfen > Tippen > AssistiveTouch eingeschaltet ist.",
+        },
+      },
+      {
+        title: "Tippen und Tastatur-Optionen",
+        paragraphs: [
+          "Alle Tastatur-Optionen findest du in TypeWhisper unter Einstellungen > Tastatur.",
+        ],
+        bullets: [
+          "Tastaturlayout: Automatisch, English, Deutsch, Español, Français, Italiano oder 简体中文（拼音）. Das Layout ändert nur die Tasten. Das Diktat verwendet weiterhin deine Eingabesprachen.",
+          "Chinesisch mit Pinyin: Tippe Pinyin und wähle die vereinfachten chinesischen Schriftzeichen über den Tasten. Die Leertaste fügt den ersten Vorschlag ein, der Zeilenumbruch die getippten Buchstaben. Gewählte Wörter stehen beim nächsten Mal vorn und bleiben auf dem Gerät.",
+          "Tastengröße in Kompakt, Standard oder Groß und die Zeichenvorschau, die jeden Buchstaben über deinem Finger vergrößert.",
+          "Auto-Großschreibung, der Kurzbefehl „.“ für einen Punkt nach doppeltem Tippen auf die Leertaste, Wortvorschläge, „Wischen zum Tippen“ mit „Wischspur anzeigen“ und „Textbausteine beim Tippen ersetzen“.",
+          "Tastentöne und Haptik.",
+          "Mit Premium nimmt „Getippte Wörter lernen“ unbekannte Wörter, die du mit der TypeWhisper-Tastatur tippst, in dein Wörterbuch auf.",
+          "„Tastatureinstellungen zurücksetzen“ setzt alle Optionen dieser Seite auf die Standardwerte zurück.",
         ],
       },
     ],
@@ -1245,7 +1401,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Häufige Fälle lösen",
     title: "Fehlerbehebung für iPhone, iPad, Tastatur und Watch",
     description:
-      "Fehlende Berechtigungen, Modell-Downloads, Tastatur-Rückweg, Watch-Übertragung, Cloud-Anbieter und Premium-Sync prüfen.",
+      "Fehlende Berechtigungen, Modell-Downloads und Modellvorbereitung, Tastatur-Rückweg, Hardware-Tastaturen am iPad, Watch-Übertragung, Cloud-Anbieter und Premium-Sync prüfen.",
     intro:
       "Beginne beim genauen Einstiegspunkt des Fehlers. App-Aufnahme, Tastatur-Diktat, Watch-Transfer, Dateiimport und Sync haben jeweils andere Voraussetzungen.",
     sections: [
@@ -1260,19 +1416,40 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Öffne iOS-Einstellungen > Datenschutz & Sicherheit > Mikrofon und prüfe, ob TypeWhisper aktiviert ist.",
           "Prüfe bei Apple Speech zusätzlich die Berechtigung für Spracherkennung.",
-          "Öffne die Modellverwaltung in TypeWhisper und prüfe, ob das gewählte Modell vollständig geladen und kompiliert ist.",
+          "Öffne in TypeWhisper Einstellungen > Spracherkennung und prüfe, ob das gewählte lokale Modell vollständig geladen und vorbereitet ist.",
           "Prüfe den freien Gerätespeicher und setze einen pausierten oder fehlgeschlagenen Download bei stabiler Verbindung fort.",
+          "„Schnell und lokal“ braucht mindestens 4 GB Arbeitsspeicher, „Live lokal“ mindestens 6 GB. Auf Geräten mit weniger sagt die App das, statt das Modell zu laden.",
+          "Hat iOS TypeWhisper beendet, während ein lokales Modell vorbereitet wurde, erklärt die App die wahrscheinliche Ursache und lädt dieses Modell nicht von selbst neu. Versuche es unter Einstellungen > Spracherkennung erneut oder wähle Apple Speech.",
           "Trenne eine unerwartete Bluetooth-Audioquelle oder wähle das gewünschte Mikrofon und teste erneut.",
+        ],
+      },
+      {
+        title: "Spracherkennung oder Tastatur hängt scheinbar bei der Vorbereitung",
+        bullets: [
+          "Die erste Vorbereitung eines lokalen Sprachmodells kann einige Minuten dauern, auf dem iPad länger. Spätere Starts gehen deutlich schneller.",
+          "Öffne TypeWhisper und lass die App geöffnet, bis „Spracherkennung wird vorbereitet …“ fertig ist. Unter Einstellungen > Spracherkennung siehst du den Status des Modells.",
+          "Mach zuerst eine kurze Aufnahme in der App und diktiere danach über die Tastatur.",
+          "Brauchst du sofort Text, wähle Apple Speech. Es braucht keinen Download.",
         ],
       },
       {
         title: "Tastatur fehlt oder setzt keinen Text ein",
         bullets: [
-          "Füge TypeWhisper unter Einstellungen > Allgemein > Tastatur > Tastaturen > Tastatur hinzufügen hinzu.",
-          "Aktiviere Vollen Zugriff für Diktat und gemeinsamen Rückgabeweg.",
+          "Füge TypeWhisper unter Einstellungen > Allgemein > Tastatur > Tastaturen > Tastatur hinzufügen hinzu oder tippe in TypeWhisper unter Einstellungen > Tastatur auf „Tastatur aktiviert“.",
+          "Aktiviere „Vollen Zugriff erlauben“ für Diktat und gemeinsamen Rückgabeweg.",
           "Öffne die Haupt-App einmal, erteile Mikrofon- und Sprachberechtigung und teste dort eine Aufnahme.",
           "Teste in einem normalen Textfeld. iOS erlaubt Drittanbieter-Tastaturen in manchen sicheren Feldern nicht.",
-          "Kehre nach dem Tastatur-Mikrofon über den Link zur vorherigen App zurück und lasse die TypeWhisper-Tastatur bis zur Einfügung gewählt.",
+          "Kehre nach dem Tastatur-Mikrofon über den Hinweis „Nach oben, dann nach links wischen“ oder den Link zur vorherigen App zurück und lasse die TypeWhisper-Tastatur bis zur Einfügung gewählt.",
+          "Ein Format, das in der Tastatur mit „Einrichtung erforderlich“ markiert ist, braucht zuerst eine Spracherkennung oder einen Schreibdienst.",
+        ],
+      },
+      {
+        title: "Tastatur fehlt neben einem Magic Keyboard",
+        bullets: [
+          "iPadOS blendet Tastaturen von Drittanbietern aus, solange eine Hardware-Tastatur verbunden ist.",
+          "Schalte die Bildschirmtastatur unter Einstellungen > Bedienungshilfen > Tippen > AssistiveTouch ein. Die TypeWhisper-Tastatur erscheint dann neben der Hardware-Tastatur.",
+          "Ist eine Hardware-Tastatur verbunden, zeigt die TypeWhisper-Tastatur nur ihre Werkzeuge. Möchtest du die Buchstabentasten behalten, schalte unter Einstellungen > Tastatur > Tastaturmodus „Nur Werkzeuge mit Hardware-Tastatur“ aus.",
+          "Um die TypeWhisper-Tastatur auf dem iPad auszublenden, tippe auf die Taste unten rechts.",
         ],
       },
       {
@@ -1289,13 +1466,14 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Prüfe Zugangsdaten und Netzwerkverbindung des gewählten Anbieters mit einer kurzen Aufnahme.",
           "Wechsle auf eine lokale Engine, um Anbieterprobleme von Mikrofon- oder Modellproblemen zu trennen.",
+          "Für „TypeWhisper auf dem Mac“ brauchen beide Geräte dasselbe lokale Netzwerk, TypeWhisper für Mac ab Version 1.8 und Zugang zu den Premium-Funktionen. Der Mac muss gekoppelte Geräte erlauben.",
           "Prüfe für Premium-Sync Apple-Anmeldung, aktive Berechtigung, gewählten Modus und Zugriff auf den Cloud-Ordner.",
-          "Nutze Jetzt synchronisieren nach dem erneuten Verbinden. Wähle einen Ordner neu, wenn iOS den Zugriff nicht mehr bereitstellt.",
+          "Nutze „Jetzt synchronisieren“ nach dem erneuten Verbinden. Wähle einen Ordner neu, wenn iOS den Zugriff nicht mehr bereitstellt.",
         ],
         callout: {
           title: "Noch nicht gelöst?",
           description:
-            "Nenne beim Kontakt an hello@typewhisper.com iOS-Version, Gerätemodell, Engine, Profil, Aufnahmequelle und die sichtbare Fehlermeldung.",
+            "Nenne beim Kontakt an hello@typewhisper.com iOS-Version, Gerätemodell, Spracherkennung, Format, Aufnahmequelle und die sichtbare Fehlermeldung.",
         },
       },
     ],

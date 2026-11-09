@@ -90,6 +90,41 @@ test.describe("detailed iOS documentation", () => {
     await expect(page.getByText(/previous-app link/).first()).toBeVisible();
   });
 
+  test("keyboard guide covers staying ready, Tools Only, and hardware keyboards", async ({
+    page,
+  }) => {
+    await page.goto("/en/docs/ios/dictation-and-keyboard/");
+
+    await expect(page.getByText(/Swipe up, then left/)).toBeVisible();
+    await expect(
+      page.getByText(/Keep Ready for Next Dictation/),
+    ).toBeVisible();
+    await expect(page.getByText(/between 1 and 30 minutes/)).toBeVisible();
+    await expect(page.getByText(/Tools Only with Hardware Keyboard/)).toBeVisible();
+    await expect(
+      page.getByText(/Settings > Accessibility > Touch > AssistiveTouch/),
+    ).toBeVisible();
+
+    await page.goto("/de/docs/ios/dictation-and-keyboard/");
+    await expect(
+      page.getByText(
+        /Einstellungen > Bedienungshilfen > Tippen > AssistiveTouch/,
+      ),
+    ).toBeVisible();
+
+    await page.goto("/en/docs/ios/troubleshooting/");
+    await expect(
+      page.getByRole("heading", {
+        name: "Speech recognition or the keyboard seems stuck on preparing",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "The keyboard is missing next to a Magic Keyboard",
+      }),
+    ).toBeVisible();
+  });
+
   test("installation and troubleshooting describe the public App Store path", async ({
     page,
   }) => {
