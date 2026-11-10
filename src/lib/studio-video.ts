@@ -100,3 +100,51 @@ export function watchStudioVideoOrientation(root: ParentNode = document) {
     }
   });
 }
+
+/**
+ * Plays a `StudioVideo` from YouTube once its upload is public there, so the
+ * views count on the channel. Until someone presses play, the page shows the
+ * site's own poster and sends nothing to YouTube; the click loads the player
+ * from youtube-nocookie.com and starts it. Before the publish date the site's
+ * own players stay.
+ */
+export function playStudioVideosFromYoutube(
+  root: ParentNode = document,
+  now: number = Date.now(),
+) {
+  for (const box of root.querySelectorAll<HTMLElement>("[data-youtube-video]")) {
+    const publicFrom = Date.parse(box.dataset.youtubeFrom ?? "");
+    const figure = box.closest("figure");
+    const start = box.querySelector<HTMLButtonElement>(".site-video__youtube-start");
+    if (!(publicFrom <= now) || !figure || !start) continue;
+
+    figure.classList.add("site-video--youtube");
+    box.hidden = false;
+    start.addEventListener(
+      "click",
+      () => {
+        const lang = document.documentElement.lang || "en";
+        const url = new URL(
+          `https://www.youtube-nocookie.com/embed/${encodeURIComponent(box.dataset.youtubeVideo ?? "")}`,
+        );
+        url.searchParams.set("autoplay", "1");
+        url.searchParams.set("rel", "0");
+        url.searchParams.set("hl", lang);
+        url.searchParams.set("cc_lang_pref", lang);
+        url.searchParams.set("cc_load_policy", "1");
+
+        const frame = document.createElement("iframe");
+        frame.className = "site-video__youtube-frame";
+        frame.src = url.toString();
+        frame.title = box.dataset.youtubeTitle ?? "";
+        frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen; web-share";
+        frame.allowFullscreen = true;
+        // YouTube refuses embeds that arrive without a referrer.
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        start.replaceWith(frame);
+        frame.focus();
+      },
+      { once: true },
+    );
+  }
+}

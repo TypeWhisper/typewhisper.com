@@ -144,5 +144,8 @@
   "downloadCta.requirement.mac": "macOS 14 oder neuer",
   "downloadCta.requirement.windows": "Windows 10 und 11",
   "downloadCta.requirement.ios": "iOS 18 oder neuer",
-  "downloadCta.requirement.android": "Android 10 oder neuer"
+  "downloadCta.requirement.android": "Android 10 oder neuer",
+  "video.youtube.play": "Auf YouTube abspielen",
+  "video.youtube.note": "Das Video läuft über YouTube (youtube-nocookie.com). Erst wenn du auf Abspielen drückst, lädt etwas von YouTube.",
+  "video.youtube.privacy": "Datenschutz"
 }

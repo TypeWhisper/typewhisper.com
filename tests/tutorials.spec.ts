@@ -8,6 +8,12 @@ const titles = {
 } as const;
 
 test.describe("Tutorials", () => {
+  // Before the YouTube dates in src/data/youtube-videos.ts, so the site's own
+  // players show; youtube-videos.spec.ts covers the YouTube player.
+  test.beforeEach(async ({ page }) => {
+    await page.clock.setFixedTime(new Date("2026-10-01T12:00:00+02:00"));
+  });
+
   for (const locale of ["en", "de"] as const) {
     test(`${locale} index links to the tutorial with its poster`, async ({
       page,

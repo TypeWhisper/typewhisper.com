@@ -608,6 +608,77 @@
     border-radius: 28px;
   }
 
+  /* Public on YouTube: the poster with a play button replaces the site's
+     players, in both orientations. See playStudioVideosFromYoutube. */
+  /* As specific as the .site-video--adaptive rules above, and later. */
+  .site-video.site-video--youtube video {
+    display: none;
+  }
+
+  .site-video__youtube-start,
+  .site-video__youtube-frame {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .site-video__youtube-start {
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .site-video__youtube-start img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .site-video__youtube-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.15rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.72);
+    color: #fff;
+    font-weight: 600;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.15s ease;
+  }
+
+  .site-video__youtube-start:hover .site-video__youtube-label,
+  .site-video__youtube-start:focus-visible .site-video__youtube-label {
+    background: rgb(0 0 0 / 0.88);
+  }
+
+  .site-video__youtube-start:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+
+  .site-video__youtube-note {
+    margin: 0.625rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .site-video__youtube-note a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   /* Screenshot with its caption. The image keeps its own proportions. */
   .site-shot {
     min-width: 0;
