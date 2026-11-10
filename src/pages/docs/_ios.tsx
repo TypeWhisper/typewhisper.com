@@ -84,9 +84,14 @@ const newIn12Updates = [
     path: "/docs/ios/profiles-and-processing#section-3",
   },
   {
-    en: "Quick Fix, snippets, and Chinese Pinyin in the keyboard, with all keyboard options under Settings > Keyboard",
-    de: "Schnellkorrektur, Textbausteine und chinesisches Pinyin in der Tastatur, dazu alle Tastatur-Optionen unter Einstellungen > Tastatur",
+    en: "Quick Fix and snippets in the keyboard's top bar",
+    de: "Schnellkorrektur und Textbausteine in der oberen Leiste der Tastatur",
     path: "/docs/ios/dictation-and-keyboard#section-5",
+  },
+  {
+    en: "Chinese Pinyin in the keyboard, with all keyboard options under Settings > Keyboard",
+    de: "Chinesisches Pinyin in der Tastatur, dazu alle Tastatur-Optionen unter Einstellungen > Tastatur",
+    path: "/docs/ios/dictation-and-keyboard#section-7",
   },
   {
     en: "Apple Speech with SpeechAnalyzer on iOS and iPadOS 26 and later",
@@ -94,9 +99,14 @@ const newIn12Updates = [
     path: "/docs/ios/profiles-and-processing#section-1",
   },
   {
-    en: "Apple Watch: status for each recording, read aloud, profile switch with the Digital Crown, double tap, complications, and Control Center",
-    de: "Apple Watch: Status für jede Aufnahme, Vorlesen, Profilwechsel mit der Digital Crown, Doppeltippen, Komplikationen und Kontrollzentrum",
+    en: "Apple Watch: status for each recording, read aloud, profile switch with the Digital Crown, and double tap",
+    de: "Apple Watch: Status für jede Aufnahme, Vorlesen, Profilwechsel mit der Digital Crown und Doppeltippen",
     path: "/docs/ios/watch-and-shortcuts#section-1",
+  },
+  {
+    en: "Apple Watch: Record complication, Latest Transcription in the Smart Stack, and Start Recording in Control Center",
+    de: "Apple Watch: Komplikation „Aufnehmen“, „Letzte Transkription“ im Smart-Stapel und „Aufnahme starten“ im Kontrollzentrum",
+    path: "/docs/ios/watch-and-shortcuts#section-3",
   },
   {
     en: "Siri reads your latest note aloud and answers questions about your last recording (Premium), and CarPlay shows pause and stop",
