@@ -163,6 +163,43 @@ test.describe("Tutorials", () => {
       ).toBeVisible();
     });
 
+    test(`${locale} iOS docs show the keyboard video where the keyboard is added`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/dictation-and-keyboard/`);
+      const section = page.locator("#section-2");
+      await expect(section.getByTestId("studio-video")).toHaveCount(1);
+      await expect(section.getByTestId("studio-video").locator("source")).toHaveAttribute(
+        "src",
+        `/videos/ios-keyboard-tour-${locale}.mp4`,
+      );
+      await expect(
+        section.locator(`a[href="/${locale}/tutorials/dictate-with-the-ios-keyboard/"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/dictate-with-the-ios-keyboard/`);
+      await expect(
+        page.getByTestId("tutorial-steps").locator(".site-steps__item"),
+      ).toHaveCount(5);
+      await expect(page.getByTestId("tutorial-steps")).toContainText(
+        locale === "de"
+          ? "Bedienungshilfen > Tippen > AssistiveTouch"
+          : "Accessibility > Touch > AssistiveTouch",
+      );
+      await expect(
+        page.locator(`a[href="/${locale}/docs/ios/dictation-and-keyboard/#section-2"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/`);
+      const iosCards = page
+        .getByTestId("tutorial-group")
+        .nth(1)
+        .getByTestId("tutorial-card");
+      await expect(iosCards.first()).toHaveAttribute(
+        "href",
+        `/${locale}/tutorials/dictate-with-the-ios-keyboard/`,
+      );
+      await expect(iosCards.first()).toContainText(locale === "de" ? "3:24" : "3:03");
+    });
+
     test(`${locale} header and footer link to the tutorials`, async ({
       page,
     }) => {
@@ -278,7 +315,12 @@ test.describe("Tutorials", () => {
   });
 
   test("tutorial files are served", async ({ request }) => {
-    for (const clip of [video, "mac-email-reply-workflow", "ios-compare-local-models"]) {
+    for (const clip of [
+      video,
+      "mac-email-reply-workflow",
+      "ios-compare-local-models",
+      "ios-keyboard-tour",
+    ]) {
       for (const locale of ["en", "de"]) {
         for (const [file, type] of [
           [`${clip}-${locale}.mp4`, "video/mp4"],

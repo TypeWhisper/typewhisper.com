@@ -217,6 +217,10 @@ const en: Record<IosDocSlug, IosDocPage> = {
           alt: "TypeWhisper voice keyboard in an iPhone text field",
           layout: "phone",
         },
+        tutorial: {
+          slug: "dictate-with-the-ios-keyboard",
+          link: "Set up the keyboard and dictate, step by step",
+        },
       },
       {
         title: "Dictate from another app",
@@ -1085,6 +1089,10 @@ const de: Record<IosDocSlug, IosDocPage> = {
           path: "/screenshots/ios/03-keyboard.png",
           alt: "TypeWhisper-Diktier-Tastatur in einem iPhone-Textfeld",
           layout: "phone",
+        },
+        tutorial: {
+          slug: "dictate-with-the-ios-keyboard",
+          link: "Tastatur einrichten und diktieren, Schritt für Schritt",
         },
       },
       {

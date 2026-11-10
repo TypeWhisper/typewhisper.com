@@ -40,6 +40,66 @@ export interface Tutorial {
  */
 export const tutorials: Tutorial[] = [
   {
+    slug: "dictate-with-the-ios-keyboard",
+    video: "ios-keyboard-tour",
+    portrait: true,
+    platform: "ios",
+    published: "2026-11-10",
+    appVersion: "1.2.4",
+    duration: { en: 183, de: 204 },
+    docsPath: "/docs/ios/dictation-and-keyboard/#section-2",
+    copy: {
+      en: {
+        title: "Set up the TypeWhisper keyboard and dictate into other apps",
+        description:
+          "Turn on the TypeWhisper keyboard on iPhone and iPad, dictate into other apps, and see why the app opens on the first dictation and how the keyboard then stays ready.",
+        caption:
+          "The TypeWhisper keyboard in Messages: setup with Full Access, the first dictation through the app, the next ones right in the keyboard, and Tools Only next to a hardware keyboard on iPad.",
+        steps: [
+          "In TypeWhisper, open Settings > Keyboard and tap Keyboard Enabled. In iOS Settings, open Keyboards, then turn on TypeWhisper and Allow Full Access.",
+          "In a text field, for example in Messages, switch to TypeWhisper with the globe key.",
+          "Tap the microphone. TypeWhisper opens and starts the recording. To get back, tap the previous app's name at the top left, here Messages, or swipe as the hint in TypeWhisper shows. Talk once the keyboard says Listening.",
+          "Tap the microphone again. Your words are inserted at the cursor.",
+          "After each dictation, the keyboard stays ready for 5 minutes: the next one starts right in the keyboard, without opening the app. You can also hold the microphone while you talk and let go to insert.",
+        ],
+        notes: [
+          "Dictation needs Full Access: it's how the keyboard and the TypeWhisper app talk to each other. Normal typing works without it. iOS shows the same warning for every keyboard that asks for Full Access.",
+          "iOS doesn't let keyboards use the microphone, so the app records for the keyboard. That's why it opens on the first dictation.",
+          "Set the Ready Duration under Settings > Keyboard > Keyboard Dictation (1 to 30 minutes), or turn Keep Ready for Next Dictation off. Until the time runs out, the iOS microphone indicator can stay visible. Music and videos keep their normal volume while the keyboard stays ready.",
+          "The first time, preparing a local speech model can take a few minutes. Keep TypeWhisper open until it's done.",
+          "On iPad, the key at the bottom right of the keyboard hides it.",
+          "With a Magic Keyboard or another hardware keyboard on iPad, TypeWhisper shows only its tools: the microphone, your formats and the globe key. Keyboard Mode under Settings > Keyboard in TypeWhisper offers Full Keyboard and Tools Only, and Tools Only with Hardware Keyboard is on by default.",
+          "If TypeWhisper does not appear next to your hardware keyboard, turn on the onscreen keyboard in iPadOS Settings under Accessibility > Touch > AssistiveTouch. Without it, iPadOS hides third-party keyboards while a hardware keyboard is attached.",
+        ],
+        docsLabel: "The keyboard in the docs",
+      },
+      de: {
+        title: "Die TypeWhisper-Tastatur einrichten und in andere Apps diktieren",
+        description:
+          "Schalte die TypeWhisper-Tastatur auf iPhone und iPad ein, diktiere in andere Apps und sieh, warum sich beim ersten Diktat die App öffnet und wie die Tastatur danach bereit bleibt.",
+        caption:
+          "Die TypeWhisper-Tastatur in Nachrichten: Einrichtung mit vollem Zugriff, das erste Diktat über die App, die nächsten direkt in der Tastatur und „Nur Werkzeuge“ neben einer Hardware-Tastatur am iPad.",
+        steps: [
+          "Öffne in TypeWhisper Einstellungen > Tastatur und tippe auf „Tastatur aktiviert“. Öffne in den iOS-Einstellungen „Tastaturen“ und schalte TypeWhisper und „Vollen Zugriff erlauben“ ein.",
+          "Wechsle in einem Textfeld, etwa in Nachrichten, mit der Globustaste zu TypeWhisper.",
+          "Tippe aufs Mikrofon. TypeWhisper öffnet sich und startet die Aufnahme. Um zurückzukommen, tippe oben links auf den Namen der vorherigen App, hier „Nachrichten“, oder wische wie im Hinweis von TypeWhisper. Sprich, sobald die Tastatur „Hört zu …“ zeigt.",
+          "Tippe noch mal aufs Mikrofon. Deine Worte werden am Cursor eingefügt.",
+          "Nach jedem Diktat bleibt die Tastatur 5 Minuten bereit: Das nächste startet direkt in der Tastatur, ohne dass sich die App öffnet. Du kannst das Mikrofon auch beim Sprechen gedrückt halten und zum Einfügen loslassen.",
+        ],
+        notes: [
+          "Fürs Diktat braucht die Tastatur vollen Zugriff: So reden Tastatur und TypeWhisper-App miteinander. Normales Tippen geht auch ohne. Die Warnung dazu zeigt iOS bei jeder Tastatur, die vollen Zugriff möchte.",
+          "iOS lässt Tastaturen nicht ans Mikrofon, deshalb nimmt die App für die Tastatur auf. Darum öffnet sie sich beim ersten Diktat.",
+          "Die Bereitschaftsdauer stellst du unter Einstellungen > Tastatur > Tastatur-Diktat ein (1 bis 30 Minuten), oder du schaltest „Für nächstes Diktat bereit halten“ aus. Bis die Zeit abläuft, kann die Mikrofonanzeige von iOS sichtbar bleiben. Musik und Videos behalten ihre normale Lautstärke, solange die Tastatur bereit ist.",
+          "Beim ersten Mal kann es einige Minuten dauern, bis ein lokales Sprachmodell vorbereitet ist. Lass TypeWhisper so lange geöffnet.",
+          "Auf dem iPad blendet die Taste unten rechts die Tastatur aus.",
+          "Mit einem Magic Keyboard oder einer anderen Hardware-Tastatur am iPad zeigt TypeWhisper nur noch seine Werkzeuge: das Mikrofon, deine Formate und die Globustaste. Unter Einstellungen > Tastatur > Tastaturmodus in TypeWhisper wählst du „Volle Tastatur“ oder „Nur Werkzeuge“, und „Nur Werkzeuge mit Hardware-Tastatur“ ist standardmäßig eingeschaltet.",
+          "Erscheint TypeWhisper nicht neben deiner Hardware-Tastatur, schalte in den iPadOS-Einstellungen unter Bedienungshilfen > Tippen > AssistiveTouch die Bildschirmtastatur ein. Ohne sie blendet iPadOS Tastaturen von Drittanbietern aus, solange eine Hardware-Tastatur verbunden ist.",
+        ],
+        docsLabel: "Die Tastatur in der Doku",
+      },
+    },
+  },
+  {
     slug: "email-reply-workflow",
     video: "mac-email-reply-workflow",
     portrait: true,
