@@ -90,7 +90,7 @@
   "releaseStatus.win.githubInstaller": "GitHub-Installer herunterladen",
   "releaseStatus.win.docs": "Windows-Doku lesen",
   "releaseStatus.ios.title": "iOS {iosVersion}",
-  "releaseStatus.ios.description": "Private Sprache-zu-Text mit lokalen Engines, Diktier-Tastatur, Profilen, Dateien, Kurzbefehlen, Wörterbuch, Textbausteine und Apple-Watch-Unterstützung. Version 1.1 bringt lokale Schreibmodelle, Wörterbuchimporte mit Vorschau und Aufnahmesteuerungen für das Kontrollzentrum und die Aktionstaste.",
+  "releaseStatus.ios.description": "Private Sprache-zu-Text mit lokalen Engines, Diktier-Tastatur, Formaten, Dateien, Kurzbefehlen, Wörterbuch, Textbausteinen und Apple-Watch-Unterstützung. Version 1.2 bringt Transkription und Schreiben mit einem gekoppelten Mac, Sprechererkennung auf dem Gerät, Vorlesen, Fragen zum Transkript und das Formatieren von getipptem Text ohne Aufnahme.",
   "releaseStatus.ios.download": "Im App Store laden",
   "releaseStatus.ios.docs": "iOS-Dokumentation lesen",
   "releaseStatus.android.title": "Android {androidVersion}",

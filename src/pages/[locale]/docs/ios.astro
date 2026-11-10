@@ -16,8 +16,8 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const description = locale === "de"
-  ? "Ausführliche TypeWhisper-Anleitung für iPhone, iPad und Apple Watch: Einrichtung, Diktier-Tastatur, Profile, Capture Inbox, Dateien, Kurzbefehle, Datenschutz, Premium und Fehlerbehebung."
-  : "Complete TypeWhisper guidance for iPhone, iPad, and Apple Watch: setup, voice keyboard, profiles, Capture Inbox, files, Shortcuts, privacy, Premium, and troubleshooting.";
+  ? "Ausführliche TypeWhisper-Anleitung für iPhone, iPad und Apple Watch: Einrichtung, Diktier-Tastatur, Formate, Capture Inbox, Dateien, Kurzbefehle, Datenschutz, Premium und Fehlerbehebung."
+  : "Complete TypeWhisper guidance for iPhone, iPad, and Apple Watch: setup, voice keyboard, formats, Capture Inbox, files, Shortcuts, privacy, Premium, and troubleshooting.";
 const head = iosOverviewHead(locale);
 ---
 <DocsLayout

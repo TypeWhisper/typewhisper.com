@@ -36,8 +36,8 @@ const phoneScreenshots = [
   {
     filename: "05-profiles.png",
     alt: {
-      en: "TypeWhisper profiles on iPhone",
-      de: "TypeWhisper-Profile auf dem iPhone",
+      en: "Choosing a format for a result on iPhone",
+      de: "Formatauswahl für ein Ergebnis auf dem iPhone",
     },
   },
 ] as const;
@@ -66,6 +66,64 @@ const watchScreenshots = [
   },
 ] as const;
 
+// What the App Store release notes of 1.2.1 to 1.2.4 name, with the guide that explains it.
+const newIn12Updates = [
+  {
+    en: "Format Text: format pasted or typed text without a recording",
+    de: "Text formatieren: eingefügten oder getippten Text ohne Aufnahme formatieren",
+    path: "/docs/ios/profiles-and-processing#section-5",
+  },
+  {
+    en: "Tools Only keyboard mode, also next to a hardware keyboard, and a hide-keyboard key on iPad",
+    de: "Tastaturmodus „Nur Werkzeuge“, auch neben einer Hardware-Tastatur, und eine Taste zum Ausblenden der Tastatur auf dem iPad",
+    path: "/docs/ios/dictation-and-keyboard#section-6",
+  },
+  {
+    en: "Result and original side by side on iPad, with highlighted word changes",
+    de: "Ergebnis und Originalfassung nebeneinander auf dem iPad, mit markierten Wortänderungen",
+    path: "/docs/ios/profiles-and-processing#section-3",
+  },
+  {
+    en: "Quick Fix and snippets in the keyboard's top bar",
+    de: "Schnellkorrektur und Textbausteine in der oberen Leiste der Tastatur",
+    path: "/docs/ios/dictation-and-keyboard#section-5",
+  },
+  {
+    en: "Chinese Pinyin in the keyboard, with all keyboard options under Settings > Keyboard",
+    de: "Chinesisches Pinyin in der Tastatur, dazu alle Tastatur-Optionen unter Einstellungen > Tastatur",
+    path: "/docs/ios/dictation-and-keyboard#section-7",
+  },
+  {
+    en: "Apple Speech with SpeechAnalyzer on iOS and iPadOS 26 and later",
+    de: "Apple Speech mit SpeechAnalyzer ab iOS und iPadOS 26",
+    path: "/docs/ios/profiles-and-processing#section-1",
+  },
+  {
+    en: "Apple Watch: status for each recording, read aloud, profile switch with the Digital Crown, and double tap",
+    de: "Apple Watch: Status für jede Aufnahme, Vorlesen, Profilwechsel mit der Digital Crown und Doppeltippen",
+    path: "/docs/ios/watch-and-shortcuts#section-1",
+  },
+  {
+    en: "Apple Watch: Record complication, Latest Transcription in the Smart Stack, and Start Recording in Control Center",
+    de: "Apple Watch: Komplikation „Aufnehmen“, „Letzte Transkription“ im Smart-Stapel und „Aufnahme starten“ im Kontrollzentrum",
+    path: "/docs/ios/watch-and-shortcuts#section-3",
+  },
+  {
+    en: "Siri reads your latest note aloud and answers questions about your last recording (Premium), and CarPlay shows pause and stop",
+    de: "Siri liest deine neueste Notiz vor und beantwortet Fragen zu deiner letzten Aufnahme (Premium), und CarPlay zeigt Pausieren und Stoppen",
+    path: "/docs/ios/watch-and-shortcuts#section-5",
+  },
+  {
+    en: "Transcribe Again for finished files, to compare models on the same recording",
+    de: "„Erneut transkribieren“ für fertige Dateien, um Modelle an derselben Aufnahme zu vergleichen",
+    path: "/docs/ios/files-history-and-inbox#section-1",
+  },
+  {
+    en: "Live Local on iPhones with 6 GB of memory (Premium)",
+    de: "„Live lokal“ auf iPhones mit 6 GB Arbeitsspeicher (Premium)",
+  },
+] as const;
+
 // What the App Store release notes of 1.2 name.
 const newIn12 = [
   {
@@ -75,7 +133,7 @@ const newIn12 = [
   },
   {
     en: "On-device speaker detection with names, corrected turns, and optional local voice profiles (Premium)",
-    de: "Sprechererkennung auf dem Gerät mit Namen, korrigierbaren Wortbeiträgen und optionalen lokalen Stimmprofilen (Premium)",
+    de: "Sprechererkennung auf dem Gerät mit Namen, korrigierbaren Wortbeiträgen und optionalen lokalen Sprecherprofilen (Premium)",
   },
   {
     en: "Read transcripts and results aloud with the voices installed on your device",
@@ -139,8 +197,8 @@ export function iosOverviewHead(locale: Locale) {
       isDe ? "Version {iosSeries} stabil" : "Version {iosSeries} stable",
     ),
     lede: isDe
-      ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Profilen, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
-      : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, profiles, files, dictionary, snippets, Shortcuts, and optional Premium sync.",
+      ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Formaten, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
+      : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, formats, files, dictionary, snippets, Shortcuts, and optional Premium sync.",
     download: isDe ? "Im App Store laden" : "Download on the App Store",
   };
 }
@@ -235,8 +293,8 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           </li>
           <li>
             {isDe
-              ? "Gehe in TypeWhisper auf dem iPhone zu Einstellungen > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
-              : "In TypeWhisper on the iPhone, go to Settings > Mac and choose your Mac under Macs on This Network."}
+              ? "Gehe in TypeWhisper auf dem iPhone zu Einstellungen > Premium > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
+              : "In TypeWhisper on the iPhone, go to Settings > Premium > Mac and choose your Mac under Macs on This Network."}
           </li>
           <li>
             {isDe
@@ -391,6 +449,21 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           {isDe ? "App Store öffnen" : "Open the App Store"}
           <ArrowRight className="size-4" aria-hidden="true" />
         </a>
+
+        <DocsSubheading id="new-in-1-2-updates">
+          {isDe ? "Ergänzt in 1.2.1 bis 1.2.4" : "Added in 1.2.1 to 1.2.4"}
+        </DocsSubheading>
+        <ul>
+          {newIn12Updates.map((entry) => (
+            <li key={entry.en}>
+              {"path" in entry ? (
+                <a href={localePath(locale, entry.path)}>{entry[locale]}</a>
+              ) : (
+                entry[locale]
+              )}
+            </li>
+          ))}
+        </ul>
 
         <DocsSubheading id="new-in-1-2">
           {isDe ? "Neu in 1.2" : "What's new in 1.2"}
