@@ -20,15 +20,15 @@ export interface YoutubeVideo {
 export const youtubeVideos: Record<string, Partial<Record<Locale, YoutubeVideo>>> = {
   "ios-keyboard-tour": {
     en: { id: "vcQg_UooAXM", publicFrom: "2026-11-10T12:00:00+01:00" },
-    de: { id: "invORvr1_HU", publicFrom: "2026-11-11T16:00:00+01:00" },
+    de: { id: "jtz06QRlu08", publicFrom: "2026-11-11T16:00:00+01:00" },
   },
   "mac-email-reply-workflow": {
     en: { id: "u-v3FrgiFQU", publicFrom: "2026-11-04T00:00:00+01:00" },
     de: { id: "X8kpSPzWlM0", publicFrom: "2026-11-04T00:00:00+01:00" },
   },
   "ios-compare-local-models": {
-    en: { id: "fzhRAIOxGZk", publicFrom: "2026-11-17T16:00:00+01:00" },
-    de: { id: "zn3MY4EMeAE", publicFrom: "2026-11-17T16:00:00+01:00" },
+    en: { id: "kvEXlkoWuCw", publicFrom: "2026-11-17T16:00:00+01:00" },
+    de: { id: "gl4XlY8Q0K8", publicFrom: "2026-11-17T16:00:00+01:00" },
   },
   "mac-translate-selection": {
     en: { id: "yne1dhjyxnk", publicFrom: "2026-11-03T00:00:00+01:00" },
