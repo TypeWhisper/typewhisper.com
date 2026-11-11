@@ -6,6 +6,12 @@ const pages = [
 ] as const;
 
 test.describe("Studio release video", () => {
+  // Before the YouTube dates in src/data/youtube-videos.ts, so the site's own
+  // players show; youtube-videos.spec.ts covers the YouTube player.
+  test.beforeEach(async ({ page }) => {
+    await page.clock.setFixedTime(new Date("2026-10-01T12:00:00+02:00"));
+  });
+
   for (const locale of ["en", "de"] as const) {
     for (const { path, section } of pages) {
       test(`${locale} ${path} plays the video in the page language`, async ({

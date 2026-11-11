@@ -1,4 +1,5 @@
-import { t, type Locale } from "@/i18n/index";
+import { getYoutubeVideo } from "@/data/youtube-videos";
+import { localePath, t, type Locale } from "@/i18n/index";
 
 interface StudioVideoProps {
   /**
@@ -31,7 +32,10 @@ const captionLabels: Record<Locale, string> = {
 /**
  * A wide product video rendered in the TypeWhisper Demo Studio, in the
  * language of the page. The file loads only when someone starts it, and the
- * voice-over comes with captions.
+ * voice-over comes with captions. When the video is public on YouTube (see
+ * `src/data/youtube-videos.ts`), `playStudioVideosFromYoutube` swaps the
+ * site's players for the poster with a play button; the YouTube player loads
+ * only after that click. Without JavaScript the site's own file plays.
  */
 export function StudioVideo({
   slug,
@@ -42,6 +46,7 @@ export function StudioVideo({
   className = "",
 }: StudioVideoProps) {
   const base = `/videos/${slug}-${locale}`;
+  const youtube = getYoutubeVideo(slug, locale);
   const track = (
     <track
       kind="captions"
@@ -60,6 +65,36 @@ export function StudioVideo({
 
   return (
     <figure className={classes} data-studio-video={portrait ? "" : undefined}>
+      {youtube && (
+        <div
+          className="site-video__youtube"
+          data-youtube-video={youtube.id}
+          data-youtube-from={youtube.publicFrom}
+          data-youtube-title={label}
+          hidden
+        >
+          <button
+            type="button"
+            className="site-video__youtube-start"
+            aria-label={`${label}: ${t(locale, "video.youtube.play")}`}
+            data-testid="youtube-start"
+          >
+            <img src={`${base}-poster.jpg`} alt="" loading="lazy" decoding="async" />
+            <span className="site-video__youtube-label" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14Z" />
+              </svg>
+              {t(locale, "video.youtube.play")}
+            </span>
+          </button>
+          <p className="site-video__youtube-note">
+            {t(locale, "video.youtube.note")}{" "}
+            <a href={`${localePath(locale, "/privacy")}#thirdParty`}>
+              {t(locale, "video.youtube.privacy")}
+            </a>
+          </p>
+        </div>
+      )}
       <video
         className={portrait ? "site-video__wide" : undefined}
         playsInline
