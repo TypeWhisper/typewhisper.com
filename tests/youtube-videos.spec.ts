@@ -4,8 +4,7 @@ const translate = { slug: "translate-selected-text", ids: { en: "yne1dhjyxnk", d
 
 test.describe("Studio videos on YouTube", () => {
   for (const locale of ["en", "de"] as const) {
-    test(`${locale} public video shows the poster and loads YouTube only on play`, async ({ page }) => {
-      await page.clock.setFixedTime(new Date("2026-12-01T12:00:00+01:00"));
+    test(`${locale} video on YouTube shows the poster and loads YouTube only on play`, async ({ page }) => {
       const youtubeRequests: string[] = [];
       await page.route(/youtube(-nocookie)?\.com|ytimg\.com|googlevideo\.com/, (route) => {
         youtubeRequests.push(route.request().url());
@@ -34,16 +33,14 @@ test.describe("Studio videos on YouTube", () => {
     });
   }
 
-  test("a phone held upright also gets the YouTube player once public", async ({ page }) => {
-    await page.clock.setFixedTime(new Date("2026-12-01T12:00:00+01:00"));
+  test("a phone held upright also gets the YouTube player", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/en/tutorials/${translate.slug}/`);
     await expect(page.getByTestId("youtube-start")).toBeVisible();
     await expect(page.getByTestId("studio-video-portrait")).toBeHidden();
   });
 
-  test("a video scheduled for later keeps the site's own player until then", async ({ page }) => {
-    await page.clock.setFixedTime(new Date("2026-11-12T12:00:00+01:00"));
+  test("a video without a public YouTube upload keeps the site's own player", async ({ page }) => {
     await page.goto("/en/tutorials/compare-local-writing-models/");
     await expect(page.getByTestId("studio-video")).toBeVisible();
     await expect(page.getByTestId("youtube-start")).toBeHidden();
