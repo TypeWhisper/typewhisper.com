@@ -32,8 +32,8 @@ const captionLabels: Record<Locale, string> = {
 /**
  * A wide product video rendered in the TypeWhisper Demo Studio, in the
  * language of the page. The file loads only when someone starts it, and the
- * voice-over comes with captions. When the video is public on YouTube (see
- * `src/data/youtube-videos.ts`), `playStudioVideosFromYoutube` swaps the
+ * voice-over comes with captions. When the video is listed in
+ * `src/data/youtube-videos.ts`, `playStudioVideosFromYoutube` swaps the
  * site's players for the poster with a play button; the YouTube player loads
  * only after that click. Without JavaScript the site's own file plays.
  */
@@ -69,7 +69,6 @@ export function StudioVideo({
         <div
           className="site-video__youtube"
           data-youtube-video={youtube.id}
-          data-youtube-from={youtube.publicFrom}
           data-youtube-title={label}
           hidden
         >
