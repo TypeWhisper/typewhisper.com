@@ -34,7 +34,8 @@ Diese Version benötigt **TypeWhisper 1.1.0 oder neuer** unter Windows 10 oder n
 - Drei Gemma-3-Instruktionsmodelle im GGUF-Format mit Q4_K_M-Quantisierung: 4B, 12B und 27B
 - Läuft über LLamaSharp und llama.cpp auf der CPU; eine GPU wird nicht genutzt
 - Downloads von festgelegten Hugging-Face-Ständen, geprüft gegen Größe und SHA-256 und nach einer Unterbrechung fortsetzbar
-- Schaltflächen zum Herunterladen, Laden, Entladen und Entfernen auf der Seite des Add-ons
+- Herunterladen und Laden in einem Schritt auf der Seite des Add-ons, dazu Schaltflächen zum Laden, Entladen und Entfernen
+- Heruntergeladene Modelle stehen in der Modellauswahl der Workflows und unter „Standard-LLM“ und werden bei Auswahl geladen
 - TypeWhisper lädt das zuletzt geladene Modell nach einer Freigabe im Leerlauf oder einem Neustart wieder
 - Einstellbare Zahl von CPU-Threads
 
@@ -52,9 +53,9 @@ Die Seite des Add-ons zeigt gerundete Größen von etwa 3, 8 und 17 GB. Die Date
 
 | Einstellung | Was sie bewirkt |
 | --- | --- |
-| **Modell herunterladen** | Lädt die GGUF-Datei herunter und prüft ihre Größe und ihren SHA-256-Wert, bevor sich das Modell laden lässt. Wird ein Download unterbrochen oder abgebrochen, setzt ein erneuter Klick auf **Modell herunterladen** ihn an der Stelle fort, an der er aufgehört hat. |
+| **Herunterladen und laden** | Lädt die GGUF-Datei herunter, prüft ihre Größe und ihren SHA-256-Wert und lädt dann das Modell. Wird ein Download unterbrochen oder abgebrochen, setzt ein erneuter Klick auf **Herunterladen und laden** ihn an der Stelle fort, an der er aufgehört hat. Vor TypeWhisper 1.3 heißt die Schaltfläche **Modell herunterladen** und lädt das Modell nicht. |
 | **Download abbrechen** | Stoppt den laufenden Download. Die Teildatei bleibt erhalten, damit der Download später fortgesetzt werden kann. |
-| **Modell laden** | Lädt das heruntergeladene Modell in den Arbeitsspeicher, damit Workflows es nutzen können. |
+| **Modell laden** | Lädt ein heruntergeladenes Modell in den Arbeitsspeicher, damit Workflows es nutzen können. Während ein Modell lädt, stoppt **Abbrechen** das Laden. |
 | **Modell entladen** | Gibt den Arbeitsspeicher des Modells frei. TypeWhisper lädt es danach nicht mehr von selbst. |
 | **Entfernen** | Entlädt das Modell bei Bedarf und löscht seine GGUF-Datei, nachdem du mit **Modell entfernen** bestätigt hast. |
 | **CPU threads** | Zahl der CPU-Threads für das Modell: **Automatic** (die Hälfte der verfügbaren Prozessoren), 2, 4, 8 oder 16, nie mehr, als dein PC hat. Gilt ab dem nächsten Laden eines Modells. Speichere sie mit **Einstellungen speichern**. Auch in der deutschen App sind die Einstellung und ihre Auswahl englisch beschriftet. |
@@ -63,13 +64,13 @@ Die Seite des Add-ons zeigt gerundete Größen von etwa 3, 8 und 17 GB. Die Date
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Gemma 3 (Local)**. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle unter **Modelle** **Modell herunterladen** neben **Gemma 3 4B (Q4_K_M)**, dem empfohlenen Modell, oder neben einem größeren Modell.
-3. Wähle nach Abschluss des Downloads **Modell laden**.
-4. Öffne **Workflows** in der Seitenleiste der Einstellungen, öffne einen Workflow und wähle unter **Erweitert** **Gemma 3 (Local)** als **Anbieter** und das geladene Modell als **Modell**. Soll Gemma für alle Workflows gelten, die dem Standard folgen, wähle es stattdessen unter **Standard-LLM**.
+2. Wähle unter **Modelle** **Herunterladen und laden** neben **Gemma 3 4B (Q4_K_M)**, dem empfohlenen Modell, oder neben einem größeren Modell. Das Modell wird direkt nach dem Download geladen. Vor TypeWhisper 1.3 wählst du **Modell herunterladen** und nach Abschluss des Downloads **Modell laden**.
+3. Öffne **Workflows** in der Seitenleiste der Einstellungen, öffne einen Workflow und wähle unter **Erweitert** **Gemma 3 (Local)** als **Anbieter** und das Modell als **Modell**. Soll Gemma für alle Workflows gelten, die dem Standard folgen, wähle es stattdessen unter **Standard-LLM**. Ab TypeWhisper 1.3 listen beide Auswahlen auch heruntergeladene Modelle, die nicht geladen sind, mit dem Hinweis **Heruntergeladen · wird bei Auswahl geladen**; wählst du eines, wird es geladen, und der Fortschritt erscheint unter der Auswahl.
 
 ## Hinweise
 
-- Beim Installieren oder Aktivieren des Add-ons wird nichts heruntergeladen oder geladen. Du wählst das Modell und lädst es selbst.
+- Beim Installieren oder Aktivieren des Add-ons wird nichts heruntergeladen oder geladen. Du wählst das Modell selbst.
+- Es bleibt nur ein Modell geladen. Lädst du ein anderes, wird das bisherige freigegeben, und ein Workflow, der es noch verwendet, zeigt unter seiner Modellauswahl **Modell laden**. Mehr dazu unter [Lokale Textmodelle](/de/docs/windows/workflows/#local-text-models) in der Windows-Dokumentation.
 - TypeWhisper merkt sich das Modell, das du geladen hast. Wurde es nach einer Zeit ohne Nutzung freigegeben, wie unter **Inaktive Modelle entladen** in **Einstellungen > Erweitert > Aufnahme** festgelegt, oder nach einem Neustart, lädt die nächste Anfrage es wieder.
 - Wechselst du direkt zu einem anderen Modell, bleibt das aktuelle verfügbar, bis das neue geladen ist; kurz brauchen also beide Arbeitsspeicher. Hat dein PC wenig Arbeitsspeicher, wähle zuerst **Modell entladen** und lade dann das andere Modell.
 - Gemma 3 hat keine eigene Systemrolle. Das Add-on stellt die Anweisungen des Workflows an den Anfang der Nutzereingabe, wie es Googles [Gemma-Promptformat](https://ai.google.dev/gemma/docs/core/prompt-structure) beschreibt.
