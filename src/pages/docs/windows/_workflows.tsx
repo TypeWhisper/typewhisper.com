@@ -4,7 +4,7 @@ import {
   DocsSteps,
   DocsTable,
 } from "@/components/docs/prose";
-import { screenshotPath, type Locale } from "@/i18n/index";
+import { localePath, screenshotPath, type Locale } from "@/i18n/index";
 
 export function windowsWorkflowsHead(locale: Locale) {
   return {
@@ -136,6 +136,62 @@ export default function DocsWindowsWorkflows({ locale = "en" }: { locale?: Local
           {isDe
             ? "Vorlagen erzeugen eine passende Systemanweisung für den gewählten KI-Anbieter. Mit Feintuning-Anweisungen kannst du Ton, Struktur oder Ausgabe weiter eingrenzen. Wähle als KI-Anbieter „Keine (keine Nachbearbeitung)“, wenn der Workflow nur Transkriptions-, Sprach-, Modell- oder Ausgabeoptionen anwenden soll. Dann wird kein Text an einen LLM-Anbieter gesendet."
             : "Templates create a suitable system instruction for the selected AI provider. Fine-tuning instructions can narrow tone, structure, or output. Select None (no post-processing) when the workflow should apply only transcription, language, model, or output options. No text is then sent to an LLM provider."}
+        </p>
+      </DocsSection>
+
+      <DocsSection
+        id="local-text-models"
+        title={isDe ? "Lokale Textmodelle" : "Local text models"}
+      >
+        <p>
+          {isDe ? (
+            <>
+              Mit den Add-ons Local LLM und{" "}
+              <a href={localePath(locale, "/addons/gemma-local")}>
+                Gemma 3 (Local)
+              </a>{" "}
+              verarbeitet ein Workflow seinen Text auf deinem PC. Dafür muss ein Modell heruntergeladen und in den Arbeitsspeicher geladen sein.
+            </>
+          ) : (
+            <>
+              With the Local LLM and{" "}
+              <a href={localePath(locale, "/addons/gemma-local")}>
+                Gemma 3 (Local)
+              </a>{" "}
+              add-ons, a workflow processes its text on your PC. For that, a model has to be downloaded and loaded into memory.
+            </>
+          )}
+        </p>
+        <DocsSteps
+          items={[
+            {
+              title: isDe ? "Herunterladen und laden" : "Download and load",
+              description: isDe
+                ? "Wähle auf der Seite des Add-ons in der Seitenleiste der Einstellungen „Herunterladen und laden“ neben einem Modell. Das Modell wird direkt nach dem Download geladen; die Zeile des Modells zeigt den Fortschritt, und „Abbrechen“ stoppt das Laden. Eine startende Aufnahme bricht das Laden ebenfalls ab."
+                : "On the add-on's page in the Settings sidebar, select Download and load next to a model. The model loads right after its download; its row shows the progress, and Cancel stops the load. A recording that starts also cancels it.",
+            },
+            {
+              title: isDe ? "Im Workflow auswählen" : "Choose it in a workflow",
+              description: isDe
+                ? "Wähle das Add-on in einem Workflow unter „Erweitert“ als „Anbieter“ und das Modell als „Modell“, oder wähle beides unter „Standard-LLM“ für Workflows ohne eigenen Anbieter."
+                : "In a workflow, select the add-on as the Provider under Advanced and the model as the Model, or choose both under Default LLM for workflows without a provider of their own.",
+            },
+          ]}
+        />
+        <p>
+          {isDe
+            ? "Die Modellauswahl eines Workflows und der Dialog „Standard-LLM“ listen auch heruntergeladene Modelle, die noch nicht geladen sind, mit dem Hinweis „Heruntergeladen · wird bei Auswahl geladen“. Wählst du ein solches Modell, wird es sofort geladen. Fortschritt, „Abbrechen“ und Fehler erscheinen unter der Auswahl, und Speichern wartet, bis das Modell geladen ist. Nach einem Fehler lädt „Erneut versuchen“ das Modell noch einmal. Ist noch kein Modell heruntergeladen, nennt die Auswahl die Plugin-Einstellungen, in denen du eines herunterlädst."
+            : "A workflow's model picker and the Default LLM dialog also list downloaded models that are not loaded yet, marked Downloaded · loads when you choose it. Choosing one loads it right away. Progress, Cancel and any error show below the picker, and Save waits until the model has loaded. After an error, Try again loads the model once more. If no model is downloaded yet, the picker points to the plugin settings where you download one."}
+        </p>
+        <p>
+          {isDe
+            ? "Jedes Add-on hält ein Modell geladen. Lädst du ein anderes, wird das bisherige freigegeben. Ein Workflow, der noch das freigegebene Modell verwendet, kann damit keinen Text verarbeiten, bis du es wieder lädst: Öffne den Workflow und wähle unter der Modellauswahl „Modell laden“. TypeWhisper merkt sich das zuletzt geladene Modell und lädt es nach einer Freigabe im Leerlauf oder einem Neustart wieder."
+            : "Each add-on keeps one model loaded. Loading another model releases the previous one. A workflow that still uses the released model cannot process text with it until you load it again: open the workflow and select Load model below the model picker. TypeWhisper remembers the last loaded model and loads it again after an idle release or a restart."}
+        </p>
+        <p>
+          {isDe
+            ? "Das gilt ab TypeWhisper 1.3. In älteren Versionen heißt die Schaltfläche „Modell herunterladen“; wähle nach dem Download „Modell laden“, bevor du das Modell in einem Workflow auswählst. Bis dahin listet die Auswahl keine Modelle des Add-ons."
+            : "This applies to TypeWhisper 1.3 or newer. In older versions, the button is called Download model; select Load model after the download before you choose the model in a workflow. Until then, the picker lists no models of the add-on."}
         </p>
       </DocsSection>
 
