@@ -1,8 +1,8 @@
 ---
 familySlug: "elevenlabs"
 platform: "mac"
-version: "1.2.0"
-description: "ElevenLabs Scribe v2 für Datei- und Echtzeit-Transkription, mit Live-Vorschau schon während des Diktats."
+version: "1.3.0"
+description: "ElevenLabs Scribe v3 und Scribe v2 für Datei- und Echtzeit-Transkription, mit Live-Vorschau schon während des Diktats und der Option „Gemischte Sprachen“."
 id: "com.typewhisper.elevenlabs"
 minAppVersion: "1.8.1"
 minOsVersion: "14.0"
@@ -10,8 +10,10 @@ requirements:
   - "TypeWhisper 1.8.1 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
-  - "Cloud-Transkription mit Scribe v2 und Scribe v2 Medical für klinische Aufnahmen; das Add-on schaltet den Zero Retention Mode von ElevenLabs nicht ein, schicke darüber deshalb keine geschützten Gesundheitsdaten"
-  - "Live-Vorschau beim Diktieren: Im Modus „Automatisch“ streamt Scribe v2 schon während der Aufnahme, und der Endtext steht kurz nach dem Stoppen bereit"
+  - "Scribe v3 ist das Standardmodell für neue Einrichtungen und kostet so viel wie Scribe v2; eine gespeicherte Auswahl von Scribe v2 oder Scribe v2 Medical bleibt erhalten"
+  - "Cloud-Transkription mit Scribe v3, Scribe v2 und Scribe v2 Medical für klinische Aufnahmen; das Add-on schaltet den Zero Retention Mode von ElevenLabs nicht ein, schicke darüber deshalb keine geschützten Gesundheitsdaten"
+  - "Live-Vorschau beim Diktieren: Im Modus „Automatisch“ streamt Scribe v3 mit Scribe v3 Live und Scribe v2 mit Scribe v2 Realtime schon während der Aufnahme, und der Endtext steht kurz nach dem Stoppen bereit"
+  - "„Gemischte Sprachen“ (nur Scribe v3, standardmäßig aus) lässt Scribe v3 Live Sprachwechseln innerhalb eines Satzes folgen; Endtext von der Batch-API, etwa mit Wörterbuchbegriffen, nutzt die Option nicht"
   - "Auch lange Diktate laufen mit Live-Vorschau über die Echtzeit-Sitzung, die in Sprechpausen Abschnitte abschließt"
   - "Automatischer REST-Fallback, wenn Streaming nicht verfügbar ist"
   - "Scribe v2 Medical und „Nur REST“ transkribieren nach der Aufnahme; eine Live-Vorschau kommt dann nur von einer geladenen lokalen Engine"
@@ -19,8 +21,9 @@ highlights:
   - "Wortzeitstempel und Satzsegmente in der lokalen HTTP-API (ab TypeWhisper 1.8.2)"
 configuration:
   - "API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen"
-  - "Scribe v2 oder Scribe v2 Medical und den automatischen Echtzeit-/REST- oder reinen REST-Modus wählen"
+  - "Scribe v3, Scribe v2 oder Scribe v2 Medical und den automatischen Echtzeit-/REST- oder reinen REST-Modus wählen"
+  - "Mit Scribe v3 „Gemischte Sprachen“ für Diktate einschalten, die innerhalb eines Satzes die Sprache wechseln"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ElevenLabsPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-elevenlabs-v1.2.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-elevenlabs-v1.3.0"
 processing: "cloud"
 ---
