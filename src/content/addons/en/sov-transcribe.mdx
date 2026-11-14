@@ -1,0 +1,64 @@
+---
+slug: "sov-transcribe"
+name: "SOV-Transcribe"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "Cpu"
+description: "Salesforce SOV-Transcribe-1 locally on Apple silicon: punctuated transcripts in seven languages, for Macs with 32 GB of memory or more."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.sov-transcribe"
+minAppVersion: "1.8.3"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SOVTranscribePlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sov-transcribe-v1.0.0"
+principalClass: "SOVTranscribePlugin"
+screenshotAlt: "SOV-Transcribe settings in TypeWhisper for macOS: a field for the optional Hugging Face token and the model SOV-Transcribe-1 (4-bit) with its download size and memory requirement"
+---
+
+## About
+
+SOV-Transcribe runs [Salesforce SOV-Transcribe-1](https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1) on your Mac through MLX. The model combines a Whisper large-v3 audio encoder with a Gemma 4 mixture-of-experts decoder and writes transcripts with punctuation and capitalization in English, German, French, Spanish, Italian, Portuguese, and Dutch.
+
+This is a local engine. Your audio is transcribed on your Mac. The add-on uses the network to download the model.
+
+## Requirements
+
+This release requires **TypeWhisper 1.8.3 or newer** on macOS 14 or later and a Mac with **Apple silicon and 32 GB of memory or more**.
+
+The add-on offers the 4-bit model. It is a download of about 15.6 GB and uses about 16 GB of memory while it transcribes. You need no API key and no account.
+
+On a Mac with less than 32 GB of memory the add-on offers no model to TypeWhisper. Its settings show the model with the memory requirement, and **Download & Load** stays unavailable.
+
+## Setup
+
+1. In TypeWhisper, open **Settings > Discover plugins** and install **SOV-Transcribe**. The add-on then appears in the Settings sidebar, and its page opens.
+2. Select **Download & Load** beside **SOV-Transcribe-1 (4-bit)**.
+3. Select **SOV-Transcribe (MLX)** as your transcription engine in the dictation settings or in a profile.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **HuggingFace Token** | Optional. A token raises the download rate limits of Hugging Face. **Save** checks the token with Hugging Face and stores a valid one in the macOS Keychain. **Remove** deletes the stored token. |
+| **Model** | Shows SOV-Transcribe-1 (4-bit) with its size and memory requirement. **Download & Load** downloads the model and loads it; when the files are already on your Mac the button is called **Load**. **Unload** releases the model from memory and keeps the downloaded files. |
+| **1 downloaded model** | Expands to the downloaded model. There you delete its files when you no longer need them. |
+
+## Transcription
+
+The add-on shows text while the model writes it. When you choose a language for dictation, the add-on tells the model which language it hears. Without a selected language the model recognizes the language on its own. Translation is not supported.
+
+The add-on passes your TypeWhisper dictionary terms to the model as a contextual vocabulary, up to 4,000 characters. This helps the model spell names and technical terms the way you write them. Dictionary corrections are still applied after transcription.
+
+The model handles up to 30 minutes in one pass. The add-on splits longer recordings into parts of at most 30 minutes at a quiet moment and transcribes them one after the other.
+
+## Local processing and privacy
+
+Recognition runs on your Mac. The add-on sends no audio and no text to a cloud service.
+
+The model files come from the Hugging Face repository [`TypeWhisper/SOV-Transcribe-1-4bit`](https://huggingface.co/TypeWhisper/SOV-Transcribe-1-4bit), a 4-bit MLX conversion of Salesforce's original weights. TypeWhisper stores them in `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.sov-transcribe/models`. The add-on also contacts Hugging Face when it checks a token.
+
+The model and Salesforce's reference code are licensed under Apache 2.0.

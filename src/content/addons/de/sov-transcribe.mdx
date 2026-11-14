@@ -1,0 +1,64 @@
+---
+slug: "sov-transcribe"
+name: "SOV-Transcribe"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "Cpu"
+description: "Salesforce SOV-Transcribe-1 lokal auf Apple Silicon: Transkripte mit Satzzeichen in sieben Sprachen, für Macs mit 32 GB Arbeitsspeicher oder mehr."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.sov-transcribe"
+minAppVersion: "1.8.3"
+minOsVersion: "14.0"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SOVTranscribePlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sov-transcribe-v1.0.0"
+principalClass: "SOVTranscribePlugin"
+screenshotAlt: "Einstellungen von SOV-Transcribe in TypeWhisper für macOS: ein Feld für das optionale Hugging-Face-Token und das Modell SOV-Transcribe-1 (4-bit) mit Downloadgröße und Speicherbedarf"
+---
+
+## Über
+
+SOV-Transcribe führt [Salesforce SOV-Transcribe-1](https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1) über MLX auf deinem Mac aus. Das Modell verbindet einen Whisper-large-v3-Audio-Encoder mit einem Gemma-4-Decoder aus Expertennetzen und schreibt Transkripte mit Satzzeichen und Großschreibung auf Englisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch und Niederländisch.
+
+Das ist eine lokale Engine. Dein Audio wird auf deinem Mac transkribiert. Das Add-on nutzt das Netzwerk, um das Modell herunterzuladen.
+
+## Voraussetzungen
+
+Diese Version braucht **TypeWhisper 1.8.3 oder neuer** ab macOS 14 und einen Mac mit **Apple Silicon und mindestens 32 GB Arbeitsspeicher**.
+
+Das Add-on bietet das 4-Bit-Modell an. Der Download ist etwa 15,6 GB groß, beim Transkribieren belegt das Modell etwa 16 GB Arbeitsspeicher. Du brauchst keinen API-Schlüssel und kein Konto.
+
+Auf einem Mac mit weniger als 32 GB Arbeitsspeicher bietet das Add-on TypeWhisper kein Modell an. Die Einstellungen zeigen das Modell mit dem Speicherbedarf, und **Laden & Aktivieren** bleibt gesperrt.
+
+## Einrichtung
+
+1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **SOV-Transcribe**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+2. Wähle **Laden & Aktivieren** neben **SOV-Transcribe-1 (4-bit)**.
+3. Wähle **SOV-Transcribe (MLX)** in den Diktat-Einstellungen oder in einem Profil als Transkriptions-Engine.
+
+## Einstellungen
+
+| Einstellung | Was sie steuert |
+| --- | --- |
+| **HuggingFace Token** | Optional. Ein Token hebt die Download-Limits von Hugging Face an. **Speichern** prüft das Token bei Hugging Face und legt ein gültiges im macOS-Schlüsselbund ab. **Entfernen** löscht das gespeicherte Token. |
+| **Modell** | Zeigt SOV-Transcribe-1 (4-bit) mit Größe und Speicherbedarf. **Laden & Aktivieren** lädt das Modell herunter und aktiviert es; liegen die Dateien schon auf deinem Mac, heißt die Schaltfläche **Laden**. **Deaktivieren** gibt den Arbeitsspeicher frei und behält die heruntergeladenen Dateien. |
+| **1 heruntergeladenes Modell** | Klappt das heruntergeladene Modell auf. Dort löschst du seine Dateien, wenn du es nicht mehr brauchst. |
+
+## Transkription
+
+Das Add-on zeigt den Text schon, während das Modell ihn schreibt. Wählst du für das Diktat eine Sprache, sagt das Add-on dem Modell, welche Sprache es hört. Ohne gewählte Sprache erkennt das Modell die Sprache selbst. Übersetzen kann es nicht.
+
+Das Add-on gibt deine TypeWhisper-Wörterbuchbegriffe als Vokabelliste an das Modell weiter, bis zu 4.000 Zeichen. So schreibt das Modell Namen und Fachbegriffe so, wie du sie schreibst. Die Korrekturen aus dem Wörterbuch wendet TypeWhisper weiterhin nach der Transkription an.
+
+Das Modell verarbeitet bis zu 30 Minuten in einem Durchgang. Längere Aufnahmen teilt das Add-on an einer ruhigen Stelle in Abschnitte von höchstens 30 Minuten und transkribiert sie nacheinander.
+
+## Lokale Verarbeitung und Datenschutz
+
+Die Erkennung läuft auf deinem Mac. Das Add-on schickt weder Audio noch Text an einen Cloud-Dienst.
+
+Die Modelldateien kommen aus dem Hugging-Face-Repository [`TypeWhisper/SOV-Transcribe-1-4bit`](https://huggingface.co/TypeWhisper/SOV-Transcribe-1-4bit), einer 4-Bit-MLX-Umwandlung der Originalgewichte von Salesforce. TypeWhisper speichert sie in `~/Library/Application Support/TypeWhisper/PluginData/com.typewhisper.sov-transcribe/models`. Außerdem kontaktiert das Add-on Hugging Face, wenn es ein Token prüft.
+
+Das Modell und der Referenzcode von Salesforce stehen unter der Lizenz Apache 2.0.
