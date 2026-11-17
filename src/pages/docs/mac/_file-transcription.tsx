@@ -22,6 +22,14 @@ export default function DocsMacFileTranscription({
       </DocsSection>
 
       <DocsSection
+        id="export"
+        title={t(locale, "docs.mac.fileTranscription.export.title")}
+      >
+        <p>{t(locale, "docs.mac.fileTranscription.export.desc1")}</p>
+        <p>{t(locale, "docs.mac.fileTranscription.export.desc2")}</p>
+      </DocsSection>
+
+      <DocsSection
         id="watch-folder"
         title={t(locale, "docs.mac.fileTranscription.watchFolder.title")}
       >
