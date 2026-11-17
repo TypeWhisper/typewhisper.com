@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { keepSiteVideos } from "./helpers/site-videos";
 
 const translate = { slug: "translate-selected-text", ids: { en: "yne1dhjyxnk", de: "GH42MUwdnu0" } } as const;
 
@@ -41,7 +42,10 @@ test.describe("Studio videos on YouTube", () => {
   });
 
   test("a video without a public YouTube upload keeps the site's own player", async ({ page }) => {
-    await page.goto("/en/tutorials/compare-local-writing-models/");
+    // Every studio video has a YouTube entry, so drop the box to stand in for
+    // a video that is not public yet.
+    await keepSiteVideos(page);
+    await page.goto(`/en/tutorials/${translate.slug}/`);
     await expect(page.getByTestId("studio-video")).toBeVisible();
     await expect(page.getByTestId("youtube-start")).toBeHidden();
   });
