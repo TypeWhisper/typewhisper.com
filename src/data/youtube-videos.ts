@@ -22,6 +22,10 @@ export const youtubeVideos: Record<string, Partial<Record<Locale, YoutubeVideo>>
     en: { id: "u-v3FrgiFQU" },
     de: { id: "X8kpSPzWlM0" },
   },
+  "ios-compare-local-models": {
+    en: { id: "kvEXlkoWuCw" },
+    de: { id: "gl4XlY8Q0K8" },
+  },
   "mac-translate-selection": {
     en: { id: "yne1dhjyxnk" },
     de: { id: "GH42MUwdnu0" },
