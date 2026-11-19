@@ -129,11 +129,21 @@ function scalar(data, key) {
   return data.match(new RegExp(`^${key}: ["']?([^"'\\n]+)["']?$`, "m"))?.[1];
 }
 
-// The catalog's minHostVersion is the plugin host version, 1.1.6 in both
-// TypeWhisper for Windows 1.1.0 and 1.2.0, not an app version. Every catalog
-// plugin therefore runs on 1.1.0, the first release with Discover plugins, and
-// a later version here would wrongly exclude users of 1.1.
+// The catalog's minHostVersion is the plugin host version, not an app
+// version. Plugins built for host 1.1.6 run on TypeWhisper for Windows 1.1.0,
+// the first release with Discover plugins, and name it. An edition that needs a
+// newer host, such as AssemblyAI 1.4.0 with plugin API 1.3.1, names the first
+// app version with that host instead; it can never be older than 1.1.0.
 const FIRST_APP_WITH_DISCOVER = "1.1.0";
+
+function compareVersions(a, b) {
+  const left = a.split(".").map(Number);
+  const right = b.split(".").map(Number);
+  for (let i = 0; i < 3; i++) {
+    if (left[i] !== right[i]) return left[i] - right[i];
+  }
+  return 0;
+}
 
 test("Windows add-ons name the first app version with Discover plugins", async () => {
   const newer = { en: "or newer", de: "oder neuer" };
@@ -150,7 +160,8 @@ test("Windows add-ons name the first app version with Discover plugins", async (
 
       const { data } = split(content);
       const minimum = scalar(data, "minAppVersion");
-      assert.equal(minimum, FIRST_APP_WITH_DISCOVER, `${locale}/${slug}: minAppVersion`);
+      assert.match(minimum ?? "", /^\d+\.\d+\.\d+$/, `${locale}/${slug}: minAppVersion`);
+      assert.ok(compareVersions(minimum, FIRST_APP_WITH_DISCOVER) >= 0, `${locale}/${slug}: minAppVersion before Discover plugins`);
       assert.equal(
         list(data, "requirements")[0],
         `TypeWhisper ${minimum} ${newer[locale]}`,
