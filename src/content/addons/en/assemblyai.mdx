@@ -5,7 +5,7 @@ author: TypeWhisper
 icon: AudioWaveform
 iconUrl: /brand-logos/assemblyai/logo-light.svg
 iconUrlDark: /brand-logos/assemblyai/logo-dark.svg
-description: Cloud transcription using AssemblyAI's Universal models with real-time WebSocket streaming and REST fallback.
+description: Cloud transcription with AssemblyAI, with live text while you dictate, cleaned-up dictations and transcripts of recordings and files.
 categories:
   - transcription
 platforms:
@@ -17,26 +17,45 @@ sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisper
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AssemblyAIPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.AssemblyAi"
+screenshotAlt: "AssemblyAI settings in TypeWhisper for macOS: API key, AssemblyAI-STT-3.7 as the model, the Transcription choices Live, Sync, Dictation and Async with their prices, the Live model picker and speaker diarization"
 ---
 
-## About this edition
+## About
 
-The macOS edition provides **Universal-3.5 Pro** and **Universal-2**. It uses live WebSocket transcription and falls back to REST processing when the connection fails. Enabling speaker diarization selects the structured REST path and disables live preview.
+AssemblyAI adds cloud speech-to-text to TypeWhisper. On Mac, the add-on 1.4.0 and later uses **AssemblyAI-STT-3.7** and **Universal-2**. The **Transcription** setting decides how a dictation reaches AssemblyAI:
+
+| Transcription | What happens | AssemblyAI list price |
+| --- | --- | --- |
+| Live | Dictations with a live preview stream while you speak; the final text is ready right after you stop | $0.45/h with Realtime-Agent, $0.30/h with Realtime, for the time the connection is open |
+| Sync | The recording is uploaded when you stop; the text is usually ready in under half a second | $0.30/h |
+| Dictation | AssemblyAI's Dictation API transcribes the dictation with Universal-3.6 Pro and returns it cleaned up: filler words removed, punctuation and capitalization fixed | $0.62/h |
+| Async | Lowest price; the text takes a few seconds after you stop | $0.21/h |
+
+Only Live shows a live preview from AssemblyAI. Recordings, file transcriptions, watch folders and the HTTP API keep the verbatim transcript: Live, Sync and Dictation send them to the Sync API, and Async and recordings over 20 minutes use the async API. In the Dictation mode, dictations over 20 minutes, with more than 100 dictionary terms or in a language the Dictation API does not support, and failed requests use the async API without cleanup. The prices are AssemblyAI's list prices in November 2026; add-ons such as dictionary terms can cost extra.
 
 ## Models
 
 | Model | ID | Languages |
 | --- | --- | --- |
-| Universal-3.5 Pro | `universal-3-5-pro` | 18 |
+| AssemblyAI-STT-3.7 | `assemblyai-stt-3-7` | 32 |
 | Universal-2 | `universal-2` | 37 |
 
-Saved macOS selections of `universal-3-pro` migrate to Universal-3.5 Pro. The model and language determine the streaming endpoint. Dictionary terms are sent as model-specific recognition hints.
+AssemblyAI-STT-3.7 transcribes recordings on the async API and sends a language it does not support to Universal-2. Filler words stay out of the transcript. In the Live mode, the **Live model** setting picks the realtime model:
+
+- **Realtime-Agent** (`assemblyai-stt-3-7-realtime-agent`, $0.45/h, the default) keeps the preview steady while you speak.
+- **Realtime** (`assemblyai-stt-3-7-realtime`, $0.30/h) costs less, but the preview changes more while you speak. The final text is as accurate.
+
+The Sync API runs Universal-3.6 Pro. Universal-2 always uses the async API, at $0.15/h.
+
+AssemblyAI deprecated Universal-3.5 Pro on November 17, 2026, when it released AssemblyAI-STT-3.7. Saved selections of Universal-3.5 Pro and Universal-3 Pro, also in workflows, move to AssemblyAI-STT-3.7. Dictionary terms reach AssemblyAI as keyterms, and as word boost with Universal-2. A live session takes up to 100 terms of up to 50 characters; with more, the recording is also transcribed with all of them, which is billed in addition.
+
+Speaker diarization applies to recordings, file transcriptions, watch folders and the HTTP API. It always uses the async API, and dictations then show no live preview from AssemblyAI.
 
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **AssemblyAI**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Save and validate your AssemblyAI API key.
-3. Choose a model and a supported language, or automatic detection.
+3. Choose a model and the Transcription setting, and with Live the Live model.
 4. Enable speaker diarization only when you need it.
 5. Select AssemblyAI as the workflow's transcription provider.
 
