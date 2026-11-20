@@ -1,0 +1,77 @@
+---
+slug: "zoom"
+name: "Zoom Scribe"
+author: "TypeWhisper"
+version: "1.0.0"
+icon: "AudioWaveform"
+description: "Cloud transcription with Zoom Scribe: one model for ten languages with language detection, single-language models with dictionary terms, English Pro, and live dictation."
+categories:
+  - transcription
+platforms:
+  - mac
+source: "official"
+id: "com.typewhisper.zoom"
+minAppVersion: "1.8.3"
+minOsVersion: "14.0"
+homepage: "https://developers.zoom.us/docs/ai-services/scribe/"
+apiDocsUrl: "https://developers.zoom.us/docs/ai-services/scribe/fast-mode/"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-zoom-v1.0.0"
+principalClass: "ZoomPlugin"
+screenshotAlt: "Zoom Scribe settings in TypeWhisper for macOS: the API key field, the model Scribe Multilingual, and the transcription modes Live and After recording"
+---
+
+## About
+
+Zoom Scribe connects TypeWhisper to [Zoom Scribe](https://developers.zoom.us/docs/ai-services/scribe/), the speech recognition of Zoom AI Services. Dictations with a live preview stream to Zoom while you speak. Recordings and audio files go to Zoom when they end.
+
+In the [TypeWhisper benchmark](https://typewhisper.github.io/typewhisper-benchmark/), Scribe had the lowest error rate of all measured models in Spanish, French, and Italian, and its English Pro model was level with the best cloud model in English.
+
+This is a cloud engine. Your audio is sent to Zoom for transcription.
+
+## Requirements
+
+This release requires **TypeWhisper 1.8.3 or newer** on macOS 14 or later and an **API key from Zoom AI Services**.
+
+Zoom bills usage in Build Credits. A new account starts with a free trial. Check your balance and the current rates on the usage page at [zoom.ai](https://zoom.ai).
+
+## Setup
+
+1. Sign in at [zoom.ai](https://zoom.ai), open a project, and create a key under **Configure > API Keys**. Zoom shows the full key only once, so copy it right away.
+2. In TypeWhisper, open **Settings > Discover plugins** and install **Zoom Scribe**. The add-on then appears in the Settings sidebar, and its page opens.
+3. Paste the key and select **Save**. TypeWhisper checks the key with Zoom without transcribing anything and stores it in the macOS Keychain.
+4. Select **Zoom Scribe** as your transcription engine in the dictation settings or in a profile.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **API Key** | **Save** checks the key with Zoom and stores a valid one in the macOS Keychain. **Remove** deletes the stored key. |
+| **Model** | **Scribe Multilingual** (the default), **Scribe Single Language**, or **Scribe English Pro**. See the table below. |
+| **Transcription** | **Live** streams dictations that show a live preview to Zoom while you speak. **After recording** sends every recording to Zoom when you stop, without a preview from Zoom. |
+
+## Models
+
+| Model | Languages | Dictionary terms |
+| --- | --- | --- |
+| **Scribe Multilingual** | English, German, Spanish, French, Italian, Portuguese, Japanese, Korean, Chinese, Arabic | Not used |
+| **Scribe Single Language** | Zoom's model for the dictation language: English, German, Spanish, French, Italian, Portuguese, Japanese, Chinese, Arabic | Up to 100 |
+| **Scribe English Pro** | English | Up to 100 |
+
+Scribe Multilingual recognizes the language on its own when you have not chosen one for dictation. It also takes Korean and every dictation without a language from the other two models, and then works without dictionary terms. Translation is not supported.
+
+## Transcription
+
+In the **Live** mode, a dictation streams to Zoom in small pieces while you speak. The preview shows each finished sentence and the one Zoom is still hearing. When you stop, the final text is usually ready about half a second later.
+
+Recordings, audio files, and dictations without a live preview always go to Zoom when they end, and so does every recording in the **After recording** mode. The text is usually ready about a second later. Zoom takes at most 2 MB per request, so TypeWhisper sends long recordings in parts of up to three minutes.
+
+Dictionary corrections from TypeWhisper are applied to the text afterwards with every model.
+
+## Cloud processing and privacy
+
+Audio is sent to Zoom whenever Zoom Scribe is your transcription engine. The API key is stored in the macOS Keychain. The selected model and transcription mode are stored as local plugin settings.
+
+Review Zoom's current privacy terms and pricing for AI Services before you send confidential recordings.
+
+Sources: [Zoom Scribe documentation](https://developers.zoom.us/docs/ai-services/scribe/), [Live mode](https://developers.zoom.us/docs/ai-services/scribe/live-mode/), [Custom vocabulary](https://developers.zoom.us/docs/ai-services/scribe/custom-vocabulary/), [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin)
