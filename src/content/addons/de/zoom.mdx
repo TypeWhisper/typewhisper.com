@@ -2,7 +2,6 @@
 slug: "zoom"
 name: "Zoom Scribe"
 author: "TypeWhisper"
-version: "1.0.0"
 icon: "AudioWaveform"
 iconUrl: "/brand-logos/zoom/logo.svg"
 description: "Cloud-Transkription mit Zoom Scribe: ein Modell für zehn Sprachen mit Spracherkennung, Einzelsprachmodelle mit Wörterbuchbegriffen, English Pro und Live-Diktat."
@@ -10,15 +9,15 @@ categories:
   - transcription
 platforms:
   - mac
+  - windows
 source: "official"
 id: "com.typewhisper.zoom"
-minAppVersion: "1.8.3"
-minOsVersion: "14.0"
 homepage: "https://developers.zoom.us/docs/ai-services/scribe/"
 apiDocsUrl: "https://developers.zoom.us/docs/ai-services/scribe/fast-mode/"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-zoom-v1.0.0"
-principalClass: "ZoomPlugin"
+sourceUrls:
+  mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin"
+  windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Zoom"
 screenshotAlt: "Einstellungen von Zoom Scribe in TypeWhisper für macOS: das Feld für den API-Schlüssel, das Modell Scribe Multilingual und die Transkriptionsarten Live und Nach der Aufnahme"
 ---
 
@@ -32,7 +31,7 @@ Das ist eine Cloud-Engine. Dein Audio wird zur Transkription an Zoom gesendet.
 
 ## Voraussetzungen
 
-Diese Version braucht **TypeWhisper 1.8.3 oder neuer** ab macOS 14 und einen **API-Schlüssel von Zoom AI Services**.
+Auf dem Mac braucht das Add-on **TypeWhisper 1.8.3 oder neuer** ab macOS 14, unter Windows **TypeWhisper 1.3.0 oder neuer**. Auf beiden brauchst du einen **API-Schlüssel von Zoom AI Services**.
 
 Zoom rechnet die Nutzung in Build Credits ab. Ein neues Konto startet mit einer kostenlosen Testphase. Dein Guthaben und die aktuellen Preise siehst du auf der Nutzungsseite von [zoom.ai](https://zoom.ai).
 
@@ -40,7 +39,7 @@ Zoom rechnet die Nutzung in Build Credits ab. Ein neues Konto startet mit einer 
 
 1. Melde dich auf [zoom.ai](https://zoom.ai) an, öffne ein Projekt und erstelle unter **Configure > API Keys** einen Schlüssel. Zoom zeigt den vollständigen Schlüssel nur einmal an, kopiere ihn also sofort.
 2. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Zoom Scribe**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-3. Füge den Schlüssel ein und wähle **Speichern**. TypeWhisper prüft den Schlüssel bei Zoom, ohne etwas zu transkribieren, und speichert ihn im macOS-Schlüsselbund.
+3. Füge den Schlüssel ein und wähle **Speichern**. TypeWhisper prüft den Schlüssel bei Zoom, ohne etwas zu transkribieren, und speichert ihn im macOS-Schlüsselbund. Unter Windows sind die Schritte etwas anders; siehe die Windows-Anleitung.
 4. Wähle **Zoom Scribe** in den Diktat-Einstellungen oder in einem Profil als Transkriptions-Engine.
 
 ## Einstellungen
@@ -65,14 +64,14 @@ Scribe Multilingual erkennt die Sprache selbst, wenn du für das Diktat keine ge
 
 Im Modus **Live** geht ein Diktat in kleinen Stücken an Zoom, während du sprichst. Die Vorschau zeigt jeden fertigen Satz und den, den Zoom gerade noch hört. Nach dem Stoppen ist der fertige Text meist nach etwa einer halben Sekunde da.
 
-Aufnahmen, Audiodateien und Diktate ohne Live-Vorschau gehen immer erst an Zoom, wenn sie zu Ende sind, im Modus **Nach der Aufnahme** auch jedes Diktat. Der Text ist dann meist nach etwa einer Sekunde da. Zoom nimmt höchstens 2 MB pro Anfrage an, deshalb sendet TypeWhisper lange Aufnahmen in Teilen von bis zu drei Minuten.
+Aufnahmen, Audiodateien und Diktate ohne Live-Vorschau gehen immer erst an Zoom, wenn sie zu Ende sind, im Modus **Nach der Aufnahme** auch jedes Diktat. Der Text ist dann meist nach etwa einer Sekunde da. Zoom nimmt höchstens 2 MB pro Anfrage an, deshalb sendet TypeWhisper lange Aufnahmen in Teilen: auf dem Mac bis zu drei Minuten, unter Windows bis zu 45 Sekunden, weil Windows das Audio unkomprimiert sendet.
 
 Die Wörterbuch-Korrekturen von TypeWhisper werden bei jedem Modell anschließend auf den Text angewendet.
 
 ## Cloud-Verarbeitung und Datenschutz
 
-Dein Audio geht an Zoom, sobald Zoom Scribe deine Transkriptions-Engine ist. Der API-Schlüssel liegt im macOS-Schlüsselbund. Modell und Transkriptionsart werden als lokale Plugin-Einstellungen gespeichert.
+Dein Audio geht an Zoom, sobald Zoom Scribe deine Transkriptions-Engine ist. Der API-Schlüssel liegt im macOS-Schlüsselbund oder unter Windows verschlüsselt für dein Windows-Konto. Modell und Transkriptionsart werden als lokale Plugin-Einstellungen gespeichert.
 
 Prüfe die aktuellen Datenschutzbedingungen und Preise von Zoom AI Services, bevor du vertrauliche Aufnahmen sendest.
 
-Quellen: [Zoom-Scribe-Dokumentation](https://developers.zoom.us/docs/ai-services/scribe/), [Live-Modus](https://developers.zoom.us/docs/ai-services/scribe/live-mode/), [Eigenes Vokabular](https://developers.zoom.us/docs/ai-services/scribe/custom-vocabulary/), [Quellcode des macOS-Plugins](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin)
+Quellen: [Zoom-Scribe-Dokumentation](https://developers.zoom.us/docs/ai-services/scribe/), [Live-Modus](https://developers.zoom.us/docs/ai-services/scribe/live-mode/), [Eigenes Vokabular](https://developers.zoom.us/docs/ai-services/scribe/custom-vocabulary/), [Quellcode des macOS-Plugins](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ZoomPlugin), [Quellcode des Windows-Plugins](https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Zoom)

@@ -130,5 +130,9 @@
   "xai-grok": {
     "mac": ["transcription", "llm", "tts"],
     "windows": ["transcription", "llm", "tts"]
+  },
+  "zoom": {
+    "mac": ["transcription"],
+    "windows": ["transcription"]
   }
 }

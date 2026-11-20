@@ -1,0 +1,54 @@
+---
+familySlug: "zoom"
+platform: "windows"
+version: "1.0.0"
+description: "Cloud transcription with Zoom Scribe: one model for ten languages with language detection, single-language models with dictionary terms, English Pro, and live dictation."
+id: "com.typewhisper.zoom"
+minAppVersion: "1.3.0"
+requirements:
+  - "TypeWhisper 1.3.0 or newer"
+  - "Windows 10 or newer"
+  - "An API key from Zoom AI Services"
+highlights:
+  - "Scribe Multilingual (the default) for ten languages, with language detection when no language is set"
+  - "Scribe Single Language uses Zoom's model for the dictation language, with up to 100 dictionary terms"
+  - "Scribe English Pro, Zoom's most accurate English model, with dictionary terms"
+  - "Live: dictations stream while you speak, and in our tests the final text was ready 0.25 to 0.45 seconds after the stop"
+  - "After recording: every recording goes to Zoom when you stop, and the text is usually ready about a second later, without a preview from Zoom"
+  - "Recordings, file transcriptions, watch folders and the HTTP API go to Zoom when they end, in parts of up to 45 seconds, with timestamps for subtitles"
+  - "Check connection tests a key without sending audio and costs no credits"
+configuration:
+  - "Enter your Zoom AI Services API key and select Check connection"
+  - "Choose Scribe Multilingual, Scribe Single Language or Scribe English Pro as the Transcription model"
+  - "Choose Live or After recording under Transcription"
+  - "Select Save settings"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Zoom"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-zoom-v1.0.0"
+processing: "cloud"
+---
+
+## Setup
+
+1. Sign in at [zoom.ai](https://zoom.ai), open a project, and create a key under **Configure > API Keys**. Zoom shows the full key only once, so copy it right away.
+2. In TypeWhisper, open **Settings > Discover plugins** and install **Zoom Scribe**. The add-on then appears in the Settings sidebar, and its page opens.
+3. Paste the key under **API key** and select **Check connection**. TypeWhisper asks Zoom for a model that does not exist, without audio: Zoom accepts a valid key and rejects an invalid one, and nothing is transcribed or billed.
+4. Choose the **Transcription model** and, under **Transcription**, **Live** or **After recording**, then select **Save settings**. The key is stored encrypted for your Windows account.
+5. Select **Zoom Scribe** as your transcription engine in the dictation settings or in a workflow.
+
+## Settings
+
+| Setting | What it controls |
+| --- | --- |
+| **API key** | The key from Zoom AI Services. **Check connection** tests the key you entered without saving it. **Remove saved key** deletes the stored key. |
+| **Transcription model** | **Scribe Multilingual** (the default), **Scribe Single Language**, or **Scribe English Pro**. See the models on the add-on page. |
+| **Transcription** | **Live** streams dictations to Zoom while you speak and shows Zoom's live preview. **After recording** sends every recording to Zoom when you stop, without a preview from Zoom. |
+
+## Transcription
+
+In the **Live** mode, a dictation streams to Zoom in small pieces while you speak. TypeWhisper waits until Zoom has applied the model, language and dictionary terms before it sends audio, so a wrong key or a model your account cannot use fails before you speak. When you stop, the final text was ready 0.25 to 0.45 seconds later in our tests. If the live connection fails or Zoom does not finish within ten seconds, TypeWhisper sends the whole recording to Zoom instead.
+
+Recordings, audio files, watch folders, the HTTP API and dictations without a live preview always go to Zoom when they end, and so does every dictation in the **After recording** mode. The text was ready about a second later in our tests. Zoom takes at most 2 MB per request, and Windows sends uncompressed audio, so TypeWhisper splits recordings longer than 45 seconds at pauses: a 73-second recording took about five seconds. Zoom's timestamps become segments, so subtitles work for files.
+
+Chinese and Japanese text is joined without spaces, as Zoom writes it.
+
+In our tests, Scribe Single Language for German sometimes left out the start of a sentence in the Live mode. If you notice this, use Scribe Multilingual or **After recording**.

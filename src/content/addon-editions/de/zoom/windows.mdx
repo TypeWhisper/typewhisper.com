@@ -1,0 +1,54 @@
+---
+familySlug: "zoom"
+platform: "windows"
+version: "1.0.0"
+description: "Cloud-Transkription mit Zoom Scribe: ein Modell für zehn Sprachen mit Spracherkennung, Einzelsprachmodelle mit Wörterbuchbegriffen, English Pro und Live-Diktat."
+id: "com.typewhisper.zoom"
+minAppVersion: "1.3.0"
+requirements:
+  - "TypeWhisper 1.3.0 oder neuer"
+  - "Windows 10 oder neuer"
+  - "Ein API-Schlüssel von Zoom AI Services"
+highlights:
+  - "Scribe Multilingual (Standard) für zehn Sprachen, mit Spracherkennung, wenn keine Sprache eingestellt ist"
+  - "Scribe Single Language nutzt Zooms Modell für die Diktiersprache, mit bis zu 100 Wörterbuchbegriffen"
+  - "Scribe English Pro, Zooms genauestes englisches Modell, mit Wörterbuchbegriffen"
+  - "Live: Diktate werden beim Sprechen gestreamt, und in unseren Tests war der fertige Text 0,25 bis 0,45 Sekunden nach dem Stopp da"
+  - "Nach der Aufnahme: Jede Aufnahme geht beim Stoppen an Zoom, und der Text ist meist nach etwa einer Sekunde da, ohne Vorschau von Zoom"
+  - "Aufnahmen, Dateitranskriptionen, überwachte Ordner und die HTTP-API gehen an Zoom, wenn sie enden, in Teilen von bis zu 45 Sekunden, mit Zeitstempeln für Untertitel"
+  - "„Verbindung prüfen“ testet einen Schlüssel ohne Audio und kostet keine Credits"
+configuration:
+  - "Trag deinen API-Schlüssel von Zoom AI Services ein und teste ihn mit „Verbindung prüfen“"
+  - "Wähle Scribe Multilingual, Scribe Single Language oder Scribe English Pro als „Transkriptionsmodell“"
+  - "Wähle unter „Transkription“ Live oder Nach der Aufnahme"
+  - "Wähle „Einstellungen speichern“"
+sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Zoom"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-zoom-v1.0.0"
+processing: "cloud"
+---
+
+## Einrichtung
+
+1. Melde dich auf [zoom.ai](https://zoom.ai) an, öffne ein Projekt und erstelle unter **Configure > API Keys** einen Schlüssel. Zoom zeigt den vollständigen Schlüssel nur einmal an, kopiere ihn also sofort.
+2. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Zoom Scribe**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
+3. Füge den Schlüssel unter **API-Schlüssel** ein und wähle **Verbindung prüfen**. TypeWhisper fragt bei Zoom ohne Audio nach einem Modell, das es nicht gibt: Zoom nimmt einen gültigen Schlüssel an und lehnt einen ungültigen ab, transkribiert und abgerechnet wird nichts.
+4. Wähle das **Transkriptionsmodell** und unter **Transkription** **Live** oder **Nach der Aufnahme**, dann **Einstellungen speichern**. Der Schlüssel wird verschlüsselt für dein Windows-Konto gespeichert.
+5. Wähle **Zoom Scribe** in den Diktat-Einstellungen oder in einem Workflow als Transkriptions-Engine.
+
+## Einstellungen
+
+| Einstellung | Was sie steuert |
+| --- | --- |
+| **API-Schlüssel** | Der Schlüssel von Zoom AI Services. **Verbindung prüfen** testet den eingegebenen Schlüssel, ohne ihn zu speichern. **Gespeicherten Schlüssel entfernen** löscht den gespeicherten Schlüssel. |
+| **Transkriptionsmodell** | **Scribe Multilingual** (Standard), **Scribe Single Language** oder **Scribe English Pro**. Die Modelle stehen auf der Add-on-Seite. |
+| **Transkription** | **Live** streamt Diktate schon während des Sprechens an Zoom und zeigt die Live-Vorschau von Zoom. **Nach der Aufnahme** sendet jede Aufnahme erst nach dem Stoppen an Zoom, ohne Vorschau von Zoom. |
+
+## Transkription
+
+Im Modus **Live** geht ein Diktat in kleinen Stücken an Zoom, während du sprichst. TypeWhisper wartet, bis Zoom Modell, Sprache und Wörterbuchbegriffe übernommen hat, bevor Audio gesendet wird. So scheitert ein falscher Schlüssel oder ein Modell, das dein Konto nicht nutzen kann, schon vor dem Sprechen. Nach dem Stoppen war der fertige Text in unseren Tests 0,25 bis 0,45 Sekunden später da. Bricht die Live-Verbindung ab oder wird Zoom nicht innerhalb von zehn Sekunden fertig, sendet TypeWhisper stattdessen die ganze Aufnahme an Zoom.
+
+Aufnahmen, Audiodateien, überwachte Ordner, die HTTP-API und Diktate ohne Live-Vorschau gehen immer erst an Zoom, wenn sie enden, im Modus **Nach der Aufnahme** auch jedes Diktat. Der Text war in unseren Tests etwa eine Sekunde später da. Zoom nimmt höchstens 2 MB pro Anfrage an, und Windows sendet das Audio unkomprimiert. Deshalb teilt TypeWhisper Aufnahmen über 45 Sekunden an Pausen auf: Eine Aufnahme von 73 Sekunden dauerte etwa fünf Sekunden. Aus Zooms Zeitstempeln werden Segmente, sodass Untertitel für Dateien funktionieren.
+
+Chinesischer und japanischer Text wird ohne Leerzeichen verbunden, so wie Zoom ihn schreibt.
+
+In unseren Tests ließ Scribe Single Language für Deutsch im Modus Live manchmal den Anfang eines Satzes weg. Falls dir das auffällt, nutze Scribe Multilingual oder **Nach der Aufnahme**.
