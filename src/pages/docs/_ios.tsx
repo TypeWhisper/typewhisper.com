@@ -66,6 +66,69 @@ const watchScreenshots = [
   },
 ] as const;
 
+// What the App Store release notes of 1.3 name, with the guide that explains it.
+const newIn13 = [
+  {
+    en: "Ask History: ask about all your recordings, typed or spoken, and get answers with their sources (Premium)",
+    de: "Fragen zum Verlauf: Fragen zu all deinen Aufnahmen stellen, getippt oder gesprochen, und Antworten mit ihren Quellen bekommen (Premium)",
+    path: "/docs/ios/files-history-and-inbox#section-5",
+  },
+  {
+    en: "Record in the Keyboard: dictate with the TypeWhisper keyboard without switching to the app (Premium)",
+    de: "In der Tastatur aufnehmen: mit der TypeWhisper-Tastatur diktieren, ohne zur App zu wechseln (Premium)",
+    path: "/docs/ios/dictation-and-keyboard#section-4",
+  },
+  {
+    en: "Siri answers questions about your recordings and saves them in Ask History (Premium)",
+    de: "Siri beantwortet Fragen zu deinen Aufnahmen und speichert sie in „Fragen zum Verlauf“ (Premium)",
+    path: "/docs/ios/watch-and-shortcuts#section-5",
+  },
+  {
+    en: "Ask About Transcript with the same layout and questions by voice",
+    de: "„Fragen zum Transkript“ mit demselben Layout und Fragen per Sprache",
+    path: "/docs/ios/files-history-and-inbox#section-6",
+  },
+  {
+    en: "Transcribe Again: run a saved recording with other speech recognition, another language, or another format, compare, and keep the result you prefer",
+    de: "Erneut transkribieren: eine gespeicherte Aufnahme mit einer anderen Spracherkennung, Sprache oder einem anderen Format verarbeiten, vergleichen und das bessere Ergebnis übernehmen",
+    path: "/docs/ios/files-history-and-inbox#section-4",
+  },
+  {
+    en: "Fluid Speech Pro by FluidVoice: more accurate English than Fast Local Ultra and faster on long recordings",
+    de: "Fluid Speech Pro von FluidVoice: genaueres Englisch als „Schnell und lokal Ultra“ und schneller bei langen Aufnahmen",
+    path: "/docs/ios/profiles-and-processing#section-1",
+  },
+  {
+    en: "Emoji by name: say “thumbs up emoji” while dictating, in English and German",
+    de: "Emoji per Namen: beim Diktieren „Daumen hoch Emoji“ sagen, auf Deutsch und Englisch",
+    path: "/docs/ios/dictionary-and-snippets#section-5",
+  },
+  {
+    en: "Recording starts right away while speech recognition is still loading, and loading shows its current step",
+    de: "Die Aufnahme startet sofort, auch wenn die Spracherkennung noch lädt, und das Laden zeigt den aktuellen Schritt",
+    path: "/docs/ios/dictation-and-keyboard#section-1",
+  },
+  {
+    en: "The keyboard records as soon as you tap the microphone, even while speech recognition is still loading",
+    de: "Die Tastatur nimmt auf, sobald du auf das Mikrofon tippst, auch wenn die Spracherkennung noch lädt",
+    path: "/docs/ios/dictation-and-keyboard#section-3",
+  },
+  {
+    en: "Between keyboard dictations, TypeWhisper mutes the microphone and records nothing",
+    de: "Zwischen zwei Diktaten mit der Tastatur schaltet TypeWhisper das Mikrofon stumm und nimmt nichts auf",
+    path: "/docs/ios/dictation-and-keyboard#section-5",
+  },
+  {
+    en: "Apple Watch: the status symbol pulses while your iPhone receives or transcribes a recording",
+    de: "Apple Watch: Das Statussymbol pulsiert, während dein iPhone eine Aufnahme empfängt oder transkribiert",
+    path: "/docs/ios/watch-and-shortcuts#section-1",
+  },
+  {
+    en: "Faster keyboard dictation with Apple Speech and Parakeet models on iOS 27, long Apple Watch recordings transcribed in full with Apple Speech, and no more “unk” markers from Parakeet models",
+    de: "Schnelleres Diktieren über die Tastatur mit Apple Speech und Parakeet-Modellen unter iOS 27, vollständig transkribierte lange Apple-Watch-Aufnahmen mit Apple Speech und keine „unk“-Platzhalter mehr von Parakeet-Modellen",
+  },
+] as const;
+
 // What the App Store release notes of 1.2.1 to 1.2.4 name, with the guide that explains it.
 const newIn12Updates = [
   {
@@ -76,7 +139,7 @@ const newIn12Updates = [
   {
     en: "Tools Only keyboard mode, also next to a hardware keyboard, and a hide-keyboard key on iPad",
     de: "Tastaturmodus „Nur Werkzeuge“, auch neben einer Hardware-Tastatur, und eine Taste zum Ausblenden der Tastatur auf dem iPad",
-    path: "/docs/ios/dictation-and-keyboard#section-6",
+    path: "/docs/ios/dictation-and-keyboard#section-7",
   },
   {
     en: "Result and original side by side on iPad, with highlighted word changes",
@@ -86,12 +149,12 @@ const newIn12Updates = [
   {
     en: "Quick Fix and snippets in the keyboard's top bar",
     de: "Schnellkorrektur und Textbausteine in der oberen Leiste der Tastatur",
-    path: "/docs/ios/dictation-and-keyboard#section-5",
+    path: "/docs/ios/dictation-and-keyboard#section-6",
   },
   {
     en: "Chinese Pinyin in the keyboard, with all keyboard options under Settings > Keyboard",
     de: "Chinesisches Pinyin in der Tastatur, dazu alle Tastatur-Optionen unter Einstellungen > Tastatur",
-    path: "/docs/ios/dictation-and-keyboard#section-7",
+    path: "/docs/ios/dictation-and-keyboard#section-8",
   },
   {
     en: "Apple Speech with SpeechAnalyzer on iOS and iPadOS 26 and later",
@@ -197,8 +260,8 @@ export function iosOverviewHead(locale: Locale) {
       isDe ? "Version {iosSeries} stabil" : "Version {iosSeries} stable",
     ),
     lede: isDe
-      ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Formaten, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
-      : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, formats, files, dictionary, snippets, Shortcuts, and optional Premium sync.",
+      ? "Private Sprache-zu-Text für iPhone, iPad und Apple Watch mit lokalen Engines, Diktier-Tastatur, Live-Text, Capture Inbox, Fragen zum Verlauf, Formaten, Dateien, Wörterbuch, Snippets, Kurzbefehlen und optionalem Premium-Sync."
+      : "Private speech-to-text for iPhone, iPad, and Apple Watch with on-device engines, a voice keyboard, live text, Capture Inbox, Ask History, formats, files, dictionary, snippets, Shortcuts, and optional Premium sync.",
     download: isDe ? "Im App Store laden" : "Download on the App Store",
   };
 }
@@ -298,8 +361,8 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           </li>
           <li>
             {isDe
-              ? "Prüfe, ob beide Geräte denselben sechsstelligen Code zeigen. Tippe auf „Die Codes stimmen überein“ und bestätige auf dem Mac."
-              : "Check that both devices show the same six-digit code. Tap The Codes Match and approve on the Mac."}
+              ? "Prüfe, ob beide Geräte denselben sechsstelligen Code zeigen. Bestätige auf dem Mac und tippe dann auf dem iPhone auf „Kopplung bestätigen“."
+              : "Check that both devices show the same six-digit code. Approve on the Mac, then tap Confirm Pairing on the iPhone."}
           </li>
           <li>
             {isDe
@@ -449,6 +512,21 @@ export default function DocsIOS({ locale = "en" }: { locale?: Locale }) {
           {isDe ? "App Store öffnen" : "Open the App Store"}
           <ArrowRight className="size-4" aria-hidden="true" />
         </a>
+
+        <DocsSubheading id="new-in-1-3">
+          {isDe ? "Neu in 1.3" : "What's new in 1.3"}
+        </DocsSubheading>
+        <ul>
+          {newIn13.map((entry) => (
+            <li key={entry.en}>
+              {"path" in entry ? (
+                <a href={localePath(locale, entry.path)}>{entry[locale]}</a>
+              ) : (
+                entry[locale]
+              )}
+            </li>
+          ))}
+        </ul>
 
         <DocsSubheading id="new-in-1-2-updates">
           {isDe ? "Ergänzt in 1.2.1 bis 1.2.4" : "Added in 1.2.1 to 1.2.4"}

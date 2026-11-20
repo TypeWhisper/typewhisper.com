@@ -90,7 +90,7 @@
   "releaseStatus.win.githubInstaller": "Download GitHub installer",
   "releaseStatus.win.docs": "Read Windows docs",
   "releaseStatus.ios.title": "iOS {iosVersion}",
-  "releaseStatus.ios.description": "Private speech-to-text with on-device engines, a voice keyboard, formats, files, Shortcuts, dictionary, snippets, and Apple Watch support. Version 1.2 adds transcription and writing with a paired Mac, on-device speaker detection, read aloud, questions about a transcript, and formatting typed text without a recording.",
+  "releaseStatus.ios.description": "Private speech-to-text with on-device engines, a voice keyboard, formats, files, Shortcuts, dictionary, snippets, and Apple Watch support. Version 1.3 adds Ask History for questions across all your recordings, dictation in the keyboard without switching apps, Transcribe Again for saved recordings, Fluid Speech Pro, and emoji by name.",
   "releaseStatus.ios.download": "Download on the App Store",
   "releaseStatus.ios.docs": "Read the iOS docs",
   "releaseStatus.android.title": "Android {androidVersion}",

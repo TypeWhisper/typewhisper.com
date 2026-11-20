@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { getIosDocTitle, iosDocSlugs } from "../src/data/ios-docs";
+import {
+  getIosDocPage,
+  getIosDocTitle,
+  iosDocSlugs,
+  type IosDocSlug,
+} from "../src/data/ios-docs";
 
 const guidePages = iosDocSlugs.map(
   (slug) =>
@@ -84,11 +89,65 @@ test.describe("detailed iOS documentation", () => {
     ).toBeVisible();
     await expect(
       page.getByText(
-        /iOS keyboard extensions cannot capture microphone audio directly/,
+        /Without Record in the Keyboard, the TypeWhisper app records and transcribes/,
       ),
     ).toBeVisible();
     await expect(page.getByText(/previous-app link/).first()).toBeVisible();
   });
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} keyboard guide explains Record in the Keyboard next to the app switch`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/dictation-and-keyboard/`);
+
+      const section = page.locator("#section-4");
+      await expect(
+        section.getByRole("heading", {
+          level: 2,
+          name:
+            locale === "de"
+              ? "Mit Premium in der Tastatur aufnehmen"
+              : "Record in the keyboard with Premium",
+        }),
+      ).toBeVisible();
+      await expect(
+        section.getByText(
+          locale === "de"
+            ? /„In der Tastatur aufnehmen“ unter Einstellungen > Tastatur > Tastatur-Diktat ist mit Premium standardmäßig eingeschaltet/
+            : /Record in the Keyboard under Settings > Keyboard > Keyboard Dictation is on by default with Premium/,
+        ),
+      ).toBeVisible();
+      await expect(section.getByText(/Fluid Speech Pro/)).toBeVisible();
+      await expect(
+        section.getByText(
+          locale === "de"
+            ? /Ohne App-Wechsel diktieren/
+            : /Dictate Without Switching Apps/,
+        ),
+      ).toBeVisible();
+
+      // The app switch stays documented for dictations without Premium.
+      await expect(
+        page
+          .locator("#section-3")
+          .getByText(
+            locale === "de"
+              ? /Nach oben, dann nach links wischen/
+              : /Swipe up, then left/,
+          ),
+      ).toBeVisible();
+      await expect(
+        page
+          .locator("#section-5")
+          .getByText(
+            locale === "de"
+              ? /schaltet TypeWhisper das Mikrofon stumm/
+              : /TypeWhisper mutes the microphone/,
+          ),
+      ).toBeVisible();
+    });
+  }
 
   test("keyboard guide covers staying ready, Tools Only, and hardware keyboards", async ({
     page,
@@ -147,6 +206,161 @@ test.describe("detailed iOS documentation", () => {
       ).toBeVisible();
     });
   }
+
+  for (const locale of ["en", "de"] as const) {
+    test(`${locale} overview links the 1.3 additions to their guides`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/`);
+
+      await expect(
+        page.getByRole("heading", {
+          level: 3,
+          name: locale === "de" ? "Neu in 1.3" : "What's new in 1.3",
+        }),
+      ).toBeVisible();
+
+      for (const [path, title] of [
+        [
+          "dictation-and-keyboard/#section-4",
+          locale === "de"
+            ? "Mit Premium in der Tastatur aufnehmen"
+            : "Record in the keyboard with Premium",
+        ],
+        [
+          "files-history-and-inbox/#section-5",
+          locale === "de"
+            ? "Fragen zum Verlauf mit Premium"
+            : "Ask questions about your History with Premium",
+        ],
+        [
+          "files-history-and-inbox/#section-4",
+          locale === "de"
+            ? "Eine Aufnahme erneut transkribieren"
+            : "Transcribe a recording again",
+        ],
+        [
+          "dictionary-and-snippets/#section-5",
+          locale === "de" ? "Emoji per Namen einfügen" : "Insert emoji by name",
+        ],
+      ]) {
+        const link = page.locator(
+          `#release-status a[href="/${locale}/docs/ios/${path}"]`,
+        );
+        await expect(link).toBeVisible();
+        await link.click();
+        await expect(
+          page.locator(path.slice(path.indexOf("#"))).getByRole("heading", {
+            level: 2,
+            name: title,
+          }),
+        ).toBeVisible();
+        await page.goBack();
+      }
+    });
+
+    test(`${locale} overview links point to existing guide sections`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/`);
+
+      const hrefs = await page
+        .locator('#release-status a[href*="/docs/ios/"][href*="#section-"]')
+        .evaluateAll((links) =>
+          links.map((link) => link.getAttribute("href") ?? ""),
+        );
+      expect(hrefs.length).toBeGreaterThan(0);
+
+      const sectionsBySlug = new Map<IosDocSlug, Set<number>>();
+      for (const href of hrefs) {
+        const match = href.match(
+          new RegExp(`^/${locale}/docs/ios/([a-z-]+)/#section-(\\d+)$`),
+        );
+        expect(match, href).not.toBeNull();
+        const slug = match![1] as IosDocSlug;
+        expect(iosDocSlugs, href).toContain(slug);
+        const sections = sectionsBySlug.get(slug) ?? new Set<number>();
+        sections.add(Number(match![2]));
+        sectionsBySlug.set(slug, sections);
+      }
+
+      for (const [slug, sections] of sectionsBySlug) {
+        const guide = getIosDocPage(locale, slug);
+        await page.goto(`/${locale}/docs/ios/${slug}/`);
+        for (const section of sections) {
+          expect(section, `${slug}#section-${section}`).toBeLessThanOrEqual(
+            guide.sections.length,
+          );
+          await expect(
+            page.locator(`#section-${section}`).getByRole("heading", {
+              level: 2,
+              name: guide.sections[section - 1].title,
+              exact: true,
+            }),
+          ).toBeVisible();
+        }
+      }
+    });
+  }
+
+  test("History guide covers Transcribe Again and Ask History", async ({
+    page,
+  }) => {
+    await page.goto("/en/docs/ios/files-history-and-inbox/");
+
+    const again = page.locator("#section-4");
+    await expect(again.getByText(/Allow for This Run/)).toBeVisible();
+    await expect(again.getByText(/First Transcription/)).toBeVisible();
+    await expect(again.getByText(/It does not need Premium/)).toBeVisible();
+
+    const ask = page.locator("#section-5");
+    await expect(ask.getByText(/In History, tap Ask/)).toBeVisible();
+    await expect(
+      ask.getByText(/download the optional search model under Settings > Ask History/),
+    ).toBeVisible();
+    await expect(
+      ask.getByText(/Ask TypeWhisper about my recordings/),
+    ).toBeVisible();
+
+    await page.goto("/de/docs/ios/files-history-and-inbox/");
+    await expect(
+      page.locator("#section-5").getByText(/Tippe im Verlauf auf „Fragen“/),
+    ).toBeVisible();
+    await expect(
+      page.locator("#section-4").getByText(/„Für diesen Lauf erlauben“/),
+    ).toBeVisible();
+  });
+
+  test("Local Only, Siri while locked, and pairing match the current app", async ({
+    page,
+  }) => {
+    await page.goto("/en/docs/ios/privacy-and-premium/");
+    await expect(
+      page.getByText(/Local Only under Settings > General > Privacy/),
+    ).toBeVisible();
+
+    await page.goto("/de/docs/ios/privacy-and-premium/");
+    await expect(
+      page.getByText(/„Nur lokal“ unter Einstellungen > Allgemein > Datenschutz/),
+    ).toBeVisible();
+
+    await page.goto("/en/docs/ios/watch-and-shortcuts/");
+    await expect(
+      page.getByText(
+        /Allow Siri While Locked under Settings > General > Siri and Shortcuts/,
+      ),
+    ).toBeVisible();
+
+    await page.goto("/en/docs/ios/");
+    await expect(page.locator("#mac")).toContainText("Confirm Pairing");
+    await expect(page.locator("#mac")).not.toContainText("The Codes Match");
+
+    await page.goto("/en/docs/mac/installation/");
+    await expect(page.locator("#iphone")).toContainText(
+      "Settings > Premium > Mac",
+    );
+    await expect(page.locator("#iphone")).toContainText("Confirm Pairing");
+  });
 
   test("installation and troubleshooting describe the public App Store path", async ({
     page,
