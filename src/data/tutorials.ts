@@ -40,6 +40,68 @@ export interface Tutorial {
  */
 export const tutorials: Tutorial[] = [
   {
+    slug: "record-in-the-keyboard",
+    video: "ios-record-in-keyboard",
+    portrait: true,
+    platform: "ios",
+    published: "2026-11-20",
+    appVersion: "1.3.0",
+    duration: { en: 81, de: 83 },
+    docsPath: "/docs/ios/dictation-and-keyboard/#section-4",
+    copy: {
+      en: {
+        title: "Record in the Keyboard: dictate without leaving your app",
+        description:
+          "With TypeWhisper Premium on iPhone, the keyboard records and transcribes by itself. See a dictation that stays in the chat, where the setting is, and which speech recognition it works with.",
+        caption:
+          "Record in the Keyboard in Messages: the app switch as it was, two dictations that stay in the chat, the setting under Settings > Keyboard, and the dictations in History.",
+        steps: [
+          "Record in the Keyboard is part of TypeWhisper Premium and on by default with Premium. All it needs is the TypeWhisper keyboard with Full Access.",
+          "In a text field, for example in Messages, switch to the TypeWhisper keyboard and tap the microphone. When TypeWhisper is not running, the keyboard records by itself and you stay in your app.",
+          "Talk, then tap the microphone again. The keyboard transcribes the dictation and inserts the text at the cursor.",
+          "Dictate again to continue. The next sentence starts with a space, and you can say emoji by name, for example thumbs up emoji.",
+          "Open TypeWhisper later, and every dictation is in History.",
+        ],
+        notes: [
+          "To turn it off, open Settings > Keyboard in TypeWhisper and switch off Record in the Keyboard under Keyboard Dictation. Every dictation then goes through the app again.",
+          "It works with Apple Speech, Fast Local, Fast Local Ultra, Fluid Speech Pro and cloud services with your own API key. Other speech models still open TypeWhisper.",
+          "On iPad and on iPhones with 4 GB of memory, the keyboard uses Apple Speech instead of the local models.",
+          "Music and other audio pause while you dictate.",
+          "The keyboard needs Full Access, as keyboard dictation did before.",
+          "Without Premium, the first dictation still opens TypeWhisper, and you return to your text field as before.",
+          "The first dictation after installing or updating prepares the speech model once, which can take up to about 15 seconds.",
+          "The video was recorded in the iOS Simulator, where recognition takes about a second. The video shortens that wait. On an iPhone 17, Fast Local recognizes a short dictation in about 0.3 seconds.",
+        ],
+        docsLabel: "Record in the Keyboard in the docs",
+      },
+      de: {
+        title: "In der Tastatur aufnehmen: diktieren, ohne die App zu wechseln",
+        description:
+          "Mit TypeWhisper Premium nimmt die Tastatur auf dem iPhone selbst auf und transkribiert. Das Video zeigt ein Diktat, bei dem du im Chat bleibst, wo die Einstellung liegt und mit welcher Spracherkennung es funktioniert.",
+        caption:
+          "„In der Tastatur aufnehmen“ in Nachrichten: der bisherige App-Wechsel, zwei Diktate, bei denen du im Chat bleibst, die Einstellung unter Einstellungen > Tastatur und die Diktate im Verlauf.",
+        steps: [
+          "„In der Tastatur aufnehmen“ gehört zu TypeWhisper Premium und ist mit Premium standardmäßig eingeschaltet. Du brauchst dafür nur die TypeWhisper-Tastatur mit vollem Zugriff.",
+          "Wechsle in einem Textfeld, etwa in Nachrichten, zur TypeWhisper-Tastatur und tippe aufs Mikrofon. Läuft TypeWhisper nicht, nimmt die Tastatur selbst auf, und du bleibst in deiner App.",
+          "Sprich und tippe noch mal aufs Mikrofon. Die Tastatur transkribiert das Diktat und fügt den Text am Cursor ein.",
+          "Diktiere einfach weiter. Der nächste Satz beginnt mit einem Leerzeichen, und Emojis klappen per Namen, etwa mit „Daumen hoch Emoji“.",
+          "Öffnest du TypeWhisper später, steht jedes Diktat im Verlauf.",
+        ],
+        notes: [
+          "Zum Ausschalten öffnest du in TypeWhisper Einstellungen > Tastatur und schaltest unter Tastatur-Diktat „In der Tastatur aufnehmen“ aus. Dann läuft jedes Diktat wieder über die App.",
+          "Es funktioniert mit Apple Speech, „Schnell und lokal“, „Schnell und lokal Ultra“, Fluid Speech Pro und Cloud-Diensten mit deinem eigenen API-Schlüssel. Andere Sprachmodelle öffnen weiterhin TypeWhisper.",
+          "Auf dem iPad und auf iPhones mit 4 GB Arbeitsspeicher nutzt die Tastatur Apple Speech statt der lokalen Modelle.",
+          "Musik und andere Wiedergaben pausieren, solange du diktierst.",
+          "Die Tastatur braucht vollen Zugriff, wie das Tastatur-Diktat bisher auch.",
+          "Ohne Premium öffnet das erste Diktat weiterhin TypeWhisper, und du wechselst wie bisher zurück in dein Textfeld.",
+          "Das erste Diktat nach der Installation oder einem Update bereitet das Sprachmodell einmal vor. Das kann bis zu etwa 15 Sekunden dauern.",
+          "Das Video ist im iOS-Simulator aufgenommen, dort dauert die Erkennung etwa eine Sekunde. Das Video kürzt diese Wartezeit. Auf einem iPhone 17 erkennt „Schnell und lokal“ ein kurzes Diktat in etwa 0,3 Sekunden.",
+        ],
+        docsLabel: "„In der Tastatur aufnehmen“ in der Doku",
+      },
+    },
+  },
+  {
     slug: "dictate-with-the-ios-keyboard",
     video: "ios-keyboard-tour",
     portrait: true,
@@ -64,8 +126,8 @@ export const tutorials: Tutorial[] = [
         ],
         notes: [
           "Dictation needs Full Access: it's how the keyboard and the TypeWhisper app talk to each other. Normal typing works without it. iOS shows the same warning for every keyboard that asks for Full Access.",
-          "iOS doesn't let keyboards use the microphone, so the app records for the keyboard. That's why it opens on the first dictation.",
-          "Set the Ready Duration under Settings > Keyboard > Keyboard Dictation (1 to 30 minutes), or turn Keep Ready for Next Dictation off. Until the time runs out, the iOS microphone indicator can stay visible. Music and videos keep their normal volume while the keyboard stays ready.",
+          "In this video, recorded with version 1.2.4, the app records for the keyboard. That's why it opens on the first dictation. Since 1.3, this applies without Premium or with Record in the Keyboard turned off. With Premium, the keyboard records by itself.",
+          "Set the Ready Duration under Settings > Keyboard > Keyboard Dictation (1 to 30 minutes), or turn Keep Ready for Next Dictation off. In 1.2.4, the iOS microphone indicator can stay visible until the time runs out. Since 1.3, TypeWhisper mutes the microphone between keyboard dictations, and the orange indicator goes away. Music and videos keep their normal volume while the keyboard stays ready.",
           "The first time, preparing a local speech model can take a few minutes. Keep TypeWhisper open until it's done.",
           "On iPad, the key at the bottom right of the keyboard hides it.",
           "With a Magic Keyboard or another hardware keyboard on iPad, TypeWhisper shows only its tools: the microphone, your formats and the globe key. Keyboard Mode under Settings > Keyboard in TypeWhisper offers Full Keyboard and Tools Only, and Tools Only with Hardware Keyboard is on by default.",
@@ -88,8 +150,8 @@ export const tutorials: Tutorial[] = [
         ],
         notes: [
           "Fürs Diktat braucht die Tastatur vollen Zugriff: So reden Tastatur und TypeWhisper-App miteinander. Normales Tippen geht auch ohne. Die Warnung dazu zeigt iOS bei jeder Tastatur, die vollen Zugriff möchte.",
-          "iOS lässt Tastaturen nicht ans Mikrofon, deshalb nimmt die App für die Tastatur auf. Darum öffnet sie sich beim ersten Diktat.",
-          "Die Bereitschaftsdauer stellst du unter Einstellungen > Tastatur > Tastatur-Diktat ein (1 bis 30 Minuten), oder du schaltest „Für nächstes Diktat bereit halten“ aus. Bis die Zeit abläuft, kann die Mikrofonanzeige von iOS sichtbar bleiben. Musik und Videos behalten ihre normale Lautstärke, solange die Tastatur bereit ist.",
+          "In diesem Video, aufgenommen mit Version 1.2.4, nimmt die App für die Tastatur auf. Darum öffnet sie sich beim ersten Diktat. Seit 1.3 gilt das ohne Premium oder wenn „In der Tastatur aufnehmen“ ausgeschaltet ist. Mit Premium nimmt die Tastatur selbst auf.",
+          "Die Bereitschaftsdauer stellst du unter Einstellungen > Tastatur > Tastatur-Diktat ein (1 bis 30 Minuten), oder du schaltest „Für nächstes Diktat bereit halten“ aus. In 1.2.4 kann die Mikrofonanzeige von iOS sichtbar bleiben, bis die Zeit abläuft. Seit 1.3 schaltet TypeWhisper das Mikrofon zwischen zwei Tastatur-Diktaten stumm, und die orange Anzeige verschwindet. Musik und Videos behalten ihre normale Lautstärke, solange die Tastatur bereit ist.",
           "Beim ersten Mal kann es einige Minuten dauern, bis ein lokales Sprachmodell vorbereitet ist. Lass TypeWhisper so lange geöffnet.",
           "Auf dem iPad blendet die Taste unten rechts die Tastatur aus.",
           "Mit einem Magic Keyboard oder einer anderen Hardware-Tastatur am iPad zeigt TypeWhisper nur noch seine Werkzeuge: das Mikrofon, deine Formate und die Globustaste. Unter Einstellungen > Tastatur > Tastaturmodus in TypeWhisper wählst du „Volle Tastatur“ oder „Nur Werkzeuge“, und „Nur Werkzeuge mit Hardware-Tastatur“ ist standardmäßig eingeschaltet.",

@@ -279,6 +279,10 @@ const en: Record<IosDocSlug, IosDocPage> = {
           description:
             "The keyboard opens TypeWhisper for the first dictation, as described above. While TypeWhisper is open for it, the card Dictate Without Switching Apps can appear above the swipe hint when the keyboard could have recorded the dictation itself. After you unlock Premium there, Record in the Keyboard is on. The close button hides the card for two weeks.",
         },
+        tutorial: {
+          slug: "record-in-the-keyboard",
+          link: "Record in the Keyboard, shown in a chat",
+        },
       },
       {
         title: "Stay ready for the next dictation",
@@ -1296,6 +1300,10 @@ const de: Record<IosDocSlug, IosDocPage> = {
           title: "Ohne Premium",
           description:
             "Die Tastatur öffnet für das erste Diktat TypeWhisper, wie oben beschrieben. Während TypeWhisper dafür geöffnet ist, kann über dem Wischhinweis die Karte „Ohne App-Wechsel diktieren“ erscheinen, wenn die Tastatur das Diktat selbst hätte aufnehmen können. Schaltest du dort Premium frei, ist „In der Tastatur aufnehmen“ eingeschaltet. Die Schließen-Taste blendet die Karte für zwei Wochen aus.",
+        },
+        tutorial: {
+          slug: "record-in-the-keyboard",
+          link: "„In der Tastatur aufnehmen“, gezeigt in einem Chat",
         },
       },
       {
