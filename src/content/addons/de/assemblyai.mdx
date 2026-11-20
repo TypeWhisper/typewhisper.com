@@ -22,7 +22,7 @@ screenshotAlt: "AssemblyAI-Einstellungen in TypeWhisper für macOS: API-Schlüss
 
 ## Über AssemblyAI
 
-AssemblyAI bringt Cloud-Spracherkennung in TypeWhisper. Auf dem Mac nutzt das Add-on ab 1.4.0 **AssemblyAI-STT-3.7** und **Universal-2**. Die Einstellung **Transkription** legt fest, wie ein Diktat zu AssemblyAI gelangt:
+AssemblyAI bringt Cloud-Spracherkennung in TypeWhisper. Auf dem Mac nutzt das Add-on ab 1.4.0 **AssemblyAI-STT-3.7** und **Universal-2**. Mit AssemblyAI-STT-3.7 legt die Einstellung **Transkription** fest, wie ein Diktat zu AssemblyAI gelangt. Universal-2 nutzt immer die Async-API, für 0,15 $/h.
 
 | Transkription | Was passiert | Listenpreis von AssemblyAI |
 | --- | --- | --- |
@@ -31,7 +31,7 @@ AssemblyAI bringt Cloud-Spracherkennung in TypeWhisper. Auf dem Mac nutzt das Ad
 | Dictation | Die Dictation API von AssemblyAI transkribiert das Diktat mit Universal-3.6 Pro und gibt es bereinigt zurück: ohne Füllwörter, mit korrigierter Zeichensetzung und Groß- und Kleinschreibung | 0,62 $/h |
 | Async | Günstigster Preis; der Text braucht nach dem Stopp einige Sekunden | 0,21 $/h |
 
-Nur Live zeigt eine Live-Vorschau von AssemblyAI. Aufnahmen, Dateitranskriptionen, überwachte Ordner und die HTTP-API behalten das wörtliche Transkript: Live, Sync und Dictation schicken sie an die Sync API, Async und Aufnahmen über 20 Minuten nutzen die Async-API. Im Modus Dictation nutzen Diktate über 20 Minuten, mit mehr als 100 Wörterbuchbegriffen oder in einer Sprache, die die Dictation API nicht unterstützt, sowie fehlgeschlagene Anfragen die Async-API ohne Bereinigung. Die Preise sind die Listenpreise von AssemblyAI im November 2026; Zusätze wie Wörterbuchbegriffe können extra kosten.
+Nur Live zeigt eine Live-Vorschau von AssemblyAI. Aufnahmen, Dateitranskriptionen, überwachte Ordner und die HTTP-API behalten das wörtliche Transkript: Live, Sync und Dictation schicken sie an die Sync API. Async, Sprechererkennung, Aufnahmen, die die Sync API nicht annimmt (über 20 Minuten, mit mehr als 100 Wörterbuchbegriffen oder in einer Sprache, die sie nicht unterstützt), und fehlgeschlagene Sync-Anfragen nutzen die Async-API. Im Modus Dictation nutzen Diktate über 20 Minuten, mit mehr als 100 Wörterbuchbegriffen oder in einer Sprache, die die Dictation API nicht unterstützt, sowie fehlgeschlagene Anfragen die Async-API ohne Bereinigung. Die Preise sind die Listenpreise von AssemblyAI im November 2026; Zusätze wie Wörterbuchbegriffe können extra kosten.
 
 ## Modelle
 
@@ -45,7 +45,7 @@ AssemblyAI-STT-3.7 transkribiert Aufnahmen über die Async-API und gibt eine Spr
 - **Realtime-Agent** (`assemblyai-stt-3-7-realtime-agent`, 0,45 $/h, Standard) hält die Vorschau beim Sprechen ruhig.
 - **Realtime** (`assemblyai-stt-3-7-realtime`, 0,30 $/h) ist günstiger, aber die Vorschau ändert sich beim Sprechen häufiger. Der fertige Text ist genauso gut.
 
-Die Sync API nutzt Universal-3.6 Pro. Universal-2 nutzt immer die Async-API, für 0,15 $/h.
+Die Sync API nutzt Universal-3.6 Pro.
 
 AssemblyAI hat Universal-3.5 Pro am 17. November 2026 abgekündigt, als AssemblyAI-STT-3.7 erschien. Gespeicherte Auswahlen von Universal-3.5 Pro und Universal-3 Pro, auch in Workflows, wechseln zu AssemblyAI-STT-3.7. Wörterbuchbegriffe gehen als Keyterms an AssemblyAI, bei Universal-2 als Word Boost. Eine Live-Sitzung nimmt bis zu 100 Begriffe mit bis zu 50 Zeichen; bei mehr wird die Aufnahme zusätzlich mit allen Begriffen transkribiert, was zusätzlich abgerechnet wird.
 
@@ -55,7 +55,7 @@ Sprechererkennung gilt für Aufnahmen, Dateitranskriptionen, überwachte Ordner 
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **AssemblyAI**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Hinterlege und validiere deinen AssemblyAI-API-Key.
-3. Wähle ein Modell und die Transkription, bei Live auch das Live-Modell.
+3. Wähle ein Modell. Bei AssemblyAI-STT-3.7 wählst du außerdem die Transkription, bei Live auch das Live-Modell.
 4. Aktiviere Sprechererkennung nur, wenn du sie benötigst.
 5. Wähle AssemblyAI als Transkriptionsanbieter im Workflow.
 
