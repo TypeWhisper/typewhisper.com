@@ -194,15 +194,56 @@ test.describe("Tutorials", () => {
         page.locator(`a[href="/${locale}/docs/ios/dictation-and-keyboard/#section-2"]`),
       ).toBeVisible();
       await page.goto(`/${locale}/tutorials/`);
+      const card = page
+        .getByTestId("tutorial-group")
+        .nth(1)
+        .locator(
+          `[data-testid="tutorial-card"][href="/${locale}/tutorials/dictate-with-the-ios-keyboard/"]`,
+        );
+      await expect(card).toHaveCount(1);
+      await expect(card).toContainText(locale === "de" ? "3:24" : "3:03");
+    });
+
+    test(`${locale} iOS docs show the Record in the Keyboard video in its Premium section`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale}/docs/ios/dictation-and-keyboard/`);
+      const section = page.locator("#section-4");
+      await expect(section.getByRole("heading").first()).toContainText(
+        locale === "de"
+          ? "Mit Premium in der Tastatur aufnehmen"
+          : "Record in the keyboard with Premium",
+      );
+      await expect(section.getByTestId("studio-video")).toHaveCount(1);
+      await expect(section.getByTestId("studio-video").locator("source")).toHaveAttribute(
+        "src",
+        `/videos/ios-record-in-keyboard-${locale}.mp4`,
+      );
+      await expect(
+        section.locator(`a[href="/${locale}/tutorials/record-in-the-keyboard/"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/record-in-the-keyboard/`);
+      await expect(
+        page.getByTestId("tutorial-steps").locator(".site-steps__item"),
+      ).toHaveCount(5);
+      await expect(page.getByTestId("tutorial-steps")).toContainText(
+        locale === "de"
+          ? "mit Premium standardmäßig eingeschaltet"
+          : "on by default with Premium",
+      );
+      await expect(
+        page.locator(`a[href="/${locale}/docs/ios/dictation-and-keyboard/#section-4"]`),
+      ).toBeVisible();
+      await page.goto(`/${locale}/tutorials/`);
       const iosCards = page
         .getByTestId("tutorial-group")
         .nth(1)
         .getByTestId("tutorial-card");
       await expect(iosCards.first()).toHaveAttribute(
         "href",
-        `/${locale}/tutorials/dictate-with-the-ios-keyboard/`,
+        `/${locale}/tutorials/record-in-the-keyboard/`,
       );
-      await expect(iosCards.first()).toContainText(locale === "de" ? "3:24" : "3:03");
+      await expect(iosCards.first()).toContainText(locale === "de" ? "1:23" : "1:21");
     });
 
     test(`${locale} header and footer link to the tutorials`, async ({
@@ -325,6 +366,7 @@ test.describe("Tutorials", () => {
       "mac-email-reply-workflow",
       "ios-compare-local-models",
       "ios-keyboard-tour",
+      "ios-record-in-keyboard",
     ]) {
       for (const locale of ["en", "de"]) {
         for (const [file, type] of [

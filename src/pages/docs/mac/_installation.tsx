@@ -121,13 +121,13 @@ export default function DocsMacInstallation({
           </li>
           <li>
             {isDe
-              ? "Öffne TypeWhisper auf dem iPhone oder iPad, gehe zu Einstellungen > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
-              : "On the iPhone or iPad, open TypeWhisper, go to Settings > Mac, and choose your Mac under Macs on This Network."}
+              ? "Öffne TypeWhisper auf dem iPhone oder iPad, gehe zu Einstellungen > Premium > Mac und wähle deinen Mac unter „Macs in diesem Netzwerk“."
+              : "On the iPhone or iPad, open TypeWhisper, go to Settings > Premium > Mac, and choose your Mac under Macs on This Network."}
           </li>
           <li>
             {isDe
-              ? "Beide Geräte zeigen denselben sechsstelligen Code. Tippe auf dem iPhone auf „Die Codes stimmen überein“ und klicke auf dem Mac auf „Bestätigen“."
-              : "Both devices show the same six-digit code. Tap The Codes Match on the iPhone and click Approve on the Mac."}
+              ? "Beide Geräte zeigen denselben sechsstelligen Code. Klicke auf dem Mac auf „Bestätigen“ und tippe auf dem iPhone auf „Kopplung bestätigen“."
+              : "Both devices show the same six-digit code. Click Approve on the Mac and tap Confirm Pairing on the iPhone."}
           </li>
           <li>
             {isDe

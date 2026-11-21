@@ -113,7 +113,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         callout: {
           title: "The first preparation can take a few minutes",
           description:
-            "A downloaded speech model is prepared for your device before its first use. During that time the app shows Preparing speech recognition… This can take a few minutes, longer on iPad. Keep TypeWhisper open until it finishes. Later starts are much faster.",
+            "A downloaded speech model is prepared for your device before its first use, and once more after an update of TypeWhisper or iOS. During that time the app shows Preparing speech recognition… or the current loading step. This can take a few minutes, longer on iPad. Keep TypeWhisper open until it finishes. Later starts are much faster.",
         },
         image: {
           path: "/screenshots/ios/01-recording.png",
@@ -136,7 +136,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
         title: "Find your way around the app",
         bullets: [
           "The four tabs are History, Dictionary, Record, and Settings.",
-          "Settings > General holds Input Languages, Read Aloud, Whisper Mode, and Recording Storage.",
+          "Settings > General holds Input Languages, Read Aloud, Whisper Mode, Recording Storage, Siri and Shortcuts, and Privacy with Local Only.",
           "Settings > Appearance changes the Waveform and the Color of the Record tab. The keyboard keeps its own design.",
           "Settings > Statistics shows active days, streaks, transcriptions, words, average words per minute, and time saved for a time period. Statistics stay on the device.",
           "What’s New in TypeWhisper under Settings > General shows the highlights of the latest update again.",
@@ -150,9 +150,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Daily dictation",
     title: "Dictation and the voice keyboard",
     description:
-      "Record in TypeWhisper, add the keyboard, dictate into other apps, get back to your text field, keep the keyboard ready, and use it next to a hardware keyboard on iPad.",
+      "Record in TypeWhisper, add the keyboard, dictate into other apps, record in the keyboard with Premium, keep the keyboard ready, and use it next to a hardware keyboard on iPad.",
     intro:
-      "You can dictate in TypeWhisper itself or use the TypeWhisper keyboard in another app. In both cases the TypeWhisper app records and transcribes.",
+      "You can dictate in TypeWhisper itself or use the TypeWhisper keyboard in another app. Usually the TypeWhisper app records and transcribes. With Premium, the keyboard can do both by itself, so you stay in your app.",
     sections: [
       {
         title: "Record in the app",
@@ -179,7 +179,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         bullets: [
-          "The speech recognition menu on the Record tab switches the model for the next recording.",
+          "The speech recognition menu on the Record tab switches the model for the next recording and starts loading it right away.",
+          "Recording starts right away, even while speech recognition is still loading. If you stop before it is ready, the entry waits in History and gets its text there, and you can record again at once.",
+          "While a speech model loads, the Record tab and Settings > Speech Recognition show the current step. The first load after an install or update can take a few minutes.",
           "Format Text on the Record tab formats pasted or typed text without a recording.",
         ],
       },
@@ -208,9 +210,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         callout: {
-          title: "Why the main app opens",
+          title: "Why the app opens",
           description:
-            "iOS keyboard extensions cannot capture microphone audio directly. That is why the first dictation opens TypeWhisper. The app records and transcribes, and the keyboard inserts the result.",
+            "Without Record in the Keyboard, the TypeWhisper app records and transcribes, and the keyboard inserts the result. That is why the first dictation opens TypeWhisper. With Premium, the keyboard records by itself, as described under Record in the keyboard with Premium.",
         },
         image: {
           path: "/screenshots/ios/03-keyboard.png",
@@ -224,6 +226,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
       },
       {
         title: "Dictate from another app",
+        paragraphs: [
+          "Without Record in the Keyboard, a dictation goes through the TypeWhisper app. With Premium, this also applies to speech recognition the keyboard cannot run itself.",
+        ],
         steps: [
           {
             title: "Tap the keyboard microphone",
@@ -248,9 +253,36 @@ const en: Record<IosDocSlug, IosDocPage> = {
         ],
         bullets: [
           "Instead of tapping, you can hold the microphone to talk and release it to insert the text.",
+          "The keyboard records as soon as you tap the microphone, even while speech recognition is still loading. If you stop before it is ready, the keyboard shows Speech recognition is still loading… and inserts the text once it is done.",
           "The undo button in the top bar removes the dictation you just inserted.",
           "iOS does not allow third-party keyboards in password fields and in some apps. Apple's keyboard appears there instead.",
         ],
+      },
+      {
+        title: "Record in the keyboard with Premium",
+        paragraphs: [
+          "With Premium, the TypeWhisper keyboard can record and transcribe by itself. When TypeWhisper is not ready in the background, for example after you closed it, a dictation no longer opens the app. You stay in your text field and do not need to swipe back.",
+        ],
+        bullets: [
+          "Record in the Keyboard under Settings > Keyboard > Keyboard Dictation is on by default with Premium. Turn it off there if every dictation should go through the app.",
+          "Tap the keyboard microphone, speak, and tap it again to stop. The text appears at the cursor.",
+          "This works with Apple Speech, Fast Local, Fast Local Ultra, Fluid Speech Pro, and cloud services with your own API key. Other speech recognition, such as WhisperKit, Live Local, Cohere Transcribe (Local), or TypeWhisper on Mac, still opens TypeWhisper.",
+          "If the keyboard has too little memory for a local model, for example on iPad and on iPhones with 4 GB of memory, it uses Apple Speech instead. The footer under Settings > Keyboard says so too.",
+          "Music and other audio pause while you dictate.",
+          "The keyboard needs Full Access and the microphone access you gave TypeWhisper. The orange microphone indicator shows while it records.",
+          "The dictation appears in History the next time you open TypeWhisper.",
+          "While TypeWhisper is still ready from an earlier dictation, the app records the dictation, also without a switch.",
+          "If the keyboard cannot start recording, TypeWhisper opens and records instead.",
+        ],
+        callout: {
+          title: "Without Premium",
+          description:
+            "The keyboard opens TypeWhisper for the first dictation, as described above. While TypeWhisper is open for it, the card Dictate Without Switching Apps can appear above the swipe hint when the keyboard could have recorded the dictation itself. After you unlock Premium there, Record in the Keyboard is on. The close button hides the card for two weeks.",
+        },
+        tutorial: {
+          slug: "record-in-the-keyboard",
+          link: "Record in the Keyboard, shown in a chat",
+        },
       },
       {
         title: "Stay ready for the next dictation",
@@ -260,9 +292,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Keep Ready for Next Dictation under Settings > Keyboard > Keyboard Dictation is on by default, with a Ready Duration of 5 minutes.",
           "Set the Ready Duration to between 1 and 30 minutes, or turn the option off.",
-          "The iOS microphone indicator can stay visible until that time runs out. Shorten the duration or turn the option off to end it sooner.",
+          "Between dictations, TypeWhisper mutes the microphone and records nothing. The orange microphone indicator goes away until you dictate again.",
           "Music and other audio keep their volume while TypeWhisper stays ready.",
-          "Once the time has run out, the next dictation opens TypeWhisper again.",
+          "Once the time has run out, the next dictation opens TypeWhisper again. With Record in the Keyboard, the keyboard records it instead.",
         ],
       },
       {
@@ -325,11 +357,12 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Apple Speech is built in and needs no download. On iOS and iPadOS 26 and later it uses SpeechAnalyzer, Apple's newer speech recognition. iOS downloads the model for each dictation language once in the background. Until it is ready, and for languages SpeechAnalyzer does not support yet, Apple Speech uses the previous on-device recognition.",
           "Fast Local (Parakeet) recognizes 25 European languages on the device and needs at least 4 GB of memory. Fast Local Ultra is more accurate.",
+          "Fluid Speech Pro by FluidVoice is a Parakeet model for the same 25 languages as Fast Local. It recognizes English more accurately than Fast Local Ultra and transcribes long recordings faster. Download it under Fast Local Recognition in Settings > Speech Recognition. It needs a device with at least 4 GB of memory.",
           "Live Local shows the text while you speak and runs on the device. It is part of Premium and needs at least 6 GB of memory.",
           "Additional Local Models offers WhisperKit in five model sizes from about 39 to 800 MB with 99 languages and automatic detection, and Cohere Transcribe (Local) with 14 languages and downloads from about 1.5 to 2.4 GB.",
           "TypeWhisper on Mac transcribes on your paired Mac with Premium.",
           "Cloud Speech Recognition offers Groq, Soniox, Reson8, ElevenLabs, OpenAI, Meta with Muse Voice Transcribe, and Gemini, each with your own API key. Add Server connects an OpenAI-compatible server.",
-          "You see a live preview while you speak with Apple Speech, WhisperKit, Live Local, Soniox, ElevenLabs, OpenAI, Meta, and Gemini. Fast Local, Cohere Transcribe (Local), TypeWhisper on Mac, Groq, and Reson8 show the text after you stop.",
+          "You see a live preview while you speak with Apple Speech, WhisperKit, Live Local, Soniox, ElevenLabs, OpenAI, Meta, and Gemini. Fast Local, Fluid Speech Pro, Cohere Transcribe (Local), TypeWhisper on Mac, Groq, and Reson8 show the text after you stop.",
         ],
         callout: {
           title: "Local is the default",
@@ -457,7 +490,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Capture and review",
     title: "Files, History, and Capture Inbox",
     description:
-      "Transcribe audio and video files, share files to TypeWhisper, search and filter History, detect speakers, ask questions about a transcript, and work through the Inbox.",
+      "Transcribe audio and video files, share files to TypeWhisper, search and filter History, transcribe a recording again, ask questions about all your recordings, detect speakers, and work through the Inbox.",
     intro:
       "History is the complete archive on the History tab. Capture Inbox, shown as Inbox in the app, is the focused queue for recordings that arrive from another entry point or still need your attention.",
     sections: [
@@ -486,7 +519,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         bullets: [
-          "Transcribe Again runs a finished file once more with the current format and models and adds a second entry to History. That way you can compare two speech recognition or writing models on the same recording.",
+          "Transcribe Again runs a finished file once more with the current format and models and adds a second entry to History. That way you can compare two speech recognition or writing models on the same recording. For an entry that is already in History, Transcribe Again in the entry's menu keeps all versions in one entry.",
           "Ogg Opus voice notes, including those from WhatsApp, can be imported.",
           "Files you add here keep their audio until you remove them or tap Reset.",
         ],
@@ -507,7 +540,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Search past transcription text.",
           "Filter by source and format, and browse entries by the device that created them.",
           "Open an entry to compare Result and Original, play the audio, or have the text read aloud.",
-          "The menu of an entry offers Copy, Share, Read Aloud, Apply Another Format, Recording Info, Add Recording, and Delete.",
+          "The menu of an entry offers Copy, Share, Read Aloud, Ask About Transcript, Apply Another Format, Transcribe Again, Add Recording, Recording Info, and Delete.",
           "Edit the result or the original.",
           "Entries from Format Text have the source Text Input and no audio.",
           "Playback and Read Aloud can use AirPlay, Bluetooth, or the speaker through Apple's audio route picker.",
@@ -521,13 +554,89 @@ const en: Record<IosDocSlug, IosDocPage> = {
         },
       },
       {
+        title: "Transcribe a recording again",
+        paragraphs: [
+          "Transcribe Again runs a saved recording once more with other settings. You compare the new result with the current text and keep the one you prefer. It does not need Premium.",
+        ],
+        steps: [
+          {
+            title: "Open the entry",
+            description:
+              "In History, open an entry with audio, tap … and choose Transcribe Again.",
+          },
+          {
+            title: "Choose the settings",
+            description:
+              "Under Settings for the New Run, pick another Speech Recognition, Language, or Format.",
+          },
+          {
+            title: "Allow cloud processing when needed",
+            description:
+              "If the run sends audio or text to a cloud service, the note below the switch says where. Turn on Allow for This Run to continue. Cloud providers may charge for usage.",
+          },
+          {
+            title: "Run and compare",
+            description:
+              "Tap Transcribe Again. The new result appears below Text in Use. With several results, Compare With chooses the one you see.",
+          },
+          {
+            title: "Keep the result you prefer",
+            description:
+              "Tap Use This Result. The current text stays as a version. To switch back, open Transcribe Again once more and use First Transcription or an earlier result the same way.",
+          },
+        ],
+        bullets: [
+          "Saved versions stay on this device until you delete them or the entry is deleted. Delete Version removes one.",
+          "Only the text in use is searched, exported, and synced. With History sync, your other devices show the text you chose.",
+          "Running again does not count as a new dictation.",
+          "For an entry without audio, Compare Versions in the same menu shows the versions it already has.",
+        ],
+      },
+      {
+        title: "Ask questions about your History with Premium",
+        paragraphs: [
+          "Ask History answers questions about all your recordings, for example “What did I agree with the print shop last week?” TypeWhisper finds the matching passages on your device, your selected writing service answers, and each answer lists its sources.",
+        ],
+        steps: [
+          {
+            title: "Open Ask History",
+            description:
+              "In History, tap Ask. The menu at the top chooses what to ask about: All History, Last 7 Days, Last 30 Days, or This Year.",
+          },
+          {
+            title: "Ask typed or by voice",
+            description:
+              "Type your question, or tap the microphone in the empty field, ask aloud, and tap the arrow. A spoken question is asked right away and does not create a History entry.",
+          },
+          {
+            title: "Check the sources",
+            description:
+              "Numbers like [1] in the answer and the sources below it open the recording they come from. Ask follow-up questions in the same conversation.",
+          },
+          {
+            title: "Allow a cloud writing service once",
+            description:
+              "With a cloud writing service, Ask History asks once before it sends your question and the matching excerpts. Audio, the rest of your History, the dictionary, statistics, and device identifiers are not sent.",
+          },
+        ],
+        bullets: [
+          "Select entries in History and tap Ask to ask about only those, up to 50 at a time.",
+          "When your search text in History reads like a question, History offers to ask it in Ask History.",
+          "Conversations are saved. The clock button lists them, and New Conversation starts a fresh one. With History sync, they also appear on your other iPhone and iPad, and a conversation you delete is deleted there too.",
+          "For questions worded differently from what you said, download the optional search model under Settings > Ask History. Until it is prepared, answers use full-text search.",
+          "The search index and the search model stay on this device and are neither backed up nor synced.",
+          "Without a writing service, Ask History shows the passages it finds. Choose one under Settings > Writing Services to get answers.",
+          "Siri answers too: say “Ask TypeWhisper about my recordings” to hear a short answer. The question is saved in Ask History.",
+        ],
+      },
+      {
         title: "Speakers, questions, and corrections with Premium",
         bullets: [
           "Detect Speakers separates speakers on the device after transcription. Turn it on for a format under Advanced, in File Transcription, or start it from the menu of a History entry. Meeting Notes detects speakers by default.",
           "Name Speakers gives the speakers names. In the transcript you can assign a turn to another speaker or split it.",
           "Recognize Voice in Future Recordings saves a voice profile that suggests the name in later recordings. Voice profiles stay on the device, are not synced, and contain no audio. You manage them under Settings > Voice Profiles.",
           "Similar voices and overlapping speech can lead to wrong assignments, which you correct in the transcript.",
-          "Ask About Transcript answers questions about a recording with your selected writing service. The chat shows where text is sent and is not saved.",
+          "Ask About Transcript answers questions about a single recording with your selected writing service. It has the same layout as Ask History, and you can ask by voice there too. The chat shows where text is sent and is not saved.",
           "Select misrecognized text in a transcript and choose Create Correction to add a dictionary correction for future transcriptions. The saved transcript stays unchanged.",
         ],
       },
@@ -550,7 +659,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Reusable language",
     title: "Dictionary and snippets",
     description:
-      "Teach TypeWhisper names and specialist terms, add trusted corrections, and expand short triggers into reusable text with live placeholders, after dictation and in the keyboard.",
+      "Teach TypeWhisper names and specialist terms, add trusted corrections, expand short triggers into reusable text with live placeholders, and insert emoji by name, after dictation and in the keyboard.",
     intro:
       "The dictionary improves recurring vocabulary. Snippets replace a short spoken or typed trigger with a longer block of text.",
     sections: [
@@ -655,6 +764,17 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Delete Entire Dictionary removes all terms and corrections. With Premium sync turned on, the deletion syncs to your other devices.",
         ],
       },
+      {
+        title: "Insert emoji by name",
+        paragraphs: [
+          "While dictating, say an emoji name followed by “emoji”, for example “thumbs up emoji” for 👍 or “red heart emoji” for ❤️. TypeWhisper puts the emoji in place of the words.",
+        ],
+        bullets: [
+          "Emoji names work in English and German, in the app and with the keyboard.",
+          "Supported Emoji under Settings > Snippets lists the names you can say.",
+          "Turn off Emoji by Name there if the words should stay as you said them.",
+        ],
+      },
     ],
     next: "watch-and-shortcuts",
   },
@@ -682,7 +802,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Follow the transfer",
             description:
-              "Each recording shows its status with haptics at every step: Waiting for iPhone, Transferring, Transcribing on iPhone, and Transcription ready.",
+              "Each recording shows its status with haptics at every step: Waiting for iPhone, Transferring, Transcribing on iPhone, and Transcription ready. While your iPhone receives or transcribes a recording, the status symbol pulses.",
           },
           {
             title: "Review the result",
@@ -700,6 +820,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Get Last Transcription returns the latest text to the next Shortcut action.",
           "Copy Last Transcription places the latest result on the clipboard.",
           "With Premium, Ask About Last Recording answers a question about your latest recording.",
+          "With Premium, Ask About My Recordings answers a question about all your recordings. The answer is read aloud and saved in Ask History.",
           "Quick Dictation and Start Recording accept a language, a format, and a translation target.",
         ],
         callout: {
@@ -746,6 +867,8 @@ const en: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Siri reads your latest note aloud, for example with “Read my latest note from TypeWhisper”.",
           "With Premium, Siri answers questions about your last recording, for example with “Ask TypeWhisper about my last recording”. The answer is read aloud and nothing is saved.",
+          "With Premium, Siri also answers questions about all your recordings, for example with “Ask TypeWhisper about my recordings”. You hear a short answer, and the question is saved in Ask History.",
+          "While your iPhone is locked, Siri and Shortcuts do not read, copy, or answer questions about your recordings and do not stop a recording. Allow Siri While Locked under Settings > General > Siri and Shortcuts turns this on for hands-free use, for example in the car. Anyone near the locked device can then do the same.",
           "“Pause TypeWhisper” and “Resume TypeWhisper” pause or resume a running recording.",
           "In CarPlay, a running recording shows buttons to pause and stop it.",
           "The Quick Capture widget captures a thought on the Home Screen, shows your Inbox, and marks items as done.",
@@ -759,7 +882,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Control and ownership",
     title: "Privacy, cloud providers, and Premium",
     description:
-      "Understand what stays on the device, what a selected provider or your Mac receives, why keyboard Full Access is needed, which features require Premium, and how to buy, restore, or redeem it.",
+      "Understand what stays on the device, what Local Only turns off, what a selected provider or your Mac receives, why keyboard Full Access is needed, which features require Premium, and how to buy, restore, or redeem it.",
     intro:
       "Core local dictation, dictionary, snippets, and the keyboard do not require an account or subscription. Cloud processing and Premium are optional layers with separate data paths.",
     sections: [
@@ -771,7 +894,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "TypeWhisper does not include advertising or third-party tracking.",
           "Local History, dictionary, snippets, formats, and model files remain in the app's storage unless you enable an export or sync feature.",
           "Voice profiles and statistics stay on the device that created them.",
+          "Ask History searches your History on the device. The search index and the optional search model stay on the device and are neither backed up nor synced.",
           "Normal keyboard typing works without Full Access.",
+          "Local Only under Settings > General > Privacy turns off cloud speech recognition and writing services that send text to a server. Audio and text then stay on the device, your paired Mac, and your local network. If your organization manages this setting, you cannot change it.",
         ],
       },
       {
@@ -781,7 +906,8 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "A cloud writing provider receives the text required for the writing action you run.",
           "TypeWhisper on Mac sends recordings and writing text encrypted to your paired Mac over the local network. Models selected on the Mac may use the cloud providers configured there.",
           "Ask About Transcript sends the transcript and your questions to your selected writing service only when you send a question.",
-          "Keyboard Full Access lets the keyboard and main TypeWhisper app share the short-lived recording state and result. The main app performs microphone capture.",
+          "Ask History sends your question and the matching excerpts to your selected writing service for each question, unless that service runs on the device. A cloud writing service asks once before the first question. Audio, the rest of your History, the dictionary, statistics, and device identifiers are not sent.",
+          "Keyboard Full Access lets the keyboard and the TypeWhisper app share the short-lived recording state and result. Usually the app records the microphone. With Record in the Keyboard, the keyboard records itself and transcribes with the speech recognition you selected, so a cloud service receives the audio only when you chose one.",
           "Premium entitlement requests carry account, device, and purchase status, not dictionary or snippet contents.",
         ],
       },
@@ -791,12 +917,14 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Improve a fresh transcript and teach TypeWhisper trusted corrections.",
           "Create reviewable email drafts with a subject and body, and calendar events that you check before saving.",
           "Ask About Transcript answers questions about a recording with your selected writing service.",
+          "Ask History answers questions about all your recordings with their sources, also through Siri, and keeps the conversations.",
+          "Record in the Keyboard lets the keyboard record and transcribe by itself, so you stay in your app.",
           "Use Your Mac transcribes and writes with the models and workflows on your paired Mac. It requires TypeWhisper for Mac 1.8 or later on the same local network and access to Premium features on both devices.",
           "Separate speakers on the device, name them, and save optional local voice profiles.",
           "Use Live Local and copy the live transcript while a recording continues.",
           "Create dictionary corrections from selected transcript text, and let the keyboard learn the words you type.",
           "Sync dictionary entries and snippets between signed-in iPhone and iPad installations.",
-          "Optionally sync History and Inbox text and metadata. Audio sync applies only to new entries after you enable it.",
+          "Optionally sync History and Inbox text and metadata, together with your Ask History conversations. Audio sync applies only to new entries after you enable it.",
         ],
         callout: {
           title: "Your selected cloud location",
@@ -820,7 +948,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Choose History and audio scope",
             description:
-              "Sync History & Inbox is optional and adds your existing text. Sync Audio for New Entries affects only entries created after you turn it on.",
+              "Sync History & Inbox is optional and adds your existing text. Saved Ask History conversations sync while it is on. Sync Audio for New Entries affects only entries created after you turn it on.",
           },
           {
             title: "Check devices and sync",
@@ -830,7 +958,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Disconnect or delete the sync folder",
             description:
-              "Disconnect Folder removes the folder selection. Delete Private Sync Folder deletes TypeWhisper's sync data from the selected cloud location. Local dictionary entries and snippets stay on the current device.",
+              "Disconnect Folder removes the folder selection. Delete Private Sync Folder deletes TypeWhisper's sync data, including synced Ask History conversations, from the selected cloud location. Local dictionary entries, snippets, and conversations stay on the current device.",
           },
         ],
       },
@@ -852,7 +980,7 @@ const en: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Solve the common cases",
     title: "Troubleshooting iPhone, iPad, keyboard, and Watch",
     description:
-      "Fix missing permissions, model downloads and preparation, the keyboard return flow, hardware keyboards on iPad, Watch transfers, cloud providers, and Premium sync.",
+      "Fix missing permissions, model downloads and preparation, the keyboard return flow, recording in the keyboard, hardware keyboards on iPad, Watch transfers, Ask History, cloud providers, and Premium sync.",
     intro:
       "Start with the exact entry point that failed. A recording in the app, keyboard dictation, Watch transfer, file import, and sync each have a different dependency.",
     sections: [
@@ -877,8 +1005,9 @@ const en: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Speech recognition or the keyboard seems stuck on preparing",
         bullets: [
-          "The first preparation of a local speech model can take a few minutes, longer on iPad. Later starts are much faster.",
-          "Open TypeWhisper and keep it open until Preparing speech recognition… is done. Settings > Speech Recognition shows the status of the model.",
+          "The first preparation of a local speech model can take a few minutes, longer on iPad. It happens once more after an update of TypeWhisper or iOS. Later starts are much faster.",
+          "Open TypeWhisper and keep it open until Preparing speech recognition… is done. While the model loads, the Record tab and Settings > Speech Recognition show the current step.",
+          "You can record in the meantime. If you stop before speech recognition is ready, the entry waits in History and gets its text there. The keyboard shows Speech recognition is still loading… until it can transcribe.",
           "Run a short recording in the app first, then dictate from the keyboard.",
           "If you need text right away, choose Apple Speech, which needs no download.",
         ],
@@ -890,8 +1019,17 @@ const en: Record<IosDocSlug, IosDocPage> = {
           "Enable Allow Full Access for voice dictation and the shared result path.",
           "Open the main app once, complete its microphone and speech permissions, and run a test recording there.",
           "Use a normal text field for testing. iOS does not allow third-party keyboards in some secure fields.",
-          "After tapping the keyboard microphone, return with the hint Swipe up, then left or through the previous-app link, and keep the TypeWhisper keyboard selected until insertion finishes.",
+          "When TypeWhisper opens for a dictation, return with the hint Swipe up, then left or through the previous-app link, and keep the TypeWhisper keyboard selected until insertion finishes.",
           "A format marked Setup Required in the keyboard needs speech recognition or a writing service first.",
+        ],
+      },
+      {
+        title: "With Premium, the keyboard still opens TypeWhisper",
+        bullets: [
+          "Record in the Keyboard needs Premium. Check that it is on under Settings > Keyboard > Keyboard Dictation.",
+          "It works with Apple Speech, Fast Local, Fast Local Ultra, Fluid Speech Pro, and cloud services with a saved API key. WhisperKit, Live Local, Cohere Transcribe (Local), and TypeWhisper on Mac open the app. A format with its own speech recognition under Advanced uses that one.",
+          "While TypeWhisper is still ready from an earlier dictation, the app records without a switch.",
+          "If the keyboard cannot start recording, TypeWhisper opens and records instead. Check that TypeWhisper has microphone access under iOS Settings > Privacy & Security > Microphone and that Allow Full Access is on.",
         ],
       },
       {
@@ -913,9 +1051,20 @@ const en: Record<IosDocSlug, IosDocPage> = {
         ],
       },
       {
+        title: "Ask History finds nothing or does not answer",
+        bullets: [
+          "Ask History needs Premium.",
+          "Without a writing service, Ask History shows only the passages it finds. Choose a writing service under Settings > Writing Services.",
+          "With a cloud writing service, tap Allow Ask History and confirm, so that your question and the matching excerpts may be sent.",
+          "The first time you open Ask History, TypeWhisper prepares your History for search. Wait until Preparing History… is done.",
+          "If you word a question differently from what you said, download the search model under Settings > Ask History. Rebuild Index there builds the search index again.",
+        ],
+      },
+      {
         title: "Cloud processing or Premium sync fails",
         bullets: [
           "Confirm the selected provider credential and network connection, then test with a short recording.",
+          "If cloud services are missing or cannot be selected, check whether Local Only is on under Settings > General > Privacy.",
           "Switch to an on-device engine to separate provider problems from microphone or model problems.",
           "For TypeWhisper on Mac, both devices need the same local network, TypeWhisper for Mac 1.8 or later, and access to Premium features. The Mac must allow paired devices.",
           "For Premium sync, confirm Sign in with Apple, active entitlement, selected sync mode, and access to the chosen Files folder.",
@@ -986,7 +1135,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         callout: {
           title: "Die erste Vorbereitung kann einige Minuten dauern",
           description:
-            "Ein heruntergeladenes Sprachmodell wird vor der ersten Nutzung für dein Gerät vorbereitet. In dieser Zeit zeigt die App „Spracherkennung wird vorbereitet …“. Das kann einige Minuten dauern, auf dem iPad länger. Lass TypeWhisper geöffnet, bis es fertig ist. Spätere Starts gehen deutlich schneller.",
+            "Ein heruntergeladenes Sprachmodell wird vor der ersten Nutzung für dein Gerät vorbereitet und nach einem Update von TypeWhisper oder iOS noch einmal. In dieser Zeit zeigt die App „Spracherkennung wird vorbereitet …“ oder den aktuellen Ladeschritt. Das kann einige Minuten dauern, auf dem iPad länger. Lass TypeWhisper geöffnet, bis es fertig ist. Spätere Starts gehen deutlich schneller.",
         },
         image: {
           path: "/screenshots/ios/01-recording.png",
@@ -1009,7 +1158,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
         title: "In der App zurechtfinden",
         bullets: [
           "Die vier Tabs heißen Verlauf, Wörterbuch, Aufnehmen und Einstellungen.",
-          "Unter Einstellungen > Allgemein findest du Eingabesprachen, Vorlesen, Flüstermodus und Aufnahmespeicher.",
+          "Unter Einstellungen > Allgemein findest du Eingabesprachen, Vorlesen, Flüstermodus, Aufnahmespeicher, „Siri und Kurzbefehle“ und „Datenschutz“ mit „Nur lokal“.",
           "Einstellungen > Darstellung ändert Wellenform und Farbe im Tab „Aufnehmen“. Die Tastatur behält ihr eigenes Design.",
           "Einstellungen > Statistiken zeigt für einen Zeitraum aktive Tage, Serien, Transkriptionen, Wörter, durchschnittliche Wörter pro Minute und gesparte Zeit. Statistiken bleiben auf dem Gerät.",
           "„Neu in TypeWhisper“ unter Einstellungen > Allgemein zeigt die Highlights des letzten Updates noch einmal.",
@@ -1023,9 +1172,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Tägliches Diktieren",
     title: "Diktat und Diktier-Tastatur",
     description:
-      "In TypeWhisper aufnehmen, die Tastatur hinzufügen, in andere Apps diktieren, zum Textfeld zurückkehren, die Tastatur bereit halten und sie auf dem iPad neben einer Hardware-Tastatur nutzen.",
+      "In TypeWhisper aufnehmen, die Tastatur hinzufügen, in andere Apps diktieren, mit Premium in der Tastatur aufnehmen, die Tastatur bereit halten und sie auf dem iPad neben einer Hardware-Tastatur nutzen.",
     intro:
-      "Du kannst direkt in TypeWhisper diktieren oder die TypeWhisper-Tastatur in einer anderen App verwenden. In beiden Fällen nimmt die TypeWhisper-App auf und transkribiert.",
+      "Du kannst direkt in TypeWhisper diktieren oder die TypeWhisper-Tastatur in einer anderen App verwenden. Meist nimmt die TypeWhisper-App auf und transkribiert. Mit Premium kann die Tastatur beides selbst, und du bleibst in deiner App.",
     sections: [
       {
         title: "In der App aufnehmen",
@@ -1052,7 +1201,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         bullets: [
-          "Das Spracherkennungsmenü im Tab „Aufnehmen“ wechselt das Modell für die nächste Aufnahme.",
+          "Das Spracherkennungsmenü im Tab „Aufnehmen“ wechselt das Modell für die nächste Aufnahme und lädt es sofort.",
+          "Die Aufnahme startet sofort, auch wenn die Spracherkennung noch lädt. Stoppst du, bevor sie bereit ist, wartet der Eintrag im Verlauf und bekommt dort seinen Text, und du kannst gleich weiter aufnehmen.",
+          "Während ein Sprachmodell lädt, zeigen der Tab „Aufnehmen“ und Einstellungen > Spracherkennung den aktuellen Schritt. Das erste Laden nach einer Installation oder einem Update kann einige Minuten dauern.",
           "„Text formatieren“ im Tab „Aufnehmen“ formatiert eingefügten oder getippten Text ohne Aufnahme.",
         ],
       },
@@ -1081,9 +1232,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         callout: {
-          title: "Warum sich die Haupt-App öffnet",
+          title: "Warum sich die App öffnet",
           description:
-            "iOS-Tastaturerweiterungen dürfen Mikrofon-Audio nicht direkt aufnehmen. Deshalb öffnet das erste Diktat TypeWhisper. Die App nimmt auf und transkribiert, die Tastatur fügt das Ergebnis ein.",
+            "Ohne „In der Tastatur aufnehmen“ nimmt die TypeWhisper-App auf und transkribiert, und die Tastatur fügt das Ergebnis ein. Deshalb öffnet das erste Diktat TypeWhisper. Mit Premium nimmt die Tastatur selbst auf, wie unter „Mit Premium in der Tastatur aufnehmen“ beschrieben.",
         },
         image: {
           path: "/screenshots/ios/03-keyboard.png",
@@ -1097,6 +1248,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
       },
       {
         title: "Aus einer anderen App diktieren",
+        paragraphs: [
+          "Ohne „In der Tastatur aufnehmen“ läuft ein Diktat über die TypeWhisper-App. Mit Premium gilt das auch für Spracherkennungen, die die Tastatur nicht selbst ausführen kann.",
+        ],
         steps: [
           {
             title: "Tastatur-Mikrofon antippen",
@@ -1121,9 +1275,36 @@ const de: Record<IosDocSlug, IosDocPage> = {
         ],
         bullets: [
           "Statt zu tippen, kannst du das Mikrofon gedrückt halten, um zu sprechen. Beim Loslassen wird der Text eingefügt.",
+          "Die Tastatur nimmt auf, sobald du auf das Mikrofon tippst, auch wenn die Spracherkennung noch lädt. Stoppst du, bevor sie bereit ist, zeigt die Tastatur „Spracherkennung lädt noch…“ und fügt den Text ein, sobald er fertig ist.",
           "Die Zurücknehmen-Taste in der oberen Leiste entfernt das gerade eingefügte Diktat.",
           "In Passwortfeldern und einzelnen Apps lässt iOS keine Tastaturen von Drittanbietern zu. Dort erscheint Apples Tastatur.",
         ],
+      },
+      {
+        title: "Mit Premium in der Tastatur aufnehmen",
+        paragraphs: [
+          "Mit Premium kann die TypeWhisper-Tastatur selbst aufnehmen und transkribieren. Ist TypeWhisper nicht im Hintergrund bereit, etwa weil du die App geschlossen hast, öffnet ein Diktat die App nicht mehr. Du bleibst in deinem Textfeld und musst nicht zurückwischen.",
+        ],
+        bullets: [
+          "„In der Tastatur aufnehmen“ unter Einstellungen > Tastatur > Tastatur-Diktat ist mit Premium standardmäßig eingeschaltet. Schalte es dort aus, wenn jedes Diktat über die App laufen soll.",
+          "Tippe auf das Tastatur-Mikrofon, sprich und tippe zum Stoppen erneut darauf. Der Text erscheint am Cursor.",
+          "Das funktioniert mit Apple Speech, „Schnell und lokal“, „Schnell und lokal Ultra“, Fluid Speech Pro und Cloud-Diensten mit deinem eigenen API-Schlüssel. Andere Spracherkennungen wie WhisperKit, „Live lokal“, „Cohere Transcribe (Lokal)“ oder „TypeWhisper auf dem Mac“ öffnen weiterhin TypeWhisper.",
+          "Hat die Tastatur zu wenig Speicher für ein lokales Modell, etwa auf dem iPad und auf iPhones mit 4 GB Arbeitsspeicher, nutzt sie stattdessen Apple Speech. Das steht auch unter Einstellungen > Tastatur.",
+          "Musik und andere Wiedergaben pausieren, während du diktierst.",
+          "Die Tastatur braucht vollen Zugriff und den Mikrofonzugriff, den du TypeWhisper erlaubt hast. Während sie aufnimmt, ist die orange Mikrofonanzeige zu sehen.",
+          "Das Diktat erscheint im Verlauf, sobald du TypeWhisper das nächste Mal öffnest.",
+          "Ist TypeWhisper von einem früheren Diktat noch bereit, nimmt die App das Diktat auf, ebenfalls ohne App-Wechsel.",
+          "Kann die Tastatur die Aufnahme nicht starten, öffnet sich TypeWhisper und nimmt stattdessen auf.",
+        ],
+        callout: {
+          title: "Ohne Premium",
+          description:
+            "Die Tastatur öffnet für das erste Diktat TypeWhisper, wie oben beschrieben. Während TypeWhisper dafür geöffnet ist, kann über dem Wischhinweis die Karte „Ohne App-Wechsel diktieren“ erscheinen, wenn die Tastatur das Diktat selbst hätte aufnehmen können. Schaltest du dort Premium frei, ist „In der Tastatur aufnehmen“ eingeschaltet. Die Schließen-Taste blendet die Karte für zwei Wochen aus.",
+        },
+        tutorial: {
+          slug: "record-in-the-keyboard",
+          link: "„In der Tastatur aufnehmen“, gezeigt in einem Chat",
+        },
       },
       {
         title: "Für das nächste Diktat bereit bleiben",
@@ -1133,9 +1314,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "„Für nächstes Diktat bereit halten“ unter Einstellungen > Tastatur > Tastatur-Diktat ist standardmäßig eingeschaltet, mit einer Bereitschaftsdauer von 5 Minuten.",
           "Stelle die Bereitschaftsdauer auf 1 bis 30 Minuten ein oder schalte die Option aus.",
-          "Die iOS-Mikrofonanzeige kann sichtbar bleiben, bis diese Zeit abgelaufen ist. Verkürze die Dauer oder schalte die Option aus, damit sie früher verschwindet.",
+          "Zwischen zwei Diktaten schaltet TypeWhisper das Mikrofon stumm und nimmt nichts auf. Die orange Mikrofonanzeige verschwindet, bis du wieder diktierst.",
           "Musik und anderes Audio behalten ihre Lautstärke, während TypeWhisper bereit bleibt.",
-          "Ist die Zeit abgelaufen, öffnet das nächste Diktat wieder TypeWhisper.",
+          "Ist die Zeit abgelaufen, öffnet das nächste Diktat wieder TypeWhisper. Mit „In der Tastatur aufnehmen“ nimmt stattdessen die Tastatur auf.",
         ],
       },
       {
@@ -1198,11 +1379,12 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Apple Speech ist eingebaut und braucht keinen Download. Ab iOS und iPadOS 26 nutzt es SpeechAnalyzer, Apples neuere Spracherkennung. iOS lädt das Modell für jede Diktiersprache einmalig im Hintergrund. Bis es bereit ist und für Sprachen, die SpeechAnalyzer noch nicht unterstützt, nutzt Apple Speech die bisherige Erkennung auf dem Gerät.",
           "„Schnell und lokal“ (Parakeet) erkennt 25 europäische Sprachen auf dem Gerät und braucht mindestens 4 GB Arbeitsspeicher. „Schnell und lokal Ultra“ ist genauer.",
+          "Fluid Speech Pro von FluidVoice ist ein Parakeet-Modell für dieselben 25 Sprachen wie „Schnell und lokal“. Es erkennt Englisch genauer als „Schnell und lokal Ultra“ und transkribiert lange Aufnahmen schneller. Du lädst es unter Einstellungen > Spracherkennung im Bereich „Schnelle lokale Erkennung“. Es braucht ein Gerät mit mindestens 4 GB Arbeitsspeicher.",
           "„Live lokal“ zeigt den Text schon beim Sprechen und läuft auf dem Gerät. Es gehört zu Premium und braucht mindestens 6 GB Arbeitsspeicher.",
           "„Weitere lokale Modelle“ bietet WhisperKit in fünf Modellgrößen von etwa 39 bis 800 MB mit 99 Sprachen und automatischer Erkennung sowie „Cohere Transcribe (Lokal)“ mit 14 Sprachen und Downloads von etwa 1,5 bis 2,4 GB.",
           "„TypeWhisper auf dem Mac“ transkribiert mit Premium auf deinem gekoppelten Mac.",
           "„Spracherkennung in der Cloud“ bietet Groq, Soniox, Reson8, ElevenLabs, OpenAI, Meta mit Muse Voice Transcribe und Gemini, jeweils mit deinem eigenen API-Schlüssel. „Server hinzufügen“ verbindet einen OpenAI-kompatiblen Server.",
-          "Eine Live-Vorschau beim Sprechen siehst du mit Apple Speech, WhisperKit, „Live lokal“, Soniox, ElevenLabs, OpenAI, Meta und Gemini. „Schnell und lokal“, „Cohere Transcribe (Lokal)“, „TypeWhisper auf dem Mac“, Groq und Reson8 zeigen den Text nach dem Stoppen.",
+          "Eine Live-Vorschau beim Sprechen siehst du mit Apple Speech, WhisperKit, „Live lokal“, Soniox, ElevenLabs, OpenAI, Meta und Gemini. „Schnell und lokal“, Fluid Speech Pro, „Cohere Transcribe (Lokal)“, „TypeWhisper auf dem Mac“, Groq und Reson8 zeigen den Text nach dem Stoppen.",
         ],
         callout: {
           title: "Lokal ist Standard",
@@ -1330,7 +1512,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Erfassen und prüfen",
     title: "Dateien, Verlauf und Capture Inbox",
     description:
-      "Audio- und Videodateien transkribieren, Dateien an TypeWhisper teilen, den Verlauf durchsuchen und filtern, Sprecher erkennen, Fragen zu einem Transkript stellen und die Inbox abarbeiten.",
+      "Audio- und Videodateien transkribieren, Dateien an TypeWhisper teilen, den Verlauf durchsuchen und filtern, eine Aufnahme erneut transkribieren, Fragen zu all deinen Aufnahmen stellen, Sprecher erkennen und die Inbox abarbeiten.",
     intro:
       "Der Verlauf ist das vollständige Archiv im Tab „Verlauf“. Die Capture Inbox, in der App „Inbox“, ist die fokussierte Warteschlange für Aufnahmen aus anderen Einstiegspunkten oder Ergebnisse, die noch Aufmerksamkeit benötigen.",
     sections: [
@@ -1359,7 +1541,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           },
         ],
         bullets: [
-          "„Erneut transkribieren“ verarbeitet eine fertige Datei noch einmal mit dem aktuellen Format und den gewählten Modellen und legt einen zweiten Eintrag im Verlauf an. So vergleichst du zwei Spracherkennungs- oder Schreibmodelle an derselben Aufnahme.",
+          "„Erneut transkribieren“ verarbeitet eine fertige Datei noch einmal mit dem aktuellen Format und den gewählten Modellen und legt einen zweiten Eintrag im Verlauf an. So vergleichst du zwei Spracherkennungs- oder Schreibmodelle an derselben Aufnahme. Für einen Eintrag, der schon im Verlauf ist, behält „Erneut transkribieren“ im Menü des Eintrags alle Versionen in einem Eintrag.",
           "Ogg-Opus-Sprachnachrichten, etwa aus WhatsApp, lassen sich importieren.",
           "Hier hinzugefügte Dateien behalten ihr Audio, bis du sie entfernst oder auf „Zurücksetzen“ tippst.",
         ],
@@ -1380,7 +1562,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Vergangene Transkriptionen durchsuchen.",
           "Nach Quelle und Format filtern und Einträge nach dem Gerät durchsehen, das sie erstellt hat.",
           "Einen Eintrag öffnen, um Ergebnis und Originalfassung zu vergleichen, das Audio abzuspielen oder den Text vorlesen zu lassen.",
-          "Das Menü eines Eintrags bietet „Kopieren“, „Teilen“, „Vorlesen“, „Anderes Format anwenden“, „Aufnahmeinformationen“, „Aufnahme hinzufügen“ und „Löschen“.",
+          "Das Menü eines Eintrags bietet „Kopieren“, „Teilen“, „Vorlesen“, „Fragen zum Transkript“, „Anderes Format anwenden“, „Erneut transkribieren“, „Aufnahme hinzufügen“, „Aufnahmeinformationen“ und „Löschen“.",
           "Das Ergebnis oder die Originalfassung bearbeiten.",
           "Einträge aus „Text formatieren“ haben die Quelle „Texteingabe“ und kein Audio.",
           "Wiedergabe und Vorlesen laufen über Apples Audioausgabe-Auswahl auf AirPlay, Bluetooth oder dem Lautsprecher.",
@@ -1394,13 +1576,89 @@ const de: Record<IosDocSlug, IosDocPage> = {
         },
       },
       {
+        title: "Eine Aufnahme erneut transkribieren",
+        paragraphs: [
+          "„Erneut transkribieren“ verarbeitet eine gespeicherte Aufnahme noch einmal mit anderen Einstellungen. Du vergleichst das neue Ergebnis mit dem aktuellen Text und übernimmst das, das dir besser gefällt. Premium brauchst du dafür nicht.",
+        ],
+        steps: [
+          {
+            title: "Eintrag öffnen",
+            description:
+              "Öffne im Verlauf einen Eintrag mit Audio, tippe auf … und wähle „Erneut transkribieren“.",
+          },
+          {
+            title: "Einstellungen wählen",
+            description:
+              "Wähle unter „Einstellungen für den neuen Lauf“ eine andere Spracherkennung, Sprache oder ein anderes Format.",
+          },
+          {
+            title: "Cloud-Verarbeitung bei Bedarf erlauben",
+            description:
+              "Sendet der Lauf Audio oder Text an einen Cloud-Dienst, steht unter dem Schalter, wohin. Schalte „Für diesen Lauf erlauben“ ein, um fortzufahren. Cloud-Anbieter können dafür Kosten berechnen.",
+          },
+          {
+            title: "Starten und vergleichen",
+            description:
+              "Tippe auf „Erneut transkribieren“. Das neue Ergebnis erscheint unter „Text in Verwendung“. Bei mehreren Ergebnissen wählst du mit „Vergleichen mit“, welches du siehst.",
+          },
+          {
+            title: "Das bessere Ergebnis übernehmen",
+            description:
+              "Tippe auf „Ergebnis übernehmen“. Der bisherige Text bleibt als Version erhalten. Um zurückzuwechseln, öffne „Erneut transkribieren“ noch einmal und übernimm auf dieselbe Weise die „Erste Transkription“ oder ein früheres Ergebnis.",
+          },
+        ],
+        bullets: [
+          "Gespeicherte Versionen bleiben auf diesem Gerät, bis du sie löschst oder der Eintrag gelöscht wird. „Version löschen“ entfernt eine Version.",
+          "Nur der Text in Verwendung wird durchsucht, exportiert und synchronisiert. Mit Verlaufs-Sync zeigen deine anderen Geräte den Text, den du gewählt hast.",
+          "Ein weiterer Lauf zählt nicht als neues Diktat.",
+          "Bei einem Eintrag ohne Audio zeigt „Versionen vergleichen“ im selben Menü die Versionen, die er schon hat.",
+        ],
+      },
+      {
+        title: "Fragen zum Verlauf mit Premium",
+        paragraphs: [
+          "„Fragen zum Verlauf“ beantwortet Fragen zu all deinen Aufnahmen, zum Beispiel „Was habe ich letzte Woche mit der Druckerei vereinbart?“. TypeWhisper findet die passenden Stellen auf deinem Gerät, dein gewählter Schreibdienst antwortet, und jede Antwort nennt ihre Quellen.",
+        ],
+        steps: [
+          {
+            title: "„Fragen zum Verlauf“ öffnen",
+            description:
+              "Tippe im Verlauf auf „Fragen“. Im Menü oben wählst du, worauf sich die Frage bezieht: „Gesamter Verlauf“, „Letzte 7 Tage“, „Letzte 30 Tage“ oder „Dieses Jahr“.",
+          },
+          {
+            title: "Getippt oder per Sprache fragen",
+            description:
+              "Tippe deine Frage ein, oder tippe im leeren Feld auf das Mikrofon, frag laut und tippe auf den Pfeil. Eine gesprochene Frage wird sofort gestellt und legt keinen Eintrag im Verlauf an.",
+          },
+          {
+            title: "Quellen prüfen",
+            description:
+              "Zahlen wie [1] in der Antwort und die Quellen darunter öffnen die Aufnahme, aus der sie stammen. Folgefragen stellst du im selben Gespräch.",
+          },
+          {
+            title: "Einen Cloud-Schreibdienst einmal erlauben",
+            description:
+              "Mit einem Cloud-Schreibdienst fragt „Fragen zum Verlauf“ einmal nach, bevor deine Frage und die passenden Auszüge gesendet werden. Audio, der übrige Verlauf, Wörterbuch, Statistiken und Gerätekennungen werden nicht gesendet.",
+          },
+        ],
+        bullets: [
+          "Markiere Einträge im Verlauf und tippe auf „Fragen“, um nur zu diesen Aufnahmen zu fragen, bis zu 50 auf einmal.",
+          "Liest sich dein Suchtext im Verlauf wie eine Frage, bietet der Verlauf an, sie in „Fragen zum Verlauf“ zu stellen.",
+          "Gespräche werden gespeichert. Die Uhr-Taste listet sie auf, „Neues Gespräch“ beginnt ein neues. Mit Verlaufs-Sync erscheinen sie auch auf deinem anderen iPhone und iPad, und ein Gespräch, das du löschst, wird auch dort gelöscht.",
+          "Für Fragen, die anders formuliert sind als das Gesagte, lädst du unter Einstellungen > Fragen zum Verlauf das optionale Suchmodell. Bis es vorbereitet ist, nutzen Antworten die Volltextsuche.",
+          "Suchindex und Suchmodell bleiben auf diesem Gerät und werden weder gesichert noch synchronisiert.",
+          "Ohne Schreibdienst zeigt „Fragen zum Verlauf“ die gefundenen Stellen. Für Antworten wählst du unter Einstellungen > Schreibdienste einen Dienst.",
+          "Siri antwortet auch: Sag „Frag TypeWhisper zu meinen Aufnahmen“ und hör eine kurze Antwort. Die Frage wird in „Fragen zum Verlauf“ gespeichert.",
+        ],
+      },
+      {
         title: "Sprecher, Fragen und Korrekturen mit Premium",
         bullets: [
           "„Sprecher erkennen“ unterscheidet Sprecher nach der Transkription auf dem Gerät. Schalte es für ein Format unter „Erweitert“ oder in der Dateitranskription ein oder starte es über das Menü eines Verlaufseintrags. „Besprechungsnotizen“ erkennt Sprecher standardmäßig.",
           "„Sprecher benennen“ gibt den Sprechern Namen. Im Transkript weist du eine Wortmeldung einem anderen Sprecher zu oder teilst sie auf.",
           "„Stimme in künftigen Aufnahmen erkennen“ sichert ein Sprecherprofil, das den Namen in späteren Aufnahmen vorschlägt. Sprecherprofile bleiben auf dem Gerät, werden nicht synchronisiert und enthalten kein Audio. Du verwaltest sie unter Einstellungen > Sprecherprofile.",
           "Ähnliche Stimmen und gleichzeitiges Sprechen können zu falschen Zuordnungen führen, die du im Transkript korrigierst.",
-          "„Fragen zum Transkript“ beantwortet Fragen zu einer Aufnahme über deinen gewählten Schreibdienst. Der Chat zeigt an, wohin Text gesendet wird, und wird nicht gespeichert.",
+          "„Fragen zum Transkript“ beantwortet Fragen zu einer einzelnen Aufnahme über deinen gewählten Schreibdienst. Es hat dasselbe Layout wie „Fragen zum Verlauf“, und auch dort kannst du per Sprache fragen. Der Chat zeigt an, wohin Text gesendet wird, und wird nicht gespeichert.",
           "Markiere falsch erkannten Text im Transkript und wähle „Korrektur anlegen“, um eine Wörterbuchkorrektur für künftige Transkriptionen anzulegen. Das gespeicherte Transkript bleibt unverändert.",
         ],
       },
@@ -1423,7 +1681,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Wiederverwendbare Sprache",
     title: "Wörterbuch und Textbausteine",
     description:
-      "TypeWhisper Namen und Fachbegriffe beibringen, bestätigte Korrekturen anlegen und kurze Auslöser in wiederverwendbaren Text mit dynamischen Platzhaltern verwandeln, nach dem Diktat und in der Tastatur.",
+      "TypeWhisper Namen und Fachbegriffe beibringen, bestätigte Korrekturen anlegen, kurze Auslöser in wiederverwendbaren Text mit dynamischen Platzhaltern verwandeln und Emoji per Namen einfügen, nach dem Diktat und in der Tastatur.",
     intro:
       "Das Wörterbuch verbessert wiederkehrendes Vokabular. Textbausteine ersetzen einen kurzen gesprochenen oder getippten Auslöser durch längeren Text.",
     sections: [
@@ -1528,6 +1786,17 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "„Gesamtes Wörterbuch löschen“ entfernt alle Begriffe und Korrekturen. Ist der Premium-Sync eingeschaltet, wird die Löschung auf deine anderen Geräte synchronisiert.",
         ],
       },
+      {
+        title: "Emoji per Namen einfügen",
+        paragraphs: [
+          "Sag beim Diktieren einen Emoji-Namen und danach „Emoji“, zum Beispiel „Daumen hoch Emoji“ für 👍 oder „rotes Herz Emoji“ für ❤️. TypeWhisper setzt das Emoji an die Stelle der Wörter.",
+        ],
+        bullets: [
+          "Emoji-Namen funktionieren auf Deutsch und Englisch, in der App und mit der Tastatur.",
+          "„Unterstützte Emoji“ unter Einstellungen > Textbausteine listet die Namen auf, die du sagen kannst.",
+          "Schalte dort „Emoji per Namen“ aus, wenn die Wörter so bleiben sollen, wie du sie gesagt hast.",
+        ],
+      },
     ],
     next: "watch-and-shortcuts",
   },
@@ -1555,7 +1824,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Übertragung verfolgen",
             description:
-              "Jede Aufnahme zeigt ihren Status, mit Haptik bei jedem Schritt: „Wartet auf das iPhone“, „Wird übertragen“, „Wird auf dem iPhone transkribiert“ und „Transkription fertig“.",
+              "Jede Aufnahme zeigt ihren Status, mit Haptik bei jedem Schritt: „Wartet auf das iPhone“, „Wird übertragen“, „Wird auf dem iPhone transkribiert“ und „Transkription fertig“. Während dein iPhone eine Aufnahme empfängt oder transkribiert, pulsiert das Statussymbol.",
           },
           {
             title: "Ergebnis prüfen",
@@ -1573,6 +1842,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Letzte Transkription abrufen gibt den Text an die nächste Kurzbefehl-Aktion weiter.",
           "Letzte Transkription kopieren legt das Ergebnis in die Zwischenablage.",
           "Mit Premium beantwortet „Frage zur letzten Aufnahme“ eine Frage zu deiner neuesten Aufnahme.",
+          "Mit Premium beantwortet „Fragen zu meinen Aufnahmen“ eine Frage zu all deinen Aufnahmen. Die Antwort wird vorgelesen und in „Fragen zum Verlauf“ gespeichert.",
           "Schnelldiktat und Aufnahme starten nehmen eine Sprache, ein Format und ein Übersetzungsziel an.",
         ],
         callout: {
@@ -1619,6 +1889,8 @@ const de: Record<IosDocSlug, IosDocPage> = {
         bullets: [
           "Siri liest deine neueste Notiz vor, zum Beispiel mit „Lies meine neueste Notiz aus TypeWhisper vor“.",
           "Mit Premium beantwortet Siri Fragen zu deiner letzten Aufnahme, zum Beispiel mit „Frag TypeWhisper zu meiner letzten Aufnahme“. Die Antwort wird vorgelesen, und nichts wird gespeichert.",
+          "Mit Premium beantwortet Siri auch Fragen zu all deinen Aufnahmen, zum Beispiel mit „Frag TypeWhisper zu meinen Aufnahmen“. Du hörst eine kurze Antwort, und die Frage wird in „Fragen zum Verlauf“ gespeichert.",
+          "Solange dein iPhone gesperrt ist, lesen Siri und Kurzbefehle deine Aufnahmen nicht vor, kopieren sie nicht, beantworten keine Fragen dazu und stoppen keine Aufnahme. „Siri im Sperrzustand erlauben“ unter Einstellungen > Allgemein > Siri und Kurzbefehle schaltet das für die freihändige Nutzung ein, zum Beispiel im Auto. Dann kann das auch jeder in der Nähe des gesperrten Geräts.",
           "„TypeWhisper pausieren“ und „TypeWhisper fortsetzen“ pausieren eine laufende Aufnahme oder setzen sie fort.",
           "In CarPlay zeigt eine laufende Aufnahme Tasten zum Pausieren und Stoppen.",
           "Das Widget „Schnellaufnahme“ hält auf dem Home-Bildschirm einen Gedanken fest, zeigt deine Inbox und markiert Einträge als erledigt.",
@@ -1632,7 +1904,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Kontrolle und Eigentum",
     title: "Datenschutz, Cloud-Anbieter und Premium",
     description:
-      "Verstehen, was auf dem Gerät bleibt, was ein gewählter Anbieter oder dein Mac erhält, warum die Tastatur Vollzugriff braucht, welche Funktionen Premium benötigen und wie du Premium kaufst, wiederherstellst oder einlöst.",
+      "Verstehen, was auf dem Gerät bleibt, was „Nur lokal“ ausschaltet, was ein gewählter Anbieter oder dein Mac erhält, warum die Tastatur Vollzugriff braucht, welche Funktionen Premium benötigen und wie du Premium kaufst, wiederherstellst oder einlöst.",
     intro:
       "Lokales Diktieren, Wörterbuch, Textbausteine und Tastatur benötigen weder Account noch Abo. Cloud-Verarbeitung und Premium sind optionale Ebenen mit getrennten Datenwegen.",
     sections: [
@@ -1644,7 +1916,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "TypeWhisper enthält keine Werbung und kein Drittanbieter-Tracking.",
           "Lokaler Verlauf, Wörterbuch, Textbausteine, Formate und Modelle bleiben im App-Speicher, solange du keinen Export oder Sync aktivierst.",
           "Sprecherprofile und Statistiken bleiben auf dem Gerät, auf dem sie entstanden sind.",
+          "„Fragen zum Verlauf“ durchsucht deinen Verlauf auf dem Gerät. Der Suchindex und das optionale Suchmodell bleiben auf dem Gerät und werden weder gesichert noch synchronisiert.",
           "Normales Tippen mit der Tastatur funktioniert ohne Vollzugriff.",
+          "„Nur lokal“ unter Einstellungen > Allgemein > Datenschutz schaltet die Spracherkennung in der Cloud und Schreibdienste aus, die Text an einen Server senden. Audio und Text bleiben dann auf dem Gerät, deinem gekoppelten Mac und in deinem lokalen Netzwerk. Verwaltet deine Organisation diese Einstellung, kannst du sie nicht ändern.",
         ],
       },
       {
@@ -1654,7 +1928,8 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Ein Cloud-Schreibanbieter erhält den Text, der für die von dir gestartete Schreibaktion nötig ist.",
           "„TypeWhisper auf dem Mac“ sendet Aufnahmen und Text verschlüsselt über das lokale Netzwerk an deinen gekoppelten Mac. Auf dem Mac ausgewählte Modelle können dort eingerichtete Cloud-Anbieter nutzen.",
           "„Fragen zum Transkript“ sendet das Transkript und deine Fragen nur dann an deinen gewählten Schreibdienst, wenn du eine Frage abschickst.",
-          "Der Tastatur-Vollzugriff erlaubt Tastatur und Haupt-App, kurzlebigen Aufnahmezustand und Ergebnis zu teilen. Die Haupt-App nimmt das Mikrofon auf.",
+          "„Fragen zum Verlauf“ sendet für jede Frage deine Frage und die passenden Auszüge an deinen gewählten Schreibdienst, außer er läuft auf dem Gerät. Ein Cloud-Schreibdienst fragt vor der ersten Frage einmal nach. Audio, der übrige Verlauf, Wörterbuch, Statistiken und Gerätekennungen werden nicht gesendet.",
+          "Der Tastatur-Vollzugriff erlaubt Tastatur und TypeWhisper-App, kurzlebigen Aufnahmezustand und Ergebnis zu teilen. Meist nimmt die App das Mikrofon auf. Mit „In der Tastatur aufnehmen“ nimmt die Tastatur selbst auf und transkribiert mit der gewählten Spracherkennung. Ein Cloud-Dienst erhält das Audio also nur, wenn du ihn gewählt hast.",
           "Premium-Berechtigungsanfragen enthalten Account-, Geräte- und Kaufstatus, nicht Wörterbuch- oder Textbaustein-Inhalte.",
         ],
       },
@@ -1664,12 +1939,14 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Ein frisches Transkript verbessern und TypeWhisper bestätigte Korrekturen beibringen.",
           "Prüfbare E-Mail-Entwürfe mit Betreff und Text erstellen und Kalendertermine, die du vor dem Sichern prüfst.",
           "„Fragen zum Transkript“ beantwortet Fragen zu einer Aufnahme über deinen gewählten Schreibdienst.",
+          "„Fragen zum Verlauf“ beantwortet Fragen zu all deinen Aufnahmen mit ihren Quellen, auch über Siri, und speichert die Gespräche.",
+          "„In der Tastatur aufnehmen“ lässt die Tastatur selbst aufnehmen und transkribieren, und du bleibst in deiner App.",
           "„Deinen Mac nutzen“ transkribiert und schreibt mit den Modellen und Workflows deines gekoppelten Macs. Dafür brauchst du TypeWhisper für Mac ab Version 1.8 im selben lokalen Netzwerk und Zugang zu den Premium-Funktionen auf beiden Geräten.",
           "Sprecher auf dem Gerät unterscheiden, benennen und auf Wunsch lokale Sprecherprofile sichern.",
           "„Live lokal“ nutzen und den Live-Text kopieren, während die Aufnahme weiterläuft.",
           "Wörterbuchkorrekturen aus markiertem Transkripttext anlegen und die Tastatur getippte Wörter lernen lassen.",
           "Wörterbuch und Textbausteine zwischen angemeldeten iPhone- und iPad-Installationen synchronisieren.",
-          "Optional Text und Metadaten aus Verlauf und Inbox synchronisieren. Audio-Sync gilt nur für neue Einträge nach der Aktivierung.",
+          "Optional Text und Metadaten aus Verlauf und Inbox synchronisieren, zusammen mit deinen Gesprächen aus „Fragen zum Verlauf“. Audio-Sync gilt nur für neue Einträge nach der Aktivierung.",
         ],
         callout: {
           title: "Dein gewählter Cloud-Speicher",
@@ -1693,7 +1970,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Verlauf und Audio festlegen",
             description:
-              "„Verlauf und Inbox synchronisieren“ ist optional und nimmt deine vorhandenen Texte mit auf. „Audio für neue Einträge synchronisieren“ betrifft nur Einträge, die nach dem Einschalten entstehen.",
+              "„Verlauf und Inbox synchronisieren“ ist optional und nimmt deine vorhandenen Texte mit auf. Solange es eingeschaltet ist, werden auch gespeicherte Gespräche aus „Fragen zum Verlauf“ synchronisiert. „Audio für neue Einträge synchronisieren“ betrifft nur Einträge, die nach dem Einschalten entstehen.",
           },
           {
             title: "Geräte prüfen und synchronisieren",
@@ -1703,7 +1980,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
           {
             title: "Sync-Ordner trennen oder löschen",
             description:
-              "„Ordner trennen“ hebt die Ordnerauswahl auf. „Privaten Synchronisierungsordner löschen“ löscht die Sync-Daten von TypeWhisper aus dem gewählten Cloud-Speicher. Lokale Wörterbuch- und Textbaustein-Daten bleiben auf dem aktuellen Gerät.",
+              "„Ordner trennen“ hebt die Ordnerauswahl auf. „Privaten Synchronisierungsordner löschen“ löscht die Sync-Daten von TypeWhisper, auch synchronisierte Gespräche aus „Fragen zum Verlauf“, aus dem gewählten Cloud-Speicher. Lokale Wörterbucheinträge, Textbausteine und Gespräche bleiben auf dem aktuellen Gerät.",
           },
         ],
       },
@@ -1725,7 +2002,7 @@ const de: Record<IosDocSlug, IosDocPage> = {
     eyebrow: "Häufige Fälle lösen",
     title: "Fehlerbehebung für iPhone, iPad, Tastatur und Watch",
     description:
-      "Fehlende Berechtigungen, Modell-Downloads und Modellvorbereitung, Tastatur-Rückweg, Hardware-Tastaturen am iPad, Watch-Übertragung, Cloud-Anbieter und Premium-Sync prüfen.",
+      "Fehlende Berechtigungen, Modell-Downloads und Modellvorbereitung, Tastatur-Rückweg, Aufnahme in der Tastatur, Hardware-Tastaturen am iPad, Watch-Übertragung, „Fragen zum Verlauf“, Cloud-Anbieter und Premium-Sync prüfen.",
     intro:
       "Beginne beim genauen Einstiegspunkt des Fehlers. App-Aufnahme, Tastatur-Diktat, Watch-Transfer, Dateiimport und Sync haben jeweils andere Voraussetzungen.",
     sections: [
@@ -1750,8 +2027,9 @@ const de: Record<IosDocSlug, IosDocPage> = {
       {
         title: "Spracherkennung oder Tastatur hängt scheinbar bei der Vorbereitung",
         bullets: [
-          "Die erste Vorbereitung eines lokalen Sprachmodells kann einige Minuten dauern, auf dem iPad länger. Spätere Starts gehen deutlich schneller.",
-          "Öffne TypeWhisper und lass die App geöffnet, bis „Spracherkennung wird vorbereitet …“ fertig ist. Unter Einstellungen > Spracherkennung siehst du den Status des Modells.",
+          "Die erste Vorbereitung eines lokalen Sprachmodells kann einige Minuten dauern, auf dem iPad länger. Nach einem Update von TypeWhisper oder iOS passiert sie noch einmal. Spätere Starts gehen deutlich schneller.",
+          "Öffne TypeWhisper und lass die App geöffnet, bis „Spracherkennung wird vorbereitet …“ fertig ist. Während das Modell lädt, zeigen der Tab „Aufnehmen“ und Einstellungen > Spracherkennung den aktuellen Schritt.",
+          "Du kannst in der Zwischenzeit aufnehmen. Stoppst du, bevor die Spracherkennung bereit ist, wartet der Eintrag im Verlauf und bekommt dort seinen Text. Die Tastatur zeigt „Spracherkennung lädt noch…“, bis sie transkribieren kann.",
           "Mach zuerst eine kurze Aufnahme in der App und diktiere danach über die Tastatur.",
           "Brauchst du sofort Text, wähle Apple Speech. Es braucht keinen Download.",
         ],
@@ -1763,8 +2041,17 @@ const de: Record<IosDocSlug, IosDocPage> = {
           "Aktiviere „Vollen Zugriff erlauben“ für Diktat und gemeinsamen Rückgabeweg.",
           "Öffne die Haupt-App einmal, erteile Mikrofon- und Sprachberechtigung und teste dort eine Aufnahme.",
           "Teste in einem normalen Textfeld. iOS erlaubt Drittanbieter-Tastaturen in manchen sicheren Feldern nicht.",
-          "Kehre nach dem Tastatur-Mikrofon über den Hinweis „Nach oben, dann nach links wischen“ oder den Link zur vorherigen App zurück und lasse die TypeWhisper-Tastatur bis zur Einfügung gewählt.",
+          "Öffnet sich TypeWhisper für ein Diktat, kehre über den Hinweis „Nach oben, dann nach links wischen“ oder den Link zur vorherigen App zurück und lasse die TypeWhisper-Tastatur bis zur Einfügung gewählt.",
           "Ein Format, das in der Tastatur mit „Einrichtung erforderlich“ markiert ist, braucht zuerst eine Spracherkennung oder einen Schreibdienst.",
+        ],
+      },
+      {
+        title: "Mit Premium öffnet die Tastatur trotzdem TypeWhisper",
+        bullets: [
+          "„In der Tastatur aufnehmen“ braucht Premium. Prüfe, ob es unter Einstellungen > Tastatur > Tastatur-Diktat eingeschaltet ist.",
+          "Es funktioniert mit Apple Speech, „Schnell und lokal“, „Schnell und lokal Ultra“, Fluid Speech Pro und Cloud-Diensten mit gespeichertem API-Schlüssel. WhisperKit, „Live lokal“, „Cohere Transcribe (Lokal)“ und „TypeWhisper auf dem Mac“ öffnen die App. Ein Format mit eigener Spracherkennung unter „Erweitert“ nutzt diese.",
+          "Ist TypeWhisper von einem früheren Diktat noch bereit, nimmt die App ohne App-Wechsel auf.",
+          "Kann die Tastatur die Aufnahme nicht starten, öffnet sich TypeWhisper und nimmt stattdessen auf. Prüfe, ob TypeWhisper unter iOS-Einstellungen > Datenschutz & Sicherheit > Mikrofon Zugriff hat und „Vollen Zugriff erlauben“ eingeschaltet ist.",
         ],
       },
       {
@@ -1786,9 +2073,20 @@ const de: Record<IosDocSlug, IosDocPage> = {
         ],
       },
       {
+        title: "„Fragen zum Verlauf“ findet nichts oder antwortet nicht",
+        bullets: [
+          "„Fragen zum Verlauf“ braucht Premium.",
+          "Ohne Schreibdienst zeigt „Fragen zum Verlauf“ nur die gefundenen Stellen. Wähle einen Schreibdienst unter Einstellungen > Schreibdienste.",
+          "Tippe bei einem Cloud-Schreibdienst auf „Fragen zum Verlauf erlauben“ und bestätige, damit deine Frage und die passenden Auszüge gesendet werden dürfen.",
+          "Beim ersten Öffnen bereitet TypeWhisper deinen Verlauf für die Suche vor. Warte, bis „Verlauf wird vorbereitet …“ fertig ist.",
+          "Formulierst du eine Frage anders als das Gesagte, lade das Suchmodell unter Einstellungen > Fragen zum Verlauf. „Index neu aufbauen“ baut dort den Suchindex neu auf.",
+        ],
+      },
+      {
         title: "Cloud-Verarbeitung oder Premium-Sync schlägt fehl",
         bullets: [
           "Prüfe Zugangsdaten und Netzwerkverbindung des gewählten Anbieters mit einer kurzen Aufnahme.",
+          "Fehlen Cloud-Dienste oder lassen sie sich nicht auswählen, prüfe, ob „Nur lokal“ unter Einstellungen > Allgemein > Datenschutz eingeschaltet ist.",
           "Wechsle auf eine lokale Engine, um Anbieterprobleme von Mikrofon- oder Modellproblemen zu trennen.",
           "Für „TypeWhisper auf dem Mac“ brauchen beide Geräte dasselbe lokale Netzwerk, TypeWhisper für Mac ab Version 1.8 und Zugang zu den Premium-Funktionen. Der Mac muss gekoppelte Geräte erlauben.",
           "Prüfe für Premium-Sync Apple-Anmeldung, aktive Berechtigung, gewählten Modus und Zugriff auf den Cloud-Ordner.",
