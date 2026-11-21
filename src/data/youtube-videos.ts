@@ -14,6 +14,10 @@ export interface YoutubeVideo {
  * or private upload shows "Video unavailable" in the player.
  */
 export const youtubeVideos: Record<string, Partial<Record<Locale, YoutubeVideo>>> = {
+  "ios-record-in-keyboard": {
+    en: { id: "mjVX8kwjNWA" },
+    de: { id: "oty3LuAxOuo" },
+  },
   "ios-keyboard-tour": {
     en: { id: "vcQg_UooAXM" },
     de: { id: "jtz06QRlu08" },

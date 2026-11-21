@@ -44,7 +44,7 @@ export const tutorials: Tutorial[] = [
     video: "ios-record-in-keyboard",
     portrait: true,
     platform: "ios",
-    published: "2026-11-20",
+    published: "2026-11-21",
     appVersion: "1.3.0",
     duration: { en: 81, de: 83 },
     docsPath: "/docs/ios/dictation-and-keyboard/#section-4",
