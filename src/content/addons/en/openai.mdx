@@ -104,7 +104,7 @@ API Key mode enables OpenAI speech-to-text. ChatGPT Login does not replace the A
 
 On a fresh configuration, TypeWhisper selects **GPT Transcribe**. Upgrades keep a previously saved transcription model. Translation requests are blocked locally for every model except **Whisper 1**.
 
-From February 26, 2027, when OpenAI shuts them down, version `1.5.0` on Mac and `1.2.0` on Windows leave Whisper 1, GPT-4o Transcribe and GPT-4o Mini Transcribe out of the built-in model list and no longer offer translation. A saved selection of one of them transcribes with **GPT Transcribe** instead.
+From February 26, 2027, when OpenAI shuts them down, version `1.5.0` on Mac and `1.2.0` on Windows leave Whisper 1, GPT-4o Transcribe and GPT-4o Mini Transcribe out of the built-in model list and no longer offer translation. A saved selection of one of them transcribes with **GPT Transcribe** instead. On Windows, a model list fetched from your OpenAI account replaces the built-in list: a model stays available as long as that list includes it, and a saved model the list no longer includes uses GPT Transcribe if the list offers it, otherwise the first model in the list.
 
 Sources: [GPT Transcribe](https://developers.openai.com/api/docs/models/gpt-transcribe), [OpenAI deprecations](https://platform.openai.com/docs/deprecations), [OpenAI Realtime transcription](https://developers.openai.com/api/docs/guides/realtime-transcription), [OpenAIPlugin v1.3.3 release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-openai-v1.3.3), [OpenAI plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
@@ -115,7 +115,7 @@ OpenAI / ChatGPT also provides TypeWhisper's text-to-speech provider. It uses an
 | Field | What it controls | Example |
 | --- | --- | --- |
 | **Text-to-Speech Voice** | Selects one of the 10 voices OpenAI's realtime model offers. TypeWhisper defaults to **Marin**. | Choose `Marin` for the default voice or `Cedar` for another high-quality option. |
-| **Voice instructions** | Tells the voice how to speak, for example its tone or pace. TypeWhisper asks the model to read the text aloud word for word, so the instructions change only the delivery, never the words. | `Speak calmly, with short pauses between sentences.` |
+| **Voice instructions** | Tells the voice how to speak, for example its tone or pace. TypeWhisper asks the model to read the text aloud word for word, so the instructions are meant to change only the delivery. The model can still occasionally say a word differently. | `Speak calmly, with short pauses between sentences.` |
 
 Text-to-speech runs through OpenAI's Realtime API with `gpt-realtime-2.1-mini`, the model OpenAI names as the replacement for `gpt-4o-mini-tts`, `tts-1` and `tts-1-hd`, which it shuts down on January 6, 2027. The voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. The realtime model does not offer Fable, Nova and Onyx: a voice saved as one of them stays selected and shows as not available, and reading aloud asks you to choose another voice instead of switching on its own. TypeWhisper receives 24 kHz PCM audio and plays it once the whole text is spoken, up to two minutes per request; in our tests a sentence was ready after about 1.5 to 2 seconds. On Windows, the voice for spoken feedback is chosen under **Spoken feedback > Voice**.
 
