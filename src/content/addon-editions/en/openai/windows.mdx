@@ -1,23 +1,24 @@
 ---
 familySlug: "openai"
 platform: "windows"
-version: "1.1.6"
+version: "1.2.0"
 description: "OpenAI for transcription, text processing, and text-to-speech. Transcription and speech need an API key; text processing can also use your ChatGPT login."
 id: "com.typewhisper.openai"
 capabilityNames:
   llm: "OpenAI"
-minAppVersion: "1.1.0"
+minAppVersion: "1.3.0"
 requirements:
-  - "TypeWhisper 1.1.0 or newer"
+  - "TypeWhisper 1.3.0 or newer"
   - "Windows 10 or newer"
   - "An OpenAI API key for transcription and text-to-speech"
 highlights:
-  - "Cloud transcription with GPT Transcribe, GPT Live Transcribe, Whisper 1, and the GPT-4o transcription models"
+  - "Cloud transcription with GPT Transcribe, GPT Live Transcribe, Whisper 1, and the GPT-4o transcription models; without a fetched model list, Whisper 1 and the GPT-4o models leave the list on February 26, 2027, when OpenAI shuts them down, and a saved one then uses GPT Transcribe"
   - "Live text while you speak with the realtime models GPT Live Transcribe and GPT Realtime Whisper"
   - "Transcription context, language hints, and dictionary terms for GPT Transcribe and GPT Live Transcribe"
-  - "Translation into English with Whisper 1"
+  - "Translation into English with Whisper 1 until OpenAI shuts it down on February 26, 2027"
   - "Text processing with an API key or your ChatGPT login, with the models available to that account"
-  - "Text-to-speech with 13 voices and optional speech instructions"
+  - "Text-to-speech through OpenAI's Realtime API with gpt-realtime-2.1-mini and 10 voices, before OpenAI shuts down gpt-4o-mini-tts on January 6, 2027; speech instructions change only how the text is spoken, and a saved Fable, Nova or Onyx voice shows as no longer available"
+  - "The API model list reloads in the background once a day; GPT-4.1 Nano and o4-mini, shut down by OpenAI on October 23, 2026, are no longer offered"
 configuration:
   - "Keep OpenAI API key as the Connection method, enter your key under API key, select Save settings, then select Check connection"
   - "To use your ChatGPT account for text processing, switch Connection method to ChatGPT, select Save settings, then select Sign in with ChatGPT or Import existing Codex login"
@@ -25,6 +26,6 @@ configuration:
   - "Optionally enter Speech instructions for tone, pace or accent; the voice for spoken feedback is chosen under Spoken feedback > Voice"
   - "Choose a Text model, Reasoning effort, and Temperature, then select Save settings; after changing accounts, select Refresh models"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAi"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-v1.1.6"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-v1.2.0"
 processing: "cloud"
 ---

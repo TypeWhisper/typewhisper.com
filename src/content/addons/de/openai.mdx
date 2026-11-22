@@ -23,7 +23,7 @@ featured: true
 
 ## Über
 
-OpenAI / ChatGPT verbindet TypeWhisper mit OpenAI für Sprache-zu-Text, Prompt-Verarbeitung und Text-to-Speech. Version `1.3.0` brachte die oben gezeigten kontextbezogenen Modelle `gpt-transcribe` und `gpt-live-transcribe` sowie die kontospezifische ChatGPT-/Codex-Modellsuche. Version `1.3.3` behält schrittweise Vorschauen bei dateibasierten Transkriptionen bei und finalisiert beim Diktatende zuverlässig die vollständige gepufferte Aufnahme.
+OpenAI / ChatGPT verbindet TypeWhisper mit OpenAI für Sprache-zu-Text, Prompt-Verarbeitung und Text-to-Speech. Version `1.3.0` brachte die oben gezeigten kontextbezogenen Modelle `gpt-transcribe` und `gpt-live-transcribe` sowie die kontospezifische ChatGPT-/Codex-Modellsuche. Version `1.3.3` behält schrittweise Vorschauen bei dateibasierten Transkriptionen bei und finalisiert beim Diktatende zuverlässig die vollständige gepufferte Aufnahme. Version `1.5.0` auf dem Mac und `1.2.0` unter Windows lesen Text über OpenAIs Realtime API mit `gpt-realtime-2.1-mini` vor, weil OpenAI `gpt-4o-mini-tts` und seine anderen Sprachmodelle am 6. Januar 2027 abschaltet.
 
 Das veröffentlichte Release ist die Quelle der Wahrheit für die öffentliche Version. Der Plugin-Release-Workflow kann das Bundle-Manifest während der Veröffentlichung patchen; ein lokaler Checkout kann daher noch eine ältere Manifest-Version zeigen.
 
@@ -89,9 +89,9 @@ Der API-Schlüssel-Modus aktiviert OpenAI-Sprache-zu-Text. ChatGPT-Login ersetzt
 | --- | --- | --- |
 | GPT Transcribe | `gpt-transcribe` | Kontextbezogene Dateitranskription und Standard bei neuen Konfigurationen. Während eines Diktats zeigt TypeWhisper schrittweise Vorschauen und finalisiert anschließend die vollständige gepufferte Aufnahme. Whisper Translate ist nicht verfügbar. |
 | GPT Live Transcribe | `gpt-live-transcribe` | Kontextbezogene Echtzeittranskription mit Teilergebnissen und einstellbarer Live-Verzögerung. Whisper Translate ist nicht verfügbar. |
-| Whisper 1 | `whisper-1` | Klassische Whisper-Transkription. Unterstützt Whisper Translate ins Englische. |
-| GPT-4o Transcribe | `gpt-4o-transcribe` | Genauere GPT-4o-Transkription. Whisper Translate ist bei GPT-4o-Transkriptionsmodellen nicht verfügbar. |
-| GPT-4o Mini Transcribe | `gpt-4o-mini-transcribe` | Kleineres GPT-4o-Transkriptionsmodell für schnellere oder günstigere Transkription. Whisper Translate ist nicht verfügbar. |
+| Whisper 1 | `whisper-1` | Klassische Whisper-Transkription. Unterstützt Whisper Translate ins Englische. OpenAI schaltet es am 26. Februar 2027 ab. |
+| GPT-4o Transcribe | `gpt-4o-transcribe` | Genauere GPT-4o-Transkription. Whisper Translate ist bei GPT-4o-Transkriptionsmodellen nicht verfügbar. OpenAI schaltet es am 26. Februar 2027 ab. |
+| GPT-4o Mini Transcribe | `gpt-4o-mini-transcribe` | Kleineres GPT-4o-Transkriptionsmodell für schnellere oder günstigere Transkription. Whisper Translate ist nicht verfügbar. OpenAI schaltet es am 26. Februar 2027 ab. |
 | GPT Realtime Whisper | `gpt-realtime-whisper` | Streamt 24-kHz-Mono-PCM über OpenAIs Realtime API für Live-Transkription. Whisper Translate ist nicht verfügbar. |
 
 | Feld | Was es steuert | Beispiel |
@@ -104,7 +104,9 @@ Der API-Schlüssel-Modus aktiviert OpenAI-Sprache-zu-Text. ChatGPT-Login ersetzt
 
 Bei einer neuen Konfiguration wählt TypeWhisper **GPT Transcribe**. Beim Update bleibt ein zuvor gespeichertes Transkriptionsmodell erhalten. Übersetzungsanfragen werden bei allen Modellen außer **Whisper 1** bereits lokal blockiert.
 
-Quellen: [GPT Transcribe](https://developers.openai.com/api/docs/models/gpt-transcribe), [OpenAI Realtime Transcription](https://developers.openai.com/api/docs/guides/realtime-transcription), [OpenAIPlugin v1.3.3 Release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-openai-v1.3.3), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
+Ab dem 26. Februar 2027, wenn OpenAI sie abschaltet, nehmen Version `1.5.0` auf dem Mac und `1.2.0` unter Windows Whisper 1, GPT-4o Transcribe und GPT-4o Mini Transcribe aus der eingebauten Modellliste und bieten keine Übersetzung mehr an. Ist eines davon gespeichert, transkribiert TypeWhisper stattdessen mit **GPT Transcribe**. Unter Windows ersetzt eine aus deinem OpenAI-Konto abgerufene Modellliste die eingebaute Liste samt Abschaltdatum: Ein gespeichertes Modell transkribiert weiter, solange diese Liste es enthält, auch nach dem 26. Februar 2027. Ein gespeichertes Modell, das die Liste nicht mehr enthält, nutzt GPT Transcribe, wenn die Liste es anbietet, sonst das erste Modell der Liste. Liefert eine von dir gestartete Aktualisierung keine Transkriptionsmodelle, bleibt die OpenAI-Transkription nicht verfügbar, bis eine spätere Aktualisierung welche liefert.
+
+Quellen: [GPT Transcribe](https://developers.openai.com/api/docs/models/gpt-transcribe), [OpenAI-Abkündigungen](https://platform.openai.com/docs/deprecations), [OpenAI Realtime Transcription](https://developers.openai.com/api/docs/guides/realtime-transcription), [OpenAIPlugin v1.3.3 Release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-openai-v1.3.3), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
 ## Text-to-Speech
 
@@ -112,12 +114,12 @@ OpenAI / ChatGPT stellt auch den Text-to-Speech-Anbieter für TypeWhisper bereit
 
 | Feld | Was es steuert | Beispiel |
 | --- | --- | --- |
-| **Text-to-Speech Voice** | Wählt eine der integrierten OpenAI-Stimmen aus. TypeWhisper nutzt standardmäßig **Marin**. | Wähle `Marin` als Standardstimme oder `Cedar` als weitere hochwertige Option. |
-| **Voice instructions** | Sendet zusätzliche Sprechanweisungen an die `gpt-4o-mini-tts`-Anfrage, wenn das Feld nicht leer ist. | `Sprich ruhig, mit kurzen Pausen zwischen den Sätzen.` |
+| **Text-to-Speech Voice** | Wählt eine der 10 Stimmen, die OpenAIs Realtime-Modell anbietet. TypeWhisper nutzt standardmäßig **Marin**. | Wähle `Marin` als Standardstimme oder `Cedar` als weitere hochwertige Option. |
+| **Voice instructions** | Sagt der Stimme, wie sie sprechen soll, zum Beispiel Tonfall oder Tempo. TypeWhisper weist das Modell an, den Text Wort für Wort vorzulesen. Die Anweisungen sollen also nur ändern, wie gesprochen wird. Gelegentlich kann das Modell trotzdem ein Wort anders sprechen. | `Sprich ruhig, mit kurzen Pausen zwischen den Sätzen.` |
 
-Das Plugin unterstützt `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `nova`, `onyx`, `sage`, `shimmer`, `verse`, `marin` und `cedar`. TypeWhisper fordert PCM-Audio an, damit die Wiedergabe ohne zusätzliche Dateikonvertierung starten kann.
+Text-to-Speech läuft über OpenAIs Realtime API mit `gpt-realtime-2.1-mini`, das OpenAI als Ersatz für `gpt-4o-mini-tts`, `tts-1` und `tts-1-hd` nennt, die es am 6. Januar 2027 abschaltet. Die Stimmen sind `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin` und `cedar`. Fable, Nova und Onyx bietet das Realtime-Modell nicht an: Ist eine davon gespeichert, bleibt sie ausgewählt und wird als nicht verfügbar angezeigt, und beim Vorlesen wirst du gebeten, eine andere Stimme zu wählen, statt dass TypeWhisper selbst wechselt. TypeWhisper erhält 24-kHz-PCM-Audio und spielt es ab, sobald der ganze Text gesprochen ist, bis zu zwei Minuten pro Anfrage; in unseren Tests war ein Satz nach etwa 1,5 bis 2 Sekunden fertig. Unter Windows wählst du die Stimme für das Sprachfeedback unter **Sprachfeedback > Stimme**.
 
-Quellen: [OpenAI Text to speech](https://platform.openai.com/docs/guides/text-to-speech), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
+Quellen: [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime), [OpenAI-Abkündigungen](https://platform.openai.com/docs/deprecations), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
 ## LLM-Modelle
 
@@ -131,7 +133,7 @@ Der LLM-Bereich ist verfügbar, sobald die ausgewählte Verbindungsmethode gült
 | **Temperature Mode** | Nur im API-Schlüssel-Modus. **Provider Default** nutzt TypeWhispers Standard-Temperaturverhalten. **Custom** aktiviert einen 0,0-2,0-Slider, wenn das gewählte Modell benutzerdefinierte Temperatur unterstützt. | Nutze `0.2` für deterministische Bereinigung oder einen höheren Wert für variablere Formulierungen. |
 | **Hinweis bei ignorierter Temperatur** | Wird gezeigt, wenn eine GPT-5-Reasoning-Konfiguration keine benutzerdefinierte Temperatur akzeptiert. | Wenn du GPT-5 mit Denkaufwand nutzt, bleibe bei Provider Default oder ignoriere den Custom-Slider. |
 
-Die Fallback-Modelle im API-Schlüssel-Modus enthalten `gpt-5.5`, `gpt-4.1-nano`, `gpt-4.1-mini`, `gpt-4.1`, `gpt-4o`, `gpt-4o-mini` und `o4-mini`. Das Offline-Fallback für ChatGPT/Codex enthält aktuelle Optionen wie `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`, `gpt-5.5`, `gpt-5.4` und `gpt-5.4-mini`; nach einer erfolgreichen Aktualisierung ersetzt die für das Konto sichtbare Modellliste dieses Fallback.
+Die Fallback-Modelle im API-Schlüssel-Modus enthalten `gpt-5.5`, `gpt-4.1-mini`, `gpt-4.1`, `gpt-4o` und `gpt-4o-mini`; `gpt-4.1-nano` und `o4-mini` sind nicht mehr dabei, weil OpenAI beide am 23. Oktober 2026 abgeschaltet hat. Das Offline-Fallback für ChatGPT/Codex enthält aktuelle Optionen wie `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`, `gpt-5.5`, `gpt-5.4` und `gpt-5.4-mini`; nach einer erfolgreichen Aktualisierung ersetzt die für das Konto sichtbare Modellliste dieses Fallback.
 
 Quellen: [OpenAI Models API](https://platform.openai.com/docs/api-reference/models/list), [OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses), [OpenAI Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenAIPlugin)
 
@@ -160,4 +162,4 @@ Installiere zuerst **OpenAI / ChatGPT** unter **Einstellungen > Plugins entdecke
 - ChatGPT-Login ist hier für macOS dokumentiert.
 - Transkription und Text-to-Speech benötigen einen OpenAI-API-Schlüssel.
 - Browser-Login und Codex-Import sind für Prompt-Verarbeitung gedacht und ersetzen keine API-Authentifizierung für STT/TTS.
-- Das öffentliche Release `1.3.3` benötigt TypeWhisper-Hostversion `1.6.0` oder neuer.
+- Version `1.5.0` benötigt auf dem Mac TypeWhisper `1.8.3` oder neuer, Version `1.2.0` unter Windows TypeWhisper `1.3.0` oder neuer.

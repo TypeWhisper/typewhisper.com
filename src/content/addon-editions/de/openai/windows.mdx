@@ -1,23 +1,24 @@
 ---
 familySlug: "openai"
 platform: "windows"
-version: "1.1.6"
+version: "1.2.0"
 description: "OpenAI für Transkription, Textverarbeitung und Text-to-Speech. Transkription und Sprachausgabe brauchen einen API-Schlüssel; die Textverarbeitung kann auch deinen ChatGPT-Login nutzen."
 id: "com.typewhisper.openai"
 capabilityNames:
   llm: "OpenAI"
-minAppVersion: "1.1.0"
+minAppVersion: "1.3.0"
 requirements:
-  - "TypeWhisper 1.1.0 oder neuer"
+  - "TypeWhisper 1.3.0 oder neuer"
   - "Windows 10 oder neuer"
   - "Ein OpenAI-API-Schlüssel für Transkription und Text-to-Speech"
 highlights:
-  - "Cloud-Transkription mit GPT Transcribe, GPT Live Transcribe, Whisper 1 und den GPT-4o-Transkriptionsmodellen"
+  - "Cloud-Transkription mit GPT Transcribe, GPT Live Transcribe, Whisper 1 und den GPT-4o-Transkriptionsmodellen; ohne abgerufene Modellliste verschwinden Whisper 1 und die GPT-4o-Modelle am 26. Februar 2027 aus der Liste, wenn OpenAI sie abschaltet, und ein gespeichertes davon nutzt dann GPT Transcribe"
   - "Live-Text beim Sprechen mit den Realtime-Modellen GPT Live Transcribe und GPT Realtime Whisper"
   - "Transkriptionskontext, Sprachhinweise und Wörterbuchbegriffe für GPT Transcribe und GPT Live Transcribe"
-  - "Übersetzung ins Englische mit Whisper 1"
+  - "Übersetzung ins Englische mit Whisper 1, bis OpenAI es am 26. Februar 2027 abschaltet"
   - "Textverarbeitung mit API-Schlüssel oder deinem ChatGPT-Login, mit den Modellen, die dieses Konto anbietet"
-  - "Text-to-Speech mit 13 Stimmen und optionalen Sprechanweisungen"
+  - "Text-to-Speech über OpenAIs Realtime API mit gpt-realtime-2.1-mini und 10 Stimmen, bevor OpenAI gpt-4o-mini-tts am 6. Januar 2027 abschaltet; Sprechanweisungen ändern nur, wie der Text gesprochen wird, und eine gespeicherte Stimme Fable, Nova oder Onyx wird als nicht mehr verfügbar angezeigt"
+  - "Die API-Modellliste lädt sich einmal am Tag im Hintergrund neu; GPT-4.1 Nano und o4-mini, die OpenAI am 23. Oktober 2026 abgeschaltet hat, werden nicht mehr angeboten"
 configuration:
   - "Lass „OpenAI-API-Key“ als „Verbindungsmethode“ stehen, trag deinen Schlüssel unter „API-Schlüssel“ ein, wähle „Einstellungen speichern“ und dann „Verbindung prüfen“"
   - "Um dein ChatGPT-Konto für die Textverarbeitung zu nutzen, stell die „Verbindungsmethode“ auf ChatGPT, wähle „Einstellungen speichern“ und dann „Mit ChatGPT anmelden“ oder „Bestehende Codex-Anmeldung importieren“"
@@ -25,6 +26,6 @@ configuration:
   - "Trag bei Bedarf „Sprechanweisungen“ zu Tonfall, Tempo oder Akzent ein; die Stimme für das Sprachfeedback wählst du unter „Sprachfeedback“ > „Stimme“"
   - "Wähle „Textmodell“, „Reasoning-Stufe“ und „Temperatur“ und dann „Einstellungen speichern“; nach einem Kontowechsel wähle „Modelle aktualisieren“"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAi"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-v1.1.6"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-v1.2.0"
 processing: "cloud"
 ---
