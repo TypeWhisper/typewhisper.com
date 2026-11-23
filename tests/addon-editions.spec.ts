@@ -192,7 +192,7 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
     ).toBeVisible();
-    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.1.0", { exact: true })).toBeVisible();
 
     await page.goto("/de/addons/meta/macos/");
     await expect(
