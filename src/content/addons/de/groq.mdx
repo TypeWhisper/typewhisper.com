@@ -18,6 +18,7 @@ sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GroqPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Groq"
 featured: false
+screenshotAlt: "Groq-Einstellungen in TypeWhisper für macOS: API-Schlüssel, Transkriptionsmodell, LLM-Modell, Reasoning-Aufwand und Temperatur"
 ---
 
 ## Über diese Edition
@@ -28,7 +29,8 @@ Groq bietet Cloud-Transkription mit Whisper-Modellen und Textverarbeitung mit LL
 
 - Cloud-Transkription mit Whisper-Modellen
 - Mehrere Whisper-Modellvarianten
-- LLM-Verarbeitung mit GPT-OSS-Modellen
+- LLM-Verarbeitung mit GPT-OSS- und Qwen-Modellen
+- Reasoning-Aufwand pro Modell auf dem Mac, zum Beispiel Niedrig für GPT-OSS 120B
 - Kostenloses Kontingent mit großzügigen Rate-Limits
 - OpenAI-kompatible API
 
@@ -41,12 +43,16 @@ Groq bietet Cloud-Transkription mit Whisper-Modellen und Textverarbeitung mit LL
 
 ## LLM-Modelle
 
-| Modell | ID |
-| --- | --- |
-| GPT-OSS 20B | `openai/gpt-oss-20b` |
-| GPT-OSS 120B | `openai/gpt-oss-120b` |
+| Modell | ID | Reasoning-Aufwand auf dem Mac |
+| --- | --- | --- |
+| GPT-OSS 20B | `openai/gpt-oss-20b` | Niedrig, Mittel (Groq-Standard), Hoch |
+| GPT-OSS 120B | `openai/gpt-oss-120b` | Niedrig, Mittel (Groq-Standard), Hoch |
+| Qwen 3.8 27B | `qwen/qwen3.8-27b` | Aus (Groq-Standard), Niedrig, Mittel, Hoch |
+| Muse Spark | `meta-models/muse-spark-open` | Niedrig, Mittel, Hoch, Sehr hoch (Groq-Standard) |
 
-Aktualisiere den Modellkatalog in TypeWhisper, um die für dein Konto verfügbaren Modelle zu sehen. Prüfe [Groqs Abkündigungen](https://console.groq.com/docs/deprecations), wenn ein älteres gespeichertes Modell nicht mehr funktioniert.
+Aktualisiere den Modellkatalog in TypeWhisper, um die für dein Konto verfügbaren Modelle zu sehen. Muse Spark erscheint erst, wenn du seine Nutzungsbedingungen in der Groq-Konsole akzeptiert hast.
+
+Auf dem Mac legt die Einstellung „Reasoning-Aufwand“ fest, wie lange ein Modell nachdenkt, bevor es antwortet. Niedrigere Stufen antworten schneller und verbrauchen weniger Tokens, das passt gut zum Aufbereiten von Diktaten. Solange du keine Stufe wählst, nutzt Groq seinen eigenen Standard. Workflows können ihre eigene Stufe wählen. Prüfe [Groqs Abkündigungen](https://console.groq.com/docs/deprecations), wenn ein älteres gespeichertes Modell nicht mehr funktioniert.
 
 ## Konfiguration
 
@@ -57,3 +63,4 @@ Aktualisiere den Modellkatalog in TypeWhisper, um die für dein Konto verfügbar
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Groq**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Gib deinen Groq API-Schlüssel ein.
 3. Wähle Groq als Transkriptions-Engine oder LLM-Anbieter.
+4. Wähle auf dem Mac einen Reasoning-Aufwand, wenn das LLM-Modell einen anbietet.

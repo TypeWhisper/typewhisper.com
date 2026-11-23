@@ -20,6 +20,7 @@ sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenRouterPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenRouter"
 principalClass: OpenRouterPlugin
+screenshotAlt: "OpenRouter-Einstellungen in TypeWhisper für macOS: API-Schlüssel und Guthaben, Transkriptionsmodell, LLM-Modell mit Preisen, Reasoning-Aufwand und Temperatur"
 ---
 
 ## Über diese Edition
@@ -31,11 +32,18 @@ OpenRouter verbindet TypeWhisper mit Cloud-Transkriptionsmodellen und LLMs über
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **OpenRouter**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Speichere und validiere deinen OpenRouter-API-Key.
 3. Aktualisiere die Modellkataloge und wähle ein Transkriptionsmodell für Sprache oder ein LLM für Text-Workflows.
-4. Prüfe die angezeigten Modellpreise und dein Kontoguthaben.
-5. Wähle OpenRouter im entsprechenden Transkriptions- oder LLM-Feld deines Workflows.
+4. Wähle auf dem Mac einen Reasoning-Aufwand, wenn das LLM einen anbietet.
+5. Prüfe die angezeigten Modellpreise und dein Kontoguthaben.
+6. Wähle OpenRouter im entsprechenden Transkriptions- oder LLM-Feld deines Workflows.
 
 ## Transkription und Modellwahl
 
 Nur passende Audiomodelle erscheinen im Transkriptionskatalog. Die macOS-Edition verwendet den passenden Transkriptions-Endpunkt oder einen Audio-Chat-Pfad; nicht unterstützte Routen können einen Fallback auslösen. Die Transkription unterstützt keine Übersetzungsanforderung.
 
 Der Katalog und dein API-Zugang bestimmen die verfügbaren Modelle. Preis- und Guthabenanzeigen stammen von OpenRouter. Audio beziehungsweise Workflow-Text wird über OpenRouter an den ausgewählten Anbieter gesendet.
+
+## Reasoning-Aufwand
+
+Auf dem Mac zeigt das Add-on die Einstellung „Reasoning-Aufwand“ für LLMs, bei denen OpenRouter Aufwandsstufen nennt. OpenRouter kennt die Stufen Aus, Minimal, Niedrig, Mittel, Hoch, Sehr hoch und Maximum, und jedes Modell bietet einen Teil davon an, zum Beispiel Niedrig, Mittel und Hoch für GPT-OSS 120B oder Aus, Niedrig, Hoch und Maximum für DeepSeek V4.1 Flash. Modelle ohne Stufen, etwa GPT-4o, zeigen keine Einstellung.
+
+Niedrigere Stufen antworten schneller und verbrauchen weniger Tokens, das passt gut zum Aufbereiten von Diktaten. Solange du keine Stufe wählst, gilt der Standard des Modells. Workflows können ihre eigene Stufe wählen. Nach dem Update auf 1.3.0 lädt das Add-on den LLM-Katalog einmal neu, um die Stufen zu bekommen.

@@ -20,6 +20,7 @@ sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/OpenRouterPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenRouter"
 principalClass: OpenRouterPlugin
+screenshotAlt: "OpenRouter settings in TypeWhisper for macOS: API key and balance, transcription model, LLM model with pricing, reasoning effort and temperature"
 ---
 
 ## About this edition
@@ -31,11 +32,18 @@ OpenRouter connects TypeWhisper to cloud transcription models and LLMs through o
 1. In TypeWhisper, open **Settings > Discover plugins** and install **OpenRouter**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Save and validate your OpenRouter API key.
 3. Refresh the model catalogs and choose a transcription model for speech or an LLM for text workflows.
-4. Check the displayed model prices and account balance.
-5. Select OpenRouter in the corresponding transcription or LLM field of your workflow.
+4. On Mac, choose a Reasoning Effort if the LLM offers one.
+5. Check the displayed model prices and account balance.
+6. Select OpenRouter in the corresponding transcription or LLM field of your workflow.
 
 ## Transcription and model selection
 
 Only compatible audio models appear in the transcription catalog. The macOS edition uses a suitable transcription endpoint or an audio-chat path; unsupported routes can trigger a fallback. Transcription does not support translation requests.
 
 The catalog and your API access determine available models. Pricing and balance information comes from OpenRouter. Audio or workflow text is sent through OpenRouter to the selected provider.
+
+## Reasoning effort
+
+On Mac, the add-on shows a Reasoning Effort setting for LLMs whose OpenRouter listing names effort levels. OpenRouter knows the levels Off, Minimal, Low, Medium, High, Extra High and Max, and each model offers some of them, for example Low, Medium and High for GPT-OSS 120B, or Off, Low, High and Max for DeepSeek V4.1 Flash. Models without levels, such as GPT-4o, show no setting.
+
+Lower levels answer faster and use fewer tokens, which suits cleaning up dictations. Until you pick a level, the model's own default applies. Workflows can pick their own level. After the update to 1.3.0, the add-on loads the LLM catalog once more to get the levels.
