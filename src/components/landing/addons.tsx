@@ -14,7 +14,7 @@ const showcaseOrder = [
   "parakeet",
   "whisper-cpp",
   "reson8",
-  "groq",
+  "zoom",
   "openai",
   "claude",
   "obsidian",
