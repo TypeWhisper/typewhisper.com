@@ -1,7 +1,7 @@
 ---
 familySlug: "qwen3-asr"
 platform: "windows"
-version: "1.1.1"
+version: "1.1.3"
 description: "Qwen3-ASR 0.6B oder 1.7B offline auf der CPU über sherpa-onnx, nach einem einmaligen Modelldownload."
 id: "com.typewhisper.qwen3-local"
 appName: "Qwen3 ASR (Local)"
@@ -17,12 +17,13 @@ highlights:
   - "30 Sprachen, darunter Deutsch, Englisch und Kantonesisch; ohne festgelegte Sprache erkennt das Modell sie automatisch"
   - "Läuft auf der CPU mit der mitgelieferten sherpa-onnx-Laufzeit; kein API-Schlüssel, kein Hugging-Face-Token, kein Python und keine GPU nötig"
   - "Downloads werden gegen feste SHA-256-Werte geprüft, und vor jedem Download wird der freie Speicherplatz geprüft"
+  - "Ein beschädigtes Modell scheitert schon beim Laden, mit einer Meldung, die einen erneuten Download vorschlägt"
   - "Transkribiert die fertige Aufnahme; kein Live-Text und keine Übersetzung, und Wörterbuchbegriffe werden nicht an das Modell übergeben"
 configuration:
   - "Wähle neben „Qwen3-ASR 0.6B INT8“ (empfohlen) oder „Qwen3-ASR 1.7B INT8“ „Modell herunterladen“"
   - "Wähle „Modell verwenden“, um das heruntergeladene Modell für das Diktat zu laden; der Download allein ändert das aktive Modell nicht"
   - "Zum Löschen eines Modells wählst du auf der Seite des Add-ons seine Schaltfläche „Unload and remove …“ (in der App englisch beschriftet) und öffnest die Seite vor einem erneuten Download dieses Modells neu"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Qwen3Local"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-qwen3-local-v1.1.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-qwen3-local-v1.1.3"
 processing: "local"
 ---

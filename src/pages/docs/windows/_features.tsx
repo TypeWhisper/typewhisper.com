@@ -25,14 +25,14 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
   const dailyFeatures: DocsItem[] = isDe
     ? [
         { title: "Systemweites Diktat", description: "Starte eine Aufnahme aus jeder App und füge das Ergebnis direkt in das aktive Textfeld ein." },
-        { title: "Flexible Tastenkürzel", description: "Nutze Hybrid, Umschalten oder Gedrückthalten; zusätzliche Kürzel öffnen Verlauf, Workflow-Palette oder das letzte Ergebnis." },
+        { title: "Flexible Tastenkürzel", description: "Nutze Hybrid, Umschalten oder Gedrückthalten; zusätzliche Kürzel öffnen Verlauf, Workflow-Palette oder das letzte Ergebnis. Ohne Ctrl, Alt oder Shift funktionieren F1 bis F24, Insert, Pause sowie Medien-, Lautstärke-, Browser- und Starttasten, praktisch für Push-to-Talk auf Laptops, deren F-Tasten Fn brauchen." },
         { title: "Geordnete Sprachhinweise", description: "Begrenze die automatische Erkennung auf mehrere Sprachen und ordne die Hinweise nach ihrer erwarteten Priorität." },
         { title: "Aufnahme-Overlays", description: "Sieh Aufnahmestatus, Dauer, aktiven Workflow und – bei unterstützten Engines – Live-Teilergebnisse." },
         { title: "Verlauf", description: "Suche frühere Transkriptionen, kopiere Text erneut und prüfe verwendete Engine, Modell und Dauer." },
       ]
     : [
         { title: "System-wide dictation", description: "Start recording from any app and insert the result directly into the active text field." },
-        { title: "Flexible hotkeys", description: "Use Hybrid, Toggle, or Hold mode; additional shortcuts open history, the workflow palette, or the last result." },
+        { title: "Flexible hotkeys", description: "Use Hybrid, Toggle, or Hold mode; additional shortcuts open history, the workflow palette, or the last result. Without Ctrl, Alt, or Shift, a shortcut can use F1 to F24, Insert, Pause, or a media, volume, browser, or launch key, which helps with push-to-talk on laptops whose F-keys need Fn." },
         { title: "Ordered language hints", description: "Restrict automatic detection to several languages and order the hints by expected priority." },
         { title: "Recording overlays", description: "See recording state, duration, the active workflow, and live partial results when the engine supports them." },
         { title: "History", description: "Search previous transcriptions, copy text again, and review the engine, model, and duration." },
@@ -70,6 +70,27 @@ export default function DocsWindowsFeatures({ locale = "en" }: { locale?: Locale
           src={screenshotPath(locale, "/screenshots/windows/shortcuts.png")}
           alt={isDe ? "Tastenkürzel von TypeWhisper für Windows" : "TypeWhisper hotkeys for Windows"}
         />
+      </DocsSection>
+
+      <DocsSection
+        id="world-of-warcraft"
+        title={isDe ? "World-of-Warcraft-Chat" : "World of Warcraft chat"}
+      >
+        <p>
+          {isDe
+            ? "Ab TypeWhisper 1.2.2 diktierst du in den Chat von World of Warcraft. Schalte unter Einstellungen > Erweitert „In den World-of-Warcraft-Chat diktieren“ ein und wähle „Add-on installieren“. TypeWhisper findet das Spiel über Battle.net und installiert das TypeWhisper-Add-on in jede Version auf dem PC: Retail, Classic und Forever. Findet TypeWhisper das Spiel nicht, wählst du den Spielordner selbst aus."
+            : "From TypeWhisper 1.2.2, you can dictate into the World of Warcraft chat. Under Settings > Advanced, turn on Dictate into the World of Warcraft chat and select Install add-on. TypeWhisper finds the game through Battle.net and installs the TypeWhisper add-on into every version on the PC: Retail, Classic, and Forever. If TypeWhisper does not find the game, choose the game folder yourself."}
+        </p>
+        <p>
+          {isDe
+            ? "Ist das Spiel im Vordergrund, öffnet dein Diktat-Tastenkürzel den Chat, fügt den Text ein und sendet ihn. Ein bereits offener Chat bleibt mit seinem Text offen. Langer Text geht als mehrere Nachrichten mit höchstens 255 Bytes hinaus, und eine Nachricht beginnt nie mit einem Schrägstrich, sodass ein Diktat keinen Spielbefehl ausführen kann. Im Spiel zeigt das Add-on dein Diktat als Zauberbalken: eine Wellenform, während du sprichst, und einen Balken, der sich füllt, während TypeWhisper transkribiert."
+            : "While the game is in front, your dictation shortcut opens the chat, inserts the text, and sends it. A chat that is already open stays open with its text. Long text goes out as several messages of up to 255 bytes, and a message never starts with a slash, so a dictation cannot run a game command. In the game, the add-on shows your dictation as a cast bar: a waveform while you speak, and a bar that fills while TypeWhisper transcribes."}
+        </p>
+        <p>
+          {isDe
+            ? "Senden, den Zauberbalken und eine optionale Übersetzung deiner Nachrichten stellst du im Spiel auf der Seite des Add-ons ein: Gib /tw ein. Die Übersetzung nutzt das Standard-LLM deiner Workflows. TypeWhisper liest diese Einstellungen, wenn du /reload eingibst oder dich abmeldest. Um auf ein Flüstern zu antworten, drück die Antworttaste des Spiels und diktiere dann."
+            : "Sending, the cast bar, and an optional translation of your messages are set on the add-on's page in the game: type /tw. Translation uses the default LLM of your workflows. TypeWhisper reads these settings when you type /reload or log out. To answer a whisper, press the game's reply key, then dictate."}
+        </p>
       </DocsSection>
 
       <DocsSection

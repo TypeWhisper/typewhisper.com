@@ -1,7 +1,7 @@
 ---
 familySlug: "granite"
 platform: "windows"
-version: "1.2.7"
+version: "1.2.9"
 description: "IBM Granite Speech locally on the CPU or an NVIDIA GPU through a managed Python/PyTorch runtime."
 id: "com.typewhisper.granite-speech"
 appName: "IBM Granite Speech (Local)"
@@ -18,12 +18,13 @@ highlights:
   - "Granite 4.0 1B Speech for six languages"
   - "Runs on the CPU or, with CUDA, on an NVIDIA GPU"
   - "About 5–8 GB for runtime and model; download before first use"
+  - "The model downloads into a short folder, so the download also works with long Windows user names when long path support is off; if the path is still too long, setup stops with a message that names the folder"
 configuration:
   - "Under Processing device, choose Automatic, CPU, or NVIDIA CUDA and select Save settings; with CPU, the add-on downloads a smaller runtime without CUDA"
   - "Select Download model to install the runtime and the model, then select Use model"
   - "A later change of the processing device applies the next time the model loads; switching from CPU to Automatic or NVIDIA CUDA downloads the runtime again and keeps the model files"
   - "To free the disk space, select Remove model and runtime"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.GraniteSpeech"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-granite-speech-v1.2.7"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-granite-speech-v1.2.9"
 processing: "local"
 ---

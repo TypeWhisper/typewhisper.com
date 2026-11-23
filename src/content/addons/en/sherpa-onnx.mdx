@@ -2,9 +2,9 @@
 slug: sherpa-onnx
 name: NVIDIA Parakeet
 author: TypeWhisper
-version: "1.3.1"
+version: "1.4.1"
 icon: AudioLines
-description: Offline transcription on Windows with NVIDIA Parakeet, Parakeet Ultra and Canary, on the CPU or, for Parakeet, on any graphics card with Vulkan.
+description: Offline transcription on Windows with NVIDIA Parakeet, Parakeet Ultra, Fluid Speech Pro and Canary, on the CPU or, for Parakeet, on any graphics card with Vulkan.
 categories:
   - transcription
 platforms:
@@ -12,7 +12,7 @@ platforms:
 source: official
 id: "com.typewhisper.sherpa-onnx"
 minAppVersion: "1.1.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-sherpa-onnx-v1.3.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-sherpa-onnx-v1.4.1"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.SherpaOnnx
@@ -20,15 +20,15 @@ sourceUrls:
 
 ## About
 
-NVIDIA Parakeet adds offline transcription to TypeWhisper for Windows. It runs the models Parakeet Ultra 0.6B, Parakeet TDT 0.6B and Canary 180M Flash on your PC, so your audio is not sent to a cloud service. On the CPU, the models run through sherpa-onnx. The two Parakeet models can also run on a graphics card from NVIDIA, AMD or Intel through Vulkan, using transcribe.cpp.
+NVIDIA Parakeet adds offline transcription to TypeWhisper for Windows. It runs the models Parakeet Ultra 0.6B, Fluid Speech Pro, Parakeet TDT 0.6B and Canary 180M Flash on your PC, so your audio is not sent to a cloud service. On the CPU, the models run through sherpa-onnx. The two Parakeet models can also run on a graphics card from NVIDIA, AMD or Intel through Vulkan, using transcribe.cpp.
 
 ## Features
 
 - Offline transcription on Windows: audio is processed on your PC
-- Three models: Parakeet Ultra 0.6B (recommended), Parakeet TDT 0.6B and Canary 180M Flash
-- The Parakeet models cover 25 European languages and detect the spoken language themselves
+- Four models: Parakeet Ultra 0.6B (recommended), Fluid Speech Pro, Parakeet TDT 0.6B and Canary 180M Flash
+- The Parakeet models and Fluid Speech Pro cover 25 European languages and detect the spoken language themselves
 - Canary transcribes English, German, French and Spanish and can translate them into English
-- Processing device: Automatic, CPU or Graphics card. Parakeet runs on graphics cards from NVIDIA, AMD or Intel through Vulkan; Canary always runs on the CPU
+- Processing device: Automatic, CPU or Graphics card. Parakeet runs on graphics cards from NVIDIA, AMD or Intel through Vulkan; Fluid Speech Pro and Canary always run on the CPU
 - Live preview while you dictate
 - Dictionary boosting for Parakeet: the add-on includes the Parakeet CTC component, and you add terms in Dictionary
 - Long recordings are split into chunks automatically
@@ -40,7 +40,8 @@ NVIDIA Parakeet adds offline transcription to TypeWhisper for Windows. It runs t
 
 | Model | ID | Publisher | Size | Languages | Graphics card | Translation |
 | --- | --- | --- | --- | --- | --- | --- |
-| Parakeet Ultra 0.6B | `parakeet-ultra-0.6b` | Moondream | ~670 MB | 25 | Yes | No |
+| Parakeet Ultra 0.6B | `parakeet-ultra-0.6b` | Moondream | ~900 MB | 25 | Yes | No |
+| Fluid Speech Pro | `fluid-speech-pro` | FluidVoice | ~900 MB | 25 | No | No |
 | Parakeet TDT 0.6B | `parakeet-tdt-0.6b` | NVIDIA | ~670 MB | 25 | Yes | No |
 | Canary 180M Flash | `canary-180m-flash` | NVIDIA | ~198 MB | 4 | No | Into English |
 
@@ -51,7 +52,7 @@ The sizes refer to the CPU files. For the graphics card, each Parakeet model dow
 | Option | What it does |
 | --- | --- |
 | **Automatic** | Uses the graphics card once its files are downloaded, otherwise the CPU. If the graphics card cannot load the model and the model's CPU files are present, the model runs on the CPU. |
-| **CPU** | Works on every PC and runs all three models. |
+| **CPU** | Works on every PC and runs all four models. |
 | **Graphics card** | Runs Parakeet on a graphics card from NVIDIA, AMD or Intel through Vulkan. The first switch downloads about 760 MB: the transcribe.cpp runtime and the graphics card version of the model. The add-on uses the first dedicated graphics card, or integrated graphics when there is none. |
 
 ## Setup
@@ -64,7 +65,10 @@ The sizes refer to the CPU files. For the graphics card, each Parakeet model dow
 
 ## Notes
 
-- Parakeet Ultra 0.6B is Moondream's retrained version of NVIDIA's Parakeet TDT 0.6B v3. It has the same size, speed and 25 languages and was more accurate in TypeWhisper's test: 4.05% against 4.96% word error rate on 50 FLEURS clips in German, English, French, Spanish and Italian. Parakeet TDT 0.6B stays available.
+- Parakeet Ultra 0.6B is Moondream's retrained version of NVIDIA's Parakeet TDT 0.6B v3. It has the same speed and 25 languages and was more accurate in TypeWhisper's test: 4.05% against 4.96% word error rate on 50 FLEURS clips in German, English, French, Spanish and Italian. Parakeet TDT 0.6B stays available.
+- Since version 1.4.1, Parakeet Ultra downloads new files of about 900 MB instead of 670 MB, which make fewer errors: on 250 FLEURS clips in 25 languages, the word error rate dropped from 14.2% to 10.6%. A model downloaded with an earlier version keeps its files; to get the new ones, remove the model and download it again.
+- Fluid Speech Pro is FluidVoice's fine-tune of Parakeet TDT 0.6B v3 and Parakeet Ultra. It covers the same 25 languages, detects the language itself and always runs on the CPU, also when **Graphics card** is selected. In TypeWhisper for Windows 1.2, dictionary boosting does not apply to Fluid Speech Pro yet.
+- Characters the Parakeet vocabulary has no token for no longer show up as `<unk>` in the text: the add-on puts in the likely character, such as "&" in M&A, or leaves the marker out.
 - Canary does not detect the language. If no language it supports is set, it transcribes as English.
 - Canary always runs on the CPU, even when **Graphics card** is selected. If the graphics card fails while you switch, TypeWhisper keeps the previous device.
 - Versions before 1.3.0 used NVIDIA CUDA. Version 1.3.0 replaced it with Vulkan: the add-on deletes the old CUDA runtime of about 2.3 GB, and a saved NVIDIA CUDA choice counts as **Automatic**.

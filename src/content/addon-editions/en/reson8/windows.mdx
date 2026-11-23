@@ -1,8 +1,8 @@
 ---
 familySlug: "reson8"
 platform: "windows"
-version: "1.2.10"
-description: "Reson8 transcription with real-time streaming and custom models, through the Reson8 cloud API or a compatible server."
+version: "1.3.0"
+description: "Reson8 transcription with Resonant-1, Rumble-2-Flash, custom models and pattern sets, with real-time streaming, through the Reson8 cloud API or a compatible server."
 id: "com.typewhisper.reson8"
 minAppVersion: "1.1.0"
 requirements:
@@ -12,15 +12,23 @@ requirements:
 highlights:
   - "Speech-to-text through the Reson8 API at api.reson8.dev, or a compatible server you enter"
   - "Live text while you speak, streamed over a WebSocket connection"
-  - "Custom models available to your API key, alongside the default model"
-  - "Dutch, English, French, German, Italian, Polish, Portuguese, Spanish, Swedish, and Frisian"
+  - "Reson8's own models, such as Resonant-1 and Rumble-2-Flash, next to the custom models available to your API key; languages and live text follow the selected model"
+  - "Rumble-2-Flash has no live text and no dictionary terms; the recording is transcribed after you stop"
+  - "The default model, Resonant-1, covers Dutch, English, French, German, Italian, Polish, Portuguese, Spanish, Swedish and Frisian"
+  - "With several languages set, Reson8 detects the language only among them"
+  - "Filler words: Natural, Clean leaves filler words out, Verbatim transcribes them as spoken"
+  - "Dictionary terms go to Reson8 as phrases, up to 250 per request; Bias strength sets how strongly they and custom models steer recognition"
+  - "Keep dictionary in a custom model stores your dictionary in a custom model named TypeWhisper Dictionary in your Reson8 account, with up to 50,000 terms"
+  - "Pattern sets recover structured tokens such as order codes; each set appears as a model a workflow can select"
   - "If streaming fails, the recording is transcribed in a single request instead"
 configuration:
   - "Keep Server URL and Authentication header at their defaults unless you use a compatible server; after changing them, select Save settings"
   - "Enter your Reson8 API key under API key, select Save settings, then Check connection"
-  - "Select Refresh custom models to load the custom models available to your key"
+  - "Select Refresh models to load Reson8's models and the custom models available to your key"
   - "Choose a Transcription model and, if it appears, select Use selected model"
+  - "Optionally set Filler words and Bias strength, and turn on Keep dictionary in a custom model for a large dictionary"
+  - "For order codes or reference numbers, write Pattern sets and select Check patterns with Reson8"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Reson8"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-reson8-v1.2.10"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-reson8-v1.3.0"
 processing: "custom"
 ---
