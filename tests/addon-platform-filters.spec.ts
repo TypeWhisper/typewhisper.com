@@ -89,7 +89,7 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
 
     expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
   };
-  const needsNewerHost = requiresNewerHost("1.7.0", readFeedVersion("mac"));
+  const needsNewerHost = requiresNewerHost("1.8.0", readFeedVersion("mac"));
 
   await page.goto("/en/addons/vercel-ai-gateway/");
   await expect(page).toHaveTitle("Vercel AI Gateway - TypeWhisper Add-ons");
@@ -109,12 +109,12 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
 
   const requirement = page.getByTestId("addon-host-requirement");
   if (needsNewerHost) {
-    await expect(requirement).toContainText("TypeWhisper 1.7.0");
+    await expect(requirement).toContainText("TypeWhisper 1.8.0");
     await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
-  await expect(page.getByText("TypeWhisper 1.7.0 or newer").first()).toBeVisible();
+  await expect(page.getByText("TypeWhisper 1.8.0 or newer").first()).toBeVisible();
 
   const shot = page.locator('img[src="/screenshots/en/plugins/vercel-ai-gateway.png"]');
   await expect(shot).toBeVisible();
@@ -135,9 +135,9 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
   await expect(page.locator("body")).toContainText(
     "It does not stream partial text while you speak.",
   );
-  await expect(page.getByRole("link", { name: "Release 1.0.0" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Release 1.0.4" })).toHaveAttribute(
     "href",
-    "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.0",
+    "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.4",
   );
   await expect(page.getByRole("link", { name: "Source Code" })).toHaveAttribute(
     "href",
@@ -158,7 +158,7 @@ test("Vercel AI Gateway has a source-checked macOS page in both locales", async 
   } else {
     await expect(requirement).toHaveCount(0);
   }
-  await expect(page.getByText("TypeWhisper 1.7.0 oder neuer").first()).toBeVisible();
+  await expect(page.getByText("TypeWhisper 1.8.0 oder neuer").first()).toBeVisible();
   await expect(
     page.locator('img[src="/screenshots/de/plugins/vercel-ai-gateway.png"]'),
   ).toHaveAttribute(
@@ -219,7 +219,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
 
     expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
   };
-  const needsNewerHost = requiresNewerHost("1.7.0", readFeedVersion("mac"));
+  const needsNewerHost = requiresNewerHost("1.8.1", readFeedVersion("mac"));
 
   await page.goto("/en/addons/canary-asr/");
   await expect(page).toHaveTitle("Canary ASR - TypeWhisper Add-ons");
@@ -240,12 +240,12 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
 
   const requirement = page.getByTestId("addon-host-requirement");
   if (needsNewerHost) {
-    await expect(requirement).toContainText("TypeWhisper 1.7.0");
+    await expect(requirement).toContainText("TypeWhisper 1.8.1");
     await expect(requirement.getByRole("link")).toHaveAttribute("href", "/en/release-status/");
   } else {
     await expect(requirement).toHaveCount(0);
   }
-  await expect(page.getByText("TypeWhisper 1.7.0 or newer").first()).toBeVisible();
+  await expect(page.getByText("TypeWhisper 1.8.1 or newer").first()).toBeVisible();
 
   const shot = page.locator('img[src="/screenshots/en/plugins/canary-asr.png"]');
   await expect(shot).toBeVisible();
@@ -270,9 +270,9 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
   await expect(
     page.getByRole("link", { name: "NVIDIA Parakeet", exact: true }),
   ).toHaveAttribute("href", "/en/addons/sherpa-onnx/");
-  await expect(page.getByRole("link", { name: "Release 1.0.1" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Release 1.1.2" })).toHaveAttribute(
     "href",
-    "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-canary-v1.0.1",
+    "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-canary-v1.1.2",
   );
   await expect(page.getByRole("link", { name: "Source Code" })).toHaveAttribute(
     "href",
@@ -293,7 +293,7 @@ test("Canary ASR has a source-checked macOS page in both locales", async ({ page
   } else {
     await expect(requirement).toHaveCount(0);
   }
-  await expect(page.getByText("TypeWhisper 1.7.0 oder neuer").first()).toBeVisible();
+  await expect(page.getByText("TypeWhisper 1.8.1 oder neuer").first()).toBeVisible();
   const germanShot = page.locator('img[src="/screenshots/de/plugins/canary-asr.png"]');
   await expect(germanShot).toBeVisible();
   await expect(germanShot).toHaveAttribute(
