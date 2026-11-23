@@ -1,23 +1,27 @@
 ---
 familySlug: "qwen3-asr"
 platform: "mac"
-version: "1.1.8"
-description: "Qwen3-ASR locally through MLX on Apple silicon with downloadable models."
+version: "1.3.0"
+description: "Qwen3-ASR and Rumble-2-Flash locally through MLX on Apple silicon, with downloadable models and your own imported Qwen3-ASR models."
 id: "com.typewhisper.qwen3"
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.6.0 or newer"
+  - "TypeWhisper 1.8.0 or newer"
   - "macOS 14.0 or newer"
 highlights:
   - "Local speech-to-text processing"
   - "Processing without uploading audio or text"
-  - "Model or runtime downloads managed by TypeWhisper"
+  - "Model or runtime downloads managed by TypeWhisper, with a free disk space check before a download starts"
   - "30 languages plus Chinese dialects"
+  - "Rumble-2-Flash (8-bit), Reson8's fine-tune of Qwen3 0.6B: nearly the accuracy of 1.7B, faster than 0.6B, about 0.7 GB for Macs with 8 GB or more; it writes numbers as digits and leaves filler words out"
+  - "Import Model… adds your own Qwen3-ASR models from Hugging Face or a local folder; from 1.3.0 also checkpoints in the native Transformers format"
+  - "Dictionary terms are not passed to the model, and translation is not supported"
 configuration:
   - "Optionally store a Hugging Face token for more reliable model downloads"
   - "Choose, download, and manage the local model"
+  - "Import a model with Import Model…, from a Hugging Face model URL or a local folder; it is checked and loaded before the import completes"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-qwen3-v1.1.8"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-qwen3-v1.3.0"
 processing: "local"
 ---

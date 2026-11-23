@@ -2,7 +2,7 @@
 slug: whisperkit
 name: WhisperKit
 author: TypeWhisper
-version: "1.2.0"
+version: "1.2.2"
 icon: AudioWaveform
 description: Lokale Transkription auf dem Gerät mit WhisperKit und CoreML, optimiert für Apple Silicon.
 categories:
@@ -13,9 +13,9 @@ source: official
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WhisperKitPlugin
 featured: false
 id: "com.typewhisper.whisperkit"
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.2"
 ---
 
 ## Über
@@ -30,6 +30,8 @@ WhisperKit führt OpenAIs Whisper-Modelle lokal auf deinem Mac mit Apples CoreML
 - Sprachaktivitätserkennung (VAD)
 - Modell-Empfehlungen anhand des RAMs mit manueller Auswahl
 - Kein API-Schlüssel oder Cloud-Konto nötig
+- Prüfung des freien Speicherplatzes vor einem Modell-Download: Passt das Modell nicht, stoppt der Download und zeigt den benötigten und den freien Platz
+- Schlägt ein Teil einer langen Aufnahme fehl, transkribiert WhisperKit diesen Teil noch einmal; klappt es wieder nicht, bekommst du einen Fehler statt eines Transkripts mit fehlendem Text
 
 ## Transkriptionsmodelle
 
@@ -51,7 +53,7 @@ Kein API-Schlüssel erforderlich. WhisperKit läuft vollständig auf dem Gerät.
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **WhisperKit**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle ein Modell in den Plugin-Einstellungen, lade es herunter und aktiviere es.
+2. Wähle ein Modell in den Plugin-Einstellungen, lade es herunter und aktiviere es. Steht **Modell automatisch entladen** auf **Sofort**, zeigt das Modell **Wird bei Bedarf geladen**: Es wird für jede Transkription geladen und direkt danach entladen.
 3. Wähle WhisperKit als Transkriptions-Engine in den Einstellungen oder in einem Profil.
 
 ## Workaround: Modelle manuell kopieren

@@ -18,11 +18,11 @@ sourceUrls:
 
 ## Über
 
-Qwen3 ASR ist TypeWhispers lokaler Sprache-zu-Text-Anbieter für Qwen3-ASR auf Apple Silicon. Version `1.1.8` bietet optionale HuggingFace-Token-Speicherung, Schnellauswahl für Modelle und zehn MLX-Modellvarianten vom kompakten quantisierten 0.6B-Download bis zum größeren 1.7B-BF16-Modell.
+Qwen3 ASR ist TypeWhispers lokaler Sprache-zu-Text-Anbieter für Qwen3-ASR auf Apple Silicon. Version `1.3.0` bietet optionale HuggingFace-Token-Speicherung, Schnellauswahl für Modelle, zehn Qwen3-ASR-Varianten für MLX vom kompakten quantisierten 0.6B-Download bis zum größeren 1.7B-BF16-Modell und Rumble-2-Flash, Reson8s Feinabstimmung von Qwen3 0.6B. **Modell importieren …** ergänzt eigene Qwen3-ASR-Modelle.
 
 Die Transkription läuft lokal auf dem Gerät, nachdem das gewählte Modell heruntergeladen wurde. TypeWhisper sendet bei diesem Anbieter kein Audio an eine Cloud-Transkriptions-API, und für die Transkription ist kein API-Key erforderlich.
 
-Quellen: [Qwen3Plugin v1.1.8 Release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-qwen3-v1.1.8), [TypeWhisper Plugin-Registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-community-v1.json), [Qwen3 Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin)
+Quellen: [Qwen3Plugin v1.3.0 Release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-qwen3-v1.3.0), [TypeWhisper Plugin-Registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-community-v1.json), [Qwen3 Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin)
 
 ## Voraussetzungen & Datenschutz
 
@@ -32,7 +32,7 @@ Quellen: [Qwen3Plugin v1.1.8 Release](https://github.com/TypeWhisper/typewhisper
 | **Download-Quelle** | Modelle werden von Hugging Face in TypeWhispers Plugin-Datenverzeichnis geladen. | Der erste Ladevorgang kann dauern und benötigt genug freien Speicherplatz für das gewählte Modell. |
 | **Netzwerkzugriff** | Netzwerk wird für Modell-Downloads und optionale HuggingFace-Token-Prüfung genutzt. | Die Audio-Transkription selbst läuft lokal, sobald das Modell verfügbar ist. |
 | **Zugangsdaten** | Kein API-Key nötig. Ein HuggingFace-Token ist optional. | Der Token hilft nur bei Hugging-Face-Download-Rate-Limits; er ist keine Transkriptionsauthentifizierung. |
-| **Modellspeicher** | Die kleinsten 0.6B-Varianten zielen auf 8-GB-Macs. Das empfohlene 1.7B-6-bit-Modell zielt auf Macs mit 16 GB+. Die 1.7B-8-bit- und BF16-Optionen zielen auf Macs mit 32 GB+. | Wähle zuerst ein Modell, das zum RAM-Budget passt, bevor du auf maximale Qualität optimierst. |
+| **Modellspeicher** | Die kleinsten 0.6B-Varianten zielen auf 8-GB-Macs. Das empfohlene 1.7B-6-bit-Modell zielt auf Macs mit 16 GB+. Die 1.7B-8-bit- und BF16-Optionen zielen auf Macs mit 32 GB+. Rumble-2-Flash (8-bit) zielt auf 8-GB-Macs. | Wähle zuerst ein Modell, das zum RAM-Budget passt, bevor du auf maximale Qualität optimierst. |
 
 Quellen: [Qwen3 Plugin-Manifest](https://github.com/TypeWhisper/typewhisper-mac/blob/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin/manifest.json), [Qwen3 Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin)
 
@@ -75,10 +75,19 @@ Die Qwen3-ASR-Einstellungen zeigen Schnellauswahl-Empfehlungen und die vollstän
 | Qwen3 1.7B (6-bit) | `qwen3-asr-1.7b-6bit` | `mlx-community/Qwen3-ASR-1.7B-6bit` | `~2.0 GB` | `16 GB+` | **Empfohlen**. Beste Vorgabe für die meisten Macs mit 16 GB+. |
 | Qwen3 1.7B (8-bit) | `qwen3-asr-1.7b-8bit` | `mlx-community/Qwen3-ASR-1.7B-8bit` | `~2.5 GB` | `32 GB+` | **32-GB-Qualität**. Qualitätswahl für Macs mit 32 GB+. |
 | Qwen3 1.7B (BF16) | `qwen3-asr-1.7b-bf16` | `mlx-community/Qwen3-ASR-1.7B-bf16` | `~4.1 GB` | `32 GB+` | Größtes unquantisiertes Modell; für Validierung mit maximaler Wiedergabetreue. |
+| Rumble-2-Flash (8-bit) | `rumble-2-flash-8bit` | `TypeWhisper/Rumble-2-Flash-8bit` | `~0.7 GB` | `8 GB+` | Reson8s Feinabstimmung von Qwen3 0.6B: fast so genau wie 1.7B, schneller als 0.6B. |
 
-Klicke **Laden & Aktivieren**, um ein Modell herunterzuladen und zu aktivieren. Das geladene Modell wird zum aktiven Transkriptionsmodell. Klicke **Deaktivieren**, um das Modell aus dem Arbeitsspeicher zu entladen. Heruntergeladene Dateien bleiben erhalten; das Löschen eines Downloads ist eine separate Aktion.
+Klicke **Laden & Aktivieren**, um ein Modell herunterzuladen und zu aktivieren. Das geladene Modell wird zum aktiven Transkriptionsmodell. Klicke **Deaktivieren**, um das Modell aus dem Arbeitsspeicher zu entladen und seinen Download zu löschen; **Laden & Aktivieren** lädt es erneut herunter. TypeWhisper prüft vor jedem Download den freien Speicherplatz.
+
+**Rumble-2-Flash (8-bit)** gibt es ab dem macOS-Add-on 1.2.0. Es ist Reson8s Feinabstimmung von Qwen3-ASR 0.6B, von TypeWhisper für MLX umgewandelt. TypeWhisper fordert seinen Standardstil an: Zahlen als Ziffern, keine Füllwörter, wiederholte Wörter bleiben stehen. Eine importierte Kopie von Rumble-2-Flash bekommt denselben Stil.
 
 Quellen: [Qwen3 Modellkatalog im Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/Qwen3Plugin), [MLX Community Models auf Hugging Face](https://huggingface.co/mlx-community)
+
+## Eigenes Modell importieren
+
+Ab dem macOS-Add-on 1.1.9 ergänzt **Modell importieren …** neben **Modell** ein Qwen3-ASR-Modell, das nicht in der Liste steht. Wähle unter **Quelle** entweder **Hugging Face** und gib die Hugging-Face-Modell-URL ein, oder **Lokaler Ordner** und wähle den Ordner mit `config.json`, Tokenizer-Dateien und Gewichten. TypeWhisper erstellt eine eigene Kopie; deine Originaldateien bleiben unverändert. Ein Hugging-Face-Token ist nur für private oder zugangsbeschränkte Modelle nötig; es wird für diesen Import verwendet und nicht gespeichert.
+
+Das Modell wird vor Abschluss des Imports geprüft und geladen, und ein Modell mit einer anderen Architektur wird abgelehnt. Ab 1.3.0 nimmt der Import auch Qwen3-ASR-Checkpoints im nativen Transformers-Format an. Importierte Modelle erscheinen in der Modellliste als **Importiertes Modell** mit der Schaltfläche **Laden**.
 
 ## Transkriptionsverhalten
 
@@ -88,7 +97,7 @@ Qwen3 ASR erscheint in TypeWhisper als `Qwen3 ASR (MLX)`, nachdem ein Modell gel
 | --- | --- | --- |
 | **Profilsprache** | Einen Qwen-Sprachnamen, wenn die Profilsprache unterstützt wird. | `de` wird zu `German`; `fr` wird zu `French`. Leere oder nicht unterstützte Sprachen lassen Qwen3 im Auto-Detect-Modus. |
 | **Auto-Detect** | Keinen erzwungenen Sprachhinweis. | TypeWhisper fällt nicht auf Englisch zurück, wenn im Profil keine unterstützte Qwen3-Sprache gesetzt ist. |
-| **Wörterbuchbegriffe / Prompt-Kontext** | Eine Anti-Halluzinations-Anweisung plus normalisierte Fachbegriffe. | Begriffe wie `TypeWhisper` oder `MLX` werden, soweit vorhanden, als Kontext-Bias mitgegeben. |
+| **Wörterbuchbegriffe** | Nichts. | Qwen3 ASR nimmt keine Wörterbuchbegriffe von TypeWhisper an. |
 | **Ins Englische übersetzen** | Nicht unterstützt. | Nutze einen anderen Transkriptionsanbieter, wenn der Workflow Übersetzung braucht. |
 | **Lange oder geloopte Ausgabe** | TypeWhisper versucht wahrscheinlich geloopte Ausgabe erneut mit kürzeren Chunks und ohne Kontext-Bias. | Dieser Guard soll eine sauberere Transkription bevorzugen, wenn Qwen3 Wörter oder Phrasen wiederholt. |
 
@@ -112,7 +121,6 @@ Installiere zuerst **Qwen3 ASR** unter **Einstellungen > Plugins entdecken**. Da
 1. Wähle **Qwen3 ASR** in der Seitenleiste der Einstellungen.
 2. Klicke bei **Qwen3 1.7B (6-bit)** auf **Laden & Aktivieren**.
 3. Setze die Profilsprache, wenn du einen Sprachhinweis möchtest, oder lasse sie für Auto-Detect leer.
-4. Ergänze Wörterbuchbegriffe für Produktnamen, Personen und Fachvokabular, die in der Transkription bevorzugt werden sollen.
 
 ### Höhere Qualität auf einem Mac mit 32 GB+
 
@@ -123,7 +131,7 @@ Installiere zuerst **Qwen3 ASR** unter **Einstellungen > Plugins entdecken**. Da
 ### Modell wechseln oder entfernen
 
 1. Wähle **Qwen3 ASR** in der Seitenleiste der Einstellungen.
-2. Klicke beim aktiven Modell auf **Deaktivieren**, um den Arbeitsspeicher freizugeben, ohne den Download zu löschen.
+2. Klicke beim aktiven Modell auf **Deaktivieren**, um den Arbeitsspeicher freizugeben und den Download zu löschen.
 3. Klicke beim nächsten Modell auf **Laden & Aktivieren**.
 4. Öffne das Transkriptionsprofil erneut und bestätige, dass **Qwen3 ASR (MLX)** weiter ausgewählt ist.
 
@@ -132,6 +140,6 @@ Installiere zuerst **Qwen3 ASR** unter **Einstellungen > Plugins entdecken**. Da
 - Qwen3 ASR ist hier für die macOS-MLX-Implementierung dokumentiert.
 - Ein HuggingFace-Token erhöht Download-Rate-Limits; er macht Qwen3 ASR nicht zu einem Cloud-Anbieter.
 - Die Transkription läuft lokal, nachdem das gewählte Modell heruntergeladen wurde.
-- Der Anbieter unterstützt Wörterbuchbegriffe und Prompt-Kontext mit einem Budget von `10.000` Zeichen.
+- Wörterbuchbegriffe gehen nicht an das Modell.
 - Übersetzung wird von diesem Anbieter nicht unterstützt.
-- Die öffentliche `1.1.8`-Release benötigt TypeWhisper-Hostversion `1.6.0` oder neuer.
+- Die öffentliche `1.3.0`-Release benötigt TypeWhisper-Hostversion `1.8.0` oder neuer.

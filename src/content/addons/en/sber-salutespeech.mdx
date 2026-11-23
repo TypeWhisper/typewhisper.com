@@ -2,7 +2,7 @@
 slug: sber-salutespeech
 name: Sber SaluteSpeech
 author: TypeWhisper
-version: "0.1.1"
+version: "0.1.2"
 icon: Cloud
 description: Cloud transcription via the Sber SaluteSpeech REST API. Requires a user-supplied SaluteSpeech Authorization Key.
 categories:
@@ -16,9 +16,9 @@ sourceUrls:
   mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SaluteSpeechPlugin
 principalClass: SaluteSpeechPlugin
 id: "com.typewhisper.sber-salutespeech"
-minAppVersion: "1.4.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sber-salutespeech-v0.1.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sber-salutespeech-v0.1.2"
 ---
 
 ## About
@@ -27,7 +27,7 @@ Sber SaluteSpeech adds a macOS cloud transcription provider backed by Sber's Sal
 
 TypeWhisper does not include a shared Sber credential. Audio is sent to SaluteSpeech for recognition, and TypeWhisper stores the Authorization Key through its plugin secret storage.
 
-The published macOS add-on is version `0.1.1` and requires TypeWhisper `1.4.0` or newer.
+The published macOS add-on is version `0.1.2` and requires TypeWhisper `1.7.0` or newer.
 
 Sources: [Sber SaluteSpeech REST API](https://developers.sber.ru/docs/ru/salutespeech/rest/salutespeech-rest-api), [Sber access-token documentation](https://developers.sber.ru/docs/ru/salutespeech/api/authentication), [macOS plugin PR](https://github.com/TypeWhisper/typewhisper-mac/pull/706), [TypeWhisper plugin registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-v1.json)
 
@@ -36,7 +36,7 @@ Sources: [Sber SaluteSpeech REST API](https://developers.sber.ru/docs/ru/salutes
 | Requirement | Details | Why it matters |
 | --- | --- | --- |
 | **Platform** | macOS `14.0` or newer. | The initial TypeWhisper integration is a macOS plugin. |
-| **TypeWhisper host** | `1.4.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
+| **TypeWhisper host** | `1.7.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
 | **SDK compatibility** | `v1`. | The release workflow publishes compatible metadata to `plugins-v1.json`. |
 | **Credential** | A SaluteSpeech Authorization Key from Sber Developer Studio. | The plugin exchanges this key for short-lived OAuth access tokens before each recognition request. |
 | **Network use** | Audio is uploaded to `smartspeech.sber.ru`; OAuth tokens are requested from Sber's OAuth endpoint. | This is a cloud provider, not local transcription. |

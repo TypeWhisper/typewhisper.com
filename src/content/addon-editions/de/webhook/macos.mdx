@@ -1,7 +1,7 @@
 ---
 familySlug: "webhook"
 platform: "mac"
-version: "1.2.1"
+version: "1.4.0"
 description: "Sendet Transkriptionsereignisse per POST oder PUT an konfigurierbare Webhooks."
 id: "com.typewhisper.webhook"
 minAppVersion: "1.8.0"
@@ -15,9 +15,11 @@ highlights:
   - "Alle Transkriptionen oder ausgewählte Workflows"
   - "Strukturierte Transkriptionsdaten im Request"
   - "Optionaler Versand fertiger Recorder-Transkripte"
+  - "Optionaler Versand von Datei-Transkripten aus dem überwachten Ordner"
+  - "Umfang „Keine Diktate“ für Webhooks, die nur Recorder- oder Datei-Transkripte erhalten sollen"
 configuration:
-  - "Name, URL, HTTP-Methode, Workflow-Umfang und optionalen Recorder-Versand je Webhook festlegen"
+  - "Name, URL, HTTP-Methode, Workflow-Umfang und optionalen Recorder- und Datei-Versand je Webhook festlegen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WebhookPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-webhook-v1.2.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-webhook-v1.4.0"
 processing: "custom"
 ---

@@ -2,10 +2,10 @@
 slug: parakeet
 name: Parakeet
 author: TypeWhisper
-version: "1.3.1"
+version: "1.8.0"
 icon: Bird
 brandLogo: nvidia
-description: Ultraschnelle lokale Transkription mit NVIDIAs Parakeet TDT-Modell, optimiert für Apple Silicon.
+description: Lokale Transkription auf Apple Silicon mit NVIDIA Parakeet TDT, Parakeet Ultra, Fluid Speech und Nemotron 3.5 ASR Streaming für Live-Text beim Sprechen.
 categories:
   - transcription
 platforms:
@@ -14,24 +14,25 @@ source: official
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ParakeetPlugin
 featured: true
 id: "com.typewhisper.parakeet"
-minAppVersion: "1.5.0"
+minAppVersion: "1.8.2"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-parakeet-v1.3.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-parakeet-v1.8.0"
 screenshotAlt: "Einstellungen von Parakeet in TypeWhisper für macOS: das optionale Hugging-Face-Token, die Schaltfläche „Modell importieren …“ und die eingebauten Modelle mit der Schaltfläche „Laden & Aktivieren“"
 ---
 
 ## Über
 
-Parakeet nutzt NVIDIAs Parakeet TDT-Modell für extrem schnelle Spracherkennung auf dem Gerät mit Apple Silicon. Das kompakte 0.6B-Parameter-Modell liefert hohe Genauigkeit in 25 europäischen Sprachen mit Zeitstempeln auf Wortebene - ganz ohne Cloud-Verbindung.
+Parakeet erkennt Sprache direkt auf deinem Mac mit Apple Silicon, ohne Cloud-Verbindung. Es bietet NVIDIAs Parakeet-TDT-Modelle und darauf aufbauende Modelle wie Parakeet Ultra und Fluid Speech, mit Zeitstempeln auf Wortebene in 25 europäischen Sprachen. Nemotron 3.5 ASR Streaming transkribiert schon beim Sprechen, in 28 Sprachen.
 
 ## Features
 
-- NVIDIA Parakeet TDT - extrem schnell auf Apple Silicon
-- 25 europäische Sprachen unterstützt
+- Parakeet-TDT-Modelle laufen lokal auf Apple Silicon
+- Parakeet Ultra als Standardmodell, mit 25 europäischen Sprachen
+- Fluid Speech Pro für die höchste Genauigkeit auf Englisch und Fluid Speech Mini als englisches Modell mit 250 MB Download
+- Nemotron 3.5 ASR Streaming: Der Text erscheint beim Sprechen und ist fertig, wenn du stoppst, in 28 Sprachen
 - Zeitstempel auf Wortebene
 - Kein API-Schlüssel oder Cloud-Konto nötig
-- Kompakte Modellgröße (~600 MB)
-- Optionales lokales Vocabulary Boosting aus deinem TypeWhisper-Wörterbuch
+- Optionales lokales Vokabel-Boosting aus deinem TypeWhisper-Wörterbuch
 - Import eigener Parakeet-TDT-Modelle im Core-ML-Format, etwa eines Fine-Tunes für eine Sprache
 
 ## Transkriptionsmodelle
@@ -39,22 +40,32 @@ Parakeet nutzt NVIDIAs Parakeet TDT-Modell für extrem schnelle Spracherkennung 
 | Modell | ID | Größe | Sprachen |
 | --- | --- | --- | --- |
 | Parakeet Ultra (Standard) | `parakeet-ultra` | ~630 MB | 25 europäische Sprachen |
-| Parakeet TDT v3 0.6B | `parakeet-tdt-0.6b-v3` | ~600 MB | 25 europäische Sprachen |
+| Parakeet TDT v3 | `parakeet-tdt-0.6b-v3` | ~600 MB | 25 europäische Sprachen |
+| Fluid Speech Pro | `fluid-speech-pro` | ~650 MB | 25 europäische Sprachen |
 | Fluid Speech Mini | `fluid-speech-mini` | ~250 MB | Englisch |
-| Parakeet TDT v2 0.6B | `parakeet-tdt-0.6b-v2` | ~600 MB | Englisch |
+| Parakeet TDT v2 | `parakeet-tdt-0.6b-v2` | ~600 MB | Englisch |
+| Nemotron 3.5 ASR Streaming | `nemotron-3.5-asr-streaming-0.6b` | ~665 MB | 28 Sprachen |
 
-Fluid Speech Mini braucht Version 1.5.0 dieses Add-ons und TypeWhisper 1.8. Jedes Modell braucht 8 GB Arbeitsspeicher oder mehr.
+Jedes Modell braucht 8 GB Arbeitsspeicher oder mehr.
+
+- **Parakeet Ultra** ist Moondreams weitertrainiertes Parakeet TDT v3 mit höherer Genauigkeit. Es ist ausgewählt, solange du noch kein Modell gewählt hast; ein Modell, das du schon gewählt hast, bleibt ausgewählt.
+- **Fluid Speech Pro** und **Fluid Speech Mini** stammen von FluidVoice und basieren auf NVIDIA Parakeet TDT 0.6B v3 und Moondream Parakeet Ultra. Fluid Speech Pro ist auf Englisch das genaueste Modell und in anderen Sprachen etwas ungenauer als Ultra. Es erkennt die Sprache selbst. Fluid Speech Mini ist der kleinste Download und transkribiert nur Englisch.
+- **Nemotron 3.5 ASR Streaming** von NVIDIA transkribiert schon beim Sprechen, damit der Text fertig ist, wenn du stoppst. Es ist ungenauer als die Parakeet-TDT-Modelle. Es deckt Arabisch, Bulgarisch, Chinesisch, Dänisch, Deutsch, Englisch, Estnisch, Finnisch, Französisch, Hindi, Italienisch, Japanisch, Koreanisch, Kroatisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Schwedisch, Slowakisch, Spanisch, Tschechisch, Türkisch, Ukrainisch, Ungarisch und Vietnamesisch ab. Nemotron nutzt keine Wörterbuchbegriffe, Vokabel-Boosting gilt für dieses Modell also nicht.
+
+Die Parakeet-TDT-Modelle zeigen eine Live-Vorschau, indem sie die wachsende Aufnahme transkribieren, und transkribieren sie beim Stoppen noch einmal.
 
 ## Konfiguration
 
 Kein API-Schlüssel erforderlich. Parakeet läuft vollständig auf dem Gerät.
 
-Wenn Vocabulary Boosting aktiviert ist, verwendet Parakeet deine eigenen TypeWhisper-Wörterbuchbegriffe lokal während der Transkription. Wörterbuch-Korrekturen werden weiterhin automatisch nach der Transkription angewendet, sodass das Wörterbuch sowohl während als auch nach dem Transkriptionsschritt hilft.
+Schalte in den Parakeet-Einstellungen **Vokabel-Boosting aktivieren** ein, damit Parakeet deine TypeWhisper-Wörterbuchbegriffe lokal während der Transkription nutzt. Dafür braucht es ein CTC-Modell mit etwa 100 MB, das beim ersten Einsatz oder über **Jetzt herunterladen** geladen wird. Fügst du einen Begriff zum Wörterbuch hinzu, während Parakeet ausgewählt und Vokabel-Boosting aus ist, bietet dir die Wörterbuch-Seite an, es einzuschalten.
+
+Vokabel-Boosting macht aus gewöhnlichen Wörtern keine Wörterbuchbegriffe mehr. Eine Änderung bleibt, wenn sie nur Wörter zusammenzieht oder ihre Groß- und Kleinschreibung ändert, oder wenn sie ein Wort ersetzt, das die Rechtschreibprüfung von macOS nicht kennt, etwa „PostGur SQL“ zu „PostgreSQL“. Begriffe mit Sonderzeichen wie C++, C# und .NET funktionieren nach wie vor. Wörterbuch-Korrekturen werden weiterhin automatisch nach der Transkription angewendet, sodass das Wörterbuch sowohl während als auch nach dem Transkriptionsschritt hilft.
 
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Parakeet**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Wähle ein Modell, etwa Ultra für mehrsprachige Diktate oder Fluid Speech Mini für einen kleineren englischen Download, und lade und aktiviere es in den Plugin-Einstellungen.
+2. Wähle unter **Modellversion** ein Modell, etwa Parakeet Ultra für mehrsprachige Diktate, Fluid Speech Pro für Englisch oder Nemotron 3.5 ASR Streaming für Text schon beim Sprechen, und wähle **Laden & Aktivieren**.
 3. Wähle Parakeet als Transkriptions-Engine in den Einstellungen oder in einem Profil.
 
 ## Eigenes Modell importieren
@@ -107,7 +118,7 @@ Wenn Parakeet auf einem Mac bereits funktioniert, kannst du die lokalen Modellda
 2. Kopiere auf dem Mac, auf dem Parakeet bereits funktioniert, nur die Modellordner, die du tatsächlich nutzt:
    - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v3-coreml/`
    - `~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v2-coreml/`, falls du das ältere v2-Modell noch nutzt
-   - `~/Library/Application Support/FluidAudio/Models/parakeet-ctc-110m-coreml/`, falls du Vocabulary Boosting verwendest
+   - `~/Library/Application Support/FluidAudio/Models/parakeet-ctc-110m-coreml/`, falls du Vokabel-Boosting verwendest
 3. Installiere auf dem Ziel-Mac dieselbe oder eine neuere TypeWhisper-Version, starte die App einmal und beende sie dann wieder.
 4. Kopiere diese Ordner auf dem Ziel-Mac in exakt dieselben Pfade unter `~/Library/Application Support/FluidAudio/Models/`.
 5. Öffne TypeWhisper erneut und prüfe, ob das Modell erkannt wird und sich laden lässt.

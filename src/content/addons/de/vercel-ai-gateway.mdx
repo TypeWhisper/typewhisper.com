@@ -2,7 +2,7 @@
 slug: "vercel-ai-gateway"
 name: "Vercel AI Gateway"
 author: "TypeWhisper"
-version: "1.0.0"
+version: "1.0.4"
 icon: "Cloud"
 brandLogo: "vercel"
 description: "Cloud-Transkription und LLM-Workflows über Vercel AI Gateway mit einem API-Key, Modellkatalogen, Preisanzeige und Guthaben."
@@ -13,12 +13,12 @@ platforms:
   - mac
 source: "official"
 id: "com.typewhisper.vercel-ai-gateway"
-minAppVersion: "1.7.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 homepage: "https://vercel.com/ai-gateway"
 apiDocsUrl: "https://vercel.com/docs/ai-gateway"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/VercelAIGatewayPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.4"
 principalClass: "VercelAIGatewayPlugin"
 ---
 
@@ -30,7 +30,7 @@ Das ist ein Cloud-Anbieter. Audio und Workflow-Text verlassen deinen Mac, wenn d
 
 ## Voraussetzungen
 
-Diese Version benötigt **TypeWhisper 1.7.0 oder neuer** auf macOS 14 oder neuer.
+Version 1.0.4 benötigt **TypeWhisper 1.8.0 oder neuer** auf macOS 14 oder neuer.
 
 Du brauchst einen eigenen **API-Key für Vercel AI Gateway**. Die Spracherkennung über Vercel AI Gateway ist in der Beta. Transkriptionsmodelle sind für dein Team deshalb vielleicht noch nicht freigeschaltet.
 
@@ -55,7 +55,7 @@ Solange kein Katalog geladen ist, bietet das Add-on eine kurze Standardliste an 
 
 ## Transkription
 
-Das Add-on sendet die fertige Aufnahme in einer Anfrage an das Gateway. Während du sprichst, erscheint kein Zwischentext. Echtzeitmodelle, die Audio nur über eine Live-Verbindung annehmen, fehlen in der Liste.
+Das Add-on sendet die fertige Aufnahme nach dem Ende an das Gateway. Aufnahmen über 10 Minuten gehen in Teilen von bis zu 10 Minuten hinaus, an leisen Stellen geschnitten: fünf Minuten für GPT-4o Transcribe und GPT-4o mini Transcribe, drei Minuten für Fish Audio transcribe-1. MAI-Transcribe-Modelle erhalten das Audio als FLAC, das etwa halb so groß ist wie WAV. Während du sprichst, erscheint kein Zwischentext. Echtzeitmodelle, die Audio nur über eine Live-Verbindung annehmen, fehlen in der Liste.
 
 Eine eingestellte Sprache gibt das Add-on nur bei OpenAI-Transkriptionsmodellen als Hinweis weiter. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht gesendet.
 

@@ -39,9 +39,9 @@ Modell und Laufzeit werden beim Einrichten des Add-ons heruntergeladen. Sobald d
   <tbody>
     <tr>
       <td>macOS</td>
-      <td><code>1.0.1</code></td>
-      <td>TypeWhisper <code>1.6.0</code> oder neuer, macOS <code>14.0</code> oder neuer, Apple Silicon (<code>arm64</code>)</td>
-      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.2.4">macOS-Release 1.0.1</a></td>
+      <td><code>1.1.0</code></td>
+      <td>TypeWhisper <code>1.8.1</code> oder neuer, macOS <code>14.0</code> oder neuer, Apple Silicon (<code>arm64</code>)</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.1.0">macOS-Release 1.1.0</a></td>
     </tr>
     <tr>
       <td>Windows</td>
@@ -123,7 +123,7 @@ Die macOS-Einstellungen setzen für Q4_K, Q5_0 und Q6_K einen Mac mit mindestens
     </tr>
     <tr>
       <td>Sprachauswahl</td>
-      <td>Eine unterstützte Sprache muss explizit ausgewählt werden</td>
+      <td>Verwendet die gewählte Sprache; bei automatischer Spracherkennung wählt das Add-on Language Detection eine der 14 Sprachen, und ohne es oder wenn es unsicher ist, gilt die erste deiner bevorzugten macOS-Sprachen, die Cohere unterstützt</td>
       <td>Verwendet einen expliziten Sprachhinweis, falls vorhanden; andernfalls lokale ECAPA-Spracherkennung</td>
     </tr>
     <tr>
@@ -256,9 +256,9 @@ Dieser Vergleich in [macOS-Issue #1031](https://github.com/TypeWhisper/typewhisp
 2. Füge nur dann ein Hugging-Face-Token hinzu, wenn anonyme Downloads limitiert werden.
 3. Wähle eine Quantisierung. Beginne mit **Schnell (Q5_0)**, sofern Downloadgröße oder Speicherbedarf nicht wichtiger sind.
 4. Lass unter Windows **Verarbeitungsgerät** auf **Automatisch** oder wähle **CPU**, **NVIDIA CUDA** oder **Vulkan**.
-5. Lade und aktiviere das ausgewählte Modell.
+5. Lade und aktiviere das ausgewählte Modell. Unter macOS stehen die Quantisierungen untereinander; klicke neben der gewünschten auf **Herunterladen & Laden**.
 6. Wähle Cohere Transcribe (Local) als Transkriptions-Engine in den Einstellungen oder in einem Profil.
-7. Wähle unter macOS vor der Transkription explizit eine der 14 unterstützten Sprachen aus.
+7. Wähle unter macOS vor der Transkription eine der 14 unterstützten Sprachen aus, oder aktiviere das Add-on **Language Detection**, wenn du die automatische Erkennung nutzt.
 
 ## Hinweise
 

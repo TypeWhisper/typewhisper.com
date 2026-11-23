@@ -37,8 +37,14 @@ Für Mistrals Cloud-Transkription mit Voxtral Transcribe 3 und Voxtral Realtime 
 
 | Modell | ID | Größe |
 | --- | --- | --- |
-| Voxtral Mini 4B 4-bit | `voxtral-mini-4b-2602-4bit` | ~2.5 GB |
-| Voxtral Mini 4B FP16 | `voxtral-mini-4b-2602-fp16` | ~8 GB |
+| Mini 4B (4-bit) | `voxtral-mini-4b-2602-4bit` | ~2.5 GB |
+| Mini 4B (fp16) | `voxtral-mini-4b-2602-fp16` | ~8 GB |
+
+## Eigenes Modell importieren
+
+Seit Version 1.0.15 ergänzt **Modell importieren …** neben **Modell** ein Voxtral-Realtime-Modell, das nicht in der Liste steht. Wähle unter **Quelle** entweder **Hugging Face** und gib die Hugging-Face-Modell-URL ein, oder **Lokaler Ordner** und wähle einen Ordner mit `config.json`, `tekken.json` und `.safetensors`-Gewichten. TypeWhisper erstellt eine eigene Kopie; deine Originaldateien bleiben unverändert. Ein Hugging-Face-Token ist nur für private oder zugangsbeschränkte Modelle nötig; es wird für diesen Import verwendet und nicht gespeichert.
+
+Das Modell wird vor Abschluss des Imports geprüft und geladen, und ein Modell mit einer anderen Architektur wird abgelehnt. Importierte Modelle erscheinen in der Modellliste als **Importiertes Modell** mit der Schaltfläche **Laden**.
 
 ## Konfiguration
 
@@ -47,5 +53,5 @@ Kein API-Schlüssel erforderlich. Voxtral läuft vollständig auf dem Gerät.
 ## Einrichtung
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Voxtral**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
-2. Das Modell wird beim ersten Gebrauch heruntergeladen.
+2. Das Modell wird beim ersten Gebrauch heruntergeladen. Steht **Modell automatisch entladen** auf **Sofort**, zeigt ein heruntergeladenes Modell **Wird bei Bedarf geladen**: Es wird für jede Transkription geladen und direkt danach entladen.
 3. Wähle Voxtral als Transkriptions-Engine in den Einstellungen oder in einem Profil.

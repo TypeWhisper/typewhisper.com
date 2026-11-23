@@ -39,7 +39,7 @@ Sources: [Smallest Pulse documentation](https://docs.smallest.ai/waves/model-car
 
 | Platform | Plugin ID | Behavior |
 | --- | --- | --- |
-| macOS | `com.typewhisper.smallest-pulse` | Uses the pre-recorded Pulse HTTP endpoint for the initial implementation. |
+| macOS | `com.typewhisper.smallest-pulse` | Uses the pre-recorded Pulse HTTP endpoint. Since version 1.0.2, recordings longer than 10 minutes are sent in parts of up to 10 minutes, cut at a quiet moment, and a part without speech no longer fails the whole recording. |
 | Windows | `com.typewhisper.smallest-ai` | Supports pre-recorded HTTPS transcription and WebSocket live streaming, plus Lightning and Lightning Pro text-to-speech with the same API key. |
 
 ## Language Modes

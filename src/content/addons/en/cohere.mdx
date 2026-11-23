@@ -39,4 +39,6 @@ Select the spoken language explicitly. Without a language selection, the macOS e
 3. Select Cohere as the transcription provider and set the spoken language.
 4. Check a short recording in that language.
 
+Cohere takes at most 25 MB per request, about 13 minutes of audio. Since version 1.0.6, the macOS edition sends recordings longer than 10 minutes in parts of up to 10 minutes, cut at a quiet moment, and joins the text.
+
 Audio is sent to Cohere. For local recognition, use the separate **Cohere Transcribe (Local)** add-on.

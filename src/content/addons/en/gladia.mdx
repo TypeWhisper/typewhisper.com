@@ -26,6 +26,7 @@ Gladia adds a dedicated cloud transcription engine to TypeWhisper. The macOS plu
 
 - Real-time transcription via WebSocket streaming
 - Automatic fallback to pre-recorded upload and polling
+- On Mac, recordings over two hours are uploaded in parts of up to two hours, cut at a quiet moment, because Gladia rejects pre-recorded audio over 135 minutes; long uploads and long transcriptions get more time to finish
 - Secure API key storage in the macOS Keychain
 - Built-in API key validation in settings
 - Language-aware transcription with broad multilingual support

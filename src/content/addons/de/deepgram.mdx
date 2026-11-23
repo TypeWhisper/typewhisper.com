@@ -37,6 +37,10 @@ Deepgram bietet schnelle, präzise cloudbasierte Spracherkennung mit der Nova-Mo
 | Nova 3 | `nova-3` |
 | Nova 2 | `nova-2` |
 
+Auf dem Mac richtet sich die Sprachliste nach dem gewählten Modell: Nova 3 bietet 59 Sprachen, darunter Arabisch und Kasachisch, Nova 2 bietet 33. Wechselt ein Profil oder Workflow das Modell, wird seine Sprache gegen dieses Modell geprüft. Ohne gewählte Sprache sendet das Mac-Add-on beim Streaming und bei REST-Anfragen `language=multi`, damit Deepgram die Sprache erkennt, statt Englisch anzunehmen.
+
+Deepgram liest einen Stream höchstens mit 1,25-facher Echtzeit. Auf dem Mac geht Audio über fünf Minuten, das am Stück transkribiert wird, etwa eine Datei, deshalb direkt an die REST-API von Deepgram. Bei Aufnahmen über 30 Minuten wartet die Anfrage 2 Sekunden pro Audiominute auf die Antwort, höchstens 10 Minuten.
+
 ## Konfiguration
 
 - **API-Schlüssel** - Erstelle einen API-Schlüssel auf console.deepgram.com.

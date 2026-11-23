@@ -1,7 +1,7 @@
 ---
 familySlug: obsidian
 platform: mac
-version: "1.2.0"
+version: "1.3.0"
 description: Save dictations and Recorder transcripts as customizable Markdown notes in your Obsidian vault, with templates, auto-export, and live sync.
 id: com.typewhisper.obsidian
 minAppVersion: "1.8.0"
@@ -13,10 +13,11 @@ highlights:
   - Customizable Markdown note templates
   - Auto-export for dictations, Recorder transcripts, or both
   - Meeting notes with title and attendees in the frontmatter
+  - Recorder notes that name the recording and its word timestamps file in the frontmatter
   - Live sync for later History corrections
   - Flexible daily notes and YAML frontmatter
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.2.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.3.0"
 screenshots:
   - src: /screenshots/plugins/obsidian.png
     caption: The macOS edition detects existing vaults and reveals all template, daily-note, auto-export, and live-sync options after a vault is selected. Auto-Export can include dictations, Recorder transcripts, or both.
@@ -27,7 +28,7 @@ processing: "local"
 
 The Obsidian plugin saves TypeWhisper transcriptions as regular Markdown files directly inside a folder in your vault. You can create selected notes through a workflow action target or enable **Auto-Export** to save every completed transcription automatically.
 
-Version `1.2.0` can also save Recorder transcripts, including calendar meetings, and lets Auto-Export leave out dictations. It requires TypeWhisper `1.8.0` or newer on macOS. Version `1.1.0` added configurable note templates, additional metadata, and live sync for later corrections in TypeWhisper History.
+Version `1.3.0` names the recording and its word timestamps file in the frontmatter of Recorder notes and fills in the recording's length. Version `1.2.0` can also save Recorder transcripts, including calendar meetings, and lets Auto-Export leave out dictations. Both require TypeWhisper `1.8.0` or newer on macOS. Version `1.1.0` added configurable note templates, additional metadata, and live sync for later corrections in TypeWhisper History.
 
 Sources: [macOS plugin source](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin), [implementation PR #1089](https://github.com/TypeWhisper/typewhisper-mac/pull/1089)
 
@@ -241,7 +242,8 @@ If you mainly continue editing exported notes in Obsidian, disable live sync to 
 With **Auto-Export** and **Recorder transcripts** on, every transcript the Recorder saves becomes a note in the configured subfolder. This covers manual recordings, recordings started by Meeting Automation, and recordings started through the API.
 
 - **Calendar meetings** keep the Markdown file the Recorder writes next to the recording. Its frontmatter contains the meeting title, date, start and end time, location, organizer, and attendees, so Dataview can list meetings by attendee or date. With **YAML Frontmatter** on, the plugin adds your tags.
-- **Other recordings** use your **Note Template** and frontmatter, with `{{APP}}` set to `Recorder` and the time the transcript was saved as date and time.
+- **Other recordings** use your **Note Template** and frontmatter, with `{{APP}}` set to `Recorder`, the time the transcript was saved as date and time, and the recording's length as `{{DURATION}}`.
+- With **YAML Frontmatter** on, every Recorder note gets `audio:` with the path of the recording and, when TypeWhisper wrote one, `timestamps:` with the path of `<recording>.timestamps.json`. TypeWhisper 1.8.3 and newer write that file for engines that report word timestamps. Tools that cut audio by its transcript, such as the TypeWhisper scripts for REAPER, find the recording and the times of its words from a note that links this one.
 - The note is named after the recording file, for example `20261022 - Weekly sync.md`.
 - Recordings always get their own note, also in **Daily Note Mode**.
 - With **Live Sync History Edits** on, a new transcription of the same recording updates its note instead of creating a second one.

@@ -33,6 +33,8 @@ Auf macOS verbindet sich Cloudflare ASR über einen Cloudflare Tunnel mit deinem
 
 Audio wird über Cloudflare an dein Backend gesendet. Modell und Verarbeitung hängen von diesem Backend ab.
 
+Cloudflare beendet eine Anfrage mit Fehler 524, wenn das Backend 125 Sekunden lang nichts sendet, und nimmt in den Tarifen Free und Pro höchstens 100 MB pro Upload an. Seit Version 1.0.8 sendet das Mac-Add-on Aufnahmen über fünf Minuten deshalb in Teilen von fünf Minuten und setzt den Text zusammen. Jede Anfrage wartet 30 Sekunden pro Audiominute auf die Antwort, höchstens 130 Sekunden. Dein Backend sollte schneller als etwa 2,5-fache Echtzeit transkribieren, damit ein Teil rechtzeitig zurückkommt.
+
 ## Einrichtung auf Windows: Workers AI
 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere das Add-on, das dort **Cloudflare Workers AI** heißt. Es erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.

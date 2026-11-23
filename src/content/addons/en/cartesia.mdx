@@ -2,7 +2,7 @@
 slug: cartesia
 name: Cartesia
 author: TypeWhisper
-version: "1.0.4"
+version: "1.0.6"
 icon: AudioWaveform
 iconUrl: /brand-logos/cartesia/logo-light.svg
 iconUrlDark: /brand-logos/cartesia/logo-dark.svg
@@ -20,9 +20,9 @@ sourceUrls:
   mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CartesiaPlugin
 principalClass: CartesiaPlugin
 id: "com.typewhisper.cartesia"
-minAppVersion: "1.5.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cartesia-v1.0.4"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cartesia-v1.0.6"
 ---
 
 ## About
@@ -49,7 +49,7 @@ Sources: [Cartesia API conventions](https://docs.cartesia.ai/use-the-api/api-con
 | Requirement | Details | Why it matters |
 | --- | --- | --- |
 | **Platform** | macOS `14.0` or newer. | The current TypeWhisper integration is a macOS plugin. |
-| **TypeWhisper host** | `1.5.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
+| **TypeWhisper host** | `1.8.0` or newer. | This is the `minHostVersion` in the plugin manifest. |
 | **SDK compatibility** | `v1`. | The release is published through the compatible plugin registry path. |
 | **Credential** | A Cartesia API key from your Cartesia account. | The plugin sends it as `Authorization: Bearer <api_key>` on Cartesia API requests. |
 | **OAuth scopes** | None. | This plugin uses a user-supplied API key, not Cartesia OAuth. |
@@ -73,7 +73,7 @@ Sources: [Cartesia API conventions](https://docs.cartesia.ai/use-the-api/api-con
 
 ## Speech-to-Text
 
-The plugin sends WAV audio to Cartesia's batch `/stt` endpoint with `model=ink-whisper`, requests word timestamps, and includes a `language` field for the source audio language.
+The plugin sends the audio as compressed M4A to Cartesia's batch `/stt` endpoint with `model=ink-whisper`, requests word timestamps, and includes a `language` field for the source audio language. If Cartesia rejects the M4A upload, the plugin sends the recording again as WAV.
 
 Cartesia documents `language` as the input audio language in ISO-639-1 format. TypeWhisper normalizes profile, workflow, and plugin language selections to Cartesia's primary language code, so `de-DE` becomes `de` and `en-US` becomes `en`.
 
@@ -99,12 +99,12 @@ Sources: [Cartesia batch Speech-to-Text](https://docs.cartesia.ai/api-reference/
 
 ## Short and Long Audio Behavior
 
-Cartesia's batch STT endpoint accepts audio files directly and documents that long files do not need to be manually split; their service chunks long audio server-side. The current TypeWhisper plugin therefore uses the same batch REST request for both short and longer recordings.
+Cartesia's batch STT endpoint accepts audio files directly and documents that long files do not need to be manually split; their service chunks long audio server-side. The TypeWhisper plugin therefore uses the same batch REST request for both short and longer recordings. Cartesia answers only once the whole file is transcribed, so since version 1.0.6 the plugin waits longer for long recordings: 6 seconds per audio minute for the answer and 10 seconds per audio minute for the whole request, at least 10 minutes each. Recordings up to an hour keep the 10 minute limit.
 
 | Recording | TypeWhisper behavior | Cartesia flow |
 | --- | --- | --- |
-| Short clips | Sends one multipart `/stt` request. | Upload WAV audio, `model=ink-whisper`, selected `language`, word timestamps. |
-| Longer clips | Sends the same multipart `/stt` request. | Cartesia handles chunking on the server side. |
+| Short clips | Sends one multipart `/stt` request. | Upload M4A audio, `model=ink-whisper`, selected `language`, word timestamps. |
+| Longer clips | Sends the same multipart `/stt` request and waits longer for the answer. | Cartesia handles chunking on the server side. |
 
 There is no separate async upload, task polling, or result download flow in the Cartesia plugin.
 
@@ -146,4 +146,4 @@ Sources: [Cartesia Text-to-Speech Bytes](https://docs.cartesia.ai/api-reference/
 
 - The plugin is cloud-only and sends audio or text to Cartesia; use a local engine when content must stay on device.
 - Cartesia rate limits, billing, and available voices are controlled by your Cartesia account.
-- The public `1.0.4` release requires TypeWhisper host version `1.5.0` or newer, SDK compatibility `v1`, and macOS `14.0` or newer.
+- The public `1.0.6` release requires TypeWhisper host version `1.8.0` or newer, SDK compatibility `v1`, and macOS `14.0` or newer.

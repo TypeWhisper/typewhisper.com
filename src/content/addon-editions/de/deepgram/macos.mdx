@@ -1,24 +1,27 @@
 ---
 familySlug: "deepgram"
 platform: "mac"
-version: "1.0.15"
+version: "1.0.18"
 description: "Deepgram-Transkription mit Echtzeit-Streaming, Wörterbuchbegriffen und optionalem Proxy."
 id: "com.typewhisper.deepgram"
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.6.0 oder neuer"
+  - "TypeWhisper 1.8.0 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
   - "Cloudbasierte Sprach-zu-Text-Verarbeitung"
   - "Echtzeit-Transkription während der Aufnahme"
   - "Übergabe aktiver Wörterbuchbegriffe"
   - "Unterstützung eigener Endpunkte oder Proxys"
+  - "Die Sprachliste richtet sich nach dem gewählten Modell: 59 Sprachen mit Nova 3, 33 mit Nova 2"
+  - "Ohne gewählte Sprache erkennt Deepgram sie beim Streaming und bei REST-Anfragen"
+  - "Dateien und anderes Audio über fünf Minuten gehen direkt an die REST-API, die bei langen Aufnahmen länger wartet"
 configuration:
   - "API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen"
   - "Transkriptionsmodell in den Add-on- oder Provider-Einstellungen wählen"
   - "Optional eigene Basis-URL und eigenen Auth-Header für Gateway oder Proxy setzen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/DeepgramPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-deepgram-v1.0.15"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-deepgram-v1.0.18"
 processing: "cloud"
 ---

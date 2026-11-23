@@ -2,7 +2,7 @@
 slug: whisperkit
 name: WhisperKit
 author: TypeWhisper
-version: "1.2.0"
+version: "1.2.2"
 icon: AudioWaveform
 description: Local on-device transcription using WhisperKit with CoreML, optimized for Apple Silicon.
 categories:
@@ -13,9 +13,9 @@ source: official
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/WhisperKitPlugin
 featured: false
 id: "com.typewhisper.whisperkit"
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-whisperkit-v1.2.2"
 ---
 
 ## About
@@ -30,6 +30,8 @@ WhisperKit runs OpenAI's Whisper models locally on your Mac using Apple's CoreML
 - Voice Activity Detection (VAD)
 - RAM-based model recommendations with manual selection
 - No API key or cloud account needed
+- Free disk space check before a model download: if the model does not fit, the download stops and shows the required and available space
+- If a part of a long recording fails, WhisperKit transcribes that part again; if it still fails, you get an error instead of a transcript with missing text
 
 ## Transcription Models
 
@@ -51,7 +53,7 @@ No API key required. WhisperKit runs entirely on-device.
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **WhisperKit**. The add-on then appears in the Settings sidebar, and its page opens.
-2. Choose a model in the plugin settings, then download and load it.
+2. Choose a model in the plugin settings, then download and load it. If **Auto-unload model** is set to **Immediate**, the model shows **Loads on demand**: it is loaded for each transcription and unloaded right after.
 3. Select WhisperKit as your transcription engine in Settings or in a profile.
 
 ## Manual copy workaround

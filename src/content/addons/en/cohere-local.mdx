@@ -39,9 +39,9 @@ The model and runtime are downloaded when you configure the add-on. After the re
   <tbody>
     <tr>
       <td>macOS</td>
-      <td><code>1.0.1</code></td>
-      <td>TypeWhisper <code>1.6.0</code> or newer, macOS <code>14.0</code> or newer, Apple Silicon (<code>arm64</code>)</td>
-      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.2.4">macOS 1.0.1 release</a></td>
+      <td><code>1.1.0</code></td>
+      <td>TypeWhisper <code>1.8.1</code> or newer, macOS <code>14.0</code> or newer, Apple Silicon (<code>arm64</code>)</td>
+      <td><a href="https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.1.0">macOS 1.1.0 release</a></td>
     </tr>
     <tr>
       <td>Windows</td>
@@ -123,7 +123,7 @@ The macOS settings target 8 GB or larger Macs for Q4_K, Q5_0, and Q6_K. A 16 GB 
     </tr>
     <tr>
       <td>Language handling</td>
-      <td>A supported language must be selected explicitly</td>
+      <td>Uses the selected language; with automatic detection, the Language Detection add-on picks one of the 14 languages, and without it, or when it is unsure, the first of your preferred macOS languages that Cohere supports is used</td>
       <td>Uses an explicit language hint when available; otherwise uses local ECAPA language identification</td>
     </tr>
     <tr>
@@ -256,9 +256,9 @@ That comparison in [macOS issue #1031](https://github.com/TypeWhisper/typewhispe
 2. Add a Hugging Face token only if anonymous downloads are rate-limited.
 3. Choose a quantization. Start with **Fast (Q5_0)** unless download size or memory use is more important.
 4. On Windows, leave **Processing device** on **Automatic** or choose **CPU**, **NVIDIA CUDA**, or **Vulkan**.
-5. Download and load the selected model.
+5. Download and load the selected model. On macOS, the quantizations are listed one below another; click **Download & Load** next to the one you want.
 6. Select Cohere Transcribe (Local) as the transcription engine in Settings or in a profile.
-7. On macOS, select one of the 14 supported languages explicitly before transcribing.
+7. On macOS, select one of the 14 supported languages before transcribing, or enable the **Language Detection** add-on if you use automatic detection.
 
 ## Notes
 

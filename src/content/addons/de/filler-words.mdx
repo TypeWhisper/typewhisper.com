@@ -31,6 +31,8 @@ Das Plugin erkennt Wörter unabhängig von Groß- und Kleinschreibung, respektie
 - Schützt normale Wörter wie "umbrella" oder "summer"
 - Entfernt angrenzende Satzzeichen um erkannte Füllwörter
 - Läuft vollständig lokal ohne API-Schlüssel
+- Entfernt auf dem Mac „um“, „ah“ und „eh“ nur aus englischem Text, weil sie in anderen Sprachen echte Wörter sind, etwa in „um 10 Uhr“. Es entscheidet die Diktatsprache; ohne sie erkennt das Plugin die Sprache selbst und lässt die Wörter stehen, wenn sie unklar ist.
+- Fasst auf dem Mac ein Wort, das drei- oder mehrmals hintereinander vorkommt, etwa „ich ich ich“, zu einem Wort zusammen. Zwei Wiederholungen bleiben stehen.
 
 ## Standard-Füllwörter
 
@@ -67,6 +69,7 @@ umm
 
 - **Füllwörter** - Ein Wort pro Zeile. Kommas und Semikolons werden ebenfalls akzeptiert.
 - **Standardwerte zurücksetzen** - Stellt die integrierte englische, deutsche und japanische Füllwortliste wieder her.
+- **Gestotterte Wörter zusammenfassen** (Mac) - Standardmäßig an. Kürzt ein Wort, das drei- oder mehrmals hintereinander vorkommt, auf ein einzelnes Wort.
 
 ## Einrichtung
 

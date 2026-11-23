@@ -1,22 +1,26 @@
 ---
 familySlug: "filler-words"
 platform: "mac"
-version: "1.0.1"
+version: "1.0.3"
 description: "Entfernt konfigurierbare englische, deutsche und japanische Füllwörter lokal aus Transkriptionen."
 id: "com.typewhisper.filler-words"
-minAppVersion: "1.0.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.0.0 oder neuer"
+  - "TypeWhisper 1.7.0 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
   - "Lokale Nachbearbeitung ohne API-Schlüssel"
   - "Konfigurierbare englische, deutsche und japanische Füllwörter"
   - "Erkennung unabhängig von Groß- und Kleinschreibung"
   - "Wortgrenzen und angrenzende Satzzeichen werden berücksichtigt"
+  - "„um“, „ah“ und „eh“ werden nur aus englischem Text entfernt, sodass „um 10 Uhr“ seine Präposition behält"
+  - "„Gestotterte Wörter zusammenfassen“ ist standardmäßig an und kürzt ein Wort, das drei- oder mehrmals hintereinander vorkommt, etwa „ich ich ich“, auf eines"
+  - "Ein Füllwort am Satzanfang gibt seinen Großbuchstaben an das nächste Wort weiter, aus „Um, so I think“ wird „So I think“"
 configuration:
   - "Füllwörter zeilenweise oder durch Kommas und Semikolons getrennt eingeben"
+  - "„Gestotterte Wörter zusammenfassen“ ein- oder ausschalten"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/FillerWordsPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-filler-words-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-filler-words-v1.0.3"
 processing: "local"
 ---

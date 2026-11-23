@@ -390,15 +390,15 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
         assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
       } else {
         assert.equal(scalar(data, "status"), undefined);
-        assert.equal(scalar(data, "version"), "1.0.0");
+        assert.equal(scalar(data, "version"), "1.1.0");
         assert.equal(scalar(data, "id"), "com.typewhisper.meta");
-        assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+        assert.equal(scalar(data, "minAppVersion"), "1.8.3");
         assert.equal(scalar(data, "minOsVersion"), "14.0");
         assert.equal(
           scalar(data, "sourceUrl"),
           "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin",
         );
-        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.0\.0$/);
+        assert.match(scalar(data, "releaseUrl"), /plugin-meta-v1\.1\.0$/);
         assert.deepEqual(capabilityMap.meta[platform], ["transcription", "llm"]);
       }
     }
@@ -422,7 +422,7 @@ test("Meta docs link the published Windows and macOS editions on main", async ()
   }
 });
 
-test("Microsoft AI keeps its published macOS 1.0.0 edition", async () => {
+test("Microsoft AI keeps its published macOS 1.1.0 edition", async () => {
   for (const locale of LOCALES) {
     const familyContent = await readFile(
       path.resolve(`src/content/addons/${locale}/microsoft-ai.mdx`),
@@ -452,15 +452,15 @@ test("Microsoft AI keeps its published macOS 1.0.0 edition", async () => {
 
     assert.equal(scalar(data, "familySlug"), "microsoft-ai");
     assert.equal(scalar(data, "platform"), "mac");
-    assert.equal(scalar(data, "version"), "1.0.0");
+    assert.equal(scalar(data, "version"), "1.1.0");
     assert.equal(scalar(data, "id"), "com.typewhisper.microsoft-ai");
-    assert.equal(scalar(data, "minAppVersion"), "1.7.0");
+    assert.equal(scalar(data, "minAppVersion"), "1.8.3");
     assert.equal(scalar(data, "minOsVersion"), "14.0");
     assert.equal(
       scalar(data, "sourceUrl"),
       "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin",
     );
-    assert.match(scalar(data, "releaseUrl"), /plugin-microsoft-ai-v1\.0\.0$/);
+    assert.match(scalar(data, "releaseUrl"), /plugin-microsoft-ai-v1\.1\.0$/);
     assert.match(guide, /MAI Transcribe 2/);
     assert.match(
       guide,
@@ -562,7 +562,7 @@ test("Authenticated Provider CLI docs cover the published OpenCode editions", as
       const data = frontmatter(content);
       const guide = body(content);
 
-      const version = platform === "mac" ? "1.1.0" : "1.3.5";
+      const version = platform === "mac" ? "1.1.1" : "1.3.5";
 
       assert.equal(scalar(data, "familySlug"), "authenticated-cli");
       assert.equal(scalar(data, "platform"), platform);

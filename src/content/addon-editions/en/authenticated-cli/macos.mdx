@@ -1,7 +1,7 @@
 ---
 familySlug: "authenticated-cli"
 platform: "mac"
-version: "1.1.0"
+version: "1.1.1"
 description: "Use existing Codex, Claude Code, OpenCode Zen, and Antigravity CLI logins as isolated LLM providers on macOS."
 id: "com.typewhisper.authenticated-cli"
 minAppVersion: "1.7.0"
@@ -22,7 +22,7 @@ configuration:
   - "Refresh CLI status and models, choose an executable, and set model and effort globally or per workflow"
   - "Review current OpenCode Zen pricing and privacy terms before using a free model"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/AuthenticatedCLIPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.1"
 screenshots:
   - src: "/screenshots/plugins/authenticated-cli.png"
     alt: "Authenticated Provider CLIs settings with OpenCode Zen in TypeWhisper for macOS"
@@ -33,7 +33,7 @@ processing: "custom"
 
 ## Availability
 
-Authenticated Provider CLIs 1.1.0 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.0). Its current source code is maintained on the repository's `main` branch.
+Authenticated Provider CLIs 1.1.1 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-authenticated-cli-v1.1.1). Its current source code is maintained on the repository's `main` branch.
 
 ## macOS Setup
 
@@ -61,7 +61,7 @@ TypeWhisper rechecks the detected version, login state, and required controls pe
 
 For Codex, TypeWhisper requests picker-visible models directly through `model/list` from the installed and signed-in CLI's App Server. Each model includes its `supportedReasoningEfforts`, `defaultReasoningEffort`, and whether Codex marks it as the default. This lets both pickers follow account changes instead of baking fixed Codex lists into the add-on.
 
-For OpenCode, TypeWhisper loads the Zen catalog through `opencode models opencode --verbose --pure`. OpenCode may serve this model metadata from its own cache because the v1.1.0 integration does not force `--refresh`. TypeWhisper exposes only `opencode/*` text models whose complete pricing object includes input and output prices and whose every numeric value—including cache and tier pricing—is zero. Free offers are dynamic and can change or end at any time; TypeWhisper never falls back to a model whose reported pricing is nonzero or incomplete. Safe variants reported for the selected model become its available effort levels on macOS.
+For OpenCode, TypeWhisper loads the Zen catalog through `opencode models opencode --verbose --pure`. OpenCode may serve this model metadata from its own cache because the integration in version 1.1.1 does not force `--refresh`. TypeWhisper exposes only `opencode/*` text models whose complete pricing object includes input and output prices and whose every numeric value, including cache and tier pricing, is zero. Free offers are dynamic and can change or end at any time; TypeWhisper never falls back to a model whose reported pricing is nonzero or incomplete. Safe variants reported for the selected model become its available effort levels on macOS.
 
 Antigravity models are loaded with `agy models`; its documented effort levels are **Low**, **Medium**, and **High**. Claude Code documents **Low**, **Medium**, **High**, **XHigh**, **Max**, and **Ultracode**, but its headless CLI does not expose a comparable machine-readable model catalog.
 

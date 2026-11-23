@@ -2,7 +2,7 @@
 slug: "vercel-ai-gateway"
 name: "Vercel AI Gateway"
 author: "TypeWhisper"
-version: "1.0.0"
+version: "1.0.4"
 icon: "Cloud"
 brandLogo: "vercel"
 description: "Cloud transcription and LLM workflows through Vercel AI Gateway with one API key, model catalogs, pricing, and credit balance."
@@ -13,12 +13,12 @@ platforms:
   - mac
 source: "official"
 id: "com.typewhisper.vercel-ai-gateway"
-minAppVersion: "1.7.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 homepage: "https://vercel.com/ai-gateway"
 apiDocsUrl: "https://vercel.com/docs/ai-gateway"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/VercelAIGatewayPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-vercel-ai-gateway-v1.0.4"
 principalClass: "VercelAIGatewayPlugin"
 ---
 
@@ -30,7 +30,7 @@ This is a cloud provider. Audio and workflow text leave your Mac when you use it
 
 ## Requirements
 
-This release requires **TypeWhisper 1.7.0 or newer** on macOS 14 or later.
+Version 1.0.4 requires **TypeWhisper 1.8.0 or newer** on macOS 14 or later.
 
 You need your own **Vercel AI Gateway API key**. Speech-to-text on Vercel AI Gateway is in beta, so transcription models may not be enabled for your team yet.
 
@@ -55,7 +55,7 @@ Until a catalog has been loaded, the add-on offers a short default list and says
 
 ## Transcription
 
-The add-on sends recorded audio to the gateway in one request. It does not stream partial text while you speak. Realtime models that accept audio only over a live connection are left out of the list.
+The add-on sends recorded audio to the gateway after the recording. Recordings longer than 10 minutes go out in parts of up to 10 minutes, cut at quiet moments: five minutes for GPT-4o Transcribe and GPT-4o mini Transcribe, and three minutes for Fish Audio transcribe-1. MAI-Transcribe models receive the audio as FLAC, which is about half the size of WAV. It does not stream partial text while you speak. Realtime models that accept audio only over a live connection are left out of the list.
 
 A language setting is passed on as a hint for OpenAI transcription models only. Translation is not supported, and TypeWhisper dictionary terms are not sent.
 

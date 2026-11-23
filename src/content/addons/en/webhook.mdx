@@ -28,7 +28,7 @@ The Webhook plugin sends transcriptions as POST or PUT requests to the URLs you 
 - Works with Zapier, Make, n8n, and custom APIs
 - Send for all transcriptions or only for selected workflows
 - JSON payload format
-- Optionally send completed Recorder transcripts on macOS
+- Optionally send completed Recorder transcripts and file transcripts on macOS
 - Delivery log for the latest requests
 
 ## Configuration
@@ -39,7 +39,8 @@ Each webhook has these settings:
 - **URL** - The HTTP(S) endpoint that receives the requests.
 - **Method** - POST or PUT.
 - **Also send completed Recorder transcripts** - Also send each saved Recorder transcript to this webhook. Available on macOS from TypeWhisper 1.8; off by default.
-- **Send webhook for** - All transcriptions, or only transcriptions from the workflows you select.
+- **Also send file transcripts** - Also send transcripts of files from the Watch Folder. Available on macOS with version 1.4.0 of this add-on; off by default.
+- **Send webhook for** - All transcriptions, or only transcriptions from the workflows you select. On macOS, from version 1.4.0 of this add-on, **No dictations** sends only the Recorder and file transcripts turned on above.
 
 ## Recorder transcripts
 
@@ -66,10 +67,38 @@ TypeWhisper sends the request to the webhook's URL with its method and this JSON
 
 If a delivery fails, TypeWhisper retries it once after five seconds with the same body, so deduplicate by `completion_id`. Delivery is best effort and happens only while TypeWhisper is running. To catch up on transcripts your endpoint missed, use [`GET /v1/recorder/recordings`](/en/docs/mac/api/#recorder-recordings) in the local API. It returns the latest saved transcript of each recording, not every revision: if a recording was retranscribed before you caught up, only the newer transcript is available.
 
+## File transcripts
+
+Available on macOS with version 1.4.0 or newer of this add-on. TypeWhisper for Windows does not offer this option.
+
+With **Also send file transcripts** turned on, the webhook also receives the transcript of every file from the Watch Folder once it is transcribed. Like Recorder transcripts, the option is off by default and does not depend on the workflows under **Send webhook for**. The text is the transcript from the engine. The body looks like this:
+
+```json
+{
+  "source": "watch-folder",
+  "completion_id": "0B7E3C5A-2F4D-4A8E-9C61-5D2B7F0A1E93",
+  "completed_at": 1791100000.123456,
+  "text": "Interview transcript from the watch folder.",
+  "source_file": "/Users/alex/Watch/Interview.m4a",
+  "source_file_name": "Interview.m4a",
+  "output_file": "/Users/alex/Watch/Interview.md",
+  "output_format": "md",
+  "engine": "Parakeet",
+  "language": "en",
+  "segments": [
+    { "text": "Interview transcript from the watch folder.", "start": 0.0, "end": 2.4 }
+  ]
+}
+```
+
+`source` is `watch-folder` or `file-transcription`. `output_file` and `output_format` name the saved transcript file, if there is one. `engine`, `model` and `language` appear when TypeWhisper knows them, and `segments` holds the timed parts of the transcript, with `speaker` when a speaker was detected. Failed deliveries are retried once after five seconds, as for Recorder transcripts, so deduplicate by `completion_id`.
+
+From version 1.4.0 on macOS, dictation webhooks carry `"source": "dictation"`, so one endpoint can tell dictation, Recorder and file events apart. To receive only Recorder or file transcripts, set **Send webhook for** to **No dictations**.
+
 ## Setup
 
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Webhook Notifications**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Click **Add Webhook**.
 3. Enter a name and the URL, and choose the method.
-4. Under **Send webhook for**, choose all transcriptions or selected workflows. To receive Recorder transcripts as well, turn on **Also send completed Recorder transcripts**.
+4. Under **Send webhook for**, choose all transcriptions or selected workflows. To receive Recorder transcripts as well, turn on **Also send completed Recorder transcripts**. On macOS, **Also send file transcripts** adds files from the Watch Folder.
 5. Click **Save**. TypeWhisper sends the webhook after each matching transcription.

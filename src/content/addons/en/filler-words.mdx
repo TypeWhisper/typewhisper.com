@@ -31,6 +31,8 @@ The plugin matches words case-insensitively, respects word boundaries, and can r
 - Preserves normal words such as "umbrella" or "summer"
 - Removes adjacent punctuation around matched filler words
 - Works fully locally without API keys
+- On Mac, removes “um”, “ah” and “eh” only from English text, because they are real words in other languages, such as German “um 10 Uhr”. The dictation language decides; without one, the plugin recognizes the language and keeps the words when it is unclear.
+- On Mac, collapses a word repeated three or more times in a row, like “I I I think”, to one word. Two repetitions stay.
 
 ## Default Filler Words
 
@@ -67,6 +69,7 @@ umm
 
 - **Filler words** - One word per line. Commas and semicolons are also accepted.
 - **Reset Defaults** - Restores the built-in English, German, and Japanese filler word list.
+- **Collapse stuttered words** (Mac) - On by default. Shortens a word repeated three or more times in a row to a single word.
 
 ## Setup
 

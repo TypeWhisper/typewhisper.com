@@ -2,7 +2,7 @@
 slug: sber-salutespeech
 name: Sber SaluteSpeech
 author: TypeWhisper
-version: "0.1.1"
+version: "0.1.2"
 icon: Cloud
 description: Cloud-Transkription über die Sber SaluteSpeech REST API. Benötigt einen nutzerbereitgestellten SaluteSpeech Authorization Key.
 categories:
@@ -16,9 +16,9 @@ sourceUrls:
   mac: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SaluteSpeechPlugin
 principalClass: SaluteSpeechPlugin
 id: "com.typewhisper.sber-salutespeech"
-minAppVersion: "1.4.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sber-salutespeech-v0.1.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-sber-salutespeech-v0.1.2"
 ---
 
 ## Über
@@ -27,7 +27,7 @@ Sber SaluteSpeech ergänzt TypeWhisper unter macOS um einen Cloud-Transkriptions
 
 TypeWhisper bringt keine gemeinsame Sber-Zugangsdaten mit. Audio wird zur Erkennung an SaluteSpeech gesendet, und TypeWhisper speichert den Authorization Key über seinen Plugin-Secret-Speicher.
 
-Die veröffentlichte macOS-Erweiterung ist Version `0.1.1` und benötigt TypeWhisper `1.4.0` oder neuer.
+Die veröffentlichte macOS-Erweiterung ist Version `0.1.2` und benötigt TypeWhisper `1.7.0` oder neuer.
 
 Quellen: [Sber SaluteSpeech REST API](https://developers.sber.ru/docs/ru/salutespeech/rest/salutespeech-rest-api), [Sber Access-Token-Dokumentation](https://developers.sber.ru/docs/ru/salutespeech/api/authentication), [macOS Plugin-PR](https://github.com/TypeWhisper/typewhisper-mac/pull/706), [TypeWhisper Plugin-Registry](https://github.com/TypeWhisper/typewhisper-mac/blob/gh-pages/plugins-v1.json)
 
@@ -36,7 +36,7 @@ Quellen: [Sber SaluteSpeech REST API](https://developers.sber.ru/docs/ru/salutes
 | Voraussetzung | Details | Warum es wichtig ist |
 | --- | --- | --- |
 | **Plattform** | macOS `14.0` oder neuer. | Die erste TypeWhisper-Integration ist ein macOS-Plugin. |
-| **TypeWhisper-Host** | `1.4.0` oder neuer. | Das ist die `minHostVersion` im Plugin-Manifest. |
+| **TypeWhisper-Host** | `1.7.0` oder neuer. | Das ist die `minHostVersion` im Plugin-Manifest. |
 | **SDK-Kompatibilität** | `v1`. | Der Release-Workflow veröffentlicht kompatible Metadaten in `plugins-v1.json`. |
 | **Zugangsdaten** | Ein SaluteSpeech Authorization Key aus Sber Developer Studio. | Das Plugin tauscht diesen Schlüssel vor Erkennungsanfragen gegen kurzlebige OAuth-Access-Tokens. |
 | **Netzwerkzugriff** | Audio wird zu `smartspeech.sber.ru` hochgeladen; OAuth-Tokens werden über Sbers OAuth-Endpunkt angefordert. | Das ist ein Cloud-Anbieter, keine lokale Transkription. |

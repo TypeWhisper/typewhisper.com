@@ -1,7 +1,7 @@
 ---
 familySlug: obsidian
 platform: mac
-version: "1.2.0"
+version: "1.3.0"
 description: Speichere Diktate und Recorder-Transkripte als anpassbare Markdown-Notizen in deinem Obsidian-Vault, mit Vorlagen, Auto-Export und Live-Sync.
 id: com.typewhisper.obsidian
 minAppVersion: "1.8.0"
@@ -13,10 +13,11 @@ highlights:
   - Anpassbare Markdown-Notizvorlagen
   - Auto-Export für Diktate, Recorder-Transkripte oder beides
   - Meeting-Notizen mit Titel und Teilnehmern im Frontmatter
+  - Recorder-Notizen, die im Frontmatter die Aufnahme und ihre Datei mit Wort-Zeitstempeln nennen
   - Live-Sync für spätere Verlaufskorrekturen
   - Flexible Tagesnotizen und YAML-Frontmatter
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.2.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-obsidian-v1.3.0"
 screenshots:
   - src: /screenshots/plugins/obsidian.png
     caption: Die macOS-Edition erkennt vorhandene Vaults und bietet nach der Auswahl alle Optionen für Vorlagen, Tagesnotizen, Auto-Export und Live-Sync. Auto-Export kann Diktate, Recorder-Transkripte oder beides speichern.
@@ -27,7 +28,7 @@ processing: "local"
 
 Das Obsidian-Plugin speichert TypeWhisper-Transkriptionen als normale Markdown-Dateien direkt in einem Ordner deines Vaults. Du kannst einzelne Notizen über ein Workflow-Action-Ziel erstellen oder mit **Auto-Export** jede abgeschlossene Transkription automatisch ablegen.
 
-Version `1.2.0` speichert auch Recorder-Transkripte, einschließlich Kalender-Meetings, und Auto-Export kann Diktate auslassen. Sie benötigt TypeWhisper `1.8.0` oder neuer auf macOS. Version `1.1.0` hat konfigurierbare Notizvorlagen, zusätzliche Metadaten und Live-Sync für spätere Korrekturen im TypeWhisper-Verlauf ergänzt.
+Version `1.3.0` nennt im Frontmatter von Recorder-Notizen die Aufnahme und ihre Datei mit Wort-Zeitstempeln und trägt die Länge der Aufnahme ein. Version `1.2.0` speichert auch Recorder-Transkripte, einschließlich Kalender-Meetings, und Auto-Export kann Diktate auslassen. Beide benötigen TypeWhisper `1.8.0` oder neuer auf macOS. Version `1.1.0` hat konfigurierbare Notizvorlagen, zusätzliche Metadaten und Live-Sync für spätere Korrekturen im TypeWhisper-Verlauf ergänzt.
 
 Quellen: [macOS-Plugin-Code](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/ObsidianPlugin), [Implementierungs-PR #1089](https://github.com/TypeWhisper/typewhisper-mac/pull/1089)
 
@@ -241,7 +242,8 @@ Wenn du exportierte Notizen anschließend hauptsächlich in Obsidian weiterbearb
 Mit **Auto-Export** und **Recorder-Transkripte** wird jedes Transkript, das der Recorder speichert, zu einer Notiz im konfigurierten Unterordner. Das gilt für manuelle Aufnahmen, für Aufnahmen der Meeting-Automatik und für Aufnahmen, die über die API gestartet wurden.
 
 - **Kalender-Meetings** übernehmen die Markdown-Datei, die der Recorder neben der Aufnahme schreibt. Ihr Frontmatter enthält Titel, Datum, Beginn und Ende, Ort, Organisator und Teilnehmer des Meetings, sodass Dataview Meetings nach Teilnehmer oder Datum auflisten kann. Mit **YAML-Frontmatter** ergänzt das Plugin deine Tags.
-- **Andere Aufnahmen** verwenden deine **Notizvorlage** und das Frontmatter. `{{APP}}` steht dabei für `Recorder`, Datum und Uhrzeit sind der Zeitpunkt, an dem das Transkript gespeichert wurde.
+- **Andere Aufnahmen** verwenden deine **Notizvorlage** und das Frontmatter. `{{APP}}` steht dabei für `Recorder`, Datum und Uhrzeit sind der Zeitpunkt, an dem das Transkript gespeichert wurde, und `{{DURATION}}` ist die Länge der Aufnahme.
+- Mit **YAML-Frontmatter** bekommt jede Recorder-Notiz `audio:` mit dem Pfad der Aufnahme und, wenn TypeWhisper eine geschrieben hat, `timestamps:` mit dem Pfad von `<aufnahme>.timestamps.json`. TypeWhisper ab 1.8.3 schreibt diese Datei für Engines, die Wort-Zeitstempel liefern. Werkzeuge, die Audio anhand des Transkripts schneiden, etwa die TypeWhisper-Skripte für REAPER, finden so über eine Notiz, die auf diese verlinkt, die Aufnahme und die Zeiten ihrer Wörter.
 - Die Notiz heißt wie die Aufnahmedatei, zum Beispiel `20261022 - Weekly sync.md`.
 - Aufnahmen bekommen immer eine eigene Notiz, auch im **Tagesnotiz-Modus**.
 - Mit **Live-Sync** aktualisiert eine neue Transkription derselben Aufnahme ihre Notiz, statt eine zweite anzulegen.

@@ -21,7 +21,7 @@ sourceUrls:
 
 Microsoft AI verbindet TypeWhisper mit den MAI-Transcribe-Modellen aus Azure Speech. Das Add-on sendet eine abgeschlossene Mikrofonaufnahme oder importiertes Audio an Azure und gibt anschließend Text mit erkannter Sprache und Segment-Zeitstempeln zurück. MAI Transcribe 2 kann außerdem Sprecherlabels ergänzen.
 
-Version `1.0.0` ist für macOS verfügbar; TypeWhisper für Windows bietet dieses Add-on ab Version 1.1 nicht mehr an. Microsoft kennzeichnet MAI Transcribe in Azure Speech derzeit als Vorschau. Prüfe deshalb die aktuelle Azure-Verfügbarkeit und die Vorschau-Bedingungen, bevor du den Dienst produktiv oder für sensible Inhalte einsetzt.
+Version `1.1.0` ist für macOS verfügbar und benötigt TypeWhisper 1.8.3; TypeWhisper für Windows bietet dieses Add-on ab Version 1.1 nicht mehr an. Microsoft kennzeichnet MAI Transcribe in Azure Speech derzeit als Vorschau. Prüfe deshalb die aktuelle Azure-Verfügbarkeit und die Vorschau-Bedingungen, bevor du den Dienst produktiv oder für sensible Inhalte einsetzt.
 
 Quellen: [Microsoft-Dokumentation zu MAI Transcribe](https://learn.microsoft.com/de-de/azure/ai-services/speech-service/mai-transcribe), [macOS-Plugin-Quellcode](https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin)
 
@@ -38,7 +38,8 @@ Quellen: [Microsoft-Dokumentation zu MAI Transcribe](https://learn.microsoft.com
 | **Sprachauswahl** | Ein starker Sprachhinweis für die Aufnahme. | Wähle eine sicher bekannte Sprache oder lass die Auswahl für Erkennung und gemischtsprachiges Audio auf Automatisch. |
 | **Wörterbucheinträge** | Namen und Fachbegriffe aus dem TypeWhisper-Wörterbuch. | Lenkt die Erkennung auf wichtige Begriffe, ohne sie im Ergebnis zu erzwingen. |
 | **Transkriptionsstil** | Steuert, wie genau die Ausgabe Versprecher und Füllwörter übernimmt. | **Bereinigt** bevorzugt lesbaren Text; **Wörtlich** erhält Füllwörter, Fehlstarts und Selbstkorrekturen. |
-| **Sprechererkennung** | Trennt gesprochene Abschnitte nach Sprecher. | Mit MAI Transcribe 2 kann TypeWhisper Labels wie `Speaker 1:` ergänzen und Segment-Zeitstempel erhalten. |
+| **Sprechererkennung** | Trennt gesprochene Abschnitte nach Sprecher. | Mit MAI Transcribe 2 kann TypeWhisper in Aufnahmen und Dateien Labels wie `Speaker 1:` ergänzen und Segment-Zeitstempel erhalten. Diktate gehen ohne sie an Azure. |
+| **Ausweich-Endpunkt** | Eine zweite Speech-Ressource in einer anderen Region. | Übernimmt eine Anfrage sofort, wenn die erste Region sie mangels Kapazität abweist. |
 
 ## Modelle und Ausgabe
 
@@ -49,7 +50,7 @@ Quellen: [Microsoft-Dokumentation zu MAI Transcribe](https://learn.microsoft.com
 
 TypeWhisper kann kompatible Modell-IDs aus dem Microsoft-Foundry-Katalog der verbundenen Ressource laden. Es werden nur MAI-Transcribe-Modelle übernommen. Schlägt das Laden fehl, bleiben die beiden integrierten Modelle verfügbar; ein zuvor geladener Katalog bleibt im Cache.
 
-Das Add-on lädt normalisiertes WAV-Audio über den Transkriptionsendpunkt von Azure Speech hoch. Es streamt während des Sprechens keinen Teiltext. Für MAI Transcribe 2 fordert TypeWhisper Zeitstempel auf Segmentebene an und wandelt zurückgegebene Sprecherinformationen in lesbare Labels um. Übersetzungen werden nicht unterstützt.
+Das Add-on lädt normalisiertes Audio als FLAC, etwa halb so groß wie WAV, über den Transkriptionsendpunkt von Azure Speech hoch. Aufnahmen über eine Stunde gehen in Teilen von bis zu einer Stunde hinaus, und jeder Teil nummeriert seine Sprecher für sich. Es streamt während des Sprechens keinen Teiltext. Für MAI Transcribe 2 fordert TypeWhisper Zeitstempel auf Segmentebene an und wandelt zurückgegebene Sprecherinformationen in lesbare Labels um. Übersetzungen werden nicht unterstützt.
 
 ## Sprache und Fachbegriffe
 
@@ -65,12 +66,16 @@ Das Plugin benötigt einen Azure-Speech-Endpunkt und den passenden API-Key. Es a
 
 MAI Transcribe ist derzeit über Speech-Ressourcen in diesen Regionen verfügbar:
 
+- Central India (`centralindia`)
 - East US (`eastus`)
 - North Europe (`northeurope`)
 - Southeast Asia (`southeastasia`)
 - West US (`westus`)
+- West US 2 (`westus2`)
 
 Kann TypeWhisper aus einem regionalen Endpunkt eine nicht unterstützte Region erkennen, nennen die Einstellungen oder der API-Fehler die Region und die unterstützten Alternativen. Ein allgemeiner Azure-Speech-Endpunkt kann trotzdem gültig sein, auch wenn der Foundry-Modellkatalog darüber nicht geladen werden kann; die integrierte MAI-Modellliste bleibt dann verfügbar.
+
+Fehlt einer Region die Kapazität, antwortet Azure mit HTTP 429 oder einem 5xx-Status oder gar nicht rechtzeitig. Ist ein **Ausweich-Endpunkt** gespeichert, schickt TypeWhisper dieselbe Anfrage dann sofort dorthin, ohne das Retry-After der ersten Region abzuwarten. Erst wenn beide scheitern, greift der Automatische Fallback. Nutze eine Speech-Ressource in einer anderen Region aus der Liste oben; die Einstellungen warnen, wenn die Region des Ausweich-Endpunkts MAI Transcribe nicht anbietet.
 
 Quelle: [Azure-Speech-Regionen](https://learn.microsoft.com/de-de/azure/ai-services/speech-service/regions?tabs=llmspeech)
 
@@ -85,7 +90,8 @@ Quelle: [Azure-Speech-Regionen](https://learn.microsoft.com/de-de/azure/ai-servi
 | **Modell** | Wählt MAI Transcribe 2 oder 1.5 sowie kompatible Modelle aus dem Katalog. | Beginne mit **MAI Transcribe 2**. |
 | **Modelle aktualisieren** | Lädt kompatible Modell-IDs aus der verbundenen Microsoft-Foundry-Ressource. | Aktualisiere nach der Freischaltung eines neuen MAI-Transcribe-Modells. |
 | **Transkriptionsstil** | Wählt **Bereinigt** oder **Wörtlich**. | Nutze Bereinigt für Notizen und Untertitel, Wörtlich für Prüfung oder Analyse. |
-| **Sprechererkennung** | Ergänzt Sprecherlabels, wenn das gewählte Modell sie unterstützt. | Aktiviere sie bei Interviews und Gesprächen mit MAI Transcribe 2. |
+| **Sprechererkennung** | Ergänzt Sprecherlabels, wenn das gewählte Modell sie unterstützt, für Aufnahmen, Datei-Transkriptionen, überwachte Ordner und die HTTP-API. Diktate gehen ohne Sprechererkennung an Azure. | Aktiviere sie bei Interviews und Gesprächen mit MAI Transcribe 2. |
+| **Ausweich-Endpunkt** | Optionaler zweiter Endpunkt oder Ressourcenname mit eigenem **API-Schlüssel für den Ausweich-Endpunkt**, gespeichert mit **Ausweich-Endpunkt speichern**. | `https://westus.api.cognitive.microsoft.com` |
 
 ## Typische Einsatzmöglichkeiten
 
@@ -98,7 +104,7 @@ Quelle: [Azure-Speech-Regionen](https://learn.microsoft.com/de-de/azure/ai-servi
 
 ## Einrichtungsbeispiel
 
-1. Erstelle im Azure-Portal eine Microsoft-Foundry-Ressource für Speech in East US, North Europe, Southeast Asia oder West US.
+1. Erstelle im Azure-Portal eine Microsoft-Foundry-Ressource für Speech in Central India, East US, North Europe, Southeast Asia, West US oder West US 2.
 2. Öffne die Ressource und kopiere den Speech-Endpunkt oder Ressourcennamen sowie einen API-Key.
 3. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Microsoft AI**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 4. Öffne die Add-on-Einstellungen, gib Endpunkt und API-Key ein und speichere die Verbindung.
@@ -110,7 +116,7 @@ Quelle: [Azure-Speech-Regionen](https://learn.microsoft.com/de-de/azure/ai-servi
 
 | Plattform | Host-Anforderung | Vom Plugin erzwungene Audiogrenze |
 | --- | --- | --- |
-| macOS | TypeWhisper 1.7.0 und macOS 14 oder neuer | Bis zu 2 Stunden und 300 MB normalisiertes WAV-Audio |
+| macOS | TypeWhisper 1.8.3 und macOS 14 oder neuer | Keine eigene Längengrenze; Aufnahmen über eine Stunde gehen in Teilen von bis zu einer Stunde hinaus |
 
 ## Cloud-Verarbeitung und Datenschutz
 

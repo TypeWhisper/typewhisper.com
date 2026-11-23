@@ -2,7 +2,7 @@
 slug: "canary-asr"
 name: "Canary ASR"
 author: "TypeWhisper"
-version: "1.0.1"
+version: "1.1.2"
 icon: "Bird"
 description: "Lokale Canary-Spracherkennung auf Apple Silicon, mit dem Modell Sophea für Griechisch und Englisch und dem Import kompatibler Modelle."
 categories:
@@ -11,10 +11,10 @@ platforms:
   - mac
 source: "official"
 id: "com.typewhisper.canary"
-minAppVersion: "1.7.0"
+minAppVersion: "1.8.1"
 minOsVersion: "14.0"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CanaryPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-canary-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-canary-v1.1.2"
 principalClass: "CanaryPlugin"
 screenshotAlt: "Einstellungen von Canary ASR in TypeWhisper für macOS: ein Feld für das optionale Hugging-Face-Token und das Modell Sophea Canary mit der Schaltfläche „Laden & Aktivieren“"
 ---
@@ -29,7 +29,7 @@ Für TypeWhisper für Windows gibt es kein Add-on Canary ASR. Dort gehört das M
 
 ## Voraussetzungen
 
-Diese Version benötigt **TypeWhisper 1.7.0 oder neuer** auf macOS 14 oder neuer und einen Mac mit **Apple Silicon**.
+Diese Version benötigt **TypeWhisper 1.8.1 oder neuer** auf macOS 14 oder neuer und einen Mac mit **Apple Silicon**.
 
 Sophea Canary ist ein Download von etwa 1,9 GB. Das Add-on nennt dafür 8 GB Arbeitsspeicher oder mehr. Du brauchst keinen API-Key und kein Konto.
 
@@ -38,14 +38,14 @@ Sophea Canary ist ein Download von etwa 1,9 GB. Das Add-on nennt dafür 8 GB Arb
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Canary ASR**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Wähle **Laden & Aktivieren** neben **Sophea Canary (Greek / English)**.
 3. Wähle **Canary Speech (MLX)** in den Diktateinstellungen als Transkriptions-Engine.
-4. Stelle als Sprache des Diktats **Griechisch** oder **Englisch** ein. Canary erkennt die Sprache nicht von selbst.
+4. Stelle als Sprache des Diktats **Griechisch** oder **Englisch** ein. Canary erkennt die Sprache nicht von selbst. Nutzt du die automatische Erkennung, aktiviere das Add-on **Language Detection**, das für jedes Diktat Griechisch oder Englisch wählt.
 
 ## Einstellungen
 
 | Einstellung | Funktion |
 | --- | --- |
 | **HuggingFace Token** | Optional. Ein Token erhöht die Download-Limits von Hugging Face. **Speichern** prüft das Token bei Hugging Face und legt ein gültiges im macOS-Schlüsselbund ab. **Entfernen** löscht das gespeicherte Token. |
-| **Modell** | Zeigt Sophea Canary und deine importierten Modelle mit Größe und Speicherbedarf. **Laden & Aktivieren** lädt Sophea Canary herunter und lädt es in den Speicher. **Deaktivieren** gibt den Speicher wieder frei; bei Sophea Canary löscht es auch die heruntergeladenen Dateien. |
+| **Modell** | Zeigt Sophea Canary und deine importierten Modelle mit Größe und Speicherbedarf. **Laden & Aktivieren** lädt Sophea Canary herunter und lädt es in den Speicher. **Deaktivieren** gibt den Speicher wieder frei; bei Sophea Canary löscht es auch die heruntergeladenen Dateien. Steht **Modell automatisch entladen** auf **Sofort**, zeigt ein heruntergeladenes Modell **Wird bei Bedarf geladen**: Es wird für jede Transkription geladen und direkt danach entladen. |
 | **Modell importieren …** | Fügt ein Canary-Modell aus einem Hugging-Face-Repository oder aus einem lokalen Ordner mit `config.json`, Tokenizer-Dateien und `.safetensors`-Gewichten hinzu. Das Add-on prüft und lädt das Modell, bevor der Import abgeschlossen ist. |
 
 Ein importiertes Modell ist eine Kopie, die TypeWhisper behält; deine Originaldateien bleiben unverändert. Ein Token, das du im Import-Dialog für ein privates oder zugangsbeschränktes Repository eingibst, gilt nur für diesen Import und wird nicht gespeichert.
@@ -54,7 +54,7 @@ Ein importiertes Modell ist eine Kopie, die TypeWhisper behält; deine Originald
 
 Das Add-on transkribiert die fertige Aufnahme. Während du sprichst, erscheint kein Zwischentext. Eine längere Aufnahme teilt es an einer nahen Sprechpause in Abschnitte von etwa 20 Sekunden und transkribiert sie nacheinander.
 
-Sophea Canary erkennt Griechisch und Englisch. Ohne gewählte Sprache bricht das Add-on mit einem Hinweis ab, der dich um die Auswahl bittet. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht an das Modell übergeben.
+Sophea Canary erkennt Griechisch und Englisch. Bei automatischer Erkennung wählt das Add-on Language Detection eine der beiden Sprachen. Ohne es oder wenn es unsicher ist, nutzt Canary die erste deiner bevorzugten macOS-Sprachen, die es unterstützt. Nur wenn keine davon Griechisch oder Englisch ist, bricht das Add-on mit einem Hinweis ab, der dich um die Auswahl einer Sprache bittet. Übersetzung wird nicht unterstützt, und Begriffe aus dem TypeWhisper-Wörterbuch werden nicht an das Modell übergeben.
 
 ## Lokale Verarbeitung und Datenschutz
 

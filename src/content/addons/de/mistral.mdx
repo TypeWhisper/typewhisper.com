@@ -79,7 +79,7 @@ Diktate mit Live-Text werden für das Realtime-Modell und die fertige Transkript
 - **API-Schlüssel** - Erstelle einen API-Schlüssel in der Mistral-Konsole und füge ihn in die Add-on-Einstellungen ein. Auf dem Mac lädt das Speichern auch die Modellliste deines Kontos.
 - **Transkriptionsmodell** - Voxtral Mini Transcribe 3 ist der Standard; Voxtral Small Transcribe 3 ist genauer und kostet etwas mehr.
 - **Live-Text** - Auf dem Mac wählst du unter **Transkription** zwischen **Live** (Standard) und **Nach der Aufnahme**. Unter Windows wählst du Voxtral Mini Transcribe Realtime 3 als Transkriptionsmodell; Live-Text braucht TypeWhisper 1.3 oder neuer, ältere Versionen transkribieren nach dem Stoppen.
-- **Sprecherkennzeichnung** (Mac) - Kennzeichnet, wer in Aufnahmen mit mehreren Personen spricht. Diktate werden dann nach der Aufnahme transkribiert statt gestreamt.
+- **Sprecherkennzeichnung** (Mac) - Kennzeichnet, wer in Aufnahmen mit mehreren Personen spricht. Diktate werden dann nach der Aufnahme transkribiert statt gestreamt. Seit Version 1.3.1 gehen Diktate ohne Sprecherkennzeichnung an Mistral, weil diktierter Text sie nie zeigt; Aufnahmen, Datei-Transkriptionen, überwachte Ordner und die HTTP-API behalten sie.
 - **Textmodell und Reasoning** - Wähle das Modell für Prompts und Workflows und seine Reasoning-Stufe.
 - **Temperatur** - Mistrals Standard oder ein eigener Wert von 0 bis 2.
 - **Aktualisieren** (Windows: **Modelle aktualisieren**) - Lädt die Modelle deines Mistral-Kontos.

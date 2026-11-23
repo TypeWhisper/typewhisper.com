@@ -79,7 +79,7 @@ Dictations with live text are billed for both the realtime model and the final t
 - **API Key** - Create an API key in the Mistral console and paste it into the add-on settings. On Mac, saving it also loads your account's model list.
 - **Transcription model** - Voxtral Mini Transcribe 3 is the default; Voxtral Small Transcribe 3 is more accurate and costs a little more.
 - **Live text** - On Mac, choose **Live** (default) or **After recording** under **Transcription**. On Windows, choose Voxtral Mini Transcribe Realtime 3 as the transcription model; live text needs TypeWhisper 1.3 or newer, and older versions transcribe after you stop.
-- **Speaker labels** (Mac) - Marks who is speaking in recordings with several people. Dictations then transcribe after the recording instead of streaming.
+- **Speaker labels** (Mac) - Marks who is speaking in recordings with several people. Dictations then transcribe after the recording instead of streaming. Since version 1.3.1, dictations are sent without speaker labels, which dictated text never shows; recordings, file transcriptions, watch folders and the HTTP API keep them.
 - **Text model and reasoning** - Choose the model for prompts and workflows, and its reasoning level.
 - **Temperature** - Mistral's default or a custom value from 0 to 2.
 - **Refresh** (Windows: **Refresh models**) - Loads the models of your Mistral account.
