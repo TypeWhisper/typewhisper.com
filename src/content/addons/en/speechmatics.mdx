@@ -30,6 +30,7 @@ Speechmatics adds a cloud transcription engine to TypeWhisper powered by the Spe
 - Enhanced model for best-in-class accuracy
 - Standard model for faster, cost-effective transcription
 - Configurable server region (EU or US) for lower latency
+- On Mac, long recordings are sent as one batch job, and TypeWhisper waits up to half the audio duration for the result (at least five minutes), so a two-hour recording gets an hour
 - Built-in API key validation in settings
 - Secure API key storage in the macOS Keychain
 

@@ -101,6 +101,11 @@ export default function DocsWindowsTroubleshooting({
           </li>
           <li>
             {isDe
+              ? "Ohne Ctrl, Alt oder Shift funktionieren nur F1 bis F24, Insert, Pause sowie Medien-, Lautstärke-, Browser- und Starttasten. Buchstaben, Ziffern, Navigations- und Bearbeitungstasten sowie Feststelltasten brauchen eine Zusatztaste; die Meldung beim Aufzeichnen nennt die Tasten, die allein funktionieren."
+              : "Without Ctrl, Alt, or Shift, only F1 to F24, Insert, Pause, and the media, volume, browser, and launch keys work. Letters, digits, navigation and editing keys, and lock keys need a modifier; the message shown while recording lists the keys that work alone."}
+          </li>
+          <li>
+            {isDe
               ? "Prüfe auch workflow-spezifische Tastenkürzel. TypeWhisper verhindert Konflikte innerhalb der App, aber nicht mit fremden Programmen."
               : "Check workflow-specific hotkeys as well. TypeWhisper prevents conflicts inside the app, but not with other programs."}
           </li>
@@ -136,6 +141,11 @@ export default function DocsWindowsTroubleshooting({
             {isDe
               ? "Teste ein normales Textfeld wie Editor. Funktioniert es dort, liegt die Grenze am Zielprogramm."
               : "Test a regular field such as Notepad. If it works there, the limitation is in the target app."}
+          </li>
+          <li>
+            {isDe
+              ? "In Apps, die mit Flutter gebaut sind, kam vor TypeWhisper 1.2.2 statt des Textes nur ein „v“ an. Aktualisiere TypeWhisper, dann funktioniert das Einfügen dort."
+              : "In apps built with Flutter, versions before TypeWhisper 1.2.2 inserted a plain \"v\" instead of the text. Update TypeWhisper, and pasting works there."}
           </li>
           <li>
             {isDe

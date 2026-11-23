@@ -1,8 +1,8 @@
 ---
 familySlug: "reson8"
 platform: "windows"
-version: "1.2.10"
-description: "Reson8-Transkription mit Echtzeit-Streaming und eigenen Modellen, über die Reson8-Cloud-API oder einen kompatiblen Server."
+version: "1.3.0"
+description: "Reson8-Transkription mit Resonant-1, Rumble-2-Flash, eigenen Modellen und Mustergruppen, mit Echtzeit-Streaming, über die Reson8-Cloud-API oder einen kompatiblen Server."
 id: "com.typewhisper.reson8"
 minAppVersion: "1.1.0"
 requirements:
@@ -12,15 +12,23 @@ requirements:
 highlights:
   - "Sprach-zu-Text über die Reson8-API unter api.reson8.dev oder einen kompatiblen Server, den du einträgst"
   - "Live-Text beim Sprechen, gestreamt über eine WebSocket-Verbindung"
-  - "Eigene Modelle, die mit deinem API-Schlüssel verfügbar sind, neben dem Standardmodell"
-  - "Niederländisch, Englisch, Französisch, Deutsch, Italienisch, Polnisch, Portugiesisch, Spanisch, Schwedisch und Friesisch"
+  - "Die Modelle von Reson8, etwa Resonant-1 und Rumble-2-Flash, neben den eigenen Modellen, die mit deinem API-Schlüssel verfügbar sind; Sprachen und Live-Text richten sich nach dem gewählten Modell"
+  - "Rumble-2-Flash bietet keinen Live-Text und keine Wörterbuchbegriffe; die Aufnahme wird nach dem Stoppen transkribiert"
+  - "Das Standardmodell Resonant-1 unterstützt Niederländisch, Englisch, Französisch, Deutsch, Italienisch, Polnisch, Portugiesisch, Spanisch, Schwedisch und Friesisch"
+  - "Stellst du mehrere Sprachen ein, erkennt Reson8 nur unter diesen Sprachen"
+  - "Füllwörter: Natürlich, Bereinigt lässt Füllwörter weg, Wörtlich schreibt sie so, wie sie gesprochen wurden"
+  - "Wörterbuchbegriffe gehen als Phrasen an Reson8, bis zu 250 pro Anfrage; „Biasstärke“ legt fest, wie stark sie und eigene Modelle die Erkennung lenken"
+  - "„Wörterbuch in einem eigenen Modell führen“ speichert dein Wörterbuch in einem eigenen Modell namens TypeWhisper Dictionary in deinem Reson8-Konto, mit bis zu 50.000 Begriffen"
+  - "Mustergruppen erkennen strukturierte Angaben wie Bestellnummern; jede Gruppe erscheint als Modell, das ein Workflow auswählen kann"
   - "Scheitert das Streaming, wird die Aufnahme stattdessen in einer einzigen Anfrage transkribiert"
 configuration:
   - "Lass „Server-URL“ und „Authentifizierungsheader“ auf ihren Standardwerten, außer du nutzt einen kompatiblen Server; nach einer Änderung wähle „Einstellungen speichern“"
   - "Trag deinen Reson8-API-Schlüssel unter „API-Schlüssel“ ein, wähle „Einstellungen speichern“ und dann „Verbindung prüfen“"
-  - "Wähle „Eigene Modelle aktualisieren“, um die eigenen Modelle deines Schlüssels zu laden"
+  - "Wähle „Modelle aktualisieren“, um die Modelle von Reson8 und die eigenen Modelle deines Schlüssels zu laden"
   - "Wähle ein „Transkriptionsmodell“ und, falls angezeigt, „Ausgewähltes Modell verwenden“"
+  - "Stell bei Bedarf „Füllwörter“ und „Biasstärke“ ein, und schalte für ein großes Wörterbuch „Wörterbuch in einem eigenen Modell führen“ ein"
+  - "Für Bestellnummern oder Aktenzeichen trag „Mustergruppen“ ein und wähle „Muster bei Reson8 prüfen“"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Reson8"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-reson8-v1.2.10"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-reson8-v1.3.0"
 processing: "custom"
 ---

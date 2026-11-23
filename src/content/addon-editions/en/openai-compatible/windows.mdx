@@ -1,7 +1,7 @@
 ---
 familySlug: "openai-compatible"
 platform: "windows"
-version: "1.1.3"
+version: "1.1.4"
 description: "Server profiles for transcription and text processing with any OpenAI-compatible server, such as Ollama, LM Studio, or vLLM."
 id: "com.typewhisper.openai-compatible"
 capabilityNames:
@@ -16,6 +16,7 @@ highlights:
   - "Speech-to-text through the configured local or remote server"
   - "LLM provider for workflow prompts, through Chat Completions or the Responses API"
   - "Multiple server profiles, each with its own URL, optional API key, models, and settings"
+  - "The API key is sent only over HTTPS or to this computer; a server on another computer over plain HTTP, such as Ollama in your local network, receives requests without it, and Test connection says so"
   - "Model suggestions from the server's model list, or any model ID entered by hand"
   - "Batch or realtime transcription, including deployment-scoped endpoints with an API version"
 configuration:
@@ -25,6 +26,6 @@ configuration:
   - "If your server needs it, adjust Transcription mode, Text API, Temperature, Thinking mode, and Text request timeout, then select Save profile"
   - "To connect another server, add a profile with + next to Server profile"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.OpenAiCompatible"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-compatible-v1.1.3"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-openai-compatible-v1.1.4"
 processing: "custom"
 ---

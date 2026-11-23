@@ -193,6 +193,15 @@ export default function DocsMacInstallation({
             ))}
           </ul>
 
+          <h2>{t(locale, "docs.mac.installation.updates.title")}</h2>
+          <ul>
+            {[1, 2, 3].map((item) => (
+              <li key={item}>
+                {t(locale, `docs.mac.installation.updates.item${item}`)}
+              </li>
+            ))}
+          </ul>
+
           <h2>{t(locale, "docs.mac.installation.upgrade.title")}</h2>
           <p>{t(locale, "docs.mac.installation.upgrade.desc")}</p>
 
@@ -213,7 +222,7 @@ export default function DocsMacInstallation({
           locale={locale}
           lang="shell"
           code={
-            "git clone https://github.com/TypeWhisper/typewhisper-mac.git\ncd typewhisper-mac\n# Requires Xcode 16+\nopen TypeWhisper.xcodeproj"
+            "git clone https://github.com/TypeWhisper/typewhisper-mac.git\ncd typewhisper-mac\n# Requires Xcode 26.6 or later\nopen TypeWhisper.xcodeproj"
           }
         />
       </DocsSection>

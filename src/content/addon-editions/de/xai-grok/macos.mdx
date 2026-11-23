@@ -1,23 +1,24 @@
 ---
 familySlug: xai-grok
 platform: mac
-version: "1.0.2"
-releaseVersion: "1.0.2"
+version: "1.0.4"
+releaseVersion: "1.0.4"
 description: xAI-Grok-Cloud-Transkription, Prompt-Verarbeitung und Text-to-Speech mit Speicherung im macOS-Schlüsselbund.
 id: com.typewhisper.xai
-minAppVersion: "1.5.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - TypeWhisper 1.5.0 oder neuer
+  - TypeWhisper 1.8.0 oder neuer
   - macOS 14.0 oder neuer
 highlights:
   - Cloudbasierte Sprach-zu-Text-Verarbeitung mit Streaming und REST-Fallback
+  - Aufnahmen und Dateien über fünf Minuten gehen direkt an den REST-Endpunkt, der Wort-Zeitstempel liefert, statt in Echtzeit gestreamt zu werden
   - Grok als LLM-Anbieter für Prompts und Workflows
   - Text-to-Speech mit integrierten oder benutzerdefinierten xAI-Voice-IDs
   - Dynamische Kataloge für LLM-Modelle und TTS-Stimmen
 configuration:
   - Speichere den API-Schlüssel im macOS-Schlüsselbund und wähle Transkriptions-, LLM- und TTS-Optionen
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/XAIPlugin
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-xai-v1.0.2"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-xai-v1.0.4"
 processing: "cloud"
 ---

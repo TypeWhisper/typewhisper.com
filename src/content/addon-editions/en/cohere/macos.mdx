@@ -1,23 +1,24 @@
 ---
 familySlug: "cohere"
 platform: "mac"
-version: "1.0.4"
+version: "1.0.6"
 description: "Cohere Transcribe cloud speech recognition for 14 languages."
 id: "com.typewhisper.cohere"
-minAppVersion: "0.12.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 0.12.0 or newer"
+  - "TypeWhisper 1.8.0 or newer"
   - "macOS 14.0 or newer"
 highlights:
   - "Cloud transcription through Cohere Transcribe"
   - "Explicit selection from 14 supported languages"
   - "English fallback without a language selection; no automatic detection"
   - "No dictionary term boosting during recognition"
+  - "Recordings longer than 10 minutes are sent in parts of up to 10 minutes, below Cohere's limit of 25 MB per request"
 configuration:
   - "Store, validate, or remove the API key in macOS Keychain"
   - "Choose the transcription model in add-on or provider settings"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CoherePlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-v1.0.4"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-v1.0.6"
 processing: "cloud"
 ---

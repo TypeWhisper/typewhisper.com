@@ -1,8 +1,8 @@
 ---
 familySlug: "groq"
 platform: "windows"
-version: "1.1.1"
-description: "Groq for Whisper transcription and for workflow prompts with Llama, GPT-OSS and Kimi K2."
+version: "1.2.0"
+description: "Groq for Whisper transcription and for workflow prompts with GPT-OSS and Qwen, with a model list that keeps itself up to date."
 id: "com.typewhisper.groq"
 minAppVersion: "1.1.0"
 requirements:
@@ -13,12 +13,15 @@ highlights:
   - "Cloud speech-to-text processing"
   - "Whisper Large V3 and Whisper Large V3 Turbo for transcription"
   - "Translation into English with Whisper Large V3"
-  - "LLM provider for workflow prompts with Llama 3.3 70B, Llama 3.1 8B, GPT-OSS 120B, GPT-OSS 20B and Kimi K2"
+  - "LLM provider for workflow prompts with GPT-OSS 120B (the default), GPT-OSS 20B and Qwen 3.8 27B; Llama 3.3 70B, Llama 3.1 8B and Kimi K2 are gone because Groq retired them for free and developer accounts"
+  - "Refresh models loads the text models your Groq account can use, and the list also reloads in the background once a day, so a model Groq retires drops out on its own"
+  - "If your saved LLM model is no longer offered, Groq uses GPT-OSS 120B instead of failing, and your choice applies again once Groq lists the model again"
   - "Transcription after the recording stops; no live streaming"
 configuration:
   - "Enter your Groq API key, select Save settings, then select Check connection"
   - "Under Transcription model, choose Whisper Large V3 or Whisper Large V3 Turbo and, if it appears, select Use selected model"
+  - "Select Refresh models to load the current text models for workflow prompts"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Groq"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugins-v2-categories-20260908"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-groq-v1.2.0"
 processing: "cloud"
 ---

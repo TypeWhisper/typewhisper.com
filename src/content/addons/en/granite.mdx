@@ -44,7 +44,7 @@ Version 1.1.0 adds IBM's Granite Speech 5.0 models. Granite 5.0 TurboCTC is the 
 
 Granite 5.0 TurboCTC transcribes English, French, German, Spanish, Portuguese, Italian, and Japanese. Granite 5.0 2B and Granite 4.0 support the same languages except Italian.
 
-- **Granite 5.0 TurboCTC** is the fastest model. It writes punctuation and capitalization, but it cannot translate and does not use dictionary terms.
+- **Granite 5.0 TurboCTC** is the fastest model. It writes punctuation and capitalization, but it cannot translate and does not use dictionary terms. Since version 1.2.1, it frees its memory after each transcription and when the model is unloaded; before, memory grew with every dictated second until TypeWhisper restarted.
 - **Granite 5.0 2B** writes punctuation and capitalization, translates, and passes your dictionary terms to the model as keywords. It is slower and needs a larger download.
 - **Granite 4.0 1B** is the older model. It writes mostly lowercase with little punctuation. If you already use a Granite 4.0 model, it stays selected after the update.
 

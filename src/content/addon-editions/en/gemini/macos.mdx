@@ -1,25 +1,27 @@
 ---
 familySlug: "gemini"
 platform: "mac"
-version: "1.1.0"
+version: "1.1.7"
 description: "Google Gemini cloud transcription and Gemini/Gemma text processing with separate model catalogs."
 id: "com.typewhisper.gemini"
-minAppVersion: "1.5.0"
+minAppVersion: "1.8.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.5.0 or newer"
+  - "TypeWhisper 1.8.0 or newer"
   - "macOS 14.0 or newer"
 highlights:
-  - "Cloud transcription with Smart and Verbatim modes"
+  - "Cloud transcription with Verbatim (the default) and Smart modes"
   - "Gemini and Gemma models for workflow prompts"
   - "Refreshable transcription and language-model catalogs"
   - "Live preview with supported transcription models"
+  - "Gemini Live dictations finish as soon as Gemini detects the end of your turn, instead of waiting three seconds after you release the hotkey"
+  - "Recordings longer than 30 minutes go to Gemini's transcription models in parts of up to 30 minutes"
 configuration:
   - "Store and validate the API key in macOS Keychain"
   - "Refresh models and select the transcription model in provider or workflow settings"
   - "Choose Smart for cleaned dictation or Verbatim for literal output"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GeminiPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gemini-v1.1.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-gemini-v1.1.7"
 processing: "cloud"
 ---
 
@@ -28,7 +30,7 @@ processing: "cloud"
 1. In TypeWhisper, open **Settings > Discover plugins** and install **Gemini**. The add-on then appears in the Settings sidebar, and its page opens.
 2. Save your Google AI Studio API key and refresh the model catalog.
 3. Select Gemini as the transcription provider and choose an available transcription model.
-4. Choose **Smart** for cleaned dictation or **Verbatim** for a more literal result. Live previews require a model with live support.
+4. Keep **Verbatim**, the default, for a more literal result, or choose **Smart** for cleaned dictation. Live previews require a model with live support.
 5. For text processing, select Gemini separately as the workflow's LLM provider and choose a Gemini or Gemma text model.
 
 ## Models and privacy

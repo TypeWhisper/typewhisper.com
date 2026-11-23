@@ -2,7 +2,7 @@
 slug: whisper-cpp
 name: Whisper (Local)
 author: TypeWhisper
-version: "1.2.24"
+version: "1.2.25"
 icon: Cpu
 description: Offline Whisper transcription on Windows with whisper.cpp, on the CPU or on a graphics card with NVIDIA CUDA or Vulkan.
 categories:
@@ -15,7 +15,7 @@ sourceUrl: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/Type
 sourceUrls:
   windows: https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.WhisperCpp
 minAppVersion: "1.1.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-whisper-cpp-v1.2.24"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-whisper-cpp-v1.2.25"
 ---
 
 ## About
@@ -33,7 +33,7 @@ Whisper (Local) adds offline Whisper transcription to TypeWhisper for Windows. I
 - Processing device: Automatic, CPU, NVIDIA CUDA, Vulkan or AMD ROCm
 - The **Processing device** setting shows what the loaded model runs on, with Vulkan including the graphics card in use, or why it fell back to the CPU
 - Download, use and remove models on the add-on's page
-- Free disk space is checked before a download, and every download must match the exact size of the model file
+- Free disk space is checked before a download, and every download must match the exact size and SHA-256 hash of the model file; otherwise the partial file is removed and you can download it again
 - No API key or account required
 
 ## Transcription Models

@@ -61,6 +61,8 @@ Ollama stellt eine OpenAI-kompatible API unter `http://localhost:11434/v1` berei
 6. Klicke auf **Verbindung testen**.
 7. Aktualisiere die Modelle und waehle das Ollama-Modell fuer LLM-Aufgaben aus.
 
+Auf dem Mac setzt du **Servertyp** auf **Ollama**. Das Profil listet die installierten Modelle dann über Ollamas eigenen `/api/tags`-Endpunkt auf, mit Namen wie `llama3.1:8b`, und weicht auf `/v1/models` aus, wenn das nicht klappt. Ollama lässt Modelle, die nachdenken können, standardmäßig nachdenken. Ist die **Thinking-Erweiterung des Anbieters** aus, schaltet ein Ollama-Profil mit Chat Completions dieses Nachdenken ab, sodass Antworten schneller kommen; ist sie an, behält Ollama seinen Standard.
+
 Siehe die offiziellen [Ollama OpenAI-Kompatibilitaetsdocs](https://docs.ollama.com/api/openai-compatibility) fuer die unterstuetzten `/v1/*`-Endpunkte.
 
 ## LM Studio fuer lokale LLM-Prompts nutzen
@@ -83,9 +85,11 @@ Ollama und LM Studio sind LLM-Server. Sie unterstuetzen OpenAI-kompatible Text-E
 
 Um OpenAI Compatible als Transkriptions-Engine zu verwenden, muss der Server auch OpenAI-kompatible Audio-Endpunkte wie `/v1/audio/transcriptions` implementieren. Wenn dein Server nur Chat Completions unterstuetzt, nutze OpenAI Compatible fuer LLM-Workflows und waehle fuer Speech-to-Text eine dedizierte TypeWhisper-Transkriptions-Engine.
 
+Auf dem Mac hat jedes Batch-Profil die Einstellung **Upload-Format**. **Auto** komprimiert das Audio als M4A und versucht es mit WAV erneut, wenn der Server M4A ablehnt, zum Beispiel llama.cpp. **WAV** lädt direkt WAV hoch, für Server, die kein M4A annehmen. Batch-Profile transkribieren nach dem Ende der Aufnahme und laden für die Live-Vorschau kein Audio hoch; Echtzeit-Profile behalten ihre Live-Vorschau. Aufnahmen über 10 Minuten werden in Teilen transkribiert. GPT-4o-Transkriptionsmodelle und Profile mit API-Version oder bereitstellungsbezogenem Endpunkt, etwa Azure OpenAI, nutzen Teile von fünf Minuten.
+
 ## Reasoning-Aufwand
 
-Unter macOS haben Profile, die die LLM-API **Responses** nutzen, die Einstellung **Reasoning-Aufwand**. **Anbieterstandard** sendet kein `reasoning`; die anderen Stufen senden `reasoning: { effort: ... }` an `/v1/responses` und lassen die Temperatur weg. Jedes Profil ist ein eigener Provider mit eigener Einstellung.
+Unter macOS haben Profile, die die LLM-API **Responses** nutzen, die Einstellung **Reasoning-Aufwand** mit Niedrig, Mittel, Hoch, Sehr hoch und Maximum. **Anbieterstandard** sendet kein `reasoning`; die anderen Stufen senden `reasoning: { effort: ... }` an `/v1/responses` und lassen die Temperatur weg. Jedes Profil ist ein eigener Provider mit eigener Einstellung. Workflows können für Responses-Profile ihre eigene Stufe wählen; auf **Anbieterstandard** gilt die Einstellung des Profils. Profile mit Chat Completions senden nie einen Reasoning-Aufwand.
 
 ## Fehlerbehebung
 

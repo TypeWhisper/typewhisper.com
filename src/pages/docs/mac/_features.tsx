@@ -3,6 +3,7 @@ import {
   DocsSection,
   DocsSubheading,
   DocsTerms,
+  withCode,
 } from "@/components/docs/prose";
 import { t, screenshotPath, localePath, type Locale } from "@/i18n/index";
 
@@ -26,6 +27,16 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.dictation.title")}
       >
         <p>{t(locale, "docs.mac.features.dictation.desc")}</p>
+        <p>{t(locale, "docs.mac.features.dictation.stop")}</p>
+        <p>{t(locale, "docs.mac.features.dictation.indicator")}</p>
+      </DocsSection>
+
+      <DocsSection
+        id="correct-last-dictation"
+        title={t(locale, "docs.mac.features.correctLast.title")}
+      >
+        <p>{t(locale, "docs.mac.features.correctLast.desc1")}</p>
+        <p>{t(locale, "docs.mac.features.correctLast.desc2")}</p>
       </DocsSection>
 
       <DocsSection
@@ -33,6 +44,7 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.streaming.title")}
       >
         <p>{t(locale, "docs.mac.features.streaming.desc")}</p>
+        <p>{t(locale, "docs.mac.features.streaming.cloud")}</p>
       </DocsSection>
 
       <DocsSection id="workflows" title={t(locale, "docs.mac.features.ai.title")}>
@@ -57,6 +69,7 @@ export default function DocsMacFeatures({
         <p>{t(locale, "docs.mac.features.dictionary.desc")}</p>
         <p>{t(locale, "docs.mac.features.dictionary.desc2")}</p>
         <p>{t(locale, "docs.mac.features.dictionary.desc3")}</p>
+        <p>{t(locale, "docs.mac.features.dictionary.localPacks")}</p>
 
         <DocsSubheading id="vocabulary-boosting">
           {t(locale, "docs.mac.features.dictionary.boostingTitle")}
@@ -120,6 +133,8 @@ export default function DocsMacFeatures({
         title={t(locale, "docs.mac.features.recorder.title")}
       >
         <p>{t(locale, "docs.mac.features.recorder.desc")}</p>
+        <p>{withCode(t(locale, "docs.mac.features.recorder.desc2"))}</p>
+        <p>{t(locale, "docs.mac.features.recorder.history")}</p>
       </DocsSection>
 
       <DocsSection

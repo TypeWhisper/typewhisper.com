@@ -1,24 +1,25 @@
 ---
 familySlug: "google-cloud-stt"
 platform: "mac"
-version: "1.0.4"
+version: "1.1.1"
 description: "Google Cloud Speech-to-Text mit Service-Account-Anmeldung und Aufteilung langer Aufnahmen."
 id: "com.typewhisper.google-cloud-stt"
-minAppVersion: "0.12.0"
+minAppVersion: "1.8.1"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 0.12.0 oder neuer"
+  - "TypeWhisper 1.8.1 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
   - "Cloudbasierte Sprach-zu-Text-Verarbeitung"
   - "Aufteilung langer Aufnahmen in mehrere Erkennungsanfragen"
   - "Übergabe aktiver Wörterbuchbegriffe"
   - "Anmeldung mit einem Google-Service-Account"
+  - "Bei automatischer Spracherkennung wählt das Add-on Language Detection die gesprochene Sprache aus den Sprachen von Google; ist es unsicher, gilt die Standardsprache"
 configuration:
   - "Service-Account-JSON sicher hinterlegen und validieren"
   - "Transkriptionsmodell in den Add-on- oder Provider-Einstellungen wählen"
   - "Standard-Sprache als vollständigen Google-Sprachcode festlegen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/GoogleCloudSTTPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-google-cloud-stt-v1.0.4"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-google-cloud-stt-v1.1.1"
 processing: "cloud"
 ---

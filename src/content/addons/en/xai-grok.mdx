@@ -42,7 +42,7 @@ xAI / Grok adds Grok-powered cloud speech-to-text, prompt processing, and text-t
 | **Transcription model** | Uses xAI's Grok Speech to Text model. | TypeWhisper sends audio to `grok-stt`. |
 | **Language** | Comes from the TypeWhisper profile or request context. | Set a profile language such as `en` or `de` to pass a language hint. |
 
-The plugin supports streaming transcription and falls back to the REST endpoint if streaming fails. Translation is not supported by the xAI STT provider.
+The plugin supports streaming transcription and falls back to the REST endpoint if streaming fails. xAI takes streamed audio at real-time pace, so on Mac, recordings and files longer than five minutes go straight to the REST endpoint, which transcribes them much faster and returns word timings. Dictations and shorter files keep the stream and its live text. Translation is not supported by the xAI STT provider.
 
 ## LLM Models
 

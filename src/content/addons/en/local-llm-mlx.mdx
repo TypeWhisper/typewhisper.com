@@ -10,7 +10,10 @@ categories:
 platforms:
   - mac
 source: official
+version: "1.0.8"
+minAppVersion: "1.8.0"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/LocalLLMPlugin
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-local-llm-mlx-v1.0.8"
 ---
 
 ## About
@@ -25,6 +28,7 @@ Local LLM (MLX) runs prompt processing entirely on your Mac. Rewrites, summaries
 - Optional HuggingFace token for higher download rate limits
 - HuggingFace token validation before it is saved
 - Download, load, cancel, and unload controls for local models
+- Recommendation of a model for this Mac based on its memory, and a warning when a model needs more memory than the Mac has
 - Experimental models stay visible with explicit warnings
 - No API key required for the core local workflow
 
@@ -34,14 +38,17 @@ Local LLM (MLX) runs prompt processing entirely on your Mac. Rewrites, summaries
 | --- | --- | --- | --- |
 | Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ | Supported |
 | Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ | Supported |
-| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Experimental |
+| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Supported |
 | Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ | Experimental |
 | Qwen3.5 2B (4-bit) | ~1.8 GB | 8 GB+ | Experimental |
 | LFM2.5 2.6B (4-bit) | ~1.6 GB | 8 GB+ | Experimental |
 
 ## Choosing a Model
 
-- **Gemma 4 E2B or E4B** gives the most reliable results for cleanup, translation, and restructuring.
+The settings recommend a model for your Mac and mark it **Recommended for this Mac**: Gemma 4 E2B (4-bit) on a Mac with less than 16 GB of memory, Gemma 4 E4B (4-bit) from 16 GB. A model that needs more memory than the Mac has shows a warning.
+
+- **Gemma 4 E2B or E4B** gives the most reliable results for cleanup, translation, and restructuring. E2B is the fastest and suits cleanup and short texts, but handles inline commands and notes less reliably. E4B balances speed and quality for every workflow.
+- **Gemma 4 E4B (8-bit)** is slightly more accurate than the 4-bit version, but needs more memory and runs slower.
 - **Qwen3.5 2B** needs about half the memory of Gemma 4 E2B and handles dictation cleanup well, but it translates and restructures text less reliably.
 - **LFM2.5 2.6B** thinks before it answers, so each result takes several seconds. It is released under the LFM Open License, which allows free commercial use only below USD 10 million in annual revenue.
 
@@ -49,7 +56,7 @@ Local LLM (MLX) runs prompt processing entirely on your Mac. Rewrites, summaries
 
 - **Generation Temperature** - Adjust the output style between more precise and more creative responses.
 - **HuggingFace Token** - Optional. Increases download rate limits and is validated before saving. You can create one at `huggingface.co/settings/tokens`.
-- **Model** - Choose which model to download and load. The 4-bit Gemma 4 `E2B` and `E4B` models are the recommended path.
+- **Model** - Choose which model to download and load. The settings name the recommended model for this Mac. When TypeWhisper unloads models right after each use, the model row shows `Loads on demand` instead of a Load button.
 
 ## Setup
 
@@ -61,5 +68,6 @@ Local LLM (MLX) runs prompt processing entirely on your Mac. Rewrites, summaries
 ## Notes
 
 - If you still have the former Gemma 4 plugin installed, install Local LLM (MLX), download your model again, and then remove the Gemma 4 plugin. Workflows and prompts that used Gemma 4 switch to Local LLM (MLX) once the old plugin is removed.
-- Larger Gemma 4 variants are still experimental and may fail depending on hardware or the current app build.
+- Gemma 4 26B-A4B is still experimental and may fail to load depending on hardware or the current app build.
+- Version 1.0.8 keeps the spaces Gemma models write before punctuation, so `x != y` no longer turns into `x!= y`.
 - A HuggingFace token is optional, but it can make downloads more reliable by increasing rate limits.

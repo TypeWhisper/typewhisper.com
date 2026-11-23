@@ -1,18 +1,20 @@
 ---
 familySlug: "meta"
 platform: "mac"
-version: "1.0.0"
+version: "1.1.0"
 description: "Muse Voice Transcribe für Echtzeit- und Datei-Transkription mit optionaler Sprechertrennung sowie Muse Spark für die Prompt-Verarbeitung."
 id: "com.typewhisper.meta"
-minAppVersion: "1.7.0"
+minAppVersion: "1.8.3"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.7.0 oder neuer"
+  - "TypeWhisper 1.8.3 oder neuer"
   - "macOS 14 oder neuer"
   - "Zugang zur Meta Model API und ein API-Key"
 highlights:
   - "Echtzeit- und Datei-Transkription mit Muse Voice Transcribe"
-  - "Optionale Sprechertrennung für Live- und hochgeladenes Audio"
+  - "Optionale Sprechererkennung für Aufnahmen, Datei-Transkriptionen, überwachte Ordner und die HTTP-API; Diktate gehen ohne sie an Meta"
+  - "Aufnahmen über neun Minuten werden in Teilen von bis zu neun Minuten transkribiert"
+  - "Muse Spark meldet die Tokens jeder Anfrage, die der Verlauf in den Details zeigt"
   - "Sprach- und Wörterbuch-Biasing bei Echtzeit- und Datei-Transkription"
   - "Prompt-Verarbeitung mit Muse Spark für TypeWhisper-Workflows"
   - "Dynamische Modellerkennung mit lokal zwischengespeichertem Katalog"
@@ -24,7 +26,7 @@ configuration:
   - "Muse-Spark-Prompt-Modell für Workflows auswählen"
   - "Vor der Auswahl eines Contributor-Modells den Trainingshinweis prüfen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MetaPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.1.0"
 screenshots:
   - src: "/screenshots/plugins/meta.png"
     caption: "API-Key im Schlüsselbund, Muse-Voice-Transcribe-Modell, Sprechererkennung und Muse-Spark-Prompt-Modell."
@@ -34,7 +36,7 @@ processing: "cloud"
 
 ## Verfügbarkeit
 
-Meta 1.0.0 ist als [Plugin-Release für TypeWhisper unter macOS](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.0.0) verfügbar. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
+Meta 1.1.0 ist als [Plugin-Release für TypeWhisper unter macOS](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-meta-v1.1.0) verfügbar und benötigt TypeWhisper 1.8.3 oder neuer. Der aktuelle Quellcode wird im `main`-Branch des Repositories gepflegt.
 
 ## Was das macOS-Add-on macht
 
@@ -51,7 +53,7 @@ Das Add-on unterstützt Sprachhinweise und Wörterbuchbegriffe bei Live- und Dat
 | --- | --- |
 | **Meta Model API** | API-Key eingeben, ein- oder ausblenden, im macOS-Schlüsselbund speichern und verfügbare Modelle laden. **Entfernen** löscht den gespeicherten Zugang. |
 | **Transkriptionsmodell** | Wählt das Muse-Voice-Transcribe-Modell. Muse Voice Transcribe 1.0 ist der integrierte Fallback. |
-| **Sprechererkennung** | Wechselt bei Meta vom Push-to-talk-Modus in den Diarisierungsmodus. Sprecherlabels gelten für Echtzeit- und hochgeladenes Audio. |
+| **Sprechererkennung** | Wechselt bei Meta vom Push-to-talk-Modus in den Diarisierungsmodus, für Aufnahmen, Datei-Transkriptionen, überwachte Ordner und die HTTP-API. Diktate gehen samt Live-Vorschau ohne Diarisierung an Meta, weil diktierter Text nie Sprecherlabels zeigt. |
 | **Prompt-Modell** | Wählt das Muse-Spark-Modell für die Prompt-Verarbeitung in Workflows. |
 
 Der integrierte Katalog enthält Muse Spark 1.2, Muse Spark 1.1 und Muse Spark 1.2 Contributor. Bei Contributor-Modellen erscheint ein ausdrücklicher Hinweis, dass Prompts und Antworten zum Training zukünftiger Meta-Modelle verwendet werden können.
@@ -75,6 +77,8 @@ Der integrierte Katalog enthält Muse Spark 1.2, Muse Spark 1.1 und Muse Spark 1
 
 Die Echtzeit-Transkription streamt 16-kHz-PCM über Metas WebSocket-API. Wenn die Aufnahme endet, wartet TypeWhisper auf Metas Abschlussereignis, bevor das Transkript fertiggestellt wird.
 
+Meta nimmt höchstens 10 Minuten Audio pro Anfrage an. Längere Aufnahmen gehen in Teilen von bis zu neun Minuten an Meta. Meta nummeriert die Sprecher in jedem Teil neu, deshalb kann eine Person unter mehreren Nummern erscheinen, zwei Personen teilen sich aber nie eine.
+
 ## Muse Spark in einem Workflow verwenden
 
 1. Erstelle oder bearbeite einen TypeWhisper-Workflow mit Prompt-Verarbeitung.
@@ -87,7 +91,7 @@ Die Echtzeit-Transkription streamt 16-kHz-PCM über Metas WebSocket-API. Wenn di
 
 - **Verbindung fehlgeschlagen:** Prüfe API-Key und Meta-API und wähle erneut **Speichern und Modelle laden**.
 - **Ein Modell fehlt:** Aktualisiere den Katalog. Erfolgreich geladene Modelle werden zwischengespeichert und bleiben in den Einstellungen auch offline sichtbar.
-- **Sprecherlabels fehlen:** Prüfe, ob die **Sprechererkennung** vor der Live-Sitzung oder Datei-Transkription aktiv war und ob Meta Sprecherinformationen geliefert hat.
+- **Sprecherlabels fehlen:** Prüfe, ob die **Sprechererkennung** vor der Aufnahme oder Datei-Transkription aktiv war und ob Meta Sprecherinformationen geliefert hat.
 - **Übersetzung schlägt fehl:** Muse Voice Transcribe stellt über dieses Add-on keine Übersetzung bereit.
 
 ## Cloud-Verarbeitung und Datenschutz

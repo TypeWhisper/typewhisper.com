@@ -1,7 +1,7 @@
 ---
 familySlug: "cohere-local"
 platform: "windows"
-version: "1.2.4"
+version: "1.2.6"
 description: "Cohere Transcribe 03-2026 offline on your PC through a managed CrispASR runtime, on the CPU or a GPU with CUDA or Vulkan."
 id: "com.typewhisper.cohere-transcribe"
 minAppVersion: "1.1.0"
@@ -17,12 +17,13 @@ highlights:
   - "Live preview while you speak, with the final text after you stop"
   - "Processing on the CPU, an NVIDIA GPU with CUDA, or a GPU with Vulkan"
   - "Model and runtime downloads checked against pinned SHA-256 values"
+  - "The CrispASR runtime brings its own Visual C++ runtime, so the model also loads on PCs without the Visual C++ Redistributable"
 configuration:
   - "Optionally enter a Hugging Face token and select Save token"
   - "Select Download model for Cohere Transcribe 2B (Q5_0) or another size, then Use model"
   - "Choose the Processing device for the next model load and select Save settings"
   - "Use Unload and remove selected model to delete the selected model's files"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.CohereTranscribe"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.2.4"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-win/releases/tag/plugin-cohere-transcribe-v1.2.6"
 processing: "local"
 ---

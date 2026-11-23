@@ -2,7 +2,7 @@
 slug: apple-speech
 name: Apple Speech
 author: TypeWhisper
-version: "1.0.15"
+version: "1.0.16"
 icon: Mic
 brandLogo: apple
 description: Native Transkription auf dem Gerät mit Apples Speech-Framework und Echtzeit-Streaming-Ergebnissen.
@@ -14,9 +14,9 @@ source: built-in
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/SpeechAnalyzerPlugin
 featured: false
 id: "com.typewhisper.speechanalyzer"
-minAppVersion: "0.12.0"
+minAppVersion: "1.8.0"
 minOsVersion: "26.0"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-speechanalyzer-v1.0.15"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-speechanalyzer-v1.0.16"
 screenshotAlt: "Einstellungen von Apple Speech in TypeWhisper für macOS: eine durchsuchbare Liste von Sprachen, jede mit der Schaltfläche „Auswählen“"
 ---
 
@@ -35,6 +35,8 @@ Apple Speech nutzt Apples natives Speech-Framework für vollständig lokale Spra
 ## Transkriptionsmodelle
 
 Modelle werden automatisch vom System verwaltet - ein Modell pro Sprache, bei Bedarf heruntergeladen.
+
+Beim Start von TypeWhisper wird die zuletzt gewählte Sprache nur wiederhergestellt, wenn ihr Modell schon installiert ist; beim Start wird nichts heruntergeladen. Steht **Modell automatisch entladen** auf **Sofort**, zeigt die gewählte Sprache **Wird bei Bedarf geladen** statt eines Häkchens, weil das Modell für jede Transkription geladen und direkt danach entladen wird.
 
 ## Konfiguration
 

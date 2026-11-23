@@ -34,23 +34,42 @@ Source: [Reson8 documentation](https://docs.reson8.dev/)
 - Real-time WebSocket streaming with REST fallback
 - API key validation in the plugin settings
 - Secure API key storage through TypeWhisper plugin secrets
-- Default Reson8 model plus custom models fetched from the API
-- A single language from the TypeWhisper language selection; when multiple languages are selected, TypeWhisper uses the first supported language, and Reson8 auto-detects when no language is selected
+- Default Reson8 model plus custom models fetched from the API; on Mac also the other models Reson8 lists, such as Rumble-2-Flash, and your pattern sets
+- A single language from the TypeWhisper language selection, or automatic detection by Reson8 when no language is selected; on Mac, several selected languages limit Reson8's detection to them
+- On Mac: filler word control, speaker diarization for recordings and files, dictionary terms as phrases or in a custom model, and pattern sets
+- On Mac: toggle dictations can end sooner when Reson8 reports that you finished speaking
 - Advanced fields for custom base URLs and custom auth headers
 - No translation support
+
+## Models on Mac
+
+The macOS add-on 1.1.0 and later fills the **Model** picker with the models Reson8 offers your API key. It loads the list once each time you open the settings, and **Refresh** loads it again. After the default model come the other models Reson8 lists, such as **Rumble-2-Flash**, then your custom models and your pattern sets. Custom models and pattern sets run on the default model. The languages of each model come from Reson8.
+
+The default model streams while you speak. Rumble-2-Flash transcribes finished audio only and takes no filler word setting, speaker diarization, dictionary terms or patterns. The settings hide what the selected model does not support, and a note under the picker names it.
 
 ## Transcription
 
 | Mode | Behavior |
 | --- | --- |
-| Live transcription | Streams PCM audio to Reson8 over WebSocket and emits interim text while audio is processed. |
+| Live transcription | Streams PCM audio to Reson8 over WebSocket and emits interim text while audio is processed. On Mac, dictations with a model that streams go to Reson8's realtime endpoint while you speak. |
 | REST fallback | Sends recorded audio to the pre-recorded Reson8 endpoint when streaming fails or is not used. |
-| Language | Sends one language to Reson8. When multiple TypeWhisper languages are selected, the first supported language is used; with no language selected, Reson8 auto-detects. |
+| Recordings and files (Mac) | The Recorder, file transcriptions and dictations without live preview use the prerecorded endpoint by default, at 1 credit per minute. **Realtime** under **Advanced** costs 2 credits per minute and shows the text while it arrives. A prerecorded request takes up to five minutes of audio, so longer recordings are sent in parts. |
+| Speaker diarization (Mac) | Labels who spoke when in recordings and file transcriptions, up to eight speakers. Since the macOS add-on 1.2.1, dictations do not ask Reson8 for speaker labels. |
+| Language | Sends one language to Reson8, or no language, and Reson8 auto-detects. On Mac, several selected TypeWhisper languages go to Reson8 as a list that limits its detection to them. |
 
 ## Configuration
 
+On Mac, the settings offer:
+
 - **API Key** - Paste a Reson8 API key and wait for the plugin to show **Valid API Key**.
-- **Model** - Use the default Reson8 dictation model or refresh custom models available to the API key.
+- **Model** - Choose one of the models, custom models or pattern sets. **Refresh** reloads the list.
+- **Filler words** - **Natural** (the default) gives the model no instruction, so filler words such as "um" may appear in some places and be left out in others. **Clean** leaves them out, which suits dictation and notes. **Verbatim** transcribes them as spoken, for example for interviews.
+- **Speaker diarization** - Reson8 labels who spoke when, up to eight speakers; **Maximum speakers** is **Automatic** or a fixed number. With **Detect Speakers** on, recordings and file transcriptions use these labels instead of detecting speakers on the Mac. Dictated text stays without labels. While this is on, transcripts appear once the whole recording is done, and recordings longer than five minutes are labeled in five-minute parts, so one person can appear under several numbers.
+- **End dictation when you finish speaking** - With **Stop recording after silence** on, Reson8 recognizes when you finished a thought, and a toggle dictation then stops after half the silence duration, at least one second. A pause in the middle of a sentence still waits the full duration. While this is on, the live preview shows your words at pauses rather than while you speak. Available from the macOS add-on 1.2.0.
+- **Keep dictionary in a custom model** - TypeWhisper keeps your dictionary terms in a custom model named "TypeWhisper Dictionary" in your Reson8 account and updates it when the dictionary changes. Reson8 then takes up to 50,000 terms instead of 250 per request. The model replaces a custom model configured on your API client; with a custom model selected as the model, the terms go as phrases.
+- **Patterns** - **Add pattern set** creates a named set with one pattern per line, for structured tokens such as order codes, reference numbers or licence plates. `[0-9]` is a digit, `[A-Z]` a letter, `{n}` or `{m,n}` repeats what comes before, `(…)?` marks an optional part, for example `AMZ[0-9]{6}`. **Check with Reson8** tests the patterns. Each set appears as a model, so a profile or workflow can use it where such tokens are spoken; Reson8 advises against applying patterns everywhere. Patterns replace dictionary terms and do not work with an API client that has a custom model configured.
+- **Advanced > Recordings and files** - **Prerecorded** or **Realtime** for the Recorder, file transcriptions and dictations without live preview. Dictations with live preview stream either way.
+- **Advanced > Bias strength** - How strongly custom models and dictionary terms steer recognition, from 0 to 1. Higher values recover these terms more often, but can also turn similar-sounding words into them. The default is 0.45.
 - **Custom Base URL** - Override the default `https://api.reson8.dev` endpoint for gateways or proxies.
 - **Custom Auth Header** - Override the default `Authorization` header when a proxy expects a different header name.
 
@@ -60,5 +79,5 @@ Source: [Reson8 documentation](https://docs.reson8.dev/)
 2. Generate an API key.
 3. In TypeWhisper, open **Settings > Discover plugins** and install **Reson8**. The add-on then appears in the Settings sidebar, and its page opens.
 4. Paste the API key and wait for validation.
-5. Optionally refresh custom models or configure advanced gateway settings.
+5. Choose a model and the options you need, or configure advanced gateway settings.
 6. Select Reson8 as your transcription engine in Settings or in a profile.

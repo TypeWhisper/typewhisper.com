@@ -31,18 +31,31 @@ Claude adds Anthropic's LLM capabilities to TypeWhisper for custom prompts and t
 - API keys stored securely in the macOS Keychain
 - Model picker in plugin settings
 - Usable as the LLM provider for prompt-based workflows
+- Reasoning effort per model on Mac, for example Low for Claude Opus 4.8
+- Prompt caching on Mac, so repeated requests with the same prompt cost less
 
 ## LLM Models
 
-| Model | ID |
-| --- | --- |
-| Claude Sonnet 4.6 | `claude-sonnet-4-6` |
-| Claude Opus 4.6 | `claude-opus-4-6` |
-| Claude Haiku 4.5 | `claude-haiku-4-5` |
+The model list comes from your Anthropic account. On Mac, the add-on offers these models until the list has loaded, and it loads the list again when it is older than 24 hours:
+
+| Model | ID | Reasoning effort on Mac |
+| --- | --- | --- |
+| Claude Opus 4.8 | `claude-opus-4-8` | Low, Medium, High (default), X High, Maximum |
+| Claude Sonnet 5 | `claude-sonnet-5` | Low, Medium, High (default), X High, Maximum |
+| Claude Opus 4.7 | `claude-opus-4-7` | Low, Medium, High (default), X High, Maximum |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6` | Low, Medium, High (default), Maximum |
+| Claude Haiku 4.5 | `claude-haiku-4-5` | None |
+
+On Mac, the **Reasoning Effort** setting under **Advanced** picks how long a model thinks before it answers. Lower levels answer faster and use fewer output tokens. **Model Default** keeps the model's own level, and a workflow can pick its own level. For models from your account, the add-on takes the levels Anthropic lists. Models newer than Claude Opus 4.6 ignore a custom temperature, and so does every model while a reasoning effort is set.
+
+**Prompt Caching** keeps the system prompt at Anthropic for 5 minutes (the default) or 1 hour, or stays off. Anthropic caches only prompts of at least 512 to 4,096 tokens, depending on the model. Writing the cache costs 1.25 times (5 minutes) or 2 times (1 hour) the input price, reading it a tenth or less. **Retry declined requests on a fallback model** is on by default and applies to Claude Opus 5.5, Opus 5, Sonnet 5.5 and Fable 5.1: if Anthropic's safety checks decline a request, a fallback model answers it in the same call, billed at that model's rates. **Last Request** shows the model that answered and the input, output and cache tokens of the latest request.
+
+If a reply stops at the output token limit, is declined, or the text is too long for the model, TypeWhisper for Mac shows an error with the reason instead of inserting incomplete text.
 
 ## Configuration
 
 - **API Key** - Create an API key in the Anthropic Console on the Claude platform.
+- **Advanced** - On Mac: Reasoning Effort, Prompt Caching and Retry declined requests on a fallback model.
 
 ## Setup
 
@@ -50,3 +63,4 @@ Claude adds Anthropic's LLM capabilities to TypeWhisper for custom prompts and t
 2. Enter your Claude API key.
 3. Select a Claude model.
 4. Choose Claude as your LLM provider in a custom prompt.
+5. On Mac, open **Advanced** and choose a **Reasoning Effort** if the model offers one.

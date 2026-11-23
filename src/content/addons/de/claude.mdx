@@ -31,18 +31,31 @@ Claude bringt Anthropics LLM-Fähigkeiten in TypeWhisper für benutzerdefinierte
 - API-Schlüssel werden sicher im macOS Schlüsselbund gespeichert
 - LLM-Modellauswahl in den Plugin-Einstellungen
 - Nutzbar als LLM-Anbieter für promptbasierte Workflows
+- Denkaufwand pro Modell auf dem Mac, zum Beispiel Niedrig für Claude Opus 4.8
+- Prompt-Caching auf dem Mac, damit wiederholte Anfragen mit demselben Prompt weniger kosten
 
 ## LLM-Modelle
 
-| Modell | ID |
-| --- | --- |
-| Claude Sonnet 4.6 | `claude-sonnet-4-6` |
-| Claude Opus 4.6 | `claude-opus-4-6` |
-| Claude Haiku 4.5 | `claude-haiku-4-5` |
+Die Modellliste kommt aus deinem Anthropic-Konto. Auf dem Mac bietet das Add-on diese Modelle an, bis die Liste geladen ist, und lädt die Liste neu, wenn sie älter als 24 Stunden ist:
+
+| Modell | ID | Denkaufwand auf dem Mac |
+| --- | --- | --- |
+| Claude Opus 4.8 | `claude-opus-4-8` | Niedrig, Mittel, Hoch (Standard), Sehr hoch, Maximum |
+| Claude Sonnet 5 | `claude-sonnet-5` | Niedrig, Mittel, Hoch (Standard), Sehr hoch, Maximum |
+| Claude Opus 4.7 | `claude-opus-4-7` | Niedrig, Mittel, Hoch (Standard), Sehr hoch, Maximum |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6` | Niedrig, Mittel, Hoch (Standard), Maximum |
+| Claude Haiku 4.5 | `claude-haiku-4-5` | Keiner |
+
+Auf dem Mac legt die Einstellung „Denkaufwand“ unter „Erweitert“ fest, wie lange ein Modell nachdenkt, bevor es antwortet. Niedrigere Stufen antworten schneller und verbrauchen weniger Ausgabe-Tokens. „Modellstandard“ behält die Stufe des Modells bei, und ein Workflow kann seine eigene Stufe wählen. Für Modelle aus deinem Konto übernimmt das Add-on die Stufen, die Anthropic angibt. Modelle, die neuer als Claude Opus 4.6 sind, ignorieren eine eigene Temperatur, ebenso jedes Modell, solange ein Denkaufwand eingestellt ist.
+
+„Prompt-Caching“ hält den Systemprompt 5 Minuten (Standard) oder 1 Stunde bei Anthropic vor oder bleibt aus. Anthropic speichert nur Prompts ab 512 bis 4.096 Tokens zwischen, je nach Modell. Das Schreiben des Caches kostet das 1,25-Fache (5 Minuten) oder das 2-Fache (1 Stunde) des Eingabepreises, das Lesen ein Zehntel oder weniger. „Abgelehnte Anfragen mit einem Ersatzmodell wiederholen“ ist standardmäßig an und gilt für Claude Opus 5.5, Opus 5, Sonnet 5.5 und Fable 5.1: Lehnt Anthropics Sicherheitsprüfung eine Anfrage ab, beantwortet sie ein Ersatzmodell im selben Aufruf, abgerechnet zu dessen Preisen. „Letzte Anfrage“ zeigt das Modell, das geantwortet hat, und die Eingabe-, Ausgabe- und Cache-Tokens der letzten Anfrage.
+
+Bricht eine Antwort am Ausgabe-Token-Limit ab, lehnt Claude sie ab oder ist der Text zu lang für das Modell, zeigt TypeWhisper für Mac einen Fehler mit dem Grund, statt unvollständigen Text einzufügen.
 
 ## Konfiguration
 
 - **API-Schlüssel** - Erstelle einen API-Schlüssel in der Anthropic Console auf der Claude-Plattform.
+- **Erweitert** - Auf dem Mac: Denkaufwand, Prompt-Caching und Abgelehnte Anfragen mit einem Ersatzmodell wiederholen.
 
 ## Einrichtung
 
@@ -50,3 +63,4 @@ Claude bringt Anthropics LLM-Fähigkeiten in TypeWhisper für benutzerdefinierte
 2. Gib deinen Claude API-Schlüssel ein.
 3. Wähle ein Claude-Modell.
 4. Wähle Claude als LLM-Anbieter in einem benutzerdefinierten Prompt.
+5. Öffne auf dem Mac **Erweitert** und wähle einen **Denkaufwand**, wenn das Modell einen anbietet.

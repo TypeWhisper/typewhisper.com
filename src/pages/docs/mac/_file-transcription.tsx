@@ -1,4 +1,9 @@
-import { DocsCallout, DocsFigure, DocsSection } from "@/components/docs/prose";
+import {
+  DocsCallout,
+  DocsFigure,
+  DocsSection,
+  withCode,
+} from "@/components/docs/prose";
 import { screenshotPath, t, type Locale } from "@/i18n/index";
 
 export default function DocsMacFileTranscription({
@@ -35,6 +40,7 @@ export default function DocsMacFileTranscription({
       >
         <p>{t(locale, "docs.mac.fileTranscription.output.desc1")}</p>
         <p>{t(locale, "docs.mac.fileTranscription.output.desc2")}</p>
+        <p>{withCode(t(locale, "docs.mac.fileTranscription.output.desc3"))}</p>
       </DocsSection>
 
       <DocsSection

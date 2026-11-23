@@ -34,23 +34,42 @@ Quelle: [Reson8-Dokumentation](https://docs.reson8.dev/)
 - Echtzeit-WebSocket-Streaming mit REST-Fallback
 - API-Key-Validierung in den Plugin-Einstellungen
 - Sichere API-Key-Speicherung über TypeWhisper Plugin-Secrets
-- Standardmodell von Reson8 plus eigene Modelle, die über die API geladen werden
-- Eine einzelne Sprache aus der TypeWhisper-Sprachauswahl; bei mehreren ausgewählten Sprachen verwendet TypeWhisper die erste unterstützte Sprache, ohne Auswahl erkennt Reson8 automatisch
+- Standardmodell von Reson8 plus eigene Modelle, die über die API geladen werden; auf dem Mac auch die weiteren Modelle, die Reson8 anbietet, etwa Rumble-2-Flash, und deine Mustergruppen
+- Eine einzelne Sprache aus der TypeWhisper-Sprachauswahl oder automatische Erkennung durch Reson8, wenn keine Sprache ausgewählt ist; auf dem Mac beschränken mehrere ausgewählte Sprachen die Erkennung von Reson8 auf diese Sprachen
+- Auf dem Mac: Füllwort-Einstellung, Sprechererkennung für Aufnahmen und Dateien, Wörterbuchbegriffe als Phrasen oder in einem eigenen Modell sowie Mustergruppen
+- Auf dem Mac: Diktate im Umschaltmodus können früher enden, wenn Reson8 meldet, dass du fertig gesprochen hast
 - Erweiterte Felder für eigene Basis-URLs und eigene Auth-Header
 - Keine Übersetzungsunterstützung
+
+## Modelle auf dem Mac
+
+Ab dem macOS-Add-on 1.1.0 füllt sich die Auswahl **Modell** mit den Modellen, die Reson8 für deinen API-Key anbietet. Das Add-on lädt die Liste jedes Mal, wenn du die Einstellungen öffnest, und **Aktualisieren** lädt sie erneut. Nach dem Standardmodell folgen die weiteren Modelle von Reson8, etwa **Rumble-2-Flash**, dann deine eigenen Modelle und deine Mustergruppen. Eigene Modelle und Mustergruppen laufen auf dem Standardmodell. Welche Sprachen ein Modell kann, gibt Reson8 vor.
+
+Das Standardmodell streamt, während du sprichst. Rumble-2-Flash transkribiert nur fertige Aufnahmen und nimmt keine Füllwort-Einstellung, Sprechererkennung, Wörterbuchbegriffe oder Muster an. Die Einstellungen blenden aus, was das gewählte Modell nicht unterstützt, und ein Hinweis unter der Auswahl nennt es.
 
 ## Transkription
 
 | Modus | Verhalten |
 | --- | --- |
-| Live-Transkription | Streamt PCM-Audio per WebSocket an Reson8 und gibt Zwischentext aus, während Audio verarbeitet wird. |
+| Live-Transkription | Streamt PCM-Audio per WebSocket an Reson8 und gibt Zwischentext aus, während Audio verarbeitet wird. Auf dem Mac gehen Diktate mit einem Modell, das streamt, beim Sprechen an den Echtzeit-Endpunkt von Reson8. |
 | REST-Fallback | Sendet aufgezeichnetes Audio an den pre-recorded Reson8-Endpunkt, wenn Streaming fehlschlägt oder nicht genutzt wird. |
-| Sprache | Gibt eine einzelne Sprache an Reson8 weiter. Bei mehreren ausgewählten TypeWhisper-Sprachen wird die erste unterstützte Sprache verwendet; ohne Sprachauswahl erkennt Reson8 automatisch. |
+| Aufnahmen und Dateien (Mac) | Der Recorder, Dateitranskriptionen und Diktate ohne Live-Vorschau nutzen standardmäßig den Endpunkt für vorab aufgenommenes Audio, für 1 Credit pro Minute. **Echtzeit** unter **Erweitert** kostet 2 Credits pro Minute und zeigt den Text, während er eintrifft. Eine Anfrage an den Endpunkt für vorab aufgenommenes Audio nimmt bis zu fünf Minuten, längere Aufnahmen gehen deshalb in Teilen an Reson8. |
+| Sprechererkennung (Mac) | Kennzeichnet in Aufnahmen und Dateitranskriptionen, wer wann gesprochen hat, bis zu acht Sprecher. Seit dem macOS-Add-on 1.2.1 fragen Diktate bei Reson8 keine Sprecherkennzeichnung an. |
+| Sprache | Gibt eine Sprache an Reson8 weiter oder keine, dann erkennt Reson8 automatisch. Auf dem Mac gehen mehrere ausgewählte TypeWhisper-Sprachen als Liste an Reson8, die seine Erkennung auf diese Sprachen beschränkt. |
 
 ## Konfiguration
 
-- **API-Key** - Füge einen Reson8-API-Key ein und warte, bis das Plugin **Gültiger API-Schlüssel** anzeigt.
-- **Modell** - Nutze das Standard-Diktatmodell von Reson8 oder aktualisiere eigene Modelle, die für den API-Key verfügbar sind.
+Auf dem Mac findest du diese Einstellungen:
+
+- **API-Schlüssel** - Füge einen Reson8-API-Key ein und warte, bis das Plugin **Gültiger API-Schlüssel** anzeigt.
+- **Modell** - Wähle eines der Modelle, eigenen Modelle oder Mustergruppen. **Aktualisieren** lädt die Liste neu.
+- **Füllwörter** - **Natürlich** (Standard) gibt dem Modell keine Vorgabe, daher können Füllwörter wie „äh“ an manchen Stellen erscheinen und an anderen fehlen. **Bereinigt** lässt sie weg, das passt zu Diktaten und Notizen. **Wörtlich** schreibt sie so mit, wie sie gesprochen werden, etwa für Interviews.
+- **Sprechererkennung** - Reson8 kennzeichnet, wer wann gesprochen hat, bis zu acht Sprecher; **Maximale Sprecherzahl** ist **Automatisch** oder eine feste Zahl. Ist **Sprecher erkennen** aktiv, verwenden Aufnahmen und Dateitranskriptionen diese Bezeichnungen, statt die Sprecher auf dem Mac zu erkennen. Diktierter Text bleibt ohne Bezeichnungen. Solange die Option aktiv ist, erscheinen Transkripte erst, wenn die ganze Aufnahme fertig ist, und Aufnahmen über fünf Minuten werden in Abschnitten von fünf Minuten gekennzeichnet, daher kann eine Person unter mehreren Nummern erscheinen.
+- **Diktat beenden, wenn du fertig gesprochen hast** - Ist **Aufnahme nach Stille beenden** aktiv, erkennt Reson8, wenn du einen Gedanken abgeschlossen hast, und ein Diktat im Umschaltmodus endet dann schon nach der halben Dauer der Stille, mindestens nach einer Sekunde. Eine Pause mitten im Satz wartet weiterhin die volle Dauer ab. Solange die Option aktiv ist, zeigt die Live-Vorschau deine Worte bei Pausen statt während du sprichst. Verfügbar ab dem macOS-Add-on 1.2.0.
+- **Wörterbuch in einem eigenen Modell führen** - TypeWhisper führt deine Wörterbuchbegriffe in einem eigenen Modell namens „TypeWhisper Dictionary“ in deinem Reson8-Konto und aktualisiert es, wenn sich das Wörterbuch ändert. Reson8 berücksichtigt dann bis zu 50.000 Begriffe statt 250 pro Anfrage. Das Modell ersetzt ein eigenes Modell, das für deinen API-Client eingerichtet ist; ist als Modell ein eigenes Modell ausgewählt, gehen die Begriffe als Phrasen mit.
+- **Muster** - **Mustergruppe hinzufügen** legt eine benannte Gruppe mit einem Muster pro Zeile an, für strukturierte Angaben wie Bestellnummern, Aktenzeichen oder Kennzeichen. `[0-9]` ist eine Ziffer, `[A-Z]` ein Buchstabe, `{n}` oder `{m,n}` wiederholt das Vorangehende, `(…)?` kennzeichnet einen optionalen Teil, zum Beispiel `AMZ[0-9]{6}`. **Bei Reson8 prüfen** testet die Muster. Jede Mustergruppe erscheint als Modell, sodass ein Profil oder Workflow sie dort nutzen kann, wo solche Angaben gesprochen werden; Reson8 rät davon ab, Muster überall zu verwenden. Muster ersetzen Wörterbuchbegriffe und funktionieren nicht mit einem API-Client, für den ein eigenes Modell eingerichtet ist.
+- **Erweitert > Aufnahmen und Dateien** - **Vorab aufgenommen** oder **Echtzeit** für den Recorder, Dateitranskriptionen und Diktate ohne Live-Vorschau. Diktate mit Live-Vorschau streamen in beiden Fällen.
+- **Erweitert > Biasstärke** - Wie stark eigene Modelle und Wörterbuchbegriffe die Erkennung lenken, von 0 bis 1. Höhere Werte erkennen diese Begriffe häufiger, können aber auch ähnlich klingende Wörter in sie verwandeln. Standard ist 0,45.
 - **Eigene Basis-URL** - Überschreibt den Standard-Endpunkt `https://api.reson8.dev` für Gateways oder Proxies.
 - **Eigener Auth-Header** - Überschreibt den Standard-Header `Authorization`, wenn ein Proxy einen anderen Headernamen erwartet.
 
@@ -60,5 +79,5 @@ Quelle: [Reson8-Dokumentation](https://docs.reson8.dev/)
 2. Generiere einen API-Key.
 3. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Reson8**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 4. Füge den API-Key ein und warte auf die Validierung.
-5. Aktualisiere optional eigene Modelle oder konfiguriere erweiterte Gateway-Einstellungen.
+5. Wähle ein Modell und die Optionen, die du brauchst, oder konfiguriere erweiterte Gateway-Einstellungen.
 6. Wähle Reson8 als Transkriptions-Engine in den Einstellungen oder in einem Profil.

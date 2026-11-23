@@ -10,7 +10,10 @@ categories:
 platforms:
   - mac
 source: official
+version: "1.0.8"
+minAppVersion: "1.8.0"
 sourceUrl: https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/LocalLLMPlugin
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-local-llm-mlx-v1.0.8"
 ---
 
 ## Über
@@ -25,6 +28,7 @@ Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen,
 - Optionaler HuggingFace-Token für höhere Download-Rate-Limits
 - Validierung des HuggingFace-Tokens vor dem Speichern
 - Download-, Lade-, Abbrechen- und Entladen-Zustände für lokale Modelle
+- Empfehlung eines Modells für diesen Mac anhand seines Arbeitsspeichers und eine Warnung, wenn ein Modell mehr Arbeitsspeicher braucht, als der Mac hat
 - Sichtbare experimentelle Modelle mit klaren Warnhinweisen
 - Kein API-Key für den lokalen Basis-Workflow erforderlich
 
@@ -34,14 +38,17 @@ Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen,
 | --- | --- | --- | --- |
 | Gemma 4 E2B (4-bit) | ~3.6 GB | 8 GB+ | Empfohlen |
 | Gemma 4 E4B (4-bit) | ~5.2 GB | 16 GB+ | Empfohlen |
-| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Experimentell |
+| Gemma 4 E4B (8-bit) | ~8 GB | 16 GB+ | Unterstützt |
 | Gemma 4 26B-A4B (4-bit, MoE) | ~15.6 GB | 32 GB+ | Experimentell |
 | Qwen3.5 2B (4-bit) | ~1.8 GB | 8 GB+ | Experimentell |
 | LFM2.5 2.6B (4-bit) | ~1.6 GB | 8 GB+ | Experimentell |
 
 ## Welches Modell?
 
-- **Gemma 4 E2B oder E4B** liefert die zuverlässigsten Ergebnisse beim Bereinigen, Übersetzen und Umstrukturieren.
+Die Einstellungen empfehlen ein Modell für deinen Mac und markieren es mit **Empfohlen für diesen Mac**: Gemma 4 E2B (4-bit) auf einem Mac mit weniger als 16 GB Arbeitsspeicher, Gemma 4 E4B (4-bit) ab 16 GB. Braucht ein Modell mehr Arbeitsspeicher, als der Mac hat, erscheint eine Warnung.
+
+- **Gemma 4 E2B oder E4B** liefert die zuverlässigsten Ergebnisse beim Bereinigen, Übersetzen und Umstrukturieren. E2B ist am schnellsten und passt für Bereinigung und kurze Texte, kommt mit Inline-Befehlen und Notizen aber weniger zuverlässig zurecht. E4B verbindet Tempo und Qualität für jeden Workflow.
+- **Gemma 4 E4B (8-bit)** ist etwas genauer als die 4-bit-Version, braucht aber mehr Arbeitsspeicher und läuft langsamer.
 - **Qwen3.5 2B** braucht etwa halb so viel Arbeitsspeicher wie Gemma 4 E2B und bereinigt Diktate gut, übersetzt und strukturiert Text aber weniger zuverlässig.
 - **LFM2.5 2.6B** denkt vor der Antwort nach, daher dauert jedes Ergebnis einige Sekunden. Es steht unter der LFM Open License, die kommerzielle Nutzung nur unter 10 Mio. USD Jahresumsatz kostenlos erlaubt.
 
@@ -49,7 +56,7 @@ Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen,
 
 - **Generation Temperature** - Steuert, ob die Ausgabe eher präzise oder kreativer ausfällt.
 - **HuggingFace Token** - Optional. Erhöht Download-Rate-Limits und wird vor dem Speichern validiert. Du kannst ihn unter `huggingface.co/settings/tokens` erstellen.
-- **Modell** - Wähle, welches Modell heruntergeladen und geladen werden soll. Die 4-bit-Modelle Gemma 4 `E2B` und `E4B` sind der empfohlene Pfad.
+- **Modell** - Wähle, welches Modell heruntergeladen und geladen werden soll. Die Einstellungen nennen das empfohlene Modell für diesen Mac. Entlädt TypeWhisper Modelle direkt nach jeder Nutzung, zeigt die Modellzeile `Wird bei Bedarf geladen` statt eines Laden-Buttons.
 
 ## Einrichtung
 
@@ -61,5 +68,6 @@ Local LLM (MLX) verarbeitet Prompts vollständig auf deinem Mac. Umschreibungen,
 ## Hinweise
 
 - Wenn du noch das bisherige Gemma-4-Plugin installiert hast, installiere Local LLM (MLX), lade dein Modell erneut herunter und entferne danach das Gemma-4-Plugin. Workflows und Prompts, die Gemma 4 genutzt haben, wechseln zu Local LLM (MLX), sobald das alte Plugin entfernt ist.
-- Größere Gemma-4-Varianten sind weiterhin experimentell und können je nach Hardware oder aktuellem App-Build fehlschlagen.
+- Gemma 4 26B-A4B ist weiterhin experimentell und lässt sich je nach Hardware oder aktuellem App-Build eventuell nicht laden.
+- Version 1.0.8 behält die Leerzeichen, die Gemma-Modelle vor Satzzeichen schreiben, sodass `x != y` nicht mehr zu `x!= y` wird.
 - Ein HuggingFace-Token ist optional, kann Downloads aber durch höhere Rate-Limits stabiler machen.

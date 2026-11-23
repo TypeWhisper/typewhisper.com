@@ -76,8 +76,8 @@ const pluginHosts: Array<[plugin: string, en: string, de: string]> = [
   ["Meta", "`api.meta.ai`", ""],
   [
     "Microsoft AI",
-    "The configured Azure resource: `*.cognitiveservices.azure.com` or `<region>.api.cognitive.microsoft.com`",
-    "Die konfigurierte Azure-Ressource: `*.cognitiveservices.azure.com` oder `<region>.api.cognitive.microsoft.com`",
+    "The configured Azure resource and the optional backup endpoint: `*.cognitiveservices.azure.com` or `<region>.api.cognitive.microsoft.com`",
+    "Die konfigurierte Azure-Ressource und der optionale Ausweich-Endpunkt: `*.cognitiveservices.azure.com` oder `<region>.api.cognitive.microsoft.com`",
   ],
   ["Mistral AI", "`api.mistral.ai`", ""],
   [

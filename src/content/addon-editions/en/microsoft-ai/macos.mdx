@@ -1,13 +1,13 @@
 ---
 familySlug: "microsoft-ai"
 platform: "mac"
-version: "1.0.0"
+version: "1.1.0"
 description: "Microsoft MAI Transcribe through Azure Speech, with language detection, dictionary biasing, transcript styles, segment timestamps, and optional speaker diarization."
 id: "com.typewhisper.microsoft-ai"
-minAppVersion: "1.7.0"
+minAppVersion: "1.8.3"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.7.0 or newer"
+  - "TypeWhisper 1.8.3 or newer"
   - "macOS 14.0 or newer"
   - "An Azure Speech resource in a supported MAI region and its API key"
 highlights:
@@ -17,14 +17,18 @@ highlights:
   - "Clean and Verbatim transcript styles"
   - "Segment timestamps and optional speaker labels with MAI Transcribe 2"
   - "Foundry model discovery with a cached local fallback catalog"
+  - "Optional backup endpoint in another region that takes over right away when the first region refuses a request"
+  - "Speaker labels for recordings, file transcriptions, watch folders and the HTTP API; dictations are sent without diarization"
+  - "Recordings longer than one hour are transcribed in parts of up to one hour"
 configuration:
   - "Save an Azure Speech endpoint or resource name and API key in the macOS Keychain"
   - "Choose MAI Transcribe 2 or a compatible discovered model"
   - "Refresh the Microsoft Foundry model catalog when needed"
   - "Choose Clean or Verbatim transcript style"
   - "Enable speaker diarization when MAI Transcribe 2 should label speakers"
+  - "Optionally save a backup endpoint with its own API key"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/MicrosoftAIPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-microsoft-ai-v1.0.0"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-microsoft-ai-v1.1.0"
 screenshots:
   - src: "/screenshots/plugins/microsoft-ai.png"
     caption: "Azure Speech endpoint and Keychain-backed API key, MAI Transcribe model, transcript style, and speaker diarization."
@@ -34,11 +38,11 @@ processing: "cloud"
 
 ## Availability
 
-Microsoft AI 1.0.0 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-microsoft-ai-v1.0.0). It requires TypeWhisper 1.7.0 and macOS 14 or newer. Microsoft currently marks MAI Transcribe in Azure Speech as a preview feature.
+Microsoft AI 1.1.0 is available as a [TypeWhisper for macOS plugin release](https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-microsoft-ai-v1.1.0). It requires TypeWhisper 1.8.3 and macOS 14 or newer. Microsoft currently marks MAI Transcribe in Azure Speech as a preview feature.
 
 ## What the macOS add-on does
 
-The add-on provides one cloud transcription engine: **Microsoft AI (MAI Transcribe)**. When a microphone recording ends or an audio file is submitted, TypeWhisper normalizes it to WAV and sends it to the connected Azure Speech resource. The response can contain detected language, text segments, timing, and speaker metadata.
+The add-on provides one cloud transcription engine: **Microsoft AI (MAI Transcribe)**. When a microphone recording ends or an audio file is submitted, TypeWhisper normalizes it, encodes it as FLAC and sends it to the connected Azure Speech resource. The response can contain detected language, text segments, timing, and speaker metadata.
 
 This edition does not stream partial text and does not support translation, LLM workflows, or text-to-speech. Its built-in catalog contains **MAI Transcribe 2** and **MAI Transcribe 1.5**. A successful refresh adds compatible MAI models returned by Microsoft Foundry and caches them locally.
 
@@ -53,19 +57,21 @@ This edition does not stream partial text and does not support translation, LLM 
 | **Model** | Selects MAI Transcribe 2 by default, MAI Transcribe 1.5 as a fallback, or another compatible discovered model. |
 | **Refresh icon** | Requests the Foundry model catalog through the saved Azure endpoint. Built-in and cached models remain available if refreshing fails. |
 | **Transcript style** | **Clean** removes fillers for readability. **Verbatim** preserves filler words, false starts, and self-corrections. |
-| **Speaker diarization** | Requests speaker labels for MAI Transcribe 2. The control is disabled for MAI Transcribe 1.5. |
+| **Speaker diarization** | Requests speaker labels for MAI Transcribe 2 in recordings, file transcriptions, watch folders and the HTTP API. Dictations are sent without diarization, because dictated text never shows speaker labels. The control is disabled for MAI Transcribe 1.5. |
+| **Backup endpoint** | Optional. An endpoint or resource name in another region and its **Backup API key**. When the first endpoint answers with HTTP 429 or a 5xx status or does not answer in time, TypeWhisper sends the same request to the backup right away, without waiting for the first region's Retry-After. Only when both fail does Automatic Fallback take over. **Save backup endpoint** stores it, **Remove** deletes it. The section appears once a connection is saved. |
 
-The settings warn when a recognizable regional endpoint is outside East US, North Europe, Southeast Asia, or West US.
+The settings warn when a recognizable regional endpoint, also the backup endpoint, is outside Central India, East US, North Europe, Southeast Asia, West US, or West US 2.
 
 ## Setup tutorial
 
-1. Update TypeWhisper. The add-on needs 1.7.0 or newer; the steps below show TypeWhisper 1.8.
-2. In the Azure portal, create a Microsoft Foundry resource for Speech in `eastus`, `northeurope`, `southeastasia`, or `westus`.
+1. Update TypeWhisper. The add-on needs 1.8.3 or newer.
+2. In the Azure portal, create a Microsoft Foundry resource for Speech in `centralindia`, `eastus`, `northeurope`, `southeastasia`, `westus`, or `westus2`.
 3. From the resource, copy the Speech endpoint or resource name and one API key.
 4. In TypeWhisper, open **Settings > Discover plugins** and install **Microsoft AI**. The add-on then appears in the Settings sidebar, and its page opens.
 5. Enter the endpoint and API key, then select **Save connection**.
 6. Keep **MAI Transcribe 2** selected, choose a transcript style, and enable speaker diarization only if needed.
-7. Select Microsoft AI as the transcription engine in a profile and make a short test recording.
+7. Optionally, enter a Speech resource in another region under **Backup endpoint** and select **Save backup endpoint**.
+8. Select Microsoft AI as the transcription engine in a profile and make a short test recording.
 
 ## Use MAI Transcribe
 
@@ -73,19 +79,20 @@ The settings warn when a recognizable regional endpoint is outside East US, Nort
 2. Choose one input language when you know it with certainty. Leave language selection automatic for detection or code-switched audio.
 3. Add product names, people, acronyms, and specialist vocabulary to the TypeWhisper dictionary. The plugin sends at most 500 terms and 20,000 total characters as phrase-list hints.
 4. Use **Clean** for readable notes or captions; use **Verbatim** when the precise spoken form matters.
-5. Enable speaker diarization before recording or importing multi-speaker audio. This setting requires MAI Transcribe 2.
+5. Enable speaker diarization before recording or importing multi-speaker audio. This setting requires MAI Transcribe 2 and applies to recordings and files, not to dictations.
 6. Check the completed result after Azure returns it; no partial transcript appears while the recording is still running.
 
 With MAI Transcribe 2, TypeWhisper requests segment timestamps. When Azure returns speaker information, the structured result keeps the label on each segment and the displayed text uses lines such as `Speaker 1: ...`.
 
 ## Audio limits
 
-The macOS plugin accepts normalized WAV audio up to two hours and up to 300 MB. Larger input is rejected before the upload. Each Azure request has a three-minute network timeout; that timeout does not change the two-hour recording limit.
+Version 1.1.0 no longer rejects recordings over two hours or 300 MB. It uploads FLAC, about half the size of WAV, and sends recordings longer than one hour in parts of up to one hour. Each part numbers its speakers on its own, so one person can appear under several numbers in a long recording. Each Azure request has a three-minute network timeout.
 
 ## Troubleshooting
 
 - **The connection cannot be saved:** Use an HTTPS Azure Speech endpoint without an extra path, query, user information, or fragment. You can also enter only the resource name.
-- **MAI Transcribe is unavailable in this region:** Create or use a Speech resource in East US, North Europe, Southeast Asia, or West US.
+- **MAI Transcribe is unavailable in this region:** Create or use a Speech resource in Central India, East US, North Europe, Southeast Asia, West US, or West US 2.
+- **The first region refuses requests for lack of capacity:** Save a Speech resource in another of these regions as the **Backup endpoint**.
 - **Foundry catalog unavailable:** The connected Speech resource may not expose the model-catalog endpoint. MAI Transcribe 2 and 1.5 remain available locally.
 - **No speaker labels appear:** Select MAI Transcribe 2, enable diarization before transcription, and confirm that Azure returned speaker metadata.
 - **Translation fails:** The plugin intentionally rejects translate-to-English requests because MAI Transcribe does not support translation through this integration.

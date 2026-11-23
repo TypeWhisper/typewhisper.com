@@ -49,6 +49,8 @@ Google Cloud Speech-to-Text ergänzt TypeWhisper um eine Cloud-Transkriptions-En
 - **Modell** - Wähle ein Erkennungsmodell. Verwende `default` oder `command_and_search` für die breiteste Sprachabdeckung.
 - **Standardsprache** - Ein BCP-47-Sprachcode (z.B. `en-US`, `de-DE`), der verwendet wird, wenn TypeWhisper keine gesprochene Sprache übergibt.
 
+Google Cloud Speech-to-Text erkennt die gesprochene Sprache nicht selbst. Auf dem Mac kann seit Version 1.1.0 das Add-on **Language Detection** sie wählen, wenn du die automatische Erkennung oder mehrere Sprachen auswählst: Es wählt aus den Sprachen von Google, mit der Region deiner Standardsprache, wenn die Sprache passt. Ist Language Detection unsicher oder nicht aktiviert, bekommt Google die Standardsprache. Dafür brauchst du TypeWhisper 1.8.1 oder neuer.
+
 ## Einrichtung
 
 1. Aktiviere die Cloud Speech-to-Text API in deinem Google Cloud Projekt.

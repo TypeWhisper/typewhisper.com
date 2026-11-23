@@ -1,23 +1,26 @@
 ---
 familySlug: "cohere-local"
 platform: "mac"
-version: "1.0.1"
+version: "1.1.0"
 description: "Local Cohere Transcribe models through GGUF and Metal on Apple silicon."
 id: "com.typewhisper.cohere-transcribe"
-minAppVersion: "1.6.0"
+minAppVersion: "1.8.1"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 1.6.0 or newer"
+  - "TypeWhisper 1.8.1 or newer"
   - "macOS 14.0 or newer"
 highlights:
   - "Local speech-to-text processing"
   - "Processing without uploading audio or text"
   - "Model or runtime downloads managed by TypeWhisper"
   - "Four GGUF quantizations from Q4_K through Q8_0"
+  - "The quantizations are listed one below another, each with its own Download & Load, Unload and Remove Model buttons and a download progress bar"
+  - "Free disk space check before a download"
+  - "With automatic language detection, the Language Detection add-on picks one of the 14 languages; without it, or when it is unsure, the first of your preferred macOS languages that Cohere supports is used"
 configuration:
   - "Optionally store a Hugging Face token for more reliable model downloads"
   - "Choose, download, and manage the local model"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CohereLocalPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.0.1"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cohere-transcribe-v1.1.0"
 processing: "local"
 ---

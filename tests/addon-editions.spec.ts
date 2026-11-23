@@ -47,9 +47,9 @@ test.describe("add-on platform editions", () => {
         'source[srcset="/screenshots/en/plugins/microsoft-ai.webp"]',
       ),
     ).toHaveCount(1);
-    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.1.0", { exact: true })).toBeVisible();
     await expect(page.locator("body")).toContainText(
-      "up to two hours and up to 300 MB",
+      "in parts of up to one hour",
     );
     await expect(page.locator("body")).toContainText(
       "does not stream partial text",
@@ -154,7 +154,7 @@ test.describe("add-on platform editions", () => {
     const macCard = page.locator(
       '[data-testid="addon-edition-card"][data-platform="mac"]',
     );
-    await expect(macCard.getByText("v1.0.0", { exact: true })).toBeVisible();
+    await expect(macCard.getByText("v1.1.0", { exact: true })).toBeVisible();
 
     await expect(
       page.locator('[data-testid="addon-edition-card"][data-platform="ios"]'),
@@ -192,7 +192,7 @@ test.describe("add-on platform editions", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: "Setup tutorial" }),
     ).toBeVisible();
-    await expect(page.getByText("1.0.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.1.0", { exact: true })).toBeVisible();
 
     await page.goto("/de/addons/meta/macos/");
     await expect(
@@ -329,7 +329,7 @@ test.describe("add-on platform editions", () => {
     await expect(page.locator("body")).toContainText(
       "Safe variants reported for the selected model become its available effort levels on macOS.",
     );
-    await expect(page.getByText("1.1.0", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.1.1", { exact: true })).toBeVisible();
     await expectNoHorizontalOverflow();
 
     await page.goto("/de/addons/authenticated-cli/macos/");
@@ -380,7 +380,7 @@ test.describe("add-on platform editions", () => {
       page.getByRole("heading", { level: 1, name: "Cohere für macOS" }),
     ).toBeVisible();
     await expect(page.getByText("Cloud-Transkription über Cohere Transcribe")).toBeVisible();
-    await expect(page.getByText("1.0.4", { exact: true })).toBeVisible();
+    await expect(page.getByText("1.0.6", { exact: true })).toBeVisible();
     await expect(
       page.locator('img[src="/screenshots/de/plugins/cohere.png"]'),
     ).toBeVisible();
