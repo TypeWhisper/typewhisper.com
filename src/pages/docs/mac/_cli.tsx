@@ -18,6 +18,8 @@ interface Command {
   output?: string;
   /** The command ships with TypeWhisper 1.8. */
   since18?: boolean;
+  /** The command ships with TypeWhisper 1.8.2. */
+  since182?: boolean;
   /** The section of the HTTP API page that documents the same routes. */
   api?: { anchor: string; titleKey: string };
 }
@@ -123,6 +125,16 @@ Sound feedback: on`,
     since18: true,
     api: { anchor: "audio-settings", titleKey: "docs.mac.api.audio.title" },
   },
+  {
+    id: "completions",
+    name: "completions",
+    key: "docs.mac.cli.commands.completions",
+    code: `eval "$(typewhisper completions zsh)"
+eval "$(typewhisper completions bash)"
+mkdir -p ~/.config/fish/completions
+typewhisper completions fish > ~/.config/fish/completions/typewhisper.fish`,
+    since182: true,
+  },
 ];
 
 /** Flag, description, and whether the flag ships with TypeWhisper 1.8. */
@@ -214,6 +226,7 @@ fi`,
 export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
   // Features that ship with TypeWhisper 1.8 say so where they are described.
   const availableFrom18 = t(locale, "docs.mac.cli.availableFrom18");
+  const availableFrom182 = t(locale, "docs.mac.cli.availableFrom182");
 
   return (
     <>
@@ -240,6 +253,7 @@ export default function DocsMacCLI({ locale = "en" }: { locale?: Locale }) {
               <code>{command.name}</code>
             </DocsSubheading>
             {command.since18 && <p>{availableFrom18}</p>}
+            {command.since182 && <p>{availableFrom182}</p>}
             <p>{withCode(t(locale, command.key))}</p>
             <DocsCode code={command.code} lang="shell" locale={locale} />
             {command.output && (

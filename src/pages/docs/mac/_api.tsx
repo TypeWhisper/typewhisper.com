@@ -43,6 +43,12 @@ const recordingFields: Array<[fields: string[], key: string]> = [
   [["text"], "docs.mac.api.recordings.fields.text"],
   [["audio_file", "transcript_file"], "docs.mac.api.recordings.fields.files"],
   [["markdown_file"], "docs.mac.api.recordings.fields.markdown"],
+  [["recorded_at", "duration_seconds"], "docs.mac.api.recordings.fields.recording"],
+  [["calendar_event"], "docs.mac.api.recordings.fields.calendarEvent"],
+  [
+    ["speaker_state", "speakers", "speaker_segments"],
+    "docs.mac.api.recordings.fields.speakers",
+  ],
 ];
 
 /** Speaker fields of a `GET /v1/history` entry, in response order. */
@@ -209,6 +215,10 @@ export default function DocsMacAPI({ locale = "en" }: { locale?: Locale }) {
   );
   // Features that ship with TypeWhisper 1.8 say so where they are described.
   const availableFrom18 = t(locale, "docs.mac.api.availableFrom18");
+  // Later 1.8 updates name their own version.
+  const availableFrom181 = t(locale, "docs.mac.api.availableFrom181");
+  const availableFrom182 = t(locale, "docs.mac.api.availableFrom182");
+  const availableFrom183 = t(locale, "docs.mac.api.availableFrom183");
 
   /** Field and description, one row per field. */
   const FieldTable = ({
@@ -684,6 +694,16 @@ export TYPEWHISPER_API_PORT="$(jq -r '.port' "$DISCOVERY")"
             {withCode(t(locale, "docs.mac.api.transcribe.params.speakerCount"))}
           </li>
           <li>
+            <InlineCode>timestamp_granularities[]</InlineCode> –{" "}
+            {availableFrom182}{" "}
+            {withCode(
+              t(
+                locale,
+                "docs.mac.api.transcribe.params.timestampGranularities",
+              ),
+            )}
+          </li>
+          <li>
             <InlineCode>?await_download=1</InlineCode> –{" "}
             {t(locale, "docs.mac.api.transcribe.params.awaitDownload")}
           </li>
@@ -798,6 +818,14 @@ curl -X DELETE "http://localhost:8978/v1/models?engine=whisper&model=openai_whis
 curl -X DELETE "http://localhost:8978/v1/history?id=<uuid>"`}
         />
         <p>{t(locale, "docs.mac.api.history.description")}</p>
+        <p>
+          {availableFrom181}{" "}
+          {withCode(t(locale, "docs.mac.api.history.llmUsage"))}
+        </p>
+        <p>
+          {availableFrom183}{" "}
+          {withCode(t(locale, "docs.mac.api.history.recorder"))}
+        </p>
         <DocsSubheading id="history-speakers">
           {t(locale, "docs.mac.api.history.speakers.title")}
         </DocsSubheading>
@@ -1369,7 +1397,22 @@ curl "http://localhost:8978/v1/recorder/recordings?since=2026-10-04T07:46:40Z"`}
       "text": "Meeting notes from the recording.",
       "audio_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.m4a",
       "transcript_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.txt",
-      "markdown_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.transcript.md"
+      "markdown_file": "/Users/alex/Documents/TypeWhisper Recordings/Weekly Sync.transcript.md",
+      "recorded_at": 1791098200.5,
+      "duration_seconds": 1795.2,
+      "calendar_event": {
+        "title": "Weekly Sync",
+        "start": 1791098100,
+        "end": 1791099900,
+        "attendees": [
+          {
+            "name": "Alex",
+            "email": "alex@example.com",
+            "status": "accepted",
+            "is_current_user": true
+          }
+        ]
+      }
     }
   ]
 }`}

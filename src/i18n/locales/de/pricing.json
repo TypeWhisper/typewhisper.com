@@ -106,7 +106,7 @@
   "pricing.faq.discounts.q": "Gibt es Rabatte für Bildung oder Non-Profits?",
   "pricing.faq.discounts.a": "Non-Profits und Studierende, meldet euch bei licensing@typewhisper.com. Wir haben meist Spielraum für faire Rabatte.",
   "pricing.faq.activate.q": "Wie aktiviere ich meine Lizenz?",
-  "pricing.faq.activate.a": "Nimm den Lizenzschlüssel, den du nach dem Checkout bekommen hast. Auf dem Mac öffnest du Einstellungen > Lizenz, fügst den Schlüssel ein und aktivierst ihn. Unter Windows wählst du in der Seitenleiste Premium und dann Lizenz, fügst den Schlüssel ein und aktivierst ihn. Auf iPhone, iPad und Android öffnest du Einstellungen > Premium, meldest dich an und verbindest deine bestehende Lizenz.",
+  "pricing.faq.activate.a": "Nimm den Lizenzschlüssel, den du nach dem Checkout bekommen hast. Auf dem Mac öffnest du Einstellungen > Lizenz, fügst den Schlüssel ein und aktivierst ihn. In der Mac-App-Store-Edition öffnest du Einstellungen > Premium, meldest dich mit Apple an und wählst „Vorhandene TypeWhisper-Lizenz verbinden“; den Schlüssel gibst du auf einer TypeWhisper-Webseite ein. Unter Windows wählst du in der Seitenleiste Premium und dann Lizenz, fügst den Schlüssel ein und aktivierst ihn. Auf iPhone, iPad und Android öffnest du Einstellungen > Premium, meldest dich an und verbindest deine bestehende Lizenz.",
   "pricing.footerNote": "Suchst du eine Team-Lösung?",
   "pricing.footerNote.link": "TypeWhisper für Unternehmen ansehen",
   "supporter.eyebrow": "Optional – keine Lizenz",

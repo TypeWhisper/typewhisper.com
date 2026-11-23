@@ -12,6 +12,7 @@ import { localePath, t, screenshotPath, type Locale } from "@/i18n/index";
 const fields = [
   "apps",
   "websites",
+  "exclusions",
   "language",
   "task",
   "translationMode",
@@ -19,6 +20,7 @@ const fields = [
   "prompt",
   "promptProvider",
   "effort",
+  "screenContext",
   "manualShortcut",
   "autoSubmit",
   "inlineCommands",
