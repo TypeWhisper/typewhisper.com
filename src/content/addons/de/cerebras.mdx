@@ -16,6 +16,7 @@ sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisper
 sourceUrls:
   mac: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CerebrasPlugin"
   windows: "https://github.com/TypeWhisper/typewhisper-win/tree/main/plugins/TypeWhisper.Plugin.Cerebras"
+screenshotAlt: "Cerebras-Einstellungen in TypeWhisper für macOS: API-Schlüssel, LLM-Modell, Reasoning-Aufwand und Temperatur"
 ---
 
 ## Über diese Edition
@@ -26,19 +27,24 @@ Cerebras stellt Cloud-LLMs für TypeWhisper-Workflows bereit. Die macOS-Edition 
 
 - Cloud-LLMs für Text-Workflows
 - Dynamische Modellliste mit Aktualisierung über die Cerebras-API
+- Reasoning-Aufwand pro Modell auf dem Mac, zum Beispiel Niedrig für GPT-OSS 120B
 - OpenAI-kompatible API
 - API-Schlüssel sicher im macOS-Schlüsselbund gespeichert
 
 ## LLM-Modelle
 
-| Modell | ID |
-| --- | --- |
-| Llama 3.1 8B | `llama3.1-8b` |
-| GPT-OSS 120B | `gpt-oss-120b` |
-| Qwen 3 235B | `qwen-3-235b-a22b-instruct-2507` |
-| ZAI GLM 4.7 | `zai-glm-4.7` |
+| Modell | ID | Reasoning-Aufwand auf dem Mac |
+| --- | --- | --- |
+| GPT-OSS 120B | `gpt-oss-120b` | Niedrig, Mittel (Cerebras-Standard), Hoch |
+| Qwen 3.8 27B | `qwen-3.8-27b` | Aus, Niedrig, Mittel, Hoch (Cerebras-Standard) |
+| Kimi K3 | `kimi-k3` | Niedrig, Hoch, Maximum (Cerebras-Standard) |
+| Kimi K3.1 Pro | `kimi-k3.1-pro` | Niedrig, Mittel, Hoch, Maximum (Cerebras-Standard) |
+| ZAI GLM 5.3 Flash | `zai-glm-5.3-flash` | Niedrig, Hoch, Maximum (Cerebras-Standard) |
+| Gemma 4 31B | `gemma-4-31b` | Aus (Cerebras-Standard), Hoch |
 
-Nutze den Aktualisieren-Button, um die neuesten Modelle von der Cerebras-API zu laden.
+GPT-OSS 120B ist das Standardmodell. Mit dem Aktualisieren-Button lädst du die Modelle, die deinem Cerebras-Konto zur Verfügung stehen.
+
+Auf dem Mac legt die Einstellung „Reasoning-Aufwand“ fest, wie lange ein Modell nachdenkt, bevor es antwortet. Niedrigere Stufen antworten schneller und verbrauchen weniger Tokens, das passt gut zum Aufbereiten von Diktaten. Solange du keine Stufe wählst, nutzt Cerebras seinen eigenen Standard. Workflows können ihre eigene Stufe wählen. Cerebras hat Llama 3.1 8B, Qwen 3 235B Instruct und ZAI GLM 4.7 abgekündigt. Ist eines davon in den Add-on-Einstellungen gewählt, wechselt das Add-on zu GPT-OSS 120B. Ein Workflow mit einem dieser Modelle meldet das Modell als nicht verfügbar. Wähle dort dann ein anderes Modell.
 
 ## Konfiguration
 
@@ -49,3 +55,4 @@ Nutze den Aktualisieren-Button, um die neuesten Modelle von der Cerebras-API zu 
 1. Öffne in TypeWhisper **Einstellungen > Plugins entdecken** und installiere **Cerebras**. Das Add-on erscheint danach in der Seitenleiste der Einstellungen, und seine Seite öffnet sich.
 2. Gib deinen Cerebras API-Schlüssel ein.
 3. Wähle ein LLM-Modell und setze Cerebras als LLM-Anbieter.
+4. Wähle auf dem Mac einen Reasoning-Aufwand, wenn das Modell einen anbietet.

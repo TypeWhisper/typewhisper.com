@@ -1,24 +1,26 @@
 ---
 familySlug: "cerebras"
 platform: "mac"
-version: "1.0.5"
-description: "Cerebras als schneller Cloud-LLM-Anbieter mit Modellauswahl und Temperatursteuerung."
+version: "1.1.0"
+description: "Cerebras als schneller Cloud-LLM-Anbieter mit Modellauswahl, Reasoning-Aufwand und Temperatursteuerung."
 id: "com.typewhisper.cerebras"
-minAppVersion: "0.9.0"
+minAppVersion: "1.7.0"
 minOsVersion: "14.0"
 requirements:
-  - "TypeWhisper 0.9.0 oder neuer"
+  - "TypeWhisper 1.7.0 oder neuer"
   - "macOS 14.0 oder neuer"
 highlights:
   - "LLM-Anbieter für Workflow-Prompts"
-  - "Auswahl beziehungsweise Aktualisierung verfügbarer Modelle"
+  - "Auswahl beziehungsweise Aktualisierung verfügbarer Modelle, mit GPT-OSS 120B als Standard"
+  - "Reasoning-Aufwand pro Modell, zum Beispiel Niedrig, Mittel oder Hoch für GPT-OSS 120B; Workflows können ihre eigene Stufe wählen"
   - "Steuerung von Provider-Standard oder eigener Temperatur"
   - "Unterstützung paralleler abgesicherter LLM-Anfragen"
 configuration:
   - "API-Key im macOS-Schlüsselbund speichern, prüfen oder entfernen"
   - "LLM-Modell auswählen und den Modellkatalog aktualisieren"
+  - "Reasoning-Aufwand für Modelle wählen, die einen anbieten"
   - "Provider-Standard oder eigene Temperatur einstellen"
 sourceUrl: "https://github.com/TypeWhisper/typewhisper-mac/tree/main/TypeWhisperPluginSDK/Plugins/CerebrasPlugin"
-releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cerebras-v1.0.5"
+releaseUrl: "https://github.com/TypeWhisper/typewhisper-mac/releases/tag/plugin-cerebras-v1.1.0"
 processing: "cloud"
 ---
